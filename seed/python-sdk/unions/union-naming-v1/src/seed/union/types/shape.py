@@ -13,7 +13,10 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.union import CircleShape
-    CircleShape(radius=5.0, )
+
+    CircleShape(
+        radius=5.0,
+    )
     """
 
     id: str
@@ -33,7 +36,10 @@ class CircleShape(Base):
     Examples
     --------
     from seed.union import CircleShape
-    CircleShape(radius=5.0, )
+
+    CircleShape(
+        radius=5.0,
+    )
     """
 
     type: typing.Literal["circle"] = "circle"
@@ -54,7 +60,10 @@ class SquareShape(Base):
     Examples
     --------
     from seed.union import CircleShape
-    CircleShape(radius=5.0, )
+
+    CircleShape(
+        radius=5.0,
+    )
     """
 
     type: typing.Literal["square"] = "square"
@@ -72,6 +81,9 @@ class SquareShape(Base):
 
 """
 from seed.union import CircleShape
-CircleShape(radius=5.0, )
+
+CircleShape(
+    radius=5.0,
+)
 """
 Shape = typing.Union[CircleShape, SquareShape]

@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { FuncInvocation } from "./FuncInvocation";
 import { GoTypeReference } from "./GoTypeReference";
 import { MethodInvocation } from "./MethodInvocation";
 import { Type } from "./Type";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 type InternalTypeInstantiation =
     | Any_
@@ -111,8 +111,9 @@ interface Slice {
 
 interface Struct {
     type: "struct";
-    typeReference: GoTypeReference;
+    typeReference: AstNode;
     fields: StructField[];
+    generics?: Type[];
 }
 
 export interface StructField {
@@ -328,7 +329,7 @@ export class TypeInstantiation extends AstNode {
         typeReference,
         fields
     }: {
-        typeReference: GoTypeReference;
+        typeReference: AstNode;
         fields: StructField[];
     }): TypeInstantiation {
         return new this({
@@ -340,17 +341,20 @@ export class TypeInstantiation extends AstNode {
 
     public static structPointer({
         typeReference,
-        fields
+        fields,
+        generics
     }: {
-        typeReference: GoTypeReference;
+        typeReference: AstNode;
         fields: StructField[];
+        generics?: Type[];
     }): TypeInstantiation {
         return new this({
             type: "optional",
             value: new this({
                 type: "struct",
                 typeReference,
-                fields
+                fields,
+                generics
             })
         });
     }
@@ -401,9 +405,10 @@ export class TypeInstantiation extends AstNode {
         value
     }: {
         writer: Writer;
-        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow
+        value: any[];
     }): void {
-        writer.write("[]interface{}");
+        writer.write("[]any");
         if (value.length === 0) {
             writer.write("{}");
             return;
@@ -419,7 +424,7 @@ export class TypeInstantiation extends AstNode {
     }
 
     private writeAnyObject({ writer, value }: { writer: Writer; value: object }): void {
-        writer.write("map[string]interface{}");
+        writer.write("map[string]any");
         const entries = Object.entries(value);
         if (entries.length === 0) {
             writer.write("{}");
@@ -509,6 +514,17 @@ export class TypeInstantiation extends AstNode {
 
     private writeStruct({ writer, struct }: { writer: Writer; struct: Struct }): void {
         writer.writeNode(struct.typeReference);
+
+        if (struct.generics != null) {
+            writer.write("[");
+            struct.generics.forEach((generic, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writer.writeNode(generic);
+            });
+            writer.write("]");
+        }
 
         const fields = filterNopStructFields({ fields: struct.fields });
         if (fields.length === 0) {

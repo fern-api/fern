@@ -2,7 +2,11 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FGo)
 
-The Seed Go library provides convenient access to the Seed API from Go.
+The Seed Go library provides convenient access to the Seed APIs from Go.
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -16,7 +20,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Service.Post(
         context.TODO(),
@@ -83,6 +87,19 @@ response, err := client.Service.Post(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Service.WithRawResponse.Post(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

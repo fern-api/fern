@@ -50,7 +50,8 @@ async def main() -> None:
     # alternatively, you can paginate page-by-page
     async for page in response.iter_pages():
         yield page
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -93,11 +94,12 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPagination
 client = SeedPagination(..., )
-response = client.complex_.with_raw_response.search(...)
-print(response.headers)  # access the response headers
-for item in response.data:
+pager = client.complex_.search(...)
+print(pager.response.headers)  # access the response headers for the first page
+for item in pager:
     print(item)  # access the underlying object(s)
-for page in response.data.iter_pages():
+for page in pager.iter_pages():
+    print(page.response.headers)  # access the response headers for each page
     for item in page:
         print(item)  # access the underlying object(s)
 ```

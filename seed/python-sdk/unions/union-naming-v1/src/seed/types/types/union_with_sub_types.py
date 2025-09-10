@@ -13,7 +13,10 @@ class FooUnionWithSubTypes(UniversalBaseModel):
     Examples
     --------
     from seed.types import FooUnionWithSubTypes
-    FooUnionWithSubTypes(name='example1', )
+
+    FooUnionWithSubTypes(
+        name="example1",
+    )
     """
 
     type: typing.Literal["foo"] = "foo"
@@ -34,7 +37,10 @@ class FooExtendedUnionWithSubTypes(UniversalBaseModel):
     Examples
     --------
     from seed.types import FooUnionWithSubTypes
-    FooUnionWithSubTypes(name='example1', )
+
+    FooUnionWithSubTypes(
+        name="example1",
+    )
     """
 
     type: typing.Literal["fooExtended"] = "fooExtended"
@@ -53,6 +59,9 @@ class FooExtendedUnionWithSubTypes(UniversalBaseModel):
 
 """
 from seed.types import FooUnionWithSubTypes
-FooUnionWithSubTypes(name='example1', )
+
+FooUnionWithSubTypes(
+    name="example1",
+)
 """
 UnionWithSubTypes = typing.Union[FooUnionWithSubTypes, FooExtendedUnionWithSubTypes]

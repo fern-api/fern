@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { OperatorType } from "./OperatorType";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { OperatorType } from "./OperatorType";
 
 export declare namespace Operator {
     interface Args {

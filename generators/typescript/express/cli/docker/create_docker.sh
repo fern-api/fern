@@ -3,7 +3,7 @@
 set -e
 
 TAG="$1"
-DOCKER_NAME=fernapi/fern-typescript-express:"$TAG"
+DOCKER_NAME="fernapi/fern-typescript-express:${TAG}"
 
 DOCKER_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2>/dev/null)"
 ROOT_DIR="$DOCKER_DIR/../../../../.."
@@ -12,7 +12,7 @@ export GENERATOR_VERSION="$TAG"
 
 pnpm install
 pnpm compile
-pnpm build
+pnpm dist:cli
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"
 

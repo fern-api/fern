@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.New(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -15,7 +15,8 @@ func do() () {
             "<token>",
         ),
     )
-    client.Health.Service.Ping(
+    client.Health.Service.Check(
         context.TODO(),
+        "id",
     )
 }

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/type/orbit.pub.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "OrbitProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+message Orbit {
+  // Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3
+  anduril.type.OrbitMeanElements orbit_mean_elements = 1;
+}

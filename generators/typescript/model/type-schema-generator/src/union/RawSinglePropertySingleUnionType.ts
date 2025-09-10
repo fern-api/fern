@@ -1,9 +1,8 @@
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
+import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedType, ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-
-import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 
 export declare namespace RawSinglePropertySingleUnionType {
     export interface Init<Context extends ModelContext> extends AbstractRawSingleUnionType.Init {
@@ -32,7 +31,7 @@ export class RawSinglePropertySingleUnionType<
         const type = context.typeSchema.getReferenceToRawType(this.singleProperty.type);
         return [
             {
-                name: `"${this.singleProperty.name.wireValue}"`,
+                name: getPropertyKey(this.singleProperty.name.wireValue),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             }

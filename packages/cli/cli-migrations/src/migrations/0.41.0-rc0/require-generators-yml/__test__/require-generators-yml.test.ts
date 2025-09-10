@@ -1,14 +1,7 @@
+import { AbsoluteFilePath, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";
-
-import {
-    AbsoluteFilePath,
-    RelativeFilePath,
-    getDirectoryContents,
-    getDirectoryContentsForSnapshot,
-    join
-} from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 
 import { migration } from "../migration";
 
@@ -35,7 +28,6 @@ describe("require-generators-yml", () => {
                 context: createMockTaskContext()
             });
 
-            // eslint-disable-next-line no-console
             console.log(`Migrated fixture ${fixture} at path ${tmpDir.path}`);
 
             expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(tmpDir.path))).toMatchSnapshot();

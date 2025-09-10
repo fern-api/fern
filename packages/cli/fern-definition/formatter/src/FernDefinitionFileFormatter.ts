@@ -1,7 +1,6 @@
-import * as prettier from "prettier2";
-
 import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import * as prettier from "prettier2";
 
 const LANG_SERVER_BANNER =
     "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json";

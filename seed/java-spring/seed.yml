@@ -1,20 +1,20 @@
-irVersion: v55
+irVersion: v58
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring
 publish:
   workingDirectory: generators/java
   preBuildCommands:
-    - cd generators/java
     - ./gradlew :spring:distTar
-  docker: 
+  docker:
     file: ./generators/java/spring/Dockerfile
     image: fernapi/fern-java-spring
     context: ./generators/java/spring
 test:
   docker:
     image: fernapi/fern-java-spring:latest
-    command: 
+    context: .
+    command:
       - cd generators/java
       - ./gradlew :spring:distTar
       - docker build -f spring/Dockerfile -t fernapi/fern-java-spring:latest spring/
@@ -25,7 +25,7 @@ test:
       - chmod +x install-gradle.sh && ./install-gradle.sh
       - cd spring
       - tar -xvf build/distributions/spring.tar -C .
-    runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli
+    runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli {CONFIG_PATH}
     env: {}
 fixtures:
   imdb:
@@ -35,6 +35,17 @@ fixtures:
     - customConfig:
         disable-required-property-builder-checks: true
       outputFolder: disable-required-property-builder-checks
+  content-type:
+    - customConfig:
+        package-prefix: com.random.api.generated
+      outputFolder: package-prefix
+  nullable-optional:
+    - customConfig:
+        use-nullable-annotation: true
+      outputFolder: with-nullable-annotation
+    - customConfig:
+        use-nullable-annotation: false
+      outputFolder: legacy
 language: java
 generatorType: Server
 defaultOutputMode: local_files

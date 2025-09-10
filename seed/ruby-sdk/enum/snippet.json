@@ -2,6 +2,28 @@
     "endpoints": [
         {
             "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifierOverride": "endpoint_headers.send"
+            },
+            "snippet": {
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.headers.send(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifierOverride": "endpoint_headers.send"
+            },
+            "snippet": {
+                "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.headers.send(\n  operand: GREATER_THAN,\n  maybe_operand: GREATER_THAN,\n  operand_or_color: RED\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifierOverride": "endpoint_inlined-request.send"

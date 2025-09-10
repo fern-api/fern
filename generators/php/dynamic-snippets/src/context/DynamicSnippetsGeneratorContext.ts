@@ -1,11 +1,10 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";

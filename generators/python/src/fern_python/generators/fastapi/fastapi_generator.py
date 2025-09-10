@@ -37,6 +37,13 @@ class FastApiGenerator(AbstractGenerator):
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
 
+    def should_use_lazy_imports(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        return False
+
     def get_relative_path_to_project_for_publish(
         self,
         *,
@@ -134,6 +141,9 @@ class FastApiGenerator(AbstractGenerator):
         )
 
         context.core_utilities.copy_to_project(project=project)
+
+    def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
+        pass
 
     def _generate_service(
         self,

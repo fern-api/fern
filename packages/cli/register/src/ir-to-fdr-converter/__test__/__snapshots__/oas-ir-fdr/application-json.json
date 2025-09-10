@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getVndFernUserJsonVersion1",
-        "originalEndpointId": "getVndFernUserJsonVersion1",
+        "originalEndpointId": "endpoint_.getVndFernUserJsonVersion1",
         "name": "Get Vnd Fern User Json Version 1",
         "path": {
           "pathParameters": [],
@@ -58,6 +58,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -69,10 +70,24 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Data"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/vnd.fern.user+json;version=1",
             "pathParameters": {},
@@ -80,17 +95,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "string",
+              "bar": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "foo": "foo",
-                "bar": "foo"
+                "foo": "string",
+                "bar": "string"
               }
             }
           }
@@ -103,7 +115,7 @@
         "auth": false,
         "method": "GET",
         "id": "getApplicationJson",
-        "originalEndpointId": "getApplicationJson",
+        "originalEndpointId": "endpoint_.getApplicationJson",
         "name": "Get Application Json",
         "path": {
           "pathParameters": [],
@@ -120,6 +132,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -131,10 +144,24 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Data"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/application-json",
             "pathParameters": {},
@@ -142,17 +169,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "string",
+              "bar": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "foo": "foo",
-                "bar": "foo"
+                "foo": "string",
+                "bar": "string"
               }
             }
           }

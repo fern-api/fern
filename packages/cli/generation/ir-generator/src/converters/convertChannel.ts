@@ -433,8 +433,6 @@ function convertHeaders({
                         workspace
                     })
                 });
-            } else {
-                throw new Error(`Heder ${wireKey} does not exist`);
             }
         }
     }
@@ -454,8 +452,10 @@ function buildUrl({
     let url = channel.path;
     if (example["path-parameters"] != null) {
         for (const parameter of [...pathParams.pathParameters]) {
-            // TODO: should we URL encode the value?
-            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
+            url = url.replaceAll(
+                `{${parameter.name.originalName}}`,
+                encodeURIComponent(`${parameter.value.jsonExample}`)
+            );
         }
     }
     return url;

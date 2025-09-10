@@ -7,9 +7,9 @@ project_name=heavy_deps_project
 mkdir $project_name
 cd $project_name
 
-yarn init --yes
+npm init --yes
 
-yarn add \
+pnpm add \
   @types/express@4.17.16 \
   @types/node@17.0.33 \
   @types/url-join@4.0.1 \
@@ -19,6 +19,10 @@ yarn add \
   prettier@3.4.2 \
   typescript@5.7.2 \
   url-join@4.0.1
+
+rm -rf node_modules
+
+yarn install --ignore-scripts
 
 cd ..
 /bin/rm -rf $project_name

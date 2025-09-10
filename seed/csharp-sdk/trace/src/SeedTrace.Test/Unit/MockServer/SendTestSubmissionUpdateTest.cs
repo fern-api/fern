@@ -42,7 +42,11 @@ public class SendTestSubmissionUpdateTest : BaseMockServerTest
                         null,
                         DateTimeStyles.AdjustToUniversal
                     ),
-                    UpdateInfo = RunningSubmissionState.QueueingSubmission,
+                    UpdateInfo = new TestSubmissionUpdateInfo(
+                        new TestSubmissionUpdateInfo.Running(
+                            RunningSubmissionState.QueueingSubmission
+                        )
+                    ),
                 }
             )
         );

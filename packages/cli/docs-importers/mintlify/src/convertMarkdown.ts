@@ -1,10 +1,8 @@
+import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
-
-import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 import { MintlifyFrontmatter } from "./mintlify";
 
@@ -47,10 +45,11 @@ export async function convertMarkdown({
         relativeFilepathFromRoot,
         sidebarTitle: data.sidebarTitle ?? data.title ?? "Introduction",
         frontmatter: {
+            "max-toc-depth": undefined,
             title: data.title,
             subtitle: data.description,
             layout: data.mode != null ? "reference" : undefined,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             image: data["og:image"] as any,
             slug: FernRegistry.navigation.latest.Slug(slug),
 
@@ -86,7 +85,8 @@ export async function convertMarkdown({
             nofollow: undefined,
             "jsonld:breadcrumb": undefined,
             logo: undefined,
-            keywords: undefined
+            keywords: undefined,
+            tags: undefined
         },
         content: transformedContent
     };

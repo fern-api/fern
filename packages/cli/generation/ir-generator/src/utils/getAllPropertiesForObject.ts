@@ -1,10 +1,9 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { constructFernFileContext } from "../FernFileContext";
 import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";
+import { constructFernFileContext } from "../FernFileContext";
 import { ResolvedType } from "../resolvers/ResolvedType";
 import { TypeResolver } from "../resolvers/TypeResolver";
 
@@ -24,6 +23,7 @@ export interface ObjectPropertyWithPath {
     propertyType: string;
     resolvedPropertyType: ResolvedType;
     isOptional: boolean;
+    isNullable: boolean;
 }
 
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
@@ -101,7 +101,10 @@ export function getAllPropertiesForObject({
                     resolvedPropertyType,
                     isOptional:
                         resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "optional"
+                        resolvedPropertyType.container._type === "optional",
+                    isNullable:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "nullable"
                 });
             }
         }

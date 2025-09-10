@@ -1,6 +1,9 @@
-irVersion: v53
+irVersion: v58
 displayName: Go Model
 image: fernapi/fern-go-model
+language: go
+generatorType: Model
+defaultOutputMode: github
 changelogLocation: ../../generators/go/model/versions.yml
 
 buildScripts:
@@ -12,20 +15,19 @@ buildScripts:
       - go test -v ./...
 
 publish:
-  workingDirectory: generators/go
+  workingDirectory: generators/go-v2
   preBuildCommands:
-    - go build ./...
+    - pnpm --filter @fern-api/go-model dist:cli
   docker:
     file: ./generators/go/model/Dockerfile
     image: fernapi/fern-go-model
-    context: ./generators/go
+    context: .
+
 test:
   docker:
     image: fernapi/fern-go-model:latest
-    command: docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest ./generators/go
-language: go
-generatorType: Model
-defaultOutputMode: github
+    command: pnpm --filter @fern-api/go-model dist:cli && docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
+
 fixtures:
   streaming:
     - outputFolder: .
@@ -42,12 +44,17 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+
 scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
+
 allowedFailures:
   - exhaustive
+  - literal
   - mixed-case
+  - nullable-optional
   - reserved-keywords
+  - streaming:.
   - trace

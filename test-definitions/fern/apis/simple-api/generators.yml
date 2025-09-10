@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: local
+        config: {}
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/java-sdk/simple-api
+          # Downloads SDK locally without full project scaffolding

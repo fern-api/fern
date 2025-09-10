@@ -1,14 +1,10 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin } from "@fern-api/login";
-
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
-
-import { Semaphore } from "./Semaphore";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { getLatestCli } from "./commands/latest/getLatestCli";
@@ -18,13 +14,14 @@ import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
-import { ScriptRunner } from "./commands/test/ScriptRunner";
+import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
+import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
+import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
 
@@ -35,7 +32,7 @@ export async function tryRunCli(): Promise<void> {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
-                // eslint-disable-next-line
+                // biome-ignore lint: ignore next line
                 console.error(message);
             }
         });
@@ -107,6 +104,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: false,
                     description: "Allow unexpected test failures without failing the command"
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Execute Node with --inspect flag for debugging"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -123,38 +126,58 @@ function addTestCommand(cli: Argv) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
                     continue;
                 }
-                let testRunner;
-                const scriptRunner = new ScriptRunner(
-                    generator,
-                    argv.skipScripts,
-                    taskContextFactory.create("script-runner")
-                );
-                if (argv.local && generator.workspaceConfig.test.local != null) {
+                let testRunner: TestRunner;
+                let scriptRunner: ScriptRunner;
+
+                if (argv.local) {
+                    if (generator.workspaceConfig.test.local == null) {
+                        throw new Error(
+                            `Generator ${generator.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
+                        );
+                    }
+                    console.log(
+                        `Using local test runner for ${generator.workspaceName} with config:`,
+                        generator.workspaceConfig.test.local
+                    );
+                    scriptRunner = new LocalScriptRunner(
+                        generator,
+                        argv.skipScripts,
+                        taskContextFactory.create("local-script-runner")
+                    );
                     testRunner = new LocalTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         scriptRunner,
-                        keepDocker: false // dummy
+                        keepDocker: false, // not used for local
+                        inspect: argv.inspect
                     });
                 } else {
+                    scriptRunner = new DockerScriptRunner(
+                        generator,
+                        argv.skipScripts,
+                        taskContextFactory.create("docker-script-runner")
+                    );
                     testRunner = new DockerTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
-                        scriptRunner
+                        scriptRunner,
+                        inspect: argv.inspect
                     });
                 }
 
+                scriptRunners.push(scriptRunner);
                 tests.push(
                     testGenerator({
                         generator,
                         runner: testRunner,
                         fixtures: argv.fixture,
-                        outputFolder: argv.outputFolder
+                        outputFolder: argv.outputFolder,
+                        inspect: argv.inspect
                     })
                 );
             }
@@ -190,6 +213,12 @@ function addRunCommand(cli: Argv) {
                     demandOption: true,
                     description: "Path to the fern definition"
                 })
+                .option("output-path", {
+                    type: "string",
+                    string: true,
+                    demandOption: false,
+                    description: "Path to output the generated files (defaults to tmp dir)"
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -202,6 +231,23 @@ function addRunCommand(cli: Argv) {
                 .option("audience", {
                     string: true,
                     demandOption: false
+                })
+                .option("local", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Run the generator locally instead of using Docker"
+                })
+                .option("keepDocker", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Keeps the docker container after the generator finishes (Docker mode only)"
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -214,14 +260,27 @@ function addRunCommand(cli: Argv) {
                 );
             }
 
+            if (argv.local && generator.workspaceConfig.test.local == null) {
+                throw new Error(
+                    `Generator ${generator.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
+                );
+            }
+
             await runWithCustomFixture({
                 pathToFixture: argv.path.startsWith("/")
                     ? AbsoluteFilePath.of(argv.path)
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
                 logLevel: argv["log-level"],
-                audience: argv.audience,
-                skipScripts: argv.skipScripts
+                skipScripts: argv.skipScripts,
+                outputPath: argv["output-path"]
+                    ? argv["output-path"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-path"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
+                    : undefined,
+                inspect: argv.inspect,
+                local: argv.local,
+                keepDocker: argv.keepDocker
             });
         }
     );
@@ -277,9 +336,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context,
@@ -346,9 +405,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context

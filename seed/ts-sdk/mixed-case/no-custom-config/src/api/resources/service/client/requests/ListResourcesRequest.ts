@@ -5,11 +5,11 @@
 /**
  * @example
  *     {
- *         pageLimit: 10,
+ *         page_limit: 10,
  *         beforeDate: "2023-01-01"
  *     }
  */
 export interface ListResourcesRequest {
-    pageLimit: number;
+    page_limit: number;
     beforeDate: string;
 }

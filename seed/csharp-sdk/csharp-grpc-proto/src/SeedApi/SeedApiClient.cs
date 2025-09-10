@@ -26,8 +26,5 @@ public partial class SeedApiClient
             }
         }
         _client = new RawClient(clientOptions);
-        Userservice = new UserserviceClient(_client);
     }
-
-    public UserserviceClient Userservice { get; }
 }

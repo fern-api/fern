@@ -28,8 +28,13 @@ Create a new organization.
 
 ```python
 from seed import SeedMixedFileDirectory
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-client.organization.create(name='name', )
+
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.organization.create(
+    name="name",
+)
 
 ```
 </dd>
@@ -94,8 +99,13 @@ List all users.
 
 ```python
 from seed import SeedMixedFileDirectory
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-client.user.list(limit=1, )
+
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.list(
+    limit=1,
+)
 
 ```
 </dd>
@@ -160,8 +170,13 @@ List all user events.
 
 ```python
 from seed import SeedMixedFileDirectory
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-client.user.events.list_events(limit=1, )
+
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.events.list_events(
+    limit=1,
+)
 
 ```
 </dd>
@@ -226,8 +241,13 @@ Get event metadata.
 
 ```python
 from seed import SeedMixedFileDirectory
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-client.user.events.metadata.get_metadata(id='id', )
+
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.events.metadata.get_metadata(
+    id="id",
+)
 
 ```
 </dd>

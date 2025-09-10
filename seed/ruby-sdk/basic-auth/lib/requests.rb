@@ -41,7 +41,7 @@ module SeedBasicAuthClient
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_basic_auth", "X-Fern-SDK-Version": "0.0.1" }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
+          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end
@@ -84,7 +84,7 @@ module SeedBasicAuthClient
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_basic_auth", "X-Fern-SDK-Version": "0.0.1" }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
+          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end

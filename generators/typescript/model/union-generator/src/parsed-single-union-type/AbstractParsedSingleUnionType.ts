@@ -1,4 +1,4 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -35,7 +35,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
             extends: this.singleUnionType.getExtendsForInterface(context),
             properties: [
                 {
-                    name: generatedUnion.discriminant,
+                    name: getPropertyKey(generatedUnion.discriminant),
                     type: getTextOfTsNode(this.getDiscriminantValueType())
                 },
                 ...this.singleUnionType.getDiscriminantPropertiesForInterface(context),

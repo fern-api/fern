@@ -20,6 +20,7 @@ from .resources.endpoints.resources.params.service.service import AbstractEndpoi
 from .resources.endpoints.resources.primitive.service.service import AbstractEndpointsPrimitiveService
 from .resources.endpoints.resources.put.service.service import AbstractEndpointsPutService
 from .resources.endpoints.resources.union.service.service import AbstractEndpointsUnionService
+from .resources.endpoints.resources.urls.service.service import AbstractEndpointsUrlsService
 from .resources.inlined_requests.service.service import AbstractInlinedRequestsService
 from .resources.no_auth.service.service import AbstractNoAuthService
 from .resources.no_req_body.service.service import AbstractNoReqBodyService
@@ -39,6 +40,7 @@ def register(
     endpoints_primitive: AbstractEndpointsPrimitiveService,
     endpoints_put: AbstractEndpointsPutService,
     endpoints_union: AbstractEndpointsUnionService,
+    endpoints_urls: AbstractEndpointsUrlsService,
     inlined_requests: AbstractInlinedRequestsService,
     no_auth: AbstractNoAuthService,
     no_req_body: AbstractNoReqBodyService,
@@ -54,6 +56,7 @@ def register(
     _app.include_router(__register_service(endpoints_primitive), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_put), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_union), dependencies=dependencies)
+    _app.include_router(__register_service(endpoints_urls), dependencies=dependencies)
     _app.include_router(__register_service(inlined_requests), dependencies=dependencies)
     _app.include_router(__register_service(no_auth), dependencies=dependencies)
     _app.include_router(__register_service(no_req_body), dependencies=dependencies)

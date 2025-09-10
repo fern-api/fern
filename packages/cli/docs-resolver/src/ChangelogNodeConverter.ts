@@ -1,10 +1,9 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { kebabCase, last } from "lodash-es";
-
 import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { kebabCase, last } from "lodash-es";
 
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
@@ -31,6 +30,7 @@ export class ChangelogNodeConverter {
     public constructor(
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
         private markdownToNoIndex: Map<AbsoluteFilePath, boolean>,
+        private markdownToTags: Map<AbsoluteFilePath, string[]>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator
@@ -98,7 +98,8 @@ export class ChangelogNodeConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
-                featureFlags: undefined
+                featureFlags: undefined,
+                tags: this.markdownToTags.get(item.absoluteFilepath)
             };
         });
 

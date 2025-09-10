@@ -2,6 +2,39 @@
     "endpoints": [
         {
             "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Simple.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.NestedNoAuth.Api.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Nested.Api.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/token",
                 "method": "POST",
                 "identifier_override": "endpoint_auth.getTokenWithClientCredentials"

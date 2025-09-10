@@ -7,7 +7,7 @@ import (
     fern "github.com/examples/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,18 +16,26 @@ func do() () {
             "<token>",
         ),
     )
-    client.Service.GetMetadata(
+    client.Service.CreateMovie(
         context.TODO(),
-        &fern.GetMetadataRequest{
-            Shallow: fern.Bool(
-                false,
+        &fern.Movie{
+            Id: "id",
+            Prequel: fern.String(
+                "prequel",
             ),
-            Tag: []*string{
-                fern.String(
-                    "development",
-                ),
+            Title: "title",
+            From: "from",
+            Rating: 1.1,
+            Tag: "tag",
+            Book: fern.String(
+                "book",
+            ),
+            Metadata: map[string]any{
+                "metadata": map[string]any{
+                    "key": "value",
+                },
             },
-            XApiVersion: "0.0.1",
+            Revenue: 1000000,
         },
     )
 }

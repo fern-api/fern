@@ -18,3 +18,7 @@
 // broken links in code blocks should not be flagged
 [link](/bar/baz)
 ```
+
+## Special Files
+
+1. link to llms.txt file [llms.txt](/llms.txt)

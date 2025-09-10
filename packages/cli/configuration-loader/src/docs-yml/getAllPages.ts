@@ -1,9 +1,8 @@
-import { readFile } from "fs/promises";
-import { compact } from "lodash-es";
-
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
+import { compact } from "lodash-es";
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 
@@ -19,7 +18,7 @@ async function loadBatch({
     const pairs = await Promise.all(
         files.map(async (file) => {
             const content = await readFile(file, "utf-8");
-            return [await relativize(absolutePathToFernFolder, file), content];
+            return [relativize(absolutePathToFernFolder, file), content];
         })
     );
     return Object.fromEntries(pairs);
@@ -82,6 +81,13 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                 return getAllPages({
                     landingPage: version.landingPage,
                     navigation: version.navigation
+                });
+            });
+        case "productgroup":
+            return navigation.products.flatMap((product) => {
+                return getAllPages({
+                    landingPage: product.landingPage,
+                    navigation: product.navigation
                 });
             });
         default:

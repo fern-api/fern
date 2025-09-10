@@ -1,5 +1,7 @@
 using SeedOauthClientCredentials.Auth;
 using SeedOauthClientCredentials.Core;
+using SeedOauthClientCredentials.Nested;
+using SeedOauthClientCredentials.NestedNoAuth;
 
 namespace SeedOauthClientCredentials;
 
@@ -40,7 +42,16 @@ public partial class SeedOauthClientCredentialsClient
         );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
+        NestedNoAuth = new NestedNoAuthClient(_client);
+        Nested = new NestedClient(_client);
+        Simple = new SimpleClient(_client);
     }
 
     public AuthClient Auth { get; }
+
+    public NestedNoAuthClient NestedNoAuth { get; }
+
+    public NestedClient Nested { get; }
+
+    public SimpleClient Simple { get; }
 }

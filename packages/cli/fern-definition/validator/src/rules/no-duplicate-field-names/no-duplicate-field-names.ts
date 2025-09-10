@@ -1,16 +1,15 @@
-import { groupBy, noop } from "lodash-es";
-
 import { getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import {
-    TypeResolverImpl,
     constructFernFileContext,
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
     getEnumName,
     getSingleUnionTypeName,
-    getUnionDiscriminantName
+    getUnionDiscriminantName,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
+import { groupBy, noop } from "lodash-es";
 
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";

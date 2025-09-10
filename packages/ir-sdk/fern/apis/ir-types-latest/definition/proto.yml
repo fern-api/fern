@@ -154,3 +154,10 @@ types:
           This is used to determine what import path is required to reference the
           associated type(s).
         type: string
+
+  ProtobufMethodType:
+    enum:
+      - UNARY
+      - CLIENT_STREAM
+      - SERVER_STREAM
+      - BIDIRECTIONAL_STREAM

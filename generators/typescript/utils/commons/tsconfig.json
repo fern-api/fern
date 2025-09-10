@@ -7,8 +7,6 @@
     { "path": "../../../../packages/commons/core-utils" },
     { "path": "../../../../packages/commons/fs-utils" },
     { "path": "../../../../packages/commons/logging-execa" },
-    { "path": "../../../typescript-v2/base" },
-    { "path": "../core-utilities/fetcher" },
-    { "path": "../core-utilities/zurg" }
+    { "path": "../../../typescript-v2/base" }
   ]
 }

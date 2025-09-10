@@ -9,6 +9,7 @@ async function main() {
         format: ['cjs'],
         minify: false,
         outDir: 'dist',
+        sourcemap: true,
         env: {
             CLI_NAME: "seed",
             CLI_PACKAGE_NAME: "seed-cli",

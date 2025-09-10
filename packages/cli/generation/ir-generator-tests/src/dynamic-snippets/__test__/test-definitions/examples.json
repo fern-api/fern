@@ -95,7 +95,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Type"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -123,7 +124,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -151,7 +153,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -570,7 +573,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -608,7 +612,8 @@
                                 "value": "STRING"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -639,7 +644,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1295,7 +1301,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_types:MovieId"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1326,7 +1333,8 @@
                             "type": "named",
                             "value": "type_types:MovieId"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1354,7 +1362,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1382,7 +1391,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1410,7 +1420,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DOUBLE"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1441,7 +1452,8 @@
                             "type": "string",
                             "value": "movie"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1469,7 +1481,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_commons/types:Tag"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1500,7 +1513,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1534,7 +1548,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1562,7 +1577,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "LONG"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1741,7 +1757,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1769,7 +1786,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1867,7 +1885,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1895,7 +1914,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1993,7 +2013,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2021,7 +2042,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -2119,7 +2141,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_types:MovieId"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2150,7 +2173,8 @@
                             "type": "named",
                             "value": "type_types:MovieId"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2178,7 +2202,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2206,7 +2231,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2234,7 +2260,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DOUBLE"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2265,7 +2292,8 @@
                             "type": "string",
                             "value": "movie"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2293,7 +2321,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_commons/types:Tag"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2324,7 +2353,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2358,7 +2388,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2386,7 +2417,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "LONG"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2417,7 +2449,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -2515,7 +2548,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "UUID"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2543,7 +2577,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2571,7 +2606,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE_TIME"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -2669,7 +2705,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2697,7 +2734,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -2795,7 +2833,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2829,7 +2868,8 @@
                                 "value": "type_types:File"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2863,7 +2903,8 @@
                                 "value": "type_types:Directory"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -2961,7 +3002,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -2995,7 +3037,8 @@
                                 "value": "type_types:Node"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -3029,7 +3072,8 @@
                                 "value": "type_types:Tree"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -3133,7 +3177,8 @@
                                 "value": "type_types:Node"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -3289,7 +3334,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -3320,7 +3366,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },
@@ -3386,7 +3433,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -3417,7 +3465,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 }
@@ -3660,7 +3709,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -3688,7 +3738,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -3716,7 +3767,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -3949,7 +4001,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -3977,7 +4030,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_types:MigrationStatus"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -4074,7 +4128,8 @@
                     },
                     "typeReference": {
                         "type": "unknown"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -4171,7 +4226,8 @@
                     },
                     "typeReference": {
                         "type": "unknown"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4202,7 +4258,8 @@
                             "type": "named",
                             "value": "type_:Identifier"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -4300,7 +4357,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Type"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -4549,7 +4607,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Type"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4577,7 +4636,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -4678,7 +4738,8 @@
                             "type": "named",
                             "value": "type_types:CastMember"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4709,7 +4770,8 @@
                             "type": "named",
                             "value": "type_types:ExtendedMovie"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4740,7 +4802,8 @@
                             "type": "named",
                             "value": "type_types:Entity"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4771,7 +4834,8 @@
                             "type": "named",
                             "value": "type_types:Metadata"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4802,7 +4866,8 @@
                             "type": "named",
                             "value": "type_commons/types:Metadata"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4833,7 +4898,8 @@
                             "type": "named",
                             "value": "type_commons/types:EventInfo"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4864,7 +4930,8 @@
                             "type": "named",
                             "value": "type_commons/types:Data"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4895,7 +4962,8 @@
                             "type": "named",
                             "value": "type_types:Migration"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4926,7 +4994,8 @@
                             "type": "named",
                             "value": "type_types:Exception"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4957,7 +5026,8 @@
                             "type": "named",
                             "value": "type_types:Test"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -4988,7 +5058,8 @@
                             "type": "named",
                             "value": "type_types:Node"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -5019,7 +5090,8 @@
                             "type": "named",
                             "value": "type_types:Directory"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -5050,7 +5122,206 @@
                             "type": "named",
                             "value": "type_types:Moment"
                         }
+                    },
+                    "propertyAccess": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_types:CronJob": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CronJob",
+                    "camelCase": {
+                        "unsafeName": "cronJob",
+                        "safeName": "cronJob"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "cron_job",
+                        "safeName": "cron_job"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CRON_JOB",
+                        "safeName": "CRON_JOB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CronJob",
+                        "safeName": "CronJob"
                     }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "expression",
+                            "camelCase": {
+                                "unsafeName": "expression",
+                                "safeName": "expression"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "expression",
+                                "safeName": "expression"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXPRESSION",
+                                "safeName": "EXPRESSION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Expression",
+                                "safeName": "Expression"
+                            }
+                        },
+                        "wireValue": "expression"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_types:RefreshTokenRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "RefreshTokenRequest",
+                    "camelCase": {
+                        "unsafeName": "refreshTokenRequest",
+                        "safeName": "refreshTokenRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refresh_token_request",
+                        "safeName": "refresh_token_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFRESH_TOKEN_REQUEST",
+                        "safeName": "REFRESH_TOKEN_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefreshTokenRequest",
+                        "safeName": "RefreshTokenRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "ttl",
+                            "camelCase": {
+                                "unsafeName": "ttl",
+                                "safeName": "ttl"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ttl",
+                                "safeName": "ttl"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TTL",
+                                "safeName": "TTL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TTL",
+                                "safeName": "TTL"
+                            }
+                        },
+                        "wireValue": "ttl"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -5393,7 +5664,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -5665,7 +5937,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "queryParameters": [],
@@ -5696,7 +5969,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null,
@@ -5869,7 +6143,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -6139,7 +6414,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_types:MovieId"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -6444,7 +6720,8 @@
                                 "type": "primitive",
                                 "value": "BOOLEAN"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -6478,7 +6755,8 @@
                                     "value": "STRING"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [
@@ -6508,7 +6786,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null,
@@ -6621,6 +6900,116 @@
                     "value": {
                         "type": "named",
                         "value": "type_types:BigEntity"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_service.refreshToken": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "refreshToken",
+                    "camelCase": {
+                        "unsafeName": "refreshToken",
+                        "safeName": "refreshToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refresh_token",
+                        "safeName": "refresh_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFRESH_TOKEN",
+                        "safeName": "REFRESH_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefreshToken",
+                        "safeName": "RefreshToken"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refresh-token"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_types:RefreshTokenRequest"
+                        }
                     }
                 }
             },

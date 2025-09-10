@@ -16,9 +16,17 @@ export function mergeIntermediateRepresentation(
     return {
         apiName: ir1.apiName,
         basePath: ir1.basePath,
+        selfHosted: ir1.selfHosted && ir2.selfHosted,
         apiDisplayName: ir1.apiDisplayName ?? ir2.apiDisplayName,
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
-        auth: ir1.auth ?? ir2.auth,
+        auth: {
+            requirement: ir1.auth?.requirement ?? ir2.auth?.requirement,
+            schemes:
+                ir2.auth?.schemes?.length != null && ir2.auth.schemes.length > (ir1.auth?.schemes?.length ?? 0)
+                    ? ir2.auth.schemes
+                    : (ir1.auth?.schemes ?? []),
+            docs: ir1.auth?.docs ?? ir2.auth?.docs
+        },
         headers: [...(ir1.headers ?? []), ...(ir2.headers ?? [])],
         environments,
         types: {
@@ -38,16 +46,18 @@ export function mergeIntermediateRepresentation(
             ...(ir1.webhookGroups ?? {}),
             ...(ir2.webhookGroups ?? {})
         },
-        subpackages: {
-            ...(ir1.subpackages ?? {}),
-            ...(ir2.subpackages ?? {})
-        },
+        subpackages: mergeSubpackages(ir1.subpackages, ir2.subpackages),
         websocketChannels,
         rootPackage: {
             service: ir1.rootPackage.service ?? ir2.rootPackage.service,
             types: [...(ir1.rootPackage.types ?? []), ...(ir2.rootPackage.types ?? [])],
             errors: [...(ir1.rootPackage.errors ?? []), ...(ir2.rootPackage.errors ?? [])],
-            subpackages: [...(ir1.rootPackage.subpackages ?? []), ...(ir2.rootPackage.subpackages ?? [])],
+            subpackages: [
+                ...(ir1.rootPackage.subpackages ?? []),
+                ...(ir2.rootPackage.subpackages ?? []).filter(
+                    (subpackage) => !ir1.rootPackage.subpackages?.includes(subpackage)
+                )
+            ],
             fernFilepath: ir1.rootPackage.fernFilepath ?? ir2.rootPackage.fernFilepath,
             webhooks: ir1.rootPackage.webhooks ?? ir2.rootPackage.webhooks,
             websocket: ir1.rootPackage.websocket ?? ir2.rootPackage.websocket,
@@ -66,8 +76,42 @@ export function mergeIntermediateRepresentation(
         sourceConfig: ir1.sourceConfig ?? ir2.sourceConfig,
         publishConfig: ir1.publishConfig ?? ir2.publishConfig,
         dynamic: ir1.dynamic ?? ir2.dynamic,
-        sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig
+        sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
+        audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])]
     };
+}
+
+function mergeSubpackages(
+    subpackages1: Record<string, FernIr.Subpackage>,
+    subpackages2: Record<string, FernIr.Subpackage>
+): Record<string, FernIr.Subpackage> {
+    const mergedSubpackages: Record<string, FernIr.Subpackage> = subpackages1;
+    for (const [subpackageId, subpackage] of Object.entries(subpackages2)) {
+        if (mergedSubpackages[subpackageId] == null) {
+            mergedSubpackages[subpackageId] = subpackage;
+        } else {
+            mergedSubpackages[subpackageId] = {
+                name: subpackage.name,
+                displayName: subpackage.displayName,
+                fernFilepath: subpackage.fernFilepath,
+                hasEndpointsInTree: mergedSubpackages[subpackageId].hasEndpointsInTree || subpackage.hasEndpointsInTree,
+                navigationConfig: mergedSubpackages[subpackageId].navigationConfig ?? subpackage.navigationConfig,
+                docs: mergedSubpackages[subpackageId].docs ?? subpackage.docs,
+                service: mergedSubpackages[subpackageId].service ?? subpackage.service,
+                subpackages: [
+                    ...(mergedSubpackages[subpackageId].subpackages ?? []),
+                    ...(subpackage.subpackages ?? []).filter(
+                        (subpackage) => !mergedSubpackages[subpackageId]?.subpackages?.includes(subpackage)
+                    )
+                ],
+                webhooks: mergedSubpackages[subpackageId].webhooks ?? subpackage.webhooks,
+                websocket: mergedSubpackages[subpackageId].websocket ?? subpackage.websocket,
+                errors: [...(mergedSubpackages[subpackageId].errors ?? []), ...(subpackage.errors ?? [])],
+                types: [...(mergedSubpackages[subpackageId].types ?? []), ...(subpackage.types ?? [])]
+            };
+        }
+    }
+    return mergedSubpackages;
 }
 
 /**
@@ -285,6 +329,9 @@ function mergeServicesAndChannels(
                     if (endpoint.baseUrl == key) {
                         endpoint.baseUrl = value;
                     }
+                    if (endpoint.v2BaseUrls?.includes(key)) {
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
+                    }
                 }
             }
             for (const websocketChannel of Object.values(ir1.websocketChannels ?? {})) {
@@ -301,6 +348,9 @@ function mergeServicesAndChannels(
                     if (endpoint.baseUrl == key) {
                         endpoint.baseUrl = value;
                     }
+                    if (endpoint.v2BaseUrls?.includes(key)) {
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
+                    }
                 }
             }
             for (const websocketChannel of Object.values(ir2.websocketChannels ?? {})) {
@@ -310,15 +360,35 @@ function mergeServicesAndChannels(
             }
         }
     }
-    const services = {
-        ...(ir1.services ?? {}),
-        ...(ir2.services ?? {})
-    };
+
+    const mergedServices: Record<string, FernIr.HttpService> = ir1.services;
+    for (const [serviceId, service] of Object.entries(ir2.services)) {
+        if (mergedServices[serviceId] == null) {
+            mergedServices[serviceId] = service;
+        } else {
+            mergedServices[serviceId] = {
+                availability: service.availability,
+                name: service.name,
+                displayName: service.displayName,
+                basePath: service.basePath,
+                endpoints: [...(mergedServices[serviceId].endpoints ?? []), ...service.endpoints],
+                pathParameters: [
+                    ...(mergedServices[serviceId].pathParameters ?? []),
+                    ...(service.pathParameters ?? [])
+                ],
+                headers: [...(mergedServices[serviceId].headers ?? []), ...(service.headers ?? [])],
+                encoding: service.encoding,
+                transport: service.transport,
+                audiences: [...(mergedServices[serviceId].audiences ?? []), ...(service.audiences ?? [])]
+            };
+        }
+    }
+
     const websocketChannels = {
         ...(ir1.websocketChannels ?? {}),
         ...(ir2.websocketChannels ?? {})
     };
-    return { services, websocketChannels };
+    return { services: mergedServices, websocketChannels };
 }
 
 /**

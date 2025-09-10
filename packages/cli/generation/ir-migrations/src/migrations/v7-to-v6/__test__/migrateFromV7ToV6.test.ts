@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V7_TO_V6_MIGRATION } from "../migrateFromV7ToV6";

@@ -1,19 +1,18 @@
-import { confirm, input } from "@inquirer/prompts";
-import chalk from "chalk";
-import { maxBy } from "lodash-es";
-
-import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger";
+import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
+import { confirm, input } from "@inquirer/prompts";
+import chalk from "chalk";
+import { maxBy } from "lodash-es";
 
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
+import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
-import { logErrorMessage } from "./logErrorMessage";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
@@ -39,9 +38,11 @@ export class CliContext {
     private ttyAwareLogger: TtyAwareLogger;
 
     private logLevel: LogLevel = LogLevel.Info;
+    private isLocal: boolean;
 
-    constructor(stream: NodeJS.WriteStream) {
-        this.ttyAwareLogger = new TtyAwareLogger(stream);
+    constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
+        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        this.isLocal = isLocal ?? false;
 
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
@@ -99,14 +100,14 @@ export class CliContext {
         logErrorMessage({ message, error, logger: this.logger });
     }
 
-    public async exit(): Promise<never> {
-        if (!this._suppressUpgradeMessage) {
+    public async exit({ code }: { code?: number } = {}): Promise<never> {
+        if (!this._suppressUpgradeMessage || !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
-        this.exitProgram();
+        this.exitProgram({ code });
     }
 
     private async nudgeUpgradeIfAvailable() {
@@ -124,7 +125,7 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                this.logger.info(upgradeMessage);
+                this.stderr.info(upgradeMessage);
             }
         } catch {
             // swallow error when failing to check for upgrade
@@ -137,8 +138,8 @@ export class CliContext {
         }
     }
 
-    private exitProgram(): never {
-        process.exit(this.didSucceed ? 0 : 1);
+    private exitProgram({ code }: { code?: number } = {}): never {
+        process.exit(code ?? (this.didSucceed ? 0 : 1));
     }
 
     private longestWorkspaceName: string | undefined;
@@ -202,10 +203,13 @@ export class CliContext {
     }
 
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
-        (await getPosthogManager()).sendEvent(event);
+        if (!this.isLocal) {
+            (await getPosthogManager()).sendEvent(event);
+        }
     }
 
-    public readonly logger = createLogger(this.log.bind(this));
+    public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
+    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
@@ -223,7 +227,7 @@ export class CliContext {
 
         const prefix = prefixWithoutPadding.padEnd(minLengthForPrefix);
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
@@ -258,10 +262,24 @@ export class CliContext {
         ]);
     }
 
-    private logImmediately(logs: Log[]): void {
+    private logStderr(level: LogLevel, ...parts: string[]) {
+        this.logImmediately(
+            [
+                {
+                    parts,
+                    level,
+                    time: new Date()
+                }
+            ],
+            { stderr: true }
+        );
+    }
+
+    private logImmediately(logs: Log[], { stderr = false }: { stderr?: boolean } = {}): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
-            includeDebugInfo: this.logLevel === LogLevel.Debug
+            includeDebugInfo: this.logLevel === LogLevel.Debug,
+            stderr
         });
     }
 

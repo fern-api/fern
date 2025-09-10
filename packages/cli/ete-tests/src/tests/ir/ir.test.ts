@@ -1,6 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
+import path from "path";
 import { runFernCli } from "../../utils/runFernCli";
 import { generateIrAsString } from "./generateIrAsString";
 
@@ -78,7 +79,7 @@ describe("ir", () => {
                     audiences: fixture.audiences,
                     version: fixture.version
                 });
-                // eslint-disable-next-line jest/no-standalone-expect
+                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(irContents).toMatchSnapshot();
             },
             90_000
@@ -99,5 +100,42 @@ describe("ir", () => {
             reject: false
         });
         expect(stdout).toContain("IR v100 does not exist");
+    }, 10_000);
+});
+
+describe("ir from proto", () => {
+    // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
+    it.skip("works with proto-ir", async () => {
+        try {
+            await runFernCli(["ir", "ir.json", "--from-openapi"], {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-ir")),
+                reject: false
+            });
+            const contents = await readFile(
+                path.join(FIXTURES_DIR, RelativeFilePath.of("proto-ir"), "ir.json"),
+                "utf-8"
+            );
+            expect(contents).toMatchSnapshot();
+        } catch (error) {
+            console.error("IMPORTANT: Ensure buf version matches version from CI/CD (v1.50.0 as of 7/31/25).");
+            throw error;
+        }
+    }, 10_000);
+    // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
+    it.skip("ir from proto through oas", async () => {
+        try {
+            await runFernCli(["ir", "ir.json", "--from-openapi"], {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir")),
+                reject: false
+            });
+            const contents = await readFile(
+                path.join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir"), "ir.json"),
+                "utf-8"
+            );
+            expect(contents).toMatchSnapshot();
+        } catch (error) {
+            console.error("IMPORTANT: Ensure buf version matches version from CI/CD (v1.50.0 as of 7/31/25).");
+            throw error;
+        }
     }, 10_000);
 });

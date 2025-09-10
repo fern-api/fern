@@ -1,10 +1,15 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
-
-import { ClassReference } from "..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
+import { ClassReference } from "..";
 
 type Alias = string;
 type Namespace = string;
+
+const IMPLICIT_NAMESPACES = new Set(["System"]);
+
+function isNamespaceImplicit(namespace: string): boolean {
+    return IMPLICIT_NAMESPACES.has(namespace);
+}
 
 export declare namespace Writer {
     interface Args {
@@ -18,6 +23,8 @@ export declare namespace Writer {
         rootNamespace: string;
         /* Custom generator config */
         customConfig: BaseCsharpCustomConfigSchema;
+        /* Whether or not to skip writing imports */
+        skipImports?: boolean;
     }
 }
 
@@ -37,13 +44,24 @@ export class Writer extends AbstractWriter {
     /* Whether or not dictionary<string, object?> should be simplified to just objects */
     private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
+    /* Whether or not to skip writing imports */
+    public readonly skipImports: boolean;
+
+    constructor({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig,
+        skipImports = false
+    }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.allNamespaceSegments = allNamespaceSegments;
         this.allTypeClassReferences = allTypeClassReferences;
         this.rootNamespace = rootNamespace;
         this.customConfig = customConfig;
+        this.skipImports = skipImports;
     }
 
     public addReference(reference: ClassReference): void {
@@ -94,8 +112,16 @@ export class Writer extends AbstractWriter {
         return this.customConfig;
     }
 
+    public shouldUseFullyQualifiedNamespaces(): boolean {
+        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
+    }
+
+    public shouldUseDotnetFormat(): boolean {
+        return this.customConfig["experimental-dotnet-format"] ?? false;
+    }
+
     public getSimplifyObjectDictionaries(): boolean {
-        return this.customConfig["simplify-object-dictionaries"] ?? true;
+        return this.customConfig["simplify-object-dictionaries"] ?? false;
     }
 
     public toString(skipImports = false): string {
@@ -131,8 +157,9 @@ ${this.buffer}`;
 
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-            .map((ref) => `using ${ref};`)
+            .filter((ns) => !this.isCurrentNamespace(ns))
+            .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
+            .map((ref) => `using ${this.references[ref]?.some((each) => each?.global) ? "global::" : ""}${ref};`)
             .join("\n");
 
         if (result.length > 0) {
@@ -144,5 +171,9 @@ ${this.buffer}`;
         }
 
         return result;
+    }
+
+    private isCurrentNamespace(namespace: string): boolean {
+        return namespace === this.namespace;
     }
 }

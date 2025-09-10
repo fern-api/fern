@@ -1,3 +1,5 @@
+export * as audience from "./audience";
+export * from "./audience/types";
 export * as auth from "./auth";
 export * from "./auth/types";
 export * as commons from "./commons";

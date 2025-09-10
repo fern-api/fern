@@ -1,9 +1,9 @@
-export * as commons from "./commons";
-export * from "./commons/types";
-export * as folderA from "./folderA";
-export * as folderB from "./folderB";
-export * as folderC from "./folderC";
-export * as folderD from "./folderD";
-export * as foo from "./foo";
-export * from "./foo/types";
-export * from "./foo/client/requests";
+export * as commons from "./commons/index.js";
+export * from "./commons/types/index.js";
+export * as folderA from "./folderA/index.js";
+export * as folderB from "./folderB/index.js";
+export * as folderC from "./folderC/index.js";
+export * as folderD from "./folderD/index.js";
+export * as foo from "./foo/index.js";
+export * from "./foo/types/index.js";
+export * from "./foo/client/requests/index.js";

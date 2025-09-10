@@ -1,11 +1,8 @@
-import { upperFirst } from "lodash-es";
-import { camelCase } from "lodash-es";
-
-import { NamedArgument, Options, Scope, Style } from "@fern-api/browser-compatible-base-generator";
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { Config } from "./Config";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
@@ -129,13 +126,18 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): csharp.MethodInvocation {
+        // if the example has *any* sample with stream set to true, then the method is an async enumerable
+        const isAsyncEnumerable = endpoint.examples?.some(
+            (example) => (example.requestBody as Record<string, unknown> | undefined)?.stream === true
+        );
         return csharp.invokeMethod({
             on: csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             async: true,
             configureAwait: true,
-            multiline: true
+            multiline: true,
+            isAsyncEnumerable
         });
     }
 
@@ -278,46 +280,34 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
     }): NamedArgument[] {
+        if (values.type !== auth.type) {
+            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
+            return [];
+        }
+
         switch (auth.type) {
             case "basic":
-                if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorBasicAuthArg({ auth, values });
+                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : [];
             case "bearer":
-                if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorBearerAuthArgs({ auth, values });
+                return values.type === "bearer" ? this.getConstructorBearerAuthArgs({ auth, values }) : [];
             case "header":
-                if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorHeaderAuthArgs({ auth, values });
+                return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
-                    return [];
-                }
-                return this.getConstructorOAuthArgs({ auth, values });
+                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
+            case "inferred":
+                this.addWarning("The C# SDK Generator does not support Inferred auth scheme yet");
+                return [];
             default:
                 assertNever(auth);
         }
+    }
+
+    private addError(message: string): void {
+        this.context.errors.add({ severity: Severity.Critical, message });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getConstructorBasicAuthArg({
@@ -456,7 +446,7 @@ export class EndpointSnippetGenerator {
     }): csharp.TypeLiteral[] {
         const args: csharp.TypeLiteral[] = [];
 
-        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? false;
+        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? true;
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: csharp.ConstructorField[] = [];
@@ -696,13 +686,15 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): csharp.TypeLiteral {
-        const str = this.context.getValueAsString({ value });
+        let str = this.context.getValueAsString({ value });
         if (str == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "The bytes request body must be provided in string format"
             });
-            return csharp.TypeLiteral.nop();
+
+            // if there is no value, then let's just use a random string
+            str = "[bytes]";
         }
         return csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
     }
@@ -743,6 +735,7 @@ export class EndpointSnippetGenerator {
                 .map((val) => this.context.getClassName(val))
                 .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
+
         return this.context.getMethodName(endpoint.declaration.name);
     }
 

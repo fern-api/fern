@@ -3,12 +3,21 @@
 # isort: skip_file
 
 from . import service
-from .service import Id, MyAliasObject, MyCollectionAliasObject, MyObject, MyObjectWithOptional, ObjectType
+from .service import (
+    Id,
+    MyAliasObject,
+    MyCollectionAliasObject,
+    MyInlineType,
+    MyObject,
+    MyObjectWithOptional,
+    ObjectType,
+)
 
 __all__ = [
     "Id",
     "MyAliasObject",
     "MyCollectionAliasObject",
+    "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",

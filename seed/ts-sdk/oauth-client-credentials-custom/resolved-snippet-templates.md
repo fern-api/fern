@@ -10,7 +10,7 @@ await client.auth.getTokenWithClientCredentials({
   cid: "cid",
   csr: "csr",
   scp: "scp",
-  entityId: "entity_id",
+  entity_id: "entity_id",
   scope: "scope",
 });
 
@@ -26,11 +26,50 @@ const client = new SeedOauthClientCredentialsClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.refreshToken({
-  clientId: "client_id",
-  clientSecret: "client_secret",
-  refreshToken: "refresh_token",
+  client_id: "client_id",
+  client_secret: "client_secret",
+  refresh_token: "refresh_token",
   scope: "scope",
 });
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-custom";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.nestedNoAuth.api.getSomething();
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-custom";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.nested.api.getSomething();
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-custom";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.simple.getSomething();
 
 ```
 

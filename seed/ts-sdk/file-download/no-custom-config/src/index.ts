@@ -1,3 +1,3 @@
-export { SeedFileDownloadClient } from "./Client";
-export * as SeedFileDownload from "./api";
-export { SeedFileDownloadError, SeedFileDownloadTimeoutError } from "./errors";
+export { SeedFileDownloadClient } from "./Client.js";
+export * as SeedFileDownload from "./api/index.js";
+export { SeedFileDownloadError, SeedFileDownloadTimeoutError } from "./errors/index.js";

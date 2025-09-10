@@ -1,9 +1,8 @@
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import fs from "fs";
 import { difference } from "lodash-es";
 import path from "path";
-
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { printTestCases } from "./printTestCases";
@@ -11,18 +10,22 @@ import { TestRunner } from "./test-runner";
 
 export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
 
-export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
+export const FIXTURES = readDirectories(
+    path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
+);
 
 export async function testGenerator({
     runner,
     generator,
     fixtures,
-    outputFolder
+    outputFolder,
+    inspect
 }: {
     runner: TestRunner;
     generator: GeneratorWorkspace;
     fixtures: string[];
     outputFolder?: string;
+    inspect: boolean;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
@@ -42,7 +45,8 @@ export async function testGenerator({
                 testCases.push(
                     runner.run({
                         fixture,
-                        configuration: instance
+                        configuration: instance,
+                        inspect
                     })
                 );
             }
@@ -50,7 +54,8 @@ export async function testGenerator({
             testCases.push(
                 runner.run({
                     fixture,
-                    configuration: undefined
+                    configuration: undefined,
+                    inspect
                 })
             );
         }
@@ -65,7 +70,7 @@ export async function testGenerator({
     const unexpectedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? []);
 
     if (failedFixtures.length === 0) {
-        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
+        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed ✅`);
     } else {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
@@ -73,10 +78,12 @@ export async function testGenerator({
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
         );
         if (unexpectedFixtures.length > 0) {
-            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
+            CONSOLE_LOGGER.info(
+                `❌ THERE WERE UNEXPECTED TEST CASE FAILURES: Of the ${failedFixtures.length} failed fixtures, ${unexpectedFixtures.length} were unexpected failures, including: ${unexpectedFixtures.join(", ")}.`
+            );
             return false;
         } else {
-            CONSOLE_LOGGER.info("All failures were expected.");
+            CONSOLE_LOGGER.info("✅ All failed fixtures were expected failures.");
         }
     }
     return true;

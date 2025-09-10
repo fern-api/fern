@@ -8,6 +8,41 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "simple",
+          "originalEndpointId": "endpoint_service.simple",
+          "name": "Simple",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/snippet"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/snippet",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "downloadFile",
           "originalEndpointId": "endpoint_service.downloadFile",
           "name": "Download File",
@@ -26,11 +61,13 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

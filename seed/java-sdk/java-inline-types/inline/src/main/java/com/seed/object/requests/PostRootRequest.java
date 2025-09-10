@@ -172,6 +172,9 @@ public final class PostRootRequest {
         }
 
         public interface FooStage {
+            /**
+             * <p>lorem ipsum</p>
+             */
             _FinalStage foo(@NotNull String foo);
 
             Builder from(Bar other);
@@ -197,6 +200,7 @@ public final class PostRootRequest {
             }
 
             /**
+             * <p>lorem ipsum</p>
              * <p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */

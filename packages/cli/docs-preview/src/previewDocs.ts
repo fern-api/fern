@@ -1,27 +1,29 @@
-import { readFile } from "fs/promises";
-import { v4 as uuidv4 } from "uuid";
-
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
-    DocsV1Read,
-    FdrAPI,
-    FernNavigation,
-    SDKSnippetHolder,
     convertAPIDefinitionToDb,
     convertDbAPIDefinitionToRead,
     convertDbDocsConfigToRead,
-    convertDocsDefinitionToDb
+    convertDocsDefinitionToDb,
+    DocsV1Read,
+    FdrAPI,
+    FernNavigation,
+    SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 
-import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
-import { FernWorkspace } from "../../workspace/loader/src";
+import {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "../../docs-markdown-utils/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -69,7 +71,7 @@ export async function getPreviewDocsDefinition({
             );
 
             // Then replace image paths with file IDs
-            const finalMarkdown = replaceImagePathsAndUrls(
+            let finalMarkdown = replaceImagePathsAndUrls(
                 processedMarkdown,
                 fileIdsMap,
                 {}, // markdownFilesToPathName - empty object since we don't need it for images
@@ -80,28 +82,23 @@ export async function getPreviewDocsDefinition({
                 context
             );
 
+            finalMarkdown = await replaceReferencedCode({
+                markdown: finalMarkdown,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
+
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
                 markdown: finalMarkdown,
-                editThisPageUrl: previousValue.editThisPageUrl
+                editThisPageUrl: previousValue.editThisPageUrl,
+                rawMarkdown: markdown
             };
         }
 
         if (allMarkdownFiles) {
             return previousDocsDefinition;
         }
-    }
-
-    let fernWorkspaces: FernWorkspace[] = [];
-    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
-        fernWorkspaces = await Promise.all(
-            apiWorkspaces.map(
-                async (workspace) =>
-                    await workspace.toFernWorkspace(
-                        { context },
-                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                    )
-            )
-        );
     }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
@@ -115,7 +112,7 @@ export async function getPreviewDocsDefinition({
         domain,
         docsWorkspace,
         ossWorkspaces,
-        fernWorkspaces,
+        apiWorkspaces,
         context,
         undefined,
         async (files) =>
@@ -151,9 +148,7 @@ export async function getPreviewDocsDefinition({
         files: {},
         filesV2,
         pages: dbDocsDefinition.pages,
-        search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
-        algoliaSearchIndex: undefined,
-        jsFiles: undefined,
+        jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
 }
@@ -178,7 +173,7 @@ class ReferencedAPICollector {
             const id = uuidv4();
 
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig }),
+                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},

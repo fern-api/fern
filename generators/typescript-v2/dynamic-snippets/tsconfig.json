@@ -3,32 +3,25 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../packages/commons/path-utils"
-    },
-    {
-      "path": "../../../packages/cli/fern-definition/schema"
-    },
-    {
-      "path": "../../../packages/ir-sdk"
-    },
-    {
-      "path": "../../browser-compatible-base"
+      "path": "../browser-compatible-base"
     },
     {
       "path": "../ast"
     },
     {
-      "path": "../browser-compatible-base"
+      "path": "../../../packages/commons/path-utils"
     },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    }
   ]
 }

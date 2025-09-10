@@ -84,10 +84,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static MethodSpec createGetter(FieldSpec fieldSpec) {
+        return MethodSpec.methodBuilder(fieldSpec.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(fieldSpec.type)
+                .addStatement("return this.$L", fieldSpec.name)
+                .build();
+    }
+
+    private static Map<String, String> getPlatformHeadersEntries(
+            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
+        Map<String, String> entries = new HashMap<>();
+        if (generatorConfig.getPublish().isPresent()) {
+            entries.put(
+                    platformHeaders.getSdkName(),
+                    generatorConfig
+                            .getPublish()
+                            .get()
+                            .getRegistriesV2()
+                            .getMaven()
+                            .getCoordinate());
+            entries.put(
+                    platformHeaders.getSdkVersion(),
+                    generatorConfig.getPublish().get().getVersion());
+        }
+        if (platformHeaders.getUserAgent().isPresent()) {
+            entries.put(
+                    platformHeaders.getUserAgent().get().getHeader(),
+                    platformHeaders.getUserAgent().get().getValue());
+        }
+        entries.put(platformHeaders.getLanguage(), "JAVA");
+        return entries;
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
+
     private final ClientGeneratorContext clientGeneratorContext;
+
     private final FieldSpec apiVersionField;
 
     public ClientOptionsGenerator(
@@ -403,7 +438,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
                         .addModifiers(Modifier.PRIVATE)
                         .build())
@@ -467,6 +502,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         addApiVersionToBuilder(builder);
 
         builder.addMethod(getBuildMethod(variableFields));
+
+        Map<VariableId, MethodSpec> variableGetters = variableFields.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> MethodSpec.methodBuilder(entry.getValue().name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(entry.getValue().type)
+                        .addStatement("return this.$L", entry.getValue().name)
+                        .build()));
+        builder.addMethod(getFromMethod(variableFields, variableGetters));
 
         return builder.build();
     }
@@ -620,6 +663,66 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 }));
     }
 
+    private MethodSpec getFromMethod(
+            Map<VariableId, FieldSpec> variableFields, Map<VariableId, MethodSpec> variableGetters) {
+        MethodSpec.Builder fromMethod = MethodSpec.methodBuilder("from")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(builderClassName)
+                .addParameter(className, "clientOptions")
+                .addJavadoc("Create a new Builder initialized with values from an existing ClientOptions")
+                .addStatement("$T builder = new $T()", builderClassName, builderClassName)
+                .addStatement("builder.$L = clientOptions.$L()", environmentField.name, environmentField.name)
+                // We can only copy what's accessible via public methods so we can't get headers directly
+                .addStatement(
+                        "builder.$L = $T.of(clientOptions.$L(null))",
+                        TIMEOUT_FIELD.name,
+                        Optional.class,
+                        TIMEOUT_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+
+        for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
+            MethodSpec getter = variableGetters.get(entry.getKey());
+            if (getter != null) {
+                fromMethod.addStatement("builder.$L = clientOptions.$N()", entry.getValue().name, getter);
+            }
+        }
+
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+            if (apiVersionScheme.getHeader().isPresent()) {
+                HeaderApiVersionScheme header = apiVersionScheme.getHeader().get();
+                fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
+                fromMethod.addStatement(
+                        "builder.$L = $T.of(clientOptions.$L)",
+                        apiVersionField.name,
+                        Optional.class,
+                        apiVersionField.name);
+                fromMethod.endControlFlow();
+                if (header.getValue().getDefault().isPresent()) {
+                    fromMethod.beginControlFlow("else");
+                    fromMethod.addStatement(
+                            "builder.$L = $T.of($T.$L)",
+                            apiVersionField.name,
+                            Optional.class,
+                            clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
+                            header.getValue()
+                                    .getDefault()
+                                    .get()
+                                    .getName()
+                                    .getName()
+                                    .getScreamingSnakeCase()
+                                    .getSafeName());
+                    fromMethod.endControlFlow();
+                }
+            }
+        }
+
+        fromMethod.addStatement("return builder");
+
+        return fromMethod.build();
+    }
+
     private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields) {
         ImmutableList.Builder<Object> argsBuilder = ImmutableList.builder();
         argsBuilder.add(
@@ -699,38 +802,5 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             return builder.addStatement(returnString + ", " + variableArgs + ")", args)
                     .build();
         }
-    }
-
-    private static MethodSpec createGetter(FieldSpec fieldSpec) {
-        return MethodSpec.methodBuilder(fieldSpec.name)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(fieldSpec.type)
-                .addStatement("return this.$L", fieldSpec.name)
-                .build();
-    }
-
-    private static Map<String, String> getPlatformHeadersEntries(
-            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
-        Map<String, String> entries = new HashMap<>();
-        if (generatorConfig.getPublish().isPresent()) {
-            entries.put(
-                    platformHeaders.getSdkName(),
-                    generatorConfig
-                            .getPublish()
-                            .get()
-                            .getRegistriesV2()
-                            .getMaven()
-                            .getCoordinate());
-            entries.put(
-                    platformHeaders.getSdkVersion(),
-                    generatorConfig.getPublish().get().getVersion());
-        }
-        if (platformHeaders.getUserAgent().isPresent()) {
-            entries.put(
-                    platformHeaders.getUserAgent().get().getHeader(),
-                    platformHeaders.getUserAgent().get().getValue());
-        }
-        entries.put(platformHeaders.getLanguage(), "JAVA");
-        return entries;
     }
 }

@@ -5,6 +5,7 @@
 import * as FernIr from "../../../index";
 
 export interface V2HttpEndpointCodeSample extends FernIr.WithDocs {
+    name: string | undefined;
     language: string;
     code: string;
 }

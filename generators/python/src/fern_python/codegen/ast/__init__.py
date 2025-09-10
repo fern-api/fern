@@ -37,6 +37,7 @@ from .nodes import (
     IfConditionLeaf,
     NamedFunctionParameter,
     PassStatement,
+    RaiseStatement,
     ReferenceNode,
     ReturnStatement,
     TryStatement,
@@ -108,4 +109,5 @@ __all__ = [
     "PassStatement",
     "TryStatement",
     "ExceptHandler",
+    "RaiseStatement",
 ]

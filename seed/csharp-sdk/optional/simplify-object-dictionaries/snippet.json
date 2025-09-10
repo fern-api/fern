@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/send-optional-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}

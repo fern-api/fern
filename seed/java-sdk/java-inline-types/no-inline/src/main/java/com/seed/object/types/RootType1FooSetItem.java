@@ -77,12 +77,18 @@ public final class RootType1FooSetItem {
     }
 
     public interface FooStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         RefStage foo(@NotNull String foo);
 
         Builder from(RootType1FooSetItem other);
     }
 
     public interface RefStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
 
@@ -110,6 +116,7 @@ public final class RootType1FooSetItem {
 
         /**
          * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -120,6 +127,7 @@ public final class RootType1FooSetItem {
         }
 
         /**
+         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

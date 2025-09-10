@@ -1,0 +1,247 @@
+import {
+    FernIr,
+    HttpRequestBodyReference,
+    IntermediateRepresentation,
+    Package,
+    V2HttpEndpointResponseBody
+} from "@fern-api/ir-sdk";
+import { AbstractSpecConverter } from "@fern-api/v3-importer-commons";
+import { camelCase } from "lodash-es";
+import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
+import { ExampleConverter } from "./message/ExampleConverter";
+import { ProtofileConverterContext } from "./ProtofileConverterContext";
+import { ServiceConverter } from "./service/ServiceConverter";
+import { initializeEmptyServiceExample } from "./utils/InitializeEmptyServiceExample";
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers";
+
+export declare namespace ProtofileConverter {
+    interface Args extends AbstractSpecConverter.Args<ProtofileConverterContext> {}
+}
+
+export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverterContext, IntermediateRepresentation> {
+    constructor({ breadcrumbs, context, audiences }: ProtofileConverter.Args) {
+        super({ breadcrumbs, context, audiences });
+    }
+
+    public convert(): IntermediateRepresentation | undefined {
+        this.convertOptions();
+        this.convertEnumsAndMessages();
+        this.convertServices();
+        this.generateExamplesForServices();
+        return this.finalizeIr();
+    }
+
+    private convertOptions() {
+        // TODO: convert options
+    }
+
+    private convertEnumsAndMessages() {
+        for (const [index, schema] of this.context.spec.enumType.entries()) {
+            const enumConverter = new EnumOrMessageConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, this.context.spec.package],
+                schema,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.ENUM, index],
+                schemaIndex: index
+            });
+            const convertedEnum = enumConverter.convert();
+            if (convertedEnum != null) {
+                this.addTypesToIr({
+                    ...mapKeys(convertedEnum.inlinedTypes, this.context.maybePrependPackageName.bind(this.context)),
+                    [this.context.maybePrependPackageName(schema.name)]: convertedEnum.convertedSchema
+                });
+            }
+        }
+
+        for (const [index, schema] of this.context.spec.messageType.entries()) {
+            const messageConverter = new EnumOrMessageConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, this.context.spec.package],
+                schema,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.MESSAGE, index],
+                schemaIndex: index
+            });
+            const convertedMessage = messageConverter.convert();
+            if (convertedMessage != null) {
+                this.addTypesToIr({
+                    ...mapKeys(convertedMessage.inlinedTypes, this.context.maybePrependPackageName.bind(this.context)),
+                    [this.context.maybePrependPackageName(schema.name)]: convertedMessage.convertedSchema
+                });
+            }
+        }
+    }
+
+    private convertServices() {
+        for (const [index, service] of this.context.spec.service.entries()) {
+            const serviceConverter = new ServiceConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                service,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.SERVICE, index]
+            });
+            const convertedService = serviceConverter.convert();
+            if (convertedService != null) {
+                for (const endpoint of convertedService.endpoints) {
+                    this.addEndpointToIr({
+                        endpointGroup: endpoint.group,
+                        endpoint: endpoint.endpoint,
+                        audiences: [],
+                        serviceName: convertedService.serviceName,
+                        endpointGroupDisplayName: convertedService.serviceDisplayName
+                    });
+                }
+            }
+        }
+    }
+
+    private generateExamplesForServices() {
+        for (const [serviceName, service] of Object.entries(this.ir.services)) {
+            for (const [endpointName, endpoint] of Object.entries(service.endpoints)) {
+                const endpointExample = initializeEmptyServiceExample();
+
+                const requestBodyExample = this.constructRequestBodyExample(endpoint);
+                const responseBodyExample = this.constructResponseBodyExample(endpoint);
+                if (requestBodyExample != null && endpointExample.request != null) {
+                    endpointExample.request.requestBody = requestBodyExample;
+                }
+                if (responseBodyExample != null && endpointExample.response != null) {
+                    endpointExample.response.body = V2HttpEndpointResponseBody.json(responseBodyExample);
+                }
+                endpoint.v2Examples = {
+                    userSpecifiedExamples: {},
+                    autogeneratedExamples: {
+                        [endpointName]: endpointExample
+                    }
+                };
+            }
+        }
+    }
+
+    private constructRequestBodyExample(endpoint: FernIr.HttpEndpoint): unknown | undefined {
+        const requestBodyTypeId = (
+            (endpoint.requestBody as HttpRequestBodyReference).requestBodyType as FernIr.TypeReference.Named
+        ).typeId;
+        const resolvedRequestBodyType = this.context.resolveTypeIdToProtoFile(requestBodyTypeId);
+        if (resolvedRequestBodyType.ok) {
+            const requestBodyExampleConverter = new ExampleConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                message: resolvedRequestBodyType.message,
+                type: "request"
+            });
+            const requestBodyExample = requestBodyExampleConverter.convert();
+
+            return requestBodyExample.validExample;
+        }
+        return undefined;
+    }
+
+    private constructResponseBodyExample(endpoint: FernIr.HttpEndpoint): unknown | undefined {
+        const responseBodyTypeId = (
+            (endpoint.response?.body as FernIr.HttpResponseBody.Json).value
+                .responseBodyType as FernIr.TypeReference.Named
+        ).typeId;
+        const resolvedResponseBodyType = this.context.resolveTypeIdToProtoFile(responseBodyTypeId);
+        if (resolvedResponseBodyType.ok) {
+            const responseBodyExampleConverter = new ExampleConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                message: resolvedResponseBodyType.message,
+                type: "response"
+            });
+            const responseBodyExample = responseBodyExampleConverter.convert();
+            return responseBodyExample.validExample;
+        }
+        return undefined;
+    }
+
+    protected addEndpointToIr({
+        endpoint,
+        audiences,
+        endpointGroup,
+        endpointGroupDisplayName,
+        serviceName
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        audiences: string[];
+        endpointGroup?: string[];
+        endpointGroupDisplayName?: string;
+        serviceName?: string;
+    }): void {
+        const group = this.context.getGroup({
+            groupParts: endpointGroup,
+            namespace: this.context.namespace
+        });
+
+        const pkg = this.getOrCreatePackage({ group: endpointGroup });
+
+        const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
+        const finalpart = allParts[allParts.length - 1];
+
+        if (pkg.service == null) {
+            pkg.service = serviceName ?? `service_${group.map((part) => camelCase(part)).join("/")}`;
+        }
+
+        if (this.ir.services[pkg.service] == null) {
+            this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart, endpointGroupDisplayName });
+        }
+        this.ir.services[pkg.service]?.endpoints.push(endpoint);
+
+        const service = this.ir.services[pkg.service];
+        if (service != null) {
+            this.irGraph.addEndpoint(service, endpoint);
+            // TODO: This method should be "markEndpointsForAudience"
+            this.irGraph.markEndpointForAudience(service.name, [endpoint], audiences);
+        }
+    }
+
+    protected getOrCreatePackage({ group }: { group?: string[] }): Package {
+        const groupParts = [];
+        if (this.context.namespace != null) {
+            groupParts.push(this.context.namespace);
+        }
+        groupParts.push(...(group ?? []));
+
+        if (groupParts.length == 0) {
+            return this.ir.rootPackage;
+        }
+
+        let pkg = this.ir.rootPackage;
+        for (let i = 0; i < groupParts.length; i++) {
+            const name = groupParts[i] ?? "";
+            const groupPartsSubset = groupParts.slice(0, i + 1);
+            const subpackageId = `subpackage_${groupPartsSubset.join("/")}`;
+            if (this.ir.subpackages[subpackageId] == null) {
+                this.ir.subpackages[subpackageId] = {
+                    name: this.context.casingsGenerator.generateName(name),
+                    displayName: name,
+                    ...this.createPackage({ name })
+                };
+            }
+            const curr = this.ir.subpackages[subpackageId];
+            if (!pkg.subpackages.includes(subpackageId)) {
+                pkg.subpackages.push(subpackageId);
+            }
+            pkg = curr;
+        }
+        return pkg;
+    }
+
+    protected finalizeIr(): IntermediateRepresentation {
+        return {
+            ...this.ir,
+            apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
+            constants: {
+                errorInstanceIdKey: this.context.casingsGenerator.generateNameAndWireValue({
+                    wireValue: "errorInstanceId",
+                    name: "errorInstanceId"
+                })
+            },
+            audiences: this.audiences.type === "select" ? this.audiences.audiences : undefined
+        };
+    }
+}
+
+function mapKeys<T>(obj: Record<string, T>, fn: (key: string) => string): Record<string, T> {
+    return Object.fromEntries(Object.entries(obj).map(([key, value]) => [fn(key), value]));
+}

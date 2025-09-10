@@ -1,4 +1,4 @@
-import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 
 import { RuleViolation } from "../../Rule";

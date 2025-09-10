@@ -35,9 +35,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "oneOf": [
         {
           "properties": {

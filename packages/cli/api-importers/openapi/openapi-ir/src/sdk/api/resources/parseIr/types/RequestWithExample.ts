@@ -7,14 +7,15 @@ import * as FernOpenapiIr from "../../../index";
 export type RequestWithExample =
     | FernOpenapiIr.RequestWithExample.OctetStream
     | FernOpenapiIr.RequestWithExample.Multipart
-    | FernOpenapiIr.RequestWithExample.Json;
+    | FernOpenapiIr.RequestWithExample.Json
+    | FernOpenapiIr.RequestWithExample.FormUrlEncoded;
 
 export namespace RequestWithExample {
-    export interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
+    export interface OctetStream extends FernOpenapiIr.ParseOctetStreamRequest, _Utils {
         type: "octetStream";
     }
 
-    export interface Multipart extends FernOpenapiIr.MultipartRequest, _Utils {
+    export interface Multipart extends FernOpenapiIr.ParseMultipartRequest, _Utils {
         type: "multipart";
     }
 
@@ -22,20 +23,25 @@ export namespace RequestWithExample {
         type: "json";
     }
 
+    export interface FormUrlEncoded extends FernOpenapiIr.ParseFormUrlEncodedRequest, _Utils {
+        type: "formUrlEncoded";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
-        octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
-        multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
+        octetStream: (value: FernOpenapiIr.ParseOctetStreamRequest) => _Result;
+        multipart: (value: FernOpenapiIr.ParseMultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequestWithExample) => _Result;
+        formUrlEncoded: (value: FernOpenapiIr.ParseFormUrlEncodedRequest) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const RequestWithExample = {
-    octetStream: (value: FernOpenapiIr.OctetStreamRequest): FernOpenapiIr.RequestWithExample.OctetStream => {
+    octetStream: (value: FernOpenapiIr.ParseOctetStreamRequest): FernOpenapiIr.RequestWithExample.OctetStream => {
         return {
             ...value,
             type: "octetStream",
@@ -48,7 +54,7 @@ export const RequestWithExample = {
         };
     },
 
-    multipart: (value: FernOpenapiIr.MultipartRequest): FernOpenapiIr.RequestWithExample.Multipart => {
+    multipart: (value: FernOpenapiIr.ParseMultipartRequest): FernOpenapiIr.RequestWithExample.Multipart => {
         return {
             ...value,
             type: "multipart",
@@ -74,6 +80,21 @@ export const RequestWithExample = {
         };
     },
 
+    formUrlEncoded: (
+        value: FernOpenapiIr.ParseFormUrlEncodedRequest,
+    ): FernOpenapiIr.RequestWithExample.FormUrlEncoded => {
+        return {
+            ...value,
+            type: "formUrlEncoded",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.RequestWithExample.FormUrlEncoded,
+                visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.RequestWithExample._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernOpenapiIr.RequestWithExample,
         visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>,
@@ -85,6 +106,8 @@ export const RequestWithExample = {
                 return visitor.multipart(value);
             case "json":
                 return visitor.json(value);
+            case "formUrlEncoded":
+                return visitor.formUrlEncoded(value);
             default:
                 return visitor._other(value as any);
         }

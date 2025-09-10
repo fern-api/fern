@@ -1,2 +1,2 @@
-export { SeedEnumError } from "./SeedEnumError";
-export { SeedEnumTimeoutError } from "./SeedEnumTimeoutError";
+export { SeedEnumError } from "./SeedEnumError.js";
+export { SeedEnumTimeoutError } from "./SeedEnumTimeoutError.js";

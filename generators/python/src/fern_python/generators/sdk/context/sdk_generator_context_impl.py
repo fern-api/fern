@@ -76,7 +76,8 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             skip_resources_module=custom_config.improved_imports
         )
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
-            client_class_name=exported_client_class_name, skip_resources_module=custom_config.improved_imports
+            client_class_name=exported_client_class_name,
+            skip_resources_module=custom_config.improved_imports,
         )
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
@@ -187,7 +188,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
         return self._root_generated_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
 
-    def get_async_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+    def get_async_raw_client_class_reference_for_root_client(
+        self,
+    ) -> AST.ClassReference:
         return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(
             name=None, as_request=False
         )
@@ -195,9 +198,16 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
 
-    def get_reference_to_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
+    def get_reference_to_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId, lazy_import: bool = False
+    ) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
-        return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
+        return self._subpackage_client_declaration_referencer.get_class_reference(
+            name=subpackage,
+            as_request=False,
+            as_if_type_checking_import=lazy_import,
+            has_been_dynamically_imported=lazy_import,
+        )
 
     def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
         return self._oauth_generated_client_declaration_referencer.get_filepath(name=None)
@@ -231,10 +241,15 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_client_declaration_referencer.get_class_name(name=subpackage)
 
-    def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
+    def get_reference_to_async_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId, lazy_import: bool = False
+    ) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_client_declaration_referencer.get_class_reference(
-            name=subpackage, as_request=False
+            name=subpackage,
+            as_request=False,
+            as_if_type_checking_import=lazy_import,
+            has_been_dynamically_imported=lazy_import,
         )
 
     def get_literal_value(self, reference: ir_types.TypeReference) -> Optional[typing.Union[str, bool]]:
@@ -310,3 +325,30 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             if container_union.type == "optional":
                 return self.unwrap_optional_type_reference(container_union.optional)
         return type_reference
+
+    def resolved_schema_is_optional_or_unknown(self, reference: ir_types.TypeReference) -> bool:
+        reference_union = reference.get_as_union()
+        while (
+            reference_union.type == "container" or reference_union.type == "named" or reference_union.type == "unknown"
+        ):
+            if reference_union.type == "unknown":
+                return True
+            elif reference_union.type == "container":
+                container_union = reference_union.container.get_as_union()
+                if container_union.type == "optional":
+                    return True
+                elif container_union.type == "nullable":
+                    return True
+                else:
+                    break
+            elif reference_union.type == "named":
+                declaration = self.pydantic_generator_context.get_declaration_for_type_id(reference_union.type_id)
+                shape = declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    reference_union = shape.alias_of.get_as_union()
+                else:
+                    break
+        return False
+
+    def get_head_method_return_type(self) -> AST.TypeHint:
+        return AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())

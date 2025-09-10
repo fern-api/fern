@@ -55,6 +55,7 @@ class ComplexClient
     }
 
     /**
+     * @param string $index
      * @param SearchRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -66,11 +67,11 @@ class ComplexClient
      * } $options
      * @return Pager<Conversation>
      */
-    public function search(SearchRequest $request, ?array $options = null): Pager
+    public function search(string $index, SearchRequest $request, ?array $options = null): Pager
     {
         return new CursorPager(
             request: $request,
-            getNextPage: fn (SearchRequest $request) => $this->_search($request, $options),
+            getNextPage: fn (SearchRequest $request) => $this->_search($index, $request, $options),
             setCursor: function (SearchRequest $request, ?string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
@@ -82,6 +83,7 @@ class ComplexClient
     }
 
     /**
+     * @param string $index
      * @param SearchRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -95,14 +97,14 @@ class ComplexClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _search(SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    private function _search(string $index, SearchRequest $request, ?array $options = null): PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "conversations/search",
+                    path: "{$index}/conversations/search",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

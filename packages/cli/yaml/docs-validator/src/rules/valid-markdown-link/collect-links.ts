@@ -1,18 +1,18 @@
+import { readFileSync } from "node:fs";
+import {
+    extractAttributeValueLiteral,
+    extractSingleLiteral,
+    isMdxJsxAttribute,
+    parseMarkdownToTree,
+    walkEstreeJsxAttributes
+} from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Node as EstreeNode } from "estree";
 import { walk } from "estree-walker";
 import type { Root as HastRoot } from "hast";
 import { toHast } from "mdast-util-to-hast";
-import { readFileSync } from "node:fs";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
-
-import {
-    extractAttributeValueLiteral,
-    parseMarkdownToTree,
-    walkEstreeJsxAttributes
-} from "@fern-api/docs-markdown-utils";
-import { extractSingleLiteral, isMdxJsxAttribute } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",

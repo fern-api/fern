@@ -1,29 +1,30 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
+import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import {
-    HttpHeader,
-    HttpMethod,
-    HttpRequestBody,
-    HttpResponse,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration
-} from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
-
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
-import { OpenAPIConverter } from "../../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
+const HEADERS_TO_SKIP = new Set([
+    "user-agent",
+    "content-length",
+    "content-type",
+    "x-forwarded-for",
+    "cookie",
+    "origin",
+    "content-disposition",
+    "x-ping-custom-domain"
+]);
+
 export declare namespace AbstractOperationConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         operation: OpenAPIV3_1.OperationObject;
         method: OpenAPIV3_1.HttpMethods;
         path: string;
@@ -31,16 +32,13 @@ export declare namespace AbstractOperationConverter {
 
     export interface Output {
         group?: string[];
-        inlinedTypes: Record<string, TypeDeclaration>;
+        groupDisplayName?: string;
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
-
 interface ConvertedRequestBody {
-    value: HttpRequestBody;
-    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
-}
-interface ConvertedResponseBody {
-    value: HttpResponse;
+    requestBody: HttpRequestBody;
+    streamRequestBody: HttpRequestBody | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -51,7 +49,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly operation: OpenAPIV3_1.OperationObject;
     protected readonly method: OpenAPIV3_1.HttpMethods;
     protected readonly path: string;
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
     constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });
@@ -60,7 +58,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         this.path = path;
     }
 
-    public abstract convert(): Promise<AbstractOperationConverter.Output | undefined>;
+    public abstract convert(): AbstractOperationConverter.Output | undefined;
 
     protected convertHttpMethod(): HttpMethod | undefined {
         switch (this.method) {
@@ -74,41 +72,43 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 return HttpMethod.Delete;
             case "patch":
                 return HttpMethod.Patch;
+            case "head":
+                return HttpMethod.Head;
             default:
                 return undefined;
         }
     }
 
-    protected async convertParameters({ breadcrumbs }: { breadcrumbs: string[] }): Promise<{
+    protected convertParameters({ breadcrumbs }: { breadcrumbs: string[] }): {
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
-    }> {
+    } {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
         if (!this.operation.parameters) {
+            this.checkMissingPathParameters(pathParameters);
             return { pathParameters, queryParameters, headers };
         }
 
-        for (let parameter of this.operation.parameters) {
-            if (this.context.isReferenceObject(parameter)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameter = resolvedReference.value;
-                } else {
-                    continue;
-                }
+        for (const parameter of this.operation.parameters) {
+            const resolvedParameter = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs
+            });
+            if (resolvedParameter == null) {
+                continue;
             }
 
             const parameterConverter = new ParameterConverter({
                 context: this.context,
                 breadcrumbs,
-                parameter
+                parameter: resolvedParameter
             });
 
-            const convertedParameter = await parameterConverter.convert();
+            const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
@@ -118,13 +118,48 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     case "query":
                         queryParameters.push(convertedParameter.parameter);
                         break;
-                    case "header":
-                        headers.push(convertedParameter.parameter);
+                    case "header": {
+                        const headerName = convertedParameter.parameter.name.name.originalName;
+                        const headerWireValue = convertedParameter.parameter.name.wireValue;
+
+                        let duplicateHeader = false;
+                        const authSchemes = this.context.authOverrides?.["auth-schemes"];
+                        if (authSchemes != null) {
+                            for (const authScheme of Object.values(authSchemes)) {
+                                if (
+                                    isHeaderAuthScheme(authScheme) &&
+                                    authScheme.header.toLowerCase() === headerWireValue.toLowerCase()
+                                ) {
+                                    duplicateHeader = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        const globalHeaderNames = this.context.globalHeaderNames;
+                        if (globalHeaderNames != null) {
+                            for (const globalHeaderName of globalHeaderNames) {
+                                if (globalHeaderName.toLowerCase() === headerWireValue.toLowerCase()) {
+                                    duplicateHeader = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
+                            headers.push(convertedParameter.parameter);
+                        }
                         break;
+                    }
                 }
             }
         }
 
+        this.checkMissingPathParameters(pathParameters);
+        return { pathParameters, queryParameters, headers };
+    }
+
+    protected checkMissingPathParameters(pathParameters: PathParameter[]): void {
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
         const missingPathParams = pathParams.filter(
             (param) => !pathParameters.some((p) => p.name.originalName === param)
@@ -136,76 +171,21 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             const exampleName = `${param}_example`;
             pathParameters.push({
                 name: this.context.casingsGenerator.generateName(param),
-                valueType: ParameterConverter.STRING,
+                valueType: AbstractConverter.STRING,
                 docs: undefined,
                 location: "ENDPOINT",
                 variable: undefined,
                 v2Examples: {
                     userSpecifiedExamples: {},
                     autogeneratedExamples: {
-                        [exampleName]: await this.generateStringParameterExample({ example: undefined })
+                        [exampleName]: this.generateStringParameterExample({ example: param })
                     }
                 }
             });
         }
-
-        return {
-            pathParameters,
-            queryParameters,
-            headers
-        };
     }
 
-    protected async convertRequestBody({
-        breadcrumbs,
-        group,
-        method
-    }: {
-        breadcrumbs: string[];
-        group: string[] | undefined;
-        method: string;
-    }): Promise<ConvertedRequestBody | undefined | null> {
-        if (this.operation.requestBody == null) {
-            return undefined;
-        }
-
-        let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
-        if (this.context.isReferenceObject(this.operation.requestBody)) {
-            const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
-                this.operation.requestBody
-            );
-            if (resolvedReference.resolved) {
-                resolvedRequestBody = resolvedReference.value;
-            }
-        } else {
-            resolvedRequestBody = this.operation.requestBody;
-        }
-
-        if (resolvedRequestBody == null) {
-            return null;
-        }
-
-        const requestBodyConverter = new RequestBodyConverter({
-            context: this.context,
-            breadcrumbs,
-            requestBody: resolvedRequestBody,
-            group: group ?? [],
-            method
-        });
-        const convertedRequestBody = await requestBodyConverter.convert();
-
-        if (convertedRequestBody != null) {
-            this.inlinedTypes = {
-                ...this.inlinedTypes,
-                ...convertedRequestBody.inlinedTypes
-            };
-            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples };
-        }
-
-        return undefined;
-    }
-
-    protected async convertResponseBody({
+    protected convertRequestBody({
         breadcrumbs,
         group,
         method,
@@ -215,57 +195,49 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         group: string[] | undefined;
         method: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
-    }): Promise<ConvertedResponseBody | undefined> {
-        if (this.operation.responses == null) {
+    }): ConvertedRequestBody[] | undefined | null {
+        if (this.operation.requestBody == null) {
             return undefined;
         }
 
-        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
-                continue;
-            }
+        const resolvedRequestBody = this.context.resolveMaybeReference<OpenAPIV3_1.RequestBodyObject>({
+            schemaOrReference: this.operation.requestBody,
+            breadcrumbs
+        });
 
-            let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
-            if (this.context.isReferenceObject(response)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
-                if (resolvedReference.resolved) {
-                    resolvedResponse = resolvedReference.value;
-                }
-            } else {
-                resolvedResponse = response;
-            }
+        if (resolvedRequestBody == null) {
+            return null;
+        }
 
-            if (resolvedResponse == null) {
-                continue;
-            }
+        const convertedRequestBodies: ConvertedRequestBody[] = [];
 
-            const responseBodyConverter = new ResponseBodyConverter({
+        for (const [contentType, mediaType] of Object.entries(resolvedRequestBody.content)) {
+            const requestBodyConverter = new RequestBodyConverter({
                 context: this.context,
-                breadcrumbs: [...breadcrumbs, statusCode],
-                responseBody: resolvedResponse,
+                breadcrumbs,
+                contentType,
+                mediaType,
+                description: resolvedRequestBody.description,
+                required: resolvedRequestBody.required,
                 group: group ?? [],
                 method,
-                statusCode,
                 streamingExtension
             });
-            const convertedResponseBody = await responseBodyConverter.convert();
-            if (convertedResponseBody != null) {
+            const convertedRequestBody = requestBodyConverter.convert();
+            if (convertedRequestBody != null) {
                 this.inlinedTypes = {
                     ...this.inlinedTypes,
-                    ...convertedResponseBody.inlinedTypes
+                    ...convertedRequestBody.inlinedTypes
                 };
-                return {
-                    value: {
-                        statusCode: statusCodeNum,
-                        body: convertedResponseBody.responseBody
-                    },
-                    examples: convertedResponseBody.examples
-                };
+                convertedRequestBodies.push({
+                    requestBody: convertedRequestBody.requestBody,
+                    streamRequestBody: convertedRequestBody.streamRequestBody,
+                    examples: convertedRequestBody.examples
+                });
             }
         }
 
-        return undefined;
+        return convertedRequestBodies;
     }
 
     protected computeGroupNameAndLocationFromExtensions(): GroupNameAndLocation | undefined {
@@ -290,27 +262,28 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
+    protected evaluateMethodNameFromOperation(): string {
+        const operationId = this.operation.operationId;
+        if (operationId == null) {
+            return this.operation.summary != null
+                ? camelCase(this.operation.summary)
+                : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
+        }
+        return operationId;
+    }
+
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];
-        const operationId = this.operation.operationId;
-
-        if (operationId == null) {
-            const methodName =
-                this.operation.summary != null
-                    ? camelCase(this.operation.summary)
-                    : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
-
-            return tag != null ? { group: [tag], method: methodName } : { method: methodName };
-        }
+        const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {
-            return { method: operationId };
+            return { method: methodName };
         }
 
         const tagTokens = tokenizeString(tag);
-        const operationIdTokens = tokenizeString(operationId);
+        const methodNameTokens = tokenizeString(methodName);
 
-        if (isEqual(tagTokens, operationIdTokens)) {
+        if (isEqual(tagTokens, methodNameTokens)) {
             return {
                 method: tag
             };
@@ -318,46 +291,46 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return this.computeGroupAndMethodFromTokens({
             tag,
             tagTokens,
-            operationId,
-            operationIdTokens
+            methodName,
+            methodNameTokens
         });
     }
 
     protected computeGroupAndMethodFromTokens({
         tag,
         tagTokens,
-        operationId,
-        operationIdTokens
+        methodName,
+        methodNameTokens
     }: {
         tag: string;
         tagTokens: string[];
-        operationId: string;
-        operationIdTokens: string[];
+        methodName: string;
+        methodNameTokens: string[];
     }): GroupNameAndLocation {
-        const tagIsNotPrefixOfOperationId = tagTokens.some((tagToken, index) => tagToken !== operationIdTokens[index]);
+        const tagIsNotPrefixOfMethodName = tagTokens.some((tagToken, index) => tagToken !== methodNameTokens[index]);
 
-        if (tagIsNotPrefixOfOperationId) {
+        if (tagIsNotPrefixOfMethodName) {
             return {
                 group: [tag],
-                method: operationId
+                method: methodName
             };
         }
 
-        const methodTokens = operationIdTokens.slice(tagTokens.length);
+        const methodTokens = methodNameTokens.slice(tagTokens.length);
         return {
             group: [tag],
             method: camelCase(methodTokens.join("_"))
         };
     }
 
-    private async generateStringParameterExample({ example }: { example: unknown }): Promise<unknown> {
+    private generateStringParameterExample({ example }: { example: unknown }): unknown {
         const exampleConverter = new Converters.ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             schema: { type: "string" },
             example
         });
-        const { validExample } = await exampleConverter.convert();
+        const { validExample } = exampleConverter.convert();
         return validExample;
     }
 }
@@ -379,4 +352,10 @@ function splitOnCapitalLetters(input: string): string[] {
 
 function splitOnNonAlphanumericCharacters(input: string): string[] {
     return input.split(/[^a-zA-Z0-9]+/);
+}
+
+function isHeaderAuthScheme(
+    scheme: RawSchemas.AuthSchemeDeclarationSchema
+): scheme is RawSchemas.HeaderAuthSchemeSchema {
+    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
 }

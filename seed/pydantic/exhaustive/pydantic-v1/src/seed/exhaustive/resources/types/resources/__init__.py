@@ -2,7 +2,8 @@
 
 # isort: skip_file
 
-from . import enum, object, union
+from . import docs, enum, object, union
+from .docs import ObjectWithDocs
 from .enum import WeatherReport
 from .object import (
     DoubleOptional,
@@ -24,11 +25,13 @@ __all__ = [
     "DoubleOptional",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
+    "ObjectWithDocs",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
     "OptionalAlias",
     "WeatherReport",
+    "docs",
     "enum",
     "object",
     "union",

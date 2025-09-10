@@ -1,3 +1,3 @@
-export { type GetUsersRequest } from "./GetUsersRequest";
-export { type CreateUserRequest } from "./CreateUserRequest";
-export { type DeleteUserRequest } from "./DeleteUserRequest";
+export { type GetUsersRequest } from "./GetUsersRequest.js";
+export { type CreateUserRequest } from "./CreateUserRequest.js";
+export { type DeleteUserRequest } from "./DeleteUserRequest.js";

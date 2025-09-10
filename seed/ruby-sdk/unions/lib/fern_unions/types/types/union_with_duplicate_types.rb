@@ -28,11 +28,11 @@ module SeedUnionsClient
       # @return [SeedUnionsClient::Types::UnionWithDuplicateTypes]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct.type
-        when "foo1"
-        when "foo2"
-        end
-        member = SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
+        member = case struct.type
+                 when "foo1"
+                 when "foo2"
+                 end
+        SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
         new(member: member, discriminant: struct.type)
       end
 

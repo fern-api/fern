@@ -31,7 +31,12 @@ class Exception(UniversalRootModel):
     Examples
     --------
     from seed.examples.resources.types import Exception_Generic
-    Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
+
+    Exception_Generic(
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

@@ -15,7 +15,7 @@ public class CreateTest : BaseMockServerTest
             {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             }
             """;
@@ -24,7 +24,7 @@ public class CreateTest : BaseMockServerTest
             {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             }
             """;
@@ -49,7 +49,7 @@ public class CreateTest : BaseMockServerTest
             {
                 Decimal = 2.2,
                 Even = 100,
-                Name = "foo",
+                Name = "fern",
                 Shape = Shape.Square,
             }
         );

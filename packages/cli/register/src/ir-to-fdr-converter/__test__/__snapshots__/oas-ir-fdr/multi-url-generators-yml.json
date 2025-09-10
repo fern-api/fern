@@ -119,7 +119,7 @@
           }
         ],
         "id": "listUsers",
-        "originalEndpointId": "listUsers",
+        "originalEndpointId": "endpoint_.listUsers",
         "name": "List Users",
         "path": {
           "pathParameters": [],
@@ -136,6 +136,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -147,10 +148,49 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -158,21 +198,18 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "string",
+              "username": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
+                "id": "string",
+                "username": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z"
               }
             }
           }
@@ -193,7 +230,7 @@
           }
         ],
         "id": "getUserInformation",
-        "originalEndpointId": "getUserInformation",
+        "originalEndpointId": "endpoint_.getUserInformation",
         "name": "Get user information",
         "path": {
           "pathParameters": [
@@ -228,6 +265,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -239,34 +277,70 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "string",
+              "username": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
+                "id": "string",
+                "username": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z"
               }
             }
           }
@@ -287,7 +361,7 @@
           }
         ],
         "id": "getAuthenticationToken",
-        "originalEndpointId": "getAuthenticationToken",
+        "originalEndpointId": "endpoint_.getAuthenticationToken",
         "name": "Get authentication token",
         "path": {
           "pathParameters": [],
@@ -304,6 +378,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -315,10 +390,37 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Token"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/token",
             "pathParameters": {},
@@ -326,19 +428,16 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "accessToken": "foo",
-                "tokenType": "foo",
-                "expiresIn": 42
-              }
+              "accessToken": "string",
+              "tokenType": "string",
+              "expiresIn": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "accessToken": "foo",
-                "tokenType": "foo",
-                "expiresIn": 42
+                "accessToken": "string",
+                "tokenType": "string",
+                "expiresIn": 1
               }
             }
           }

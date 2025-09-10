@@ -13,8 +13,8 @@ public class Example0 {
         client.extendedInlineRequestBody(
             Inlined
                 .builder()
-                .docs("docs")
                 .name("name")
+                .docs("docs")
                 .unique("unique")
                 .build()
         );

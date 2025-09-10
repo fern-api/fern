@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     HeaderWithExample,
     HttpMethod,
@@ -10,6 +8,7 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension";
 import { convertAvailability } from "../../../../schema/convertAvailability";
@@ -138,10 +137,10 @@ export function convertParameters({
             resolvedParameter.in === "header" &&
             resolvedParameter.schema != null &&
             !isReferenceObject(resolvedParameter.schema) &&
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             (resolvedParameter.schema as any).default != null
         ) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const defaultValue = (resolvedParameter.schema as any).default;
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({

@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",

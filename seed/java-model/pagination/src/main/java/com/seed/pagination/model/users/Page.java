@@ -82,6 +82,9 @@ public final class Page {
     }
 
     public interface PageStage {
+        /**
+         * <p>The current page</p>
+         */
         PerPageStage page(int page);
 
         Builder from(Page other);
@@ -125,6 +128,7 @@ public final class Page {
         }
 
         /**
+         * <p>The current page</p>
          * <p>The current page</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

@@ -1,9 +1,8 @@
-import chalk from "chalk";
-import { writeFile } from "fs/promises";
-
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext";
 

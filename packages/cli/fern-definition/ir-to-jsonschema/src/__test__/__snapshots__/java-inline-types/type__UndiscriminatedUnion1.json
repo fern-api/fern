@@ -140,9 +140,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "oneOf": [
         {
           "properties": {

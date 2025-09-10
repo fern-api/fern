@@ -11,12 +11,12 @@ import { getSchemaUtils } from "../schema-utils";
 import { isProperty } from "./property";
 import {
     BaseObjectSchema,
-    ObjectSchema,
-    ObjectUtils,
-    PropertySchemas,
     inferObjectSchemaFromPropertySchemas,
     inferParsedObjectFromPropertySchemas,
     inferRawObjectFromPropertySchemas,
+    ObjectSchema,
+    ObjectUtils,
+    PropertySchemas,
 } from "./types";
 
 interface ObjectPropertyWithRawKey {

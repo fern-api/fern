@@ -1,6 +1,6 @@
 import {
-    ClassReference,
     Class_,
+    ClassReference,
     Import,
     Property,
     StringClassReference,

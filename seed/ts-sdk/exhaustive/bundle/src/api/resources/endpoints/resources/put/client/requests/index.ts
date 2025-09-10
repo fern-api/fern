@@ -1,1 +1,1 @@
-export { type PutRequest } from "./PutRequest";
+export { type PutRequest } from "./PutRequest.js";

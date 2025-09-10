@@ -1,5 +1,3 @@
-using System;
-
 namespace SeedOauthClientCredentials;
 
 /// <summary>

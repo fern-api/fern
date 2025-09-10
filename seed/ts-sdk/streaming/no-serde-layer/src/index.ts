@@ -1,4 +1,3 @@
-export * as SeedStreaming from "./api";
-export { SeedStreamingClient } from "./Client";
-export { SeedStreamingError, SeedStreamingTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedStreaming from "./api/index.js";
+export { SeedStreamingError, SeedStreamingTimeoutError } from "./errors/index.js";
+export { SeedStreamingClient } from "./Client.js";

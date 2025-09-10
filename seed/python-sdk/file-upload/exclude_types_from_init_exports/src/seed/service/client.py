@@ -9,6 +9,7 @@ from .raw_client import AsyncRawServiceClient, RawServiceClient
 from .types.id import Id
 from .types.my_alias_object import MyAliasObject
 from .types.my_collection_alias_object import MyCollectionAliasObject
+from .types.my_inline_type import MyInlineType
 from .types.my_object import MyObject
 from .types.my_object_with_optional import MyObjectWithOptional
 from .types.object_type import ObjectType
@@ -349,6 +350,50 @@ class ServiceClient:
         )
         return _response.data
 
+    def with_inline_type(
+        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
+        return _response.data
+
+    def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.simple()
+        """
+        _response = self._raw_client.simple(request_options=request_options)
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -682,4 +727,56 @@ class AsyncServiceClient:
         _response = await self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
+        return _response.data
+
+    async def with_inline_type(
+        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
+        return _response.data
+
+    async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.simple()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simple(request_options=request_options)
         return _response.data

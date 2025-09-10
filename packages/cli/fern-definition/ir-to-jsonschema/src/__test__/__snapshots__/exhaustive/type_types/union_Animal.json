@@ -9,9 +9,6 @@
       ]
     }
   },
-  "required": [
-    "animal"
-  ],
   "oneOf": [
     {
       "properties": {

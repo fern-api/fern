@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-explicit/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Simple.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-explicit/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.NestedNoAuth.Api.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-explicit/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Nested.Api.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-explicit/fern\"\n\tfernclient \"github.com/inferred-auth-explicit/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tXApiKey:      \"X-Api-Key\",\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token/refresh",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-explicit/fern\"\n\tfernclient \"github.com/inferred-auth-explicit/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tXApiKey:      \"X-Api-Key\",\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tRefreshToken: \"refresh_token\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

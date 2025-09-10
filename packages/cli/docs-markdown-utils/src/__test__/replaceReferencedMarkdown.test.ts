@@ -1,7 +1,6 @@
-import { vi } from "vitest";
-
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { vi } from "vitest";
 
 import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 

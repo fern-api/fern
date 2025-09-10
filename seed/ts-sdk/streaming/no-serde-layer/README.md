@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/streaming)](https://www.npmjs.com/package/@fern/streaming)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
 ## Installation
 
@@ -24,7 +24,7 @@ import { SeedStreamingClient } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
 const response = await client.dummy.generateStream({
-    numEvents: 1,
+    num_events: 1,
 });
 for await (const item of response) {
     console.log(item);
@@ -74,6 +74,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.dummy.generateStream(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.dummy.generateStream(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -134,8 +146,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

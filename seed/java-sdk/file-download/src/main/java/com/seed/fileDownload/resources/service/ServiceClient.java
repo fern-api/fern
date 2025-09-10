@@ -24,6 +24,14 @@ public class ServiceClient {
         return this.rawClient;
     }
 
+    public void simple() {
+        this.rawClient.simple().body();
+    }
+
+    public void simple(RequestOptions requestOptions) {
+        this.rawClient.simple(requestOptions).body();
+    }
+
     public InputStream downloadFile() {
         return this.rawClient.downloadFile().body();
     }

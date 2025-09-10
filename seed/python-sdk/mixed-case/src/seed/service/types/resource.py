@@ -16,7 +16,12 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.service import Resource_User
-    Resource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
     """
 
     status: ResourceStatus
@@ -36,7 +41,12 @@ class Resource_User(Base):
     Examples
     --------
     from seed.service import Resource_User
-    Resource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
     """
 
     resource_type: typing.Literal["user"] = "user"
@@ -59,7 +69,12 @@ class Resource_Organization(Base):
     Examples
     --------
     from seed.service import Resource_User
-    Resource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
     """
 
     resource_type: typing.Literal["Organization"] = "Organization"
@@ -77,6 +92,11 @@ class Resource_Organization(Base):
 
 """
 from seed.service import Resource_User
-Resource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
+
+Resource_User(
+    user_name="username",
+    metadata_tags=["tag1", "tag2"],
+    extra_properties={"foo": "bar", "baz": "qux"},
+)
 """
 Resource = typing.Union[Resource_User, Resource_Organization]

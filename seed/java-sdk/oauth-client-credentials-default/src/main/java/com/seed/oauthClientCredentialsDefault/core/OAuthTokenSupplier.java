@@ -6,9 +6,13 @@ package com.seed.oauthClientCredentialsDefault.core;
 import com.seed.oauthClientCredentialsDefault.resources.auth.AuthClient;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.function.Supplier;
 
 public final class OAuthTokenSupplier implements Supplier<String> {
+    private static final long BUFFER_IN_MINUTES = 2;
+
     private final String clientId;
 
     private final String clientSecret;
@@ -17,10 +21,13 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private String accessToken;
 
+    private Instant expiresAt;
+
     public OAuthTokenSupplier(String clientId, String clientSecret, AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.authClient = authClient;
+        this.expiresAt = Instant.now();
     }
 
     public TokenResponse fetchToken() {
@@ -33,10 +40,15 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     @java.lang.Override
     public String get() {
-        if (accessToken == null) {
+        if (accessToken == null || expiresAt.isBefore(Instant.now())) {
             TokenResponse authResponse = fetchToken();
             this.accessToken = authResponse.getAccessToken();
+            this.expiresAt = getExpiresAt(authResponse.getExpiresIn());
         }
         return "Bearer " + accessToken;
+    }
+
+    private Instant getExpiresAt(long expiresInSeconds) {
+        return Instant.now().plus(expiresInSeconds, ChronoUnit.SECONDS).minus(BUFFER_IN_MINUTES, ChronoUnit.MINUTES);
     }
 }

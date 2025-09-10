@@ -1,3 +1,8 @@
+import { wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
@@ -5,12 +10,6 @@ import http from "http";
 import path from "path";
 import Watcher from "watcher";
 import { type WebSocket, WebSocketServer } from "ws";
-
-import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
 
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
@@ -44,11 +43,6 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         css: undefined,
         js: undefined
     },
-    search: {
-        type: "legacyMultiAlgoliaIndex",
-        algoliaIndex: undefined
-    },
-    algoliaSearchIndex: undefined,
     jsFiles: undefined,
     id: undefined
 };
@@ -78,7 +72,7 @@ export async function runPreviewServer({
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
         } catch (err) {
             const pathToBundle = getPathToBundleFolder({});
             if (err instanceof Error) {
@@ -262,6 +256,6 @@ export async function runPreviewServer({
     context.logger.info(`Running server on http://localhost:${port}`);
 
     // await infinitely
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     await new Promise(() => {});
 }

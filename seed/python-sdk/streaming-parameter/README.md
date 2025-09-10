@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_streaming-parameter)](https://pypi.python.org/pypi/fern_streaming-parameter)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -21,8 +21,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedStreaming
-client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
-client.dummy.generate(stream=False, num_events=5, )
+
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.dummy.generate(
+    stream=False,
+    num_events=5,
+)
 ```
 
 ## Async Client
@@ -30,12 +36,24 @@ client.dummy.generate(stream=False, num_events=5, )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedStreaming
 import asyncio
-client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedStreaming
+
+client = AsyncSeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.dummy.generate(stream=False, num_events=5, )
-asyncio.run(main())```
+    await client.dummy.generate(
+        stream=False,
+        num_events=5,
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +62,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.dummy.generate()
 except ApiError as e:
@@ -60,7 +79,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedStreaming
-client = SeedStreaming(..., )
+
+client = SeedStreaming(
+    ...,
+)
 response = client.dummy.with_raw_response.generate()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -93,7 +115,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedStreaming
-client = SeedStreaming(..., timeout=20.0, )
+
+client = SeedStreaming(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.dummy.generate(request_options={
@@ -107,9 +134,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedStreaming
 import httpx
-client = SeedStreaming(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedStreaming
+
+client = SeedStreaming(
+    ...,
+    httpx_client=httpx.Client(
+        proxy="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

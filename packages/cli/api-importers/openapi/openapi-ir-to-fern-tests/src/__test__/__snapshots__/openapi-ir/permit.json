@@ -22907,49 +22907,6 @@
                           ],
                           "type": "array"
                         },
-                        "roles": {
-                          "value": [
-                            {
-                              "properties": {
-                                "role": {
-                                  "value": {
-                                    "value": "admin",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "tenant": {
-                                  "value": {
-                                    "value": "stripe-inc",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            },
-                            {
-                              "properties": {
-                                "role": {
-                                  "value": {
-                                    "value": "viewer",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "tenant": {
-                                  "value": {
-                                    "value": "othercompany.com",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
                         "email": {
                           "value": {
                             "value": "jane@coolcompany.com",
@@ -23435,49 +23392,6 @@
                   ],
                   "type": "array"
                 },
-                "roles": {
-                  "value": [
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "admin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "stripe-inc",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "viewer",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "othercompany.com",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
                 "email": {
                   "value": {
                     "value": "jane@coolcompany.com",
@@ -23835,49 +23749,6 @@
                         "status": {
                           "value": "pending",
                           "type": "enum"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "admin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "stripe-inc",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "viewer",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "othercompany.com",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -24370,49 +24241,6 @@
                         "status": {
                           "value": "pending",
                           "type": "enum"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "admin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "stripe-inc",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "viewer",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "othercompany.com",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -24943,49 +24771,6 @@
                         "status": {
                           "value": "pending",
                           "type": "enum"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  ],
-                  "type": "array"
-                },
-                "roles": {
-                  "value": [
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "admin",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "stripe-inc",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    {
-                      "properties": {
-                        "role": {
-                          "value": {
-                            "value": "viewer",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "tenant": {
-                          "value": {
-                            "value": "othercompany.com",
-                            "type": "string"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -25931,49 +25716,6 @@
                                 "status": {
                                   "value": "pending",
                                   "type": "enum"
-                                }
-                              },
-                              "type": "object"
-                            }
-                          ],
-                          "type": "array"
-                        },
-                        "roles": {
-                          "value": [
-                            {
-                              "properties": {
-                                "role": {
-                                  "value": {
-                                    "value": "admin",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "tenant": {
-                                  "value": {
-                                    "value": "stripe-inc",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
-                              "type": "object"
-                            },
-                            {
-                              "properties": {
-                                "role": {
-                                  "value": {
-                                    "value": "viewer",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "tenant": {
-                                  "value": {
-                                    "value": "othercompany.com",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
                                 }
                               },
                               "type": "object"

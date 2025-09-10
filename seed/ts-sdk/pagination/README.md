@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/pagination)](https://www.npmjs.com/package/@fern/pagination)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
 ## Installation
 
@@ -23,10 +23,10 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search({
+const response = await client.complex.search("index", {
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -39,10 +39,10 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search({
+let page = await client.complex.search("index", {
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -96,10 +96,10 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search({
+const response = await client.complex.search("index", {
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -112,10 +112,10 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search({
+let page = await client.complex.search("index", {
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -138,6 +138,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.complex.search(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.complex.search(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -198,8 +210,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

@@ -1,9 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { csharp } from "..";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { Type } from "./Type";
 
 type InternalTypeLiteral =
     | Boolean_
@@ -202,7 +203,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "string": {
-                writer.write(`"${this.escapeString(this.internalType.value)}"`);
+                writer.writeNode(csharp.string_({ string: this.internalType.value }));
                 break;
             }
             case "unknown": {
@@ -247,14 +248,14 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
-        writer.write(`DateTime.Parse("${value}", null, DateTimeStyles.`);
+        writer.write(`DateTime.Parse("${value}", null, `);
         writer.writeNode(
             new ClassReference({
-                name: "AdjustToUniversal",
+                name: "DateTimeStyles",
                 namespace: "System.Globalization"
             })
         );
-        writer.write(")");
+        writer.write(".AdjustToUniversal)");
     }
 
     private writeList({ writer, list }: { writer: Writer; list: List }): void {
@@ -433,7 +434,7 @@ export class TypeLiteral extends AstNode {
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.write(`"${this.escapeString(value)}"`);
+                writer.writeNode(csharp.string_({ string: value }));
                 return;
             case "number":
                 writer.write(value.toString());
@@ -459,7 +460,8 @@ export class TypeLiteral extends AstNode {
         value
     }: {
         writer: Writer;
-        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow
+        value: any[];
     }): void {
         if (value.length === 0) {
             writer.write("new List<object>()");
@@ -490,15 +492,6 @@ export class TypeLiteral extends AstNode {
         }
         writer.dedent();
         writer.write("}");
-    }
-
-    private escapeString(input: string): string {
-        return input
-            .replace(/\\/g, "\\\\") // Escape backslashes
-            .replace(/"/g, '\\"') // Escape double quotes
-            .replace(/\n/g, "\\n") // Escape newlines
-            .replace(/\r/g, "\\r") // Escape carriage returns
-            .replace(/\t/g, "\\t"); // Escape tabs
     }
 }
 

@@ -5,9 +5,7 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../../../packages/cli/logger"
@@ -19,7 +17,7 @@
       "path": "../../../../packages/commons/fs-utils"
     },
     {
-      "path": "../../../../packages/commons/logging-execa"
+      "path": "../../../base"
     },
     {
       "path": "../../../typescript-v2/ast"

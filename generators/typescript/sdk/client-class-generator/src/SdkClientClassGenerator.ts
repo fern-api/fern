@@ -1,8 +1,7 @@
-import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -19,7 +18,6 @@ export declare namespace SdkClientClassGenerator {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -27,6 +25,13 @@ export declare namespace SdkClientClassGenerator {
         omitUndefined: boolean;
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
+        exportsManager: ExportsManager;
+        omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
+        exportAllRequestsAtRoot: boolean;
     }
 
     export namespace generateService {
@@ -50,7 +55,6 @@ export class SdkClientClassGenerator {
     private requireDefaultEnvironment: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
-    private targetRuntime: JavaScriptRuntime;
     private includeContentHeadersOnFileDownloadResponse: boolean;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
@@ -58,7 +62,13 @@ export class SdkClientClassGenerator {
     private omitUndefined: boolean;
     private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
-
+    private streamType: "wrapper" | "web";
+    private readonly formDataSupport: "Node16" | "Node18";
+    private readonly fileResponseType: "stream" | "binary-response";
+    private exportsManager: ExportsManager;
+    private omitFernHeaders: boolean;
+    private useDefaultRequestParameterValues: boolean;
+    private exportAllRequestsAtRoot: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -70,14 +80,20 @@ export class SdkClientClassGenerator {
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
-        targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
         oauthTokenProviderGenerator,
         omitUndefined,
-        allowExtraFields
+        allowExtraFields,
+        streamType,
+        fileResponseType,
+        exportsManager,
+        formDataSupport,
+        omitFernHeaders,
+        useDefaultRequestParameterValues,
+        exportAllRequestsAtRoot
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -89,7 +105,6 @@ export class SdkClientClassGenerator {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
-        this.targetRuntime = targetRuntime;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -97,6 +112,13 @@ export class SdkClientClassGenerator {
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
+        this.exportsManager = exportsManager;
+        this.formDataSupport = formDataSupport;
+        this.omitFernHeaders = omitFernHeaders;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
     }
 
     public generateService({
@@ -108,6 +130,7 @@ export class SdkClientClassGenerator {
         return new GeneratedSdkClientClassImpl({
             isRoot,
             importsManager,
+            exportsManager: this.exportsManager,
             intermediateRepresentation: this.intermediateRepresentation,
             packageId,
             packageResolver: this.packageResolver,
@@ -120,14 +143,19 @@ export class SdkClientClassGenerator {
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
-            targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
-            allowExtraFields: this.allowExtraFields
+            allowExtraFields: this.allowExtraFields,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType,
+            formDataSupport: this.formDataSupport,
+            omitFernHeaders: this.omitFernHeaders,
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
+            exportAllRequestsAtRoot: this.exportAllRequestsAtRoot
         });
     }
 }

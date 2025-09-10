@@ -59,14 +59,16 @@
             "type": {
               "type": "id",
               "value": "type_complex:SingleFilterSearchRequest"
-            }
+            },
+            "displayName": "Single Filter Search Request"
           },
           {
             "typeName": "MultipleFilterSearchRequest",
             "type": {
               "type": "id",
               "value": "type_complex:MultipleFilterSearchRequest"
-            }
+            },
+            "displayName": "Multiple Filter Search Request"
           }
         ]
       }
@@ -818,11 +820,29 @@
           "originalEndpointId": "endpoint_complex.search",
           "name": "Search conversations",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "index",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
                 "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "index"
               },
               {
                 "type": "literal",
@@ -845,6 +865,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -854,11 +875,14 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
-              "path": "/conversations/search",
-              "pathParameters": {},
+              "path": "/index/conversations/search",
+              "pathParameters": {
+                "index": "index"
+              },
               "queryParameters": {},
               "headers": {},
               "requestBody": {
@@ -1015,6 +1039,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1024,6 +1049,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1119,6 +1145,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1128,6 +1155,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1213,6 +1241,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1222,6 +1251,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1360,6 +1390,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1369,6 +1400,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1502,6 +1534,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1511,6 +1544,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1616,6 +1650,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1625,6 +1660,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1749,6 +1785,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1758,6 +1795,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1877,6 +1915,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1886,6 +1925,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1981,6 +2021,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1990,6 +2031,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1999,6 +2041,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "total_count": 1,
                 "data": {
                   "users": [
                     {
@@ -2011,12 +2054,12 @@
                     }
                   ]
                 },
-                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "total_count": 1
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "total_count": 1,
                   "data": {
                     "users": [
                       {
@@ -2029,8 +2072,7 @@
                       }
                     ]
                   },
-                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "total_count": 1
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
               },
               "codeSamples": []
@@ -2071,6 +2113,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2080,6 +2123,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -2089,6 +2133,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "total_count": 1,
                 "data": {
                   "users": [
                     {
@@ -2101,12 +2146,12 @@
                     }
                   ]
                 },
-                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "total_count": 1
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "total_count": 1,
                   "data": {
                     "users": [
                       {
@@ -2119,8 +2164,7 @@
                       }
                     ]
                   },
-                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "total_count": 1
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
               },
               "codeSamples": []
@@ -2162,6 +2206,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2171,6 +2216,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -2238,6 +2284,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2247,6 +2294,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

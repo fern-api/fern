@@ -22,6 +22,16 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
+    streamType: z.optional(z.enum(["wrapper", "web"])),
+    fileResponseType: z.optional(z.enum(["stream", "binary-response"])),
+    formDataSupport: z.optional(z.enum(["Node16", "Node18"])),
+    fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
+    packagePath: z.optional(z.string()),
+    omitFernHeaders: z.optional(z.boolean()),
+    useDefaultRequestParameterValues: z.optional(z.boolean()),
+    packageManager: z.optional(z.enum(["pnpm", "yarn"])),
+    flattenRequestParameters: z.optional(z.boolean()),
+    exportAllRequestsAtRoot: z.optional(z.boolean()),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

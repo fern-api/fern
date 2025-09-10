@@ -1,18 +1,17 @@
-import { format } from "util";
-
 import {
     Argument,
     AstNode,
+    Class_,
     ClassReference,
     ClassReferenceFactory,
-    Class_,
     ConditionalStatement,
     ExampleGenerator,
     Expression,
-    FunctionInvocation,
     Function_,
+    FunctionInvocation,
     GeneratedRubyFile,
     GenericClassReference,
+    getBreadcrumbsFromFilepath,
     HashInstance,
     HashReference,
     Import,
@@ -22,10 +21,8 @@ import {
     Property,
     StringClassReference,
     Variable,
-    VariableType,
-    getBreadcrumbsFromFilepath
+    VariableType
 } from "@fern-api/ruby-codegen";
-
 import {
     EnvironmentId,
     EnvironmentsConfig,
@@ -45,14 +42,15 @@ import {
     Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { format } from "util";
 
 import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { RequestOptions } from "./utils/RequestOptionsClass";
 import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
+import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
     subpackageName: Name;

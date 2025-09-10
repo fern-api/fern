@@ -1,6 +1,5 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { homedir } from "os";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { APPROVED_DIRECTORIES_FILENAME, LOCAL_STORAGE_FOLDER } from "../../constants";
 

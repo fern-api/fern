@@ -1,0 +1,70 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedInferredAuthExplicit\n\nclient = SeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.get_token_with_client_credentials(\n    x_api_key=\"X-Api-Key\",\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthExplicit\n\nclient = AsyncSeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token_with_client_credentials(\n        x_api_key=\"X-Api-Key\",\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token/refresh",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedInferredAuthExplicit\n\nclient = SeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.refresh_token(\n    x_api_key=\"X-Api-Key\",\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    refresh_token=\"refresh_token\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthExplicit\n\nclient = AsyncSeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.refresh_token(\n        x_api_key=\"X-Api-Key\",\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        refresh_token=\"refresh_token\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedInferredAuthExplicit\n\nclient = SeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nested_no_auth.api.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthExplicit\n\nclient = AsyncSeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nested_no_auth.api.get_something()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedInferredAuthExplicit\n\nclient = SeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nested.api.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthExplicit\n\nclient = AsyncSeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nested.api.get_something()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedInferredAuthExplicit\n\nclient = SeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthExplicit\n\nclient = AsyncSeedInferredAuthExplicit(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.get_something()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -4,7 +4,11 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export type Request = FernOpenapiIr.Request.OctetStream | FernOpenapiIr.Request.Multipart | FernOpenapiIr.Request.Json;
+export type Request =
+    | FernOpenapiIr.Request.OctetStream
+    | FernOpenapiIr.Request.Multipart
+    | FernOpenapiIr.Request.Json
+    | FernOpenapiIr.Request.FormUrlEncoded;
 
 export namespace Request {
     export interface OctetStream extends FernOpenapiIr.OctetStreamRequest, _Utils {
@@ -19,6 +23,10 @@ export namespace Request {
         type: "json";
     }
 
+    export interface FormUrlEncoded extends FernOpenapiIr.FormUrlEncodedRequest, _Utils {
+        type: "formUrlEncoded";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Request._Visitor<_Result>) => _Result;
     }
@@ -27,6 +35,7 @@ export namespace Request {
         octetStream: (value: FernOpenapiIr.OctetStreamRequest) => _Result;
         multipart: (value: FernOpenapiIr.MultipartRequest) => _Result;
         json: (value: FernOpenapiIr.JsonRequest) => _Result;
+        formUrlEncoded: (value: FernOpenapiIr.FormUrlEncodedRequest) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -71,6 +80,19 @@ export const Request = {
         };
     },
 
+    formUrlEncoded: (value: FernOpenapiIr.FormUrlEncodedRequest): FernOpenapiIr.Request.FormUrlEncoded => {
+        return {
+            ...value,
+            type: "formUrlEncoded",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Request.FormUrlEncoded,
+                visitor: FernOpenapiIr.Request._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Request._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernOpenapiIr.Request, visitor: FernOpenapiIr.Request._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "octetStream":
@@ -79,6 +101,8 @@ export const Request = {
                 return visitor.multipart(value);
             case "json":
                 return visitor.json(value);
+            case "formUrlEncoded":
+                return visitor.formUrlEncoded(value);
             default:
                 return visitor._other(value as any);
         }

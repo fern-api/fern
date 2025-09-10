@@ -36,7 +36,18 @@ export class EndpointSnippetsGenerator {
         const allEndpoints = Object.entries(this.context.ir.services).flatMap(([serviceId, service]) =>
             service.endpoints.flatMap((endpoint) => {
                 const endpointIdsWithGenerator = [{ id: endpoint.id, isPager: false }];
-                if (endpoint.pagination) {
+                const isStreaming =
+                    endpoint.response?.body?._visit({
+                        streaming: () => true,
+                        json: () => false,
+                        fileDownload: () => false,
+                        text: () => false,
+                        bytes: () => false,
+                        streamParameter: () => false,
+                        _other: () => false
+                    }) ?? false;
+
+                if (endpoint.pagination || isStreaming) {
                     endpointIdsWithGenerator.push({ id: endpoint.id, isPager: true });
                 }
                 return endpointIdsWithGenerator.map(({ id }) => ({ id, endpoint, serviceId }));

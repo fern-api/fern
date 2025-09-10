@@ -1,10 +1,9 @@
+import { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-
-import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
 

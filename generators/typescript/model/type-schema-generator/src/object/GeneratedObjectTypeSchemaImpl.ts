@@ -1,9 +1,8 @@
+import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
-
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
@@ -56,7 +55,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 ...this.shape.properties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: `"${property.name.wireValue}"`,
+                        name: getPropertyKey(property.name.wireValue),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };

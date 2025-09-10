@@ -1,23 +1,23 @@
+import { Logger } from "@fern-api/logger";
+import { Constants } from "@fern-fern/ir-sdk/api";
 import {
+    CoreUtilities,
     CoreUtilitiesManager,
+    createExternalDependencies,
     DependencyManager,
+    ExportsManager,
     ExternalDependencies,
-    ImportsManager,
-    createExternalDependencies
+    ImportsManager
 } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { BaseContext, JsonContext, TypeContext, TypeSchemaContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
-
-import { Logger } from "@fern-api/logger";
-
-import { Constants } from "@fern-fern/ir-sdk/api";
 
 export declare namespace BaseContextImpl {
     export interface Init {
         logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
@@ -25,6 +25,8 @@ export declare namespace BaseContextImpl {
         typeSchema: TypeSchemaContext;
         jsonContext: JsonContext;
         includeSerdeLayer: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -43,13 +45,16 @@ export class BaseContextImpl implements BaseContext {
         logger,
         sourceFile,
         importsManager,
+        exportsManager,
         dependencyManager,
         coreUtilitiesManager,
         fernConstants,
         type,
         typeSchema,
         includeSerdeLayer,
-        jsonContext
+        jsonContext,
+        relativePackagePath,
+        relativeTestPath
     }: BaseContextImpl.Init) {
         this.logger = logger;
         this.sourceFile = sourceFile;
@@ -64,7 +69,10 @@ export class BaseContextImpl implements BaseContext {
         });
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
             sourceFile,
-            importsManager
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
         });
     }
 }

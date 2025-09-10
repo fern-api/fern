@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
-import { MethodInvocation } from "./MethodInvocation";
 import { AstNode, Writer } from "./core";
+import { MethodInvocation } from "./MethodInvocation";
 
 type InternalTypeLiteral =
     | Boolean_
@@ -342,7 +342,8 @@ export class TypeLiteral extends AstNode {
         value
     }: {
         writer: Writer;
-        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow
+        value: any[];
     }): void {
         if (value.length === 0) {
             writer.write("[]");

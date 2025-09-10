@@ -1,11 +1,10 @@
-import yaml from "js-yaml";
-import { mapValues } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { convert, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
+import yaml from "js-yaml";
+import { mapValues } from "lodash-es";
 
 import { FernDefinition } from "..";
 import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
@@ -43,9 +42,11 @@ export class FernDefinitionConverter {
                 }
             }),
             authOverrides:
-                this.args.generatorsConfiguration?.api?.auth != null
-                    ? { ...this.args.generatorsConfiguration?.api }
-                    : undefined,
+                settings?.auth != null
+                    ? { auth: settings.auth }
+                    : this.args.generatorsConfiguration?.api?.auth != null
+                      ? { ...this.args.generatorsConfiguration.api }
+                      : undefined,
             environmentOverrides:
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }

@@ -1,6 +1,6 @@
 import { python } from "..";
-import { TypeInstantiation } from "../TypeInstantiation";
 import { Writer } from "../core/Writer";
+import { TypeInstantiation } from "../TypeInstantiation";
 
 describe("TypeInstantiation", () => {
     let writer: Writer;
@@ -68,7 +68,7 @@ describe("TypeInstantiation", () => {
             TypeInstantiation.str(
                 // prettier-ignore
 
-                "{{ chat_history[-1][\"text\"] }}",
+                '{{ chat_history[-1]["text"] }}',
                 {
                     multiline: true
                 }

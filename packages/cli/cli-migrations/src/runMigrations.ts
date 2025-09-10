@@ -1,8 +1,7 @@
-import chalk from "chalk";
-import inquirer from "inquirer";
-
 import { addPrefixToString } from "@fern-api/core-utils";
 import { InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
+import chalk from "chalk";
+import inquirer from "inquirer";
 
 import { getMigrationsToRun } from "./migrations/getMigrationsToRun";
 import { Migration } from "./types/Migration";

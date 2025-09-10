@@ -37,6 +37,13 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
 
+    def should_use_lazy_imports(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        return False
+
     def get_relative_path_to_project_for_publish(
         self,
         *,
@@ -95,6 +102,9 @@ class PydanticModelGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
         )
         context.core_utilities.copy_to_project(project=project)
+
+    def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
+        pass
 
     def generate_types(
         self,

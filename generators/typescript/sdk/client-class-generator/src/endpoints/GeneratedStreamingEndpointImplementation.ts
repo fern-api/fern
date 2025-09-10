@@ -1,11 +1,10 @@
-import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -27,6 +26,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        streamType: "wrapper" | "web";
     }
 }
 
@@ -43,6 +43,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
+    private streamType: "wrapper" | "web";
 
     constructor({
         endpoint,
@@ -53,7 +54,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         request,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        streamType
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -64,7 +66,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.streamType = streamType;
     }
+
     public isPaginated(context: SdkContext): boolean {
         return false;
     }
@@ -74,7 +78,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
-    }): ts.Expression | undefined {
+    }): EndpointSampleCode | undefined {
+        const imports = this.request.getExampleEndpointImports({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
@@ -83,18 +92,21 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         if (exampleParameters == null) {
             return undefined;
         }
-        return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: args.clientReference
-                    }),
-                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
-                ),
-                undefined,
-                exampleParameters
+        return {
+            imports,
+            endpointInvocation: ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        this.generatedSdkClientClass.accessFromRootClient({
+                            referenceToRootClient: args.clientReference
+                        }),
+                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                    ),
+                    undefined,
+                    exampleParameters
+                )
             )
-        );
+        };
     }
 
     public maybeLeverageInvocation({
@@ -205,7 +217,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }
@@ -247,7 +259,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: context.externalDependencies.stream.Readable._getReferenceToType()
+                                cast: getReadableTypeNode({
+                                    typeArgument: undefined,
+                                    context,
+                                    streamType: this.streamType
+                                })
                             })
                         )
                     ],

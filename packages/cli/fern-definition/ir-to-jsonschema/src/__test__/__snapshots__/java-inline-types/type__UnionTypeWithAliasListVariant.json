@@ -8,9 +8,6 @@
       ]
     }
   },
-  "required": [
-    "type"
-  ],
   "oneOf": [
     {
       "properties": {

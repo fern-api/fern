@@ -1,0 +1,141 @@
+irVersion: v58
+displayName: Ruby SDK
+language: ruby
+generatorType: SDK
+defaultOutputMode: github
+image: fernapi/fern-ruby-sdk-v2
+changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - bundle install
+  testScript:
+    commands:
+      - bundle exec rake test
+
+test:
+  docker:
+    image: fernapi/fern-ruby-sdk-v2:latest
+    command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/ruby-sdk dist:cli
+  docker:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk-v2
+    context: .
+
+scripts:
+  - docker: ruby:2.7
+    commands:
+      - bundle install
+      - bundle exec rake test
+
+fixtures: {}
+allowedFailures: 
+  - accept-header
+  - alias
+  - alias-extends
+  - any-auth
+  - api-wide-base-path
+  - audiences
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - bytes-download
+  - bytes-upload
+  - circular-references
+  - circular-references-advanced
+  - client-side-params
+  - content-type
+  - cross-package-type-names
+  - custom-auth
+  - empty-clients
+  - enum
+  - error-property
+  - errors
+  - examples
+  - exhaustive
+  - extends
+  - extra-properties
+  - file-download
+  - file-upload
+  - folders
+  - http-head
+  - idempotency-headers
+  - imdb
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - license
+  - literal
+  - literals-unions
+  - mixed-case
+  - mixed-file-directory
+  - multi-line-docs
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - multiple-request-bodies
+  - no-environment
+  - nullable
+  - nullable-optional
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - object
+  - objects-with-imports
+  - optional
+  - package-yml
+  - pagination
+  - pagination-custom
+  - path-parameters
+  - plain-text
+  - public-object
+  - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - reserved-keywords
+  - response-property
+  - server-sent-event-examples
+  - server-sent-events
+  - simple-api
+  - simple-fhir
+  - single-url-environment-default
+  - single-url-environment-no-default
+  - streaming
+  - streaming-parameter
+  - trace
+  - undiscriminated-unions
+  - unions
+  - unknown
+  - validation
+  - variables
+  - version
+  - version-no-default
+  - websocket
+  - websocket-bearer-auth
+  - websocket-inferred-auth
+features:
+  requestOptions: true
+  idempotency: false
+  autoPagination: false
+  oauth: false
+  authEnvVarScanning: true
+  websocket: false
+  streamingJson: false
+  fileUpload: true
+  fileDownload: true
+  snippets: true
+  snippetTests: true
+  errors: false
+  forwardCompatibleEnums: true
+  additionalProperties: true
+  whitelabel: false
+  apiReferenceGeneration: false

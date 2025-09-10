@@ -1,7 +1,7 @@
 post:
   summary: Chat with the model
   operationId: chatv2
-  x-fern-audiences: ['v2-beta']
+  x-fern-audiences: ["v2-beta"]
   x-fern-sdk-group-name: v2
   x-fern-sdk-method-name: chat
   description: |
@@ -25,7 +25,7 @@ post:
               description: |
                 A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.
             safety_mode:
-              enum: [ 'CONTEXTUAL', 'STRICT', 'NONE' ]
+              enum: ["CONTEXTUAL", "STRICT", "NONE"]
               description: |
                 Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
                 When `NONE` is specified, the safety instruction will be omitted.
@@ -61,32 +61,32 @@ post:
               x-internal: true
               description: Whether to return the prompt in the response.
   responses:
-    '400':
+    "400":
       $ref: "./errors/BadRequest.yaml"
-    '401':
+    "401":
       $ref: "./errors/Unauthorized.yaml"
-    '403':
+    "403":
       $ref: "./errors/Forbidden.yaml"
-    '404':
+    "404":
       $ref: "./errors/NotFound.yaml"
-    '422':
+    "422":
       $ref: "./errors/UnprocessableEntity.yaml"
-    '429':
-      $ref: './errors/RateLimit.yaml'
-    '498':
+    "429":
+      $ref: "./errors/RateLimit.yaml"
+    "498":
       $ref: "./errors/InvalidToken.yaml"
-    '499':
+    "499":
       $ref: "./errors/RequestCancelled.yaml"
-    '500':
+    "500":
       $ref: "./errors/InternalServerError.yaml"
-    '501':
+    "501":
       $ref: "./errors/NotImplemented.yaml"
-    '503':
+    "503":
       $ref: "./errors/ServiceUnavailable.yaml"
-    '504':
+    "504":
       $ref: "./errors/GatewayTimeout.yaml"
-    '200':
-      description: 'OK'
+    "200":
+      description: "OK"
       content:
         application/json:
           schema:

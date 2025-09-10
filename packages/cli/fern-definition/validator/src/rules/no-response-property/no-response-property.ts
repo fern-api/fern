@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema";
+import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl,
-    constructFernFileContext
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 
 import { Rule, RuleViolation } from "../../Rule";

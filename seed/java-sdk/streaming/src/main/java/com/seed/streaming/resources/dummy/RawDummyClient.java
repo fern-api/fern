@@ -64,8 +64,7 @@ public class RawDummyClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedStreamingHttpResponse<>(
-                        new Stream<StreamResponse>(StreamResponse.class, new ResponseBodyReader(response), "\n"),
-                        response);
+                        Stream.fromJson(StreamResponse.class, new ResponseBodyReader(response), "\\n"), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedStreamingApiException(

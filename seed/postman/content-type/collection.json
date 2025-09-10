@@ -91,6 +91,360 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Patch Complex",
+          "request": {
+            "description": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)",
+            "url": {
+              "raw": "{{baseUrl}}/complex/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "complex",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"email\": \"email\",\n    \"nickname\": \"nickname\",\n    \"bio\": \"bio\",\n    \"profileImageUrl\": \"profileImageUrl\",\n    \"settings\": {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)",
+                "url": {
+                  "raw": "{{baseUrl}}/complex/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "complex",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"email\": \"email\",\n    \"nickname\": \"nickname\",\n    \"bio\": \"bio\",\n    \"profileImageUrl\": \"profileImageUrl\",\n    \"settings\": {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Named Patch With Mixed",
+          "request": {
+            "description": "Named request with mixed optional/nullable fields and merge-patch content type.\nThis should trigger the NPE issue when optional fields aren't initialized.",
+            "url": {
+              "raw": "{{baseUrl}}/named-mixed/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "named-mixed",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"appId\": \"appId\",\n    \"instructions\": \"instructions\",\n    \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Named request with mixed optional/nullable fields and merge-patch content type.\nThis should trigger the NPE issue when optional fields aren't initialized.",
+                "url": {
+                  "raw": "{{baseUrl}}/named-mixed/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "named-mixed",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"appId\": \"appId\",\n    \"instructions\": \"instructions\",\n    \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Optional Merge Patch Test",
+          "request": {
+            "description": "Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.\nThis endpoint should:\n1. Not NPE when fields are not provided (tests initialization)\n2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)",
+            "url": {
+              "raw": "{{baseUrl}}/optional-merge-patch-test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "optional-merge-patch-test"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"requiredField\": \"requiredField\",\n    \"optionalString\": \"optionalString\",\n    \"optionalInteger\": 1,\n    \"optionalBoolean\": true,\n    \"nullableString\": \"nullableString\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.\nThis endpoint should:\n1. Not NPE when fields are not provided (tests initialization)\n2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)",
+                "url": {
+                  "raw": "{{baseUrl}}/optional-merge-patch-test",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "optional-merge-patch-test"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"requiredField\": \"requiredField\",\n    \"optionalString\": \"optionalString\",\n    \"optionalInteger\": 1,\n    \"optionalBoolean\": true,\n    \"nullableString\": \"nullableString\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Regular Patch",
+          "request": {
+            "description": "Regular PATCH endpoint without merge-patch semantics",
+            "url": {
+              "raw": "{{baseUrl}}/regular/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "regular",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"field1\": \"field1\",\n    \"field2\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Regular PATCH endpoint without merge-patch semantics",
+                "url": {
+                  "raw": "{{baseUrl}}/regular/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "regular",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"field1\": \"field1\",\n    \"field2\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

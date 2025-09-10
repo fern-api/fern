@@ -11,6 +11,7 @@ async function main() {
         format: ['cjs'],
         minify: false,
         outDir: 'dist/local',
+        sourcemap: true,
         env: {
             AUTH0_DOMAIN: "fern-dev.us.auth0.com",
             AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
@@ -22,6 +23,7 @@ async function main() {
             POSTHOG_API_KEY: null,
             DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/',
+            APP_DOCS_TAR_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle4.s3.amazonaws.com/',
             APP_DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle3.s3.amazonaws.com/',
             CLI_NAME: "fern-local",
             CLI_VERSION: process.argv[2] || packageJson.version,

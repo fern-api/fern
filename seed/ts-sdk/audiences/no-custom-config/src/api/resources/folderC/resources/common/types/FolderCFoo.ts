@@ -3,5 +3,5 @@
  */
 
 export interface FolderCFoo {
-    barProperty: string;
+    bar_property: string;
 }

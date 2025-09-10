@@ -80,14 +80,16 @@
             "type": {
               "type": "id",
               "value": "RequestOne"
-            }
+            },
+            "displayName": "A simple request title"
           },
           {
             "typeName": "RequestTwo",
             "type": {
               "type": "id",
               "value": "RequestTwo"
-            }
+            },
+            "displayName": "A simple response title"
           }
         ]
       }
@@ -100,7 +102,7 @@
         "auth": false,
         "method": "GET",
         "id": "Get",
-        "originalEndpointId": "Get",
+        "originalEndpointId": "endpoint_.Get",
         "name": "Get",
         "path": {
           "pathParameters": [],
@@ -132,6 +134,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RequestOne"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -145,10 +166,26 @@
           "statusCode": 200,
           "description": "A simple API response."
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/test",
             "pathParameters": {},
@@ -160,13 +197,10 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -178,7 +212,7 @@
         "auth": false,
         "method": "POST",
         "id": "Post",
-        "originalEndpointId": "Post",
+        "originalEndpointId": "endpoint_.Post",
         "name": "Post",
         "path": {
           "pathParameters": [],
@@ -210,6 +244,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SampleUnion"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -223,10 +276,26 @@
           "statusCode": 200,
           "description": "A simple API response."
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/test",
             "pathParameters": {},
@@ -238,13 +307,10 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

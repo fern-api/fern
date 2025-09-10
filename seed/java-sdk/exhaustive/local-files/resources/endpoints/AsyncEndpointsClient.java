@@ -15,6 +15,7 @@ import com.fern.sdk.resources.endpoints.params.AsyncParamsClient;
 import com.fern.sdk.resources.endpoints.primitive.AsyncPrimitiveClient;
 import com.fern.sdk.resources.endpoints.put.AsyncPutClient;
 import com.fern.sdk.resources.endpoints.union.AsyncUnionClient;
+import com.fern.sdk.resources.endpoints.urls.AsyncUrlsClient;
 import java.util.function.Supplier;
 
 public class AsyncEndpointsClient {
@@ -38,6 +39,8 @@ public class AsyncEndpointsClient {
 
   protected final Supplier<AsyncUnionClient> unionClient;
 
+  protected final Supplier<AsyncUrlsClient> urlsClient;
+
   public AsyncEndpointsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
     this.containerClient = Suppliers.memoize(() -> new AsyncContainerClient(clientOptions));
@@ -49,6 +52,7 @@ public class AsyncEndpointsClient {
     this.primitiveClient = Suppliers.memoize(() -> new AsyncPrimitiveClient(clientOptions));
     this.putClient = Suppliers.memoize(() -> new AsyncPutClient(clientOptions));
     this.unionClient = Suppliers.memoize(() -> new AsyncUnionClient(clientOptions));
+    this.urlsClient = Suppliers.memoize(() -> new AsyncUrlsClient(clientOptions));
   }
 
   public AsyncContainerClient container() {
@@ -85,5 +89,9 @@ public class AsyncEndpointsClient {
 
   public AsyncUnionClient union() {
     return this.unionClient.get();
+  }
+
+  public AsyncUrlsClient urls() {
+    return this.urlsClient.get();
   }
 }

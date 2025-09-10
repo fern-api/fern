@@ -1,14 +1,13 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyType } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
+import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {}
@@ -28,13 +27,16 @@ export class BundledTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
+        if (this.packageManager === "pnpm") {
+            await this.generatePnpmWorkspace();
+        }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -67,7 +69,7 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${TypescriptProject.SRC_DIRECTORY}/index.ts",
+        entryPoint: "./${this.packagePath}/index.ts",
         outfile: \`./${TypescriptProject.DIST_DIRECTORY}/\${outdir}/${BundledTypescriptProject.API_BUNDLE_FILENAME}\`,
     });
     ${this.getFoldersForExports()
@@ -76,7 +78,7 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${BundledTypescriptProject.SRC_DIRECTORY}/${folder}/index.ts",
+        entryPoint: "./${this.packagePath}/${folder}/index.ts",
         outfile: \`./${BundledTypescriptProject.DIST_DIRECTORY}/\${outdir}/${this.getBundleForNonExportedFolder(
             folder
         )}\`,
@@ -118,9 +120,16 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 "!.yarn/plugins",
                 "!.yarn/releases",
                 "!.yarn/sdks",
-                "!.yarn/versions"
+                "!.yarn/versions",
+                "# pnpm",
+                ".pnpm-store/",
+                ".pnpm-debug.log"
             ].join("\n")
         );
+    }
+
+    private async generatePnpmWorkspace(): Promise<void> {
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generatePrettierRc(): Promise<void> {
@@ -166,8 +175,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             emitDeclarationOnly: true,
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
-            rootDir: BundledTypescriptProject.SRC_DIRECTORY,
-            baseUrl: BundledTypescriptProject.SRC_DIRECTORY
+            rootDir: this.packagePath,
+            baseUrl: this.packagePath
         };
 
         await this.writeFileToVolume(
@@ -175,7 +184,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [BundledTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -201,7 +210,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 license: this.npmPackage.license as any
             };
         }
@@ -244,47 +253,53 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
+                    `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
+                    `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
                 ].join(" && ")
             }
         };
 
         packageJson = produce(packageJson, (draft) => {
-            if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = {
-                    ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies
-                };
+            const dependencies = {
+                ...this.dependencies[DependencyType.PROD],
+                ...this.extraDependencies
+            };
+            if (Object.keys(dependencies).length > 0) {
+                draft.dependencies = dependencies;
             }
-            if (
-                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
-                Object.keys(this.extraPeerDependencies).length > 0
-            ) {
-                draft.peerDependencies = {
-                    ...this.dependencies[DependencyType.PEER],
-                    ...this.extraPeerDependencies
-                };
+            const peerDependencies = {
+                ...this.dependencies[DependencyType.PEER],
+                ...this.extraPeerDependencies
+            };
+            if (Object.keys(peerDependencies).length > 0) {
+                draft.peerDependencies = peerDependencies;
             }
+
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
-                draft.peerDependenciesMeta = {
-                    ...this.extraPeerDependenciesMeta
-                };
+                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta };
             }
-            draft.devDependencies = {
+
+            const devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
                 ...this.extraDevDependencies
             };
+            if (Object.keys(devDependencies).length > 0) {
+                draft.devDependencies = devDependencies;
+            }
 
             draft.browser = {
                 fs: false,
                 os: false,
                 path: false
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

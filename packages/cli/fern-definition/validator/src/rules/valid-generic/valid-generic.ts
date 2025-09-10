@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-
-import { Rule, RuleViolation } from "../../Rule";
+import { isGeneric, NodePath, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 type GenericDeclaration = string;
 type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";
@@ -110,9 +109,10 @@ export const ValidGenericRule: Rule = {
                                             nodePath
                                         });
                                     } else {
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value);
                                         errors.push({
                                             severity: "fatal",
-                                            message: `Cannot reference generic ${value} from object property ${key}`
+                                            message: `Cannot reference generic ${valueAsString} from object property ${key}`
                                         });
                                     }
                                 }
@@ -134,9 +134,10 @@ export const ValidGenericRule: Rule = {
                                             nodePath
                                         });
                                     } else {
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value);
                                         errors.push({
                                             severity: "fatal",
-                                            message: `Cannot reference generic ${value} from union property ${key}`
+                                            message: `Cannot reference generic ${valueAsString} from union property ${key}`
                                         });
                                     }
                                 }
@@ -200,6 +201,7 @@ function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, numb
                     const maybeGeneric = parseGeneric(typeName.name);
                     if (maybeGeneric != null) {
                         visitRawTypeDeclaration(declaration, {
+                            // biome-ignore-start lint/suspicious/noEmptyBlockStatements: allow
                             alias: () => {},
                             enum: () => {},
                             object: () => {
@@ -209,6 +211,7 @@ function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, numb
                             },
                             discriminatedUnion: () => {},
                             undiscriminatedUnion: () => {}
+                            // biome-ignore-end lint/suspicious/noEmptyBlockStatements: allow
                         });
                     }
                 }

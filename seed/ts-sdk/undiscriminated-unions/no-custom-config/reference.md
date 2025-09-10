@@ -195,3 +195,99 @@ await client.union.call({
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">duplicateTypesUnion</a>({ ...params }) -> SeedUndiscriminatedUnions.UnionWithDuplicateTypes</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.duplicateTypesUnion("string");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.UnionWithDuplicateTypes`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Union.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">nestedUnions</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.nestedUnions("string");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.NestedUnionRoot`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Union.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>

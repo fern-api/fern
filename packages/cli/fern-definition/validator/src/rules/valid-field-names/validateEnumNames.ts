@@ -1,7 +1,6 @@
-import chalk from "chalk";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getEnumName } from "@fern-api/ir-generator";
+import chalk from "chalk";
 
 import { RuleViolation } from "../../Rule";
 import { VALID_NAME_REGEX } from "./regex";

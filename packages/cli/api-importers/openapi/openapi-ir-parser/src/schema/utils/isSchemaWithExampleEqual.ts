@@ -1,4 +1,4 @@
-import { SchemaWithExample, isSchemaEqual } from "@fern-api/openapi-ir";
+import { isSchemaEqual, SchemaWithExample } from "@fern-api/openapi-ir";
 
 import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSchema";
 

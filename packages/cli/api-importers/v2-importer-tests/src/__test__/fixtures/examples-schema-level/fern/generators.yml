@@ -1,7 +1,0 @@
-api:
-  specs:
-    - openapi: ../openapi.yml
-      settings: 
-        example-generation: 
-          response: 
-            max-depth: 10

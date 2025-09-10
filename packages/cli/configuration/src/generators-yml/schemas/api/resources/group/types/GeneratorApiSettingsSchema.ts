@@ -5,5 +5,6 @@
 import * as FernDefinition from "../../../index";
 
 export interface GeneratorApiSettingsSchema {
+    auth?: FernDefinition.fernDefinition.ApiAuthSchema;
     settings?: FernDefinition.ApiDefinitionSettingsSchema;
 }

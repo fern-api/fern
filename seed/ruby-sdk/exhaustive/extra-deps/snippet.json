@@ -882,6 +882,94 @@
         },
         {
             "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_mixed_case",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.no_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_underscores",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_mixed_case",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.no_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_underscores",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/container/list-of-primitives",
                 "method": "POST",
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
@@ -1757,6 +1845,94 @@
             },
             "snippet": {
                 "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.union.get_and_return_union",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_mixed_case",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.no_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_underscores",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_mixed_case",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.no_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_ending_slash",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.urls.with_underscores",
                 "type": "ruby"
             }
         },

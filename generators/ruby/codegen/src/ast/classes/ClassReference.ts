@@ -1,5 +1,3 @@
-import { format } from "util";
-
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -18,17 +16,18 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { format } from "util";
 
 import { LocationGenerator } from "../../utils/LocationGenerator";
 import { Argument } from "../Argument";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Variable } from "../Variable";
 import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
+import { Import } from "../Import";
+import { Property } from "../Property";
+import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",

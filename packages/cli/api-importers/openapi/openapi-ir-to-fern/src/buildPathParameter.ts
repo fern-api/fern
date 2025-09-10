@@ -1,9 +1,8 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { PathParameter } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 

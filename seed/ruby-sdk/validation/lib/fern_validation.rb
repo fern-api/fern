@@ -30,7 +30,7 @@ module SeedValidationClient
     #  validation.create(
     #    decimal: 2.2,
     #    even: 100,
-    #    name: "foo",
+    #    name: "fern",
     #    shape: SQUARE
     #  )
     def create(decimal:, even:, name:, shape:, request_options: nil)
@@ -66,7 +66,7 @@ module SeedValidationClient
     #  validation.get(
     #    decimal: 2.2,
     #    even: 100,
-    #    name: "foo"
+    #    name: "fern"
     #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -115,7 +115,7 @@ module SeedValidationClient
     #  validation.create(
     #    decimal: 2.2,
     #    even: 100,
-    #    name: "foo",
+    #    name: "fern",
     #    shape: SQUARE
     #  )
     def create(decimal:, even:, name:, shape:, request_options: nil)
@@ -151,7 +151,7 @@ module SeedValidationClient
     #  validation.get(
     #    decimal: 2.2,
     #    even: 100,
-    #    name: "foo"
+    #    name: "fern"
     #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @async_request_client.conn.get do |req|

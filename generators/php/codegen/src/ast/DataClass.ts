@@ -2,12 +2,12 @@ import { php } from "..";
 import { Access, ClassReference } from "../php";
 import { Class } from "./Class";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName";
 import { orderByAccess } from "./utils/orderByAccess";
 

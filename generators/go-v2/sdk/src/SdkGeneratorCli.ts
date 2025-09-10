@@ -1,21 +1,19 @@
-import urlJoin from "url-join";
-
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { go } from "@fern-api/go-ast";
+import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
+import { ClientGenerator } from "./client/ClientGenerator";
+import { RawClientGenerator } from "./raw-client/RawClientGenerator";
+import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wiretest/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -35,9 +33,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
-            return parsed;
+            return {
+                ...defaultBaseGoCustomConfigSchema,
+                ...parsed
+            };
         }
-        return {};
+        return defaultBaseGoCustomConfigSchema;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -53,10 +54,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        // TODO: Enable wire tests, when available.
-        // this.generateWireTests(context);
+        this.generateClients(context);
+        this.generateRawClients(context);
 
-        if (context.config.output.snippetFilepath != null) {
+        await context.snippetGenerator.populateSnippetsCache();
+
+        if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
                 await this.generateReadme({
@@ -64,39 +67,105 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                context.logger.error("Failed to generate README.md");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
+            }
+        }
+
+        try {
+            await this.generateReference({ context });
+        } catch (error) {
+            context.logger.warn("Failed to generate reference.md, this is OK.");
+            if (error instanceof Error) {
+                context.logger.warn((error as Error)?.message);
+                context.logger.warn((error as Error)?.stack ?? "");
             }
         }
 
         await context.project.persist();
     }
 
+    private generateRawClients(context: SdkGeneratorContext) {
+        if (context.ir.rootPackage.service != null) {
+            const rawClient = new RawClientGenerator({
+                context,
+                serviceId: context.ir.rootPackage.service,
+                service: context.getHttpServiceOrThrow(context.ir.rootPackage.service),
+                subpackage: undefined
+            });
+            context.project.addGoFiles(rawClient.generate());
+        }
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (subpackage.service == null) {
+                continue;
+            }
+            const rawClient = new RawClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service: context.getHttpServiceOrThrow(subpackage.service)
+            });
+            context.project.addGoFiles(rawClient.generate());
+        }
+    }
+
+    private generateClients(context: SdkGeneratorContext) {
+        this.generateRootClient(context);
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (!context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+            const client = new ClientGenerator({
+                context,
+                fernFilepath: subpackage.fernFilepath,
+                subpackage,
+                nestedSubpackages: subpackage.subpackages,
+                serviceId: subpackage.service,
+                service: subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined
+            });
+            context.project.addGoFiles(client.generate());
+        }
+    }
+
+    private generateRootClient(context: SdkGeneratorContext) {
+        const client = new ClientGenerator({
+            context,
+            isRootClient: true,
+            fernFilepath: context.ir.rootPackage.fernFilepath,
+            subpackage: undefined,
+            nestedSubpackages: context.ir.rootPackage.subpackages,
+            serviceId: context.ir.rootPackage.service,
+            service:
+                context.ir.rootPackage.service != null
+                    ? context.getHttpServiceOrThrow(context.ir.rootPackage.service)
+                    : undefined
+        });
+        context.project.addGoFiles(client.generate());
+    }
+
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
 
-        if (!dynamicIr) {
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // TEMPORARY HACK: As of 11-Mar-25, convertIr is not a shared library, but ideally
-            // it should be. If you're reading this and considering copying convertIr and
-            // related helpers into another generator, first confirm whether now is a good time
-            // to invest in making this a shared library instead.
             ir: convertIr(dynamicIr),
             config: context.config
         });
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-
             for (const endpointExample of endpoint.examples ?? []) {
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
                     id: {
-                        method,
+                        method: endpoint.location.method,
                         path,
                         identifierOverride: endpointId
                     },
@@ -123,22 +192,31 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
-
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
         );
     }
 
-    private generateWireTests(context: SdkGeneratorContext) {
-        const wireTestGenerator = new WireTestGenerator(context);
-        for (const subpackage of Object.values(context.ir.subpackages)) {
-            const serviceId = subpackage.service != null ? subpackage.service : undefined;
-            if (serviceId == null) {
-                continue;
-            }
-            const service = context.getHttpServiceOrThrow(serviceId);
-            context.project.addGoFiles(wireTestGenerator.generate({ serviceId, endpoints: service.endpoints }));
+    private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
+        const hasSnippetFilepath = context.config.output.snippetFilepath != null;
+        const publishConfig = context.ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasSnippetFilepath;
+            case "github":
+            case "direct":
+            default:
+                return hasSnippetFilepath;
         }
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }

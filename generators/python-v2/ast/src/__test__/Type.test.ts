@@ -1,6 +1,6 @@
 import { python } from "..";
-import { Type } from "../Type";
 import { Writer } from "../core/Writer";
+import { Type } from "../Type";
 
 describe("Type", () => {
     let writer: Writer;

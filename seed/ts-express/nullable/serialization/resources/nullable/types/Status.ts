@@ -10,7 +10,7 @@ export const Status: core.serialization.Schema<serializers.Status.Raw, SeedNulla
     .union("type", {
         active: core.serialization.object({}),
         archived: core.serialization.object({
-            value: core.serialization.date().optional(),
+            value: core.serialization.date().nullable(),
         }),
         "soft-deleted": core.serialization.object({
             value: core.serialization.date().optional(),
@@ -30,7 +30,7 @@ export declare namespace Status {
 
     export interface Archived {
         type: "archived";
-        value?: string | null;
+        value: string | null;
     }
 
     export interface SoftDeleted {

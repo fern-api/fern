@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "$ref": "#/definitions/level1.types.Address"
+    }
+  },
+  "required": [
+    "name",
+    "address"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "level1.types.Address": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "const": "USA"
+        }
+      },
+      "required": [
+        "line1",
+        "city",
+        "state",
+        "zip",
+        "country"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

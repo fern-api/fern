@@ -8,7 +8,8 @@ export type AuthScheme =
     | FernIr.AuthScheme.Bearer
     | FernIr.AuthScheme.Basic
     | FernIr.AuthScheme.Header
-    | FernIr.AuthScheme.Oauth;
+    | FernIr.AuthScheme.Oauth
+    | FernIr.AuthScheme.Inferred;
 
 export namespace AuthScheme {
     export interface Bearer extends FernIr.BearerAuthScheme, _Utils {
@@ -27,6 +28,10 @@ export namespace AuthScheme {
         type: "oauth";
     }
 
+    export interface Inferred extends FernIr.InferredAuthScheme, _Utils {
+        type: "inferred";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.AuthScheme._Visitor<_Result>) => _Result;
     }
@@ -36,6 +41,7 @@ export namespace AuthScheme {
         basic: (value: FernIr.BasicAuthScheme) => _Result;
         header: (value: FernIr.HeaderAuthScheme) => _Result;
         oauth: (value: FernIr.OAuthScheme) => _Result;
+        inferred: (value: FernIr.InferredAuthScheme) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -81,6 +87,16 @@ export const AuthScheme = {
         };
     },
 
+    inferred: (value: FernIr.InferredAuthScheme): FernIr.AuthScheme.Inferred => {
+        return {
+            ...value,
+            type: "inferred",
+            _visit: function <_Result>(this: FernIr.AuthScheme.Inferred, visitor: FernIr.AuthScheme._Visitor<_Result>) {
+                return FernIr.AuthScheme._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.AuthScheme, visitor: FernIr.AuthScheme._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "bearer":
@@ -91,6 +107,8 @@ export const AuthScheme = {
                 return visitor.header(value);
             case "oauth":
                 return visitor.oauth(value);
+            case "inferred":
+                return visitor.inferred(value);
             default:
                 return visitor._other(value as any);
         }

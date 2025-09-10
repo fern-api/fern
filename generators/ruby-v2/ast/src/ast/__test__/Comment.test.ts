@@ -1,6 +1,5 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
-import { MethodKind, MethodVisibility } from "../Method";
 import { Writer } from "../core/Writer";
 
 describe("Comment", () => {

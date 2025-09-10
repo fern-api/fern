@@ -1,14 +1,8 @@
-import hash from "object-hash";
-
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
-import {
-    DEFINITION_DIRECTORY,
-    dependenciesYml,
-    generatorsYml,
-    loadDependenciesConfiguration
-} from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import hash from "object-hash";
 
 import { OSSWorkspace } from "./OSSWorkspace";
 import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";
@@ -89,18 +83,32 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                 return defaultedContext.failAndThrow();
             }
 
+            let definition = {
+                absoluteFilePath: absolutePathToDefinition,
+                rootApiFile: structuralValidationResult.rootApiFile,
+                namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
+                packageMarkers: processPackageMarkersResult.packageMarkers,
+                importedDefinitions: processPackageMarkersResult.importedDefinitions
+            };
+            if (settings?.auth != null) {
+                definition = {
+                    ...definition,
+                    rootApiFile: {
+                        ...definition.rootApiFile,
+                        contents: {
+                            ...definition.rootApiFile.contents,
+                            auth: settings?.auth
+                        }
+                    }
+                };
+            }
+
             workspace = new FernWorkspace({
                 absoluteFilePath: this.absoluteFilePath,
                 generatorsConfiguration: this.generatorsConfiguration,
                 dependenciesConfiguration,
                 workspaceName: this.workspaceName,
-                definition: {
-                    absoluteFilePath: absolutePathToDefinition,
-                    rootApiFile: structuralValidationResult.rootApiFile,
-                    namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
-                    packageMarkers: processPackageMarkersResult.packageMarkers,
-                    importedDefinitions: processPackageMarkersResult.importedDefinitions
-                },
+                definition,
                 cliVersion: this.cliVersion,
                 sources: []
             });

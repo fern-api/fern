@@ -1,7 +1,5 @@
 import { Argument } from "../Argument";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
-import { Variable, VariableType } from "../Variable";
+import { Class_ } from "../classes/Class_";
 import {
     AliasReference,
     ArrayReference,
@@ -16,11 +14,13 @@ import {
     StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
-import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
+import { Parameter } from "../Parameter";
+import { Property } from "../Property";
+import { Variable, VariableType } from "../Variable";
 import { ConditionalStatement } from "./ConditionalStatement";
 
 export const AdditionalPropertiesProperty = new Property({

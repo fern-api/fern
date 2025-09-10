@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "\\$bla",
+    "\\$yo"
+  ],
+  "definitions": {}
+}

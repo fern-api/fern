@@ -1,7 +1,6 @@
-import { JSONSchema4 } from "json-schema";
-
 import { assertNever } from "@fern-api/core-utils";
 import { UnionTypeDeclaration } from "@fern-api/ir-sdk";
+import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema";
@@ -24,7 +23,6 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
                 enum: union.types.map((member) => member.discriminantValue.wireValue)
             }
         },
-        required: [discriminant],
         oneOf: union.types.map((member) => {
             let properties: Record<string, JSONSchema4> = {};
             let required: string[] = [];

@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+types:
+  Object:
+    docs: This is another test description
+    properties:
+      id:
+        type: string
+
+  User:
+    properties:
+      id:
+        type: string
+      name:
+        type: string

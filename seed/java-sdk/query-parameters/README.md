@@ -1,8 +1,37 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/query-parameters)](https://central.sonatype.com/artifact/com.fern/query-parameters)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
+
+## Installation
+
+### Gradle
+
+Add the dependency in your `build.gradle` file:
+
+```groovy
+dependencies {
+  implementation 'com.fern:query-parameters'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>com.fern</groupId>
+  <artifactId>query-parameters</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -16,7 +45,6 @@ import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -40,34 +68,26 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build(),
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build(),
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .keyValue(
@@ -84,33 +104,25 @@ public class Example {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
+                                    Arrays.asList("tags", "tags")
                                 )
                                 .build()
                         )
                         .build()
                 )
                 .excludeUser(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .filter(
-                    new ArrayList<String>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList("filter")
                 )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .optionalString("optionalString")
@@ -119,9 +131,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
@@ -180,27 +190,24 @@ SeedQueryParametersClient client = SeedQueryParametersClient
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `maxRetries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.queryParameters.core.RequestOptions;
+import com.seed.queryParameters.SeedQueryParametersClient;
 
-client.user().getUsername(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedQueryParametersClient client = SeedQueryParametersClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts
@@ -223,6 +230,32 @@ client.user().getUsername(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.queryParameters.SeedQueryParametersClient;
+import com.seed.queryParameters.core.RequestOptions;
+
+// Client level
+SeedQueryParametersClient client = SeedQueryParametersClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.user().getUsername(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

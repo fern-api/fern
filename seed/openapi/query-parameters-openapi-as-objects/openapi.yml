@@ -1,0 +1,167 @@
+openapi: 3.0.1
+info:
+  title: Query Parameters API
+  version: ''
+paths:
+  /user/getUsername:
+    get:
+      operationId: search
+      tags:
+        - ''
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: deadline
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: bytes
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+        - name: userList
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+              nullable: true
+        - name: optionalDeadline
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: keyValue
+          in: query
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+              nullable: true
+            nullable: true
+        - name: optionalString
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: nestedUser
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/NestedUser'
+            nullable: true
+        - name: optionalUser
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/User'
+            nullable: true
+        - name: excludeUser
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+              nullable: true
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: neighbor
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/SearchRequestNeighbor'
+            nullable: true
+        - name: neighborRequired
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/SearchRequestNeighborRequired'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+components:
+  schemas:
+    SearchRequestNeighbor:
+      title: SearchRequestNeighbor
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/NestedUser'
+        - type: string
+        - type: integer
+    SearchRequestNeighborRequired:
+      title: SearchRequestNeighborRequired
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/NestedUser'
+        - type: string
+        - type: integer
+    SearchResponse:
+      title: SearchResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+          nullable: true
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+    NestedUser:
+      title: NestedUser
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+          nullable: true
+  securitySchemes: {}

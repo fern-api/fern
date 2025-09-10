@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 
 export const Email: core.serialization.Schema<serializers.Email.Raw, SeedNullable.Email> = core.serialization
     .string()
-    .optional();
+    .nullable();
 
 export declare namespace Email {
-    export type Raw = string | null | undefined;
+    export type Raw = string | null;
 }

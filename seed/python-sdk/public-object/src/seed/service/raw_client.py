@@ -34,7 +34,7 @@ class RawServiceClient:
             request_options=request_options,
         ) as _response:
 
-            def stream() -> HttpResponse[typing.Iterator[bytes]]:
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
                         _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
@@ -44,10 +44,12 @@ class RawServiceClient:
                     _response.read()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield stream()
+            yield _stream()
 
 
 class AsyncRawServiceClient:
@@ -74,7 +76,7 @@ class AsyncRawServiceClient:
             request_options=request_options,
         ) as _response:
 
-            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
                         _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
@@ -85,7 +87,9 @@ class AsyncRawServiceClient:
                     await _response.aread()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await stream()
+            yield await _stream()

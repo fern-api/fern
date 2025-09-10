@@ -75,6 +75,10 @@ public final class CreateUserRequest {
   }
 
   public interface NameStage {
+    /**
+     * <p>The name of the user to create.
+     * This name is unique to each user.</p>
+     */
     _FinalStage name(@NotNull String name);
 
     Builder from(CreateUserRequest other);
@@ -83,6 +87,10 @@ public final class CreateUserRequest {
   public interface _FinalStage {
     CreateUserRequest build();
 
+    /**
+     * <p>The age of the user.
+     * This property is not required.</p>
+     */
     _FinalStage age(Optional<Integer> age);
 
     _FinalStage age(Integer age);
@@ -109,6 +117,8 @@ public final class CreateUserRequest {
     /**
      * <p>The name of the user to create.
      * This name is unique to each user.</p>
+     * <p>The name of the user to create.
+     * This name is unique to each user.</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -129,6 +139,10 @@ public final class CreateUserRequest {
       return this;
     }
 
+    /**
+     * <p>The age of the user.
+     * This property is not required.</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "age",

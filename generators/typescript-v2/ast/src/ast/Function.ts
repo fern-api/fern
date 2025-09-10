@@ -1,9 +1,9 @@
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 
 export declare namespace Function {
     interface Args {
@@ -19,7 +19,7 @@ export declare namespace Function {
 export class Function extends AstNode {
     readonly name: string;
     readonly parameters: Parameter[];
-    readonly async: boolean;
+    readonly ["async"]: boolean;
     readonly body: CodeBlock;
     readonly return_: Type | undefined;
     readonly docs: string | undefined;

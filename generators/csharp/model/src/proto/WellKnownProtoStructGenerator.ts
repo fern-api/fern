@@ -1,6 +1,6 @@
 import { CSharpFile, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -47,7 +47,8 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
                 csharp.Type.string(),
                 csharp.Type.optional(csharp.Type.reference(this.protoValueClassReference))
             ),
-            summary: this.typeDeclaration.docs
+            summary: this.typeDeclaration.docs,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addConstructor(this.getDefaultConstructor());

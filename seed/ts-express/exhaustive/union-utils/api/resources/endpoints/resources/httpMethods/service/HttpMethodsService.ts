@@ -126,7 +126,9 @@ export class HttpMethodsService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
@@ -159,7 +161,9 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
@@ -200,7 +204,9 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
@@ -241,7 +247,9 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
@@ -279,7 +287,9 @@ export class HttpMethodsService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(

@@ -17,12 +17,12 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.UpdateTestSubmissionStatusAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     "no-properties-union"
+    ///     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task UpdateTestSubmissionStatusAsync(
         string submissionId,
-        object request,
+        TestSubmissionStatus request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -63,7 +63,9 @@ public partial class AdminClient
     ///     new TestSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = RunningSubmissionState.QueueingSubmission,
+    ///         UpdateInfo = new TestSubmissionUpdateInfo(
+    ///             new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         ),
     ///     }
     /// );
     /// </code></example>
@@ -107,12 +109,12 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     "no-properties-union"
+    ///     new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
-        object request,
+        WorkspaceSubmissionStatus request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -153,7 +155,9 @@ public partial class AdminClient
     ///     new WorkspaceSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = RunningSubmissionState.QueueingSubmission,
+    ///         UpdateInfo = new WorkspaceSubmissionUpdateInfo(
+    ///             new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         ),
     ///     }
     /// );
     /// </code></example>
@@ -204,8 +208,12 @@ public partial class AdminClient
     ///         {
     ///             Result = new TestCaseResult
     ///             {
-    ///                 ExpectedResult = 1,
-    ///                 ActualResult = 1,
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                 ActualResult = new ActualResult(
+    ///                     new ActualResult.ValueInner(
+    ///                         new VariableValue(new VariableValue.IntegerValue(1))
+    ///                     )
+    ///                 ),
     ///                 Passed = true,
     ///             },
     ///             Stdout = "stdout",
@@ -216,7 +224,7 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
+    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///                 Stack = new StackInformation
     ///                 {
@@ -229,11 +237,27 @@ public partial class AdminClient
     ///                         {
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                         },
     ///                     },
@@ -244,7 +268,7 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
+    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///                 Stack = new StackInformation
     ///                 {
@@ -257,11 +281,27 @@ public partial class AdminClient
     ///                         {
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                         },
     ///                     },
@@ -322,7 +362,7 @@ public partial class AdminClient
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = 1,
+    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
     ///             {
@@ -335,11 +375,23 @@ public partial class AdminClient
     ///                     {
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                     },
     ///                 },
@@ -351,7 +403,7 @@ public partial class AdminClient
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = 1,
+    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
     ///             {
@@ -364,11 +416,23 @@ public partial class AdminClient
     ///                     {
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                     },
     ///                 },
@@ -424,12 +488,16 @@ public partial class AdminClient
     ///     {
     ///         WorkspaceRunDetails = new WorkspaceRunDetails
     ///         {
-    ///             ExceptionV2 = new ExceptionInfo
-    ///             {
-    ///                 ExceptionType = "exceptionType",
-    ///                 ExceptionMessage = "exceptionMessage",
-    ///                 ExceptionStacktrace = "exceptionStacktrace",
-    ///             },
+    ///             ExceptionV2 = new ExceptionV2(
+    ///                 new ExceptionV2.Generic(
+    ///                     new ExceptionInfo
+    ///                     {
+    ///                         ExceptionType = "exceptionType",
+    ///                         ExceptionMessage = "exceptionMessage",
+    ///                         ExceptionStacktrace = "exceptionStacktrace",
+    ///                     }
+    ///                 )
+    ///             ),
     ///             Exception = new ExceptionInfo
     ///             {
     ///                 ExceptionType = "exceptionType",
@@ -444,7 +512,7 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
+    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///                 Stack = new StackInformation
     ///                 {
@@ -457,11 +525,27 @@ public partial class AdminClient
     ///                         {
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                         },
     ///                     },
@@ -472,7 +556,7 @@ public partial class AdminClient
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = 1,
+    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///                 Stack = new StackInformation
     ///                 {
@@ -485,11 +569,27 @@ public partial class AdminClient
     ///                         {
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                             new Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 {
+    ///                                     {
+    ///                                         "variables",
+    ///                                         new DebugVariableValue(
+    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         )
+    ///                                     },
+    ///                                 },
     ///                             },
     ///                         },
     ///                     },
@@ -547,7 +647,7 @@ public partial class AdminClient
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = 1,
+    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
     ///             {
@@ -560,11 +660,23 @@ public partial class AdminClient
     ///                     {
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                     },
     ///                 },
@@ -576,7 +688,7 @@ public partial class AdminClient
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = 1,
+    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
     ///             {
@@ -589,11 +701,23 @@ public partial class AdminClient
     ///                     {
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                         new Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             {
+    ///                                 {
+    ///                                     "variables",
+    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                 },
+    ///                             },
     ///                         },
     ///                     },
     ///                 },

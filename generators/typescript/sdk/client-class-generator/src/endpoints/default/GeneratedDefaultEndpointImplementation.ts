@@ -1,18 +1,16 @@
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
-
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
+import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { buildUrl } from "../utils/buildUrl";
 import {
-    REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression
+    getTimeoutExpression,
+    REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
@@ -139,7 +137,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             if (generatedExample == null) {
                 continue;
             }
-            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            let exampleStr = "@example\n" + EndpointSampleCode.convertToString(generatedExample);
             exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             // Only add if it doesn't already exist
             if (!examples.includes(exampleStr)) {
@@ -159,7 +157,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
-    }): ts.Expression | undefined {
+    }): EndpointSampleCode | undefined {
+        const imports = this.request.getExampleEndpointImports({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
@@ -168,18 +171,21 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         if (exampleParameters == null) {
             return undefined;
         }
-        return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: args.clientReference
-                    }),
-                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
-                ),
-                undefined,
-                exampleParameters
+        return {
+            imports,
+            endpointInvocation: ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        this.generatedSdkClientClass.accessFromRootClient({
+                            referenceToRootClient: args.clientReference
+                        }),
+                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                    ),
+                    undefined,
+                    exampleParameters
+                )
             )
-        );
+        };
     }
 
     public maybeLeverageInvocation({
@@ -254,7 +260,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             invocation
                         )
                     ],
-                    ts.NodeFlags.Const
+                    ts.NodeFlags.Let
                 )
             ),
             ts.factory.createWhileStatement(
@@ -435,7 +441,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }

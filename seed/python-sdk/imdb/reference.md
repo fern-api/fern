@@ -28,8 +28,15 @@ Add a movie to the database using the movies/* /... path.
 
 ```python
 from seed import SeedApi
-client = SeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.imdb.create_movie(title='title', rating=1.1, )
+
+client = SeedApi(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.imdb.create_movie(
+    title="title",
+    rating=1.1,
+)
 
 ```
 </dd>
@@ -87,8 +94,14 @@ client.imdb.create_movie(title='title', rating=1.1, )
 
 ```python
 from seed import SeedApi
-client = SeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.imdb.get_movie(movie_id='movieId', )
+
+client = SeedApi(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.imdb.get_movie(
+    movie_id="movieId",
+)
 
 ```
 </dd>

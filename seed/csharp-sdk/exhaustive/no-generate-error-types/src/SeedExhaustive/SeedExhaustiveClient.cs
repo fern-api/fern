@@ -1,6 +1,5 @@
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
-using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
@@ -30,17 +29,13 @@ public partial class SeedExhaustiveClient
         }
         _client = new RawClient(clientOptions);
         Endpoints = new EndpointsClient(_client);
-        GeneralErrors = new GeneralErrorsClient(_client);
         InlinedRequests = new InlinedRequestsClient(_client);
         NoAuth = new NoAuthClient(_client);
         NoReqBody = new NoReqBodyClient(_client);
         ReqWithHeaders = new ReqWithHeadersClient(_client);
-        Types = new TypesClient(_client);
     }
 
     public EndpointsClient Endpoints { get; }
-
-    public GeneralErrorsClient GeneralErrors { get; }
 
     public InlinedRequestsClient InlinedRequests { get; }
 
@@ -49,6 +44,4 @@ public partial class SeedExhaustiveClient
     public NoReqBodyClient NoReqBody { get; }
 
     public ReqWithHeadersClient ReqWithHeaders { get; }
-
-    public TypesClient Types { get; }
 }

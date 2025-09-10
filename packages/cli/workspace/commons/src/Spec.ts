@@ -24,9 +24,11 @@ export interface OpenRPCSpec {
 export interface ProtobufSpec {
     type: "protobuf";
     absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     relativeFilepathToProtobufRoot: RelativeFilePath;
     generateLocally: boolean;
+    fromOpenAPI: boolean;
+    dependencies: string[];
     settings?: ParseOpenAPIOptions;
 }

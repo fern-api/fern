@@ -32,39 +32,39 @@ func (t *testMarshaler) MarshalJSON() ([]byte, error) {
 func TestMarshalJSONWithExtraProperties(t *testing.T) {
 	tests := []struct {
 		desc                string
-		giveMarshaler       interface{}
-		giveExtraProperties map[string]interface{}
+		giveMarshaler       any
+		giveExtraProperties map[string]any
 		wantBytes           []byte
 		wantError           string
 	}{
 		{
 			desc:                "invalid type",
 			giveMarshaler:       []string{"invalid"},
-			giveExtraProperties: map[string]interface{}{"key": "overwrite"},
+			giveExtraProperties: map[string]any{"key": "overwrite"},
 			wantError:           `cannot extract keys from []string; only structs and maps with string keys are supported`,
 		},
 		{
 			desc:                "invalid key type",
-			giveMarshaler:       map[int]interface{}{42: "value"},
-			giveExtraProperties: map[string]interface{}{"key": "overwrite"},
+			giveMarshaler:       map[int]any{42: "value"},
+			giveExtraProperties: map[string]any{"key": "overwrite"},
 			wantError:           `cannot extract keys from map[int]interface {}; only structs and maps with string keys are supported`,
 		},
 		{
 			desc:                "invalid map overwrite",
-			giveMarshaler:       map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{"key": "overwrite"},
+			giveMarshaler:       map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{"key": "overwrite"},
 			wantError:           `cannot add extra property "key" because it is already defined on the type`,
 		},
 		{
 			desc:                "invalid struct overwrite",
 			giveMarshaler:       new(testMarshaler),
-			giveExtraProperties: map[string]interface{}{"birthDate": "2000-01-01"},
+			giveExtraProperties: map[string]any{"birthDate": "2000-01-01"},
 			wantError:           `cannot add extra property "birthDate" because it is already defined on the type`,
 		},
 		{
 			desc:                "invalid struct overwrite embedded type",
 			giveMarshaler:       new(testMarshaler),
-			giveExtraProperties: map[string]interface{}{"name": "bob"},
+			giveExtraProperties: map[string]any{"name": "bob"},
 			wantError:           `cannot add extra property "name" because it is already defined on the type`,
 		},
 		{
@@ -75,39 +75,39 @@ func TestMarshalJSONWithExtraProperties(t *testing.T) {
 		},
 		{
 			desc:                "empty",
-			giveMarshaler:       map[string]interface{}{},
-			giveExtraProperties: map[string]interface{}{},
+			giveMarshaler:       map[string]any{},
+			giveExtraProperties: map[string]any{},
 			wantBytes:           []byte(`{}`),
 		},
 		{
 			desc:                "no extra properties",
-			giveMarshaler:       map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{},
+			giveMarshaler:       map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{},
 			wantBytes:           []byte(`{"key":"value"}`),
 		},
 		{
 			desc:                "only extra properties",
-			giveMarshaler:       map[string]interface{}{},
-			giveExtraProperties: map[string]interface{}{"key": "value"},
+			giveMarshaler:       map[string]any{},
+			giveExtraProperties: map[string]any{"key": "value"},
 			wantBytes:           []byte(`{"key":"value"}`),
 		},
 		{
 			desc:                "single extra property",
-			giveMarshaler:       map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{"extra": "property"},
+			giveMarshaler:       map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{"extra": "property"},
 			wantBytes:           []byte(`{"key":"value","extra":"property"}`),
 		},
 		{
 			desc:                "multiple extra properties",
-			giveMarshaler:       map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{"one": 1, "two": 2},
+			giveMarshaler:       map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{"one": 1, "two": 2},
 			wantBytes:           []byte(`{"key":"value","one":1,"two":2}`),
 		},
 		{
 			desc:          "nested properties",
-			giveMarshaler: map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{
-				"user": map[string]interface{}{
+			giveMarshaler: map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{
+				"user": map[string]any{
 					"age":  42,
 					"name": "alice",
 				},
@@ -116,12 +116,12 @@ func TestMarshalJSONWithExtraProperties(t *testing.T) {
 		},
 		{
 			desc:          "multiple nested properties",
-			giveMarshaler: map[string]interface{}{"key": "value"},
-			giveExtraProperties: map[string]interface{}{
-				"metadata": map[string]interface{}{
+			giveMarshaler: map[string]any{"key": "value"},
+			giveExtraProperties: map[string]any{
+				"metadata": map[string]any{
 					"ip": "127.0.0.1",
 				},
-				"user": map[string]interface{}{
+				"user": map[string]any{
 					"age":  42,
 					"name": "alice",
 				},
@@ -135,7 +135,7 @@ func TestMarshalJSONWithExtraProperties(t *testing.T) {
 				BirthDate: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 				CreatedAt: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
 			},
-			giveExtraProperties: map[string]interface{}{
+			giveExtraProperties: map[string]any{
 				"extra": "property",
 			},
 			wantBytes: []byte(`{"name":"alice","birthDate":"2000-01-01","created_at":"2024-01-01T00:00:00Z","type":"test","extra":"property"}`),
@@ -152,7 +152,7 @@ func TestMarshalJSONWithExtraProperties(t *testing.T) {
 			require.NoError(t, err)
 			assert.Equal(t, tt.wantBytes, bytes)
 
-			value := make(map[string]interface{})
+			value := make(map[string]any)
 			require.NoError(t, json.Unmarshal(bytes, &value))
 		})
 	}
@@ -180,7 +180,7 @@ func TestExtractExtraProperties(t *testing.T) {
 		}
 		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice", "age": 42}`), value)
 		require.NoError(t, err)
-		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+		assert.Equal(t, map[string]any{"age": float64(42)}, extraProperties)
 	})
 
 	t.Run("nil pointer", func(t *testing.T) {
@@ -201,7 +201,7 @@ func TestExtractExtraProperties(t *testing.T) {
 		}
 		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice", "age": 42}`), value)
 		require.NoError(t, err)
-		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+		assert.Equal(t, map[string]any{"age": float64(42)}, extraProperties)
 	})
 
 	t.Run("zero value", func(t *testing.T) {
@@ -211,7 +211,7 @@ func TestExtractExtraProperties(t *testing.T) {
 		var value user
 		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice", "age": 42}`), value)
 		require.NoError(t, err)
-		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+		assert.Equal(t, map[string]any{"age": float64(42)}, extraProperties)
 	})
 
 	t.Run("exclude", func(t *testing.T) {

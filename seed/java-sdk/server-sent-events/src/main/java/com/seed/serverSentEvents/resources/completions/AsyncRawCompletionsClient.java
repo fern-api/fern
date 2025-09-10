@@ -72,8 +72,7 @@ public class AsyncRawCompletionsClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
-                                new Stream<StreamedCompletion>(
-                                        StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]"),
+                                Stream.fromSse(StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]"),
                                 response));
                         return;
                     }

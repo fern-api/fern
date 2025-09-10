@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "GroupProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// Details related to grouping for this entity
+message GroupDetails {
+  oneof group_type {
+    Team team = 1;
+    Echelon echelon = 3;
+  }
+}
+
+// Describes a Team group type. Comprised of autonomous entities where an entity
+// in a Team can only be a part of a single Team at a time.
+message Team {}
+
+// Describes a Echelon group type.  Comprised of entities which are members of the
+// same unit or echelon. Ex: A group of tanks within a armored company or that same company
+// as a member of a battalion.
+message Echelon {
+  oneof echelon_type {
+    ArmyEchelon army_echelon = 1;
+  }
+}
+
+// Military units defined by the Army.
+enum ArmyEchelon {
+  ARMY_ECHELON_INVALID = 0;
+  ARMY_ECHELON_FIRE_TEAM = 1; // Smallest unit group, e.g., a few soldiers
+  ARMY_ECHELON_SQUAD = 2; // E.g., a group of fire teams
+  ARMY_ECHELON_PLATOON = 3; // E.g., several squads
+  ARMY_ECHELON_COMPANY = 4; // E.g., several platoons
+  ARMY_ECHELON_BATTALION = 5; // E.g., several companies
+  ARMY_ECHELON_REGIMENT = 6; // E.g., several battalions
+  ARMY_ECHELON_BRIGADE = 7; // E.g., several regiments or battalions
+  ARMY_ECHELON_DIVISION = 8; // E.g., several brigades
+  ARMY_ECHELON_CORPS = 9; // E.g., several divisions
+  ARMY_ECHELON_ARMY = 10; // E.g., several corps
+}

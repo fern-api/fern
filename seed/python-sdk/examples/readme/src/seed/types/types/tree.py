@@ -12,9 +12,18 @@ class Tree(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Tree
-    from seed.types import Node
-    Tree(nodes=[Node(name='left', ), Node(name='right', )], )
+    from seed.types import Node, Tree
+
+    Tree(
+        nodes=[
+            Node(
+                name="left",
+            ),
+            Node(
+                name="right",
+            ),
+        ],
+    )
     """
 
     nodes: typing.Optional[typing.List["Node"]] = None

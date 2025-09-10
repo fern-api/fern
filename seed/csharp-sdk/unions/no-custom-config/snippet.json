@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(new NormalSweet { Value = \"value\" });\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(\n    new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" }))\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<object>()\n    {\n        new NormalSweet { Value = \"value\" },\n        new NormalSweet { Value = \"value\" },\n    }\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<BigUnion>()\n    {\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n    }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.UpdateAsync(new Circle { Radius = 1.1 });\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));\n"
             }
         }
     ]

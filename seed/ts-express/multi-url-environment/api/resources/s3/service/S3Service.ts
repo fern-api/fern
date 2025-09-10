@@ -60,7 +60,9 @@ export class S3Service {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedMultiUrlEnvironmentError) {
                         console.warn(

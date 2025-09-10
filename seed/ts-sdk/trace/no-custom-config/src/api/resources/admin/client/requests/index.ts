@@ -1,2 +1,2 @@
-export { type StoreTracedTestCaseRequest } from "./StoreTracedTestCaseRequest";
-export { type StoreTracedWorkspaceRequest } from "./StoreTracedWorkspaceRequest";
+export { type StoreTracedTestCaseRequest } from "./StoreTracedTestCaseRequest.js";
+export { type StoreTracedWorkspaceRequest } from "./StoreTracedWorkspaceRequest.js";

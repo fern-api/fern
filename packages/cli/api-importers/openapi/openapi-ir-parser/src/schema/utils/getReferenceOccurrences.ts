@@ -1,6 +1,5 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { MediaType } from "@fern-api/core-utils";
+import { OpenAPIV3 } from "openapi-types";
 
 import { isReferenceObject } from "./isReferenceObject";
 
@@ -16,7 +15,7 @@ function getReferenceOccurrencesHelper({
     occurrences,
     breadcrumbs
 }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     obj: any;
     occurrences: Record<string, number>;
     breadcrumbs: string[];

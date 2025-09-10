@@ -2,6 +2,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
+[Serializable]
 public record MyOtherRequest
 {
     public string? MaybeString { get; set; }

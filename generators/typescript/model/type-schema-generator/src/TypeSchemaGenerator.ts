@@ -1,3 +1,11 @@
+import {
+    AliasTypeDeclaration,
+    EnumTypeDeclaration,
+    ObjectTypeDeclaration,
+    Type,
+    UndiscriminatedUnionTypeDeclaration,
+    UnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasTypeSchema,
@@ -9,15 +17,6 @@ import {
     ModelContext
 } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import {
-    AliasTypeDeclaration,
-    EnumTypeDeclaration,
-    ObjectTypeDeclaration,
-    Type,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";

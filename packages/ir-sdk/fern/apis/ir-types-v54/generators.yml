@@ -1,10 +1,11 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: local
 groups:
   dynamic-ir:
     audiences:
       - dynamic
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.38.6
         output:
           location: npm
@@ -15,7 +16,7 @@ groups:
           noSerdeLayer: true
   node:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.38.6
         output:
           location: npm

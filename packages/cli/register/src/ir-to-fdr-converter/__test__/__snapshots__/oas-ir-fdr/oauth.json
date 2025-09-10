@@ -1,8 +1,8 @@
 {
   "types": {
-    "OauthTokenPostRequestBodySchemaGrantType": {
+    "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType": {
       "description": "The type of grant to request",
-      "name": "OauthTokenPostRequestBodySchemaGrantType",
+      "name": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType",
       "shape": {
         "type": "enum",
         "values": [
@@ -78,8 +78,8 @@
     }
   },
   "subpackages": {
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
       "name": "auth",
       "endpoints": [
         {
@@ -94,7 +94,7 @@
             }
           ],
           "id": "get-token",
-          "originalEndpointId": "auth.get-token",
+          "originalEndpointId": "endpoint_auth.get-token",
           "name": "Request an access token",
           "path": {
             "pathParameters": [],
@@ -124,7 +124,7 @@
                     "key": "grant_type",
                     "valueType": {
                       "type": "id",
-                      "value": "OauthTokenPostRequestBodySchemaGrantType"
+                      "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
                     }
                   },
                   {
@@ -190,6 +190,89 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The type of grant to request",
+                        "key": "grant_type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
+                        }
+                      },
+                      {
+                        "description": "Required for password grant type",
+                        "key": "username",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Required for password grant type",
+                        "key": "password",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Required for refresh_token grant type",
+                        "key": "refresh_token",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The client identifier",
+                        "key": "client_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The client secret",
+                        "key": "client_secret",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -201,10 +284,49 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_get-token_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful token response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},
@@ -212,34 +334,31 @@
               "headers": {},
               "requestBody": {
                 "grant_type": "password",
-                "client_id": "foo",
-                "client_secret": "foo"
+                "client_id": "string",
+                "client_secret": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "grant_type": "password",
-                  "client_id": "foo",
-                  "client_secret": "foo"
+                  "client_id": "string",
+                  "client_secret": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
-                }
+                "access_token": "string",
+                "token_type": "Bearer",
+                "expires_in": 1,
+                "refresh_token": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "access_token": "foo",
+                  "access_token": "string",
                   "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
+                  "expires_in": 1,
+                  "refresh_token": "string"
                 }
               }
             }
@@ -261,7 +380,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "auth"
+      "subpackage_auth"
     ]
   },
   "auth": {

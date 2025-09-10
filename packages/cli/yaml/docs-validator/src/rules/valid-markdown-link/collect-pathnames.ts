@@ -1,6 +1,5 @@
-import type { Position } from "unist";
-
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { Position } from "unist";
 
 import { RuleViolation } from "../../Rule";
 import { safeCollectLinksAndSources } from "./collect-links";

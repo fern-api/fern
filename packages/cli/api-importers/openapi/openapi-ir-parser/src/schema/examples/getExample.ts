@@ -1,8 +1,6 @@
+import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
 
-import { Logger } from "@fern-api/logger";
-
-import { getExtension } from "../../getExtension";
 import { getExamples } from "../../openapi/v3/extensions/getExamples";
 
 export function getExampleAsNumber({

@@ -1,0 +1,10 @@
+name: inferred-auth-explicit
+imports:
+  auth: auth.yml
+
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: bearer
+    get-token:
+      endpoint: auth.getTokenWithClientCredentials

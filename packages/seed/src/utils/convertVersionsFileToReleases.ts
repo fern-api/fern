@@ -1,10 +1,8 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-
 import { TaskContext } from "@fern-api/task-context";
-
 import { CliReleaseRequest, GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 export async function parseGeneratorReleasesFile({
     generatorId,
@@ -28,9 +26,9 @@ export async function parseGeneratorReleasesFile({
                 });
                 await action(release);
             } catch (e) {
-                context.logger.error(
-                    `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`
-                );
+                const errorMessage = `Failed to parse and run action on release ${JSON.stringify(entry, undefined, 2)}: ${(e as Error)?.message}`;
+                context.logger.error(errorMessage);
+                throw new Error(errorMessage); // Throw to fail CI
             }
         }
     }
@@ -53,9 +51,9 @@ export async function parseCliReleasesFile({
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
                 await action(release);
             } catch (e) {
-                context.logger.error(
-                    `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`
-                );
+                const errorMessage = `Failed to parse and run action on release ${JSON.stringify(entry, undefined, 2)}: ${(e as Error)?.message}`;
+                context.logger.error(errorMessage);
+                throw new Error(errorMessage); // Throw to fail CI
             }
         }
     }

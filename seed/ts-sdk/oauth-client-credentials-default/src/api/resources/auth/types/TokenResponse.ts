@@ -6,6 +6,6 @@
  * An OAuth token response.
  */
 export interface TokenResponse {
-    accessToken: string;
-    expiresIn: number;
+    access_token: string;
+    expires_in: number;
 }

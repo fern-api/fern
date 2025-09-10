@@ -1,10 +1,9 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { SourceFile } from "ts-morph";
-
-import { Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -16,6 +15,7 @@ export declare namespace SdkInlinedRequestBodySchemaContextImpl {
         packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -25,9 +25,11 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
     private packageResolver: PackageResolver;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
 
     constructor({
         importsManager,
+        exportsManager,
         packageResolver,
         sourceFile,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
@@ -37,6 +39,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = sdkInlinedRequestBodySchemaDeclarationReferencer;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.packageResolver = packageResolver;
     }
 
@@ -73,6 +76,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }

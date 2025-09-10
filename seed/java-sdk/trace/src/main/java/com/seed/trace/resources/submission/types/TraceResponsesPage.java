@@ -95,6 +95,10 @@ public final class TraceResponsesPage {
             return this;
         }
 
+        /**
+         * <p>If present, use this to load subsequent pages.
+         * The offset is the id of the next trace response to load.</p>
+         */
         @JsonSetter(value = "offset", nulls = Nulls.SKIP)
         public Builder offset(Optional<Integer> offset) {
             this.offset = offset;
@@ -119,7 +123,9 @@ public final class TraceResponsesPage {
         }
 
         public Builder addAllTraceResponses(List<TraceResponse> traceResponses) {
-            this.traceResponses.addAll(traceResponses);
+            if (traceResponses != null) {
+                this.traceResponses.addAll(traceResponses);
+            }
             return this;
         }
 

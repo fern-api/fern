@@ -16,6 +16,123 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Headers",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Send",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/headers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "headers"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "operand",
+                "description": null,
+                "type": "text",
+                "value": "\">\""
+              },
+              {
+                "key": "maybeOperand",
+                "description": null,
+                "type": "text",
+                "value": "\">\""
+              },
+              {
+                "key": "operandOrColor",
+                "description": null,
+                "type": "text",
+                "value": "\"red\""
+              },
+              {
+                "key": "maybeOperandOrColor",
+                "description": null,
+                "type": "text",
+                "value": "\"YOUR_MAYBE_OPERAND_OR_COLOR\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/headers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "headers"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "operand",
+                    "description": null,
+                    "type": "text",
+                    "value": "\">\""
+                  },
+                  {
+                    "key": "maybeOperand",
+                    "description": null,
+                    "type": "text",
+                    "value": "\">\""
+                  },
+                  {
+                    "key": "operandOrColor",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"red\""
+                  },
+                  {
+                    "key": "maybeOperandOrColor",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"YOUR_MAYBE_OPERAND_OR_COLOR\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Inlined Request",
       "item": [
         {

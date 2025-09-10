@@ -226,6 +226,36 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "my-api-key",
+              "value": {
+                "value": {
+                  "value": "my-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "another_header",
+              "value": {
+                "value": {
+                  "value": "another_header",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": "2024-06-04",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
             }
           ],
           "request": {
@@ -484,6 +514,36 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "my-api-key",
+              "value": {
+                "value": {
+                  "value": "my-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "another_header",
+              "value": {
+                "value": {
+                  "value": "another_header",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": "2024-06-04",
+                  "type": "string"
+                },
+                "type": "literal"
               }
             }
           ],

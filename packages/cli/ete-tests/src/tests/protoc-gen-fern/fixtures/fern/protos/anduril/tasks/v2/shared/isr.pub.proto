@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+package anduril.tasks.v2;
+
+import "anduril/tasks/v2/common.pub.proto";
+import "anduril/tasks/v2/objective.pub.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/v2;tasks";
+option java_multiple_files = true;
+option java_package = "com.anduril.tasks.v2";
+
+// Maps to BREVITY code INVESTIGATE.
+message Investigate {
+  // Indicates where to investigate.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+}
+
+// Maps to BREVITY code ID with type Visual.
+message VisualId {
+  // Indicates what to identify.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+}
+
+// Maps to BREVITY code MAP.
+message Map {
+  // Indicates where to perform the SAR.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+  // minimum desired NIIRS (National Image Interpretability Rating Scales) see https://irp.fas.org/imint/niirs.htm
+  google.protobuf.UInt32Value min_niirs = 3;
+}
+
+// Maps to the Loiter behavior within the FlightTask type within UCI v2.
+message Loiter {
+  // Indicates where to perform the loiter.
+  Objective objective = 1;
+  // Specifies the details of the loiter.
+  LoiterType loiter_type = 2;
+  // Optional common ISR parameters.
+  // The loiter radius and bearing should be inferred from the standoff_distance and standoff_angle respectively.
+  ISRParameters parameters = 3;
+}
+
+// Represents intent to search an area. Maps to the Area Search Team Task within the Mission Autonomy Task Model.
+message AreaSearch {
+  // Indicates where to perform the area search.
+  Objective objective = 1;
+  // Priors that can be used to inform this AreaSearch.
+  repeated Prior priors = 2;
+  // Agents participating in this AreaSearch.
+  repeated Agent participants = 3;
+  // Control Area for this AreaSearch.
+  repeated ControlArea control_areas = 4;
+  // TODO: populate remaining fields here as we iterate on the AreaSearch integration.
+}
+
+// Represents intent to search a volume. Maps to the Volume Search Team Task within the Mission Autonomy Task Model.
+message VolumeSearch {
+  // Indicates where to perform the volume search.
+  Objective objective = 1;
+  // Priors that can be used to inform this VolumeSearch.
+  repeated Prior priors = 2;
+  // Agents participating in this VolumeSearch.
+  repeated Agent participants = 3;
+  // Control Area for this VolumeSearch.
+  repeated ControlArea control_areas = 4;
+  // TODO: populate remaining fields here as we iterate on the VolumeSearch integration.
+}
+
+// Task to improve the quality of a track. Maps to the Improve Track Task within the Mission Autonomy Task Model.
+message ImproveTrackQuality {
+  // Indicates the target track that is having its quality improved.
+  Objective objective = 1;
+  // Task will complete when the requested track reaches a TQ >= the termination_track_quality.
+  uint32 termination_track_quality = 2;
+}
+
+// Indicates intent to follow an Objective. Maps to Brevity code SHADOW.
+message Shadow {
+  // Indicates what to follow.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+}
+
+// Maps to UCI v2 LoiterType.
+message LoiterType {
+  oneof loiter_type {
+    OrbitType orbit_type = 1;
+  }
+}
+
+message OrbitType {
+  // Indicates the direction in which to perform the loiter.
+  OrbitDirection direction = 1;
+  // Indicates the loiter pattern to perform.
+  OrbitPattern pattern = 2;
+  // Indicates the amount of time to be spent in loiter.
+  OrbitDuration duration = 3;
+}
+
+// Direction of the loiter relative to the front of the vehicle.
+enum OrbitDirection {
+  ORBIT_DIRECTION_DIRECTION_INVALID = 0;
+  ORBIT_DIRECTION_RIGHT = 1;
+  ORBIT_DIRECTION_LEFT = 2;
+}
+
+enum OrbitPattern {
+  ORBIT_PATTERN_INVALID = 0;
+  ORBIT_PATTERN_CIRCLE = 1;
+  ORBIT_PATTERN_RACETRACK = 2;
+  ORBIT_PATTERN_FIGURE_EIGHT = 3;
+}
+
+message OrbitDuration {
+  oneof duration {
+    DurationRange duration_range = 1;
+    uint64 num_of_orbits = 2;
+  }
+}
+
+// A Prior that can be used to inform an ISR Task.
+message Prior {
+  oneof prior {
+    // Prefer Entity priors whenever the prior is in fact an entity. In other words, don't take position/point
+    // out of an entity and pass it as a simple point.
+    string entity_id = 1;
+    // Point priors for simple reference points that are not geo entities.
+    Point point = 5;
+  }
+}
+
+// Common parameters for ISR Tasks.
+message ISRParameters {
+  // Indicates the target speed of the asset. Units are meters per second.
+  google.protobuf.FloatValue speed_m_s = 2;
+  // Indicates the standoff distance from the objective. The units are in meters.
+  google.protobuf.FloatValue standoff_distance_m = 3;
+  // Indicates the standoff angle relative to the objective's bearing orientation (defaults to north).
+  // In particular, the asset should approach target from this angle. Units in degrees.
+  google.protobuf.FloatValue standoff_angle = 5;
+  // Indicates the amount of time in milliseconds to execute an ISR task before expiring. 0 value indicates no
+  // expiration.
+  google.protobuf.UInt64Value expiration_time_ms = 6;
+
+  reserved 1, 4;
+}
+
+// Gimbal pointing command.
+message GimbalPoint {
+  oneof point_type {
+    // Point the gimbal at and lock on, continuing to look at a specific objective even as the platform moves.
+    Objective look_at = 1;
+
+    // Point the gimbal at a fixed azimuth/elevation with respect to the platform frame.
+    AzimuthElevationPoint celestial_location = 2;
+
+    // Point gimbal to an [x, y] location in the video feed.
+    FramePoint frame_location = 4;
+  }
+  // Optional common ISR parameters.
+  ISRParameters parameters = 3;
+}
+
+// Celestial location with respect to a platform frame.
+message AzimuthElevationPoint {
+  double azimuth = 1;
+  double elevation = 2;
+}
+
+// Point clicked in the frame of the video feed.
+message FramePoint {
+  // Frame-normalized location in frame on the x-axis, range (0, 1).
+  // For example, x = 0.3 implies a pixel location of 0.3 * image_width.
+  float x = 1;
+  // Frame-normalized location in frame on the y-axis, range (0, 1).
+  // For example, y = 0.3 implies a pixel location of 0.3 * image_height.
+  float y = 2;
+  // Timestamp of frame
+  google.protobuf.Timestamp timestamp = 3;
+}
+
+// Command for setting gimbal zoom levels.
+message GimbalZoom {
+  oneof mode {
+    // Set the zoom level to the provided horizontal field of view in degrees.
+    google.protobuf.DoubleValue set_horizontal_fov = 1;
+    // Set the zoom level to the provided zoom level.
+    google.protobuf.FloatValue set_magnification = 2;
+  }
+}
+
+// Maps to BREVITY code ID with type MONITOR. To task assets to maintain sensor awareness
+// on a given objective.
+message Monitor {
+  // Indicates objective to monitor.
+  Objective objective = 1;
+  reserved 2, 3;
+}
+
+// Maps to BREVITY code ID with type SCAN. To task assets to find and report any tracks in a geographic area.
+message Scan {
+  // Indicates where to scan.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+}
+
+// Performs a Battle Damage Assessment (BDA). Does not map to any Task in either UCI or BREVITY.
+message BattleDamageAssessment {
+  // Objective to perform BDA on.
+  Objective objective = 1;
+  // Optional common ISR parameters.
+  ISRParameters parameters = 2;
+}

@@ -1,5 +1,5 @@
-export * as testGet from "./testGet";
-export * as testPost from "./testPost";
-export * as testPut from "./testPut";
-export * as testPatch from "./testPatch";
-export * as testDelete from "./testDelete";
+export * as testGet from "./testGet.js";
+export * as testPost from "./testPost.js";
+export * as testPut from "./testPut.js";
+export * as testPatch from "./testPatch.js";
+export * as testDelete from "./testDelete.js";

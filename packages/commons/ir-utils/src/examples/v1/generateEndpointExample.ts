@@ -18,7 +18,7 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { hashJSON } from "../../hashJSON";
-import { isOptional } from "../utils/isTypeReferenceOptional";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
@@ -189,7 +189,7 @@ export function generateEndpointExample({
                     });
                     if (
                         propertyExample.type === "failure" &&
-                        !isOptional({ typeDeclarations, typeReference: property.valueType })
+                        !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
                     ) {
                         return {
                             type: "failure",
@@ -418,6 +418,8 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
     );
     const url =
         endpoint.fullPath.head +
-        endpoint.fullPath.parts.map((pathPart) => pathParameters[pathPart.pathParameter] + pathPart.tail).join("");
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
     return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

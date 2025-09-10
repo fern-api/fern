@@ -91,6 +91,18 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
+await client.file.service.getFile("filename");
+
+```
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
 await client.health.service.check("id-2sdx82h");
 
 ```
@@ -340,6 +352,46 @@ await client.service.createBigEntity(
 			}
 	}
 )
+
+```
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
+undefined;
+
+```
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
+await client.service.refreshToken({
+  ttl: 420,
+});
+
+```
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
+await client.service.refreshToken({
+  ttl: 1,
+});
 
 ```
 

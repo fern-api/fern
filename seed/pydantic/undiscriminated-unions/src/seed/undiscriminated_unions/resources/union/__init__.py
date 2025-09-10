@@ -8,9 +8,13 @@ from .metadata import Metadata
 from .metadata_union import MetadataUnion
 from .my_union import MyUnion
 from .named_metadata import NamedMetadata
+from .nested_union_l_1 import NestedUnionL1
+from .nested_union_l_2 import NestedUnionL2
+from .nested_union_root import NestedUnionRoot
 from .optional_metadata import OptionalMetadata
 from .request import Request
 from .type_with_optional_union import TypeWithOptionalUnion
+from .union_with_duplicate_types import UnionWithDuplicateTypes
 
 __all__ = [
     "Key",
@@ -19,7 +23,11 @@ __all__ = [
     "MetadataUnion",
     "MyUnion",
     "NamedMetadata",
+    "NestedUnionL1",
+    "NestedUnionL2",
+    "NestedUnionRoot",
     "OptionalMetadata",
     "Request",
     "TypeWithOptionalUnion",
+    "UnionWithDuplicateTypes",
 ]

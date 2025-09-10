@@ -1,5 +1,5 @@
 import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter";
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";

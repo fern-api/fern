@@ -1,9 +1,7 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
-
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 import { ParsedFrontmatter } from "../types/parsedFrontmatter";
 
@@ -35,10 +33,11 @@ export async function convertMarkdown({
         relativeFilepathFromRoot,
         sidebarTitle: data.sidebarTitle ?? data.title,
         frontmatter: {
+            "max-toc-depth": undefined,
             title: data.title,
             subtitle: data.description,
             layout: data.mode != null ? "reference" : undefined,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             image: data["og:image"] as any,
             slug: FernRegistry.navigation.latest.Slug(slug),
 
@@ -74,7 +73,8 @@ export async function convertMarkdown({
             nofollow: undefined,
             "jsonld:breadcrumb": undefined,
             logo: undefined,
-            keywords: undefined
+            keywords: undefined,
+            tags: undefined
         },
         content: transformedContent
     };

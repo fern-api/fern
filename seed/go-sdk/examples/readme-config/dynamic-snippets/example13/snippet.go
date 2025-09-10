@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.New(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,6 +17,6 @@ func do() () {
     )
     client.Service.GetMovie(
         context.TODO(),
-        "movieId",
+        "movie-c06a4ad7",
     )
 }

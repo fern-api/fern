@@ -12,19 +12,25 @@ end"
 
 exports[`Class > type definitions > writes class with method type definitions 1`] = `
 "class Foobar
-    def initialize: (String) -> void
-    def build: (name: String) -> instance
-    def call: () -> String
+  def initialize: (String) -> void
+  def build: (name: String) -> instance
+  def call: () -> String
 end"
 `;
 
 exports[`Class > writes class with a body 1`] = `
 "class Foobar
-    def initialize(name); end
+  # @option name [String]
+  #
+  # @return [void]
+  def initialize(name); end
 
-    def self.build(name:); end
+  # @return [instance]
+  def self.build(name:); end
 
-    def call; end
+  # @return [String]
+  def call; end
+
 end
 "
 `;

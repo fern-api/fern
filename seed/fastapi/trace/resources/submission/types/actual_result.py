@@ -7,7 +7,6 @@ import typing
 import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
-from ...commons.types.variable_value import VariableValue
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2
 
@@ -62,7 +61,7 @@ class ActualResult(UniversalRootModel):
 
     def visit(
         self,
-        value: typing.Callable[[VariableValue], T_Result],
+        value: typing.Callable[["VariableValue"], T_Result],
         exception: typing.Callable[[ExceptionInfo], T_Result],
         exception_v_2: typing.Callable[[resources_submission_types_exception_v_2_ExceptionV2], T_Result],
     ) -> T_Result:
@@ -73,6 +72,9 @@ class ActualResult(UniversalRootModel):
             return exception(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "exceptionV2":
             return exception_v_2(unioned_value.value)
+
+
+from ...commons.types.variable_value import VariableValue  # noqa: E402, F401, I001
 
 
 class _ActualResult:

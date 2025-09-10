@@ -50,9 +50,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "oneOf": [
         {
           "properties": {

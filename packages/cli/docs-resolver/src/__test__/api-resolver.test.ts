@@ -1,5 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -15,7 +15,7 @@ const context = createMockTaskContext();
 
 const apiDefinitionId = "550e8400-e29b-41d4-a716-446655440000";
 
-// eslint-disable-next-line jest/no-disabled-tests
+// biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/api-resolver/fern"),
@@ -72,7 +72,7 @@ it.skip("converts to api reference node", async () => {
         sourceResolver: new SourceResolverImpl(context, apiWorkspace)
     });
 
-    const apiDefinition = convertIrToApiDefinition(ir, apiDefinitionId);
+    const apiDefinition = convertIrToApiDefinition({ ir, apiDefinitionId, context });
 
     const node = new ApiReferenceNodeConverter(
         apiSection,
@@ -80,6 +80,7 @@ it.skip("converts to api reference node", async () => {
         slug,
         docsWorkspace,
         context,
+        new Map(),
         new Map(),
         new Map(),
         NodeIdGenerator.init(),

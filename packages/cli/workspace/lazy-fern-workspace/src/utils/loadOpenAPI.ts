@@ -1,8 +1,7 @@
-import { OpenAPI } from "openapi-types";
-
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPI } from "openapi-types";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
@@ -36,12 +35,12 @@ export async function loadOpenAPI({
         overridesFilepath = absolutePathToOpenAPIOverrides;
     } else if (
         typeof parsed === "object" &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
     ) {
         overridesFilepath = join(
             dirname(absolutePathToOpenAPI),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
         );
     }

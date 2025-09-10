@@ -94,19 +94,42 @@ types:
 
   RequestWithExample:
     union:
-      octetStream: finalIr.OctetStreamRequest
-      multipart: finalIr.MultipartRequest
+      octetStream: ParseOctetStreamRequest
+      multipart: ParseMultipartRequest
       json: JsonRequestWithExample
+      formUrlEncoded: ParseFormUrlEncodedRequest
 
-  JsonRequestWithExample:
+  ParseFormUrlEncodedRequest:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithSdkMethodName
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
       fullExamples: optional<list<NamedFullExample>>
       additionalProperties: boolean
+
+  JsonRequestWithExample:
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+      - commons.WithSdkMethodName
+    properties:
+      schema: SchemaWithExample
+      contentType: optional<string>
+      fullExamples: optional<list<NamedFullExample>>
+      additionalProperties: boolean
+
+  ParseOctetStreamRequest:
+    extends:
+      - finalIr.OctetStreamRequest
+      - commons.WithSdkMethodName
+
+  ParseMultipartRequest:
+    extends:
+      - finalIr.MultipartRequest
+      - commons.WithSdkMethodName
 
   ResponseWithExample:
     union:

@@ -19,7 +19,17 @@
 
 </div>
 
-Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
+# 🌿 What is Fern?
+
+Fern is a platform that transforms your API definitions into production-ready SDKs and beautiful documentation in minutes. 
+
+With Fern, you can offer your users:
+
+- 🧩 **Type-safe SDKs** in multiple languages, including TypeScript, Python, Java, Go, Ruby, PHP, and C#
+- 📘 **Developer documentation** featuring an interactive UI and auto-generated API + SDK references
+- ✨ **AI Search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer a developer's questions
+
+Fern supports leading API specifications including OpenAPI (REST, Webhooks), AsyncAPI (WebSockets), Protobuf (gRPC), and OpenRPC.
 
 <div align="center">
     <a href="/fern/images/overview-dark.png" target="_blank">
@@ -33,7 +43,7 @@ Fern is a toolkit that allows you to input your API Definition and output SDKs a
 
 ## 🌿 SDKs
 
-The Fern toolkit is available via a command line interface (CLI) and requires Node 18+. To install it, run:
+The Fern platform is available via a command line interface (CLI) and requires Node 18+. To install it, run:
 
 ```bash
 npm install -g fern-api
@@ -67,33 +77,35 @@ fern generate
 
 ## 🌿 API Documentation
 
-Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
+Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. 
+Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
 
 Check out docs built with Fern:
 
-- [docs.vellum.ai](https://docs.vellum.ai)
-- [docs.superagent.sh](https://docs.superagent.sh/)
+- [elevenlabs.io/docs](https://elevenlabs.io/docs)
+- [launchdarkly.com/docs](https://launchdarkly.com/docs/home)
 - [docs.hume.ai](https://docs.hume.ai/)
-- [docs.deepgram.com](https://docs.deepgram.com/)
 
-Get started [here](https://github.com/fern-api/docs-starter-openapi).
+Get started [here](https://github.com/fern-api/docs-starter).
 
 ## 🌿 Generators
 
 Generators are process that take your API Definition as input and output artifacts (SDKs,
-Postman Collections, Server boilerplate, etc.). To add a generator run `fern add <generator id>`
+Postman Collections, Server boilerplate, etc.). To add a generator, run `fern add <generator id>`.
 
 ### SDK Generators
 
 | Generator ID                       | Latest Version                                                                                    | Entrypoint                                                                    |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-node-sdk` | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-node-sdk) | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                      |
+| `fernapi/fern-typescript-sdk`      | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk)      | [cli.ts](./generators/typescript/sdk/cli/src/cli.ts)                      |
 | `fernapi/fern-python-sdk`          | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)              | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
 | `fernapi/fern-java-sdk`            | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)                  | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-sdk`            | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                  | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |
 | `fernapi/fern-go-sdk`              | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                      | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                            |
 | `fernapi/fern-csharp-sdk`          | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)                  | [cli.ts](./generators/csharp/sdk/src/cli.ts)                                  |
 | `fernapi/fern-php-sdk`             | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)                    | [cli.ts](./generators/php/sdk/src/cli.ts)                                     |
+| `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [cli.ts](./generators/swift/sdk/src/cli.ts)                                   |
+| `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [cli.ts](./generators/rust/sdk/src/cli.ts)                                  |
 
 ### Server-side Generators
 
@@ -235,10 +247,10 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 ## Community
 
-[Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are here to answer questions and help you get the most out of Fern.
+[Join our Slack!](https://join.slack.com/t/fern-community/shared_invite/zt-2q7ev4mki-mhO5anKslwRowp4oExWf4A) We are here to answer questions and help you get the most out of Fern.
 
 ## Contributing
 
-We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md).
+We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md). To contribute to our documentation, refer to our [docs](https://github.com/fern-api/docs) repo.
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)

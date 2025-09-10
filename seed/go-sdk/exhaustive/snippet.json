@@ -1,0 +1,543 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnListOfObjects(\n\tcontext.TODO(),\n\t[]*types.ObjectWithRequiredField{\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t},\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t\t\"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnMapOfPrimToObject(\n\tcontext.TODO(),\n\tmap[string]*types.ObjectWithRequiredField{\n\t\t\"string\": \u0026types.ObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnMapPrimToPrim(\n\tcontext.TODO(),\n\tmap[string]string{\n\t\t\"string\": \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnOptional(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnSetOfObjects(\n\tcontext.TODO(),\n\t[]*types.ObjectWithRequiredField{\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnSetOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Enum.GetAndReturnEnum(\n\tcontext.TODO(),\n\ttypes.WeatherReportSunny,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.ContentType.PostJsonPatchContentType(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUuid: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUuid: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HttpMethods.TestPost(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HttpMethods.TestDelete(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HttpMethods.TestGet(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HttpMethods.TestPatch(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026types.ObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUuid: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HttpMethods.TestPut(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026types.ObjectWithRequiredField{\n\t\tString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_no-auth.postWithNoAuth"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoAuth.PostWithNoAuth(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET",
+                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoReqBody.GetWithNoRequestBody(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST",
+                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoReqBody.PostWithNoRequestBody(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithOptionalField(\n\tcontext.TODO(),\n\t\u0026types.NestedObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUuid: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(\n\tcontext.TODO(),\n\t[]*types.NestedObjectWithRequiredField{\n\t\t\u0026types.NestedObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\t\tString: fern.String(\n\t\t\t\t\t\"string\",\n\t\t\t\t),\n\t\t\t\tInteger: fern.Int(\n\t\t\t\t\t1,\n\t\t\t\t),\n\t\t\t\tLong: fern.Int64(\n\t\t\t\t\t1000000,\n\t\t\t\t),\n\t\t\t\tDouble: fern.Float64(\n\t\t\t\t\t1.1,\n\t\t\t\t),\n\t\t\t\tBool: fern.Bool(\n\t\t\t\t\ttrue,\n\t\t\t\t),\n\t\t\t\tDatetime: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tDate: fern.Time(\n\t\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tUuid: fern.UUID(\n\t\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\t\tList: []string{\n\t\t\t\t\t\"list\",\n\t\t\t\t\t\"list\",\n\t\t\t\t},\n\t\t\t\tSet: []string{\n\t\t\t\t\t\"set\",\n\t\t\t\t},\n\t\t\t\tMap: map[int]string{\n\t\t\t\t\t1: \"map\",\n\t\t\t\t},\n\t\t\t\tBigint: fern.String(\n\t\t\t\t\t\"1000000\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\t\u0026types.NestedObjectWithRequiredField{\n\t\t\tString: \"string\",\n\t\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\t\tString: fern.String(\n\t\t\t\t\t\"string\",\n\t\t\t\t),\n\t\t\t\tInteger: fern.Int(\n\t\t\t\t\t1,\n\t\t\t\t),\n\t\t\t\tLong: fern.Int64(\n\t\t\t\t\t1000000,\n\t\t\t\t),\n\t\t\t\tDouble: fern.Float64(\n\t\t\t\t\t1.1,\n\t\t\t\t),\n\t\t\t\tBool: fern.Bool(\n\t\t\t\t\ttrue,\n\t\t\t\t),\n\t\t\t\tDatetime: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tDate: fern.Time(\n\t\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tUuid: fern.UUID(\n\t\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\t\tList: []string{\n\t\t\t\t\t\"list\",\n\t\t\t\t\t\"list\",\n\t\t\t\t},\n\t\t\t\tSet: []string{\n\t\t\t\t\t\"set\",\n\t\t\t\t},\n\t\t\t\tMap: map[int]string{\n\t\t\t\t\t1: \"map\",\n\t\t\t\t},\n\t\t\t\tBigint: fern.String(\n\t\t\t\t\t\"1000000\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(\n\tcontext.TODO(),\n\t\"string\",\n\t\u0026types.NestedObjectWithRequiredField{\n\t\tString: \"string\",\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUuid: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithMapOfMap(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithMapOfMap{\n\t\tMap: map[string]map[string]string{\n\t\t\t\"map\": map[string]string{\n\t\t\t\t\"map\": \"map\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithOptionalField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUuid: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithRequiredField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithAllowMultipleQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithMultipleQuery{\n\t\tQuery: []string{\n\t\t\t\"query\",\n\t\t},\n\t\tNumber: []int{\n\t\t\t1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithQuery{\n\t\tQuery:  \"query\",\n\t\tNumber: 1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithInlinePathAndQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePathAndQuery{\n\t\tParam: \"param\",\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithPathAndQuery(\n\tcontext.TODO(),\n\t\"param\",\n\t\u0026endpoints.GetWithPathAndQuery{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePath{\n\t\tParam: \"param\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithPath(\n\tcontext.TODO(),\n\t\"param\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.ModifyResourceAtInlinedPath{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithPath(\n\tcontext.TODO(),\n\t\"param\",\n\t\"string\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnBase64(\n\tcontext.TODO(),\n\t[]byte(\"Hello world!\"),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnBool(\n\tcontext.TODO(),\n\ttrue,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDate(\n\tcontext.TODO(),\n\tfern.MustParseDate(\n\t\t\"2023-01-15\",\n\t),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDatetime(\n\tcontext.TODO(),\n\tfern.MustParseDateTime(\n\t\t\"2024-01-15T09:30:00Z\",\n\t),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDouble(\n\tcontext.TODO(),\n\t1.1,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnInt(\n\tcontext.TODO(),\n\t1,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnLong(\n\tcontext.TODO(),\n\t1000000,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnString(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnUuid(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlinedRequests.PostWithObjectBodyandResponse(\n\tcontext.TODO(),\n\t\u0026fern.PostWithObjectBody{\n\t\tString:  \"string\",\n\t\tInteger: 1,\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUuid: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST",
+                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.ReqWithHeaders.GetWithCustomHeader(\n\tcontext.TODO(),\n\t\u0026fern.ReqWithHeaders{\n\t\tXTestServiceHeader:  \"X-TEST-SERVICE-HEADER\",\n\t\tXTestEndpointHeader: \"X-TEST-ENDPOINT-HEADER\",\n\t\tBody:                \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Union.GetAndReturnUnion(\n\tcontext.TODO(),\n\t\u0026types.Animal{\n\t\tDog: \u0026types.Dog{\n\t\t\tName:        \"name\",\n\t\t\tLikesToWoof: true,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Urls.WithMixedCase(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Urls.NoEndingSlash(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Urls.WithEndingSlash(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Urls.WithUnderscores(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/exhaustive/fern/endpoints\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Put.Add(\n\tcontext.TODO(),\n\t\u0026endpoints.PutRequest{\n\t\tId: \"id\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

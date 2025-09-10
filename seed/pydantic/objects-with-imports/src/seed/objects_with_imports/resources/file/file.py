@@ -12,7 +12,12 @@ class File(UniversalBaseModel):
     Examples
     --------
     from seed.objects_with_imports.resources import File
-    File(name='file.txt', contents='...', info="REGULAR", )
+
+    File(
+        name="file.txt",
+        contents="...",
+        info="REGULAR",
+    )
     """
 
     name: str

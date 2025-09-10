@@ -1,9 +1,9 @@
-import { HttpEndpointSchema } from "../schemas";
 import {
     ExampleBodyResponseSchema,
     ExampleResponseSchema,
     ExampleSseResponseSchema,
-    ExampleStreamResponseSchema
+    ExampleStreamResponseSchema,
+    HttpEndpointSchema
 } from "../schemas";
 import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema";
 import { isSseStreamResponseSchema } from "./isSseStreamResponseSchema";

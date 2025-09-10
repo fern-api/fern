@@ -125,12 +125,16 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                 {
                     WorkspaceRunDetails = new WorkspaceRunDetails
                     {
-                        ExceptionV2 = new ExceptionInfo
-                        {
-                            ExceptionType = "exceptionType",
-                            ExceptionMessage = "exceptionMessage",
-                            ExceptionStacktrace = "exceptionStacktrace",
-                        },
+                        ExceptionV2 = new ExceptionV2(
+                            new ExceptionV2.Generic(
+                                new ExceptionInfo
+                                {
+                                    ExceptionType = "exceptionType",
+                                    ExceptionMessage = "exceptionMessage",
+                                    ExceptionStacktrace = "exceptionStacktrace",
+                                }
+                            )
+                        ),
                         Exception = new ExceptionInfo
                         {
                             ExceptionType = "exceptionType",
@@ -145,7 +149,9 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            ReturnValue = 1,
+                            ReturnValue = new DebugVariableValue(
+                                new DebugVariableValue.IntegerValue(1)
+                            ),
                             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                             Stack = new StackInformation
                             {
@@ -158,16 +164,26 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                                     {
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                     },
@@ -179,7 +195,9 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            ReturnValue = 1,
+                            ReturnValue = new DebugVariableValue(
+                                new DebugVariableValue.IntegerValue(1)
+                            ),
                             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                             Stack = new StackInformation
                             {
@@ -192,16 +210,26 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                                     {
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                     },

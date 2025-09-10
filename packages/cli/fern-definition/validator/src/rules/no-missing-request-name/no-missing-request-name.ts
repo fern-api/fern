@@ -1,6 +1,5 @@
-import { size } from "lodash-es";
-
 import { isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { size } from "lodash-es";
 
 import { Rule } from "../../Rule";
 

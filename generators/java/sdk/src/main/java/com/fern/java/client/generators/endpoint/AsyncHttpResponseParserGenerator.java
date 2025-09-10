@@ -81,9 +81,26 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec byteArrayBaseMethodSpec,
             ParameterSpec requestParameterSpec,
             MethodSpec endpointWithRequestOptions) {
+
+        StringBuilder params = new StringBuilder();
+
+        for (ParameterSpec param : byteArrayBaseMethodSpec.parameters) {
+            if (!param.equals(requestParameterSpec)) {
+                if (params.length() > 0) {
+                    params.append(", ");
+                }
+                params.append(param.name);
+            }
+        }
+
+        if (params.length() > 0) {
+            params.append(", ");
+        }
+        params.append("new $T($L)");
+
         return methodBodyBuilder
                 .add(
-                        "return $L(new $T($L)",
+                        "return $L(" + params.toString(),
                         endpointWithRequestOptions.name,
                         ByteArrayInputStream.class,
                         requestParameterSpec.name)

@@ -1,24 +1,26 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
+using SeedTrace.V2;
 
 namespace SeedTrace;
 
-public record WorkspaceStarterFilesResponseV2
+[Serializable]
+public record WorkspaceStarterFilesResponseV2 : IJsonOnDeserialized
 {
-    [JsonPropertyName("filesByLanguage")]
-    public Dictionary<Language, V2.Files> FilesByLanguage { get; set; } =
-        new Dictionary<Language, V2.Files>();
-
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+    private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
+
+    [JsonPropertyName("filesByLanguage")]
+    public Dictionary<Language, Files> FilesByLanguage { get; set; } =
+        new Dictionary<Language, Files>();
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

@@ -151,9 +151,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "oneOf": [
         {
           "properties": {

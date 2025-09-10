@@ -1,1 +1,1 @@
-export * from "./MovieDoesNotExistError";
+export * from "./MovieDoesNotExistError.js";

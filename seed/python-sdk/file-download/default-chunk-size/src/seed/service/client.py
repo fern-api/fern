@@ -22,6 +22,29 @@ class ServiceClient:
         """
         return self._raw_client
 
+    def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedFileDownload
+
+        client = SeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.simple()
+        """
+        _response = self._raw_client.simple(request_options=request_options)
+        return _response.data
+
     def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
         Parameters
@@ -52,6 +75,37 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
+    async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileDownload
+
+        client = AsyncSeedFileDownload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.simple()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simple(request_options=request_options)
+        return _response.data
+
     async def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
@@ -66,5 +120,5 @@ class AsyncServiceClient:
         typing.AsyncIterator[bytes]
         """
         async with self._raw_client.download_file(request_options=request_options) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk

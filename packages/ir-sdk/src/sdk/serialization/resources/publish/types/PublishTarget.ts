@@ -6,17 +6,29 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PostmanPublishTarget } from "./PostmanPublishTarget";
+import { NpmPublishTarget } from "./NpmPublishTarget";
+import { MavenPublishTarget } from "./MavenPublishTarget";
+import { PypiPublishTarget } from "./PypiPublishTarget";
 
 export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.Raw, FernIr.PublishTarget> =
     core.serialization
         .union("type", {
             postman: PostmanPublishTarget,
+            npm: NpmPublishTarget,
+            maven: MavenPublishTarget,
+            pypi: PypiPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
                 switch (value.type) {
                     case "postman":
                         return FernIr.PublishTarget.postman(value);
+                    case "npm":
+                        return FernIr.PublishTarget.npm(value);
+                    case "maven":
+                        return FernIr.PublishTarget.maven(value);
+                    case "pypi":
+                        return FernIr.PublishTarget.pypi(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -25,9 +37,21 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
         });
 
 export declare namespace PublishTarget {
-    export type Raw = PublishTarget.Postman;
+    export type Raw = PublishTarget.Postman | PublishTarget.Npm | PublishTarget.Maven | PublishTarget.Pypi;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
+    }
+
+    export interface Npm extends NpmPublishTarget.Raw {
+        type: "npm";
+    }
+
+    export interface Maven extends MavenPublishTarget.Raw {
+        type: "maven";
+    }
+
+    export interface Pypi extends PypiPublishTarget.Raw {
+        type: "pypi";
     }
 }

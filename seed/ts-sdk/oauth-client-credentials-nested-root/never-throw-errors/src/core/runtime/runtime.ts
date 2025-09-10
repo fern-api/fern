@@ -11,6 +11,9 @@ interface BunGlobal {
 declare const Deno: DenoGlobal | undefined;
 declare const Bun: BunGlobal | undefined;
 declare const EdgeRuntime: string | undefined;
+declare const self: typeof globalThis.self & {
+    importScripts?: unknown;
+};
 
 /**
  * A constant that indicates which environment and version the SDK is running in.
@@ -62,7 +65,6 @@ function evaluateRuntime(): Runtime {
      */
     const isWebWorker =
         typeof self === "object" &&
-        // @ts-ignore
         typeof self?.importScripts === "function" &&
         (self.constructor?.name === "DedicatedWorkerGlobalScope" ||
             self.constructor?.name === "ServiceWorkerGlobalScope" ||

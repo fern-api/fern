@@ -14,7 +14,7 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     undiscriminatedUnionDeclaration,
     isList
 }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     context: AbstractCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
     isList: boolean;
@@ -54,7 +54,7 @@ function getOneOfSerializer({
     context,
     undiscriminatedUnionDeclaration
 }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     context: AbstractCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
 }): csharp.ClassReference {
@@ -66,7 +66,7 @@ function getOneOf({
     context,
     undiscriminatedUnionDeclaration
 }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     context: AbstractCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
 }): csharp.ClassReference {

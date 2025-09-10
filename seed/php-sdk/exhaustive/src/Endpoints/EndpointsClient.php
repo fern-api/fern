@@ -11,6 +11,7 @@ use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
+use Seed\Endpoints\Urls\UrlsClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
@@ -62,6 +63,11 @@ class EndpointsClient
     public UnionClient $union;
 
     /**
+     * @var UrlsClient $urls
+     */
+    public UrlsClient $urls;
+
+    /**
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -102,5 +108,6 @@ class EndpointsClient
         $this->primitive = new PrimitiveClient($this->client, $this->options);
         $this->put = new PutClient($this->client, $this->options);
         $this->union = new UnionClient($this->client, $this->options);
+        $this->urls = new UrlsClient($this->client, $this->options);
     }
 }

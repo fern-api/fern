@@ -12,6 +12,8 @@ export const ExpressCustomConfigSchema = z.strictObject({
     requestValidationStatusCode: z.optional(z.number()),
     useBigInt: z.optional(z.boolean()),
     noOptionalProperties: z.optional(z.boolean()),
+    packagePath: z.optional(z.string()),
+    packageManager: z.optional(z.enum(["pnpm", "yarn"])),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),

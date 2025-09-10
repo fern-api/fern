@@ -35,7 +35,7 @@ Repository = 'https://github.com/no-environment/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pydantic-core = "^2.18.2"
+pydantic-core = ">=2.18.2"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"

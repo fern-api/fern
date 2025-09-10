@@ -1,3 +1,3 @@
 export * as SeedBasicAuthEnvironmentVariables from "./api";
-export { register } from "./register";
 export { SeedBasicAuthEnvironmentVariablesError } from "./errors";
+export { register } from "./register";

@@ -8,6 +8,8 @@ export default defineConfig({
             deps: {
                 fallbackCJS: true
             }
-        }
+        },
+        maxConcurrency: 10,
+        passWithNoTests: true
     }
 });

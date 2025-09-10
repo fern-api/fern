@@ -26,17 +26,17 @@ public partial class SeedEnumClient
             }
         }
         _client = new RawClient(clientOptions);
+        Headers = new HeadersClient(_client);
         InlinedRequest = new InlinedRequestClient(_client);
         PathParam = new PathParamClient(_client);
         QueryParam = new QueryParamClient(_client);
-        Unknown = new UnknownClient(_client);
     }
+
+    public HeadersClient Headers { get; }
 
     public InlinedRequestClient InlinedRequest { get; }
 
     public PathParamClient PathParam { get; }
 
     public QueryParamClient QueryParam { get; }
-
-    public UnknownClient Unknown { get; }
 }

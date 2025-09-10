@@ -1,6 +1,12 @@
-import { isNonNullish } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir";
+import { isNonNullish, noop } from "@fern-api/core-utils";
+import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
+import {
+    EndpointExample,
+    FullExample,
+    LiteralExample,
+    PathParameterExample,
+    PrimitiveExample
+} from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";
@@ -33,8 +39,81 @@ export function buildEndpointExample({
         example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters);
     }
 
-    if (endpointExample.headers != null && endpointExample.headers.length > 0) {
-        example.headers = convertHeaderExamples({ context, namedFullExamples: endpointExample.headers });
+    const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
+    const globalHeaders = context.builder.getGlobalHeaders();
+    const hasGlobalHeaders = Object.keys(globalHeaders).length > 0;
+
+    const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
+
+    // Generate examples for headers
+    if (hasEndpointHeaders || hasGlobalHeaders) {
+        const namedFullExamples: NamedFullExample[] = [];
+
+        // Auth header handling
+        if (endpointExample.headers != null) {
+            for (const header of endpointExample.headers) {
+                // ignore auth headers for example generation
+                if (header.name !== context.builder.getAuthHeaderName()) {
+                    namedFullExamples.push(header);
+                }
+            }
+        }
+
+        // Global header handling
+        for (const [header, info] of Object.entries(globalHeaders)) {
+            // ignore global headers that are already in the endpoint headers
+            if (endpointHeaderNames.has(header)) {
+                continue;
+            }
+
+            // set global header example value
+            if (info != null && typeof info === "object" && info.type != null) {
+                // handling header types
+                const valueToUse = recursivelyVisitRawTypeReference<void | string>({
+                    type: info.type,
+                    _default: undefined,
+                    validation: undefined,
+                    // generic visitor to extract the string value from the literal
+                    // todo: add handling for other types in this visitor
+                    visitor: {
+                        primitive: (primitive) => primitive.toString(),
+                        map: (map) => map.toString(),
+                        list: (list) => list,
+                        optional: (optional) => optional,
+                        nullable: (nullable) => nullable,
+                        set: (set) => set,
+                        named: (named) => named,
+                        literal: (literal) => {
+                            if (literal.type === "string") {
+                                return literal.string;
+                            } else if (literal.type === "boolean") {
+                                return literal.boolean.toString();
+                            }
+                            return undefined;
+                        },
+                        unknown: noop
+                    }
+                });
+
+                if (valueToUse != null) {
+                    namedFullExamples.push({
+                        name: header,
+                        value: FullExample.literal(LiteralExample.string(valueToUse))
+                    });
+                }
+            } else {
+                // Adds a header example using the header name as the value when no type information is available
+                namedFullExamples.push({
+                    name: header,
+                    value: FullExample.primitive(PrimitiveExample.string(header))
+                });
+            }
+        }
+
+        example.headers = convertHeaderExamples({
+            context,
+            namedFullExamples
+        });
     }
 
     if (endpointExample.request != null) {
@@ -111,13 +190,10 @@ function convertHeaderExamples({
     context: OpenApiIrConverterContext;
     namedFullExamples: NamedFullExample[];
 }): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
         const convertedExample = convertFullExample(namedFullExample.value);
-        if (globalHeaderNames.has(namedFullExample.name)) {
-            return;
-        } else if (convertedExample != null) {
+        if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });

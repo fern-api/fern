@@ -5,7 +5,11 @@ package com.seed.contentTypes.resources.service;
 
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.RequestOptions;
+import com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;
+import com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;
+import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -30,5 +34,102 @@ public class ServiceClient {
 
     public void patch(PatchProxyRequest request, RequestOptions requestOptions) {
         this.rawClient.patch(request, requestOptions).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public void patchComplex(String id) {
+        this.rawClient.patchComplex(id).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public void patchComplex(String id, PatchComplexRequest request) {
+        this.rawClient.patchComplex(id, request).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
+    public void patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
+        this.rawClient.patchComplex(id, request, requestOptions).body();
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public void namedPatchWithMixed(String id, NamedMixedPatchRequest request) {
+        this.rawClient.namedPatchWithMixed(id, request).body();
+    }
+
+    /**
+     * Named request with mixed optional/nullable fields and merge-patch content type.
+     * This should trigger the NPE issue when optional fields aren't initialized.
+     */
+    public void namedPatchWithMixed(String id, NamedMixedPatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.namedPatchWithMixed(id, request, requestOptions).body();
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public void optionalMergePatchTest(OptionalMergePatchRequest request) {
+        this.rawClient.optionalMergePatchTest(request).body();
+    }
+
+    /**
+     * Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+     * This endpoint should:
+     * <ol>
+     * <li>Not NPE when fields are not provided (tests initialization)</li>
+     * <li>Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)</li>
+     * </ol>
+     */
+    public void optionalMergePatchTest(OptionalMergePatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.optionalMergePatchTest(request, requestOptions).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id) {
+        this.rawClient.regularPatch(id).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id, RegularPatchRequest request) {
+        this.rawClient.regularPatch(id, request).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id, RegularPatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.regularPatch(id, request, requestOptions).body();
     }
 }

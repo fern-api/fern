@@ -2,6 +2,14 @@
 
 # isort: skip_file
 
-from .types import Id, MyAliasObject, MyCollectionAliasObject, MyObject, MyObjectWithOptional, ObjectType
+from .types import Id, MyAliasObject, MyCollectionAliasObject, MyInlineType, MyObject, MyObjectWithOptional, ObjectType
 
-__all__ = ["Id", "MyAliasObject", "MyCollectionAliasObject", "MyObject", "MyObjectWithOptional", "ObjectType"]
+__all__ = [
+    "Id",
+    "MyAliasObject",
+    "MyCollectionAliasObject",
+    "MyInlineType",
+    "MyObject",
+    "MyObjectWithOptional",
+    "ObjectType",
+]

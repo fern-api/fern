@@ -14,11 +14,12 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import core.ObjectMappers;
 import java.io.IOException;
 import java.lang.Boolean;
-import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,6 +42,7 @@ public final class JsonLike {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visit((List<JsonLike>) this.value);
@@ -118,15 +120,15 @@ public final class JsonLike {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<JsonLike>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Map<String, JsonLike>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       if (value instanceof Integer) {
         return of((Integer) value);

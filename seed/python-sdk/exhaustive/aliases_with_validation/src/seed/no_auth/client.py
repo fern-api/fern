@@ -45,9 +45,14 @@ class NoAuthClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.no_auth.post_with_no_auth(request={'key': 'value'}
-        , )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.no_auth.post_with_no_auth(
+            request={"key": "value"},
+        )
         """
         _response = self._raw_client.post_with_no_auth(request=request, request_options=request_options)
         return _response.data
@@ -87,12 +92,22 @@ class AsyncNoAuthClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.no_auth.post_with_no_auth(request={'key': 'value'}
-            , )
+            await client.no_auth.post_with_no_auth(
+                request={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.post_with_no_auth(request=request, request_options=request_options)

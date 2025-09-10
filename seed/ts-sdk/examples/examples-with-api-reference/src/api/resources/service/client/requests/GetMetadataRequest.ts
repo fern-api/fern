@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         xApiVersion: "0.0.1",
+ *         "X-API-Version": "0.0.1",
  *         shallow: false,
  *         tag: "development"
  *     }
@@ -13,5 +13,5 @@
 export interface GetMetadataRequest {
     shallow?: boolean;
     tag?: string | string[];
-    xApiVersion: string;
+    "X-API-Version": string;
 }

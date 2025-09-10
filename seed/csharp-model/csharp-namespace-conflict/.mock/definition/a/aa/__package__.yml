@@ -1,9 +1,0 @@
-types:
-  A:
-    properties: {}
-  B:
-    properties: {}
-  SubTestType:
-    properties:
-      a: A
-      b: B

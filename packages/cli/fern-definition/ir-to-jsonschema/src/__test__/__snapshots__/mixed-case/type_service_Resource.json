@@ -9,9 +9,6 @@
       ]
     }
   },
-  "required": [
-    "resource_type"
-  ],
   "oneOf": [
     {
       "properties": {

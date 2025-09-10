@@ -28,10 +28,10 @@ module SeedUnionsClient
       # @return [SeedUnionsClient::Types::UnionWithSingleElement]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct.type
-        when "foo"
-        end
-        member = SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
+        member = case struct.type
+                 when "foo"
+                 end
+        SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
         new(member: member, discriminant: struct.type)
       end
 

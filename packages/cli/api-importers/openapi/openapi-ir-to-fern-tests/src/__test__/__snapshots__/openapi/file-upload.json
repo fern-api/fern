@@ -110,6 +110,7 @@
                     "metadata": {
                       "content-type": "application/json",
                       "docs": "This is a metadata field",
+                      "style": "json",
                       "type": "optional<map<string, unknown>>",
                     },
                   },
@@ -208,6 +209,7 @@
               type: optional<map<string, unknown>>
               docs: This is a metadata field
               content-type: application/json
+              style: json
             data:
               type: optional<UploadWithContentTypeRequestData>
               style: exploded

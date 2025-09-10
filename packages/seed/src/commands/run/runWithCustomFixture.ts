@@ -1,39 +1,38 @@
-import tmp from "tmp-promise";
-
-import { DEFINITION_DIRECTORY, GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import {
-    AbstractAPIWorkspace,
-    FernWorkspace,
-    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from "@fern-api/workspace-loader";
-
-import { Semaphore } from "../../Semaphore";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import tmp from "tmp-promise";
+import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
-import { workspaceShouldGenerateDynamicSnippetTests } from "../../workspaceShouldGenerateDynamicSnippetTests";
-import { ScriptRunner } from "../test/ScriptRunner";
+import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { DockerTestRunner } from "../test/test-runner";
-import { writeDotMock } from "../test/test-runner/TestRunner";
+import { DockerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
 
 export async function runWithCustomFixture({
     pathToFixture,
     workspace,
     logLevel,
-    audience,
-    skipScripts
+    skipScripts,
+    outputPath,
+    inspect,
+    local,
+    keepDocker
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
-    audience: string | undefined;
-    skipScripts: boolean | undefined;
+    skipScripts: boolean;
+    outputPath?: AbsoluteFilePath;
+    inspect: boolean;
+    local: boolean;
+    keepDocker: boolean;
 }): Promise<void> {
     const lock = new Semaphore(1);
-    const outputDir = await tmp.dir();
-    const absolutePathToOutput = AbsoluteFilePath.of(outputDir.path);
+    const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
+
     const taskContextFactory = new TaskContextFactory(logLevel);
     const customFixtureConfig = workspace.workspaceConfig.customFixtureConfig;
 
@@ -41,74 +40,126 @@ export async function runWithCustomFixture({
         `${workspace.workspaceName}:${"custom"} - ${customFixtureConfig?.outputFolder ?? ""}`
     );
 
-    const dockerGeneratorRunner = new DockerTestRunner({
-        generator: workspace,
-        lock,
-        taskContextFactory,
-        skipScripts: true,
-        keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, skipScripts ?? false, taskContext)
-    });
+    let testRunner: TestRunner;
+    let scriptRunner: ScriptRunner;
 
-    const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-        absolutePathToAPIDefinition: pathToFixture,
-        taskContext,
-        fixture: "custom"
-    });
-    if (apiWorkspace == null) {
-        taskContext.logger.error("Failed to load API definition.");
-        return;
-    }
+    if (local) {
+        if (workspace.workspaceConfig.test.local == null) {
+            throw new Error(
+                `Generator ${workspace.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
+            );
+        }
+        console.log(
+            `Using local runner for ${workspace.workspaceName} with config:`,
+            workspace.workspaceConfig.test.local
+        );
 
-    const generatorGroup = getGeneratorGroup({
-        apiWorkspace,
-        image: workspace.workspaceConfig.image,
-        absolutePathToOutput
-    });
-    if (generatorGroup == null) {
-        taskContext.logger.error(`Found no generators configuration for the generator ${workspace.workspaceName}`);
-        return;
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+
+        testRunner = new LocalTestRunner({
+            generator: workspace,
+            lock,
+            taskContextFactory,
+            skipScripts,
+            scriptRunner,
+            keepDocker,
+            inspect
+        });
+    } else {
+        scriptRunner = new DockerScriptRunner(workspace, skipScripts, taskContext);
+
+        testRunner = new DockerTestRunner({
+            generator: workspace,
+            lock,
+            taskContextFactory,
+            skipScripts,
+            keepDocker,
+            scriptRunner,
+            inspect
+        });
     }
 
     try {
-        const fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
-            { context: taskContext },
-            getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+        const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+            absolutePathToAPIDefinition: pathToFixture,
+            taskContext,
+            fixture: "custom"
+        });
+        if (apiWorkspace == null) {
+            taskContext.logger.error("Failed to load API definition.");
+            return;
+        }
+
+        const generatorGroup = getGeneratorGroup({
+            apiWorkspace,
+            image: workspace.workspaceConfig.image,
+            imageAliases: workspace.workspaceConfig.imageAliases,
+            absolutePathToOutput
+        });
+        if (generatorGroup == null) {
+            taskContext.logger.error(`Found no generators configuration for the generator ${workspace.workspaceName}`);
+            return;
+        }
+
+        const runFixtureConfig: FixtureConfigurations = {
+            ...customFixtureConfig,
+            customConfig: {
+                ...(customFixtureConfig?.customConfig as Record<string, unknown>),
+                ...(generatorGroup.invocation.config as Record<string, unknown>)
+            },
+            outputFolder: ""
+        };
+        console.log(
+            `Running custom fixture for ${workspace.workspaceName} with config:`,
+            JSON.stringify(runFixtureConfig)
         );
 
-        await dockerGeneratorRunner.build();
-        await dockerGeneratorRunner.runGeneratorFromGroup({
-            fernWorkspace,
-            absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
-            taskContext,
-            irVersion: workspace.workspaceConfig.irVersion,
-            group: generatorGroup.group,
-            shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace)
+        await testRunner.build();
+
+        await testRunner.run({
+            fixture: "custom",
+            configuration: runFixtureConfig,
+            inspect,
+            absolutePathToApiDefinition: pathToFixture,
+            outputDir: absolutePathToOutput
         });
-        await writeDotMock({
-            absolutePathToDotMockDirectory: absolutePathToOutput,
-            absolutePathToFernDefinition: pathToFixture
-        });
+
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
+
+        taskContext.logger.info(`Successfully ran custom fixture for ${workspace.workspaceName}`);
     } catch (error) {
-        taskContext.logger.error(`Encountered error while running generator. ${(error as Error)?.message}`);
+        taskContext.logger.error(
+            `Encountered error while running generator. ${
+                error instanceof Error ? (error.stack ?? error.message) : error
+            }`
+        );
+    } finally {
+        if (!skipScripts) {
+            await scriptRunner.stop();
+        }
     }
 }
 
 function getGeneratorGroup({
     apiWorkspace,
     image,
+    imageAliases,
     absolutePathToOutput
 }: {
     apiWorkspace: AbstractAPIWorkspace<unknown>;
     image: string;
+    imageAliases?: string[];
     absolutePathToOutput: AbsoluteFilePath;
 }): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
     const groups = apiWorkspace.generatorsConfiguration?.groups;
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
-            if (generator.name === image) {
-                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput, version: "latest" };
+            if (generator.name === image || (imageAliases && imageAliases.includes(generator.name))) {
+                const invocation: GeneratorInvocation = {
+                    ...generator,
+                    absolutePathToLocalOutput: absolutePathToOutput,
+                    version: "latest"
+                };
                 return {
                     group: {
                         ...group,

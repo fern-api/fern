@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v59
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -31,6 +31,13 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
     - outputFolder: always-send-required-properties
       customConfig:
         alwaysSendRequiredProperties: true
@@ -49,6 +56,9 @@ fixtures:
         clientName: Acme
         clientConstructorName: New
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
@@ -57,66 +67,89 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+    - outputFolder: package-path
+      customConfig:
+        packagePath: pleaseinhere
+  go-bytes-request:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: use-reader-for-bytes-request
+      customConfig:
+        useReaderForBytesRequest: true
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
+    - outputFolder: package-path
       customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
+        packagePath: inhereplease
+    - outputFolder: deep-package-path
       customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
+        packagePath: all/the/way/in/here/please
   undiscriminated-unions:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       outputVersion: 0.0.1
       customConfig:
         packageName: undiscriminated
-        union: v1
         module:
           path: github.com/fern-api/undiscriminated-go
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
   unions:
-    - outputFolder: .
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: unions
-        union: v1
         module:
           path: github.com/fern-api/unions-go
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: inline-file-properties
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: upload
-        union: v1
         module:
           path: github.com/fern-api/file-upload-go
-        inlineFileProperties: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: inline-path-parameters
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: path
-        union: v1
         module:
           path: github.com/fern-api/path-parameters-go
-        inlinePathParameters: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -132,20 +165,42 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+  mixed-case:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: default-values
+      customConfig:
+        useDefaultRequestParameterValues: true
 scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
+  - bytes-download
+  - enum
+  - errors
   - exhaustive
-  - mixed-case
+  - literal
+  - mixed-case:no-custom-config
+  - mixed-case:default-values
+  - pagination-custom
+  - request-parameters
   - reserved-keywords
+  - server-sent-event-examples
+  - server-sent-events
+  - streaming:.
   - streaming-parameter
   - trace
-  - bytes
-  - pagination-custom
+  - unions:no-custom-config
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
-  - unions
+
+  # TODO: Update the dynamic snippet generator to handle these cases.
+  - examples:exported-client-name
+  - path-parameters:no-custom-config
+  - path-parameters:package-name

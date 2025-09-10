@@ -6,4 +6,5 @@ import * as FernIr from "../../../index";
 
 export interface Subpackage extends FernIr.Package {
     name: FernIr.Name;
+    displayName: FernIr.DisplayName | undefined;
 }

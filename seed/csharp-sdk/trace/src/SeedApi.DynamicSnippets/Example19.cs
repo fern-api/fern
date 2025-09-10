@@ -13,8 +13,9 @@ public class Example19
             }
         );
 
-        await client.Problem.DeleteProblemAsync(
-            "problemId"
+        await client.Playlist.DeletePlaylistAsync(
+            1,
+            "playlist_id"
         );
     }
 

@@ -31,10 +31,7 @@ public partial class SeedCustomAuthClient
         }
         _client = new RawClient(clientOptions);
         CustomAuth = new CustomAuthClient(_client);
-        Errors = new ErrorsClient(_client);
     }
 
     public CustomAuthClient CustomAuth { get; }
-
-    public ErrorsClient Errors { get; }
 }

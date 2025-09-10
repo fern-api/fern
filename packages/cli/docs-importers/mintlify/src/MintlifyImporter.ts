@@ -1,9 +1,13 @@
-import { readFile } from "fs/promises";
-
 import { stripLeadingSlash } from "@fern-api/core-utils";
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
-import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+import {
+    DEFAULT_LAYOUT,
+    DocsImporter,
+    FernDocsBuilder,
+    FernDocsNavigationBuilder,
+    TabInfo
+} from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
 
 import { convertColors } from "./convertColors";
 import { convertLogo } from "./convertLogo";

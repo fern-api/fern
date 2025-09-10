@@ -1,8 +1,8 @@
-export * as commons from "./commons";
-export * as file from "./file";
-export * as types from "./types";
-export * from "./types/types";
-export * from "./types/errors";
-export * as health from "./health";
-export * as service from "./service";
-export * from "./service/client/requests";
+export * as commons from "./commons/index.js";
+export * as file from "./file/index.js";
+export * as types from "./types/index.js";
+export * from "./types/types/index.js";
+export * from "./types/errors/index.js";
+export * as health from "./health/index.js";
+export * as service from "./service/index.js";
+export * from "./service/client/requests/index.js";

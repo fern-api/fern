@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/documents/upload",
+                "method": "POST",
+                "identifier_override": "endpoint_.uploadJsonDocument"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multiple-request-bodies/fern\"\n\tfernclient \"github.com/multiple-request-bodies/fern/client\"\n\toption \"github.com/multiple-request-bodies/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.UploadJsonDocument(\n\tcontext.TODO(),\n\t\u0026fern.UploadDocumentRequest{},\n)\n"
+            }
+        }
+    ]
+}

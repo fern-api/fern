@@ -30,7 +30,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<BaseCsharpCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<BaseCsharpCustomConfigSchema>;
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {

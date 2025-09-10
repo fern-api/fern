@@ -1,11 +1,11 @@
-import { access, mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
-import path from "path";
-
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
 import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
+
+import { template } from "lodash-es";
+import path from "path";
 
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
@@ -32,6 +32,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
@@ -78,6 +79,59 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         this.testFiles.push(file);
     }
 
+    private async dotnetFormat(
+        absolutePathToSrcDirectory: AbsoluteFilePath,
+        absolutePathToProjectDirectory: AbsoluteFilePath,
+        editorConfig: string
+    ): Promise<void> {
+        // write a temporary '.editorconfig' file to the absolutePathToSrcDirectory
+        // so we can use dotnet format to pre-format the project (ie, optimize namespace usage, scoping, etc)
+        const editorConfigPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(".editorconfig"));
+        await writeFile(editorConfigPath, editorConfig);
+
+        // patch the csproj file to only target net8.0 (dotnet format gets weird with multiple target frameworks)
+        const csprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const csprojContents = (await readFile(csprojPath)).toString();
+
+        // write modified (temporary) csproj file
+        await writeFile(
+            csprojPath,
+            csprojContents
+                .replace(
+                    /<TargetFrameworks>.*<\/TargetFrameworks>/,
+                    `<TargetFrameworks>netstandard2.0</TargetFrameworks>`
+                )
+                .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
+                .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
+                .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
+        );
+
+        // call dotnet format
+        await loggingExeca(this.context.logger, "dotnet", ["format", "--severity", "error"], {
+            doNotPipeOutput: false,
+            cwd: absolutePathToSrcDirectory
+        });
+
+        await writeFile(csprojPath, csprojContents);
+        // remove the temporary editorconfig file
+        await unlink(editorConfigPath);
+
+        await writeFile(csprojPath, csprojContents);
+    }
+
+    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
+        const csharpier = findDotnetToolPath("csharpier");
+        await loggingExeca(
+            this.context.logger,
+            csharpier,
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                doNotPipeOutput: false,
+                cwd: absolutePathToSrcDirectory
+            }
+        );
+    }
+
     public async persist(): Promise<void> {
         const absolutePathToSrcDirectory = join(
             this.absolutePathToOutputDirectory,
@@ -108,8 +162,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
-        if (this.context.doesIrHaveCustomPagination()) {
-            this.coreFiles.push(await this.createCustomPagerAsIsFile());
+        if (this.context.shouldCreateCustomPagination()) {
+            this.coreFiles.push(...(await this.createCustomPagerAsIsFiles()));
         }
 
         for (const filename of this.context.getCoreTestAsIsFiles()) {
@@ -162,16 +216,33 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        const csharpier = findDotnetToolPath("csharpier");
-        await loggingExeca(
-            this.context.logger,
-            csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
-            {
-                doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory
-            }
-        );
+        if (this.context.shouldUseDotnetFormat()) {
+            // apply dotnet analyzer and formatter pass 1
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+  dotnet_diagnostic.IDE0001.severity = error
+  dotnet_diagnostic.IDE0002.severity = error 
+  dotnet_diagnostic.IDE0003.severity = error 
+  dotnet_diagnostic.IDE0004.severity = error  
+  dotnet_diagnostic.IDE0007.severity = error
+  dotnet_diagnostic.IDE0017.severity = error
+  dotnet_diagnostic.IDE0018.severity = error
+  `
+            );
+            // apply dotnet analyzer and formatter pass 2
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+dotnet_diagnostic.IDE0005.severity = error          
+          `
+            );
+        }
+
+        // format the code cleanly using csharpier
+        await this.csharpier(absolutePathToSrcDirectory);
     }
 
     private async createProject({
@@ -376,10 +447,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace,
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
@@ -391,29 +464,54 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace,
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
 
-    private async createCustomPagerAsIsFile(): Promise<File> {
-        const fileName = AsIsFiles.CustomPager;
+    private async createCustomPagerAsIsFiles(): Promise<File[]> {
+        const customPagerFileName = AsIsFiles.CustomPager;
         const customPagerName = this.context.getCustomPagerName();
-        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
-        return new File(
-            fileName.replace(".Template", "").replace("CustomPager", customPagerName),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getCoreNamespace(),
-                customConfig: this.context.customConfig
-            }).replaceAll("CustomPager", customPagerName)
-        );
+        const customPagerContents = await readFile(getAsIsFilepath(customPagerFileName), {
+            encoding: "utf-8"
+        });
+        const customPagerContextFileName = AsIsFiles.CustomPagerContext;
+        const customPagerContextContents = await readFile(getAsIsFilepath(customPagerContextFileName), {
+            encoding: "utf-8"
+        });
+        return [
+            new File(
+                customPagerFileName.replace(".Template", "").replace("CustomPager", customPagerName),
+                RelativeFilePath.of(""),
+                replaceTemplate({
+                    contents: customPagerContents,
+                    variables: getTemplateVariables({
+                        grpc: this.context.hasGrpcEndpoints(),
+                        idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        namespace: this.context.getCoreNamespace(),
+                        additionalProperties: this.context.generateNewAdditionalProperties()
+                    })
+                }).replaceAll("CustomPager", customPagerName)
+            ),
+            new File(
+                customPagerContextFileName.replace(".Template", "").replace("CustomPager", customPagerName),
+                RelativeFilePath.of(""),
+                replaceTemplate({
+                    contents: customPagerContextContents,
+                    variables: getTemplateVariables({
+                        grpc: this.context.hasGrpcEndpoints(),
+                        idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        namespace: this.context.getCoreNamespace(),
+                        additionalProperties: this.context.generateNewAdditionalProperties()
+                    })
+                }).replaceAll("CustomPager", customPagerName)
+            )
+        ];
     }
 
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {
@@ -423,10 +521,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getTestUtilsNamespace(),
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace: this.context.getTestUtilsNamespace(),
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
@@ -445,25 +545,27 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 }
 
-function replaceTemplate({
-    contents,
+function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
+    return template(contents)(variables);
+}
+
+function getTemplateVariables({
     grpc,
     idempotencyHeaders,
     namespace,
-    customConfig
+    additionalProperties
 }: {
-    contents: string;
     grpc: boolean;
     idempotencyHeaders: boolean;
     namespace: string;
-    customConfig: Record<string, unknown>;
-}): string {
-    return template(contents)({
+    additionalProperties: boolean;
+}): Record<string, unknown> {
+    return {
         grpc,
         idempotencyHeaders,
         namespace,
-        customConfig
-    });
+        additionalProperties
+    };
 }
 
 function getAsIsFilepath(filename: string): string {

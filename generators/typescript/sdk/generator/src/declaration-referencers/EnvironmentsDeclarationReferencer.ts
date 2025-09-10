@@ -1,14 +1,14 @@
+import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
+    ExportsManager,
+    getReferenceToExportFromPackage,
+    getReferenceToExportViaNamespaceImport,
     ImportsManager,
     NpmPackage,
-    Reference,
-    getReferenceToExportFromPackage,
-    getReferenceToExportViaNamespaceImport
+    Reference
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
-
-import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
@@ -16,17 +16,29 @@ export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
         npmPackage: NpmPackage | undefined;
         environmentsConfig: EnvironmentsConfig | undefined;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
 export class EnvironmentsDeclarationReferencer extends AbstractDeclarationReferencer {
     private npmPackage: NpmPackage | undefined;
     private environmentsConfig: EnvironmentsConfig | undefined;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
 
-    constructor({ npmPackage, environmentsConfig, ...superInit }: EnvironmentsDeclarationReferencer.Init) {
+    constructor({
+        npmPackage,
+        environmentsConfig,
+        relativePackagePath,
+        relativeTestPath,
+        ...superInit
+    }: EnvironmentsDeclarationReferencer.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.environmentsConfig = environmentsConfig;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
     }
 
     public getExportedFilepath(): ExportedFilePath {
@@ -74,13 +86,16 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     public getReferenceToEnvironmentsEnum({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
+            exportsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentsEnum()
         });
@@ -88,9 +103,11 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     public getReferenceToFirstEnvironmentEnum({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference | undefined {
         const firstEnvironmentEnum = this.getExportedNameOfFirstEnvironmentEnum();
@@ -100,6 +117,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         if (this.npmPackage != null) {
             return this.getReferenceToPackageExport({
                 importsManager,
+                exportsManager,
                 exportedName: firstEnvironmentEnum.exportedName,
                 namespaceImport: firstEnvironmentEnum.namepaceImport,
                 npmPackage: this.npmPackage
@@ -111,19 +129,23 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
             importsManager,
+            exportsManager,
             referencedIn: sourceFile
         });
     }
 
     public getReferenceToEnvironmentUrls({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
+            exportsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentUrls()
         });
@@ -131,11 +153,13 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     private getReferenceToPackageExport({
         importsManager,
+        exportsManager,
         exportedName,
         namespaceImport,
         npmPackage
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         exportedName: string;
         namespaceImport: string;
         npmPackage: NpmPackage;
@@ -150,10 +174,12 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     private getReferenceToExport({
         importsManager,
+        exportsManager,
         sourceFile,
         exportedName
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
         exportedName: string;
     }): Reference {
@@ -163,6 +189,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
             importsManager,
+            exportsManager,
             referencedIn: sourceFile
         });
     }

@@ -9,11 +9,11 @@ import * as core from "../../../../core";
 export const WeirdNumber: core.serialization.Schema<serializers.WeirdNumber.Raw, SeedNullable.WeirdNumber> =
     core.serialization.undiscriminatedUnion([
         core.serialization.number(),
-        core.serialization.number().optional(),
-        core.serialization.string().optional(),
+        core.serialization.number().nullable(),
+        core.serialization.string().optionalNullable(),
         core.serialization.number(),
     ]);
 
 export declare namespace WeirdNumber {
-    export type Raw = number | (number | null | undefined) | (string | null | undefined) | number;
+    export type Raw = number | (number | null) | ((string | null) | null | undefined) | number;
 }

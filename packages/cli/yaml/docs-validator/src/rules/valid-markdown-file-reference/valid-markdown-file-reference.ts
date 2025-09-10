@@ -1,9 +1,8 @@
+import { getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { visit } from "unist-util-visit";
-
-import { getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -44,6 +43,7 @@ export const ValidMarkdownFileReferences: Rule = {
                                             ? `File ${href.href} does not exit`
                                             : `File ${href.href} exists but is not specified in docs.yml`
                                     });
+                                    // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
                                 } catch (err) {}
                             }
                         }

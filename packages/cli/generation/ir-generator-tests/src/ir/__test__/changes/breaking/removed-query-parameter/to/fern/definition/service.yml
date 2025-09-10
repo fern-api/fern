@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    listMovies:
+      method: GET
+      path: /list
+      request:
+        name: ListMoviesRequest
+        query-parameters:
+          minRating: double
+      response: list<Movie>

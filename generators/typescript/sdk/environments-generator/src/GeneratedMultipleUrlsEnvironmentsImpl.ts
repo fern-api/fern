@@ -1,7 +1,3 @@
-import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
-import { VariableDeclarationKind, ts } from "ts-morph";
-
 import {
     EnvironmentBaseUrlId,
     EnvironmentBaseUrlWithId,
@@ -9,6 +5,9 @@ import {
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
 } from "@fern-fern/ir-sdk/api";
+import { FernWriters, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {
@@ -41,7 +40,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         context.sourceFile.addInterface({
             name: this.environmentUrlsTypeName,
             properties: this.environments.baseUrls.map((baseUrl) => ({
-                name: this.getNameOfBaseUrl(baseUrl),
+                name: getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
                 type: "string"
             })),
             isExported: true
@@ -61,7 +60,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
                                 );
                             }
                             return ts.factory.createPropertyAssignment(
-                                this.getNameOfBaseUrl(baseUrl),
+                                getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
                                 ts.factory.createStringLiteral(url)
                             );
                         }),

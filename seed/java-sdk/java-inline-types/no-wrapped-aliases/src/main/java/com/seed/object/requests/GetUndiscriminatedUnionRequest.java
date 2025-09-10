@@ -154,6 +154,7 @@ public final class GetUndiscriminatedUnionRequest {
             return this.value;
         }
 
+        @SuppressWarnings("unchecked")
         public <T> T visit(Visitor<T> visitor) {
             if (this.type == 0) {
                 return visitor.visit((InlineType1) this.value);
@@ -263,42 +264,42 @@ public final class GetUndiscriminatedUnionRequest {
                 Object value = p.readValueAs(Object.class);
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineType1.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineType2.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, DiscriminatedUnion1.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, InlineEnum1.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(
                             value, new TypeReference<List<InlineListItem1>>() {}));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(
                             ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<InlineSetItem1>>() {}));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(
                             value, new TypeReference<Map<String, InlineMapItem1>>() {}));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 try {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
-                } catch (IllegalArgumentException e) {
+                } catch (RuntimeException e) {
                 }
                 throw new JsonParseException(p, "Failed to deserialize");
             }
@@ -376,16 +377,25 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface FooStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 BarStage foo(@NotNull String foo);
 
                 Builder from(InlineType1 other);
             }
 
             public interface BarStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 RefStage bar(@NotNull Bar_ bar);
             }
 
             public interface RefStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -416,6 +426,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -427,6 +438,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -437,6 +449,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
+                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -514,12 +527,18 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 public interface FooStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     RefStage foo(@NotNull String foo);
 
                     Builder from(Bar_ other);
                 }
 
                 public interface RefStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     _FinalStage ref(@NotNull ReferenceType ref);
                 }
 
@@ -547,6 +566,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
+                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -557,6 +577,7 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
+                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -887,12 +908,18 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 public interface BazStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     RefStage baz(@NotNull String baz);
 
                     Builder from(Type2 other);
                 }
 
                 public interface RefStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     _FinalStage ref(@NotNull ReferenceType ref);
                 }
 
@@ -920,6 +947,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
+                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -930,6 +958,7 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
+                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -1019,16 +1048,25 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 public interface FooStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     BarStage foo(@NotNull String foo);
 
                     Builder from(Type1 other);
                 }
 
                 public interface BarStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     RefStage bar(@NotNull Bar_ bar);
                 }
 
                 public interface RefStage {
+                    /**
+                     * <p>lorem ipsum</p>
+                     */
                     _FinalStage ref(@NotNull ReferenceType ref);
                 }
 
@@ -1059,6 +1097,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
+                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -1070,6 +1109,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                     /**
                      * <p>lorem ipsum</p>
+                     * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -1080,6 +1120,7 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     /**
+                     * <p>lorem ipsum</p>
                      * <p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
@@ -1157,12 +1198,18 @@ public final class GetUndiscriminatedUnionRequest {
                     }
 
                     public interface FooStage {
+                        /**
+                         * <p>lorem ipsum</p>
+                         */
                         RefStage foo(@NotNull String foo);
 
                         Builder from(Bar_ other);
                     }
 
                     public interface RefStage {
+                        /**
+                         * <p>lorem ipsum</p>
+                         */
                         _FinalStage ref(@NotNull ReferenceType ref);
                     }
 
@@ -1190,6 +1237,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                         /**
                          * <p>lorem ipsum</p>
+                         * <p>lorem ipsum</p>
                          * @return Reference to {@code this} so that method calls can be chained together.
                          */
                         @java.lang.Override
@@ -1200,6 +1248,7 @@ public final class GetUndiscriminatedUnionRequest {
                         }
 
                         /**
+                         * <p>lorem ipsum</p>
                          * <p>lorem ipsum</p>
                          * @return Reference to {@code this} so that method calls can be chained together.
                          */
@@ -1280,12 +1329,18 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface BazStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 RefStage baz(@NotNull String baz);
 
                 Builder from(InlineType2 other);
             }
 
             public interface RefStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -1313,6 +1368,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1323,6 +1379,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
+                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -1340,25 +1397,99 @@ public final class GetUndiscriminatedUnionRequest {
             }
         }
 
-        public enum InlineEnum1 {
-            SUNNY("SUNNY"),
+        public static final class InlineEnum1 {
+            public static final InlineEnum1 SUNNY = new InlineEnum1(Value.SUNNY, "SUNNY");
 
-            CLOUDY("CLOUDY"),
+            public static final InlineEnum1 RAINING = new InlineEnum1(Value.RAINING, "RAINING");
 
-            RAINING("RAINING"),
+            public static final InlineEnum1 SNOWING = new InlineEnum1(Value.SNOWING, "SNOWING");
 
-            SNOWING("SNOWING");
+            public static final InlineEnum1 CLOUDY = new InlineEnum1(Value.CLOUDY, "CLOUDY");
 
-            private final String value;
+            private final Value value;
 
-            InlineEnum1(String value) {
+            private final String string;
+
+            InlineEnum1(Value value, String string) {
                 this.value = value;
+                this.string = string;
             }
 
-            @JsonValue
+            public Value getEnumValue() {
+                return value;
+            }
+
             @java.lang.Override
+            @JsonValue
             public String toString() {
-                return this.value;
+                return this.string;
+            }
+
+            @java.lang.Override
+            public boolean equals(Object other) {
+                return (this == other)
+                        || (other instanceof InlineEnum1 && this.string.equals(((InlineEnum1) other).string));
+            }
+
+            @java.lang.Override
+            public int hashCode() {
+                return this.string.hashCode();
+            }
+
+            public <T> T visit(Visitor<T> visitor) {
+                switch (value) {
+                    case SUNNY:
+                        return visitor.visitSunny();
+                    case RAINING:
+                        return visitor.visitRaining();
+                    case SNOWING:
+                        return visitor.visitSnowing();
+                    case CLOUDY:
+                        return visitor.visitCloudy();
+                    case UNKNOWN:
+                    default:
+                        return visitor.visitUnknown(string);
+                }
+            }
+
+            @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+            public static InlineEnum1 valueOf(String value) {
+                switch (value) {
+                    case "SUNNY":
+                        return SUNNY;
+                    case "RAINING":
+                        return RAINING;
+                    case "SNOWING":
+                        return SNOWING;
+                    case "CLOUDY":
+                        return CLOUDY;
+                    default:
+                        return new InlineEnum1(Value.UNKNOWN, value);
+                }
+            }
+
+            public enum Value {
+                SUNNY,
+
+                CLOUDY,
+
+                RAINING,
+
+                SNOWING,
+
+                UNKNOWN
+            }
+
+            public interface Visitor<T> {
+                T visitSunny();
+
+                T visitCloudy();
+
+                T visitRaining();
+
+                T visitSnowing();
+
+                T visitUnknown(String unknownType);
             }
         }
 
@@ -1423,12 +1554,18 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface FooStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 RefStage foo(@NotNull String foo);
 
                 Builder from(InlineSetItem1 other);
             }
 
             public interface RefStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -1456,6 +1593,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1466,6 +1604,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
+                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -1544,12 +1683,18 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface FooStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 RefStage foo(@NotNull String foo);
 
                 Builder from(InlineMapItem1 other);
             }
 
             public interface RefStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -1577,6 +1722,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1587,6 +1733,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
+                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
@@ -1665,12 +1812,18 @@ public final class GetUndiscriminatedUnionRequest {
             }
 
             public interface FooStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 RefStage foo(@NotNull String foo);
 
                 Builder from(InlineListItem1 other);
             }
 
             public interface RefStage {
+                /**
+                 * <p>lorem ipsum</p>
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -1698,6 +1851,7 @@ public final class GetUndiscriminatedUnionRequest {
 
                 /**
                  * <p>lorem ipsum</p>
+                 * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -1708,6 +1862,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
 
                 /**
+                 * <p>lorem ipsum</p>
                  * <p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */

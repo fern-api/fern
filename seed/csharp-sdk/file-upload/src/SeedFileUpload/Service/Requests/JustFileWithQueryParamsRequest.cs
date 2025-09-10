@@ -3,6 +3,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
+[Serializable]
 public record JustFileWithQueryParamsRequest
 {
     [JsonIgnore]

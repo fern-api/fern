@@ -1,11 +1,12 @@
-import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import {
-    BaseContext,
-    GeneratedType,
-    GeneratedTypeReferenceExample,
-    TypeContext,
-    TypeSchemaContext
-} from "@fern-typescript/contexts";
+    DeclaredTypeName,
+    ExampleTypeReference,
+    ResolvedTypeReference,
+    TypeDeclaration,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -15,20 +16,13 @@ import {
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
 
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ResolvedTypeReference,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
@@ -47,6 +41,7 @@ export declare namespace TypeContextImpl {
 export class TypeContextImpl implements TypeContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
     private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
@@ -60,6 +55,7 @@ export class TypeContextImpl implements TypeContext {
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         typeResolver,
         typeDeclarationReferencer,
         typeGenerator,
@@ -75,6 +71,7 @@ export class TypeContextImpl implements TypeContext {
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
@@ -151,7 +148,8 @@ export class TypeContextImpl implements TypeContext {
             name: typeName,
             importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 
@@ -253,6 +251,40 @@ export class TypeContextImpl implements TypeContext {
                     default:
                         return false;
                 }
+            }
+            default:
+                return false;
+        }
+    }
+
+    public isLiteral(typeReference: TypeReference): boolean {
+        const resolvedType = this.resolveTypeReference(typeReference);
+        return resolvedType.type === "container" && resolvedType.container.type === "literal";
+    }
+
+    public hasDefaultValue(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "primitive":
+                return (
+                    typeReference.primitive.v2 != null &&
+                    typeof typeReference.primitive.v2 === "object" &&
+                    "default" in typeReference.primitive.v2 &&
+                    typeReference.primitive.v2.default != null
+                );
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.hasDefaultValue(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.hasDefaultValue(typeReference.container.nullable);
+                }
+                return false;
+            case "named": {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.hasDefaultValue(typeDeclaration.shape.aliasOf);
+                }
+                return false;
             }
             default:
                 return false;

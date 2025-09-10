@@ -80,6 +80,9 @@ public final class ListUserEventsRequest {
             return this;
         }
 
+        /**
+         * <p>The maximum number of results to return.</p>
+         */
         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
         public Builder limit(Optional<Integer> limit) {
             this.limit = limit;

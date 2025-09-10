@@ -11,8 +11,10 @@ class MyObject(UniversalBaseModel):
     Examples
     --------
     from seed.unknown import MyObject
-    MyObject(unknown={'boolVal': True, 'strVal': 'string'}
-    , )
+
+    MyObject(
+        unknown={"boolVal": True, "strVal": "string"},
+    )
     """
 
     unknown: typing.Optional[typing.Any] = None

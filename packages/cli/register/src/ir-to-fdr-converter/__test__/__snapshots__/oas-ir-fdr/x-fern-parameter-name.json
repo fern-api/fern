@@ -7,7 +7,7 @@
         "auth": false,
         "method": "GET",
         "id": "get_user",
-        "originalEndpointId": "get_user",
+        "originalEndpointId": "endpoint_.get_user",
         "name": "Get User",
         "path": {
           "pathParameters": [
@@ -62,6 +62,7 @@
             }
           }
         ],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -75,29 +76,42 @@
           "statusCode": 200,
           "description": "Success!"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Success!"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/user/",
+            "path": "/user/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {
               "foo": "foo"
             },
             "headers": {
-              "X-API-Version": "foo"
+              "X-API-Version": "X-API-Version"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

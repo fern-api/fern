@@ -45,7 +45,7 @@ module SeedBearerTokenEnvironmentVariableClient
         "X-Fern-SDK-Name": "fern_bearer_token_environment_variable",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers["Authorization"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
       headers
     end
   end
@@ -91,7 +91,7 @@ module SeedBearerTokenEnvironmentVariableClient
         "X-Fern-SDK-Name": "fern_bearer_token_environment_variable",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers["Authorization"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
       headers
     end
   end

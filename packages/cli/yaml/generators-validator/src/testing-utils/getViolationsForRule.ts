@@ -1,10 +1,9 @@
-import stripAnsi from "strip-ansi";
-
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
+import stripAnsi from "strip-ansi";
 
 import { Rule } from "../Rule";
 import { ValidationViolation } from "../ValidationViolation";

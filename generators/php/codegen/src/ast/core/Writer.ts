@@ -73,7 +73,11 @@ export class Writer extends AbstractWriter {
         references.push(reference);
     }
 
-    public toString(): string {
+    public toString(skipImports = false): string {
+        if (skipImports) {
+            return this.buffer;
+        }
+
         const namespace = `namespace ${this.namespace};`;
         const imports = this.stringifyImports();
         if (imports.length > 0) {

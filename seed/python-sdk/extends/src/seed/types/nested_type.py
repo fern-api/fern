@@ -12,7 +12,12 @@ class NestedType(Json):
     Examples
     --------
     from seed import NestedType
-    NestedType(docs='This is an example nested type.', name='NestedExample', raw='{"nested": "example"}', )
+
+    NestedType(
+        docs="This is an example nested type.",
+        name="NestedExample",
+        raw='{"nested": "example"}',
+    )
     """
 
     name: str

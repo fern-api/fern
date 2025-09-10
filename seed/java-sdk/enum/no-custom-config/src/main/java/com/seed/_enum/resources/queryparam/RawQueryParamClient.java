@@ -36,19 +36,17 @@ public class RawQueryParamClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("query");
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operand", request.getOperand().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "operand", request.getOperand(), false);
         if (request.getMaybeOperand().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeOperand", request.getMaybeOperand().get().toString(), false);
+                    httpUrl, "maybeOperand", request.getMaybeOperand().get(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operandOrColor", request.getOperandOrColor().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "operandOrColor", request.getOperandOrColor(), false);
         if (request.getMaybeOperandOrColor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "maybeOperandOrColor",
-                    request.getMaybeOperandOrColor().get().toString(),
+                    request.getMaybeOperandOrColor().get(),
                     false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -84,20 +82,18 @@ public class RawQueryParamClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("query-list");
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operand", request.getOperand().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "operand", request.getOperand(), true);
         if (request.getMaybeOperand().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeOperand", request.getMaybeOperand().get().toString(), false);
+                    httpUrl, "maybeOperand", request.getMaybeOperand().get(), true);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "operandOrColor", request.getOperandOrColor().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "operandOrColor", request.getOperandOrColor(), true);
         if (request.getMaybeOperandOrColor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "maybeOperandOrColor",
-                    request.getMaybeOperandOrColor().get().toString(),
-                    false);
+                    request.getMaybeOperandOrColor().get(),
+                    true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

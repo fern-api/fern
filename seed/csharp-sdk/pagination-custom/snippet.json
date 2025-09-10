@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Users.ListUsernamesCustomAsync(\n    new ListUsernamesRequestCustom { StartingAfter = \"starting_after\" }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListUsernamesCustomAsync(\n    new ListUsernamesRequestCustom { StartingAfter = \"starting_after\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         }
     ]

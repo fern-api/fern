@@ -9,14 +9,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Settings'
+              $ref: "#/components/schemas/Settings"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Settings'
+                $ref: "#/components/schemas/Settings"
 
 components:
   schemas:
@@ -24,12 +24,12 @@ components:
       type: object
       properties:
         separator:
-          $ref: '#/components/schemas/DocumentIDSeparators'
+          $ref: "#/components/schemas/DocumentIDSeparators"
     DocumentIDSeparators:
       type: string
       enum:
-        - /    # slash
-        - '-'  # hyphen
-        - '|'  # pipe
-        - .    # dot
-        - ''   # empty string
+        - / # slash
+        - "-" # hyphen
+        - "|" # pipe
+        - . # dot
+        - "" # empty string

@@ -18,6 +18,9 @@ class SeedAlias:
     base_url : str
         The base url to use for requests from the client.
 
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -30,13 +33,17 @@ class SeedAlias:
     Examples
     --------
     from seed import SeedAlias
-    client = SeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedAlias(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
         self,
         *,
         base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -46,6 +53,7 @@ class SeedAlias:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -82,8 +90,13 @@ class SeedAlias:
         Examples
         --------
         from seed import SeedAlias
-        client = SeedAlias(base_url="https://yourhost.com/path/to/api", )
-        client.get(type_id='typeId', )
+
+        client = SeedAlias(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get(
+            type_id="typeId",
+        )
         """
         _response = self._raw_client.get(type_id, request_options=request_options)
         return _response.data
@@ -98,6 +111,9 @@ class AsyncSeedAlias:
     base_url : str
         The base url to use for requests from the client.
 
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -110,13 +126,17 @@ class AsyncSeedAlias:
     Examples
     --------
     from seed import AsyncSeedAlias
-    client = AsyncSeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedAlias(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
         self,
         *,
         base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -126,6 +146,7 @@ class AsyncSeedAlias:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -161,11 +182,21 @@ class AsyncSeedAlias:
 
         Examples
         --------
-        from seed import AsyncSeedAlias
         import asyncio
-        client = AsyncSeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedAlias
+
+        client = AsyncSeedAlias(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.get(type_id='typeId', )
+            await client.get(
+                type_id="typeId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(type_id, request_options=request_options)

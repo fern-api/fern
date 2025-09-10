@@ -3,11 +3,10 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../commons/core-utils"
@@ -22,6 +21,9 @@
       "path": "../cli-source-resolver"
     },
     {
+      "path": "../configuration"
+    },
+    {
       "path": "../configuration-loader"
     },
     {
@@ -31,10 +33,19 @@
       "path": "../generation/ir-generator"
     },
     {
+      "path": "../project-loader"
+    },
+    {
       "path": "../register"
     },
     {
       "path": "../task-context"
+    },
+    {
+      "path": "../workspace/commons"
+    },
+    {
+      "path": "../workspace/lazy-fern-workspace"
     },
     {
       "path": "../workspace/loader"

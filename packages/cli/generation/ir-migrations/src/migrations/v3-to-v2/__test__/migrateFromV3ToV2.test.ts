@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V3_TO_V2_MIGRATION } from "../migrateFromV3ToV2";
@@ -11,9 +11,9 @@ describe("migrateFromV3ToV2", () => {
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect((migrated.ir.services.http[0]?.endpoints[0] as any)?.requestBody).toBeUndefined();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect((migrated.ir.services.http[0]?.endpoints[0] as any)?.sdkRequest).toBeUndefined();
         expect(migrated.ir.services.http[0]?.endpoints[0]?.request).toEqual({
             docs: undefined,

@@ -11,7 +11,11 @@ class Actress(UniversalBaseModel):
     Examples
     --------
     from seed.types import Actress
-    Actress(name='Jennifer Lawrence', id='actor_456', )
+
+    Actress(
+        name="Jennifer Lawrence",
+        id="actor_456",
+    )
     """
 
     name: str

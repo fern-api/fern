@@ -5,5 +5,6 @@
 export interface PublishDockerConfiguration {
     context: string;
     image: string;
+    aliases?: string[];
     file: string;
 }

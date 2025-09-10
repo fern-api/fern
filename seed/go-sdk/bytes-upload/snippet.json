@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/upload-content",
+                "method": "POST",
+                "identifier_override": "endpoint_service.upload"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/bytes-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Upload(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

@@ -1,101 +1,654 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`write-docs-definition > petstore 1`] = `
-"{
+{
   "config": {
-    "title": "fern | Documentation",
-    "root": {
-      "type": "root",
-      "version": "v1",
-      "id": "d0b6b951d313294318002dfa2c33f529a0d58113d36dc35e0a83bb1e0f8638ec",
-      "child": {
-        "type": "unversioned",
-        "id": "c2c16f227d081a4aebef6d1ac541e8dd264d911a6e7de72d7e8c3276a8bcea24",
-        "child": {
-          "type": "sidebarRoot",
-          "id": "552eeeaab28dfd4140385a5c4c28f044254a6f37475dfb26447f2c787110bc0a",
-          "children": [
-            {
-              "id": "fe64a7d21153b7c9d45cca1f07c8a2b403d4d4140692cd59f009878cac447c1a",
-              "type": "apiReference",
-              "title": "API Reference",
-              "apiDefinitionId": "api-2",
-              "paginated": false,
-              "slug": "api-reference",
-              "hideTitle": false,
-              "showErrors": true,
-              "children": [
-                {
-                  "id": "api-2:subpackage_pets",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "api-2:endpoint_pets.listPets",
-                      "type": "endpoint",
-                      "method": "GET",
-                      "endpointId": "endpoint_pets.listPets",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "List all pets",
-                      "slug": "api-reference/pets/list-pets"
-                    },
-                    {
-                      "id": "api-2:endpoint_pets.createPets",
-                      "type": "endpoint",
-                      "method": "POST",
-                      "endpointId": "endpoint_pets.createPets",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "Create a pet",
-                      "slug": "api-reference/pets/create-pets"
-                    },
-                    {
-                      "id": "api-2:endpoint_pets.showPetById",
-                      "type": "endpoint",
-                      "method": "GET",
-                      "endpointId": "endpoint_pets.showPetById",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "Info for a specific pet",
-                      "slug": "api-reference/pets/show-pet-by-id"
-                    }
-                  ],
-                  "title": "Pets",
-                  "slug": "api-reference/pets",
-                  "apiDefinitionId": "api-2"
-                }
-              ],
-              "pointsTo": "api-reference/pets/list-pets"
-            }
-          ]
-        }
-      },
-      "slug": "",
-      "title": "fern | Documentation",
-      "hidden": false
-    },
+    "analyticsConfig": {},
     "colorsV3": {
-      "type": "dark",
       "accentPrimary": {
-        "r": 255,
-        "g": 255,
+        "a": 1,
         "b": 255,
-        "a": 1
+        "g": 255,
+        "r": 255,
       },
       "background": {
-        "r": 0,
-        "g": 0,
+        "a": 1,
         "b": 0,
-        "a": 1
-      }
-    },
-    "js": {
-      "files": []
+        "g": 0,
+        "r": 0,
+      },
+      "type": "dark",
     },
     "integrations": {},
-    "analyticsConfig": {}
+    "js": {
+      "files": [],
+    },
+    "root": {
+      "child": {
+        "child": {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "endpointId": "endpoint_pets.listPets",
+                      "isResponseStream": false,
+                      "method": "GET",
+                      "slug": "api-reference/pets/list-pets",
+                      "title": "List all pets",
+                      "type": "endpoint",
+                    },
+                    {
+                      "endpointId": "endpoint_pets.createPets",
+                      "isResponseStream": false,
+                      "method": "POST",
+                      "slug": "api-reference/pets/create-pets",
+                      "title": "Create a pet",
+                      "type": "endpoint",
+                    },
+                    {
+                      "endpointId": "endpoint_pets.showPetById",
+                      "isResponseStream": false,
+                      "method": "GET",
+                      "slug": "api-reference/pets/show-pet-by-id",
+                      "title": "Info for a specific pet",
+                      "type": "endpoint",
+                    },
+                  ],
+                  "slug": "api-reference/pets",
+                  "title": "pets",
+                  "type": "apiPackage",
+                },
+              ],
+              "hideTitle": false,
+              "paginated": false,
+              "pointsTo": "api-reference/pets/list-pets",
+              "showErrors": true,
+              "slug": "api-reference",
+              "title": "API Reference",
+              "type": "apiReference",
+            },
+          ],
+          "type": "sidebarRoot",
+        },
+        "type": "unversioned",
+      },
+      "hidden": false,
+      "slug": "",
+      "title": "fern | Documentation",
+      "type": "root",
+      "version": "v1",
+    },
+    "title": "fern | Documentation",
   },
+  "jsFiles": {},
   "pages": {},
-  "jsFiles": {}
-}"
+}
+`;
+
+exports[`write-docs-definition > products-with-versions 1`] = `
+{
+  "config": {
+    "analyticsConfig": {},
+    "colorsV3": {
+      "accentPrimary": {
+        "a": 1,
+        "b": 255,
+        "g": 255,
+        "r": 255,
+      },
+      "background": {
+        "a": 1,
+        "b": 0,
+        "g": 0,
+        "r": 0,
+      },
+      "type": "dark",
+    },
+    "integrations": {},
+    "js": {
+      "files": [],
+    },
+    "root": {
+      "child": {
+        "children": [
+          {
+            "child": {
+              "children": [
+                {
+                  "child": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "pageId": "pages/latest.mdx",
+                            "slug": "product-docs/v-3/welcome",
+                            "title": "Welcome",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/concepts.mdx",
+                            "slug": "product-docs/v-3/concepts",
+                            "title": "Concepts",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/sdks.mdx",
+                            "slug": "product-docs/v-3/sdks",
+                            "title": "SDKs",
+                            "type": "page",
+                          },
+                        ],
+                        "slug": "product-docs/v-3/product-a",
+                        "title": "Product A!",
+                        "type": "section",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "endpointId": "endpoint_pets.listPets",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-3/api-reference/pets/list-pets",
+                                "title": "List all pets",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.createPets",
+                                "isResponseStream": false,
+                                "method": "POST",
+                                "slug": "product-docs/v-3/api-reference/pets/create-pets",
+                                "title": "Create a pet",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.showPetById",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-3/api-reference/pets/show-pet-by-id",
+                                "title": "Info for a specific pet",
+                                "type": "endpoint",
+                              },
+                            ],
+                            "slug": "product-docs/v-3/api-reference/pets",
+                            "title": "pets",
+                            "type": "apiPackage",
+                          },
+                        ],
+                        "hideTitle": false,
+                        "paginated": false,
+                        "pointsTo": "product-docs/v-3/api-reference/pets/list-pets",
+                        "showErrors": true,
+                        "slug": "product-docs/v-3/api-reference",
+                        "title": "API Reference",
+                        "type": "apiReference",
+                      },
+                    ],
+                    "type": "sidebarRoot",
+                  },
+                  "default": true,
+                  "slug": "product-docs/v-3",
+                  "title": "V3",
+                  "type": "version",
+                  "versionId": "V3",
+                },
+                {
+                  "child": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "pageId": "pages/welcome.mdx",
+                            "slug": "product-docs/v-2/welcome",
+                            "title": "Welcome",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/concepts.mdx",
+                            "slug": "product-docs/v-2/concepts",
+                            "title": "Concepts",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/sdks.mdx",
+                            "slug": "product-docs/v-2/sdks",
+                            "title": "SDKs",
+                            "type": "page",
+                          },
+                        ],
+                        "slug": "product-docs/v-2/product-a",
+                        "title": "Product A!",
+                        "type": "section",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "endpointId": "endpoint_pets.listPets",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-2/api-reference/pets/list-pets",
+                                "title": "List all pets",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.createPets",
+                                "isResponseStream": false,
+                                "method": "POST",
+                                "slug": "product-docs/v-2/api-reference/pets/create-pets",
+                                "title": "Create a pet",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.showPetById",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-2/api-reference/pets/show-pet-by-id",
+                                "title": "Info for a specific pet",
+                                "type": "endpoint",
+                              },
+                            ],
+                            "slug": "product-docs/v-2/api-reference/pets",
+                            "title": "pets",
+                            "type": "apiPackage",
+                          },
+                        ],
+                        "hideTitle": false,
+                        "paginated": false,
+                        "pointsTo": "product-docs/v-2/api-reference/pets/list-pets",
+                        "showErrors": true,
+                        "slug": "product-docs/v-2/api-reference",
+                        "title": "API Reference",
+                        "type": "apiReference",
+                      },
+                    ],
+                    "type": "sidebarRoot",
+                  },
+                  "default": false,
+                  "slug": "product-docs/v-2",
+                  "title": "V2",
+                  "type": "version",
+                  "versionId": "V2",
+                },
+                {
+                  "child": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "pageId": "pages/welcome.mdx",
+                            "slug": "product-docs/v-1/welcome",
+                            "title": "Welcome",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/concepts.mdx",
+                            "slug": "product-docs/v-1/concepts",
+                            "title": "Concepts",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/sdks.mdx",
+                            "slug": "product-docs/v-1/sdks",
+                            "title": "SDKs",
+                            "type": "page",
+                          },
+                        ],
+                        "slug": "product-docs/v-1/product-a",
+                        "title": "Product A!",
+                        "type": "section",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "endpointId": "endpoint_pets.listPets",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-1/api-reference/pets/list-pets",
+                                "title": "List all pets",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.createPets",
+                                "isResponseStream": false,
+                                "method": "POST",
+                                "slug": "product-docs/v-1/api-reference/pets/create-pets",
+                                "title": "Create a pet",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.showPetById",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-docs/v-1/api-reference/pets/show-pet-by-id",
+                                "title": "Info for a specific pet",
+                                "type": "endpoint",
+                              },
+                            ],
+                            "slug": "product-docs/v-1/api-reference/pets",
+                            "title": "pets",
+                            "type": "apiPackage",
+                          },
+                        ],
+                        "hideTitle": false,
+                        "paginated": false,
+                        "pointsTo": "product-docs/v-1/api-reference/pets/list-pets",
+                        "showErrors": true,
+                        "slug": "product-docs/v-1/api-reference",
+                        "title": "API Reference",
+                        "type": "apiReference",
+                      },
+                    ],
+                    "type": "sidebarRoot",
+                  },
+                  "default": false,
+                  "slug": "product-docs/v-1",
+                  "title": "V1",
+                  "type": "version",
+                  "versionId": "V1",
+                },
+              ],
+              "type": "versioned",
+            },
+            "default": false,
+            "icon": "fa-regular fa-book",
+            "productId": "Docs",
+            "slug": "product-docs",
+            "subtitle": "Interactive documentation",
+            "title": "Docs",
+            "type": "product",
+          },
+          {
+            "child": {
+              "children": [
+                {
+                  "child": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "pageId": "pages/welcome.mdx",
+                            "slug": "product-sdks/latest/welcome",
+                            "title": "Welcome",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/concepts.mdx",
+                            "slug": "product-sdks/latest/concepts",
+                            "title": "Concepts",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/sdks.mdx",
+                            "slug": "product-sdks/latest/sdks",
+                            "title": "SDKs",
+                            "type": "page",
+                          },
+                        ],
+                        "slug": "product-sdks/latest/product-b",
+                        "title": "Product B!",
+                        "type": "section",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "endpointId": "endpoint_pets.listPets",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-sdks/latest/api-reference/pets/list-pets",
+                                "title": "List all pets",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.createPets",
+                                "isResponseStream": false,
+                                "method": "POST",
+                                "slug": "product-sdks/latest/api-reference/pets/create-pets",
+                                "title": "Create a pet",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.showPetById",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-sdks/latest/api-reference/pets/show-pet-by-id",
+                                "title": "Info for a specific pet",
+                                "type": "endpoint",
+                              },
+                            ],
+                            "slug": "product-sdks/latest/api-reference/pets",
+                            "title": "pets",
+                            "type": "apiPackage",
+                          },
+                        ],
+                        "hideTitle": false,
+                        "paginated": false,
+                        "pointsTo": "product-sdks/latest/api-reference/pets/list-pets",
+                        "showErrors": true,
+                        "slug": "product-sdks/latest/api-reference",
+                        "title": "API Reference",
+                        "type": "apiReference",
+                      },
+                    ],
+                    "type": "sidebarRoot",
+                  },
+                  "default": true,
+                  "slug": "product-sdks/latest",
+                  "title": "Latest",
+                  "type": "version",
+                  "versionId": "Latest",
+                },
+                {
+                  "child": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "pageId": "pages/welcome.mdx",
+                            "slug": "product-sdks/v-1/welcome",
+                            "title": "Welcome",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/concepts.mdx",
+                            "slug": "product-sdks/v-1/concepts",
+                            "title": "Concepts",
+                            "type": "page",
+                          },
+                          {
+                            "pageId": "pages/sdks.mdx",
+                            "slug": "product-sdks/v-1/sdks",
+                            "title": "SDKs",
+                            "type": "page",
+                          },
+                        ],
+                        "slug": "product-sdks/v-1/product-b",
+                        "title": "Product B!",
+                        "type": "section",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "endpointId": "endpoint_pets.listPets",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-sdks/v-1/api-reference/pets/list-pets",
+                                "title": "List all pets",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.createPets",
+                                "isResponseStream": false,
+                                "method": "POST",
+                                "slug": "product-sdks/v-1/api-reference/pets/create-pets",
+                                "title": "Create a pet",
+                                "type": "endpoint",
+                              },
+                              {
+                                "endpointId": "endpoint_pets.showPetById",
+                                "isResponseStream": false,
+                                "method": "GET",
+                                "slug": "product-sdks/v-1/api-reference/pets/show-pet-by-id",
+                                "title": "Info for a specific pet",
+                                "type": "endpoint",
+                              },
+                            ],
+                            "slug": "product-sdks/v-1/api-reference/pets",
+                            "title": "pets",
+                            "type": "apiPackage",
+                          },
+                        ],
+                        "hideTitle": false,
+                        "paginated": false,
+                        "pointsTo": "product-sdks/v-1/api-reference/pets/list-pets",
+                        "showErrors": true,
+                        "slug": "product-sdks/v-1/api-reference",
+                        "title": "API Reference",
+                        "type": "apiReference",
+                      },
+                    ],
+                    "type": "sidebarRoot",
+                  },
+                  "default": false,
+                  "slug": "product-sdks/v-1",
+                  "title": "V1",
+                  "type": "version",
+                  "versionId": "V1",
+                },
+              ],
+              "type": "versioned",
+            },
+            "default": false,
+            "icon": "fa-solid fa-code",
+            "productId": "SDKs",
+            "slug": "product-sdks",
+            "subtitle": "Generate client libraries",
+            "title": "SDKs",
+            "type": "product",
+          },
+        ],
+        "type": "productgroup",
+      },
+      "hidden": false,
+      "slug": "",
+      "title": "Products | Documentation",
+      "type": "root",
+      "version": "v1",
+    },
+    "title": "Products | Documentation",
+  },
+  "jsFiles": {},
+  "pages": {
+    "pages/concepts.mdx": {
+      "markdown": "---
+title: Key Concepts
+subtitle: Resources that will help you get started using the Plant Store API
+slug: concepts
+description: >-
+  Learn about the Plant, Store, and User resources that comprise the Plant Store
+  API.
+---
+
+### Plant
+
+A plant can be bought from the store. It has a name, a category, a status, and a list of photo URLs.
+
+### Store
+
+A store has a collection of plants. It is responsible for managing the inventory of plants. Users place orders for plants from the store.
+
+### User
+
+A user is a person who buys plants from the store. Also known as plant parents.
+",
+    },
+    "pages/latest.mdx": {
+      "markdown": "---
+title: Welcome to our developer documentation
+subtitle: Endpoint Schema Snippet
+slug: welcome
+---
+
+# Endpoint Schema Snippet
+
+LATEST WOO!
+",
+    },
+    "pages/sdks.mdx": {
+      "markdown": "---
+title: SDKs
+subtitle: >-
+  We offer client libraries for your favorite languages, generated by Fern from
+  your OpenAPI specification file.
+slug: sdks
+---
+
+We provide official open-source SDKs (client libraries) for your favorite languages, such as Node.js and Python. These clients make connecting to our API faster and help avoid errors.
+
+We regularly update our SDKs using [Fern](https://buildwithfern.com/?utm_campaign=demo&utm_medium=plantstore&utm_source=markdown_sdks) and adhere to [semantic versioning](https://semver.org/) (semver) principles, so we won't make breaking changes in minor or patch releases.
+
+## Official SDKs
+
+<CodeBlocks>
+
+\`\`\`shell Node
+bash npm install plantstore-sdk # or yarn add plantstore-sdk
+\`\`\`
+
+\`\`\`shell Python
+bash pip install plantstore
+\`\`\`
+
+\`\`\`shell Go
+bash go get -u github.com/fern-demo/plantstore-go
+\`\`\`
+
+\`\`\`xml Java (Maven)
+<dependency>
+  <groupId>com.buildwithfern.plantstore</groupId>
+  <artifactId>plantstore</artifactId>
+  <version>0.0.1</version>
+</dependency>
+\`\`\`
+
+\`\`\`gradle Java (Gradle)
+implementation 'com.buildwithfern.plantstore:plantstore:0.0.1'
+\`\`\`
+
+\`\`\`shell Ruby
+bash gem install plantstore
+\`\`\`
+
+\`\`\`shell C#
+bash nuget install plantstore.net
+\`\`\`
+
+</CodeBlocks>
+
+## Request a new SDK
+
+If you'd like to request an SDK for a language that we don't currently support, [let us know](/welcome#get-support). We're always looking to expand our SDK offerings and would love to hear from you.
+",
+    },
+    "pages/welcome.mdx": {
+      "markdown": "---
+title: Welcome to our developer documentation
+subtitle: Products with versions
+slug: welcome
+---
+
+",
+    },
+  },
+}
 `;

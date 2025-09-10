@@ -23,6 +23,7 @@ class UnionWithLiteral(UniversalRootModel):
     Examples
     --------
     from seed.types import UnionWithLiteral_Fern
+
     UnionWithLiteral_Fern()
     """
 

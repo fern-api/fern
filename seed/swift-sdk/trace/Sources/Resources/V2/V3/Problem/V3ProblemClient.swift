@@ -1,0 +1,57 @@
+import Foundation
+
+public final class V3ProblemClient: Sendable {
+    private let httpClient: HTTPClient
+
+    public init(config: ClientConfig) {
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    /// Returns lightweight versions of all problems
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2Type] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/lightweight-problem-info",
+            requestOptions: requestOptions,
+            responseType: [LightweightProblemInfoV2Type].self
+        )
+    }
+
+    /// Returns latest versions of all problems
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2Type] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info",
+            requestOptions: requestOptions,
+            responseType: [ProblemInfoV2Type].self
+        )
+    }
+
+    /// Returns latest version of a problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info/\(problemId)",
+            requestOptions: requestOptions,
+            responseType: ProblemInfoV2Type.self
+        )
+    }
+
+    /// Returns requested version of a problem
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)",
+            requestOptions: requestOptions,
+            responseType: ProblemInfoV2Type.self
+        )
+    }
+}

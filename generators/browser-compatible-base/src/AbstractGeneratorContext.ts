@@ -1,7 +1,6 @@
-import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
+import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
-import { getSdkVersion } from "./utils";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Trace]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -30,7 +29,7 @@ export abstract class AbstractGeneratorContext {
                     })
                 );
             } catch (e) {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.warn("Encountered error when sending update", e);
             }
         });

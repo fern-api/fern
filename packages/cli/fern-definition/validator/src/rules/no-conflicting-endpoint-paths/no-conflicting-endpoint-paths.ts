@@ -1,9 +1,7 @@
-import chalk from "chalk";
-
 import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-
-import { Rule } from "../../Rule";
+import chalk from "chalk";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule } from "../../Rule";
 import { EndpointPathRegistry } from "./EndpointPathRegistry";
 import { getFullEndpointPath } from "./getFullEndpointPath";
 

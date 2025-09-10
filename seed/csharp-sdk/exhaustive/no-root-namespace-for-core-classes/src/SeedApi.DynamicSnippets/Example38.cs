@@ -16,8 +16,9 @@ public class Example38
         );
 
         await client.Endpoints.Put.AddAsync(
-            "id",
-            new PutRequest()
+            new PutRequest{
+                Id = "id"
+            }
         );
     }
 

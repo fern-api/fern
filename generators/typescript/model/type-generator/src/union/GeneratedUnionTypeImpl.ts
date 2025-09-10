@@ -1,14 +1,13 @@
-import { GetReferenceOpts } from "@fern-typescript/commons";
-import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
-import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph";
-
 import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
+import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
+import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
@@ -142,10 +141,12 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                         }
                         return [
                             ts.factory.createPropertyAssignment(
-                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
-                                    includeSerdeLayer: this.includeSerdeLayer,
-                                    retainOriginalCasing: this.retainOriginalCasing
-                                }),
+                                getPropertyKey(
+                                    ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
+                                        includeSerdeLayer: this.includeSerdeLayer,
+                                        retainOriginalCasing: this.retainOriginalCasing
+                                    })
+                                ),
                                 context.type.getGeneratedExample(property).build(context, opts)
                             )
                         ];

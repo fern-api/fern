@@ -1,0 +1,3 @@
+rootProject.name = 'query-parameters-openapi-as-objects'
+
+include 'sample-app'

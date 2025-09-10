@@ -1,8 +1,8 @@
 import { Access } from "./Access";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 
 export declare namespace Method {
     interface Args {

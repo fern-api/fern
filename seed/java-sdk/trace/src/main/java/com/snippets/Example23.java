@@ -1,6 +1,10 @@
 package com.snippets;
 
 import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.commons.types.VariableType;
+import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
+import com.seed.trace.resources.problem.types.VariableTypeAndName;
+import java.util.Arrays;
 
 public class Example23 {
     public static void main(String[] args) {
@@ -10,6 +14,32 @@ public class Example23 {
             .url("https://api.fern.com")
             .build();
 
-        client.submission().stopExecutionSession("sessionId");
+        client.problem().getDefaultStarterFiles(
+            GetDefaultStarterFilesRequest
+                .builder()
+                .inputParams(
+                    Arrays.asList(
+                        VariableTypeAndName
+                            .builder()
+                            .variableType(
+                                VariableType.integerType()
+                            )
+                            .name("name")
+                            .build(),
+                        VariableTypeAndName
+                            .builder()
+                            .variableType(
+                                VariableType.integerType()
+                            )
+                            .name("name")
+                            .build()
+                    )
+                )
+                .outputType(
+                    VariableType.integerType()
+                )
+                .methodName("methodName")
+                .build()
+        );
     }
 }

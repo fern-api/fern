@@ -1,4 +1,4 @@
-import { SchemaOptions } from "@fern-typescript/zurg";
+import { SchemaOptions } from "../core-utilities/Zurg";
 
 export function getSchemaOptions({
     allowExtraFields,

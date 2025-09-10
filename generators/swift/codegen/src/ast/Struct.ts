@@ -1,75 +1,111 @@
-import Swift, { AccessLevel, Type } from "..";
-import { Field } from "./Field";
+import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
-
-/*
-
-Builds Swift Structs
-====================
-
-Example:
-
-private struct TopGun: Movie {
-    let description: String
-}
-
-Breakdown:
-
-{accessLevel} struct {name}: {inheritance} {
-    {fields}
-}
-
-*/
+import { DocComment } from "./DocComment";
+import type { EnumWithRawValues } from "./EnumWithRawValues";
+import { Initializer } from "./Initializer";
+import { Method } from "./Method";
+import { Property } from "./Property";
+import { Protocol } from "./Protocol";
 
 export declare namespace Struct {
     interface Args {
-        /* The access level of the type */
-        accessLevel?: AccessLevel;
-        /* The name of the struct */
         name: string;
-        /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
-        /* The field variables in the class */
-        fields?: Field[];
+        accessLevel?: AccessLevel;
+        conformances?: Protocol[];
+        properties: Property[];
+        initializers?: Initializer[];
+        methods?: Method[];
+        nestedTypes?: (Struct | EnumWithRawValues)[];
+        docs?: DocComment;
     }
 }
 
 export class Struct extends AstNode {
-    public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly fields?: Field[];
-    public readonly inheritance?: Type[];
+    public readonly accessLevel?: AccessLevel;
+    public readonly conformances: string[];
+    public readonly properties: Property[];
+    public readonly initializers: Initializer[];
+    public readonly methods: Method[];
+    public readonly nestedTypes: (Struct | EnumWithRawValues)[];
+    public readonly docs?: DocComment;
 
-    constructor({ accessLevel, name, inheritance, fields }: Struct.Args) {
+    public constructor({
+        accessLevel,
+        name,
+        conformances,
+        properties,
+        initializers,
+        methods,
+        nestedTypes,
+        docs
+    }: Struct.Args) {
         super();
-        this.accessLevel = accessLevel;
         this.name = name;
-        this.inheritance = inheritance;
-        this.fields = fields;
-    }
-
-    private buildTitle(): string | undefined {
-        if (!this.inheritance) {
-            return this.name;
-        }
-
-        const names = this.inheritance.map((obj) => obj.name).join(", ");
-        return `${this.name}: ${names}`;
+        this.accessLevel = accessLevel;
+        this.conformances = conformances ?? [];
+        this.properties = properties;
+        this.initializers = initializers ?? [];
+        this.methods = methods ?? [];
+        this.nestedTypes = nestedTypes ?? [];
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
-        // example: public struct Name {
-        writer.openBlock(
-            [this.accessLevel, "struct", this.buildTitle()],
-            "{",
-            () => {
-                if (this.fields) {
-                    this.fields.forEach((field) => {
-                        writer.writeNode(field);
-                    });
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
+        if (this.accessLevel != null) {
+            writer.write(this.accessLevel);
+            writer.write(" ");
+        }
+        writer.write(`struct ${this.name}`);
+        this.conformances.forEach((conformance, index) => {
+            if (index === 0) {
+                writer.write(": ");
+            } else if (index > 0) {
+                writer.write(", ");
+            }
+            writer.write(conformance);
+        });
+        writer.write(" {");
+        writer.newLine();
+        writer.indent();
+        this.properties.forEach((property) => {
+            property.write(writer);
+            writer.newLine();
+        });
+        if (this.initializers.length > 0) {
+            writer.newLine();
+            this.initializers.forEach((initializer, initializerIdx) => {
+                if (initializerIdx > 0) {
+                    writer.newLine();
                 }
-            },
-            "}"
-        );
+                initializer.write(writer);
+                writer.newLine();
+            });
+        }
+        if (this.methods.length > 0) {
+            writer.newLine();
+            this.methods.forEach((method, methodIdx) => {
+                if (methodIdx > 0) {
+                    writer.newLine();
+                }
+                method.write(writer);
+                writer.newLine();
+            });
+        }
+        if (this.nestedTypes.length > 0) {
+            writer.newLine();
+            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
+                if (nestedTypeIdx > 0) {
+                    writer.newLine();
+                }
+                nestedType.write(writer);
+                writer.newLine();
+            });
+        }
+        writer.dedent();
+        writer.write("}");
     }
 }

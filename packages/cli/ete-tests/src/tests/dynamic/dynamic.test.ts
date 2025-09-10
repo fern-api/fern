@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { generateDynamicIrAsString } from "./generateDynamicIrAsString";
 
@@ -32,7 +32,7 @@ describe("fdr", () => {
                     audiences: fixture.audiences,
                     version: fixture.version
                 });
-                // eslint-disable-next-line jest/no-standalone-expect
+                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(dynamicContents).toMatchSnapshot();
             },
             90_000

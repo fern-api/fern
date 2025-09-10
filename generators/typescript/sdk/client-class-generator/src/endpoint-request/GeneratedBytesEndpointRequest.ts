@@ -1,28 +1,24 @@
 import {
-    Fetcher,
-    GetReferenceOpts,
-    ImportsManager,
-    JavaScriptRuntime,
-    PackageId,
-    getParameterNameForPositionalPathParameter,
-    getTextOfTsNode,
-    visitJavaScriptRuntime
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
-import {
     ExampleEndpointCall,
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import {
+    ExportsManager,
+    Fetcher,
+    GetReferenceOpts,
+    getParameterNameForPositionalPathParameter,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders } from "../endpoints/utils/generateHeaders";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
@@ -34,13 +30,14 @@ export declare namespace GeneratedBytesEndpointRequest {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody.Bytes;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
-        targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
 export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
-    private static BYTES_VARIABLE_NAME = "bytes";
+    private static readonly BINARY_UPLOAD_REQUEST_VARIABLE_NAME = "_binaryUploadRequest";
+    private static readonly UPLOADABLE_PARAMETER_NAME = "uploadable";
 
     private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;
@@ -49,7 +46,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.Bytes;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
 
     constructor({
@@ -59,7 +55,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime,
         retainOriginalCasing
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
@@ -67,7 +62,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
-        this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
 
         if (this.endpoint.sdkRequest == null) {
@@ -82,15 +76,33 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest
             });
-
-            this.queryParams = new GeneratedQueryParams({
-                requestParameter: this.requestParameter
-            });
         }
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
         return this.requestParameter?.getType(context);
+    }
+
+    public getExampleEndpointImports(): ts.Statement[] {
+        return [
+            ts.factory.createImportDeclaration(
+                undefined,
+                [],
+                ts.factory.createImportClause(
+                    false,
+                    undefined,
+                    ts.factory.createNamedImports([
+                        ts.factory.createImportSpecifier(
+                            false,
+                            undefined,
+                            ts.factory.createIdentifier("createReadStream")
+                        )
+                    ])
+                ),
+                ts.factory.createStringLiteral("fs"),
+                undefined
+            )
+        ];
     }
 
     public getExampleEndpointParameters({
@@ -104,7 +116,9 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [
-            context.externalDependencies.fs.createReadStream(ts.factory.createStringLiteral("/path/to/your/file"))
+            ts.factory.createCallExpression(ts.factory.createIdentifier("createReadStream"), undefined, [
+                ts.factory.createStringLiteral("path/to/file")
+            ])
         ];
         for (const pathParameter of getPathParametersForEndpointSignature({
             service: this.service,
@@ -142,7 +156,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [
             {
-                name: GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME,
+                name: GeneratedBytesEndpointRequest.UPLOADABLE_PARAMETER_NAME,
                 type: getTextOfTsNode(this.getFileParameterType(context))
             }
         ];
@@ -169,18 +183,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     private getFileParameterType(context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
-
-        visitJavaScriptRuntime(this.targetRuntime, {
-            node: () => {
-                types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
-
-                types.push(context.externalDependencies.blob.Blob._getReferenceToType());
-            },
-            browser: () => {
-                types.push(ts.factory.createTypeReferenceNode("Blob"));
-            }
-        });
+        const types: ts.TypeNode[] = [context.coreUtilities.fileUtils.Uploadable._getReferenceToType()];
 
         if (this.requestBody.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
@@ -196,9 +199,31 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             statements.push(...this.requestParameter.getInitialStatements());
         }
 
-        if (this.queryParams != null) {
-            statements.push(...this.queryParams.getBuildStatements(context));
+        const queryParams = this.getQueryParams(context);
+        if (queryParams != null) {
+            statements.push(...queryParams.getBuildStatements(context));
         }
+
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME,
+                            undefined,
+                            undefined,
+                            context.coreUtilities.fileUtils.toBinaryUploadRequest._invoke(
+                                ts.factory.createIdentifier(GeneratedBytesEndpointRequest.UPLOADABLE_PARAMETER_NAME)
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+
+        statements.push(...this.initializeHeaders(context));
 
         return statements;
     }
@@ -207,23 +232,33 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         return {
-            headers: this.getHeaders(context),
-            queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
+            headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+            queryParameters: this.getQueryParams(context)?.getReferenceTo(),
             contentType: this.requestBody.contentType,
             requestType: "bytes",
-            body: ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME),
+            body: ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME),
+                "body"
+            ),
             duplex: ts.factory.createStringLiteral("half")
         };
     }
 
-    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({
             context,
+            intermediateRepresentation: this.ir,
             requestParameter: this.requestParameter,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
-            endpoint: this.endpoint
+            endpoint: this.endpoint,
+            headersToMergeAfterClientOptionsHeaders: [
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME),
+                    "headers"
+                )
+            ]
         });
     }
 
@@ -243,5 +278,15 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
+    }
+
+    public getQueryParams(context: SdkContext): GeneratedQueryParams {
+        if (this.queryParams == null) {
+            this.queryParams = new GeneratedQueryParams({
+                queryParameters: this.requestParameter?.getAllQueryParameters(context),
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+            });
+        }
+        return this.queryParams;
     }
 }

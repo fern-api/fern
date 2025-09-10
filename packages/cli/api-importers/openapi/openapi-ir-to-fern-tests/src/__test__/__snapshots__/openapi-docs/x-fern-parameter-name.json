@@ -14,7 +14,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-API-Version": "X-API-Version",
+                  },
                   "path-parameters": {
                     "id": "userId",
                   },
@@ -83,7 +85,8 @@
             id: userId
           query-parameters:
             foo: foo
-          headers: {}
+          headers:
+            X-API-Version: X-API-Version
           response:
             body: string
   source:

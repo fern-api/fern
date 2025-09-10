@@ -130,6 +130,9 @@ public final class ListUsersDoubleOffsetPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>Defaults to first page</p>
+         */
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Double> page) {
             this.page = page;
@@ -141,6 +144,9 @@ public final class ListUsersDoubleOffsetPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>Defaults to per page</p>
+         */
         @JsonSetter(value = "per_page", nulls = Nulls.SKIP)
         public Builder perPage(Optional<Double> perPage) {
             this.perPage = perPage;
@@ -163,6 +169,10 @@ public final class ListUsersDoubleOffsetPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>The cursor used for pagination in order to fetch
+         * the next page of results.</p>
+         */
         @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
         public Builder startingAfter(Optional<String> startingAfter) {
             this.startingAfter = startingAfter;

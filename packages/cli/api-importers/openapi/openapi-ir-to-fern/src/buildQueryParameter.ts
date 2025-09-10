@@ -1,10 +1,9 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { generateEnumNameFromValue, QueryParameter, Schema, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -427,6 +426,22 @@ function getQueryParameterTypeReference({
                         allowMultiple: true
                     };
                 }
+            }
+
+            // TODO: (jsklan) currently this is hidden behind the objectQueryParameters flag,
+            // But eventually we should probably enable this by default
+            if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace,
+                        declarationDepth: 0
+                    }),
+                    allowMultiple: false
+                };
             }
 
             // If no literal values, just pick the first schema of the undiscriminated union

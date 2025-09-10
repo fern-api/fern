@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "c862200",
+            "example_identifier": "6ecddb8d",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "7c1cabfe",
+            "example_identifier": "1afde747",
             "id": {
                 "method": "PATCH",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "4fd9b325",
+            "example_identifier": "3a1cbcea",
             "id": {
                 "method": "PATCH",
                 "path": "/many",
@@ -35,12 +35,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            new ArrayList<BigUnion>(\n                Arrays.asList(\n                    BigUnion.normalSweet(\n                        NormalSweet\n                            .builder()\n                            .value(\"value\")\n                            .build()\n                    ),\n                    BigUnion.normalSweet(\n                        NormalSweet\n                            .builder()\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            new ArrayList<BigUnion>(\n                Arrays.asList(\n                    BigUnion.normalSweet(\n                        NormalSweet\n                            .builder()\n                            .value(\"value\")\n                            .build()\n                    ),\n                    BigUnion.normalSweet(\n                        NormalSweet\n                            .builder()\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .build()\n                ),\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .build()\n                )\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .build()\n                ),\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .build()\n                )\n            )\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "35ccf68f",
+            "example_identifier": "a5b4e81c",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "c91867e9",
+            "example_identifier": "4a63c6a2",
             "id": {
                 "method": "PATCH",
                 "path": "/",

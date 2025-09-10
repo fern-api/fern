@@ -1,11 +1,10 @@
-import { mkdir, writeFile } from "fs/promises";
-import type { Root as HastRoot } from "hast";
-
 import { docsYml } from "@fern-api/configuration";
 import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join as fsUtilsJoin, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
+import { mkdir, writeFile } from "fs/promises";
+import type { Root as HastRoot } from "hast";
 
 import { getFavicon } from "./extract/favicon";
 import { getTitle } from "./extract/title";
@@ -78,10 +77,10 @@ export class ReadmeImporter extends DocsImporter<object> {
                 this.absolutePathToFernDirectory,
                 RelativeFilePath.of(this.kebabCaseWithoutEmojis(tab.name))
             );
-            // await this.downloadMarkdownPages({
-            //     absolutePathToOutputDirectory,
-            //     sections: sidebar
-            // });
+            await this.downloadMarkdownPages({
+                absolutePathToOutputDirectory,
+                sections: sidebar
+            });
             const navigationItems = await this.getNavigationItems({ absolutePathToOutputDirectory, sections: sidebar });
             for (const item of navigationItems) {
                 nav.addItem({ item });

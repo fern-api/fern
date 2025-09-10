@@ -2,6 +2,7 @@
 
 namespace Seed;
 
+use Seed\Headers\HeadersClient;
 use Seed\InlinedRequest\InlinedRequestClient;
 use Seed\PathParam\PathParamClient;
 use Seed\QueryParam\QueryParamClient;
@@ -10,6 +11,11 @@ use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
+    /**
+     * @var HeadersClient $headers
+     */
+    public HeadersClient $headers;
+
     /**
      * @var InlinedRequestClient $inlinedRequest
      */
@@ -70,6 +76,7 @@ class SeedClient
             options: $this->options,
         );
 
+        $this->headers = new HeadersClient($this->client, $this->options);
         $this->inlinedRequest = new InlinedRequestClient($this->client, $this->options);
         $this->pathParam = new PathParamClient($this->client, $this->options);
         $this->queryParam = new QueryParamClient($this->client, $this->options);

@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_examples)](https://pypi.python.org/pypi/fern_examples)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -74,6 +74,22 @@ except ApiError as e:
 
 ## Advanced
 
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedExamples
+
+client = SeedExamples(
+    ...,
+)
+response = client.with_raw_response.echo(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -126,7 +142,7 @@ from seed import SeedExamples
 client = SeedExamples(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )

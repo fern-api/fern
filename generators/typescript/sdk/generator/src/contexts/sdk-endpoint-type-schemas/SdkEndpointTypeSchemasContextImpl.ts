@@ -1,10 +1,9 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
-
-import { Name } from "@fern-fern/ir-sdk/api";
 
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -16,6 +15,7 @@ export declare namespace SdkEndpointTypeSchemasContextImpl {
         packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -25,16 +25,19 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
     private sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
 
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         sdkEndpointTypeSchemasGenerator,
         sdkEndpointSchemaDeclarationReferencer,
         packageResolver
     }: SdkEndpointTypeSchemasContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.packageResolver = packageResolver;
         this.sdkEndpointTypeSchemasGenerator = sdkEndpointTypeSchemasGenerator;
         this.sdkEndpointSchemaDeclarationReferencer = sdkEndpointSchemaDeclarationReferencer;
@@ -71,6 +74,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
             subImport: typeof export_ === "string" ? [export_] : export_
         });

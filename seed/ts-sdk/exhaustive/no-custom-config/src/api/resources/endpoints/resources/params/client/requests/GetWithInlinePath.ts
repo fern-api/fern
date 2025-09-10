@@ -4,6 +4,10 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         param: "param"
+ *     }
  */
-export interface GetWithInlinePath {}
+export interface GetWithInlinePath {
+    param: string;
+}

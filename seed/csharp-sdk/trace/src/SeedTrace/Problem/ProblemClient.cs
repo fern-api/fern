@@ -25,7 +25,11 @@ public partial class ProblemClient
     ///         ProblemName = "problemName",
     ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
+    ///             Boards = new List&lt;ProblemDescriptionBoard&gt;()
+    ///             {
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///             },
     ///         },
     ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
@@ -44,10 +48,18 @@ public partial class ProblemClient
     ///         },
     ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
     ///         },
-    ///         OutputType = "no-properties-union",
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
     ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
@@ -55,25 +67,33 @@ public partial class ProblemClient
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                     Params = new List&lt;VariableValue&gt;()
+    ///                     {
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                     },
     ///                 },
-    ///                 ExpectedResult = 1,
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                     Params = new List&lt;VariableValue&gt;()
+    ///                     {
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                     },
     ///                 },
-    ///                 ExpectedResult = 1,
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///         },
     ///         MethodName = "methodName",
     ///     }
     /// );
     /// </code></example>
-    public async Task<object> CreateProblemAsync(
+    public async Task<CreateProblemResponse> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -97,7 +117,7 @@ public partial class ProblemClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<CreateProblemResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -126,7 +146,11 @@ public partial class ProblemClient
     ///         ProblemName = "problemName",
     ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
+    ///             Boards = new List&lt;ProblemDescriptionBoard&gt;()
+    ///             {
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///                 new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+    ///             },
     ///         },
     ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
@@ -145,10 +169,18 @@ public partial class ProblemClient
     ///         },
     ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
     ///         },
-    ///         OutputType = "no-properties-union",
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
     ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
@@ -156,18 +188,26 @@ public partial class ProblemClient
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                     Params = new List&lt;VariableValue&gt;()
+    ///                     {
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                     },
     ///                 },
-    ///                 ExpectedResult = 1,
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                     Params = new List&lt;VariableValue&gt;()
+    ///                     {
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                         new VariableValue(new VariableValue.IntegerValue(1)),
+    ///                     },
     ///                 },
-    ///                 ExpectedResult = 1,
+    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
     ///             },
     ///         },
     ///         MethodName = "methodName",
@@ -270,10 +310,18 @@ public partial class ProblemClient
     ///     {
     ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
+    ///             new VariableTypeAndName
+    ///             {
+    ///                 VariableType = new VariableType(new VariableType.IntegerType()),
+    ///                 Name = "name",
+    ///             },
     ///         },
-    ///         OutputType = "no-properties-union",
+    ///         OutputType = new VariableType(new VariableType.IntegerType()),
     ///         MethodName = "methodName",
     ///     }
     /// );

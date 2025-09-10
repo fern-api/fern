@@ -25,7 +25,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<BaseJavaCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<BaseJavaCustomConfigSchema>;
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {

@@ -7,5 +7,7 @@ import * as FernIr from "../../../index";
 export interface GithubPublish {
     owner: string;
     repo: string;
+    uri: string | undefined;
+    token: string | undefined;
     target: FernIr.PublishTarget;
 }

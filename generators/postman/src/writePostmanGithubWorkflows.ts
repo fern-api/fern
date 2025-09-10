@@ -1,8 +1,7 @@
+import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator";
 import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-
-import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator";
 
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { getCollectionOutputFilename } from "./writePostmanCollection";
@@ -23,7 +22,7 @@ export async function writePostmanGithubWorkflows({
         );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
     const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 

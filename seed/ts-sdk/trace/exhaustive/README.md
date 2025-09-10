@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/trace)](https://www.npmjs.com/package/@fern/trace)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
 ## Installation
 
@@ -23,10 +23,9 @@ Instantiate and use the client with the following:
 import { SeedTraceClient, SeedTrace } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
-await client.admin.updateTestSubmissionStatus(
-    SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.TestSubmissionStatus.stopped(),
-);
+await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+    type: "stopped",
+});
 ```
 
 ## Request And Response Types
@@ -72,6 +71,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.admin.updateTestSubmissionStatus(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.admin.updateTestSubmissionStatus(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -132,8 +143,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

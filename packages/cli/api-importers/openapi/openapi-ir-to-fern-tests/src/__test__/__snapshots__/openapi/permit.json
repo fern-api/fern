@@ -17675,16 +17675,6 @@ and will return the existing tenant object in the response body.",
                           "last_name": "Doe",
                           "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                           "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                          "roles": [
-                            {
-                              "role": "admin",
-                              "tenant": "stripe-inc",
-                            },
-                            {
-                              "role": "viewer",
-                              "tenant": "othercompany.com",
-                            },
-                          ],
                         },
                       ],
                       "page_count": 1,
@@ -18046,11 +18036,6 @@ service:
                       roles:
                         - viewer
                       status: pending
-                  roles:
-                    - role: admin
-                      tenant: stripe-inc
-                    - role: viewer
-                      tenant: othercompany.com
                   email: jane@coolcompany.com
                   first_name: Jane
                   last_name: Doe
@@ -19310,16 +19295,6 @@ and will return the existing user object in the response body.",
                       "last_name": "Doe",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "roles": [
-                        {
-                          "role": "admin",
-                          "tenant": "stripe-inc",
-                        },
-                        {
-                          "role": "viewer",
-                          "tenant": "othercompany.com",
-                        },
-                      ],
                     },
                   },
                 },
@@ -19437,16 +19412,6 @@ and will return the existing user object in the response body.",
                       "last_name": "Doe",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "roles": [
-                        {
-                          "role": "admin",
-                          "tenant": "stripe-inc",
-                        },
-                        {
-                          "role": "viewer",
-                          "tenant": "othercompany.com",
-                        },
-                      ],
                     },
                   },
                 },
@@ -19526,16 +19491,6 @@ and will return the existing user object in the response body.",
                           "last_name": "Doe",
                           "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                           "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                          "roles": [
-                            {
-                              "role": "admin",
-                              "tenant": "stripe-inc",
-                            },
-                            {
-                              "role": "viewer",
-                              "tenant": "othercompany.com",
-                            },
-                          ],
                         },
                       ],
                       "page_count": 1,
@@ -19665,16 +19620,6 @@ and will return the existing user object in the response body.",
                       "last_name": "Doe",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "roles": [
-                        {
-                          "role": "admin",
-                          "tenant": "stripe-inc",
-                        },
-                        {
-                          "role": "viewer",
-                          "tenant": "othercompany.com",
-                        },
-                      ],
                     },
                   },
                 },
@@ -19825,16 +19770,6 @@ Fields that will be provided will be completely overwritten.",
                       "last_name": "Doe",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                      "roles": [
-                        {
-                          "role": "admin",
-                          "tenant": "stripe-inc",
-                        },
-                        {
-                          "role": "viewer",
-                          "tenant": "othercompany.com",
-                        },
-                      ],
                     },
                   },
                 },
@@ -19978,11 +19913,6 @@ service:
                       roles:
                         - viewer
                       status: pending
-                  roles:
-                    - role: admin
-                      tenant: stripe-inc
-                    - role: viewer
-                      tenant: othercompany.com
                   email: jane@coolcompany.com
                   first_name: Jane
                   last_name: Doe
@@ -20059,11 +19989,6 @@ service:
                   roles:
                     - viewer
                   status: pending
-              roles:
-                - role: admin
-                  tenant: stripe-inc
-                - role: viewer
-                  tenant: othercompany.com
               email: jane@coolcompany.com
               first_name: Jane
               last_name: Doe
@@ -20124,11 +20049,6 @@ service:
                   roles:
                     - viewer
                   status: pending
-              roles:
-                - role: admin
-                  tenant: stripe-inc
-                - role: viewer
-                  tenant: othercompany.com
               email: jane@coolcompany.com
               first_name: Jane
               last_name: Doe
@@ -20203,11 +20123,6 @@ service:
                   roles:
                     - viewer
                   status: pending
-              roles:
-                - role: admin
-                  tenant: stripe-inc
-                - role: viewer
-                  tenant: othercompany.com
               email: jane@coolcompany.com
               first_name: Jane
               last_name: Doe
@@ -20325,11 +20240,6 @@ service:
                   roles:
                     - viewer
                   status: pending
-              roles:
-                - role: admin
-                  tenant: stripe-inc
-                - role: viewer
-                  tenant: othercompany.com
               email: jane@coolcompany.com
               first_name: Jane
               last_name: Doe

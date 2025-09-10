@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  audience: audience.yml
   auth: auth.yml
   commons: commons.yml
   constants: constants.yml
@@ -63,6 +64,8 @@ types:
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
+      selfHosted: optional<boolean>
+      audiences: optional<list<audience.AudienceDefinition>>
 
   ReadmeConfig:
     docs: |
@@ -78,6 +81,12 @@ types:
       bannerLink: optional<string>
       introduction: optional<string>
       apiReferenceLink: optional<string>
+      apiName: optional<string>
+      disabledFeatures:
+        type: optional<list<commons.FeatureId>>
+      whiteLabel:
+        type: optional<boolean>
+        docs: "If true, removes fern branding from the generated SDK files. Defaults to false."
       features:
         docs: |
           If specified, configures the list of endpoints to associate
@@ -167,6 +176,7 @@ types:
     extends: Package
     properties:
       name: commons.Name
+      displayName: optional<commons.DisplayName>
   PackageNavigationConfig:
     properties:
       pointsTo: commons.SubpackageId

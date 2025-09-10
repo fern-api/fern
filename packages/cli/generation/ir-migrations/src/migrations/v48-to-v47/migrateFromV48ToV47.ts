@@ -19,7 +19,7 @@ export const V48_TO_V47_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.29.0",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.29.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.29.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -42,7 +42,9 @@ export const V48_TO_V47_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V47.IntermediateRepresentation.jsonOrThrow(ir, {

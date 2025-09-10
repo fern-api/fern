@@ -1,2 +1,2 @@
-export * as union from "./union";
-export * from "./union/types";
+export * as union from "./union/index.js";
+export * from "./union/types/index.js";

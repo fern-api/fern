@@ -1,7 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { AliasSchema, DiscriminatedUnionSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema } from "../schemas";
-import { UndiscriminatedUnionSchema } from "../schemas";
+import {
+    AliasSchema,
+    DiscriminatedUnionSchema,
+    EnumSchema,
+    ObjectSchema,
+    TypeDeclarationSchema,
+    UndiscriminatedUnionSchema
+} from "../schemas";
 
 export interface RawTypeDeclarationVisitor<R> {
     alias: (schema: string | AliasSchema) => R;
@@ -52,7 +57,7 @@ export function isRawDiscriminatedUnionDefinition(
     return (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (rawTypeDeclaration as DiscriminatedUnionSchema).union != null &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (rawTypeDeclaration as any).discriminated == null
     );
 }

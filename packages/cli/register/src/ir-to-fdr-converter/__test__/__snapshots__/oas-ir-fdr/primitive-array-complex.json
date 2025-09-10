@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodySchema": {
-      "name": "SearchWithObjectUnionGetRequestBodySchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "object",
         "extends": [],
@@ -25,7 +25,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithArrayUnion",
-        "originalEndpointId": "getSearchWithArrayUnion",
+        "originalEndpointId": "endpoint_.getSearchWithArrayUnion",
         "name": "Get Search With Array Union",
         "path": {
           "pathParameters": [],
@@ -65,7 +65,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -78,6 +78,31 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -92,26 +117,45 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/search-with-array-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "string"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "string"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -123,7 +167,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithObjectUnion",
-        "originalEndpointId": "getSearchWithObjectUnion",
+        "originalEndpointId": "endpoint_.getSearchWithObjectUnion",
         "name": "Get Search With Object Union",
         "path": {
           "pathParameters": [],
@@ -147,14 +191,34 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -169,26 +233,41 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/search-with-object-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

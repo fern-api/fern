@@ -2,9 +2,47 @@
 
 # isort: skip_file
 
-from .my_alias_object import MyAliasObjectParams
-from .my_collection_alias_object import MyCollectionAliasObjectParams
-from .my_object import MyObjectParams
-from .my_object_with_optional import MyObjectWithOptionalParams
+import typing
+from importlib import import_module
 
-__all__ = ["MyAliasObjectParams", "MyCollectionAliasObjectParams", "MyObjectParams", "MyObjectWithOptionalParams"]
+if typing.TYPE_CHECKING:
+    from .my_alias_object import MyAliasObjectParams
+    from .my_collection_alias_object import MyCollectionAliasObjectParams
+    from .my_inline_type import MyInlineTypeParams
+    from .my_object import MyObjectParams
+    from .my_object_with_optional import MyObjectWithOptionalParams
+_dynamic_imports: typing.Dict[str, str] = {
+    "MyAliasObjectParams": ".my_alias_object",
+    "MyCollectionAliasObjectParams": ".my_collection_alias_object",
+    "MyInlineTypeParams": ".my_inline_type",
+    "MyObjectParams": ".my_object",
+    "MyObjectWithOptionalParams": ".my_object_with_optional",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
+
+__all__ = [
+    "MyAliasObjectParams",
+    "MyCollectionAliasObjectParams",
+    "MyInlineTypeParams",
+    "MyObjectParams",
+    "MyObjectWithOptionalParams",
+]

@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using global::System.Threading.Tasks;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -137,7 +138,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<object> GetMetadataAsync(
+    public async Task<Metadata> GetMetadataAsync(
         GetMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -171,7 +172,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<Metadata>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -196,6 +197,7 @@ public partial class ServiceClient
     ///         CastMember = new Actor { Name = "name", Id = "id" },
     ///         ExtendedMovie = new ExtendedMovie
     ///         {
+    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///             Id = "id",
     ///             Prequel = "prequel",
     ///             Title = "title",
@@ -212,31 +214,38 @@ public partial class ServiceClient
     ///                 },
     ///             },
     ///             Revenue = 1000000,
-    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = "metadata",
-    ///         CommonMetadata = new SeedExamples.Commons.Metadata
+    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
+    ///         CommonMetadata = new Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
     ///             JsonString = "jsonString",
     ///         },
-    ///         EventInfo = new SeedExamples.Commons.Metadata
-    ///         {
-    ///             Id = "id",
-    ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
-    ///             JsonString = "jsonString",
-    ///         },
-    ///         Data = "data",
+    ///         EventInfo = new EventInfo(
+    ///             new EventInfo.Metadata(
+    ///                 new Metadata
+    ///                 {
+    ///                     Id = "id",
+    ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///                     JsonString = "jsonString",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Data = new Data(new Data.String("data")),
     ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-    ///         Exception = new ExceptionInfo
-    ///         {
-    ///             ExceptionType = "exceptionType",
-    ///             ExceptionMessage = "exceptionMessage",
-    ///             ExceptionStacktrace = "exceptionStacktrace",
-    ///         },
-    ///         Test = true,
+    ///         Exception = new Exception(
+    ///             new Exception.Generic(
+    ///                 new ExceptionInfo
+    ///                 {
+    ///                     ExceptionType = "exceptionType",
+    ///                     ExceptionMessage = "exceptionMessage",
+    ///                     ExceptionStacktrace = "exceptionStacktrace",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Test = new Test(new Test.And(true)),
     ///         Node = new Node
     ///         {
     ///             Name = "name",
@@ -432,6 +441,42 @@ public partial class ServiceClient
             }
         }
 
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Service.RefreshTokenAsync(null);
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task RefreshTokenAsync(
+        RefreshTokenRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/refresh-token",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(

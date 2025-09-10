@@ -6,17 +6,20 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
+import { DisplayName } from "../../commons/types/DisplayName";
 import { Package } from "./Package";
 
 export const Subpackage: core.serialization.ObjectSchema<serializers.Subpackage.Raw, FernIr.Subpackage> =
     core.serialization
         .objectWithoutOptionalProperties({
             name: Name,
+            displayName: DisplayName.optional(),
         })
         .extend(Package);
 
 export declare namespace Subpackage {
     export interface Raw extends Package.Raw {
         name: Name.Raw;
+        displayName?: DisplayName.Raw | null;
     }
 }

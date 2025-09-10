@@ -1,8 +1,7 @@
-import chalk from "chalk";
-
 import { assertNever } from "@fern-api/core-utils";
 import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 
 import { TaskContextImpl } from "../../TaskContextImpl";
 
@@ -14,7 +13,7 @@ export class TaskContextFactory {
     constructor(private readonly logLevel: LogLevel) {}
 
     create(prefix: string): TaskContext {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const colorForWorkspace = TASK_COLORS[this.idx++ % TASK_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return new TaskContextImpl({

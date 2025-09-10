@@ -139,34 +139,52 @@ public final class RootType1 {
     }
 
     public interface FooStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         BarStage foo(@NotNull String foo);
 
         Builder from(RootType1 other);
     }
 
     public interface BarStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         RefStage bar(@NotNull RootType1InlineType1 bar);
     }
 
     public interface RefStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
 
     public interface _FinalStage {
         RootType1 build();
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap);
 
         _FinalStage putAllFooMap(Map<String, RootType1FooMapValue> fooMap);
 
         _FinalStage fooMap(String key, RootType1FooMapValue value);
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooList(List<RootType1FooListItem> fooList);
 
         _FinalStage addFooList(RootType1FooListItem fooList);
 
         _FinalStage addAllFooList(List<RootType1FooListItem> fooList);
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooSet(Set<RootType1FooSetItem> fooSet);
 
         _FinalStage addFooSet(RootType1FooSetItem fooSet);
@@ -206,6 +224,7 @@ public final class RootType1 {
 
         /**
          * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -217,6 +236,7 @@ public final class RootType1 {
 
         /**
          * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -227,6 +247,7 @@ public final class RootType1 {
         }
 
         /**
+         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -243,7 +264,9 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage addAllFooSet(Set<RootType1FooSetItem> fooSet) {
-            this.fooSet.addAll(fooSet);
+            if (fooSet != null) {
+                this.fooSet.addAll(fooSet);
+            }
             return this;
         }
 
@@ -257,6 +280,9 @@ public final class RootType1 {
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooSet", nulls = Nulls.SKIP)
         public _FinalStage fooSet(Set<RootType1FooSetItem> fooSet) {
@@ -271,7 +297,9 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage addAllFooList(List<RootType1FooListItem> fooList) {
-            this.fooList.addAll(fooList);
+            if (fooList != null) {
+                this.fooList.addAll(fooList);
+            }
             return this;
         }
 
@@ -285,6 +313,9 @@ public final class RootType1 {
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooList", nulls = Nulls.SKIP)
         public _FinalStage fooList(List<RootType1FooListItem> fooList) {
@@ -309,10 +340,15 @@ public final class RootType1 {
          */
         @java.lang.Override
         public _FinalStage putAllFooMap(Map<String, RootType1FooMapValue> fooMap) {
-            this.fooMap.putAll(fooMap);
+            if (fooMap != null) {
+                this.fooMap.putAll(fooMap);
+            }
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooMap", nulls = Nulls.SKIP)
         public _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap) {

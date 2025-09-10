@@ -3,6 +3,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.User.Events;
 
+[Serializable]
 public record GetEventMetadataRequest
 {
     [JsonIgnore]

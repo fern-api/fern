@@ -120,7 +120,9 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
                         File = new TracedFile { Filename = "filename", Directory = "directory" },
-                        ReturnValue = 1,
+                        ReturnValue = new DebugVariableValue(
+                            new DebugVariableValue.IntegerValue(1)
+                        ),
                         ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                         Stack = new StackInformation
                         {
@@ -133,16 +135,26 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                                 {
                                     new Scope
                                     {
-                                        Variables = new Dictionary<string, object>()
+                                        Variables = new Dictionary<string, DebugVariableValue>()
                                         {
-                                            { "variables", 1 },
+                                            {
+                                                "variables",
+                                                new DebugVariableValue(
+                                                    new DebugVariableValue.IntegerValue(1)
+                                                )
+                                            },
                                         },
                                     },
                                     new Scope
                                     {
-                                        Variables = new Dictionary<string, object>()
+                                        Variables = new Dictionary<string, DebugVariableValue>()
                                         {
-                                            { "variables", 1 },
+                                            {
+                                                "variables",
+                                                new DebugVariableValue(
+                                                    new DebugVariableValue.IntegerValue(1)
+                                                )
+                                            },
                                         },
                                     },
                                 },
@@ -155,7 +167,9 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
                         File = new TracedFile { Filename = "filename", Directory = "directory" },
-                        ReturnValue = 1,
+                        ReturnValue = new DebugVariableValue(
+                            new DebugVariableValue.IntegerValue(1)
+                        ),
                         ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                         Stack = new StackInformation
                         {
@@ -168,16 +182,26 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                                 {
                                     new Scope
                                     {
-                                        Variables = new Dictionary<string, object>()
+                                        Variables = new Dictionary<string, DebugVariableValue>()
                                         {
-                                            { "variables", 1 },
+                                            {
+                                                "variables",
+                                                new DebugVariableValue(
+                                                    new DebugVariableValue.IntegerValue(1)
+                                                )
+                                            },
                                         },
                                     },
                                     new Scope
                                     {
-                                        Variables = new Dictionary<string, object>()
+                                        Variables = new Dictionary<string, DebugVariableValue>()
                                         {
-                                            { "variables", 1 },
+                                            {
+                                                "variables",
+                                                new DebugVariableValue(
+                                                    new DebugVariableValue.IntegerValue(1)
+                                                )
+                                            },
                                         },
                                     },
                                 },

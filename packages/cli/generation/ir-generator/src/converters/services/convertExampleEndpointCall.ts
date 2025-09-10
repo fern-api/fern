@@ -1,12 +1,10 @@
-import urlJoin from "url-join";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
-    RawSchemas,
     isInlineRequestBody,
     parseBytesRequest,
     parseRawFileType,
+    RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 import {
@@ -21,6 +19,7 @@ import {
     Name
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "@fern-api/ir-utils";
+import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -250,6 +249,9 @@ function convertHeaders({
             const endpointHeaderDeclaration =
                 typeof endpoint.request !== "string" ? endpoint.request?.headers?.[wireKey] : undefined;
             const serviceHeaderDeclaration = service.headers?.[wireKey];
+
+            // TODO: add global headers field in ExampleEndpointCall
+            // const globalHeaderDeclaration = workspace.definition.rootApiFile.contents.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
                 endpointHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
@@ -288,9 +290,29 @@ function convertHeaders({
                         workspace
                     })
                 });
-            } else {
-                throw new Error(`Header ${wireKey} does not exist`);
             }
+            // TODO: add global headers field in ExampleEndpointCall
+            // else if (globalHeaderDeclaration != null) {
+            //     // TODO: tweak ExampleEndpointCall to include global headers
+            //     endpointHeaders.push({
+            //         name: file.casingsGenerator.generateNameAndWireValue({
+            //             name: getHeaderName({ headerKey: wireKey, header: globalHeaderDeclaration }).name,
+            //             wireValue: wireKey
+            //         }),
+            //         value: convertTypeReferenceExample({
+            //             example: exampleHeader,
+            //             rawTypeBeingExemplified:
+            //                 typeof globalHeaderDeclaration === "string"
+            //                     ? globalHeaderDeclaration
+            //                     : globalHeaderDeclaration.type,
+            //             typeResolver,
+            //             exampleResolver,
+            //             fileContainingRawTypeReference: file,
+            //             fileContainingExample: file,
+            //             workspace
+            //         })
+            //     });
+            // }
         }
     }
 
@@ -579,8 +601,10 @@ function buildUrl({
             ...pathParams.servicePathParameters,
             ...pathParams.rootPathParameters
         ]) {
-            // TODO: should we URL encode the value?
-            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
+            url = url.replaceAll(
+                `{${parameter.name.originalName}}`,
+                encodeURIComponent(`${parameter.value.jsonExample}`)
+            );
         }
     }
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42

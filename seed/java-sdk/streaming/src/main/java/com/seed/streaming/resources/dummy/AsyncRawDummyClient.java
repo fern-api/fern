@@ -72,8 +72,7 @@ public class AsyncRawDummyClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedStreamingHttpResponse<>(
-                                new Stream<StreamResponse>(
-                                        StreamResponse.class, new ResponseBodyReader(response), "\n"),
+                                Stream.fromJson(StreamResponse.class, new ResponseBodyReader(response), "\\n"),
                                 response));
                         return;
                     }

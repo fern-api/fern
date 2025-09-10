@@ -1,3 +1,3 @@
-export * as commons from "./commons";
-export * as file from "./file";
-export * from "./file/types";
+export * as commons from "./commons/index.js";
+export * as file from "./file/index.js";
+export * from "./file/types/index.js";

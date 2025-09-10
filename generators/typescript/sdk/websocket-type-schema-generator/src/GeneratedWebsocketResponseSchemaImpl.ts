@@ -1,9 +1,8 @@
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons";
+import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
-
-import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketResponseSchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
@@ -12,6 +11,7 @@ export declare namespace GeneratedWebsocketResponseSchemaImpl {
         receiveMessages: WebSocketMessageBodyReference[];
         includeSerdeLayer: boolean;
         omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -24,6 +24,7 @@ export class GeneratedWebsocketResponseSchemaImpl
     private receiveMessages: WebSocketMessageBodyReference[];
     private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -31,6 +32,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         receiveMessages,
         includeSerdeLayer,
         omitUndefined,
+        skipResponseValidation,
         ...superInit
     }: GeneratedWebsocketResponseSchemaImpl.Init) {
         super(superInit);
@@ -39,6 +41,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         this.receiveMessages = receiveMessages;
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -51,7 +54,8 @@ export class GeneratedWebsocketResponseSchemaImpl
         }
         return this.getReferenceToZurgSchema(context).parse(referenceToRawResponse, {
             ...getSchemaOptions({
-                allowExtraFields: false,
+                allowExtraFields: true,
+                skipValidation: this.skipResponseValidation,
                 omitUndefined: this.omitUndefined
             })
         });

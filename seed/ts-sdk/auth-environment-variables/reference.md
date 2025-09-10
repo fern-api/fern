@@ -86,7 +86,7 @@ GET request with custom api key
 
 ```typescript
 await client.service.getWithHeader({
-    xEndpointHeader: "X-Endpoint-Header",
+    "X-Endpoint-Header": "X-Endpoint-Header",
 });
 ```
 

@@ -1,24 +1,54 @@
+import { ClassReference } from "./ClassReference";
 import { Comment } from "./Comment";
-import { Module } from "./Module";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Method, MethodKind } from "./Method";
+import { Module_ } from "./Module";
+import { Type } from "./Type";
 
 export declare namespace Class_ {
-    export interface Args extends Module.Args {
+    export interface Args extends Module_.Args {
         /* The superclass of this class. */
-        superclass?: Class_;
+        superclass?: ClassReference;
     }
 }
 
-export class Class_ extends Module {
-    public readonly superclass: Class_ | undefined;
+export class Class_ extends Module_ {
+    public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
+    public readonly methods: Method[] = [];
 
     constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
         super({ name, docstring, typeParameters });
 
         this.superclass = superclass;
         this.statements = statements ?? [];
+    }
+
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
+    }
+
+    public addStatements(statements: AstNode[]): void {
+        this.statements.push(...statements);
+    }
+
+    public addInstanceMethod(name: string, returnType: Type, statements: AstNode[]): void {
+        const method = new Method({
+            name,
+            kind: MethodKind.Instance,
+            returnType,
+            statements
+        });
+        this.addMethod(method);
+    }
+
+    public addMethod(method: Method): void {
+        this.methods.push(method);
+    }
+
+    public addMethods(methods: Method[]): void {
+        methods.forEach((method) => this.addMethod(method));
     }
 
     public write(writer: Writer): void {
@@ -29,7 +59,13 @@ export class Class_ extends Module {
         writer.write(`class ${this.name}`);
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
+        }
+
+        if (!this.hasBody()) {
+            writer.writeLine("; end");
+            return;
         }
 
         if (this.statements.length) {
@@ -38,17 +74,26 @@ export class Class_ extends Module {
 
             this.statements.forEach((statement, index) => {
                 statement.write(writer);
-                if (index < this.statements.length - 1) {
-                    writer.newLine();
-                }
+                writer.newLine();
             });
 
             writer.dedent();
-            writer.write("end");
-        } else {
-            writer.write("; end");
         }
-        writer.newLine();
+
+        if (this.methods.length) {
+            writer.newLine();
+            writer.indent();
+            this.methods.forEach((method) => {
+                method.write(writer);
+            });
+            writer.dedent();
+        }
+
+        writer.writeLine("end");
+    }
+
+    private hasBody(): boolean {
+        return this.statements.length > 0 || this.methods.length > 0;
     }
 
     public writeTypeDefinition(writer: Writer): void {
@@ -67,7 +112,8 @@ export class Class_ extends Module {
         }
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
         }
 
         writer.newLine();

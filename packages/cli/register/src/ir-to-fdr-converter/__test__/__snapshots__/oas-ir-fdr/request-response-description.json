@@ -44,7 +44,8 @@
             "type": {
               "type": "id",
               "value": "Schema1"
-            }
+            },
+            "displayName": "Schema1"
           }
         ]
       }
@@ -57,7 +58,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -74,6 +75,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -85,10 +87,24 @@
           "statusCode": 200,
           "description": "Successful response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getExample_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/example",
             "pathParameters": {},
@@ -96,17 +112,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 42,
-                "name": "foo"
-              }
+              "id": 1,
+              "name": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 42,
-                "name": "foo"
+                "id": 1,
+                "name": "string"
               }
             }
           }

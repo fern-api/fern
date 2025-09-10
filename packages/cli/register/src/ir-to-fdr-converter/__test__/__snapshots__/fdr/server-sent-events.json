@@ -78,6 +78,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "stream",
@@ -91,6 +92,7 @@
               "terminator": "[[DONE]]"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

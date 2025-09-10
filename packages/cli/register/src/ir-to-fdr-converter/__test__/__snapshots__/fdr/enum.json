@@ -43,14 +43,30 @@
             "type": {
               "type": "id",
               "value": "type_:Color"
-            }
+            },
+            "displayName": "Color"
           },
           {
             "typeName": "Operand",
             "type": {
               "type": "id",
               "value": "type_:Operand"
-            }
+            },
+            "displayName": "Operand"
+          }
+        ]
+      }
+    },
+    "type_:EnumWithSpecialCharacters": {
+      "name": "EnumWithSpecialCharacters",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "\\$bla"
+          },
+          {
+            "value": "\\$yo"
           }
         ]
       }
@@ -65,6 +81,110 @@
           },
           {
             "value": "Custom"
+          }
+        ]
+      }
+    },
+    "type_:SpecialEnum": {
+      "name": "SpecialEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "Hello \\\"World\\\""
+          },
+          {
+            "value": "Hello 'World'"
+          },
+          {
+            "value": "Hello\\\\World"
+          },
+          {
+            "value": "Hello\\nWorld"
+          },
+          {
+            "value": "Hello\\rWorld"
+          },
+          {
+            "value": "Hello\\tWorld"
+          },
+          {
+            "value": "Hello\\fWorld"
+          },
+          {
+            "value": "Hello\\u0008World"
+          },
+          {
+            "value": "Hello\\vWorld"
+          },
+          {
+            "value": "Hello\\x00World"
+          },
+          {
+            "value": "Hello\\u0007World"
+          },
+          {
+            "value": "Hello\\u0001World"
+          },
+          {
+            "value": "Hello\\u0002World"
+          },
+          {
+            "value": "Hello\\u001FWorld"
+          },
+          {
+            "value": "Hello\\u007FWorld"
+          },
+          {
+            "value": "Hello\\u009FWorld"
+          },
+          {
+            "value": "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
+          },
+          {
+            "value": "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
+          },
+          {
+            "value": "Hello 世界"
+          },
+          {
+            "value": "café"
+          },
+          {
+            "value": "🚀"
+          },
+          {
+            "value": "\\\\n"
+          },
+          {
+            "value": "\\\\"
+          },
+          {
+            "value": "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}"
+          },
+          {
+            "value": "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'"
+          },
+          {
+            "value": "C:\\\\Users\\\\John\\\\Documents\\\\file.txt"
+          },
+          {
+            "value": "/usr/local/bin/app"
+          },
+          {
+            "value": "\\\\d{3}-\\\\d{2}-\\\\d{4}"
+          },
+          {
+            "value": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}"
+          },
+          {
+            "value": "transcript[transcriptType=\"final\"]"
+          },
+          {
+            "value": "transcript[transcriptType='final']"
           }
         ]
       }
@@ -85,6 +205,89 @@
     }
   },
   "subpackages": {
+    "subpackage_headers": {
+      "subpackageId": "subpackage_headers",
+      "name": "headers",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "send",
+          "originalEndpointId": "endpoint_headers.send",
+          "name": "Send",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/headers"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "operand",
+              "type": {
+                "type": "id",
+                "value": "type_:Operand"
+              }
+            },
+            {
+              "key": "maybeOperand",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:Operand"
+                }
+              }
+            },
+            {
+              "key": "operandOrColor",
+              "type": {
+                "type": "id",
+                "value": "type_:ColorOrOperand"
+              }
+            },
+            {
+              "key": "maybeOperandOrColor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ColorOrOperand"
+                }
+              }
+            }
+          ],
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/headers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "operand": ">",
+                "operandOrColor": "red"
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
     "subpackage_inlined-request": {
       "subpackageId": "subpackage_inlined-request",
       "name": "inlined-request",
@@ -156,6 +359,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -240,10 +445,12 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
-              "path": "/path/>/red",
+              "path": "/path/%3E/red",
               "pathParameters": {
                 "operand": ">",
                 "operandOrColor": "red"
@@ -320,6 +527,8 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -390,6 +599,8 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -431,9 +642,12 @@
       "type_:Operand",
       "type_:Color",
       "type_:ColorOrOperand",
-      "type_:EnumWithCustom"
+      "type_:EnumWithSpecialCharacters",
+      "type_:EnumWithCustom",
+      "type_:SpecialEnum"
     ],
     "subpackages": [
+      "subpackage_headers",
       "subpackage_inlined-request",
       "subpackage_path-param",
       "subpackage_query-param",

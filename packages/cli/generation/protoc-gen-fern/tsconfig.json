@@ -1,0 +1,26 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../api-importers/v3-importer-commons"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../../commons/casings-generator"
+    }
+  ]
+}

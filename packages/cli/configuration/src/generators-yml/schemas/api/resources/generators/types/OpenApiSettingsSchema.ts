@@ -27,4 +27,26 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
     "example-generation"?: FernDefinition.OpenApiExampleGenerationSchema;
     /** Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`. */
     "additional-properties-defaults-to"?: boolean;
+    /**
+     * If true, convert strings with format date to strings.
+     * If false, convert strings with format date to dates.
+     * Defaults to true.
+     */
+    "type-dates-as-strings"?: boolean;
+    /**
+     * If true, preserve oneOf structures with a single schema.
+     * If false, unwrap oneOf structures with a single schema.
+     * Defaults to false.
+     */
+    "preserve-single-schema-oneof"?: boolean;
+    /**
+     * Whether to inline allOf schemas. If false, allOf schemas will be
+     * extended in the code generation.
+     */
+    "inline-all-of-schemas"?: boolean;
+    /**
+     * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
+     * This is useful for organizations with multiple APIs deployed to the same set of environments.
+     */
+    "group-multi-api-environments"?: boolean;
 }

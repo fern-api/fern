@@ -1,12 +1,12 @@
 export { Access } from "./Access";
-export { AstNode } from "./core/AstNode";
 export { Class } from "./Class";
-export { ClassReference } from "./ClassReference";
 export { ClassInstantiation } from "./ClassInstantiation";
+export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
+export { AstNode } from "./core/AstNode";
+export { Writer } from "./core/Writer";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
 export { type BuilderParameter, type ConstructorParameter, TypeLiteral } from "./TypeLiteral";
-export { Writer } from "./core/Writer";

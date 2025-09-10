@@ -1,23 +1,28 @@
+import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
+import { createFdrService } from "@fern-api/core";
+import { MediaType } from "@fern-api/core-utils";
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { convertIrToFdrApi } from "@fern-api/register";
+import { TaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import {
+    DynamicIr,
+    DynamicIrUpload,
+    SnippetsConfig
+} from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-
-import { FernToken } from "@fern-api/auth";
-import { docsYml } from "@fern-api/configuration";
-import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -40,7 +45,9 @@ export async function publishDocs({
     context,
     preview,
     editThisPage,
-    isPrivate = false
+    isPrivate = false,
+    disableTemplates = false,
+    disableDynamicSnippets = false
 }: {
     token: FernToken;
     organization: string;
@@ -53,6 +60,8 @@ export async function publishDocs({
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
+    disableTemplates: boolean | undefined;
+    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -158,17 +167,43 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
+        async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+
+            // create dynamic IR + metadata for each generator language
+            let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+            if (!disableDynamicSnippets) {
+                dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig
+                });
+            }
+
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition,
-                definitionV2: undefined
+                definition: {
+                    ...apiDefinition,
+                    snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
+                },
+                definitionV2: undefined,
+                dynamicIRs: dynamicIRsByLanguage
             });
 
             if (response.ok) {
                 context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+
+                if (response.body.dynamicIRs && dynamicIRsByLanguage) {
+                    await uploadDynamicIRs({
+                        dynamicIRs: dynamicIRsByLanguage,
+                        dynamicIRUploadUrls: response.body.dynamicIRs,
+                        context,
+                        apiId: response.body.apiDefinitionId
+                    });
+                }
+
                 return response.body.apiDefinitionId;
             } else {
                 switch (response.error.error) {
@@ -181,11 +216,11 @@ export async function publishDocs({
                     default:
                         if (apiName != null) {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
                             );
                         } else {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
                             );
                         }
                 }
@@ -197,7 +232,10 @@ export async function publishDocs({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
                 definition: undefined,
-                definitionV2: api
+                definitionV2: {
+                    ...api,
+                    snippetsConfiguration: preview ? undefined : api.snippetsConfiguration
+                }
             });
 
             if (response.ok) {
@@ -353,5 +391,136 @@ function parseBasePath(domain: string): string | undefined {
         return new URL(wrapWithHttps(domain)).pathname;
     } catch (e) {
         return undefined;
+    }
+}
+
+async function generateLanguageSpecificDynamicIRs({
+    workspace,
+    organization,
+    context,
+    snippetsConfig
+}: {
+    workspace: FernWorkspace | undefined;
+    organization: string;
+    context: TaskContext;
+    snippetsConfig: SnippetsConfig;
+}): Promise<Record<string, DynamicIr> | undefined> {
+    let languageSpecificIRs: Record<string, DynamicIr> = {};
+
+    if (!workspace) {
+        return undefined;
+    }
+
+    let snippetConfiguration = {
+        typescript: snippetsConfig.typescriptSdk?.package,
+        python: snippetsConfig.pythonSdk?.package,
+        java: snippetsConfig.javaSdk?.coordinate,
+        go: snippetsConfig.goSdk?.githubRepo,
+        csharp: snippetsConfig.csharpSdk?.package,
+        ruby: snippetsConfig.rubySdk?.gem,
+        php: snippetsConfig.phpSdk?.package,
+        swift: snippetsConfig.swiftSdk?.package,
+
+        // todo: add when available
+        rust: undefined
+    };
+
+    if (workspace.generatorsConfiguration?.groups) {
+        for (const group of workspace.generatorsConfiguration.groups) {
+            for (const generatorInvocation of group.generators) {
+                const packageName = generatorsYml.getPackageName({ generatorInvocation });
+
+                // generate a dynamic IR for configuration that matches the requested api snippet
+                if (
+                    packageName &&
+                    generatorInvocation.language &&
+                    snippetConfiguration[generatorInvocation.language] === packageName
+                ) {
+                    const irForDynamicSnippets = generateIntermediateRepresentation({
+                        workspace,
+                        generationLanguage: generatorInvocation.language,
+                        keywords: undefined,
+                        smartCasing: generatorInvocation.smartCasing,
+                        exampleGeneration: {
+                            disabled: true,
+                            skipAutogenerationIfManualExamplesExist: true,
+                            skipErrorAutogenerationIfManualErrorExamplesExist: true
+                        },
+                        audiences: {
+                            type: "all"
+                        },
+                        readme: undefined,
+                        packageName: packageName,
+                        version: undefined,
+                        context,
+                        sourceResolver: new SourceResolverImpl(context, workspace)
+                    });
+
+                    const dynamicIR = await convertIrToDynamicSnippetsIr({
+                        ir: irForDynamicSnippets,
+                        disableExamples: true,
+                        smartCasing: generatorInvocation.smartCasing,
+                        generationLanguage: generatorInvocation.language,
+                        generatorConfig: getDynamicGeneratorConfig({
+                            apiName: workspace.workspaceName ?? "",
+                            organization,
+                            generatorInvocation
+                        })
+                    });
+
+                    // include metadata along with the dynamic IR
+                    if (dynamicIR) {
+                        languageSpecificIRs[generatorInvocation.language] = {
+                            dynamicIR
+                        };
+                    } else {
+                        context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
+                    }
+                }
+            }
+        }
+    }
+
+    if (Object.keys(languageSpecificIRs).length > 0) {
+        return languageSpecificIRs;
+    }
+
+    return undefined;
+}
+
+async function uploadDynamicIRs({
+    dynamicIRs,
+    dynamicIRUploadUrls,
+    context,
+    apiId
+}: {
+    dynamicIRs: Record<string, DynamicIr>;
+    dynamicIRUploadUrls: Record<string, DynamicIrUpload>;
+    context: TaskContext;
+    apiId: string;
+}) {
+    if (Object.keys(dynamicIRUploadUrls).length > 0) {
+        for (const [language, source] of Object.entries(dynamicIRUploadUrls)) {
+            const dynamicIR = dynamicIRs[language]?.dynamicIR;
+
+            if (dynamicIR) {
+                const response = await fetch(source.uploadUrl, {
+                    method: "PUT",
+                    body: JSON.stringify(dynamicIR),
+                    headers: {
+                        "Content-Type": "application/octet-stream",
+                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                    }
+                });
+
+                if (response.ok) {
+                    context.logger.debug(`Uploaded dynamic IR for ${apiId}:${language}`);
+                } else {
+                    context.logger.warn(`Failed to upload dynamic IR for ${apiId}:${language}`);
+                }
+            } else {
+                context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);
+            }
+        }
     }
 }

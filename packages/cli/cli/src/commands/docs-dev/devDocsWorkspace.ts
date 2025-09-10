@@ -11,14 +11,16 @@ export async function previewDocsWorkspace({
     port,
     bundlePath,
     brokenLinks,
-    appPreview
+    legacyPreview,
+    backendPort
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
     bundlePath?: string;
     brokenLinks: boolean;
-    appPreview?: boolean;
+    legacyPreview?: boolean;
+    backendPort: number;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -26,16 +28,16 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    if (appPreview) {
+    if (legacyPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: "fern docs dev --beta"
+            command: "fern docs dev --legacy"
         });
 
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
             context.logger.info(`Starting server on port ${port}`);
 
-            await runAppPreviewServer({
+            await runPreviewServer({
                 initialProject: project,
                 reloadProject: loadProject,
                 validateProject: async (project) => {
@@ -44,7 +46,9 @@ export async function previewDocsWorkspace({
                         return;
                     }
                     const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
-                    if (docsWorkspace.config.experimental?.openapiParserV3) {
+                    const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
+                    const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                    if (useV3Parser) {
                         await validateDocsWorkspaceWithoutExiting({
                             workspace: docsWorkspace,
                             context,
@@ -71,19 +75,17 @@ export async function previewDocsWorkspace({
                 bundlePath
             });
         });
-
-        return;
     }
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern docs dev"
+        command: "fern docs dev --beta"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         context.logger.info(`Starting server on port ${port}`);
 
-        await runPreviewServer({
+        await runAppPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
             validateProject: async (project) => {
@@ -92,7 +94,9 @@ export async function previewDocsWorkspace({
                     return;
                 }
                 const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
-                if (docsWorkspace.config.experimental?.openapiParserV3) {
+                const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
+                const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                if (useV3Parser) {
                     await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
                         context,
@@ -116,7 +120,10 @@ export async function previewDocsWorkspace({
             },
             context,
             port,
-            bundlePath
+            bundlePath,
+            backendPort
         });
     });
+
+    return;
 }

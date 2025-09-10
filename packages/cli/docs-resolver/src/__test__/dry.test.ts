@@ -1,4 +1,3 @@
-import { docsYml } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -8,7 +7,7 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver";
 
 const context = createMockTaskContext();
 
-// eslint-disable-next-line jest/no-disabled-tests
+// biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/dry/fern"),

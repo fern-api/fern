@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { IntermediateRepresentation, dynamic } from "@fern-api/ir-sdk";
+import { dynamic, IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 import { DynamicSnippetsConverter } from "./DynamicSnippetsConverter";
 

@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExtendsClient } from \"@fern/extends\";\n\nconst client = new SeedExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    unique: \"unique\"\n});\n"
+                "client": "import { SeedExtendsClient } from \"@fern/extends\";\n\nconst client = new SeedExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    unique: \"unique\",\n    name: \"name\",\n    docs: \"docs\"\n});\n"
             }
         }
     ],

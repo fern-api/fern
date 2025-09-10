@@ -78,7 +78,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -239,7 +239,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -269,6 +269,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserCreate"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -280,10 +297,24 @@
           "statusCode": 200,
           "description": "User created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -296,39 +327,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "string",
+              "name": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z",
+              "settings": {
+                "theme": "string",
+                "notifications": true,
+                "lastModified": "2024-01-15T09:30:00Z"
+              },
+              "stats": {
+                "totalLogins": 1,
+                "lastLoginTime": "2024-01-15T09:30:00Z",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
+                "id": "string",
+                "name": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "settings": {
-                  "theme": "foo",
+                  "theme": "string",
                   "notifications": true,
-                  "lastModified": "foo"
+                  "lastModified": "2024-01-15T09:30:00Z"
                 },
                 "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
+                  "totalLogins": 1,
+                  "lastLoginTime": "2024-01-15T09:30:00Z",
                   "accountStatus": "active"
                 }
               }

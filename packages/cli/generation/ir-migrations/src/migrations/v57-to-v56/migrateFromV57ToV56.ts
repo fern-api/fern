@@ -1,5 +1,3 @@
-import { mapValues } from "lodash-es";
-
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 
@@ -24,9 +22,9 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "0.49.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.8.0",
+        [GeneratorName.JAVA_SDK]: "2.34.0",
+        [GeneratorName.JAVA_SPRING]: "1.6.0",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: "1.6.3",
@@ -44,7 +42,9 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: "0.14.1"
+        [GeneratorName.PHP_SDK]: "0.14.1",
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V56.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -55,7 +55,7 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         return {
             ...v57,
             dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined
-        };
+        } as IrVersions.V56.ir.IntermediateRepresentation;
     }
 };
 
@@ -71,10 +71,16 @@ function convertDynamicIr(
 function convertDynamicEndpoints(
     endpoints: Record<string, IrVersions.V57.dynamic.Endpoint>
 ): Record<string, IrVersions.V56.dynamic.Endpoint> {
-    return mapValues(endpoints, (endpoint) => convertDynamicEndpoint(endpoint));
+    return Object.fromEntries(
+        Object.entries(endpoints)
+            .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
+            .filter(([_, endpoint]) => endpoint != null)
+    );
 }
 
-function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVersions.V56.dynamic.Endpoint {
+function convertDynamicEndpoint(
+    endpoint: IrVersions.V57.dynamic.Endpoint
+): IrVersions.V56.dynamic.Endpoint | undefined {
     return {
         ...endpoint,
         auth: endpoint.auth != null ? convertDynamicAuth(endpoint.auth) : undefined,
@@ -85,12 +91,12 @@ function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVe
 function convertDynamicExamples(
     examples: IrVersions.V57.dynamic.EndpointExample[]
 ): IrVersions.V56.dynamic.EndpointExample[] {
-    return examples.map((example) => convertDynamicExample(example));
+    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null);
 }
 
 function convertDynamicExample(
     example: IrVersions.V57.dynamic.EndpointExample
-): IrVersions.V56.dynamic.EndpointExample {
+): IrVersions.V56.dynamic.EndpointExample | undefined {
     return {
         ...example,
         auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined

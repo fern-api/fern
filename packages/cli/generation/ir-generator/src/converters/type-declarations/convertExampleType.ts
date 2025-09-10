@@ -1,9 +1,9 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
 import {
-    RawSchemas,
     isRawAliasDefinition,
     isRawObjectDefinition,
+    RawSchemas,
     visitRawTypeDeclaration,
     visitRawTypeReference
 } from "@fern-api/fern-definition-schema";
@@ -19,10 +19,9 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
-
-import { FernFileContext } from "../../FernFileContext";
-import { IdGenerator } from "../../IdGenerator";
+import { IdGenerator } from "@fern-api/ir-utils";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
+import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import {
@@ -32,7 +31,7 @@ import {
     getUnionDiscriminantName
 } from "./convertDiscriminatedUnionTypeDeclaration";
 import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
-import { getPropertyName } from "./convertObjectTypeDeclaration";
+import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
 
 export function convertTypeExample({
     typeName,
@@ -352,7 +351,8 @@ export function convertTypeReferenceExample({
                 const typeName: DeclaredTypeName = {
                     typeId: parsedReferenceToNamedType.typeId,
                     fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                    name: parsedReferenceToNamedType.name
+                    name: parsedReferenceToNamedType.name,
+                    displayName: parsedReferenceToNamedType.displayName
                 };
                 return ExampleTypeReferenceShape.named({
                     typeName,
@@ -573,7 +573,8 @@ function convertObject({
                                   wireValue: wireKey
                               }),
                               value: valueExample,
-                              originalTypeDeclaration: originalTypeDeclaration.typeName
+                              originalTypeDeclaration: originalTypeDeclaration.typeName,
+                              propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
                           });
 
                           return exampleProperties;
@@ -737,7 +738,8 @@ function convertSingleUnionType({
             const typeName: DeclaredTypeName = {
                 typeId: parsedSingleUnionTypeProperties.typeId,
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
-                name: parsedSingleUnionTypeProperties.name
+                name: parsedSingleUnionTypeProperties.name,
+                displayName: parsedSingleUnionTypeProperties.displayName
             };
             return {
                 wireDiscriminantValue,

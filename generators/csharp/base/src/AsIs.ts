@@ -31,6 +31,7 @@ export const AsIsFiles = {
     RawGrpcClient: "RawGrpcClient.Template.cs",
     // Pagination
     CustomPager: "CustomPager.Template.cs",
+    CustomPagerContext: "CustomPagerContext.Template.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",
     // HTTP
@@ -71,7 +72,9 @@ export const AsIsFiles = {
             AdditionalHeadersTests: "test/RawClientTests/AdditionalHeadersTests.Template.cs",
             AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
-            RetriesTests: "test/RawClientTests/RetriesTests.Template.cs"
+            RetriesTests: "test/RawClientTests/RetriesTests.Template.cs",
+            QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",
+            IdempotentHeadersTests: "test/RawClientTests/IdempotentHeadersTests.Template.cs"
         },
         Utils: {
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",

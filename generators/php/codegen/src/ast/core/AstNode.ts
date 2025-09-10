@@ -11,6 +11,7 @@ export abstract class AstNode extends AbstractAstNode {
         namespace: string;
         rootNamespace: string;
         customConfig: BasePhpCustomConfigSchema;
+        skipImports?: boolean;
     }): string {
         if (param == null) {
             // You are likely implicitly calling toString() inside a string interpolation or concatenation.
@@ -21,7 +22,7 @@ export abstract class AstNode extends AbstractAstNode {
 
             throw new Error("Internal error; AstNode.toString method called incorrectly.");
         }
-        const { namespace, rootNamespace, customConfig } = param;
+        const { namespace, rootNamespace, customConfig, skipImports = false } = param;
 
         const writer = new Writer({
             namespace,
@@ -29,7 +30,7 @@ export abstract class AstNode extends AbstractAstNode {
             customConfig
         });
         this.write(writer);
-        return writer.toString();
+        return writer.toString(skipImports);
     }
 
     /**

@@ -225,6 +225,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -234,6 +235,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -244,7 +246,7 @@
             "requestBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             },
             "requestBodyV3": {
@@ -252,7 +254,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "foo",
+                "name": "fern",
                 "shape": "SQUARE"
               }
             },
@@ -260,7 +262,7 @@
             "responseBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
@@ -268,7 +270,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "foo",
+                "name": "fern",
                 "shape": "SQUARE"
               }
             },
@@ -336,6 +338,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -345,6 +348,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -353,14 +357,14 @@
             "queryParameters": {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo"
+              "name": "fern"
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
@@ -368,7 +372,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "foo",
+                "name": "fern",
                 "shape": "SQUARE"
               }
             },

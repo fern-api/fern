@@ -74,15 +74,15 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "subpackageId": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "subpackageId": "subpackage_chatCompletions",
       "name": "chatCompletions",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -112,6 +112,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateCompletionRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -125,32 +142,45 @@
             "statusCode": 200,
             "description": "Success!"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],
@@ -175,8 +205,12 @@
       "CompletionChunk"
     ],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -4,16 +4,10 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./src/**/__test__/**/generated"
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
       "path": "../../../../commons/fs-utils"
@@ -25,10 +19,10 @@
       "path": "../../../workspace/browser-compatible-fern-workspace"
     },
     {
-      "path": "../../../workspace/loader"
+      "path": "../../../workspace/lazy-fern-workspace"
     },
     {
-      "path": "../../../workspace/lazy-fern-workspace"
+      "path": "../../../workspace/loader"
     }
   ]
 }

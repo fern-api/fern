@@ -1,8 +1,9 @@
+import { keys } from "@fern-api/core-utils";
 import path from "path";
 
-import { keys } from "@fern-api/core-utils";
+import { ExportedDirectory, ExportsManager } from "../exports-manager";
 
-import { ExportedDirectory, convertExportedDirectoryPathToFilePath } from "../exports-manager/ExportedFilePath";
+const DEFAULT_SRC_DIRECTORY = "src";
 
 export declare namespace getQualifiedNameOfDirectory {
     export interface Args<QualifiedName> {
@@ -10,6 +11,7 @@ export declare namespace getQualifiedNameOfDirectory {
         constructQualifiedName: (left: QualifiedName, right: string) => QualifiedName;
         pathToDirectory: ExportedDirectory[];
         prefix?: QualifiedName;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -17,7 +19,8 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     pathToDirectory,
     convertToQualifiedName,
     constructQualifiedName,
-    prefix
+    prefix,
+    exportsManager
 }: getQualifiedNameOfDirectory.Args<QualifiedName>): QualifiedName {
     const { initial, remainingDirectories } = splitQualifiedName({ convertToQualifiedName, prefix, pathToDirectory });
 
@@ -27,15 +30,15 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     while (i < remainingDirectories.length) {
         let nextI = i + 1;
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const directory = remainingDirectories[i]!;
         let exportDeclaration = directory.exportDeclaration;
 
         // prefer jumping through subexports when they exist
         if (directory.subExports != null) {
             const remainingPath = path.relative(
-                convertExportedDirectoryPathToFilePath([directory]),
-                convertExportedDirectoryPathToFilePath(remainingDirectories.slice(i))
+                exportsManager.convertExportedDirectoryPathToFilePath([directory]),
+                exportsManager.convertExportedDirectoryPathToFilePath(remainingDirectories.slice(i))
             );
             const subExportPaths = keys(directory.subExports)
                 .filter((subExportPath) => remainingPath.startsWith(subExportPath))

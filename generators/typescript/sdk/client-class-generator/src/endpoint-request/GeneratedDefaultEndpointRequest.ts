@@ -1,15 +1,4 @@
-import {
-    Fetcher,
-    GetReferenceOpts,
-    PackageId,
-    getParameterNameForPositionalPathParameter,
-    getTextOfTsNode
-} from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
 import { assertNever } from "@fern-api/core-utils";
-
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -20,11 +9,21 @@ import {
     SdkRequest,
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import {
+    ExportsManager,
+    Fetcher,
+    GetReferenceOpts,
+    getParameterNameForPositionalPathParameter,
+    getPropertyKey,
+    getTextOfTsNode,
+    PackageId
+} from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders } from "../endpoints/utils/generateHeaders";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
@@ -40,6 +39,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -52,12 +52,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private ir: IntermediateRepresentation;
     private packageId: PackageId;
     private requestParameter: RequestParameter | undefined;
-    private queryParams: GeneratedQueryParams;
+    private queryParams: GeneratedQueryParams | undefined;
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
+    private exportsManager: ExportsManager;
 
     constructor({
         ir,
@@ -67,7 +68,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing
+        retainOriginalCasing,
+        exportsManager
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -98,9 +100,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                   })
                 : undefined;
 
-        this.queryParams = new GeneratedQueryParams({
-            requestParameter: this.requestParameter
-        });
+        this.exportsManager = exportsManager;
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
@@ -129,6 +129,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
         return parameters;
+    }
+
+    public getExampleEndpointImports(): ts.Statement[] {
+        return [];
     }
 
     public getExampleEndpointParameters({
@@ -185,7 +189,9 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             );
         }
 
-        statements.push(...this.queryParams.getBuildStatements(context));
+        statements.push(...this.getQueryParams(context).getBuildStatements(context));
+
+        statements.push(...this.initializeHeaders(context));
 
         return statements;
     }
@@ -194,17 +200,46 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
-            headers: this.getHeaders(context),
-            queryParameters: this.queryParams.getReferenceTo(context),
+            headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+            queryParameters: this.getQueryParams(context).getReferenceTo(),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: this.requestBody?.contentType ?? "application/json",
-            requestType: "json"
+            contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+            requestType: this.getRequestType()
         };
     }
 
-    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    private getFallbackContentType(): string | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "application/json";
+            case "reference":
+                return "application/json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private getRequestType(): "json" | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "json";
+            case "reference":
+                return "json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({
             context,
+            intermediateRepresentation: this.ir,
             requestParameter: this.requestParameter,
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
@@ -285,7 +320,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(serializeExpression)),
                 ...literalProperties.map((property) => {
                     return ts.factory.createPropertyAssignment(
-                        property.propertyWireKey,
+                        getPropertyKey(property.propertyWireKey),
                         typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue
@@ -359,5 +394,15 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
+    }
+
+    public getQueryParams(context: SdkContext): GeneratedQueryParams {
+        if (this.queryParams == null) {
+            this.queryParams = new GeneratedQueryParams({
+                queryParameters: this.requestParameter?.getAllQueryParameters(context),
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+            });
+        }
+        return this.queryParams;
     }
 }

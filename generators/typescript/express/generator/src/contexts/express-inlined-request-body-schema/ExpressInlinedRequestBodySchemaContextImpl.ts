@@ -1,4 +1,5 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
     GeneratedExpressInlinedRequestBodySchema
@@ -6,8 +7,6 @@ import {
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
-
-import { Name } from "@fern-fern/ir-sdk/api";
 
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -19,6 +18,7 @@ export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
         packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -28,9 +28,10 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
     private packageResolver: PackageResolver;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
-
+    private exportsManager: ExportsManager;
     constructor({
         importsManager,
+        exportsManager,
         packageResolver,
         sourceFile,
         expressInlinedRequestBodySchemaDeclarationReferencer,
@@ -41,6 +42,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             expressInlinedRequestBodySchemaDeclarationReferencer;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.packageResolver = packageResolver;
     }
 
@@ -77,6 +79,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }

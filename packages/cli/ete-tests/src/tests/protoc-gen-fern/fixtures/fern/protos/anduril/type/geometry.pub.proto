@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package anduril.type;
+
+import "anduril/type/coords.pub.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/type;atypes";
+option java_multiple_files = true;
+option java_package = "com.anduril.type";
+
+// A 2d grid with binary values for each grid cell.
+message Grid {
+  // The bottom left extent of the 2d grid. This represents the
+  // farthest corner on the grid cell, not the center of the
+  // grid cell.
+  anduril.type.LLA bottom_left_pos = 1;
+  // The top right extent of the 2d grid. This represents the
+  // farthest corner on the grid cell, not the center of the
+  // grid cell.
+  anduril.type.LLA top_right_pos = 2;
+  // The width of the grid in number of cells.
+  uint32 grid_width = 3;
+  // The height of the grid in number of cells.
+  uint32 grid_height = 4;
+  // Stores the cell values. Each byte contains 8 bits representing
+  // binary values of cells. Cells are unravelled in row-major order,
+  // with the first cell located at the top-left corner of the grid.
+  // In a single byte, the smallest bit represents the left most cell.
+  bytes cell_values = 5;
+}

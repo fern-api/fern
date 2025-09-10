@@ -14,7 +14,11 @@ class Type(UniversalBaseModel):
     Examples
     --------
     from seed.alias import Type
-    Type(id='type-df89sdg1', name='foo', )
+
+    Type(
+        id="type-df89sdg1",
+        name="foo",
+    )
     """
 
     id: TypeId

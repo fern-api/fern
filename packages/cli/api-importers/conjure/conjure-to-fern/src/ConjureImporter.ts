@@ -1,7 +1,7 @@
 import { ConjureAuthDefinitionType, DefinitionFile } from "@fern-api/conjure-sdk";
 import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, getFilename, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 
 import { listConjureFiles } from "./utils/listConjureFiles";
@@ -158,7 +158,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             pathParameters[pathParameter] =
                                 typeof pathParameterType === "string"
                                     ? pathParameterType
-                                    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                       { type: pathParameterType.type as any };
                         }
                     }

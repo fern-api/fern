@@ -7,8 +7,8 @@ import * as SeedNullable from "../../../index";
 export interface Metadata {
     createdAt: Date;
     updatedAt: Date;
-    avatar?: string;
-    activated?: boolean;
+    avatar: string | null;
+    activated?: boolean | null;
     status: SeedNullable.Status;
-    values?: Record<string, string | undefined>;
+    values?: Record<string, (string | null) | undefined>;
 }

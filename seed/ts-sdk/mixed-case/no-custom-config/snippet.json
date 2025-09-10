@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.listResources({\n    pageLimit: 10,\n    beforeDate: \"2023-01-01\"\n});\n"
+                "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.listResources({\n    page_limit: 10,\n    beforeDate: \"2023-01-01\"\n});\n"
             },
             "example_identifier": "One"
         }

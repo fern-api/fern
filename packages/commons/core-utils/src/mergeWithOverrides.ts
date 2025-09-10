@@ -54,10 +54,10 @@ interface OmitDeepBy {
 
 export const omitDeepBy: OmitDeepBy = (
     object: unknown,
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow
     cb: any,
     ancestorOmissionCriteria?: AncestorOmissionCriteria
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow
 ): any => {
     function omitByDeepByOnOwnProps(object: unknown) {
         if (Array.isArray(object)) {
@@ -66,7 +66,7 @@ export const omitDeepBy: OmitDeepBy = (
 
         if (isPlainObject(object)) {
             const temp: Record<string, unknown> = {};
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow
             for (const [key, value] of Object.entries<Record<string, PropertyName | object>>(object as any)) {
                 temp[key] = omitDeepBy(
                     value,

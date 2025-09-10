@@ -1,9 +1,4 @@
-import { NamedArgument } from "@fern-api/browser-compatible-base-generator";
-
 import { csharp } from "..";
-import { AnonymousFunction } from "../csharp";
-import { ClassInstantiation } from "./ClassInstantiation";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -27,6 +22,8 @@ export declare namespace MethodInvocation {
         generics?: csharp.Type[];
         /* Whether to use a multiline method invocation */
         multiline?: boolean;
+        /* Whether the method returns an async enumerable */
+        isAsyncEnumerable?: boolean;
     }
 }
 
@@ -34,12 +31,22 @@ export class MethodInvocation extends AstNode {
     private arguments: AstNode[];
     private method: string;
     private on: AstNode | undefined;
-    private async: boolean;
+    private ["async"]: boolean;
+    private isAsyncEnumerable: boolean;
     private configureAwait: boolean;
     private generics: csharp.Type[];
     private multiline: boolean;
 
-    constructor({ method, arguments_, on, async, configureAwait, generics, multiline }: MethodInvocation.Args) {
+    constructor({
+        method,
+        arguments_,
+        on,
+        async,
+        configureAwait,
+        generics,
+        multiline,
+        isAsyncEnumerable
+    }: MethodInvocation.Args) {
         super();
 
         this.method = method;
@@ -49,11 +56,16 @@ export class MethodInvocation extends AstNode {
         this.configureAwait = configureAwait ?? false;
         this.generics = generics ?? [];
         this.multiline = multiline ?? false;
+        this.isAsyncEnumerable = isAsyncEnumerable ?? false;
     }
 
     public write(writer: Writer): void {
-        if (this.async) {
-            writer.write("await ");
+        if (this.isAsyncEnumerable) {
+            writer.write("await foreach (var item in ");
+        } else {
+            if (this.async) {
+                writer.write("await ");
+            }
         }
         if (this.on) {
             this.on.write(writer);
@@ -96,6 +108,13 @@ export class MethodInvocation extends AstNode {
             writer.dedent();
         }
         writer.write(")");
+        if (this.isAsyncEnumerable) {
+            writer.write(") {");
+            writer.indent();
+            writer.write("/** consume each item */");
+            writer.dedent();
+            writer.write("}");
+        }
         this.writeEnd(writer);
     }
 

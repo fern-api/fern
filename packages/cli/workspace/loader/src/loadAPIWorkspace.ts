@@ -1,11 +1,11 @@
-import { Spec } from "@fern-api/api-workspace-commons";
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
-    OPENAPI_DIRECTORY,
     generatorsYml,
-    loadGeneratorsConfiguration
+    loadGeneratorsConfiguration,
+    OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -47,28 +47,34 @@ export async function loadSingleNamespaceAPIWorkspace({
                 };
             }
 
-            const absoluteFilepathToProtobufTarget = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.target)
-            );
+            // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
+            const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
+                definition.schema.target.length === 0
+                    ? undefined
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
-            if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.target)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
+            if (absoluteFilepathToTarget != null) {
+                if (!(await doesPathExist(absoluteFilepathToTarget))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
                         }
-                    }
-                };
+                    };
+                }
             }
+
             specs.push({
                 type: "protobuf",
                 absoluteFilepathToProtobufRoot,
-                absoluteFilepathToProtobufTarget,
+                absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
                 relativeFilepathToProtobufRoot,
+                dependencies: definition.schema.dependencies,
                 generateLocally: definition.schema.localGeneration,
+                fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
                     audiences: definition.audiences ?? [],
                     useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
@@ -91,7 +97,11 @@ export async function loadSingleNamespaceAPIWorkspace({
                     defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
                     useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                     respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
+                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
+                    inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
+                    groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false
                 }
             });
             continue;
@@ -160,7 +170,11 @@ export async function loadSingleNamespaceAPIWorkspace({
                 defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
                 useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                 respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
+                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
+                inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
+                groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false
             },
             source: {
                 type: "openapi",
@@ -192,6 +206,7 @@ export async function loadAPIWorkspace({
     let changelog = undefined;
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch (err) {}
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
@@ -256,8 +271,25 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs: specs.filter((spec) => spec.type !== "openrpc"),
-                allSpecs: specs,
+                specs: specs.filter((spec) => {
+                    if (spec.type === "openrpc") {
+                        return false;
+                    }
+                    if (spec.type === "protobuf") {
+                        if (!spec.fromOpenAPI) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }) as (OpenAPISpec | ProtobufSpec)[],
+                allSpecs: specs.filter((spec) => {
+                    if (spec.type === "protobuf") {
+                        if (spec.fromOpenAPI) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }),
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

@@ -1,0 +1,301 @@
+{
+  "title": "Test spec for `date` and `date-time` types.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "Post",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "date_query",
+          "schema": {
+            "generatedName": "PostRequestDateQuery",
+            "value": {
+              "schema": {
+                "type": "date"
+              },
+              "generatedName": "PostRequestDateQuery",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "date_time_query",
+          "schema": {
+            "generatedName": "PostRequestDateTimeQuery",
+            "value": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "PostRequestDateTimeQuery",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "name": "date_header",
+          "schema": {
+            "generatedName": "PostRequestDateHeader",
+            "value": {
+              "schema": {
+                "type": "date"
+              },
+              "generatedName": "PostRequestDateHeader",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "date_time_header",
+          "schema": {
+            "generatedName": "PostRequestDateTimeHeader",
+            "value": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "PostRequestDateTimeHeader",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "PostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostRequestBody",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "PostResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/post",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "date_only": {
+                  "value": {
+                    "value": "2023-01-15",
+                    "type": "date"
+                  },
+                  "type": "primitive"
+                },
+                "date_time": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Request": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "requestDateOnly",
+            "key": "date_only",
+            "schema": {
+              "generatedName": "requestDateOnly",
+              "value": {
+                "schema": {
+                  "type": "date"
+                },
+                "generatedName": "RequestDateOnly",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "requestDateTime",
+            "key": "date_time",
+            "schema": {
+              "generatedName": "requestDateTime",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "RequestDateTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Request",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Response": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "responseDateOnly",
+            "key": "date_only",
+            "schema": {
+              "generatedName": "responseDateOnly",
+              "value": {
+                "schema": {
+                  "type": "date"
+                },
+                "generatedName": "ResponseDateOnly",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "responseDateTime",
+            "key": "date_time",
+            "schema": {
+              "generatedName": "responseDateTime",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "ResponseDateTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Response",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

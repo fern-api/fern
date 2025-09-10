@@ -3,54 +3,31 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*",
-    "./src/*.json"
-  ],
+  "include": ["./src/**/*", "./src/*.json"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../loader"
     },
     {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../../commons/logging-execa"
-    },
-    {
-      "path": "../../../core"
-    },
-    {
-      "path": "../../api-importers/conjure/conjure-to-fern"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../cli-logger"
+      "path": "../../task-context"
     },
     {
       "path": "../../logger"
     },
     {
-      "path": "../../semver-utils"
+      "path": "../../../commons/fs-utils"
     },
     {
-      "path": "../../task-context"
+      "path": "../lazy-fern-workspace"
     },
     {
       "path": "../../fern-definition/schema"
     },
     {
       "path": "../commons"
-    },
+    }
   ]
 }

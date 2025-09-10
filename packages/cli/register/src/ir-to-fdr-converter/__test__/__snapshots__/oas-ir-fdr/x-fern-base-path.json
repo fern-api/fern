@@ -1,5 +1,15 @@
 {
-  "types": {},
+  "types": {
+    "exampleEndpoint_Response_200": {
+      "description": "Empty response body",
+      "name": "exampleEndpoint_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    }
+  },
   "subpackages": {},
   "rootPackage": {
     "endpoints": [
@@ -14,7 +24,7 @@
           }
         ],
         "id": "exampleEndpoint",
-        "originalEndpointId": "exampleEndpoint",
+        "originalEndpointId": "endpoint_.exampleEndpoint",
         "name": "Example endpoint",
         "path": {
           "pathParameters": [],
@@ -31,16 +41,47 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "exampleEndpoint_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "Successful response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "exampleEndpoint_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/example",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {},
+            "responseBodyV3": {
+              "type": "json",
+              "value": {}
+            }
           }
         ],
         "protocol": {

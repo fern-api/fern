@@ -16,7 +16,7 @@ public class Example0
             new CreateRequest{
                 Decimal = 2.2,
                 Even = 100,
-                Name = "foo",
+                Name = "fern",
                 Shape = Shape.Square
             }
         );

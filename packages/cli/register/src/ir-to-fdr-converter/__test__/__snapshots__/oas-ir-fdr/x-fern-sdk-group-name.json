@@ -91,7 +91,7 @@
         "description": "This endpoint should be in `auth/user.yml`",
         "method": "GET",
         "id": "getAuthUser",
-        "originalEndpointId": "getAuthUser",
+        "originalEndpointId": "endpoint_.getAuthUser",
         "name": "Get Auth User",
         "path": {
           "pathParameters": [],
@@ -108,6 +108,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -119,10 +120,24 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/auth/user",
             "pathParameters": {},
@@ -130,23 +145,20 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "associatedPersons": [
-                  {
-                    "id": "foo"
-                  }
-                ]
-              }
+              "id": "string",
+              "associatedPersons": [
+                {
+                  "id": "string"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
+                "id": "string",
                 "associatedPersons": [
                   {
-                    "id": "foo"
+                    "id": "string"
                   }
                 ]
               }

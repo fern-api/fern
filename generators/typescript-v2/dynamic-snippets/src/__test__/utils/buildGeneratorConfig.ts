@@ -17,10 +17,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
             publishTarget: FernGeneratorExec.GeneratorPublishTarget.npm(NPM_CONFIG),
             registries: {
                 npm: NPM_CONFIG
-            } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow
+            } as any,
             registriesV2: {
                 npm: NPM_CONFIG
-            } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow
+            } as any
         })
     },
     organization: "acme",
@@ -39,7 +41,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<TypescriptCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<TypescriptCustomConfigSchema>;
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {

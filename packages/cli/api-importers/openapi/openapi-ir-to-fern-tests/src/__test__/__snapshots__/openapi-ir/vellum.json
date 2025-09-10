@@ -1155,22 +1155,7 @@
                         "document_to_document_indexes": {
                           "value": [
                             {
-                              "properties": {
-                                "id": {
-                                  "value": {
-                                    "value": "id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "document_index_id": {
-                                  "value": {
-                                    "value": "document_index_id",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                }
-                              },
+                              "properties": {},
                               "type": "object"
                             }
                           ],
@@ -3586,13 +3571,6 @@
                       "properties": {
                         "document": {
                           "properties": {
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
                             "label": {
                               "value": {
                                 "value": "label",
@@ -4758,13 +4736,18 @@
             "generatedName": "deploymentReadId",
             "key": "id",
             "schema": {
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "deploymentReadId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "DeploymentReadId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DeploymentReadId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -4774,12 +4757,17 @@
             "generatedName": "deploymentReadCreated",
             "key": "created",
             "schema": {
-              "schema": {
-                "type": "datetime"
+              "generatedName": "deploymentReadCreated",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "DeploymentReadCreated",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DeploymentReadCreated",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -4882,18 +4870,23 @@
             "generatedName": "deploymentReadActiveModelVersionIds",
             "key": "active_model_version_ids",
             "schema": {
+              "generatedName": "deploymentReadActiveModelVersionIds",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "DeploymentReadActiveModelVersionIdsItem",
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "DeploymentReadActiveModelVersionIdsItem",
+                "generatedName": "DeploymentReadActiveModelVersionIds",
                 "groupName": [],
-                "type": "primitive"
+                "type": "array"
               },
-              "generatedName": "DeploymentReadActiveModelVersionIds",
               "groupName": [],
-              "type": "array"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -4958,14 +4951,19 @@
             "generatedName": "documentId",
             "key": "id",
             "schema": {
-              "description": "The ID of the document.",
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "documentId",
+              "value": {
+                "description": "The ID of the document.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "DocumentId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DocumentId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -5032,14 +5030,19 @@
             "generatedName": "documentDocumentToDocumentIndexId",
             "key": "id",
             "schema": {
-              "description": "Vellum-generated ID that uniquely identifies this link.",
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "documentDocumentToDocumentIndexId",
+              "value": {
+                "description": "Vellum-generated ID that uniquely identifies this link.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "DocumentDocumentToDocumentIndexId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DocumentDocumentToDocumentIndexId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -5049,14 +5052,19 @@
             "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
             "key": "document_index_id",
             "schema": {
-              "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
+              "value": {
+                "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "DocumentDocumentToDocumentIndexDocumentIndexId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DocumentDocumentToDocumentIndexDocumentIndexId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -5239,13 +5247,18 @@
             "generatedName": "documentIndexReadId",
             "key": "id",
             "schema": {
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "documentIndexReadId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "DocumentIndexReadId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DocumentIndexReadId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -5255,12 +5268,17 @@
             "generatedName": "documentIndexReadCreated",
             "key": "created",
             "schema": {
-              "schema": {
-                "type": "datetime"
+              "generatedName": "documentIndexReadCreated",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "DocumentIndexReadCreated",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "DocumentIndexReadCreated",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -7059,14 +7077,19 @@
             "generatedName": "modelVersionReadId",
             "key": "id",
             "schema": {
-              "description": "Vellum-generated ID that uniquely identifies this model version.",
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "modelVersionReadId",
+              "value": {
+                "description": "Vellum-generated ID that uniquely identifies this model version.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "ModelVersionReadId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "ModelVersionReadId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -7076,13 +7099,18 @@
             "generatedName": "modelVersionReadCreated",
             "key": "created",
             "schema": {
-              "description": "Timestamp of when this model version was created.",
-              "schema": {
-                "type": "datetime"
+              "generatedName": "modelVersionReadCreated",
+              "value": {
+                "description": "Timestamp of when this model version was created.",
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "ModelVersionReadCreated",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "ModelVersionReadCreated",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -7316,17 +7344,22 @@
             "generatedName": "modelVersionSandboxSnapshotSandboxId",
             "key": "sandbox_id",
             "schema": {
-              "generatedName": "ModelVersionSandboxSnapshotSandboxId",
+              "generatedName": "modelVersionSandboxSnapshotSandboxId",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ModelVersionSandboxSnapshotSandboxId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ModelVersionSandboxSnapshotSandboxId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -10381,14 +10414,19 @@
             "generatedName": "slimDocumentId",
             "key": "id",
             "schema": {
-              "description": "Vellum-generated ID that uniquely identifies this document.",
-              "schema": {
-                "format": "uuid",
-                "type": "string"
+              "generatedName": "slimDocumentId",
+              "value": {
+                "description": "Vellum-generated ID that uniquely identifies this document.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "SlimDocumentId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "SlimDocumentId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -12436,19 +12474,24 @@
             "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
-              "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
               "value": {
-                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
+                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                "value": {
+                  "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -12547,19 +12590,24 @@
             "generatedName": "workflowResultEventOutputDataJsonDelta",
             "key": "delta",
             "schema": {
-              "generatedName": "WorkflowResultEventOutputDataJsonDelta",
-              "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "generatedName": "workflowResultEventOutputDataJsonDelta",
               "value": {
-                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "WorkflowResultEventOutputDataJsonDelta",
+                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                "value": {
+                  "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "WorkflowResultEventOutputDataJsonDelta",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true

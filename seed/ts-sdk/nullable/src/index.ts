@@ -1,4 +1,3 @@
-export * as SeedNullable from "./api";
-export { SeedNullableClient } from "./Client";
-export { SeedNullableError, SeedNullableTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedNullable from "./api/index.js";
+export { SeedNullableError, SeedNullableTimeoutError } from "./errors/index.js";
+export { SeedNullableClient } from "./Client.js";

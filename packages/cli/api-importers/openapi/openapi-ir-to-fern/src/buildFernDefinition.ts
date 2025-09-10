@@ -3,9 +3,6 @@ import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
 import { FernDefinition } from "@fern-api/importer-commons";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
@@ -15,6 +12,8 @@ import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
 import { buildVariables } from "./buildVariables";
 import { buildWebhooks } from "./buildWebhooks";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -52,7 +51,11 @@ function addSchemas({
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
             const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
-            if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
+            if (
+                aliasType === (typeDeclaration.name ?? id) ||
+                aliasType === `optional<${typeDeclaration.name ?? id}>` ||
+                aliasType === `optional<nullable<${typeDeclaration.name ?? id}>>`
+            ) {
                 continue;
             }
         }

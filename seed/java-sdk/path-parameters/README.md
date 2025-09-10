@@ -1,8 +1,37 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/path-parameters)](https://central.sonatype.com/artifact/com.fern/path-parameters)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
+
+## Installation
+
+### Gradle
+
+Add the dependency in your `build.gradle` file:
+
+```groovy
+dependencies {
+  implementation 'com.fern:path-parameters'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>com.fern</groupId>
+  <artifactId>path-parameters</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -13,7 +42,6 @@ package com.example.usage;
 
 import com.seed.pathParameters.SeedPathParametersClient;
 import com.seed.pathParameters.resources.user.types.User;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example {
@@ -23,13 +51,12 @@ public class Example {
             .build();
 
         client.user().createUser(
+            "tenant_id",
             User
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         );
@@ -86,27 +113,24 @@ SeedPathParametersClient client = SeedPathParametersClient
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `maxRetries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.SeedPathParametersClient;
 
-client.user().createUser(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedPathParametersClient client = SeedPathParametersClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts
@@ -129,6 +153,32 @@ client.user().createUser(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.pathParameters.SeedPathParametersClient;
+import com.seed.pathParameters.core.RequestOptions;
+
+// Client level
+SeedPathParametersClient client = SeedPathParametersClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.user().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

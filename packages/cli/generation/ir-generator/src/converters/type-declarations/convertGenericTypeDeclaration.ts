@@ -1,4 +1,4 @@
-import { RawSchemas, isRawObjectDefinition, parseGeneric } from "@fern-api/fern-definition-schema";
+import { isRawObjectDefinition, parseGeneric, RawSchemas } from "@fern-api/fern-definition-schema";
 import { Type } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";

@@ -57,8 +57,15 @@ class PaymentClient:
         Examples
         --------
         from seed import SeedIdempotencyHeaders
-        client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.payment.create(amount=1, currency="USD", )
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.create(
+            amount=1,
+            currency="USD",
+        )
         """
         _response = self._raw_client.create(
             amount=amount,
@@ -85,8 +92,14 @@ class PaymentClient:
         Examples
         --------
         from seed import SeedIdempotencyHeaders
-        client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.payment.delete(payment_id='paymentId', )
+
+        client = SeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.payment.delete(
+            payment_id="paymentId",
+        )
         """
         _response = self._raw_client.delete(payment_id, request_options=request_options)
         return _response.data
@@ -136,11 +149,23 @@ class AsyncPaymentClient:
 
         Examples
         --------
-        from seed import AsyncSeedIdempotencyHeaders
         import asyncio
-        client = AsyncSeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.payment.create(amount=1, currency="USD", )
+            await client.payment.create(
+                amount=1,
+                currency="USD",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -167,11 +192,22 @@ class AsyncPaymentClient:
 
         Examples
         --------
-        from seed import AsyncSeedIdempotencyHeaders
         import asyncio
-        client = AsyncSeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedIdempotencyHeaders
+
+        client = AsyncSeedIdempotencyHeaders(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.payment.delete(payment_id='paymentId', )
+            await client.payment.delete(
+                payment_id="paymentId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(payment_id, request_options=request_options)

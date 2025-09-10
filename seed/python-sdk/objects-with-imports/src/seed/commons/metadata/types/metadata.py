@@ -11,7 +11,11 @@ class Metadata(UniversalBaseModel):
     Examples
     --------
     from seed.commons.metadata import Metadata
-    Metadata(id='metadata-js8dg24b', data={'foo': 'bar', 'baz': 'qux'}, )
+
+    Metadata(
+        id="metadata-js8dg24b",
+        data={"foo": "bar", "baz": "qux"},
+    )
     """
 
     id: str

@@ -7,7 +7,7 @@ import (
     fern "github.com/examples/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,20 +19,24 @@ func do() () {
     client.Service.CreateMovie(
         context.TODO(),
         &fern.Movie{
-            Id: "id",
+            Id: "movie-c06a4ad7",
             Prequel: fern.String(
-                "prequel",
+                "movie-cv9b914f",
             ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: fern.String(
-                "book",
-            ),
-            Metadata: map[string]interface{}{
-                "metadata": map[string]interface{}{
-                    "key": "value",
+            Title: "The Boy and the Heron",
+            From: "Hayao Miyazaki",
+            Rating: 8,
+            Tag: "tag-wf9as23d",
+            Metadata: map[string]any{
+                "actors": []any{
+                    "Christian Bale",
+                    "Florence Pugh",
+                    "Willem Dafoe",
+                },
+                "releaseDate": "2023-12-08",
+                "ratings": map[string]any{
+                    "rottenTomatoes": 97,
+                    "imdb": 7.6,
                 },
             },
             Revenue: 1000000,

@@ -1,11 +1,8 @@
-import urlJoin from "url-join";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import urlJoin from "url-join";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
 
 export class SnippetJsonGenerator {
@@ -37,13 +34,13 @@ export class SnippetJsonGenerator {
             snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
 
             if (isPager) {
-                snippet += "var pager = ";
+                snippet += "var items = ";
             }
 
             snippet += endpointSnippet.endpointCall;
 
             if (isPager) {
-                snippet += `\nawait foreach (var item in pager)
+                snippet += `\nawait foreach (var item in items)
 {
     // do something with item
 }\n`;
@@ -56,9 +53,19 @@ export class SnippetJsonGenerator {
             Object.values(this.context.ir.services).flatMap((service) =>
                 service.endpoints.map(async (httpEndpoint) => {
                     const isPager = isPaginationEnabled && httpEndpoint.pagination != null;
+                    const isStreaming =
+                        httpEndpoint.response?.body?._visit({
+                            streaming: () => true,
+                            json: () => false,
+                            fileDownload: () => false,
+                            text: () => false,
+                            bytes: () => false,
+                            streamParameter: () => false,
+                            _other: () => false
+                        }) ?? false;
                     const snippets = this.getSnippetsForEndpoint(httpEndpoint.id);
                     return snippets.map((endpointSnippet) => {
-                        const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager);
+                        const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager || isStreaming);
                         return {
                             exampleIdentifier: endpointSnippet?.exampleIdentifier,
                             id: {

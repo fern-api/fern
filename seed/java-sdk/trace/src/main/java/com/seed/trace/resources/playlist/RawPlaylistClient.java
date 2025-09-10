@@ -52,14 +52,10 @@ public class RawPlaylistClient {
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("create");
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "datetime", request.getDatetime().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "datetime", request.getDatetime(), false);
         if (request.getOptionalDatetime().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "optionalDatetime",
-                    request.getOptionalDatetime().get().toString(),
-                    false);
+                    httpUrl, "optionalDatetime", request.getOptionalDatetime().get(), false);
         }
         RequestBody body;
         try {
@@ -115,7 +111,7 @@ public class RawPlaylistClient {
                 .addPathSegments("all");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "otherField", request.getOtherField(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "multiLineDocs", request.getMultiLineDocs(), false);
@@ -123,15 +119,14 @@ public class RawPlaylistClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalMultipleField",
-                    request.getOptionalMultipleField().get().toString(),
-                    false);
+                    request.getOptionalMultipleField().get(),
+                    true);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), true);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -179,7 +174,6 @@ public class RawPlaylistClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

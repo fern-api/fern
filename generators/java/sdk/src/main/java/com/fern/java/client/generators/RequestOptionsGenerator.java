@@ -20,6 +20,7 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.HttpHeader;
@@ -88,7 +89,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         TypeSpec.Builder requestOptionsTypeSpec =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         TypeSpec.Builder builderTypeSpec =
-                TypeSpec.classBuilder(builderClassName).addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+                TypeSpec.classBuilder(builderClassName).addModifiers(Modifier.PUBLIC, Modifier.STATIC);
 
         CodeBlock.Builder getHeadersCodeBlock = CodeBlock.builder()
                 .addStatement(
@@ -460,6 +461,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         @Override
         public RequestOption visitOauth(OAuthScheme oauth) {
             return null;
+        }
+
+        @Override
+        public RequestOption visitInferred(InferredAuthScheme inferred) {
+            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
         }
 
         @Override

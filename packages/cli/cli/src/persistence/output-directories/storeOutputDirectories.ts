@@ -1,7 +1,6 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { getPathToOutputDirectoriesFile } from "./getPathToOutputDirectoriesFile";
 

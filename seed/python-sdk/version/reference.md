@@ -14,8 +14,13 @@
 
 ```python
 from seed import SeedVersion
-client = SeedVersion(base_url="https://yourhost.com/path/to/api", )
-client.user.get_user(user_id='userId', )
+
+client = SeedVersion(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.get_user(
+    user_id="userId",
+)
 
 ```
 </dd>

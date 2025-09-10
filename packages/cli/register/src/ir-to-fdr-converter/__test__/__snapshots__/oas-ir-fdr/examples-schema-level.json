@@ -132,7 +132,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -149,6 +149,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -163,32 +164,46 @@
           "statusCode": 200,
           "description": "List of trees"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "Tree"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "List of trees"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "species": "Ferntacular",
-                  "height": 25.4,
-                  "age": 50,
-                  "location": {
-                    "latitude": 42,
-                    "longitude": 42
-                  },
-                  "id": "foo",
-                  "plantedDate": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "species": "Ferntacular",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 1.1,
+                  "longitude": 1.1
+                },
+                "id": "string",
+                "plantedDate": "2024-01-15T09:30:00Z"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -197,11 +212,11 @@
                   "height": 25.4,
                   "age": 50,
                   "location": {
-                    "latitude": 42,
-                    "longitude": 42
+                    "latitude": 1.1,
+                    "longitude": 1.1
                   },
-                  "id": "foo",
-                  "plantedDate": "foo"
+                  "id": "string",
+                  "plantedDate": "2024-01-15T09:30:00Z"
                 }
               ]
             }
@@ -215,7 +230,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -245,6 +260,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TreeCreate"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -256,10 +288,24 @@
           "statusCode": 201,
           "description": "Tree created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Tree"
+                }
+              },
+              "statusCode": 201,
+              "description": "Tree created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -288,19 +334,18 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "$ref": "#/components/examples/oakTree",
+              "id": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "species": "Ferntacular",
                 "height": 25.4,
-                "id": "foo"
+                "$ref": "#/components/examples/oakTree",
+                "id": "string"
               }
             }
           }
@@ -313,7 +358,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -349,6 +394,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -360,32 +406,45 @@
           "statusCode": 200,
           "description": "Tree details"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Tree"
+                }
+              },
+              "statusCode": 200,
+              "description": "Tree details"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/trees/",
+            "path": "/trees/treeId",
             "pathParameters": {
-              "treeId": "foo"
+              "treeId": "treeId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "$ref": "#/components/examples/oakTree",
+              "id": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "species": "Ferntacular",
                 "height": 25.4,
-                "id": "foo"
+                "$ref": "#/components/examples/oakTree",
+                "id": "string"
               }
             }
           }
@@ -398,7 +457,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -451,6 +510,46 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "color",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "name",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -464,10 +563,26 @@
           "statusCode": 201,
           "description": "Fern created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "Fern created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -485,13 +600,10 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -503,7 +615,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -539,6 +651,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -550,24 +663,35 @@
           "statusCode": 200,
           "description": "Fern details"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getFern_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Fern details"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/ferns/",
+            "path": "/ferns/fernId",
             "pathParameters": {
-              "fernId": "foo"
+              "fernId": "fernId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "color": "blue",
-                "name": "BlueFern"
-              }
+              "color": "blue",
+              "name": "BlueFern"
             },
             "responseBodyV3": {
               "type": "json",
@@ -586,7 +710,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],
@@ -642,7 +766,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }
@@ -651,10 +775,62 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "annual",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "foo",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "bar",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/grasses",
             "pathParameters": {},

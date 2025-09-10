@@ -40,8 +40,13 @@ class UserClient:
         Examples
         --------
         from seed import SeedVersion
-        client = SeedVersion(base_url="https://yourhost.com/path/to/api", )
-        client.user.get_user(user_id='userId', )
+
+        client = SeedVersion(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.get_user(
+            user_id="userId",
+        )
         """
         _response = self._raw_client.get_user(user_id, request_options=request_options)
         return _response.data
@@ -77,11 +82,21 @@ class AsyncUserClient:
 
         Examples
         --------
-        from seed import AsyncSeedVersion
         import asyncio
-        client = AsyncSeedVersion(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedVersion
+
+        client = AsyncSeedVersion(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.user.get_user(user_id='userId', )
+            await client.user.get_user(
+                user_id="userId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_user(user_id, request_options=request_options)

@@ -16,6 +16,17 @@ components:
       required:
         - sendText
         - sendParam
+    send_snake_case:
+      title: send_snake_case
+      type: object
+      properties:
+        send_text:
+          type: string
+        send_param:
+          type: integer
+      required:
+        - send_text
+        - send_param
     ReceiveEvent:
       title: ReceiveEvent
       type: object
@@ -27,6 +38,17 @@ components:
       required:
         - alpha
         - beta
+    receive_snake_case:
+      title: receive_snake_case
+      type: object
+      properties:
+        receive_text:
+          type: string
+        receive_int:
+          type: integer
+      required:
+        - receive_text
+        - receive_int
     SendEvent2:
       title: SendEvent2
       type: object

@@ -7,7 +7,6 @@ import typing
 import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
-from ...commons.types.variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -73,7 +72,7 @@ class ProblemDescriptionBoard(UniversalRootModel):
     def visit(
         self,
         html: typing.Callable[[str], T_Result],
-        variable: typing.Callable[[VariableValue], T_Result],
+        variable: typing.Callable[["VariableValue"], T_Result],
         test_case_id: typing.Callable[[str], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
@@ -83,6 +82,9 @@ class ProblemDescriptionBoard(UniversalRootModel):
             return variable(unioned_value.value)
         if unioned_value.type == "testCaseId":
             return test_case_id(unioned_value.value)
+
+
+from ...commons.types.variable_value import VariableValue  # noqa: E402, F401, I001
 
 
 class _ProblemDescriptionBoard:

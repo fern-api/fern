@@ -1,6 +1,5 @@
-import { camelCase } from "lodash-es";
-
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { camelCase } from "lodash-es";
 
 export abstract class AbstractReadmeSnippetBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];

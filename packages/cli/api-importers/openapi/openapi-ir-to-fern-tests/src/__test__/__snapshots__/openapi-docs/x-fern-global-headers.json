@@ -82,7 +82,13 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "another_header": "another_header",
+                    "my-api-key": "my-api-key",
+                    "my-api-version": "my-api-version",
+                    "version": "2024-06-04",
+                    "x-api-key": "x-api-key",
+                  },
                   "path-parameters": {
                     "userId": "userId",
                   },
@@ -135,7 +141,13 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "another_header": "another_header",
+                    "my-api-key": "my-api-key",
+                    "my-api-version": "my-api-version",
+                    "version": "2024-06-04",
+                    "x-api-key": "x-api-key",
+                  },
                   "path-parameters": {
                     "userId": "userId",
                   },
@@ -221,7 +233,12 @@ service:
       examples:
         - path-parameters:
             userId: userId
-          headers: {}
+          headers:
+            my-api-key: my-api-key
+            another_header: another_header
+            x-api-key: x-api-key
+            my-api-version: my-api-version
+            version: '2024-06-04'
           request:
             stream: true
           response:
@@ -251,7 +268,12 @@ service:
       examples:
         - path-parameters:
             userId: userId
-          headers: {}
+          headers:
+            my-api-key: my-api-key
+            another_header: another_header
+            x-api-key: x-api-key
+            my-api-version: my-api-version
+            version: '2024-06-04'
           request:
             stream: false
           response:

@@ -13,6 +13,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .requests.my_alias_object import MyAliasObjectParams
 from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
+from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
@@ -113,14 +114,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def just_file(
         self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
@@ -147,14 +149,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def just_file_with_query_params(
         self,
@@ -206,14 +209,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def with_content_type(
         self,
@@ -260,14 +264,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def with_form_encoding(
         self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
@@ -301,14 +306,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def with_form_encoded_containers(
         self,
@@ -401,14 +407,15 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def optional_args(
         self,
@@ -448,11 +455,9 @@ class RawServiceClient:
                     else {}
                 ),
             },
-            headers={
-                "content-type": "multipart/form-data",
-            },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -466,8 +471,78 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "inline-type",
+            method="POST",
+            data={
+                "request": request,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "snippet",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawServiceClient:
@@ -561,14 +636,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def just_file(
         self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
@@ -595,14 +671,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def just_file_with_query_params(
         self,
@@ -654,14 +731,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def with_content_type(
         self,
@@ -708,14 +786,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def with_form_encoding(
         self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
@@ -749,14 +828,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def with_form_encoded_containers(
         self,
@@ -849,14 +929,15 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def optional_args(
         self,
@@ -896,11 +977,9 @@ class AsyncRawServiceClient:
                     else {}
                 ),
             },
-            headers={
-                "content-type": "multipart/form-data",
-            },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -914,5 +993,75 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "inline-type",
+            method="POST",
+            data={
+                "request": request,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "snippet",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -92,6 +92,9 @@ public final class DeleteUserRequest {
             return this;
         }
 
+        /**
+         * <p>The user to delete.</p>
+         */
         @JsonSetter(value = "username", nulls = Nulls.SKIP)
         public Builder username(Optional<String> username) {
             this.username = username;

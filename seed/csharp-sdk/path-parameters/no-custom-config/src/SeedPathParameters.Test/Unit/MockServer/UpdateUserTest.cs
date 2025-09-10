@@ -47,10 +47,10 @@ public class UpdateUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.UpdateUserAsync(
-            "tenant_id",
-            "user_id",
             new UpdateUserRequest
             {
+                TenantId = "tenant_id",
+                UserId = "user_id",
                 Body = new User
                 {
                     Name = "name",

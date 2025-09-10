@@ -1,1 +1,1 @@
-export { type GetDefaultStarterFilesRequest } from "./GetDefaultStarterFilesRequest";
+export { type GetDefaultStarterFilesRequest } from "./GetDefaultStarterFilesRequest.js";

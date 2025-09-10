@@ -1,6 +1,5 @@
-import { format } from "util";
-
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { format } from "util";
 
 import { Import } from "../Import";
 

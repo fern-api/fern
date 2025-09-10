@@ -1,6 +1,6 @@
 import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { AttrPath, ModulePath } from "./core/types";
+import { Writer } from "./core/Writer";
 
 export declare namespace Reference {
     interface Args {

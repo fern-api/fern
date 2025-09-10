@@ -26,6 +26,10 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         filter: OpenApiFilterSchema.optional(),
         "example-generation": OpenApiExampleGenerationSchema.optional(),
         "additional-properties-defaults-to": core.serialization.boolean().optional(),
+        "type-dates-as-strings": core.serialization.boolean().optional(),
+        "preserve-single-schema-oneof": core.serialization.boolean().optional(),
+        "inline-all-of-schemas": core.serialization.boolean().optional(),
+        "group-multi-api-environments": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -42,5 +46,9 @@ export declare namespace OpenApiSettingsSchema {
         filter?: OpenApiFilterSchema.Raw | null;
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;
         "additional-properties-defaults-to"?: boolean | null;
+        "type-dates-as-strings"?: boolean | null;
+        "preserve-single-schema-oneof"?: boolean | null;
+        "inline-all-of-schemas"?: boolean | null;
+        "group-multi-api-environments"?: boolean | null;
     }
 }

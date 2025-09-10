@@ -1,6 +1,3 @@
-import { merge } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     BaseOpenApiV3_1ConverterNodeContext,
@@ -8,8 +5,10 @@ import {
     FernRegistry,
     OpenApiDocumentConverterNode
 } from "@fern-api/docs-parsers";
-import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { getAllOpenAPISpecs, LazyFernWorkspace, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import { merge } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 export async function generateFdrFromOpenApiWorkspace(
     workspace: AbstractAPIWorkspace<unknown>,

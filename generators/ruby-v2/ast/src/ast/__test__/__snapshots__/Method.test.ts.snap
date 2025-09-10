@@ -17,93 +17,129 @@ exports[`Method > type definitions > writes type definition for method with type
 exports[`Method > type definitions > writes type definition for method with untyped positional parameters 1`] = `"def foobar: (untyped) -> untyped"`;
 
 exports[`Method > writes method with all parameter types 1`] = `
-"def fizzbuzz(one, two:, *three, **four, &five); end
+"# @option one [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two:, *three, **four, &five); end
 "
 `;
 
 exports[`Method > writes method with docstring 1`] = `
 "# This is a method
 # that does nothing
+#
+# @return [untyped]
 def bizbuzz; end
 "
 `;
 
 exports[`Method > writes method with double splat parameter 1`] = `
-"def fizzbuzz(**one); end
+"# @return [untyped]
+def fizzbuzz(**one); end
 "
 `;
 
 exports[`Method > writes method with empty parameter arrays 1`] = `
-"def fizzbuzz; end
+"# @return [untyped]
+def fizzbuzz; end
 "
 `;
 
 exports[`Method > writes method with keyword parameters 1`] = `
-"def fizzbuzz(one:, two:); end
+"# @return [untyped]
+def fizzbuzz(one:, two:); end
 "
 `;
 
 exports[`Method > writes method with mix of positional and keyword parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:); end
+"# @option one [untyped]
+# @option two [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two, three:, four:); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and double-splat parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, **double_splatted); end
+"# @option one [untyped]
+# @option two [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two, three:, four:, **double_splatted); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and single-splat parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, *splatted); end
+"# @option one [untyped]
+# @option two [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two, three:, four:, *splatted); end
 "
 `;
 
 exports[`Method > writes method with mix of positional, keyword, and yield parameters 1`] = `
-"def fizzbuzz(one, two, three:, four:, &block); end
+"# @option one [untyped]
+# @option two [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two, three:, four:, &block); end
 "
 `;
 
 exports[`Method > writes method with no parameters 1`] = `
-"def fizzbuzz; end
+"# @return [untyped]
+def fizzbuzz; end
 "
 `;
 
 exports[`Method > writes method with positional parameters 1`] = `
-"def fizzbuzz(one, two); end
+"# @option one [untyped]
+# @option two [untyped]
+#
+# @return [untyped]
+def fizzbuzz(one, two); end
 "
 `;
 
 exports[`Method > writes method with single splat parameter 1`] = `
-"def fizzbuzz(*one); end
+"# @return [untyped]
+def fizzbuzz(*one); end
 "
 `;
 
 exports[`Method > writes method with special characters in name 1`] = `
-"def fizz_buzz!; end
+"# @return [untyped]
+def fizz_buzz!; end
 "
 `;
 
 exports[`Method > writes method with yield parameter 1`] = `
-"def fizzbuzz(&one); end
+"# @return [untyped]
+def fizzbuzz(&one); end
 "
 `;
 
 exports[`Method > writes private class methods 1`] = `
-"private_class_method def self.foobar; end
+"# @return [untyped]
+private_class_method def self.foobar; end
 "
 `;
 
 exports[`Method > writes private instance methods 1`] = `
-"private def foobar; end
+"# @return [untyped]
+private def foobar; end
 "
 `;
 
 exports[`Method > writes protected class methods 1`] = `
-"protected_class_method def self.foobar; end
+"# @return [untyped]
+protected_class_method def self.foobar; end
 "
 `;
 
 exports[`Method > writes protected instance methods 1`] = `
-"protected def foobar; end
+"# @return [untyped]
+protected def foobar; end
 "
 `;

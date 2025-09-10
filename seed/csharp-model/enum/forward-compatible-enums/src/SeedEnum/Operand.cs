@@ -4,6 +4,7 @@ using SeedEnum.Core;
 namespace SeedEnum;
 
 [JsonConverter(typeof(StringEnumSerializer<Operand>))]
+[Serializable]
 public readonly record struct Operand : IStringEnum
 {
     public static readonly Operand GreaterThan = new(Values.GreaterThan);
@@ -58,6 +59,7 @@ public readonly record struct Operand : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string GreaterThan = ">";

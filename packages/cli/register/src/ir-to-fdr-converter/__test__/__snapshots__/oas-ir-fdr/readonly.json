@@ -9,26 +9,30 @@
           {
             "key": "name",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "email",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "settings",
@@ -52,70 +56,64 @@
           {
             "key": "id",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "email",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "createdAt",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "UserSettings"
-              }
+              "type": "id",
+              "value": "UserSettings"
             }
           },
           {
             "key": "stats",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "UserStats"
-              }
+              "type": "id",
+              "value": "UserStats"
             }
           }
         ]
@@ -130,39 +128,41 @@
           {
             "key": "theme",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "notifications",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
               }
             }
           },
           {
             "key": "lastModified",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
+          },
+          {
+            "key": "apiKey",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -193,35 +193,92 @@
           {
             "key": "totalLogins",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "integer"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
             "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "propertyAccess": "READ_ONLY"
+          },
+          {
+            "key": "accountStatus",
+            "valueType": {
+              "type": "id",
+              "value": "UserStatsAccountStatus"
+            }
+          },
+          {
+            "key": "securityScore",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            },
+            "propertyAccess": "WRITE_ONLY"
+          }
+        ]
+      }
+    },
+    "validateAUserObject_Response_200": {
+      "name": "validateAUserObject_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "success",
+            "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ValidateAUserObjectRequestBadRequestError": {
+      "name": "ValidateAUserObjectRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "success",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
                 }
               }
             }
           },
           {
-            "key": "accountStatus",
+            "key": "error",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "UserStatsAccountStatus"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -236,7 +293,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -266,6 +323,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserCreate"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -277,55 +351,74 @@
           "statusCode": 200,
           "description": "User created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/users",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
+            "requestBody": {
+              "name": "string",
+              "email": "string",
+              "password": "string"
+            },
             "requestBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "name": "string",
+                "email": "string",
+                "password": "string"
+              }
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "string",
+              "name": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z",
+              "settings": {
+                "theme": "string",
+                "notifications": true,
+                "lastModified": "2024-01-15T09:30:00Z"
+              },
+              "stats": {
+                "totalLogins": 1,
+                "lastLoginTime": "2024-01-15T09:30:00Z",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
+                "id": "string",
+                "name": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "settings": {
-                  "theme": "foo",
+                  "theme": "string",
                   "notifications": true,
-                  "lastModified": "foo"
+                  "lastModified": "2024-01-15T09:30:00Z"
                 },
                 "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
+                  "totalLogins": 1,
+                  "lastLoginTime": "2024-01-15T09:30:00Z",
                   "accountStatus": "active"
                 }
               }
@@ -340,7 +433,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [
@@ -375,6 +468,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -386,54 +480,211 @@
           "statusCode": 200,
           "description": "User retrieved successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "string",
+              "name": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z",
+              "settings": {
+                "theme": "string",
+                "notifications": true,
+                "lastModified": "2024-01-15T09:30:00Z"
+              },
+              "stats": {
+                "totalLogins": 1,
+                "lastLoginTime": "2024-01-15T09:30:00Z",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
+                "id": "string",
+                "name": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "settings": {
-                  "theme": "foo",
+                  "theme": "string",
                   "notifications": true,
-                  "lastModified": "foo"
+                  "lastModified": "2024-01-15T09:30:00Z"
                 },
                 "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
+                  "totalLogins": 1,
+                  "lastLoginTime": "2024-01-15T09:30:00Z",
                   "accountStatus": "active"
                 }
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "validateAUserObject",
+        "originalEndpointId": "endpoint_.validateAUserObject",
+        "name": "Validate a user object",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/users/validate"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
+            }
+          }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "validateAUserObject_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "User object validated successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "validateAUserObject_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User object validated successfully"
+            }
+          ]
+        },
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "value": "ValidateAUserObjectRequestBadRequestError"
+              }
+            },
+            "statusCode": 400,
+            "description": "Invalid user object",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
+        "examples": [
+          {
+            "description": "",
+            "path": "/users/validate",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "name": "string",
+              "email": "string",
+              "password": "string",
+              "settings": {
+                "theme": "string",
+                "notifications": true,
+                "apiKey": "string"
+              },
+              "stats": {
+                "accountStatus": "active",
+                "securityScore": 1
+              }
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "name": "string",
+                "email": "string",
+                "password": "string",
+                "settings": {
+                  "theme": "string",
+                  "notifications": true,
+                  "apiKey": "string"
+                },
+                "stats": {
+                  "accountStatus": "active",
+                  "securityScore": 1
+                }
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "success": true
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "success": true
               }
             }
           }

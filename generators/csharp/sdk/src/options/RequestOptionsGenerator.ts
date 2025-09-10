@@ -1,6 +1,6 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -22,7 +22,8 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             ...this.context.getRequestOptionsClassReference(),
             partial: true,
             access: csharp.Access.Public,
-            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()]
+            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()],
+            annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
         return new CSharpFile({

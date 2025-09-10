@@ -23,17 +23,19 @@ public interface OrganizationsService {
       value = "/",
       produces = "application/json"
   )
-  Organization getOrganization();
+  Organization getOrganization(@PathVariable("organization_id") String organizationId);
 
   @GetMapping(
       value = "/users/{user_id}",
       produces = "application/json"
   )
-  User getOrganizationUser(@PathVariable("user_id") String userId);
+  User getOrganizationUser(@PathVariable("organization_id") String organizationId,
+      @PathVariable("user_id") String userId);
 
   @GetMapping(
       value = "/search",
       produces = "application/json"
   )
-  List<Organization> searchOrganizations(@RequestParam("limit") Optional<Integer> limit);
+  List<Organization> searchOrganizations(@PathVariable("organization_id") String organizationId,
+      @RequestParam("limit") Optional<Integer> limit);
 }

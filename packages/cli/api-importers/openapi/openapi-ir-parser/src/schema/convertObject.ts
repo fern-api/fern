@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     AllOfPropertyConflict,
     Availability,
@@ -13,13 +11,14 @@ import {
     SdkGroupName,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { SchemaParserContext } from "./SchemaParserContext";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -71,56 +70,60 @@ export function convertObject({
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
-    const inlinedParentProperties: ObjectPropertyWithExample[] = [];
+    let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
+
     for (const allOfElement of allOf) {
-        if (isReferenceObject(allOfElement)) {
+        if (!context.options.inlineAllOfSchemas && isReferenceObject(allOfElement)) {
             // if allOf element is a discriminated union, then don't inherit from it
             const resolvedReference = context.resolveSchemaReference(allOfElement);
             if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
                 continue;
             }
 
-            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf schemas
-            if (resolvedReference.oneOf != null) {
-                // try to grab all properties from the oneOf schemas
-                for (const oneOfSchema of resolvedReference.oneOf) {
-                    const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
-                        ? context.resolveSchemaReference(oneOfSchema)
-                        : oneOfSchema;
-                    const convertedOneOfSchema = convertSchema(
-                        resolvedOneOfSchema,
-                        false,
-                        context.DUMMY,
-                        breadcrumbs,
-                        source,
-                        namespace
-                    );
-                    if (convertedOneOfSchema.type === "object") {
-                        inlinedParentProperties.push(
-                            ...convertedOneOfSchema.properties.map((property) => {
-                                if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
-                                    return {
-                                        ...property,
-                                        schema: SchemaWithExample.optional({
-                                            nameOverride: undefined,
-                                            generatedName: "",
-                                            title: undefined,
-                                            value: property.schema,
-                                            description: undefined,
-                                            availability: property.availability,
-                                            namespace: undefined,
-                                            groupName: undefined,
-                                            inline: undefined
-                                        })
-                                    };
-                                }
-                                return property;
-                            })
+            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf or anyOfschemas
+            if (resolvedReference.oneOf != null || resolvedReference.anyOf != null) {
+                const variants = resolvedReference.oneOf ?? resolvedReference.anyOf;
+                if (variants != null) {
+                    // try to grab all properties from the oneOf/anyOf schemas
+                    for (const variantSchema of variants) {
+                        const resolvedVariantSchema = isReferenceObject(variantSchema)
+                            ? context.resolveSchemaReference(variantSchema)
+                            : variantSchema;
+                        const convertedVariantSchema = convertSchema(
+                            resolvedVariantSchema,
+                            false,
+                            context.DUMMY,
+                            breadcrumbs,
+                            source,
+                            namespace
                         );
+                        if (convertedVariantSchema.type === "object") {
+                            inlinedParentProperties.push(
+                                ...convertedVariantSchema.properties.map((property) => {
+                                    if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
+                                        return {
+                                            ...property,
+                                            schema: SchemaWithExample.optional({
+                                                nameOverride: undefined,
+                                                generatedName: "",
+                                                title: undefined,
+                                                value: property.schema,
+                                                description: undefined,
+                                                availability: property.availability,
+                                                namespace: undefined,
+                                                groupName: undefined,
+                                                inline: undefined
+                                            })
+                                        };
+                                    }
+                                    return property;
+                                })
+                            );
+                        }
                     }
+                    continue;
                 }
-                continue;
             }
 
             const schemaId = getSchemaIdFromReference(allOfElement);
@@ -139,7 +142,26 @@ export function convertObject({
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
+        } else if (isReferenceObject(allOfElement)) {
+            const resolvedReference = context.resolveSchemaReference(allOfElement);
+            const convertedSchema = convertSchema(resolvedReference, false, context, breadcrumbs, source, namespace);
+            if (convertedSchema.type === "object") {
+                inlinedParentProperties.push(...convertedSchema.properties);
+            }
         } else {
+            const required = allOfElement.required ?? [];
+            inlinedParentProperties = inlinedParentProperties.map((property) => {
+                if (
+                    (property.schema.type === "optional" || property.schema.type === "nullable") &&
+                    required.includes(property.key)
+                ) {
+                    return {
+                        ...property,
+                        schema: property.schema.value
+                    };
+                }
+                return property;
+            });
             const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace);
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);
@@ -175,14 +197,24 @@ export function convertObject({
         }
     }
 
-    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
+    const filteredPropertiesToConvert = Object.fromEntries(
+        Object.entries(propertiesToConvert).filter(([_, propertySchema]) => {
+            if (!isReferenceObject(propertySchema) && (propertySchema.type as string) === "null") {
+                return false;
+            }
+            return true;
+        })
+    );
+
+    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(filteredPropertiesToConvert).map(
         ([propertyName, propertySchema]) => {
-            const isRequired = allRequired.includes(propertyName);
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
             const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
             const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
+
+            const isRequired = allRequired.includes(propertyName) && !readonly;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,

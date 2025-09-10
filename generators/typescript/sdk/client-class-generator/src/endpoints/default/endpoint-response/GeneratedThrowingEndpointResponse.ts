@@ -1,14 +1,10 @@
-import { PackageId, StreamingFetcher, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
-
 import {
     ContainerType,
     CursorPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
+    HttpMethod,
     HttpResponseBody,
     Name,
     NameAndWireValue,
@@ -17,6 +13,10 @@ import {
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { getFullPathForEndpoint, getTextOfTsNode, PackageId, Stream } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
@@ -26,8 +26,8 @@ import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
-    READABLE_RESPONSE_KEY,
-    getSuccessReturnType
+    getSuccessReturnType,
+    READABLE_RESPONSE_KEY
 } from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {
@@ -44,6 +44,8 @@ export declare namespace GeneratedThrowingEndpointResponse {
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -62,6 +64,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
+    private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,
@@ -70,7 +74,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         errorDiscriminationStrategy,
         errorResolver,
         includeContentHeadersOnResponse,
-        clientClass
+        clientClass,
+        streamType,
+        fileResponseType
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -79,6 +85,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
         this.clientClass = clientClass;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -95,8 +103,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
-        const successReturnType = getSuccessReturnType(this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+        const successReturnType = getSuccessReturnType(this.endpoint, this.response, context, {
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
 
         if (this.endpoint.pagination != null) {
@@ -148,10 +158,40 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(nextProperty)
         );
-        const hasNextPage = ts.factory.createBinaryExpression(
+
+        const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
             nextPropertyAccess,
             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
             ts.factory.createNull()
+        );
+
+        const nextPropertyIsStringType = ts.factory.createBinaryExpression(
+            ts.factory.createTypeOfExpression(nextPropertyAccess),
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("string")
+        );
+
+        const nextPropertyIsEmptyString = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("")
+        );
+
+        const nextPropertyIsStringAndEmpty = ts.factory.createBinaryExpression(
+            nextPropertyIsStringType,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsEmptyString
+        );
+
+        const nextPropertyIsNotEmptyString = ts.factory.createPrefixUnaryExpression(
+            ts.SyntaxKind.ExclamationToken,
+            nextPropertyIsStringAndEmpty
+        );
+
+        const hasNextPage = ts.factory.createBinaryExpression(
+            nextPropertyIsNonNull,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsNotEmptyString
         );
 
         // getItems gets the items
@@ -433,8 +473,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getReturnType(context: SdkContext): ts.TypeNode {
-        return getSuccessReturnType(this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+        return getSuccessReturnType(this.endpoint, this.response, context, {
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
     }
 
@@ -533,9 +575,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
-            const eventShape = this.response.value._visit<
-                StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
-            >({
+            const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
                     type: "sse",
                     streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
@@ -558,7 +598,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         [
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("data"),
-                                context.coreUtilities.streamUtils.Stream._construct({
+                                context.coreUtilities.stream.Stream._construct({
                                     stream: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(
                                             GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
@@ -927,30 +967,38 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response?.body != null
-            ? this.getReturnStatementsForOkResponseBody(context)
-            : [
-                  ts.factory.createReturnStatement(
-                      ts.factory.createObjectLiteralExpression(
-                          [
-                              ts.factory.createPropertyAssignment(
-                                  ts.factory.createIdentifier("data"),
-                                  ts.factory.createIdentifier("undefined")
-                              ),
-                              ts.factory.createPropertyAssignment(
-                                  ts.factory.createIdentifier("rawResponse"),
-                                  ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier(
-                                          GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
-                                      ),
-                                      ts.factory.createIdentifier("rawResponse")
-                                  )
-                              )
-                          ],
-                          false
-                      )
+        if (this.endpoint.response?.body != null) {
+            return this.getReturnStatementsForOkResponseBody(context);
+        }
+
+        const dataInitializer =
+            this.endpoint.method === HttpMethod.Head
+                ? ts.factory.createPropertyAccessExpression(
+                      ts.factory.createPropertyAccessExpression(
+                          ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                          ts.factory.createIdentifier("rawResponse")
+                      ),
+                      "headers"
                   )
-              ];
+                : ts.factory.createIdentifier("undefined");
+
+        return [
+            ts.factory.createReturnStatement(
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("data"), dataInitializer),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("rawResponse"),
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                ts.factory.createIdentifier("rawResponse")
+                            )
+                        )
+                    ],
+                    false
+                )
+            )
+        ];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {

@@ -18,7 +18,7 @@ export const V31_TO_V30_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.8.8",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.8.8",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.8.8",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.8.8",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.7.0-rc0",
@@ -41,7 +41,9 @@ export const V31_TO_V30_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V30.IntermediateRepresentation.jsonOrThrow(ir, {

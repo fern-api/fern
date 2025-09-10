@@ -6,6 +6,8 @@ require_relative "types/metadata"
 require "json"
 require_relative "types/metadata_union"
 require_relative "types/request"
+require_relative "types/union_with_duplicate_types"
+require_relative "types/nested_union_root"
 require "async"
 
 module SeedUndiscriminatedUnionsClient
@@ -109,6 +111,52 @@ module SeedUndiscriminatedUnionsClient
         end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/call"
+      end
+      JSON.parse(response.body)
+    end
+
+    # @param request [String, Array<String>, Integer, Set<String>]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [String, Array<String>, Integer, Set<String>]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.duplicate_types_union(request: "string")
+    def duplicate_types_union(request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/duplicate"
+      end
+      SeedUndiscriminatedUnionsClient::Union::UnionWithDuplicateTypes.from_json(json_object: response.body)
+    end
+
+    # @param request [String, Array<String>, SeedUndiscriminatedUnionsClient::Union::NestedUnionL1]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [String]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.nested_unions(request: "string")
+    def nested_unions(request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/nested"
       end
       JSON.parse(response.body)
     end
@@ -223,6 +271,57 @@ module SeedUndiscriminatedUnionsClient
           end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/call"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
+    # @param request [String, Array<String>, Integer, Set<String>]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [String, Array<String>, Integer, Set<String>]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.duplicate_types_union(request: "string")
+    def duplicate_types_union(request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/duplicate"
+        end
+        SeedUndiscriminatedUnionsClient::Union::UnionWithDuplicateTypes.from_json(json_object: response.body)
+      end
+    end
+
+    # @param request [String, Array<String>, SeedUndiscriminatedUnionsClient::Union::NestedUnionL1]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [String]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.nested_unions(request: "string")
+    def nested_unions(request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/nested"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

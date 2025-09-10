@@ -98,6 +98,9 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
     }
 
     public interface TotalCountStage {
+        /**
+         * <p>The totall number of /users</p>
+         */
         _FinalStage totalCount(int totalCount);
     }
 
@@ -138,6 +141,7 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
         }
 
         /**
+         * <p>The totall number of /users</p>
          * <p>The totall number of /users</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

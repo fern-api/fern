@@ -126,6 +126,16 @@ class CoreUtilities:
             exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="force_multipart.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="force_multipart"),
+            ),
+            exports=set(),
+        )
+
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
             "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"
@@ -274,25 +284,42 @@ class CoreUtilities:
         )
 
     def instantiate_api_error(
-        self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression(self.get_reference_to_api_error()), status_code=status_code, body=body
+            constructor=AST.Expression(self.get_reference_to_api_error()),
+            headers=headers,
+            status_code=status_code,
+            body=body,
         )
 
     def instantiate_api_error_from_subclass(
-        self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression("super().__init__"), status_code=status_code, body=body
+            constructor=AST.Expression("super().__init__"),
+            status_code=status_code,
+            body=body,
+            headers=headers,
+            wrap_headers_in_dict=False,
         )
 
     def _instantiate_api_error(
         self,
         *,
         constructor: AST.Expression,
+        headers: Optional[AST.Expression],
         status_code: Optional[AST.Expression],
         body: Optional[AST.Expression],
+        wrap_headers_in_dict: bool = True,
     ) -> AST.AstNode:
         def _write(writer: AST.NodeWriter) -> None:
             writer.write_node(constructor)
@@ -300,9 +327,17 @@ class CoreUtilities:
             if status_code is not None:
                 writer.write("status_code=")
                 writer.write_node(status_code)
-            if body is not None:
-                if status_code is not None:
+                writer.write(", ")
+            if headers is not None:
+                if wrap_headers_in_dict:
+                    writer.write("headers=dict(")
+                    writer.write_node(headers)
+                    writer.write("), ")
+                else:
+                    writer.write("headers=")
+                    writer.write_node(headers)
                     writer.write(", ")
+            if body is not None:
                 writer.write("body=")
                 writer.write_node(body)
             writer.write_line(")")
@@ -559,7 +594,12 @@ class CoreUtilities:
         )
 
     def instantiate_paginator(
-        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
+        self,
+        is_async: bool,
+        has_next: AST.Expression,
+        items: AST.Expression,
+        get_next: AST.Expression,
+        response: AST.Expression,
     ) -> AST.Expression:
         return AST.Expression(
             AST.ClassInstantiation(
@@ -569,6 +609,7 @@ class CoreUtilities:
                     ("has_next", has_next),
                     ("items", items),
                     ("get_next", get_next),
+                    ("response", response),
                 ],
             )
         )

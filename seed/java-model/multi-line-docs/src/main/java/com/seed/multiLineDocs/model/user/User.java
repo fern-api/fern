@@ -85,12 +85,23 @@ public final class User {
     }
 
     public interface NameStage {
+        /**
+         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
+         * <ul>
+         * <li>Alice</li>
+         * <li>Bob</li>
+         * <li>Charlie</li>
+         * </ul>
+         */
         _FinalStage name(String name);
     }
 
     public interface _FinalStage {
         User build();
 
+        /**
+         * <p>The user's age.</p>
+         */
         _FinalStage age(Optional<Integer> age);
 
         _FinalStage age(Integer age);
@@ -128,6 +139,12 @@ public final class User {
          * <li>Bob</li>
          * <li>Charlie</li>
          * </ul>
+         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
+         * <ul>
+         * <li>Alice</li>
+         * <li>Bob</li>
+         * <li>Charlie</li>
+         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -147,6 +164,9 @@ public final class User {
             return this;
         }
 
+        /**
+         * <p>The user's age.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "age", nulls = Nulls.SKIP)
         public _FinalStage age(Optional<Integer> age) {

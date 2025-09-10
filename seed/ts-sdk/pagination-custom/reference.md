@@ -15,9 +15,20 @@
 <dd>
 
 ```typescript
-await client.users.listUsernamesCustom({
-    startingAfter: "starting_after",
+const response = await client.users.listUsernamesCustom({
+    starting_after: "starting_after",
 });
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listUsernamesCustom({
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>

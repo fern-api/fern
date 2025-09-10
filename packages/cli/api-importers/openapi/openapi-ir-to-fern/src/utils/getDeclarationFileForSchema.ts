@@ -1,5 +1,3 @@
-import { camelCase } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { Schema, SdkGroupName } from "@fern-api/openapi-ir";

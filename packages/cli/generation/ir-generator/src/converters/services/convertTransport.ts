@@ -1,4 +1,4 @@
-import { RawSchemas, isRawProtobufSourceSchema } from "@fern-api/fern-definition-schema";
+import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import { Transport } from "@fern-api/ir-sdk";
 import { SourceResolver } from "@fern-api/source-resolver";
 

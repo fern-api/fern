@@ -3,6 +3,7 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
+[Serializable]
 public record TestRequest
 {
     [JsonIgnore]

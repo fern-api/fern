@@ -193,6 +193,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -202,6 +203,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -269,7 +271,8 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "integer",
+                  "default": 25
                 }
               }
             },
@@ -284,6 +287,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -296,6 +300,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

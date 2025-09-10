@@ -1,17 +1,16 @@
-import chalk from "chalk";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import chalk from "chalk";
 
 import { RuleViolation } from "../../Rule";
 import {
+    getRequestPropertyComponents,
+    getResponsePropertyComponents,
+    maybePrimitiveType,
     REQUEST_PREFIX,
     RESPONSE_PREFIX,
     RequestPropertyValidator,
     ResponsePropertyValidator,
-    getRequestPropertyComponents,
-    getResponsePropertyComponents,
-    maybePrimitiveType,
     requestTypeHasProperty,
     resolvedTypeHasProperty
 } from "../../utils/propertyValidatorUtils";

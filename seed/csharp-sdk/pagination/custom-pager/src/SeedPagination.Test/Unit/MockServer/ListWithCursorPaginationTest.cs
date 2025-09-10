@@ -54,7 +54,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListWithCursorPaginationAsync(
+        var items = await Client.Users.ListWithCursorPaginationAsync(
             new ListUsersCursorPaginationRequest
             {
                 Page = 1,
@@ -63,7 +63,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
                 StartingAfter = "starting_after",
             }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

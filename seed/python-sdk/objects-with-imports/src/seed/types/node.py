@@ -13,7 +13,15 @@ class Node(UniversalBaseModel):
     --------
     from seed import Node
     from seed.commons.metadata import Metadata
-    Node(id='node-8dvgfja2', label='left', metadata=Metadata(id='metadata-kjasf923', data={'foo': 'bar', 'baz': 'qux'}, ), )
+
+    Node(
+        id="node-8dvgfja2",
+        label="left",
+        metadata=Metadata(
+            id="metadata-kjasf923",
+            data={"foo": "bar", "baz": "qux"},
+        ),
+    )
     """
 
     id: str

@@ -14,22 +14,22 @@ public class GetPlaylistsTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id",
                 "name": "name",
                 "problems": [
                   "problems",
                   "problems"
-                ],
-                "playlist_id": "playlist_id",
-                "owner-id": "owner-id"
+                ]
               },
               {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id",
                 "name": "name",
                 "problems": [
                   "problems",
                   "problems"
-                ],
-                "playlist_id": "playlist_id",
-                "owner-id": "owner-id"
+                ]
               }
             ]
             """;

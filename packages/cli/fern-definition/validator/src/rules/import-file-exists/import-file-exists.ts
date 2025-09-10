@@ -1,7 +1,6 @@
-import chalk from "chalk";
-
 import { getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import chalk from "chalk";
 
 import { Rule, RuleViolation } from "../../Rule";
 

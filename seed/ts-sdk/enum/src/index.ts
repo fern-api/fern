@@ -1,4 +1,3 @@
-export * as SeedEnum from "./api";
-export { SeedEnumClient } from "./Client";
-export { SeedEnumError, SeedEnumTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedEnum from "./api/index.js";
+export { SeedEnumError, SeedEnumTimeoutError } from "./errors/index.js";
+export { SeedEnumClient } from "./Client.js";

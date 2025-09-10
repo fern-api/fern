@@ -27,6 +27,33 @@
         ]
       }
     },
+    "type_realtime:send_snake_case": {
+      "name": "send_snake_case",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "send_text",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "send_param",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_realtime:ReceiveEvent": {
       "name": "ReceiveEvent",
       "shape": {
@@ -44,6 +71,33 @@
           },
           {
             "key": "beta",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:receive_snake_case": {
+      "name": "receive_snake_case",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "receive_text",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "receive_int",
             "valueType": {
               "type": "primitive",
               "value": {
@@ -216,6 +270,18 @@
               }
             },
             {
+              "type": "send_snake_case",
+              "displayName": "send_snake",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:send_snake_case"
+                }
+              }
+            },
+            {
               "type": "send2",
               "displayName": "Send2",
               "origin": "client",
@@ -236,6 +302,18 @@
                 "value": {
                   "type": "id",
                   "value": "type_realtime:ReceiveEvent"
+                }
+              }
+            },
+            {
+              "type": "receive_snake_case",
+              "displayName": "Receive",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:receive_snake_case"
                 }
               }
             },
@@ -334,7 +412,9 @@
       ],
       "types": [
         "type_realtime:SendEvent",
+        "type_realtime:send_snake_case",
         "type_realtime:ReceiveEvent",
+        "type_realtime:receive_snake_case",
         "type_realtime:SendEvent2",
         "type_realtime:ReceiveEvent2",
         "type_realtime:ReceiveEvent3"

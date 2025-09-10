@@ -1,7 +1,6 @@
-import { mapValues } from "lodash-es";
-
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
+import { mapValues } from "lodash-es";
 
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
@@ -44,7 +43,9 @@ export const V56_TO_V55_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V55.IntermediateRepresentation.jsonOrThrow(ir, {

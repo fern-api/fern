@@ -30,7 +30,8 @@ class Data(UniversalRootModel):
     Examples
     --------
     from seed.examples.resources.commons.resources.types import Data_String
-    Data_String(value='data')
+
+    Data_String(value="data")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

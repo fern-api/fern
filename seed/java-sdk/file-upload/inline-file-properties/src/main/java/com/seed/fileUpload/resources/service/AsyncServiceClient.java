@@ -5,6 +5,7 @@ package com.seed.fileUpload.resources.service;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
+import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
@@ -90,5 +91,21 @@ public class AsyncServiceClient {
 
     public CompletableFuture<String> optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(InlineTypeRequest request) {
+        return this.rawClient.withInlineType(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withInlineType(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> simple() {
+        return this.rawClient.simple().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> simple(RequestOptions requestOptions) {
+        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
     }
 }

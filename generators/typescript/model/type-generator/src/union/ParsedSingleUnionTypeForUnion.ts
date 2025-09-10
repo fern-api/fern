@@ -1,11 +1,3 @@
-import { BaseContext } from "@fern-typescript/contexts";
-import {
-    AbstractKnownSingleUnionType,
-    NoPropertiesSingleUnionTypeGenerator,
-    SinglePropertySingleUnionTypeGenerator,
-    SingleUnionTypeGenerator
-} from "@fern-typescript/union-generator";
-
 import {
     NameAndWireValue,
     SingleUnionType,
@@ -13,6 +5,13 @@ import {
     SingleUnionTypeProperty,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { BaseContext } from "@fern-typescript/contexts";
+import {
+    AbstractKnownSingleUnionType,
+    NoPropertiesSingleUnionTypeGenerator,
+    SinglePropertySingleUnionTypeGenerator,
+    SingleUnionTypeGenerator
+} from "@fern-typescript/union-generator";
 
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 

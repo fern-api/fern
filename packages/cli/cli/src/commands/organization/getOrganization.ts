@@ -1,6 +1,5 @@
-import { writeFile } from "fs/promises";
-
 import { Project } from "@fern-api/project-loader";
+import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext";
 

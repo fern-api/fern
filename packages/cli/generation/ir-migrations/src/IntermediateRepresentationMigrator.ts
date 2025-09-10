@@ -60,6 +60,8 @@ import { V54_TO_V53_MIGRATION } from "./migrations/v54-to-v53/migrateFromV54ToV5
 import { V55_TO_V54_MIGRATION } from "./migrations/v55-to-v54/migrateFromV55ToV54";
 import { V56_TO_V55_MIGRATION } from "./migrations/v56-to-v55/migrateFromV56ToV55";
 import { V57_TO_V56_MIGRATION } from "./migrations/v57-to-v56/migrateFromV57ToV56";
+import { V58_TO_V57_MIGRATION } from "./migrations/v58-to-v57/migrateFromV58ToV57";
+import { V59_TO_V58_MIGRATION } from "./migrations/v59-to-v58/migrateFromV59ToV58";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -107,7 +109,7 @@ interface BuildableIntermediateRepresentationMigratorBuilder<LaterVersion>
 class IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
     implements IntermediateRepresentationMigratorBuilder<LaterVersion>
 {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     constructor(protected readonly migrations: IrMigration<any, any>[]) {}
 
     public withMigration<EarlierVersion>(
@@ -130,7 +132,7 @@ class BuildaleIntermediateRepresentationMigratorBuilderImpl<LaterVersion>
 }
 
 class IntermediateRepresentationMigratorImpl implements IntermediateRepresentationMigrator {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
     public migrateForGenerator({
@@ -227,7 +229,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): MigratedIntermediateMigration<Migrated> {
         let migrated: unknown = intermediateRepresentation;
         let jsonify: () => Promise<unknown> = async () => {
-            return await IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+            return IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
         };
@@ -253,7 +255,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration,
         targetGenerator
     }: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         migration: IrMigration<any, any>;
         targetGenerator: GeneratorNameAndVersion;
     }): boolean {
@@ -301,6 +303,8 @@ const IntermediateRepresentationMigrator = {
 
 export const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V59_TO_V58_MIGRATION)
+    .withMigration(V58_TO_V57_MIGRATION)
     .withMigration(V57_TO_V56_MIGRATION)
     .withMigration(V56_TO_V55_MIGRATION)
     .withMigration(V55_TO_V54_MIGRATION)

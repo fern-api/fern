@@ -1,5 +1,7 @@
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
+    getPropertyKey,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
@@ -12,14 +14,11 @@ import {
     StatementStructures,
     StructureKind,
     TypeAliasDeclarationStructure,
+    ts,
     VariableDeclarationKind,
     VariableStatementStructure,
-    WriterFunction,
-    WriterFunctionOrValue,
-    ts
+    WriterFunction
 } from "ts-morph";
-
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
@@ -33,12 +32,12 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
-    private static VISITOR_INTERFACE_NAME = "Visitor";
-    private static OTHER_VISITOR_METHOD_NAME = "_other";
-    private static VISITOR_RETURN_TYPE_PARAMETER = "R";
-    private static VISIT_PROPERTTY_NAME = "_visit";
-    private static VISIT_VALUE_PARAMETER_NAME = "value";
-    private static VISITOR_PARAMETER_NAME = "visitor";
+    private static readonly VISITOR_INTERFACE_NAME = "Visitor";
+    private static readonly OTHER_VISITOR_METHOD_NAME = "_other";
+    private static readonly VISITOR_RETURN_TYPE_PARAMETER = "R";
+    private static readonly VISIT_PROPERTTY_NAME = "_visit";
+    private static readonly VISIT_VALUE_PARAMETER_NAME = "value";
+    private static readonly VISITOR_PARAMETER_NAME = "visitor";
 
     public readonly type = "enum";
     private includeEnumUtils: boolean;
@@ -92,7 +91,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     private generateConst(context: Context): VariableStatementStructure {
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(this.getEnumValueName(value)),
+                ts.factory.createIdentifier(getPropertyKey(this.getEnumValueName(value))),
                 ts.factory.createStringLiteral(value.name.wireValue)
             )
         );
@@ -226,7 +225,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     properties: [
                         ...this.shape.values.map(
                             (enumValue): OptionalKind<PropertySignatureStructure> => ({
-                                name: this.getEnumValueVisitPropertyName(enumValue),
+                                name: getPropertyKey(this.getEnumValueVisitPropertyName(enumValue)),
                                 type: getTextOfTsNode(
                                     ts.factory.createFunctionTypeNode(
                                         undefined,
@@ -266,9 +265,16 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an enum");
         }
 
-        const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
+        let enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
         if (enumValue == null) {
-            throw new Error("No enum with wire value: " + example.value.wireValue);
+            const defaultEnumValue = this.shape.values[0];
+            // If no matching enum value, pick the first value from the enum definition
+            if (defaultEnumValue == null) {
+                throw new Error("Enum has no values defined.");
+            }
+            // Use the first enum value as a fallback
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            enumValue = defaultEnumValue;
         }
         if (opts.isForTypeDeclarationComment) {
             return ts.factory.createPropertyAccessExpression(

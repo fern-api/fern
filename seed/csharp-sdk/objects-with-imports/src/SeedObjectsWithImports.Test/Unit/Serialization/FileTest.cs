@@ -18,13 +18,13 @@ public class FileTest
               "info": "REGULAR"
             }
             """;
-        var expectedObject = new File
+        var expectedObject = new SeedObjectsWithImports.File
         {
             Name = "file.txt",
             Contents = "...",
             Info = FileInfo.Regular,
         };
-        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -38,7 +38,7 @@ public class FileTest
               "info": "REGULAR"
             }
             """;
-        var actualObj = new File
+        var actualObj = new SeedObjectsWithImports.File
         {
             Name = "file.txt",
             Contents = "...",
@@ -59,13 +59,13 @@ public class FileTest
               "info": "REGULAR"
             }
             """;
-        var expectedObject = new File
+        var expectedObject = new SeedObjectsWithImports.File
         {
             Name = "another_file.txt",
             Contents = "...",
             Info = FileInfo.Regular,
         };
-        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -79,7 +79,7 @@ public class FileTest
               "info": "REGULAR"
             }
             """;
-        var actualObj = new File
+        var actualObj = new SeedObjectsWithImports.File
         {
             Name = "another_file.txt",
             Contents = "...",

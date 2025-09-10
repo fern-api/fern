@@ -59,7 +59,16 @@
             }
           }
         },
-        "examples": []
+        "examples": [
+          {
+            "name": "Example 1",
+            "payload": {
+              "id": 123,
+              "name": "Scratch",
+              "tag": "Cat"
+            }
+          }
+        ]
       }
     ],
     "websockets": [],

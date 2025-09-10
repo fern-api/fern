@@ -1,26 +1,42 @@
 types:
-  FirstUnion:
+  Animal:
     discriminated: false
     union: 
-      - FirstUnionFirstElement
-      - FirstUnionSecondElement
-  SecondUnion:
+      - Cat
+      - Dog
+  Fruit:
     discriminated: false
     union:
-      - SecondUnionFirstElement
-      - SecondUnionSecondElement
-  FirstUnionFirstElement:
+      - Acai
+      - Fig
+  Node:
+    discriminated: false
+    union:
+      - BranchNode
+      - LeafNode
+  Cat:
     properties:
-      child: SecondUnion
-  FirstUnionSecondElement:
+      fruit: Fruit
+  Dog:
     properties:
-      child: SecondUnion
-  SecondUnionFirstElement:
+      fruit: Fruit
+  Acai:
+    extends: 
+      - Berry
+  Fig:
     properties:
-      child: FirstUnion
-  SecondUnionSecondElement:
+      animal: Animal
+  Berry:
     properties:
-      child: FirstUnion
+      animal: Animal
+  BranchNode:
+    properties:
+      children: list<Node>
+  LeafNode:
+    properties: {}
+  NodesWrapper:
+    properties:
+      nodes: list<list<Node>>
   ContainerValue:
     union:
       list: list<FieldValue>
@@ -42,4 +58,3 @@ types:
     properties:
       name: FieldName
       value: FieldValue
-

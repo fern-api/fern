@@ -53,7 +53,10 @@ class SdkGeneratorContext(ABC):
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on
         _has_paginated_endpoints = any(
-            map(lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)), ir.services.values())
+            map(
+                lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)),
+                ir.services.values(),
+            )
         )
         self.core_utilities = CoreUtilities(
             has_paginated_endpoints=_has_paginated_endpoints,
@@ -94,7 +97,9 @@ class SdkGeneratorContext(ABC):
     def get_socket_client_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath: ...
 
     @abstractmethod
-    def get_reference_to_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference: ...
+    def get_reference_to_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId, lazy_import: bool = False
+    ) -> AST.ClassReference: ...
 
     @abstractmethod
     def get_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str: ...
@@ -147,7 +152,9 @@ class SdkGeneratorContext(ABC):
     def get_filepath_for_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath: ...
 
     @abstractmethod
-    def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference: ...
+    def get_reference_to_async_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId, lazy_import: bool = False
+    ) -> AST.ClassReference: ...
 
     @abstractmethod
     def get_class_name_of_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str: ...
@@ -189,7 +196,13 @@ class SdkGeneratorContext(ABC):
     def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool: ...
 
     @abstractmethod
+    def resolved_schema_is_optional_or_unknown(self, reference: ir_types.TypeReference) -> bool: ...
+
+    @abstractmethod
     def get_types(self) -> Dict[ir_types.TypeId, ir_types.TypeDeclaration]: ...
 
     @abstractmethod
     def unwrap_optional_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference: ...
+
+    @abstractmethod
+    def get_head_method_return_type(self) -> AST.TypeHint: ...

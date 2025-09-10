@@ -8,4 +8,5 @@ export interface InlinedRequestBodyProperty extends FernIr.WithDocsAndAvailabili
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     v2Examples: FernIr.V2SchemaExamples | undefined;
+    propertyAccess: FernIr.ObjectPropertyAccess | undefined;
 }

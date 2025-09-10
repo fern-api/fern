@@ -29,6 +29,7 @@ from .statements import (
     ExceptHandler,
     ForStatement,
     PassStatement,
+    RaiseStatement,
     ReturnStatement,
     TryStatement,
     WithContextManager,
@@ -73,4 +74,5 @@ __all__ = [
     "PassStatement",
     "TryStatement",
     "ExceptHandler",
+    "RaiseStatement",
 ]

@@ -46,6 +46,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -57,6 +58,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [
             {
               "type": {
@@ -121,6 +123,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -132,6 +135,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [
             {
               "type": {

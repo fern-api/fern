@@ -1,11 +1,9 @@
-import path from "path";
-import semver from "semver";
-
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import path from "path";
+import semver from "semver";
 
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -97,8 +95,12 @@ async function buildAndPushDockerImage(
     });
 
     // Build and push the Docker image, now that you've run the pre-build commands
-    const imageTag = `${dockerConfig.image}:${version}`;
-    context.logger.debug(`Pushing Docker image ${imageTag} to Docker Hub...`);
+    const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
+    const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
+    context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`);
+    if (aliases.length > 1) {
+        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
+    }
     const standardBuildOptions = [
         "build",
         "--push",
@@ -106,8 +108,7 @@ async function buildAndPushDockerImage(
         "linux/amd64,linux/arm64",
         "-f",
         dockerConfig.file,
-        "-t",
-        imageTag,
+        ...tagArgs,
         dockerConfig.context
     ];
     try {

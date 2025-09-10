@@ -13,7 +13,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -40,7 +41,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -83,6 +85,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -92,6 +95,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

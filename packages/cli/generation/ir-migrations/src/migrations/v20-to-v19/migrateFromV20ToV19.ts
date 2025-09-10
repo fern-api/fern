@@ -1,6 +1,5 @@
-import { mapValues } from "lodash-es";
-
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { mapValues } from "lodash-es";
 
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrVersions } from "../../ir-versions";
@@ -20,7 +19,7 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.5.20-3-g2505487f",
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.20-3-g2505487f",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.3.10-rc2-1-g1c0d853",
@@ -43,7 +42,9 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v20, context): IrVersions.V19.ir.IntermediateRepresentation => {

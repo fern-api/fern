@@ -12,6 +12,9 @@ from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
 from .resources.auth.service.service import AbstractAuthService
+from .resources.nested.resources.api.service.service import AbstractNestedApiService
+from .resources.nested_no_auth.resources.api.service.service import AbstractNestedNoAuthApiService
+from .resources.simple.service.service import AbstractSimpleService
 from fastapi import params
 
 
@@ -19,9 +22,15 @@ def register(
     _app: fastapi.FastAPI,
     *,
     auth: AbstractAuthService,
+    nested_no_auth_api: AbstractNestedNoAuthApiService,
+    nested_api: AbstractNestedApiService,
+    simple: AbstractSimpleService,
     dependencies: typing.Optional[typing.Sequence[params.Depends]] = None,
 ) -> None:
     _app.include_router(__register_service(auth), dependencies=dependencies)
+    _app.include_router(__register_service(nested_no_auth_api), dependencies=dependencies)
+    _app.include_router(__register_service(nested_api), dependencies=dependencies)
+    _app.include_router(__register_service(simple), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore

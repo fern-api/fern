@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package anduril.tasks.v2;
+
+import "anduril/tasks/v2/common.pub.proto";
+import "anduril/tasks/v2/objective.pub.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/v2;tasks";
+option java_multiple_files = true;
+option java_package = "com.anduril.tasks.v2";
+
+// Maps to BREVITY code SMACK.
+message Smack {
+  // Objective to SMACK.
+  Objective objective = 1;
+  // Optional parameters associated with Strike Tasks.
+  StrikeParameters parameters = 2;
+}
+
+// Maps to UCI StrikeTask.
+message Strike {
+  // Objective to Strike.
+  Objective objective = 1;
+  // Angle range within which to ingress.
+  AnglePair ingress_angle = 2;
+  // Distance at which to yield flight control to the onboard flight computer rather than
+  // higher level autonomy.
+  StrikeReleaseConstraint strike_release_constraint = 3;
+  // Optional parameters associated with the Strike task.
+  StrikeParameters parameters = 4;
+}
+
+// Maps to UCI StrikeTaskReleaseConstraintsType.
+message StrikeReleaseConstraint {
+  oneof strike_release_constraint {
+    AreaConstraints release_area = 1;
+  }
+}
+
+message StrikeParameters {
+  repeated PayloadConfiguration payloads_to_employ = 1;
+  // GPS time at which the strike should be performed.
+  google.protobuf.Duration desired_impact_time = 2;
+  // Bearing at which to perform the run in for a strike.
+  double run_in_bearing = 3;
+  // Angle which to glide into the run in for a strike.
+  double glide_slope_angle = 4;
+}
+
+// Individual payload configuration.
+message PayloadConfiguration {
+  // Unique ID or descriptor for the capability.
+  string capability_id = 1;
+  uint32 quantity = 2;
+}
+
+// Releases a payload from the vehicle
+message ReleasePayload {
+  // The payload(s) that will be released
+  repeated PayloadConfiguration payloads = 1;
+  // Optional objective, of where the payload should be dropped. If omitted the payload will drop the current location
+  Objective objective = 2;
+  oneof release_method {
+    // Attempt to place the payload delicately from a standstill
+    google.protobuf.Empty precision_release = 3;
+  }
+}

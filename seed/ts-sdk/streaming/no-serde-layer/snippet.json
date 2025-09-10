@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedStreamingClient } from \"@fern/streaming\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.dummy.generateStream({\n    numEvents: 1\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+                "client": "import { SeedStreamingClient } from \"@fern/streaming\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.dummy.generateStream({\n    num_events: 1\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedStreamingClient } from \"@fern/streaming\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dummy.generate({\n    numEvents: 5\n});\n"
+                "client": "import { SeedStreamingClient } from \"@fern/streaming\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dummy.generate({\n    num_events: 5\n});\n"
             },
             "example_identifier": "Default"
         }

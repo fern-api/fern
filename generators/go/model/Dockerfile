@@ -1,16 +1,11 @@
-FROM golang:1.22.7-alpine3.19
+FROM node:22.12-alpine3.20 AS node
+FROM golang:1.23.8-alpine3.20
 
-WORKDIR /workspace
+ENV YARN_CACHE_FOLDER=/.yarn
 
-RUN apk add --no-cache ca-certificates git
+RUN apk --no-cache add bash curl git zip nodejs npm
+RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
-COPY go.mod go.sum /workspace/
-RUN go mod download
+COPY generators/go-v2/model/dist /dist
 
-COPY cmd /workspace/cmd
-COPY internal /workspace/internal
-COPY version.go /workspace/version.go
-
-RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-model ./cmd/fern-go-model
-
-ENTRYPOINT ["/fern-go-model"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

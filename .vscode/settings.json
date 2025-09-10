@@ -1,9 +1,9 @@
 {
   "search.exclude": {
-    ".vscode": true,
     "**/.next": true,
     "**/.pnp.*": true,
     "**/.turbo": true,
+    "**/.nx": true,
     "**/.yarn": true,
     "**/__snapshots__/**": true,
     "**/__test__/**/fixtures": true,
@@ -22,28 +22,27 @@
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
-    "pnpm-lock.yaml": true,
+    ".nx": true,
+    "pnpm-lock.yaml": true
   },
-  "eslint.execArgv": [
-    "--max_old_space_size=16384"
-  ],
-  "eslint.workingDirectories": [
-    "./packages",
-    "./generators"
-  ],
-  "prettier.prettierPath": "node_modules/prettier/index.cjs",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": [],
-  "editor.defaultFormatter": null,
-  "[typescript]": {
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
   "dotnet.testWindow.disableAutoDiscovery": true,
-  "cSpell.import": [
-    "cspell.json"
-  ]
+  "dotnet.defaultSolution": "disable",
+  "dotnet.projects.enableAutomaticRestore": false,
+  "cSpell.import": ["cspell.json"],
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }

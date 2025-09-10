@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { stripLeadingSlash } from "@fern-api/core-utils";
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { MintJsonSchema } from "./mintlify";
 

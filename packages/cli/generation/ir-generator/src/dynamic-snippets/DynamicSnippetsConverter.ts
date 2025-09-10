@@ -1,6 +1,3 @@
-import urlJoin from "url-join";
-import { v4 as uuidv4 } from "uuid";
-
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
@@ -10,6 +7,7 @@ import {
     ContainerType,
     DeclaredTypeName,
     dynamic as DynamicSnippets,
+    dynamic,
     EndpointId,
     EnumTypeDeclaration,
     FernFilepath,
@@ -36,9 +34,10 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
-    dynamic
+    UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
 
 import { Version } from "./version";
 
@@ -230,7 +229,7 @@ export class DynamicSnippetsConverter {
             case "inlinedRequestBody": {
                 const properties = [...(body.extendedProperties ?? []), ...body.properties];
                 return DynamicSnippets.InlinedRequestBody.properties(
-                    this.convertWireValueParameters({ wireValueParameters: properties })
+                    this.convertBodyPropertiesToParameters({ properties })
                 );
             }
             case "reference":
@@ -274,7 +273,8 @@ export class DynamicSnippetsConverter {
                 case "bodyProperty":
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
                         name: property.name,
-                        typeReference: this.convertTypeReference(property.valueType)
+                        typeReference: this.convertTypeReference(property.valueType),
+                        propertyAccess: property.propertyAccess
                     });
                 default:
                     assertNever(property);
@@ -307,7 +307,23 @@ export class DynamicSnippetsConverter {
                 name: pathParameter.name,
                 wireValue: pathParameter.name.originalName
             },
-            typeReference: this.convertTypeReference(pathParameter.valueType)
+            typeReference: this.convertTypeReference(pathParameter.valueType),
+            propertyAccess: undefined
+        }));
+    }
+
+    private convertBodyPropertiesToParameters({
+        properties
+    }: {
+        properties: ObjectProperty[];
+    }): DynamicSnippets.NamedParameter[] {
+        return properties.map((property) => ({
+            name: {
+                name: property.name.name,
+                wireValue: property.name.wireValue
+            },
+            typeReference: this.convertTypeReference(property.valueType),
+            propertyAccess: property.propertyAccess
         }));
     }
 
@@ -321,7 +337,8 @@ export class DynamicSnippetsConverter {
                 name: parameter.name.name,
                 wireValue: parameter.name.wireValue
             },
-            typeReference: this.convertTypeReference(parameter.valueType)
+            typeReference: this.convertTypeReference(parameter.valueType),
+            propertyAccess: undefined
         }));
     }
 
@@ -341,7 +358,8 @@ export class DynamicSnippetsConverter {
                     name: queryParameter.name.name,
                     wireValue: queryParameter.name.wireValue
                 },
-                typeReference
+                typeReference,
+                propertyAccess: undefined
             });
         }
         return parameters;
@@ -458,7 +476,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties }),
+            properties: this.convertBodyPropertiesToParameters({ properties }),
             additionalProperties
         });
     }
@@ -531,7 +549,7 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
             typeId: declaredTypeName.typeId,
             discriminantValue,
-            properties: this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+            properties: this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
         });
     }
 
@@ -549,7 +567,7 @@ export class DynamicSnippetsConverter {
             discriminantValue,
             properties:
                 inheritedProperties.length > 0
-                    ? this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+                    ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
                     : undefined
         });
     }
@@ -565,7 +583,7 @@ export class DynamicSnippetsConverter {
             discriminantValue,
             properties:
                 inheritedProperties.length > 0
-                    ? this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+                    ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
                     : undefined
         });
     }
@@ -616,7 +634,8 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.Auth.header({
                     header: {
                         name: scheme.name,
-                        typeReference: this.convertTypeReference(scheme.valueType)
+                        typeReference: this.convertTypeReference(scheme.valueType),
+                        propertyAccess: undefined
                     }
                 });
             case "oauth":
@@ -624,6 +643,8 @@ export class DynamicSnippetsConverter {
                     clientId: this.casingsGenerator.generateName("clientId"),
                     clientSecret: this.casingsGenerator.generateName("clientSecret")
                 });
+            case "inferred":
+                return DynamicSnippets.Auth.inferred({});
             default:
                 assertNever(scheme);
         }
@@ -653,6 +674,8 @@ export class DynamicSnippetsConverter {
                     clientId: "<clientId>",
                     clientSecret: "<clientSecret>"
                 });
+            case "inferred":
+                return DynamicSnippets.AuthValues.inferred({});
             default:
                 assertNever(scheme);
         }

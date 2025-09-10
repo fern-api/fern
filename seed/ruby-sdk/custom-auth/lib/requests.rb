@@ -40,7 +40,7 @@ module SeedCustomAuthClient
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
       unless @custom_auth_scheme.nil?
         headers["X-API-KEY"] =
-          (@custom_auth_scheme.is_a?(Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
+          ((@custom_auth_scheme.is_a? Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
       end
       headers
     end
@@ -82,7 +82,7 @@ module SeedCustomAuthClient
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
       unless @custom_auth_scheme.nil?
         headers["X-API-KEY"] =
-          (@custom_auth_scheme.is_a?(Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
+          ((@custom_auth_scheme.is_a? Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
       end
       headers
     end

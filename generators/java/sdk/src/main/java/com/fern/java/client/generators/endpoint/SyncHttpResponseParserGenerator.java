@@ -71,12 +71,26 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec byteArrayBaseMethodSpec,
             ParameterSpec requestParameterSpec,
             MethodSpec endpointWithRequestOptions) {
-        if (!byteArrayBaseMethodSpec.returnType.equals(TypeName.VOID)) {
-            methodBodyBuilder.add("return ");
+
+        StringBuilder params = new StringBuilder();
+
+        for (ParameterSpec param : byteArrayBaseMethodSpec.parameters) {
+            if (!param.equals(requestParameterSpec)) {
+                if (params.length() > 0) {
+                    params.append(", ");
+                }
+                params.append(param.name);
+            }
         }
+
+        if (params.length() > 0) {
+            params.append(", ");
+        }
+        params.append("new $T($L)");
+
         return methodBodyBuilder
                 .add(
-                        "$L(new $T($L)",
+                        "return $L(" + params.toString(),
                         endpointWithRequestOptions.name,
                         ByteArrayInputStream.class,
                         requestParameterSpec.name)

@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package anduril.taskmanager.v1;
+
+import "anduril/taskmanager/v1/task.pub.proto";
+import "anduril/taskmanager/v1/task_api.pub.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Anduril.Taskmanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/taskmanager/v1;taskmanager";
+option java_multiple_files = true;
+option java_outer_classname = "TaskManagerApiProto";
+option java_package = "com.anduril.taskmanager.v1";
+option objc_class_prefix = "ATX";
+
+// Task Manager is a service that performs state management associated with Tasks, and also the execution of Tasks
+// on their designated agents.
+service TaskManagerAPI {
+  // Create a new Task.
+  rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  // Get an existing Task.
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
+  // Find Tasks that match request criteria.
+  rpc QueryTasks(QueryTasksRequest) returns (QueryTasksResponse);
+  // Update the status of a Task.
+  rpc UpdateStatus(UpdateStatusRequest) returns (UpdateStatusResponse);
+  // Stream Tasks ready for RPC Agent execution that match agent selector (ex: entity_ids).
+  // Intended for use by Taskable Agents that need to receive Tasks ready for execution by RPC.
+  rpc ListenAsAgent(ListenAsAgentRequest) returns (stream ListenAsAgentResponse);
+}
+
+//--------------------//
+// Request / Response //
+//--------------------//
+
+// Request to create a Task.
+message CreateTaskRequest {
+  // Human-readable display name for this Task, should be short (<100 chars).
+  string display_name = 1;
+  // Full task parameterization, must be a message under anduril/tasks/v*/.
+  google.protobuf.Any specification = 2;
+  // Who or what is creating this Task. For example, if a user created this Task via a UI, it would
+  //  contain the "user" Principal type with the user ID of that user. Or if a service is calling the
+  //  CreateTask endpoint, then a "service" Principal type is to be provided.
+  Principal author = 3;
+  reserved 4;
+  // Any relationships associated with this Task, such as a parent Task or an assignee this Task is designated to
+  //  for execution.
+  Relations relations = 5;
+  // Longer, free-form, human-readable description of this Task.
+  string description = 6;
+  // If set, then task-manager will not trigger execution of this task on an agent. Useful for when ingesting
+  // tasks from an external system that is triggering execution of tasks on agents.
+  bool is_executed_elsewhere = 7;
+  // If non-empty, will set the requested Task ID, otherwise will generate a new random GUID.
+  //  Will reject if supplied Task ID does not match `[A-Za-z0-9_-.]{5,36}`.
+  string task_id = 8;
+  // Indicates an initial set of entities that can be used to execute an entity aware task.
+  // For example, an entity Objective, an entity Keep In Zone, etc.
+  repeated TaskEntity initial_entities = 9;
+  reserved 10;
+}
+
+// Response to a Create Task request.
+message CreateTaskResponse {
+  // Task that was created.
+  Task task = 1;
+}
+
+// Request to get a Task.
+message GetTaskRequest {
+  // ID of Task to get.
+  string task_id = 1;
+  // Optional - if > 0, will get specific definition_version, otherwise latest (highest) definition_version is used.
+  uint32 definition_version = 2;
+  // Optional - select which view of the task to fetch. If not set, defaults to TASK_VIEW_MANAGER.
+  TaskView task_view = 3;
+}
+
+// Response to a Get Task request.
+message GetTaskResponse {
+  // Task that was returned.
+  Task task = 1;
+}
+
+// Request to query for Tasks. Returns the each latest Task by Status ID and Version ID by default with no filters.
+message QueryTasksRequest {
+  // A time range query for Tasks.
+  message TimeRange {
+    // If provided, returns Tasks only updated after this time.
+    google.protobuf.Timestamp update_start_time = 1;
+    // If provided, returns Tasks only updated before this time.
+    google.protobuf.Timestamp update_end_time = 2;
+  }
+  // The type of filter.
+  enum FilterType {
+    FILTER_TYPE_INVALID = 0;
+    FILTER_TYPE_INCLUSIVE = 1;
+    FILTER_TYPE_EXCLUSIVE = 2;
+  }
+  // A filter for statuses.
+  message StatusFilter {
+    // Statuses to be part of the filter.
+    repeated Status status = 1;
+    // The type of filter to apply.
+    FilterType filter_type = 2;
+  }
+  // If present matches Tasks with this parent Task ID.
+  // Note: this is mutually exclusive with all other query parameters, i.e., either provide parent Task ID, or
+  //  any of the remaining parameters, but not both.
+  string parent_task_id = 1;
+  reserved 2;
+  // If set, returns results starting from the given page token.
+  string page_token = 3;
+  // Filters on provided status types in the filter.
+  StatusFilter status_filter = 4;
+  // If provided, only provides Tasks updated within the time range.
+  TimeRange update_time_range = 5;
+  // Optional filter for view of a Task.
+  // If not set, defaults to TASK_VIEW_MANAGER.
+  TaskView view = 6;
+}
+
+// Response to a Query Task request.
+message QueryTasksResponse {
+  // Tasks matching the Query Task request.
+  repeated Task tasks = 1;
+  // Page token to the next page of Tasks.
+  string page_token = 2;
+}
+
+// Request to update a Task's status.
+message UpdateStatusRequest {
+  // The updated status.
+  StatusUpdate status_update = 1;
+}
+
+// Response to an Update Status request.
+message UpdateStatusResponse {
+  // The updated Task.
+  Task task = 1;
+}
+
+// Request for streaming Tasks ready for agent execution.
+message ListenAsAgentRequest {
+  // Selector criteria to determine which Agent Tasks the agent receives
+  oneof agent_selector {
+    // The requesting agent will only receive Agent Tasks in the stream that have any of these specified entity ids as the task's assignee
+    EntityIds entity_ids = 1;
+  }
+}
+
+// Response for streaming Tasks ready for agent execution.
+message ListenAsAgentResponse {
+  // Action for agent to execute
+  oneof request {
+    ExecuteRequest execute_request = 1;
+    CancelRequest cancel_request = 2;
+    CompleteRequest complete_request = 3;
+  }
+}
+
+// Rate limiting / down-sampling parameters.
+message RateLimit {
+  // Specifies a minimum duration in milliseconds after an update for a given task before another one
+  // will be sent for the same task.
+  // A value of 0 is treated as unset. If set, value must be >= 250.
+  // Example: if set to 1000, and 4 events occur (ms since start) at T0, T500, T900, T2100, then
+  // event from T0 will be sent at T0, T500 will be dropped, T900 will be sent at minimum of T1000,
+  // and T2100 will be sent on time (2100)
+  // This will only limit updates, other events will be sent immediately, with a delete clearing anything held
+  uint32 update_per_task_limit_ms = 1;
+}
+
+message Heartbeat {
+  // The time at which the Heartbeat was sent.
+  google.protobuf.Timestamp timestamp = 1;
+}
+
+// Entity IDs wrapper.
+message EntityIds {
+  repeated string entity_ids = 1;
+}

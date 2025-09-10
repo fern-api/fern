@@ -14,7 +14,7 @@ export interface DocumentContext {
 }
 
 export interface ServerContext {
-    name: string;
+    name: string | undefined;
     url: string;
 }
 

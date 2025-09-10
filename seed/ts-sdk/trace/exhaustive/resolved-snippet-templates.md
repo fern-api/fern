@@ -360,10 +360,12 @@ await client.homepage.setHomepageProblems(
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.migration.getAttemptedMigrations({
-  adminKeyHeader: "admin-key-header",
-});
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
+await client.migration.getAttemptedMigrations(
+	{
+		admin-key-header: "admin-key-header"
+	}
+)
 
 ```
 
@@ -402,6 +404,36 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.getPlaylist(1, "playlistId");
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.getPlaylist(1, "playlistId");
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.getPlaylist(1, "playlistId");
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+await client.playlist.updatePlaylist(1, "playlistId", {
+  name: "name",
+  problems: ["problems", "problems"],
+});
 
 ```
 

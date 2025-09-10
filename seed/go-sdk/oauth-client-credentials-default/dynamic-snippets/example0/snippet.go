@@ -7,11 +7,12 @@ import (
     fern "github.com/oauth-client-credentials-default/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        nil,
     )
     client.Auth.GetToken(
         context.TODO(),

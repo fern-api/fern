@@ -8,14 +8,12 @@ export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMeth
         put: () => RawSchemas.HttpMethodSchema.Put,
         patch: () => RawSchemas.HttpMethodSchema.Patch,
         delete: () => RawSchemas.HttpMethodSchema.Delete,
-        head: () => {
-            throw new Error("HEAD is unsupported");
-        },
+        head: () => RawSchemas.HttpMethodSchema.Head,
         options: () => {
-            throw new Error("HEAD is unsupported");
+            throw new Error("OPTIONS is unsupported");
         },
         trace: () => {
-            throw new Error("HEAD is unsupported");
+            throw new Error("TRACE is unsupported");
         },
         _other: () => {
             throw new Error("Unknown http method is unsupported");

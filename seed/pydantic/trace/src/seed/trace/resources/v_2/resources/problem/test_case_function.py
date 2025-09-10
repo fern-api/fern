@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .assert_correctness_check import AssertCorrectnessCheck
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .non_void_function_definition import NonVoidFunctionDefinition
@@ -38,4 +38,9 @@ class TestCaseFunction_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ....commons.list_type import ListType  # noqa: E402, F401, I001
+from ....commons.map_type import MapType  # noqa: E402, F401, I001
+
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+update_forward_refs(TestCaseFunction_WithActualResult)
+update_forward_refs(TestCaseFunction_Custom)

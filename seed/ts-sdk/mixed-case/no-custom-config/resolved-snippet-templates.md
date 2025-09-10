@@ -21,7 +21,7 @@ import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.listResources({
-  pageLimit: 10,
+  page_limit: 10,
   beforeDate: "2023-01-01",
 });
 
@@ -33,7 +33,7 @@ import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.listResources({
-  pageLimit: 1,
+  page_limit: 1,
   beforeDate: "2023-01-15",
 });
 

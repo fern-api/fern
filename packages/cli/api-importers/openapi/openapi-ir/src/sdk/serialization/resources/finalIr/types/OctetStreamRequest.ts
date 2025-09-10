@@ -11,8 +11,15 @@ import { WithSource } from "../../commons/types/WithSource";
 export const OctetStreamRequest: core.serialization.ObjectSchema<
     serializers.OctetStreamRequest.Raw,
     FernOpenapiIr.OctetStreamRequest
-> = core.serialization.objectWithoutOptionalProperties({}).extend(WithDescription).extend(WithSource);
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        contentType: core.serialization.string().optional(),
+    })
+    .extend(WithDescription)
+    .extend(WithSource);
 
 export declare namespace OctetStreamRequest {
-    export interface Raw extends WithDescription.Raw, WithSource.Raw {}
+    export interface Raw extends WithDescription.Raw, WithSource.Raw {
+        contentType?: string | null;
+    }
 }

@@ -31,6 +31,7 @@ public final class WeirdNumber {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((int) this.value);
@@ -103,11 +104,11 @@ public final class WeirdNumber {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<Float>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<String>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             if (value instanceof Double) {
                 return of((Double) value);

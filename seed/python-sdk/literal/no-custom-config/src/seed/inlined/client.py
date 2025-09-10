@@ -61,10 +61,20 @@ class InlinedClient:
         Examples
         --------
         from seed import SeedLiteral
-        from seed.inlined import ATopLevelLiteral
-        from seed.inlined import ANestedLiteral
-        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-        client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral(), ), query='What is the weather today', )
+        from seed.inlined import ANestedLiteral, ATopLevelLiteral
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.inlined.send(
+            temperature=10.1,
+            context="You're super wise",
+            maybe_context="You're super wise",
+            object_with_literal=ATopLevelLiteral(
+                nested_literal=ANestedLiteral(),
+            ),
+            query="What is the weather today",
+        )
         """
         _response = self._raw_client.send(
             query=query,
@@ -124,13 +134,28 @@ class AsyncInlinedClient:
 
         Examples
         --------
-        from seed import AsyncSeedLiteral
-        from seed.inlined import ATopLevelLiteral
-        from seed.inlined import ANestedLiteral
         import asyncio
-        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedLiteral
+        from seed.inlined import ANestedLiteral, ATopLevelLiteral
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral(), ), query='What is the weather today', )
+            await client.inlined.send(
+                temperature=10.1,
+                context="You're super wise",
+                maybe_context="You're super wise",
+                object_with_literal=ATopLevelLiteral(
+                    nested_literal=ANestedLiteral(),
+                ),
+                query="What is the weather today",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(

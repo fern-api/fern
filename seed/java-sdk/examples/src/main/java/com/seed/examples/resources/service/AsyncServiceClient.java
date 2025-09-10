@@ -9,7 +9,9 @@ import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.Metadata;
 import com.seed.examples.resources.types.types.Movie;
+import com.seed.examples.resources.types.types.RefreshTokenRequest;
 import com.seed.examples.resources.types.types.Response;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -63,5 +65,17 @@ public class AsyncServiceClient {
 
     public CompletableFuture<Response> createBigEntity(BigEntity request, RequestOptions requestOptions) {
         return this.rawClient.createBigEntity(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> refreshToken() {
+        return this.rawClient.refreshToken().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> refreshToken(Optional<RefreshTokenRequest> request) {
+        return this.rawClient.refreshToken(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> refreshToken(Optional<RefreshTokenRequest> request, RequestOptions requestOptions) {
+        return this.rawClient.refreshToken(request, requestOptions).thenApply(response -> response.body());
     }
 }

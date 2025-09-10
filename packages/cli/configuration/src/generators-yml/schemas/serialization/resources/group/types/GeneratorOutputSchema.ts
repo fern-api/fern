@@ -12,6 +12,7 @@ import { PostmanOutputLocationSchema } from "./PostmanOutputLocationSchema";
 import { LocalFileSystemOutputLocationSchema } from "./LocalFileSystemOutputLocationSchema";
 import { NugetOutputLocationSchema } from "./NugetOutputLocationSchema";
 import { RubyGemsOutputLocationSchema } from "./RubyGemsOutputLocationSchema";
+import { CratesOutputLocationSchema } from "./CratesOutputLocationSchema";
 
 export const GeneratorOutputSchema: core.serialization.Schema<
     serializers.GeneratorOutputSchema.Raw,
@@ -25,6 +26,7 @@ export const GeneratorOutputSchema: core.serialization.Schema<
         "local-file-system": LocalFileSystemOutputLocationSchema,
         nuget: NugetOutputLocationSchema,
         rubygems: RubyGemsOutputLocationSchema,
+        crates: CratesOutputLocationSchema,
     })
     .transform<FernDefinition.GeneratorOutputSchema>({
         transform: (value) => value,
@@ -39,7 +41,8 @@ export declare namespace GeneratorOutputSchema {
         | GeneratorOutputSchema.Postman
         | GeneratorOutputSchema.LocalFileSystem
         | GeneratorOutputSchema.Nuget
-        | GeneratorOutputSchema.Rubygems;
+        | GeneratorOutputSchema.Rubygems
+        | GeneratorOutputSchema.Crates;
 
     export interface Npm extends NpmOutputLocationSchema.Raw {
         location: "npm";
@@ -67,5 +70,9 @@ export declare namespace GeneratorOutputSchema {
 
     export interface Rubygems extends RubyGemsOutputLocationSchema.Raw {
         location: "rubygems";
+    }
+
+    export interface Crates extends CratesOutputLocationSchema.Raw {
+        location: "crates";
     }
 }

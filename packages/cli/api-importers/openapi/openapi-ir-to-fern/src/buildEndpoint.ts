@@ -1,17 +1,16 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { MediaType, assertNever } from "@fern-api/core-utils";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
@@ -125,9 +124,13 @@ export function buildEndpoint({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
+    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
+    const authHeaderName = context.builder.getAuthHeaderName();
+    if (authHeaderName != null) {
+        alreadyUsedHeaders.add(authHeaderName);
+    }
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
-        return !globalHeaderNames.has(header.name);
+        return !alreadyUsedHeaders.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
         const headerSchema = buildHeader({
@@ -388,7 +391,7 @@ function convertEndpointExamples({
         try {
             return buildEndpointExample({ endpointExample, context });
         } catch (e) {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.error(`Error building endpoint example: ${e}`);
             throw e;
         }
@@ -427,7 +430,7 @@ function getRequest({
     usedNames: Set<string>;
     namespace: string | undefined;
 }): ConvertedRequest {
-    if (request.type === "json") {
+    if (request.type === "json" || request.type === "formUrlEncoded") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
@@ -590,13 +593,20 @@ function getRequest({
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {
+        const convertedRequestValue: RawSchemas.HttpRequestSchema = {
+            body: "bytes",
+            "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
+            "query-parameters": queryParameters
+        };
+        if (queryParameters != null) {
+            convertedRequestValue.name = requestNameOverride ?? generatedRequestName;
+        }
+        if (request.description != null) {
+            convertedRequestValue.docs = request.description;
+        }
         return {
             schemaIdsToExclude: [],
-            value: {
-                body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM,
-                ...(request.description ? { docs: request.description } : {})
-            }
+            value: convertedRequestValue
         };
     } else if (request.type === "multipart") {
         // multipart
@@ -628,7 +638,7 @@ function getRequest({
                         declarationDepth: 1 // 1 level deep for request body properties
                     });
 
-                    if (property.contentType != null || property.exploded || property.encoding === "form") {
+                    if (property.contentType || property.exploded || property.encoding) {
                         const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
                             typeof propertyTypeReference === "string"
                                 ? { type: propertyTypeReference }
@@ -640,6 +650,8 @@ function getRequest({
 
                         if (property.encoding === "form") {
                             propertySchema.style = "form";
+                        } else if (property.encoding === "json") {
+                            propertySchema.style = "json";
                         } else if (property.exploded) {
                             propertySchema.style = "exploded";
                         }
@@ -690,6 +702,8 @@ function endpointRequestSupportsInlinedPathParameters({
         case "multipart":
             return true;
         case "json":
+            return true;
+        case "formUrlEncoded":
             return true;
         default:
             assertNever(request);

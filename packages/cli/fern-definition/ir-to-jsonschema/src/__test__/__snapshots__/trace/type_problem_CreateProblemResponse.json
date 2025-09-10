@@ -9,9 +9,6 @@
       ]
     }
   },
-  "required": [
-    "type"
-  ],
   "oneOf": [
     {
       "properties": {
@@ -54,9 +51,6 @@
           ]
         }
       },
-      "required": [
-        "_type"
-      ],
       "oneOf": [
         {
           "properties": {

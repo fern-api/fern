@@ -3,6 +3,7 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
+[Serializable]
 public record StreamCompletionRequest
 {
     [JsonPropertyName("query")]

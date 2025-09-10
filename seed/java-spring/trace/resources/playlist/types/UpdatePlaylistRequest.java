@@ -79,6 +79,9 @@ public final class UpdatePlaylistRequest {
   public interface _FinalStage {
     UpdatePlaylistRequest build();
 
+    /**
+     * <p>The problems that make up the playlist.</p>
+     */
     _FinalStage problems(List<ProblemId> problems);
 
     _FinalStage addProblems(ProblemId problems);
@@ -117,7 +120,9 @@ public final class UpdatePlaylistRequest {
      */
     @java.lang.Override
     public _FinalStage addAllProblems(List<ProblemId> problems) {
-      this.problems.addAll(problems);
+      if (problems != null) {
+        this.problems.addAll(problems);
+      }
       return this;
     }
 
@@ -131,6 +136,9 @@ public final class UpdatePlaylistRequest {
       return this;
     }
 
+    /**
+     * <p>The problems that make up the playlist.</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "problems",

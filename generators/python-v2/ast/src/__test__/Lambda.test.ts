@@ -1,7 +1,6 @@
 import { python } from "..";
-import { ClassMethodType } from "../Method";
-import { OperatorType } from "../OperatorType";
 import { Writer } from "../core/Writer";
+import { OperatorType } from "../OperatorType";
 
 describe("Lambda", () => {
     let writer: Writer;

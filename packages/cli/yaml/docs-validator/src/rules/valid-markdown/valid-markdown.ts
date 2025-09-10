@@ -1,16 +1,17 @@
+import { getMarkdownFormat, parseImagePaths } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
 
-import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
-
 import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
-    create: () => {
+    create: ({ logger, workspace }) => {
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 let format: "mdx" | "md";
@@ -24,7 +25,12 @@ export const ValidMarkdownRule: Rule = {
                         }
                     ];
                 }
-                const markdownParseResult = await parseMarkdown({ markdown: content });
+                const markdownParseResult = await parseMarkdown({
+                    markdown: content,
+                    absoluteFilepath,
+                    absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig),
+                    logger
+                });
                 if (markdownParseResult.type === "failure") {
                     const message =
                         markdownParseResult.message != null
@@ -76,10 +82,26 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
+async function parseMarkdown({
+    markdown,
+    absoluteFilepath,
+    absolutePathToFernFolder,
+    logger
+}: {
+    markdown: string;
+    absoluteFilepath: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    logger: Logger;
+}): Promise<MarkdownParseResult> {
     try {
-        parseMarkdownToTree(markdown);
+        logger.trace(`Starting markdown parse for file: ${absoluteFilepath}`);
 
+        parseImagePaths(markdown, {
+            absolutePathToMarkdownFile: absoluteFilepath,
+            absolutePathToFernFolder
+        });
+
+        logger.trace("Serializing markdown with MDX");
         const parsed = await serialize(markdown, {
             scope: {},
             mdxOptions: {
@@ -89,8 +111,13 @@ async function parseMarkdown({ markdown }: { markdown: string }): Promise<Markdo
             },
             parseFrontmatter: true
         });
+
+        logger.trace("Validating frontmatter");
         const frontmatterParseResult = FrontmatterSchema.safeParse(parsed.frontmatter);
         if (!frontmatterParseResult.success) {
+            logger.trace(
+                `Frontmatter validation failed: ${frontmatterParseResult.error.errors.map((e) => e.message).join(", ")}`
+            );
             return {
                 type: "failure",
                 message: `Failed to parse frontmatter: ${frontmatterParseResult.error.errors
@@ -98,10 +125,13 @@ async function parseMarkdown({ markdown }: { markdown: string }): Promise<Markdo
                     .join("\n")}`
             };
         }
+
+        logger.trace("Markdown parse completed successfully");
         return {
             type: "success"
         };
     } catch (err) {
+        logger.trace(`Markdown parse failed with error: ${err instanceof Error ? err.message : String(err)}`);
         return {
             type: "failure",
             message: err instanceof Error ? err.message : undefined

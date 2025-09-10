@@ -58,6 +58,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "contentType": "application/octet-stream",
         "type": "octetStream"
       },
       "response": {
@@ -1321,13 +1322,6 @@
                   },
                   "type": "primitive"
                 },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
                 "auto_highlights": {
                   "value": {
                     "value": true,
@@ -2463,13 +2457,6 @@
                   },
                   "type": "primitive"
                 },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
                 "auto_highlights": {
                   "value": {
                     "value": true,
@@ -3602,13 +3589,6 @@
                   "value": {
                     "value": "webhook_auth_header_name",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
                   },
                   "type": "primitive"
                 },
@@ -14121,8 +14101,8 @@
                 "value": "SessionBegins",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of the message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14195,8 +14175,8 @@
                 "value": "SessionTerminated",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of the message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14352,8 +14332,8 @@
                 "value": "PartialTranscript",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14393,8 +14373,8 @@
                 "value": "FinalTranscript",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],

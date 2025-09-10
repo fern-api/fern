@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_accept-header)](https://pypi.python.org/pypi/fern_accept-header)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -21,7 +21,11 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedAccept
-client = SeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedAccept(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.service.endpoint()
 ```
 
@@ -30,12 +34,22 @@ client.service.endpoint()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedAccept
 import asyncio
-client = AsyncSeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedAccept
+
+client = AsyncSeedAccept(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
     await client.service.endpoint()
-asyncio.run(main())```
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +58,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.service.endpoint()
 except ApiError as e:
@@ -60,7 +75,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedAccept
-client = SeedAccept(..., )
+
+client = SeedAccept(
+    ...,
+)
 response = client.service.with_raw_response.endpoint()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -93,7 +111,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedAccept
-client = SeedAccept(..., timeout=20.0, )
+
+client = SeedAccept(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.service.endpoint(request_options={
@@ -107,9 +130,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedAccept
 import httpx
-client = SeedAccept(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedAccept
+
+client = SeedAccept(
+    ...,
+    httpx_client=httpx.Client(
+        proxy="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

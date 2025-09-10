@@ -14,7 +14,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -48,7 +48,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -76,7 +76,7 @@
         "auth": false,
         "method": "POST",
         "id": "Post",
-        "originalEndpointId": "Post",
+        "originalEndpointId": "endpoint_.Post",
         "name": "Post",
         "path": {
           "pathParameters": [],
@@ -108,6 +108,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Request"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -119,10 +138,24 @@
           "statusCode": 200,
           "description": "A simple API response."
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Response"
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/post",
             "pathParameters": {},
@@ -135,17 +168,14 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 42,
-                "value": 42
-              }
+              "id": 1.1,
+              "value": 1.1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 42,
-                "value": 42
+                "id": 1.1,
+                "value": 1.1
               }
             }
           }

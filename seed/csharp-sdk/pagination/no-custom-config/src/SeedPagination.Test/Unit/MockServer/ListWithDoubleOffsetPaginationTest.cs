@@ -54,7 +54,7 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListWithDoubleOffsetPaginationAsync(
+        var items = await Client.Users.ListWithDoubleOffsetPaginationAsync(
             new ListUsersDoubleOffsetPaginationRequest
             {
                 Page = 1.1,
@@ -63,7 +63,7 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
                 StartingAfter = "starting_after",
             }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

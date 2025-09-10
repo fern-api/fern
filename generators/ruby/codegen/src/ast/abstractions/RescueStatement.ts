@@ -1,6 +1,6 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
-import { Import } from "../Import";
 import { AstNode } from "../core/AstNode";
+import { Import } from "../Import";
 
 export declare namespace RescueStatement {
     export interface Init extends AstNode.Init {

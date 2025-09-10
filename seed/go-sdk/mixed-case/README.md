@@ -4,6 +4,10 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -16,7 +20,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Service.GetResource(
         context.TODO(),
@@ -83,6 +87,19 @@ response, err := client.Service.GetResource(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Service.WithRawResponse.GetResource(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

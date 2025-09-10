@@ -3,13 +3,21 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedTrace)](https://nuget.org/packages/SeedTrace)
 
-The Seed C# library provides convenient access to the Seed API from C#.
+The Seed C# library provides convenient access to the Seed APIs from C#.
+
+## Requirements
+
+This SDK requires:
 
 ## Installation
 
 ```sh
 dotnet add package SeedTrace
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -21,7 +29,7 @@ using SeedTrace;
 var client = new SeedTraceClient("TOKEN");
 await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    "no-properties-union"
+    new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
 );
 ```
 

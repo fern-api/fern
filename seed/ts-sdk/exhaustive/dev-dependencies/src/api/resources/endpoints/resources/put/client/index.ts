@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as add from "./add";
+export * as add from "./add.js";
+export * from "./requests/index.js";

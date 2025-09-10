@@ -7,7 +7,7 @@ import (
     fern "github.com/pagination/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,6 +18,7 @@ func do() () {
     )
     client.Complex.Search(
         context.TODO(),
+        "index",
         &fern.SearchRequest{
             Pagination: &fern.StartingAfterPaging{
                 PerPage: 1,

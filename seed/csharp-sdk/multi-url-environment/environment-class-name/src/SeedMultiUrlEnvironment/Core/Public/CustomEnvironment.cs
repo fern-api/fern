@@ -1,5 +1,6 @@
 namespace SeedMultiUrlEnvironment;
 
+[Serializable]
 public class CustomEnvironment
 {
     public static readonly CustomEnvironment Production = new CustomEnvironment

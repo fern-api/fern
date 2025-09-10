@@ -18,7 +18,10 @@ export const toJson = (
     replacer?: (this: unknown, key: string, value: unknown) => unknown,
     space?: string | number,
 ): string => {
-    if (!data) {
+    if (typeof data === "bigint") {
+        return data.toString();
+    }
+    if (typeof data !== "object") {
         return JSON.stringify(data, replacer, space);
     }
 

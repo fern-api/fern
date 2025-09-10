@@ -1,6 +1,5 @@
-import { isEmpty } from "lodash-es";
-
 import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { isEmpty } from "lodash-es";
 
 import { Rule } from "../../Rule";
 

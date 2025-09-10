@@ -1,2 +1,2 @@
-export { SeedBasicAuthEnvironmentVariablesError } from "./SeedBasicAuthEnvironmentVariablesError";
-export { SeedBasicAuthEnvironmentVariablesTimeoutError } from "./SeedBasicAuthEnvironmentVariablesTimeoutError";
+export { SeedBasicAuthEnvironmentVariablesError } from "./SeedBasicAuthEnvironmentVariablesError.js";
+export { SeedBasicAuthEnvironmentVariablesTimeoutError } from "./SeedBasicAuthEnvironmentVariablesTimeoutError.js";

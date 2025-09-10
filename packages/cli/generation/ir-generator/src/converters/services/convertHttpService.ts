@@ -1,8 +1,6 @@
-import urlJoin from "url-join";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas, isVariablePathParameter } from "@fern-api/fern-definition-schema";
+import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Encoding,
     HttpEndpoint,
@@ -15,11 +13,11 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
+import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";
-import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
@@ -107,6 +105,7 @@ export function convertHttpService({
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                 baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
+                v2BaseUrls: undefined,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                 path: constructHttpPath(endpoint.path),
@@ -141,6 +140,7 @@ export function convertHttpService({
                           )
                         : [],
                 requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                v2RequestBodies: undefined,
                 sdkRequest: convertHttpSdkRequest({
                     service: serviceDefinition,
                     request: endpoint.request,
@@ -151,27 +151,39 @@ export function convertHttpService({
                     propertyResolver
                 }),
                 response: convertHttpResponse({ endpoint, file, typeResolver }),
+                v2Responses: undefined,
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 userSpecifiedExamples:
                     endpoint.examples != null
-                        ? endpoint.examples.map((example) => {
-                              return {
-                                  example: convertExampleEndpointCall({
-                                      service: serviceDefinition,
-                                      endpoint,
-                                      example,
-                                      typeResolver,
-                                      errorResolver,
-                                      exampleResolver,
-                                      variableResolver,
-                                      file,
-                                      workspace
-                                  }),
-                                  codeSamples: example["code-samples"]?.map((codeSample) =>
-                                      convertCodeSample({ codeSample, file })
-                                  )
-                              };
-                          })
+                        ? endpoint.examples
+                              .map((example) => {
+                                  try {
+                                      const convertedExample = convertExampleEndpointCall({
+                                          service: serviceDefinition,
+                                          endpoint,
+                                          example,
+                                          typeResolver,
+                                          errorResolver,
+                                          exampleResolver,
+                                          variableResolver,
+                                          file,
+                                          workspace
+                                      });
+                                      if (convertedExample === undefined) {
+                                          return undefined;
+                                      }
+                                      return {
+                                          example: convertedExample,
+                                          codeSamples: example["code-samples"]?.map((codeSample) =>
+                                              convertCodeSample({ codeSample, file })
+                                          )
+                                      };
+                                  } catch (e) {
+                                      // Optionally log the error here if needed
+                                      return undefined;
+                                  }
+                              })
+                              .filter((ex) => ex !== undefined)
                         : [],
                 autogeneratedExamples: [], // gets filled in later on
                 pagination: convertPagination({
@@ -187,11 +199,13 @@ export function convertHttpService({
                     sourceResolver
                 }),
                 v2Examples: undefined,
-                source: undefined
+                source: undefined,
+                audiences: endpoint.audiences
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
-        })
+        }),
+        audiences: serviceDefinition.audiences
     };
     return service;
 }
@@ -332,6 +346,8 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
             return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+        case "HEAD":
+            return HttpMethod.Head;
         default:
             assertNever(method);
     }

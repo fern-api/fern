@@ -1,5 +1,6 @@
 namespace SeedSingleUrlEnvironmentNoDefault;
 
+[Serializable]
 public class SeedSingleUrlEnvironmentNoDefaultEnvironment
 {
     public const string Production = "https://production.com/api";

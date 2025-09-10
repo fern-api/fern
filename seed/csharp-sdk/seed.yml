@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v57
+irVersion: v58
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -29,13 +29,12 @@ test:
     workingDirectory: generators/csharp
     buildCommand:
       - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-    runCommand: node sdk/dist/cli.cjs
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
-defaultCustomConfig:
-  generate-mock-server-tests: true
+defaultCustomConfig: {}
 scripts:
   - docker: fernapi/csharp-seed
     commands:
@@ -61,6 +60,9 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -109,19 +111,18 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
-    - customConfig:
-        experimental-additional-properties: true
-      outputFolder: experimental-additional-properties
   optional:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
-        simplify-object-dictionaries: false
-      outputFolder: no-simplify-object-dictionaries
+        simplify-object-dictionaries: true
+      outputFolder: simplify-object-dictionaries
   path-parameters:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        inline-path-parameters: true
-      outputFolder: inline-path-parameters
+        inline-path-parameters: false
+      outputFolder: no-inline-path-parameters
   csharp-grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -142,11 +143,10 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
   enum:
-    - customConfig:
-        experimental-enable-forward-compatible-enums: true
+    - customConfig: null
       outputFolder: forward-compatible-enums
     - customConfig:
-        experimental-enable-forward-compatible-enums: false
+        enable-forward-compatible-enums: false
       outputFolder: plain-enums
   license:
     - license:
@@ -161,53 +161,42 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        use-discriminated-unions: true
-      outputFolder: use-discriminated-unions
+        use-discriminated-unions: false
+      outputFolder: no-discriminated-unions
   extra-properties:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-additional-properties: true
-      outputFolder: experimental-additional-properties
+        additional-properties: false
+      outputFolder: no-additional-properties
+  csharp-namespace-collision:
+    - customConfig:
+        experimental-fully-qualified-namespaces: true
+        experimental-dotnet-format: true
+      outputFolder: fully-qualified-namespaces
+  csharp-system-collision:
+    - customConfig:
+        client-class-name: System
+      outputFolder: system-client
 allowedFailures:
-  ## COMPILE FAILURES
-  - alias-extends
-  - any-auth
-  - enum:forward-compatible-enums
-  - enum:plain-enums
-  - examples:no-custom-config
-  - examples:readme-config
-  - extends
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - objects-with-imports
-  - mixed-file-directory
-  ## WIRE TEST FAILURES
-  - unknown # issue with example object
-  # - package-yml # user-provided example path not coming in properly
-  # - simple-fhir # nested generated examples are wonky
-  # - enum # failing because of oneof's as header values
-  # - trace # failing because we don't call stringify on enums path params
-  # - undiscriminated-unions # failing because of union type as dictionary key
-  # - exhaustive:explicit-namespaces # single test failing because we don't support discriminated unions properly
-  # - exhaustive:no-root-namespace-for-core-classes
-  # - exhaustive:no-generate-error-types
-  ## MORE Failures
-  - literal
+  - errors
+  - imdb:exported-client-class-name
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
 
+  ## COMPILE FAILURES
+  - any-auth
+  - examples:no-custom-config
+  - examples:readme-config
+  - objects-with-imports
+  - mixed-file-directory
+
+  # deserialization/?? issues for public readonly record struct
+  - circular-references
+  - circular-references-advanced
+
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
-  - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
   - trace
-
-  # TODO: Add support for well-known types.
-  - csharp-grpc-proto-exhaustive:no-custom-config
-  - csharp-grpc-proto-exhaustive:package-id
-  - csharp-grpc-proto-exhaustive:read-only-memory
-  - csharp-grpc-proto-exhaustive:include-exception-handler

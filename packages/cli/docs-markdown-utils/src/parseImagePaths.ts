@@ -1,17 +1,11 @@
-import type { Node as EstreeNode } from "estree";
-import { walk } from "estree-walker";
-import grayMatter from "gray-matter";
-import { fromMarkdown } from "mdast-util-from-markdown";
-import { mdxFromMarkdown } from "mdast-util-mdx";
-import { mdx } from "micromark-extension-mdx";
-import { isAbsolute } from "path";
-import { CONTINUE, SKIP, visit } from "unist-util-visit";
-import { z } from "zod";
-
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import type { Node as EstreeNode } from "estree";
+import grayMatter from "gray-matter";
+import { isAbsolute } from "path";
+import { CONTINUE, visit } from "unist-util-visit";
+import { z } from "zod";
 
 import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
 import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
@@ -178,7 +172,8 @@ export function getReplacedHref({
         if (absoluteFilePath != null) {
             const slug = markdownFilesToPathName[absoluteFilePath];
             if (slug != null) {
-                return { type: "replace", slug, href };
+                const normalizeSlug = slug.startsWith("/") ? slug : "/" + slug;
+                return { type: "replace", slug: normalizeSlug, href };
             } else {
                 return { type: "missing-reference", path: absoluteFilePath, href };
             }
@@ -399,7 +394,7 @@ export function convertImageToFileIdOrUrl(
 }
 
 function replaceFrontmatterImagesforLogo(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     data: Record<string, any>,
     mapImage: (image: string | undefined) => string | undefined
 ) {

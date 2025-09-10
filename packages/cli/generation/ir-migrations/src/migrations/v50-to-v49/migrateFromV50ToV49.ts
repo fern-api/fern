@@ -1,6 +1,5 @@
-import { mapValues } from "lodash-es";
-
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { mapValues } from "lodash-es";
 
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
@@ -20,7 +19,7 @@ export const V50_TO_V49_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.34.0",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.34.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.34.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.2",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -43,7 +42,9 @@ export const V50_TO_V49_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: "0.0.0",
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V49.IntermediateRepresentation.jsonOrThrow(ir, {

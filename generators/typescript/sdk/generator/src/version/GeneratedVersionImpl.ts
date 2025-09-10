@@ -1,8 +1,7 @@
+import { ApiVersionScheme, HttpHeader } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedVersion, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { ApiVersionScheme, HttpHeader } from "@fern-fern/ir-sdk/api";
 
 export class GeneratedVersionImpl implements GeneratedVersion {
     private apiVersion: ApiVersionScheme;

@@ -110,7 +110,7 @@ await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 </details>
 
 ## User Events
-<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(ListUserEventsRequest { ... }) -> IEnumerable<Event></code></summary>
+<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(User.ListUserEventsRequest { ... }) -> IEnumerable<User.Event></code></summary>
 <dl>
 <dd>
 
@@ -152,7 +152,7 @@ await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 }
 <dl>
 <dd>
 
-**request:** `ListUserEventsRequest` 
+**request:** `User.ListUserEventsRequest` 
     
 </dd>
 </dl>
@@ -165,7 +165,7 @@ await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 }
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.User.Events.Metadata.<a href="/src/SeedMixedFileDirectory/User/Events/Metadata/MetadataClient.cs">GetMetadataAsync</a>(GetEventMetadataRequest { ... }) -> Metadata</code></summary>
+<details><summary><code>client.User.Events.Metadata.<a href="/src/SeedMixedFileDirectory/User/Events/Metadata/MetadataClient.cs">GetMetadataAsync</a>(User.Events.GetEventMetadataRequest { ... }) -> User.Events.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -207,7 +207,7 @@ await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest {
 <dl>
 <dd>
 
-**request:** `GetEventMetadataRequest` 
+**request:** `User.Events.GetEventMetadataRequest` 
     
 </dd>
 </dl>

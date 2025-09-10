@@ -3,44 +3,40 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../cli/configuration"
-    },
-    {
-      "path": "../cli/generation/local-generation/local-workspace-runner"
-    },
-    {
-      "path": "../cli/logger"
-    },
-    {
-      "path": "../cli/login"
+      "path": "../cli/workspace/loader"
     },
     {
       "path": "../cli/task-context"
     },
     {
-      "path": "../cli/workspace/loader"
-    },
-    {
-      "path": "../cli/workspace/commons"
-    },
-    {
-      "path": "../commons/core-utils"
-    },
-    {
-      "path": "../commons/fs-utils"
+      "path": "../cli/login"
     },
     {
       "path": "../commons/logging-execa"
     },
     {
-      "path": "../ir-sdk"
+      "path": "../cli/logger"
+    },
+    {
+      "path": "../cli/generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "../commons/fs-utils"
+    },
+    {
+      "path": "../commons/core-utils"
+    },
+    {
+      "path": "../cli/configuration"
+    },
+    {
+      "path": "../cli/workspace/commons"
     }
   ]
 }

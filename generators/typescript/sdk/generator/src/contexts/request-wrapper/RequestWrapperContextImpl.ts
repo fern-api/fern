@@ -1,12 +1,10 @@
-import { ImportsManager, PackageId } from "@fern-typescript/commons";
+import { assertNever } from "@fern-api/core-utils";
+import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
 
@@ -16,12 +14,15 @@ export declare namespace RequestWrapperContextImpl {
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         packageResolver: PackageResolver;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         inlinePathParameters: boolean;
         enableInlineTypes: boolean;
+        formDataSupport: "Node16" | "Node18";
+        flattenRequestParameters: boolean;
     }
 }
 
@@ -30,35 +31,44 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
     private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
     private inlinePathParameters: boolean;
     private enableInlineTypes: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
+    private readonly flattenRequestParameters: boolean;
 
     constructor({
         requestWrapperGenerator,
         requestWrapperDeclarationReferencer,
         packageResolver,
         importsManager,
+        exportsManager,
         sourceFile,
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
         inlinePathParameters,
-        enableInlineTypes
+        enableInlineTypes,
+        formDataSupport,
+        flattenRequestParameters
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
         this.packageResolver = packageResolver;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
         this.enableInlineTypes = enableInlineTypes;
+        this.formDataSupport = formDataSupport;
+        this.flattenRequestParameters = flattenRequestParameters;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -105,7 +115,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
             enableInlineTypes: this.enableInlineTypes,
-            shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest)
+            shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
+            formDataSupport: this.formDataSupport,
+            flattenRequestParameters: this.flattenRequestParameters
         });
     }
 
@@ -120,6 +132,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
             name: { packageId, endpoint },
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: {
                 type: "fromRoot",
                 namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport

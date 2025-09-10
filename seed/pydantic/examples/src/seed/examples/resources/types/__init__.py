@@ -6,6 +6,7 @@ from .actor import Actor
 from .actress import Actress
 from .big_entity import BigEntity
 from .cast_member import CastMember
+from .cron_job import CronJob
 from .directory import Directory
 from .entity import Entity
 from .exception import Exception, Exception_Generic, Exception_Timeout
@@ -19,6 +20,7 @@ from .moment import Moment
 from .movie import Movie
 from .movie_id import MovieId
 from .node import Node
+from .refresh_token_request import RefreshTokenRequest
 from .request import Request
 from .response import Response
 from .response_type import ResponseType
@@ -31,6 +33,7 @@ __all__ = [
     "Actress",
     "BigEntity",
     "CastMember",
+    "CronJob",
     "Directory",
     "Entity",
     "Exception",
@@ -48,6 +51,7 @@ __all__ = [
     "Movie",
     "MovieId",
     "Node",
+    "RefreshTokenRequest",
     "Request",
     "Response",
     "ResponseType",

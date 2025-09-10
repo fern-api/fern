@@ -11,7 +11,6 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
-    OpenRpcSpecSchema,
     ReadmeSchema
 } from "./schemas";
 
@@ -71,6 +70,10 @@ export interface APIDefinitionSettings {
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     additionalPropertiesDefaultsTo: boolean | undefined;
+    typeDatesAsStrings: boolean | undefined;
+    preserveSingleSchemaOneOf: boolean | undefined;
+    inlineAllOfSchemas: boolean | undefined;
+    groupMultiApiEnvironments: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -88,6 +91,8 @@ export interface ProtoAPIDefinitionSchema {
     root: string;
     target: string;
     localGeneration: boolean;
+    fromOpenAPI: boolean;
+    dependencies: string[];
 }
 
 export interface OSSAPIDefinitionSchema {
@@ -145,7 +150,8 @@ export const GenerationLanguage = {
     RUBY: "ruby",
     CSHARP: "csharp",
     SWIFT: "swift",
-    PHP: "php"
+    PHP: "php",
+    RUST: "rust"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

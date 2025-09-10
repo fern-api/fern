@@ -241,6 +241,9 @@ public final class ObjectWithOptionalField {
             return this;
         }
 
+        /**
+         * <p>This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.</p>
+         */
         @JsonSetter(value = "string", nulls = Nulls.SKIP)
         public Builder string(Optional<String> string) {
             this.string = string;

@@ -1,5 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
-import { Project, loadProject } from "@fern-api/project-loader";
+import { loadProject, Project } from "@fern-api/project-loader";
 
 import { CliContext } from "./cli-context/CliContext";
 

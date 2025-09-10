@@ -7,7 +7,7 @@ import (
     fern "github.com/unknown/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,7 +16,7 @@ func do() () {
     client.Unknown.PostObject(
         context.TODO(),
         &fern.MyObject{
-            Unknown: map[string]interface{}{
+            Unknown: map[string]any{
                 "key": "value",
             },
         },

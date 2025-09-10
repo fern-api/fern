@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoGetRequestBodyRule } from "../no-get-request-body";
@@ -24,6 +24,12 @@ describe("no-get-request-body", () => {
             {
                 message: "Endpoint is a GET, so it cannot have a request body.",
                 nodePath: ["service", "endpoints", "bing"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "fatal"
+            },
+            {
+                message: "Endpoint is a HEAD, so it cannot have a request body.",
+                nodePath: ["service", "endpoints", "qux"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }

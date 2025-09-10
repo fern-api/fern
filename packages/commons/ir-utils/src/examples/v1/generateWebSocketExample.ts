@@ -167,6 +167,8 @@ function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSoc
     });
     const url =
         channel.path.head +
-        channel.path.parts.map((pathPart) => pathParameters[pathPart.pathParameter] + pathPart.tail).join("");
+        channel.path.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
     return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

@@ -4,24 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.http.BytesResponse;
-import com.fern.ir.model.http.CursorPagination;
-import com.fern.ir.model.http.FileDownloadResponse;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpResponseBody;
-import com.fern.ir.model.http.JsonResponse;
-import com.fern.ir.model.http.JsonResponseBody;
-import com.fern.ir.model.http.JsonResponseBodyWithProperty;
-import com.fern.ir.model.http.JsonStreamChunk;
-import com.fern.ir.model.http.OffsetPagination;
-import com.fern.ir.model.http.Pagination;
-import com.fern.ir.model.http.QueryParameter;
-import com.fern.ir.model.http.RequestPropertyValue;
-import com.fern.ir.model.http.SseStreamChunk;
-import com.fern.ir.model.http.StreamParameterResponse;
-import com.fern.ir.model.http.StreamingResponse;
-import com.fern.ir.model.http.TextResponse;
-import com.fern.ir.model.http.TextStreamChunk;
+import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumTypeDeclaration;
@@ -269,6 +252,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                                         clientGeneratorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitCustom(CustomPagination customPagination) {
+                                throw new RuntimeException("Unknown pagination type custom");
                             }
 
                             @Override
@@ -623,18 +611,53 @@ public abstract class AbstractHttpResponseParserGenerator {
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
             String terminator =
-                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
+                    streaming.visit(new GetStreamingResponseTerminator()).orElse(null);
 
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T<$T>($T.class, new $T($L), $S)",
+            CodeBlock streamCreation = streaming.visit(new StreamingResponse.Visitor<CodeBlock>() {
+                @Override
+                public CodeBlock visitJson(JsonStreamChunk json) {
+                    String delimiter = terminator != null ? terminator : "\\n";
+                    return CodeBlock.of(
+                            "$T.fromJson($T.class, new $T($L), $S)",
                             clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
-                            bodyTypeName,
                             bodyTypeName,
                             clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
                             variables.getResponseName(),
-                            terminator));
+                            delimiter);
+                }
+
+                @Override
+                public CodeBlock visitText(TextStreamChunk text) {
+                    throw new RuntimeException("Returning streamed text is not supported.");
+                }
+
+                @Override
+                public CodeBlock visitSse(SseStreamChunk sse) {
+                    if (terminator != null) {
+                        return CodeBlock.of(
+                                "$T.fromSse($T.class, new $T($L), $S)",
+                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                bodyTypeName,
+                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                                variables.getResponseName(),
+                                terminator);
+                    } else {
+                        return CodeBlock.of(
+                                "$T.fromSse($T.class, new $T($L))",
+                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                bodyTypeName,
+                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                                variables.getResponseName());
+                    }
+                }
+
+                @Override
+                public CodeBlock _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown streaming response type: " + unknownType);
+                }
+            });
+
+            handleSuccessfulResult(httpResponseBuilder, streamCreation);
 
             return null;
         }
@@ -1160,9 +1183,21 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
             }
 
-            com.fern.ir.model.types.TypeReference numberType = pageType.getContainer()
-                    .map(containerType -> containerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType()))
-                    .orElse(pageType);
+            // Extract the actual underlying type from Optional<> or Nullable<>
+            com.fern.ir.model.types.TypeReference numberType;
+            if (pageIsOptional
+                    && pageType.getContainer().isPresent()
+                    && pageType.getContainer().get().isOptional()) {
+                numberType = pageType.getContainer().get().getOptional().get();
+
+                if (numberType.getContainer().isPresent()
+                        && numberType.getContainer().get().isNullable()) {
+                    numberType = numberType.getContainer().get().getNullable().get();
+                }
+            } else {
+                numberType = pageType;
+            }
+
             TypeName numberTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
 
@@ -1172,11 +1207,19 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             if (pageIsOptional) {
+                String zero = one.equals(DECIMAL_ONE) ? "0.0" : "0";
+
+                TypeName lambdaParamType = numberTypeName;
+                if (numberTypeName.isPrimitive()) {
+                    lambdaParamType = numberTypeName.box();
+                }
+
                 httpResponseBuilder.addStatement(CodeBlock.of(
-                        "$T $L = $L.map(page -> page + $L).orElse($L)",
+                        "$T $L = $L.map(($T page) -> page + $L).orElse($L)",
                         numberTypeName,
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
+                        lambdaParamType,
                         one,
                         one));
             } else {
@@ -1274,6 +1317,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                             getNextPageGetter(endpointName, methodParameters)));
             endpointMethodBuilder.returns(responseType);
             return null;
+        }
+
+        @Override
+        public Void visitCustom(CustomPagination customPagination) {
+            throw new RuntimeException("Unknown pagination type custom");
         }
 
         @Override

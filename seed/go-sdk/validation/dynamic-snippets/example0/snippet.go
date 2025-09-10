@@ -7,7 +7,7 @@ import (
     fern "github.com/validation/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,7 +18,7 @@ func do() () {
         &fern.CreateRequest{
             Decimal: 2.2,
             Even: 100,
-            Name: "foo",
+            Name: "fern",
             Shape: fern.ShapeSquare,
         },
     )

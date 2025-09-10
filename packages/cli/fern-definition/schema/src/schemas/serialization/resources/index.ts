@@ -16,6 +16,8 @@ export * as file from "./file";
 export * from "./file/types";
 export * as pagination from "./pagination";
 export * from "./pagination/types";
+export * as products from "./products";
+export * from "./products/types";
 export * as service from "./service";
 export * from "./service/types";
 export * as source from "./source";

@@ -59,7 +59,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "numEvents: $FERN_INPUT",
+                                        "templateString": "num_events: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -143,7 +143,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "numEvents: $FERN_INPUT",
+                                        "templateString": "num_events: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

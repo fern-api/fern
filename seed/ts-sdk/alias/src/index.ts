@@ -1,4 +1,3 @@
-export * as SeedAlias from "./api";
-export { SeedAliasClient } from "./Client";
-export { SeedAliasError, SeedAliasTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedAlias from "./api/index.js";
+export { SeedAliasError, SeedAliasTimeoutError } from "./errors/index.js";
+export { SeedAliasClient } from "./Client.js";

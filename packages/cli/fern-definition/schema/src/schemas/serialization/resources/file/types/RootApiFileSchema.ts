@@ -10,6 +10,7 @@ import { HttpPathParameterSchema } from "../../service/types/HttpPathParameterSc
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 import { VariableDeclarationSchema } from "../../variables/types/VariableDeclarationSchema";
 import { PaginationSchema } from "../../pagination/types/PaginationSchema";
+import { ProductDeclarationSchema } from "../../products/types/ProductDeclarationSchema";
 import { VersionDeclarationSchema } from "../../versioning/types/VersionDeclarationSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
@@ -32,6 +33,7 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
         "idempotency-headers": core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         variables: core.serialization.record(core.serialization.string(), VariableDeclarationSchema).optional(),
         pagination: PaginationSchema.optional(),
+        product: ProductDeclarationSchema.optional(),
         version: VersionDeclarationSchema.optional(),
     })
     .extend(WithDocsSchema)
@@ -57,6 +59,7 @@ export declare namespace RootApiFileSchema {
         "idempotency-headers"?: Record<string, HttpHeaderSchema.Raw> | null;
         variables?: Record<string, VariableDeclarationSchema.Raw> | null;
         pagination?: PaginationSchema.Raw | null;
+        product?: ProductDeclarationSchema.Raw | null;
         version?: VersionDeclarationSchema.Raw | null;
     }
 }

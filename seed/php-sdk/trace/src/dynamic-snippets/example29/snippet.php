@@ -10,6 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->v2->problem->getLatestProblem(
-    'problemId',
-);
+$client->sysprop->getNumWarmInstances();

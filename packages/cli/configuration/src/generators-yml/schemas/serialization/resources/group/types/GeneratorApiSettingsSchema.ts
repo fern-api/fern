@@ -5,17 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema";
 import { ApiDefinitionSettingsSchema } from "../../generators/types/ApiDefinitionSettingsSchema";
 
 export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.GeneratorApiSettingsSchema.Raw,
     FernDefinition.GeneratorApiSettingsSchema
 > = core.serialization.object({
+    auth: ApiAuthSchema.optional(),
     settings: ApiDefinitionSettingsSchema.optional(),
 });
 
 export declare namespace GeneratorApiSettingsSchema {
     export interface Raw {
+        auth?: ApiAuthSchema.Raw | null;
         settings?: ApiDefinitionSettingsSchema.Raw | null;
     }
 }

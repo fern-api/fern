@@ -13,7 +13,9 @@ from ....core.route_args import get_route_args
 from ..types.metadata import Metadata
 from ..types.metadata_union import MetadataUnion
 from ..types.my_union import MyUnion
+from ..types.nested_union_root import NestedUnionRoot
 from ..types.request import Request
+from ..types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 
 class AbstractUnionService(AbstractFernService):
@@ -37,6 +39,12 @@ class AbstractUnionService(AbstractFernService):
     @abc.abstractmethod
     def call(self, *, body: Request) -> bool: ...
 
+    @abc.abstractmethod
+    def duplicate_types_union(self, *, body: UnionWithDuplicateTypes) -> UnionWithDuplicateTypes: ...
+
+    @abc.abstractmethod
+    def nested_unions(self, *, body: NestedUnionRoot) -> str: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -48,6 +56,8 @@ class AbstractUnionService(AbstractFernService):
         cls.__init_get_metadata(router=router)
         cls.__init_update_metadata(router=router)
         cls.__init_call(router=router)
+        cls.__init_duplicate_types_union(router=router)
+        cls.__init_nested_unions(router=router)
 
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
@@ -189,4 +199,76 @@ class AbstractUnionService(AbstractFernService):
             response_model=bool,
             description=AbstractUnionService.call.__doc__,
             **get_route_args(cls.call, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_duplicate_types_union(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.duplicate_types_union)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.duplicate_types_union, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.duplicate_types_union)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UnionWithDuplicateTypes:
+            try:
+                return cls.duplicate_types_union(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'duplicate_types_union' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.duplicate_types_union.__globals__)
+
+        router.post(
+            path="/duplicate",
+            response_model=UnionWithDuplicateTypes,
+            description=AbstractUnionService.duplicate_types_union.__doc__,
+            **get_route_args(cls.duplicate_types_union, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_nested_unions(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.nested_unions)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.nested_unions, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.nested_unions)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.nested_unions(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'nested_unions' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.nested_unions.__globals__)
+
+        router.post(
+            path="/nested",
+            response_model=str,
+            description=AbstractUnionService.nested_unions.__doc__,
+            **get_route_args(cls.nested_unions, default_tag="union"),
         )(wrapper)

@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user/username",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_request_parameters\"\n\nrequest_parameters = SeedRequestParametersClient::Client.new(base_url: \"https://api.example.com\")\nrequest_parameters.user.create_username(\n  username: \"username\",\n  password: \"password\",\n  name: \"test\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_request_parameters\"\n\nrequest_parameters = SeedRequestParametersClient::Client.new(base_url: \"https://api.example.com\")\nrequest_parameters.user.get_username(\n  limit: 1,\n  id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  date: Date.parse(\"2023-01-15\"),\n  deadline: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  bytes: \"SGVsbG8gd29ybGQh\",\n  user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  user_list: [{ name: \"name\", tags: [\"tags\", \"tags\"] }, { name: \"name\", tags: [\"tags\", \"tags\"] }],\n  optional_deadline: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  key_value: { \"keyValue\": \"keyValue\" },\n  optional_string: \"optionalString\",\n  nested_user: { name: \"name\", user: { name: \"name\", tags: [\"tags\", \"tags\"] } },\n  optional_user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  exclude_user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  filter: \"filter\",\n  long_param: 1000000,\n  big_int_param: \"1000000\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/username",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_request_parameters\"\n\nrequest_parameters = SeedRequestParametersClient::Client.new(base_url: \"https://api.example.com\")\nrequest_parameters.user.create_username(\n  username: \"username\",\n  password: \"password\",\n  name: \"test\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_request_parameters\"\n\nrequest_parameters = SeedRequestParametersClient::Client.new(base_url: \"https://api.example.com\")\nrequest_parameters.user.get_username(\n  limit: 1,\n  id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  date: Date.parse(\"2023-01-15\"),\n  deadline: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  bytes: \"SGVsbG8gd29ybGQh\",\n  user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  user_list: [{ name: \"name\", tags: [\"tags\", \"tags\"] }, { name: \"name\", tags: [\"tags\", \"tags\"] }],\n  optional_deadline: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  key_value: { \"keyValue\": \"keyValue\" },\n  optional_string: \"optionalString\",\n  nested_user: { name: \"name\", user: { name: \"name\", tags: [\"tags\", \"tags\"] } },\n  optional_user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  exclude_user: { name: \"name\", tags: [\"tags\", \"tags\"] },\n  filter: \"filter\",\n  long_param: 1000000,\n  big_int_param: \"1000000\"\n)",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

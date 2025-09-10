@@ -7,7 +7,7 @@ import (
     fern "github.com/extends/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,8 @@ func do() () {
     client.ExtendedInlineRequestBody(
         context.TODO(),
         &fern.Inlined{
-            Docs: "docs",
             Name: "name",
+            Docs: "docs",
             Unique: "unique",
         },
     )

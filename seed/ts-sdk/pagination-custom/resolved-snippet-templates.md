@@ -6,7 +6,7 @@ const client = new SeedPaginationClient({
   token: "YOUR_TOKEN",
 });
 await client.users.listUsernamesCustom({
-  startingAfter: "starting_after",
+  starting_after: "starting_after",
 });
 
 ```

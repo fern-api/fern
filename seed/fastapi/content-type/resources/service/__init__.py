@@ -2,6 +2,18 @@
 
 # isort: skip_file
 
-from .service import PatchProxyRequest
+from .service import (
+    NamedMixedPatchRequest,
+    OptionalMergePatchRequest,
+    PatchComplexRequest,
+    PatchProxyRequest,
+    RegularPatchRequest,
+)
 
-__all__ = ["PatchProxyRequest"]
+__all__ = [
+    "NamedMixedPatchRequest",
+    "OptionalMergePatchRequest",
+    "PatchComplexRequest",
+    "PatchProxyRequest",
+    "RegularPatchRequest",
+]

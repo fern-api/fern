@@ -1,0 +1,33 @@
+types:
+  User:
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getUser:
+      method: GET
+      path: /users/{id}
+      path-parameters:
+        id: string
+      request:
+        name: GetUserRequest
+        query-parameters:
+          filter:
+            type: string
+            allow-multiple: true
+      response: User
+
+    checkUser:
+      method: HEAD
+      path: /users/{id}
+      path-parameters:
+        id: string
+      request:
+        name: CheckUserRequest
+        query-parameters:
+          filter:
+            type: string
+            allow-multiple: true

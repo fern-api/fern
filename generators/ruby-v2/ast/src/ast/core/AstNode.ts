@@ -11,11 +11,11 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        customConfig: BaseRubyCustomConfigSchema;
+        customConfig?: BaseRubyCustomConfigSchema;
         formatter?: AbstractFormatter;
-    }): Promise<string> {
+    } = {}): Promise<string> {
         const file = new RubyFile({
-            customConfig,
+            customConfig: customConfig ?? {},
             formatter
         });
         this.write(file);
@@ -29,11 +29,11 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        customConfig: BaseRubyCustomConfigSchema;
+        customConfig?: BaseRubyCustomConfigSchema;
         formatter?: AbstractFormatter;
-    }): string {
+    } = {}): string {
         const file = new RubyFile({
-            customConfig,
+            customConfig: customConfig ?? {},
             formatter
         });
         this.write(file);
@@ -47,11 +47,11 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        customConfig: BaseRubyCustomConfigSchema;
+        customConfig?: BaseRubyCustomConfigSchema;
         formatter?: AbstractFormatter;
-    }): string {
+    } = {}): string {
         const file = new RubyFile({
-            customConfig,
+            customConfig: customConfig ?? {},
             formatter
         });
         this.writeTypeDefinition(file);

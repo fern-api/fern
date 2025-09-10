@@ -1,6 +1,6 @@
 import { AstNode } from "../ruby";
-import { Parameter } from "./Parameter";
 import { Writer } from "./core/Writer";
+import { Parameter } from "./Parameter";
 
 export declare namespace YieldParameter {
     interface Args extends Parameter.Args {}

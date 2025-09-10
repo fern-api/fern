@@ -2,21 +2,65 @@
 
 # isort: skip_file
 
-from . import service
-from .client import AsyncSeedFileUpload, SeedFileUpload
-from .service import (
-    Id,
-    MyAliasObject,
-    MyAliasObjectParams,
-    MyCollectionAliasObject,
-    MyCollectionAliasObjectParams,
-    MyObject,
-    MyObjectParams,
-    MyObjectWithOptional,
-    MyObjectWithOptionalParams,
-    ObjectType,
-)
-from .version import __version__
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from . import service
+    from .client import AsyncSeedFileUpload, SeedFileUpload
+    from .service import (
+        Id,
+        MyAliasObject,
+        MyAliasObjectParams,
+        MyCollectionAliasObject,
+        MyCollectionAliasObjectParams,
+        MyInlineType,
+        MyInlineTypeParams,
+        MyObject,
+        MyObjectParams,
+        MyObjectWithOptional,
+        MyObjectWithOptionalParams,
+        ObjectType,
+    )
+    from .version import __version__
+_dynamic_imports: typing.Dict[str, str] = {
+    "AsyncSeedFileUpload": ".client",
+    "Id": ".service",
+    "MyAliasObject": ".service",
+    "MyAliasObjectParams": ".service",
+    "MyCollectionAliasObject": ".service",
+    "MyCollectionAliasObjectParams": ".service",
+    "MyInlineType": ".service",
+    "MyInlineTypeParams": ".service",
+    "MyObject": ".service",
+    "MyObjectParams": ".service",
+    "MyObjectWithOptional": ".service",
+    "MyObjectWithOptionalParams": ".service",
+    "ObjectType": ".service",
+    "SeedFileUpload": ".client",
+    "__version__": ".version",
+    "service": ".",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "AsyncSeedFileUpload",
@@ -25,6 +69,8 @@ __all__ = [
     "MyAliasObjectParams",
     "MyCollectionAliasObject",
     "MyCollectionAliasObjectParams",
+    "MyInlineType",
+    "MyInlineTypeParams",
     "MyObject",
     "MyObjectParams",
     "MyObjectWithOptional",

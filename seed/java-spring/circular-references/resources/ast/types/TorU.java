@@ -12,10 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import core.ObjectMappers;
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.Objects;
 
 @JsonDeserialize(
@@ -36,6 +37,7 @@ public final class TorU {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visit((resources.ast.types.T) this.value);
@@ -89,11 +91,11 @@ public final class TorU {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, T.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, U.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       throw new JsonParseException(p, "Failed to deserialize");
     }

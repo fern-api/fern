@@ -46,6 +46,7 @@ class SeedClient
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
+            'X-API-Version' => '2.0.0',
         ];
 
         $this->options = $options ?? [];

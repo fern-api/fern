@@ -1,6 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -15,11 +16,12 @@ public class Example39
         );
 
         await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Dictionary<string, object>() {
-                ["animal"] = "dog",
-                ["name"] = "name",
-                ["likesToWoof"] = true,
-            }
+            new Animal(
+                new Dog{
+                    Name = "name",
+                    LikesToWoof = true
+                }
+            )
         );
     }
 

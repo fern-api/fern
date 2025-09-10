@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
     AuthScheme,
@@ -14,12 +14,11 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -107,6 +106,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
+            // skip subpackages that have no endpoints (recursively)
+            if (!this.context.subPackageHasEndpoints(subpackage)) {
+                continue;
+            }
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Public,
@@ -184,7 +187,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(`"${param.header.name}"`),
+                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
                     value: csharp.codeblock(
                         param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
                     )
@@ -195,10 +198,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of literalParameters) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(`"${param.header.name}"`),
+                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
                     value: csharp.codeblock(
                         param.value.type === "string"
-                            ? `"${param.value.string}"`
+                            ? csharp.string_({ string: param.value.string })
                             : param.value
                               ? `"${true.toString()}"`
                               : `"${false.toString()}"`
@@ -243,9 +246,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     if (param.environmentVariable != null) {
                         writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
                         writer.indent();
-                        writer.writeLine(`"${param.environmentVariable}",`);
+                        writer.writeNode(csharp.string_({ string: param.environmentVariable }));
+                        writer.writeLine(",");
                         writer.writeLine(
-                            `"Please pass in ${param.name} or set the environment variable ${param.environmentVariable}."`
+                            `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
                         );
                         writer.dedent();
                         writer.writeLine(");");
@@ -331,6 +335,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 }
                 const arguments_ = [csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
+                    // skip subpackages that have no endpoints (recursively)
+                    if (!this.context.subPackageHasEndpoints(subpackage)) {
+                        continue;
+                    }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({

@@ -8,7 +8,7 @@ types:
       rating:
         type: double
         docs: The rating scale is one to five stars
-  
+
   CreateMovieRequest:
     properties:
       title: string
@@ -26,7 +26,7 @@ service:
       response:
         type: MovieId
         status-code: 201
-    
+
     getMovie:
       method: GET
       path: /{movieId}

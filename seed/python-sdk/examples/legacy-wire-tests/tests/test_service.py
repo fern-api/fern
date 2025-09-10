@@ -5,6 +5,7 @@ import typing
 import uuid
 
 from .utilities import validate_response
+
 from seed import AsyncSeedExamples, SeedExamples
 from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
 from seed.types import (
@@ -126,6 +127,7 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
     response = client.service.create_big_entity(
         cast_member=Actor(name="name", id="id"),
         extended_movie=ExtendedMovie(
+            cast=["cast", "cast"],
             id="id",
             prequel="prequel",
             title="title",
@@ -135,7 +137,6 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
             book="book",
             metadata={"metadata": {"key": "value"}},
             revenue=1000000,
-            cast=["cast", "cast"],
         ),
         entity=Entity(type="primitive", name="name"),
         metadata=Metadata_Html(value="metadata"),
@@ -201,6 +202,7 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
     async_response = await async_client.service.create_big_entity(
         cast_member=Actor(name="name", id="id"),
         extended_movie=ExtendedMovie(
+            cast=["cast", "cast"],
             id="id",
             prequel="prequel",
             title="title",
@@ -210,7 +212,6 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
             book="book",
             metadata={"metadata": {"key": "value"}},
             revenue=1000000,
-            cast=["cast", "cast"],
         ),
         entity=Entity(type="primitive", name="name"),
         metadata=Metadata_Html(value="metadata"),
@@ -272,3 +273,16 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
         ),
     )
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_refresh_token(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.service.refresh_token()  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.service.refresh_token()  # type: ignore[func-returns-value]
+        is None
+    )

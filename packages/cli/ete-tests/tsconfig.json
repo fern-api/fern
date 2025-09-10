@@ -1,12 +1,24 @@
 {
   "extends": "@fern-api/configs/tsconfig/test.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "exclude": ["./src/**/__test__/**/generated", "./src/tests/generate/fixtures/**"],
   "references": [
-    { "path": "../../../generators/typescript/utils/core-utilities/fetcher" },
-    { "path": "../../commons/fs-utils" },
-    { "path": "../../commons/logging-execa" },
-    { "path": "../configuration" }
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../logger"
+    }
   ]
 }

@@ -1,33 +1,33 @@
-types: 
+types:
   Operand:
-    docs: | 
-      Tests enum name and value can be 
+    docs: |-
+      Tests enum name and value can be
       different.
     enum:
       - value: ">"
-        name: GREATER_THAN 
+        name: GREATER_THAN
       - value: "="
         name: EQUAL_TO
       - value: "less_than"
-        docs: | 
+        docs: |-
           The name and value should be similar
-          are similar for less than. 
+          are similar for less than.
     examples:
       - name: GreaterThan
         value: ">"
       - name: LessThan
         value: "less_than"
-  
+
   Color:
     enum:
       - value: "red"
-        name: RED 
+        name: RED
       - value: "blue"
         name: BLUE
     examples:
       - name: Red
         value: "red"
-  
+
   ColorOrOperand:
     discriminated: false
     union:
@@ -36,3 +36,113 @@ types:
     examples:
       - name: Red
         value: "red"
+
+  EnumWithCustom:
+    enum:
+      - value: "safe"
+        name: SAFE
+      - value: "Custom"
+        name: CUSTOM
+    examples:
+      - name: SAFE
+        value: "safe"
+      - name: CUSTOM
+        value: "Custom"
+
+  SpecialEnum:
+    enum:
+      - value: ""
+        name: A
+      - value: |-
+          Hello \"World\"
+        name: B
+      - value: |-
+          Hello 'World'
+        name: C
+      - value: |-
+          Hello\\World
+        name: D
+      - value: |-
+          Hello\nWorld
+        name: E
+      - value: |-
+          Hello\rWorld
+        name: F
+      - value: |-
+          Hello\tWorld
+        name: H
+      - value: |-
+          Hello\fWorld
+        name: I
+      - value: |-
+          Hello\u0008World
+        name: J
+      - value: |-
+          Hello\vWorld
+        name: K
+      - value: |-
+          Hello\0World
+        name: L
+      - value: |-
+          Hello\u0007World
+        name: M
+      - value: |-
+          Hello\u0001World
+        name: N
+      - value: |-
+          Hello\u0002World
+        name: O
+      - value: |-
+          Hello\u001FWorld
+        name: P
+      - value: |-
+          Hello\u007FWorld
+        name: Q
+      - value: |-
+          Hello\u009FWorld
+        name: R
+      - value: |-
+          Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null
+        name: S
+      - value: |-
+          \n\r\t\0\u0008\f\v\u0007
+        name: T
+      - value: |-
+          Hello 世界
+        name: U
+      - value: |-
+          café
+        name: V
+      - value: |-
+          🚀
+        name: W
+      - value: |-
+          \\n
+        name: X
+      - value: |-
+          \\
+        name: Y
+      - value: |-
+          {"name": "John", "age": 30, "city": "New York"}
+        name: Z
+      - value: |-
+          SELECT * FROM users WHERE name = 'John O\\'Reilly'
+        name: AA
+      - value: |-
+          C:\\Users\\John\\Documents\\file.txt
+        name: BB
+      - value: |-
+          /usr/local/bin/app
+        name: CC
+      - value: |-
+          \\d{3}-\\d{2}-\\d{4}
+        name: DD
+      - value: |-
+          [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}
+        name: EE
+      - value: |-
+          transcript[transcriptType="final"]
+        name: FF
+      - value: |-
+          transcript[transcriptType='final']
+        name: GG

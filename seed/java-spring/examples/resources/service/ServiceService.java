@@ -18,6 +18,7 @@ import resources.types.types.BigEntity;
 import resources.types.types.Metadata;
 import resources.types.types.Movie;
 import resources.types.types.MovieId;
+import resources.types.types.RefreshTokenRequest;
 import resources.types.types.Response;
 
 @RequestMapping(
@@ -51,4 +52,11 @@ public interface ServiceService {
       consumes = "application/json"
   )
   Response createBigEntity(@RequestBody BigEntity body);
+
+  @PostMapping(
+      value = "/refresh-token",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void refreshToken(@RequestBody Optional<RefreshTokenRequest> body);
 }

@@ -13,6 +13,7 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.types import FernUnionWithLiteral
+
     FernUnionWithLiteral()
     """
 
@@ -43,6 +44,7 @@ class FernUnionWithLiteral(Base):
 
 """
 from seed.types import FernUnionWithLiteral
+
 FernUnionWithLiteral()
 """
 UnionWithLiteral = FernUnionWithLiteral

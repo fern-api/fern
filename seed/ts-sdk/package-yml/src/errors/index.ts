@@ -1,2 +1,2 @@
-export { SeedPackageYmlError } from "./SeedPackageYmlError";
-export { SeedPackageYmlTimeoutError } from "./SeedPackageYmlTimeoutError";
+export { SeedPackageYmlError } from "./SeedPackageYmlError.js";
+export { SeedPackageYmlTimeoutError } from "./SeedPackageYmlTimeoutError.js";

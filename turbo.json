@@ -1,29 +1,152 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".npmrc",
+    ".prettierrc.json",
+    ".stylelintrc.json",
+    "babel.config.json",
+    "package.json",
+    "shared/.prettierignore",
+    "shared/stylelintrc.shared.json",
+    "tsconfig.json",
+    "turbo.json"
+  ],
   "tasks": {
     "clean": {
       "cache": false
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**"]
+      "outputs": ["lib/**"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
+    },
+    "compile:debug": {
+      "dependsOn": ["^compile:debug"],
+      "outputs": ["lib/**"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
     "depcheck": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "package.json", ".depcheckrc.json", "$TURBO_ROOT$/.depcheckrc.json"]
     },
     "lint:eslint": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "lint:eslint:fix": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "test": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
+    },
+    "test:debug": {
+      "dependsOn": ["^compile:debug"],
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
     },
     "test:update": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
+    },
+    "dist:cli": {
+      "dependsOn": ["^compile"],
+      "outputs": ["dist/**"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "dist:cli:dev": {
+      "dependsOn": ["^compile"],
+      "outputs": ["dist/**"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "dist:cli:local": {
+      "dependsOn": ["^compile"],
+      "outputs": ["dist/**"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "dist:cli:prod": {
+      "dependsOn": ["^compile"],
+      "outputs": ["dist/**"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "dist": {
+      "with": ["dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod"],
+      "cache": false,
+      "outputs": ["dist/**"],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
     }
   }
 }

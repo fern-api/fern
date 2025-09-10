@@ -16,6 +16,7 @@ module SeedPaginationClient
       @request_client = request_client
     end
 
+    # @param index [String]
     # @param request [Hash] Request of type SeedPaginationClient::Complex::SearchRequest, as a Hash
     #   * :pagination (Hash)
     #     * :per_page (Integer)
@@ -25,8 +26,8 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Complex::PaginatedConversationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.complex.search(request: { pagination: { per_page: 1, starting_after: "starting_after" }, query: { field: "field", operator: EQUALS, value: "value" } })
-    def search(request:, request_options: nil)
+    #  pagination.complex.search(index: "index", request: { pagination: { per_page: 1, starting_after: "starting_after" }, query: { field: "field", operator: EQUALS, value: "value" } })
+    def search(index:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -39,7 +40,7 @@ module SeedPaginationClient
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/conversations/search"
+        req.url "#{@request_client.get_url(request_options: request_options)}/#{index}/conversations/search"
       end
       SeedPaginationClient::Complex::PaginatedConversationResponse.from_json(json_object: response.body)
     end
@@ -55,6 +56,7 @@ module SeedPaginationClient
       @request_client = request_client
     end
 
+    # @param index [String]
     # @param request [Hash] Request of type SeedPaginationClient::Complex::SearchRequest, as a Hash
     #   * :pagination (Hash)
     #     * :per_page (Integer)
@@ -64,8 +66,8 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Complex::PaginatedConversationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  pagination.complex.search(request: { pagination: { per_page: 1, starting_after: "starting_after" }, query: { field: "field", operator: EQUALS, value: "value" } })
-    def search(request:, request_options: nil)
+    #  pagination.complex.search(index: "index", request: { pagination: { per_page: 1, starting_after: "starting_after" }, query: { field: "field", operator: EQUALS, value: "value" } })
+    def search(index:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -79,7 +81,7 @@ module SeedPaginationClient
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/conversations/search"
+          req.url "#{@request_client.get_url(request_options: request_options)}/#{index}/conversations/search"
         end
         SeedPaginationClient::Complex::PaginatedConversationResponse.from_json(json_object: response.body)
       end

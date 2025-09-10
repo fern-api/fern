@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as postWithObjectBodyandResponse from "./postWithObjectBodyandResponse";
+export * as postWithObjectBodyandResponse from "./postWithObjectBodyandResponse.js";
+export * from "./requests/index.js";

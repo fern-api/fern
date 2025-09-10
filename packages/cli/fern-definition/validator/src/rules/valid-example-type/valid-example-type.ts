@@ -1,8 +1,8 @@
 import {
+    constructFernFileContext,
     ExampleResolverImpl,
     ExampleValidators,
-    TypeResolverImpl,
-    constructFernFileContext
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 
 import { Rule } from "../../Rule";

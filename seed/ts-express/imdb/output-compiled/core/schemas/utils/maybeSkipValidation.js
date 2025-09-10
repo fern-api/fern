@@ -9,7 +9,7 @@ function transformAndMaybeSkipValidation(transform) {
         const transformed = transform(value, opts);
         const { skipValidation = false } = opts !== null && opts !== void 0 ? opts : {};
         if (!transformed.ok && skipValidation) {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.warn([
                 "Failed to validate.",
                 ...transformed.errors.map((error) => "  - " +

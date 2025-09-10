@@ -1,10 +1,9 @@
-import path from "path";
-
 import { OnDiskNamedDefinitionFile, ParsedFernFile } from "@fern-api/api-workspace-commons";
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { entries, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import path from "path";
 
 import * as RootApiFileJsonSchema from "../api-yml.schema.json";
 import * as DefinitionFileJsonSchema from "../fern.schema.json";
@@ -57,7 +56,7 @@ export function validateStructureOfYamlFiles({
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const result = validateAgainstJsonSchema(parsedFileContents, RootApiFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
@@ -70,7 +69,7 @@ export function validateStructureOfYamlFiles({
                 addFailure(result);
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
@@ -83,7 +82,7 @@ export function validateStructureOfYamlFiles({
                 addFailure(result);
             }
         } else {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
             if (result.success) {
                 const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);

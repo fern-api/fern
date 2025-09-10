@@ -1,3 +1,4 @@
+import { titleCase } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Type } from "@fern-api/ir-sdk";
 
@@ -26,15 +27,22 @@ export function convertUndiscriminatedUnionTypeDeclaration({
 
     return Type.undiscriminatedUnion({
         members: uniqueMembers.map((member) => {
-            if (typeof member === "string") {
-                return {
-                    docs: undefined,
-                    type: file.parseTypeReference(member)
-                };
-            }
+            const parsedType = file.parseTypeReference(typeof member === "string" ? member : member.type);
+
+            const typeWithDisplayName =
+                parsedType.type === "named"
+                    ? {
+                          ...parsedType,
+                          displayName:
+                              typeof member === "string"
+                                  ? titleCase(parsedType.name.originalName)
+                                  : (member["display-name"] ?? titleCase(parsedType.name.originalName))
+                      }
+                    : parsedType;
+
             return {
-                type: file.parseTypeReference(member.type),
-                docs: member.docs
+                type: typeWithDisplayName,
+                docs: typeof member === "string" ? undefined : member.docs
             };
         })
     });

@@ -1,19 +1,43 @@
 import {
+    AstNode,
     Class_,
+    ClassInstantiation,
+    ClassReference,
     CodeBlock,
     Comment,
+    KeywordArgument,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
-    Module,
+    MethodInvocation,
+    Module_,
+    PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
+    TypeParameter,
     YieldParameter
 } from "./ast";
-import { TypeParameter } from "./ast/TypeParameter";
+import { IfElse } from "./ast/IfElse";
 
+export {
+    Class_,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    KeywordArgument,
+    KeywordParameter,
+    Method,
+    MethodInvocation,
+    MethodKind,
+    Module_,
+    Parameter,
+    Type,
+    TypeLiteral,
+    TypeParameter,
+    Writer
+} from "./ast";
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Parameter, Method } from "./ast";
+export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -45,8 +69,8 @@ export function class_(args: Class_.Args): Class_ {
     return new Class_(args);
 }
 
-export function module(args: Module.Args): Module {
-    return new Module(args);
+export function module(args: Module_.Args): Module_ {
+    return new Module_(args);
 }
 
 export function method(args: Method.Args): Method {
@@ -59,4 +83,37 @@ export function comment(args: Comment.Args): Comment {
 
 export function typeParameter(args: TypeParameter.Args): TypeParameter {
     return new TypeParameter(args);
+}
+
+export function classReference(args: ClassReference.Args): ClassReference {
+    return new ClassReference(args);
+}
+
+export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
+    return new ClassInstantiation(args);
+}
+
+export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
+    return new KeywordArgument(args);
+}
+
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
+}
+
+export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
+    return new PositionalArgument(args);
+}
+
+export function ifElse(args: IfElse.Args): IfElse {
+    return new IfElse(args);
+}
+
+export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {
+    let topLevelNode: AstNode = node;
+    for (const module of modules.toReversed()) {
+        module.addStatement(topLevelNode);
+        topLevelNode = module;
+    }
+    return topLevelNode;
 }

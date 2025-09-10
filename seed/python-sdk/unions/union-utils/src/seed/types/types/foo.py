@@ -11,7 +11,10 @@ class Foo(UniversalBaseModel):
     Examples
     --------
     from seed.types import Foo
-    Foo(name='example1', )
+
+    Foo(
+        name="example1",
+    )
     """
 
     name: str

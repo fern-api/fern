@@ -48,7 +48,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(GetOrganizationUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -62,10 +62,12 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 
 ```csharp
 await client.Organizations.GetOrganizationUserAsync(
-    "tenant_id",
-    "organization_id",
-    "user_id",
-    new GetOrganizationUserRequest()
+    new GetOrganizationUserRequest
+    {
+        TenantId = "tenant_id",
+        OrganizationId = "organization_id",
+        UserId = "user_id",
+    }
 );
 ```
 </dd>
@@ -77,30 +79,6 @@ await client.Organizations.GetOrganizationUserAsync(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -178,7 +156,7 @@ await client.Organizations.SearchOrganizationsAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -191,7 +169,7 @@ await client.Organizations.SearchOrganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
 ```
 </dd>
 </dl>
@@ -202,22 +180,6 @@ await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -289,7 +251,7 @@ await client.User.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(UpdateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -303,10 +265,10 @@ await client.User.CreateUserAsync(
 
 ```csharp
 await client.User.UpdateUserAsync(
-    "tenant_id",
-    "user_id",
     new UpdateUserRequest
     {
+        TenantId = "tenant_id",
+        UserId = "user_id",
         Body = new User
         {
             Name = "name",
@@ -328,22 +290,6 @@ await client.User.UpdateUserAsync(
 <dl>
 <dd>
 
-**tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request:** `UpdateUserRequest` 
     
 </dd>
@@ -356,7 +302,7 @@ await client.User.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
 <dl>
 <dd>
 
@@ -369,7 +315,14 @@ await client.User.UpdateUserAsync(
 <dd>
 
 ```csharp
-await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
+await client.User.SearchUsersAsync(
+    new SearchUsersRequest
+    {
+        TenantId = "tenant_id",
+        UserId = "user_id",
+        Limit = 1,
+    }
+);
 ```
 </dd>
 </dl>
@@ -380,22 +333,6 @@ await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersReques
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

@@ -1,6 +1,5 @@
-import chalk from "chalk";
-
 import { loggingExeca } from "@fern-api/logging-execa";
+import chalk from "chalk";
 
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";

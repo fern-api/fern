@@ -10,7 +10,7 @@ describe("fern generator get", () => {
         const pathOfDirectory = await init();
 
         const out = await runFernCli(
-            ["generator", "get", "--generator", "fernapi/fern-typescript-node-sdk", "--group", "local", "--version"],
+            ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--version"],
             {
                 cwd: pathOfDirectory
             }
@@ -23,7 +23,7 @@ describe("fern generator get", () => {
         const pathOfDirectory = await init();
 
         const out = await runFernCli(
-            ["generator", "get", "--generator", "fernapi/fern-typescript-node-sdk", "--group", "local", "--language"],
+            ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--language"],
             {
                 cwd: pathOfDirectory
             }
@@ -40,7 +40,7 @@ describe("fern generator get", () => {
                 "generator",
                 "get",
                 "--generator",
-                "fernapi/fern-typescript-node-sdk",
+                "fernapi/fern-typescript-sdk",
                 "--group",
                 "local",
                 "--language",

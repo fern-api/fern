@@ -1,6 +1,5 @@
-import { GeneratedEnvironments } from "@fern-typescript/contexts";
-
 import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
+import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
 import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";

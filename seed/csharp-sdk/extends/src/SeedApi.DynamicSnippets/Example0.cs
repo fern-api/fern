@@ -14,8 +14,8 @@ public class Example0
 
         await client.ExtendedInlineRequestBodyAsync(
             new Inlined{
-                Docs = "docs",
                 Name = "name",
+                Docs = "docs",
                 Unique = "unique"
             }
         );

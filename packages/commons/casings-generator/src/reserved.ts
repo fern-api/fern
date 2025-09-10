@@ -1,6 +1,5 @@
-import { upperFirst } from "lodash-es";
-
 import { generatorsYml } from "@fern-api/configuration";
+import { upperFirst } from "lodash-es";
 
 export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
     [generatorsYml.GenerationLanguage.PHP]: new Set(
@@ -240,7 +239,8 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "long",
         // the following aren't actually reserved, but we treat them as unavailable
         "self",
-        "all"
+        "all",
+        "kwargs"
     ]),
     [generatorsYml.GenerationLanguage.GO]: new Set([
         // Keywords - these are not allowed. https://go.dev/ref/spec#Keywords
@@ -269,6 +269,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "switch",
         "type",
         "var",
+        "vendor",
         // Technically allowed as identifiers, but should be avoided.
         "any",
         "bool",
@@ -461,6 +462,91 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "where",
         "with",
         "yield"
+    ]),
+    [generatorsYml.GenerationLanguage.RUST]: new Set([
+        "as",
+        "async",
+        "await",
+        "break",
+        "const",
+        "continue",
+        "crate",
+        "dyn",
+        "else",
+        "enum",
+        "extern",
+        "false",
+        "fn",
+        "for",
+        "if",
+        "impl",
+        "in",
+        "let",
+        "loop",
+        "match",
+        "mod",
+        "move",
+        "mut",
+        "pub",
+        "ref",
+        "return",
+        "self",
+        "Self",
+        "static",
+        "struct",
+        "super",
+        "trait",
+        "true",
+        "type",
+        "union",
+        "unsafe",
+        "use",
+        "where",
+        "while",
+        "abstract",
+        "become",
+        "box",
+        "do",
+        "final",
+        "macro",
+        "override",
+        "priv",
+        "try",
+        "typeof",
+        "unsized",
+        "virtual",
+        "yield",
+        // Common types
+        "bool",
+        "char",
+        "f32",
+        "f64",
+        "i8",
+        "i16",
+        "i32",
+        "i64",
+        "i128",
+        "isize",
+        "str",
+        "u8",
+        "u16",
+        "u32",
+        "u64",
+        "u128",
+        "usize",
+        "String",
+        "Vec",
+        "Option",
+        "Result",
+        "Box",
+        "Rc",
+        "Arc",
+        "Cell",
+        "RefCell",
+        "HashMap",
+        "HashSet",
+        "BTreeMap",
+        "BTreeSet"
     ]),
     // TODO(mikemilla): add reserved keywords for Swift
     [generatorsYml.GenerationLanguage.SWIFT]: new Set([])

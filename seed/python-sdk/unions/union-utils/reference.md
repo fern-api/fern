@@ -14,8 +14,13 @@
 
 ```python
 from seed import SeedUnions
-client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-client.bigunion.get(id='id', )
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.bigunion.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -66,8 +71,15 @@ client.bigunion.get(id='id', )
 ```python
 from seed import SeedUnions
 from seed.bigunion import BigUnion_NormalSweet
-client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-client.bigunion.update(request=BigUnion_NormalSweet(value='value', ), )
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.bigunion.update(
+    request=BigUnion_NormalSweet(
+        value="value",
+    ),
+)
 
 ```
 </dd>
@@ -118,8 +130,20 @@ client.bigunion.update(request=BigUnion_NormalSweet(value='value', ), )
 ```python
 from seed import SeedUnions
 from seed.bigunion import BigUnion_NormalSweet
-client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-client.bigunion.update_many(request=[BigUnion_NormalSweet(value='value', ), BigUnion_NormalSweet(value='value', )], )
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.bigunion.update_many(
+    request=[
+        BigUnion_NormalSweet(
+            value="value",
+        ),
+        BigUnion_NormalSweet(
+            value="value",
+        ),
+    ],
+)
 
 ```
 </dd>
@@ -170,8 +194,13 @@ client.bigunion.update_many(request=[BigUnion_NormalSweet(value='value', ), BigU
 
 ```python
 from seed import SeedUnions
-client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-client.union.get(id='id', )
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.union.get(
+    id="id",
+)
 
 ```
 </dd>
@@ -222,8 +251,15 @@ client.union.get(id='id', )
 ```python
 from seed import SeedUnions
 from seed.union import Shape_Circle
-client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-client.union.update(request=Shape_Circle(radius=1.1, ), )
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.union.update(
+    request=Shape_Circle(
+        radius=1.1,
+    ),
+)
 
 ```
 </dd>

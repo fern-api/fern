@@ -1,14 +1,12 @@
-import { readFile } from "fs/promises";
-import path from "path";
-
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { readFile } from "fs/promises";
+import path from "path";
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -27,7 +25,11 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     filter: undefined,
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined,
-    additionalPropertiesDefaultsTo: undefined
+    additionalPropertiesDefaultsTo: undefined,
+    typeDatesAsStrings: undefined,
+    preserveSingleSchemaOneOf: undefined,
+    inlineAllOfSchemas: undefined,
+    groupMultiApiEnvironments: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -103,7 +105,11 @@ function parseOpenApiDefinitionSettingsSchema(
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
-        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"]
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
+        inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
+        groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
     };
 }
 
@@ -152,8 +158,10 @@ async function parseAPIConfigurationToApiLocations(
                 schema: {
                     type: "protobuf",
                     root: apiConfiguration.proto.root,
-                    target: apiConfiguration.proto.target,
-                    localGeneration: apiConfiguration.proto["local-generation"] ?? false
+                    target: apiConfiguration.proto.target ?? "",
+                    localGeneration: apiConfiguration.proto["local-generation"] ?? false,
+                    fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false,
+                    dependencies: apiConfiguration.proto.dependencies ?? []
                 },
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
@@ -178,8 +186,10 @@ async function parseAPIConfigurationToApiLocations(
                         schema: {
                             type: "protobuf",
                             root: definition.proto.root,
-                            target: definition.proto.target,
-                            localGeneration: definition.proto["local-generation"] ?? false
+                            target: definition.proto.target ?? "",
+                            localGeneration: definition.proto["local-generation"] ?? false,
+                            fromOpenAPI: definition.proto["from-openapi"] ?? false,
+                            dependencies: definition.proto.dependencies ?? []
                         },
                         origin: undefined,
                         overrides: definition.proto.overrides,
@@ -329,8 +339,10 @@ async function parseApiConfigurationV2Schema({
                 schema: {
                     type: "protobuf",
                     root: spec.proto.root,
-                    target: spec.proto.target,
-                    localGeneration: spec.proto["local-generation"] ?? false
+                    target: spec.proto.target ?? "",
+                    localGeneration: spec.proto["local-generation"] ?? false,
+                    fromOpenAPI: spec.proto["from-openapi"] ?? false,
+                    dependencies: spec.proto.dependencies ?? []
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,
@@ -353,7 +365,7 @@ async function parseApiConfigurationV2Schema({
         }
         if ("namespace" in spec && spec.namespace != null) {
             namespacedDefinitions[spec.namespace] ??= [];
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             namespacedDefinitions[spec.namespace]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);
@@ -593,7 +605,7 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null) {
+    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
@@ -730,6 +742,18 @@ async function convertOutputMode({
                     downloadSnippets
                 })
             );
+        case "crates":
+            // Workaround: Use npm override as a temporary solution for crates
+            // Both are package registries with similar authentication patterns
+            // This allows crates configuration to pass validation and be processed
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                    registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
+                    packageName: generator.output["package-name"],
+                    token: generator.output.token ?? "",
+                    downloadSnippets
+                })
+            );
         default:
             assertNever(generator.output);
     }
@@ -838,6 +862,15 @@ function getGithubPublishInfo(
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
             });
+        case "crates":
+            // TODO: Add native crates support to FernFiddle SDK
+            // Workaround: Use npm configuration as a temporary solution for crates
+            // Both are package registries with similar structure
+            return FernFiddle.GithubPublishInfo.npm({
+                registryUrl: output.url ?? "https://crates.io",
+                packageName: output["package-name"],
+                token: output.token
+            });
         default:
             assertNever(output);
     }
@@ -887,6 +920,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
+    } else if (isGithubSelfhosted(generator.github)) {
+        return undefined;
     }
     return generator.github?.license;
 }
@@ -960,4 +995,16 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
         context.logger.warn("Warnings for generators.yml:");
         context.logger.warn("\t" + warnings.join("\n\t"));
     }
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+export function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

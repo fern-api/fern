@@ -32,7 +32,9 @@ public partial class SeedAliasExtendsClient
     }
 
     /// <example><code>
-    /// await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
+    /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,

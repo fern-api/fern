@@ -1,2 +1,2 @@
-export { SeedContentTypesError } from "./SeedContentTypesError";
-export { SeedContentTypesTimeoutError } from "./SeedContentTypesTimeoutError";
+export { SeedContentTypesError } from "./SeedContentTypesError.js";
+export { SeedContentTypesTimeoutError } from "./SeedContentTypesTimeoutError.js";

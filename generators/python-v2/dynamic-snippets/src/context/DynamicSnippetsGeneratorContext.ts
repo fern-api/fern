@@ -1,5 +1,3 @@
-import { camelCase, snakeCase } from "lodash-es";
-
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
@@ -8,6 +6,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base";
+import { camelCase, snakeCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";

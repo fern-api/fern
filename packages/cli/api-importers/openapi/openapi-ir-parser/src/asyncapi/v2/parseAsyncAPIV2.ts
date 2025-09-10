@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -12,19 +10,20 @@ import {
     WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../getExtension";
 import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertAvailability } from "../../schema/convertAvailability";
-import { convertSchema } from "../../schema/convertSchemas";
-import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
+import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
 import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
-import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
 import { AsyncAPIIntermediateRepresentation } from "../parse";
 import { ServerContext } from "../sharedTypes";
@@ -58,6 +57,7 @@ export function parseAsyncAPIV2({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
+            // Always preserve server names from AsyncAPI spec
             name: serverId,
             url: constructServerUrl(server.protocol, server.url)
         };
@@ -110,21 +110,41 @@ export function parseAsyncAPIV2({
             if (channel.bindings.ws.headers != null) {
                 const required = channel.bindings.ws.headers.required ?? [];
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
-                    const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+                    if (isReferenceObject(schema)) {
+                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        headers.push({
+                            name,
+                            schema: convertReferenceObject(
+                                schema,
+                                false,
+                                context,
+                                breadcrumbs,
+                                undefined,
+                                source,
+                                context.namespace
+                            ),
+                            description: resolvedSchema.description,
+                            parameterNameOverride: undefined,
+                            env: undefined,
+                            availability: convertAvailability(resolvedSchema),
+                            source
+                        });
+                        continue;
+                    }
                     headers.push({
                         name,
                         schema: convertSchema(
-                            resolvedHeader,
+                            schema,
                             !required.includes(name),
                             context,
                             [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
-                        description: resolvedHeader.description,
+                        description: schema.description,
                         parameterNameOverride: undefined,
                         env: undefined,
-                        availability: convertAvailability(resolvedHeader),
+                        availability: convertAvailability(schema),
                         source
                     });
                 }
@@ -133,22 +153,39 @@ export function parseAsyncAPIV2({
             if (channel.bindings.ws.query != null) {
                 const required = channel.bindings.ws.query.required ?? [];
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
-                    const resolvedQueryParameter = isReferenceObject(schema)
-                        ? context.resolveSchemaReference(schema)
-                        : schema;
+                    if (isReferenceObject(schema)) {
+                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        queryParameters.push({
+                            name,
+                            schema: convertReferenceObject(
+                                schema,
+                                false,
+                                context,
+                                breadcrumbs,
+                                undefined,
+                                source,
+                                context.namespace
+                            ),
+                            description: resolvedSchema.description,
+                            parameterNameOverride: undefined,
+                            availability: convertAvailability(resolvedSchema),
+                            source
+                        });
+                        continue;
+                    }
                     queryParameters.push({
                         name,
                         schema: convertSchema(
-                            resolvedQueryParameter,
+                            schema,
                             !required.includes(name),
                             context,
                             [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
-                        description: resolvedQueryParameter.description,
+                        description: schema.description,
                         parameterNameOverride: undefined,
-                        availability: convertAvailability(resolvedQueryParameter),
+                        availability: convertAvailability(schema),
                         source
                     });
                 }
@@ -287,9 +324,12 @@ export function parseAsyncAPIV2({
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
                 ]),
                 messages,
-                servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers)).filter(
-                    (server): server is ServerContext => server != null
-                ),
+                servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers))
+                    .filter((server): server is ServerContext => server != null && server.name != null)
+                    .map((server) => ({
+                        ...server,
+                        name: server.name as string
+                    })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path,
                 description: channel.description,
@@ -302,7 +342,10 @@ export function parseAsyncAPIV2({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels != null ? parsedChannels : undefined,
-        servers: Object.values(servers),
+        servers: Object.values(servers).map((server) => ({
+            ...server,
+            name: server.name as string
+        })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
@@ -386,11 +429,7 @@ function convertMessageToSchema({
         if (isReferenceObject(message.payload)) {
             resolvedSchema = context.resolveSchemaReference(message.payload);
         }
-        if (!isReferenceObject(resolvedSchema)) {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        } else {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        }
+        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
     }
     return undefined;
 }

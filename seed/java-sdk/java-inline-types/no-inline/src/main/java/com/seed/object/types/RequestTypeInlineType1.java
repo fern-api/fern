@@ -66,6 +66,9 @@ public final class RequestTypeInlineType1 {
     }
 
     public interface FooStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage foo(@NotNull String foo);
 
         Builder from(RequestTypeInlineType1 other);
@@ -91,6 +94,7 @@ public final class RequestTypeInlineType1 {
         }
 
         /**
+         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

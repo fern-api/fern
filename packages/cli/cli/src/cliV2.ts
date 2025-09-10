@@ -1,9 +1,7 @@
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
-
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-
-import { FernRegistry } from "@fern-fern/generators-sdk";
 
 import { CliContext } from "./cli-context/CliContext";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";

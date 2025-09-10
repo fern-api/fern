@@ -1,10 +1,7 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BaseCsharpCustomConfigSchema, convertReadOnlyPrimitiveTypes, csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     FernFilepath,
     HttpHeader,
@@ -18,6 +15,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
 
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
@@ -124,7 +122,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public shouldGenerateDiscriminatedUnions(): boolean {
-        return this.customConfig["use-discriminated-unions"] ?? false;
+        return this.customConfig["use-discriminated-unions"] ?? true;
     }
 
     public getJsonElementClassReference(): csharp.ClassReference {
@@ -160,6 +158,15 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.Type.reference(this.getReadOnlyAdditionalPropertiesClassReference(genericType));
     }
 
+    public getSerializableAttribute(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "Serializable",
+                namespace: "System"
+            })
+        });
+    }
+
     public getValueConvertReference(): csharp.ClassReference {
         return csharp.classReference({
             name: VALUE_CONVERT_CLASS_NAME,
@@ -175,11 +182,27 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public isForwardCompatibleEnumsEnabled(): boolean {
-        return this.customConfig["experimental-enable-forward-compatible-enums"] ?? false;
+        return (
+            this.customConfig["enable-forward-compatible-enums"] ??
+            this.customConfig["experimental-enable-forward-compatible-enums"] ??
+            true
+        );
+    }
+
+    public shouldUseFullyQualifiedNamespaces(): boolean {
+        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
+    }
+
+    public shouldUseDotnetFormat(): boolean {
+        return this.customConfig["experimental-dotnet-format"] ?? false;
     }
 
     public generateNewAdditionalProperties(): boolean {
-        return this.customConfig["experimental-additional-properties"] ?? false;
+        return (
+            this.customConfig["additional-properties"] ??
+            this.customConfig["experimental-additional-properties"] ??
+            true
+        );
     }
 
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
@@ -281,14 +304,14 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getJsonConverterAttributeReference(): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json",
+            namespace: "System.Text.Json.Serialization",
             name: "JsonConverter"
         });
     }
 
     public getJsonConverterClassReference(typeToConvert: csharp.Type): csharp.ClassReference {
         return csharp.classReference({
-            namespace: "System.Text.Json",
+            namespace: "System.Text.Json.Serialization",
             name: "JsonConverter",
             generics: [typeToConvert]
         });
@@ -681,7 +704,9 @@ export abstract class AbstractCsharpGeneratorContext<
         const literalValue = this.getLiteralValue(typeReference);
         if (literalValue != null) {
             return csharp.codeblock(
-                typeof literalValue === "boolean" ? `${literalValue.toString().toLowerCase()}` : `"${literalValue}"`
+                typeof literalValue === "boolean"
+                    ? `${literalValue.toString().toLowerCase()}`
+                    : csharp.string_({ string: literalValue })
             );
         }
         return undefined;
@@ -735,36 +760,62 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getCustomPagerContextClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Context`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public invokeCustomPagerFactoryMethod({
         itemType,
         sendRequestMethod,
         initialRequest,
+        clientOptions,
+        requestOptions,
         cancellationToken
     }: {
         itemType: csharp.Type;
         sendRequestMethod: csharp.CodeBlock;
         initialRequest: csharp.CodeBlock;
+        clientOptions: csharp.CodeBlock;
+        requestOptions: csharp.CodeBlock;
         cancellationToken: csharp.CodeBlock;
     }): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: this.getCustomPagerFactoryClassReference(),
             method: "CreateAsync",
             async: true,
-            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            arguments_: [
+                csharp.instantiateClass({
+                    classReference: this.getCustomPagerContextClassReference(),
+                    arguments_: [],
+                    properties: [
+                        {
+                            name: "SendRequest",
+                            value: sendRequestMethod
+                        },
+                        {
+                            name: "InitialHttpRequest",
+                            value: initialRequest
+                        },
+                        {
+                            name: "ClientOptions",
+                            value: clientOptions
+                        },
+                        {
+                            name: "RequestOptions",
+                            value: requestOptions
+                        }
+                    ]
+                }),
+                cancellationToken
+            ],
             generics: [itemType]
         });
     }
 
-    #doesIrHaveCustomPagination: boolean | null = null;
-
-    public doesIrHaveCustomPagination(): boolean {
-        if (this.#doesIrHaveCustomPagination === null) {
-            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
-                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
-            );
-        }
-        return this.#doesIrHaveCustomPagination;
-    }
+    public abstract shouldCreateCustomPagination(): boolean;
 
     public getCustomPagerName(): string {
         return this.customConfig["custom-pager-name"] ?? `${stripNonAlphanumeric(this.getPackageId())}Pager`;

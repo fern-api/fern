@@ -1,5 +1,0 @@
-api:
-  specs:
-    - openapi: ../openapi.yml
-      settings: 
-        respect-nullable-schemas: true

@@ -1,18 +1,18 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl,
-    constructFernFileContext
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
-    RequestPropertyValidator,
     getRequestPropertyComponents,
     maybePrimitiveType,
+    RequestPropertyValidator,
     requestTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 

@@ -1,9 +1,7 @@
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
-
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 
 export async function publishPackage({
     generatorNotificationService,

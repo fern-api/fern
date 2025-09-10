@@ -1,1 +1,1 @@
-export * from "./PropertyBasedErrorTest";
+export * from "./PropertyBasedErrorTest.js";

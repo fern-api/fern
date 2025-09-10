@@ -18119,7 +18119,6 @@ docs: Endpoints relating to Contact objects
                                 "product": {
                                   "_object": "/product",
                                   "client_verified": true,
-                                  "country_of_origin": "China",
                                   "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
                                   "name": "AC Adapter 12V",
@@ -18262,7 +18261,6 @@ docs: Endpoints relating to Contact objects
                             "product": {
                               "_object": "/product",
                               "client_verified": true,
-                              "country_of_origin": "China",
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
@@ -18516,7 +18514,6 @@ service:
                           sku: WDVCDFD-RM00472
                           description: The best 12V AC Adapter on the market
                           product_category: Cosmetics
-                          country_of_origin: China
                           client_verified: true
     show:
       path: /ocean/shipment_containers/{id}
@@ -18599,7 +18596,6 @@ service:
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
                       product_category: Cosmetics
-                      country_of_origin: China
                       client_verified: true
   source:
     openapi: ../openapi.yml
@@ -22861,15 +22857,7 @@ docs: Endpoints relating to Ports objects
                           },
                         ],
                         "client_verified": true,
-                        "country_of_origin": "China",
                         "description": "The best 12V AC Adapter on the market",
-                        "hs_codes": [
-                          {
-                            "_object": "/hs_code",
-                            "code": "0301:00",
-                            "country_code": "US",
-                          },
-                        ],
                         "id": 84291,
                         "name": "AC Adapter 12V",
                         "product_category": "Cosmetics",
@@ -22977,15 +22965,7 @@ docs: Endpoints relating to Ports objects
                               },
                             ],
                             "client_verified": true,
-                            "country_of_origin": "China",
                             "description": "The best 12V AC Adapter on the market",
-                            "hs_codes": [
-                              {
-                                "_object": "/hs_code",
-                                "code": "0301:00",
-                                "country_code": "US",
-                              },
-                            ],
                             "id": 84291,
                             "name": "AC Adapter 12V",
                             "product_category": "Cosmetics",
@@ -23066,15 +23046,7 @@ docs: Endpoints relating to Ports objects
                           },
                         ],
                         "client_verified": true,
-                        "country_of_origin": "China",
                         "description": "The best 12V AC Adapter on the market",
-                        "hs_codes": [
-                          {
-                            "_object": "/hs_code",
-                            "code": "0301:00",
-                            "country_code": "US",
-                          },
-                        ],
                         "id": 84291,
                         "name": "AC Adapter 12V",
                         "product_category": "Cosmetics",
@@ -23141,15 +23113,7 @@ docs: Endpoints relating to Ports objects
                           },
                         ],
                         "client_verified": true,
-                        "country_of_origin": "China",
                         "description": "The best 12V AC Adapter on the market",
-                        "hs_codes": [
-                          {
-                            "_object": "/hs_code",
-                            "code": "0301:00",
-                            "country_code": "US",
-                          },
-                        ],
                         "id": 84291,
                         "name": "AC Adapter 12V",
                         "product_category": "Cosmetics",
@@ -23408,16 +23372,11 @@ service:
                     description: The best 12V AC Adapter on the market
                     archived_at: '2019-01-18T22:08:38Z'
                     product_category: Cosmetics
-                    country_of_origin: China
                     client_verified: true
                     product_properties:
                       - _object: /product/property
                         type: color
                         value: blue
-                    hs_codes:
-                      - _object: /hs_code
-                        code: '0301:00'
-                        country_code: US
                     classifications:
                       - _object: /product/classification
                         codes:
@@ -23497,16 +23456,11 @@ service:
                 description: The best 12V AC Adapter on the market
                 archived_at: '2019-01-18T22:08:38Z'
                 product_category: Cosmetics
-                country_of_origin: China
                 client_verified: true
                 product_properties:
                   - _object: /product/property
                     type: color
                     value: blue
-                hs_codes:
-                  - _object: /hs_code
-                    code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -23547,16 +23501,11 @@ service:
                 description: The best 12V AC Adapter on the market
                 archived_at: '2019-01-18T22:08:38Z'
                 product_category: Cosmetics
-                country_of_origin: China
                 client_verified: true
                 product_properties:
                   - _object: /product/property
                     type: color
                     value: blue
-                hs_codes:
-                  - _object: /hs_code
-                    code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -23637,16 +23586,11 @@ service:
                 description: The best 12V AC Adapter on the market
                 archived_at: '2019-01-18T22:08:38Z'
                 product_category: Cosmetics
-                country_of_origin: China
                 client_verified: true
                 product_properties:
                   - _object: /product/property
                     type: color
                     value: blue
-                hs_codes:
-                  - _object: /hs_code
-                    code: '0301:00'
-                    country_code: US
                 classifications:
                   - _object: /product/classification
                     codes:
@@ -26477,7 +26421,6 @@ docs: >-
                                 "product": {
                                   "_object": "/product",
                                   "client_verified": true,
-                                  "country_of_origin": "China",
                                   "description": "The best 12V AC Adapter on the market",
                                   "id": 84291,
                                   "name": "AC Adapter 12V",
@@ -26993,7 +26936,6 @@ docs: >-
                             "product": {
                               "_object": "/product",
                               "client_verified": true,
-                              "country_of_origin": "China",
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
@@ -27309,7 +27251,6 @@ docs: >-
                             "product": {
                               "_object": "/product",
                               "client_verified": true,
-                              "country_of_origin": "China",
                               "description": "The best 12V AC Adapter on the market",
                               "id": 84291,
                               "name": "AC Adapter 12V",
@@ -28043,7 +27984,6 @@ service:
                           sku: WDVCDFD-RM00472
                           description: The best 12V AC Adapter on the market
                           product_category: Cosmetics
-                          country_of_origin: China
                           client_verified: true
                     legs:
                       _object: /api/refs/collection
@@ -28287,7 +28227,6 @@ service:
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
                       product_category: Cosmetics
-                      country_of_origin: China
                       client_verified: true
                 legs:
                   _object: /api/refs/collection
@@ -28551,7 +28490,6 @@ service:
                       sku: WDVCDFD-RM00472
                       description: The best 12V AC Adapter on the market
                       product_category: Cosmetics
-                      country_of_origin: China
                       client_verified: true
                 legs:
                   _object: /api/refs/collection

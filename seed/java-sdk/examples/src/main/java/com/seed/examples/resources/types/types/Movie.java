@@ -189,6 +189,9 @@ public final class Movie implements IMovie {
     }
 
     public interface RatingStage {
+        /**
+         * <p>The rating scale is one to five stars</p>
+         */
         TagStage rating(double rating);
     }
 
@@ -280,6 +283,7 @@ public final class Movie implements IMovie {
         }
 
         /**
+         * <p>The rating scale is one to five stars</p>
          * <p>The rating scale is one to five stars</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

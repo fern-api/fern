@@ -1,2 +1,2 @@
-export * as common from "./common";
-export * from "./common/types";
+export * as common from "./common/index.js";
+export * from "./common/types/index.js";

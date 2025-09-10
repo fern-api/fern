@@ -62,6 +62,7 @@ class String2UnionWithDuplicatePrimitive(UniversalBaseModel):
 
 """
 from seed.types import Integer1UnionWithDuplicatePrimitive
+
 Integer1UnionWithDuplicatePrimitive(value=9)
 """
 UnionWithDuplicatePrimitive = typing.Union[

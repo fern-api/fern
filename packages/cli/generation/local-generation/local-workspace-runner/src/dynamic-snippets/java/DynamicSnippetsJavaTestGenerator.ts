@@ -1,13 +1,11 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
-
 import { Style } from "@fern-api/browser-compatible-base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -37,16 +35,17 @@ export class DynamicSnippetsJavaTestGenerator {
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
         for (const [idx, request] of requests.entries()) {
             try {
-                const response = await this.dynamicSnippetsGenerator.generate(
-                    convertDynamicEndpointSnippetRequest(request),
-                    {
-                        config: {
-                            fullStyleClassName: `Example${idx}`,
-                            fullStylePackageName: "com.snippets"
-                        } as Config,
-                        style: Style.Full
-                    }
-                );
+                const convertedRequest = convertDynamicEndpointSnippetRequest(request);
+                if (convertedRequest == null) {
+                    continue;
+                }
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
+                    config: {
+                        fullStyleClassName: `Example${idx}`,
+                        fullStylePackageName: "com.snippets"
+                    } as Config,
+                    style: Style.Full
+                });
                 const dynamicSnippetFilePath = this.getTestFilePath({ absolutePathToOutputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);

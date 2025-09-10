@@ -11,14 +11,16 @@
             "type": {
               "type": "id",
               "value": "IbanField"
-            }
+            },
+            "displayName": "IbanField"
           },
           {
             "typeName": "OtherField",
             "type": {
               "type": "id",
               "value": "OtherField"
-            }
+            },
+            "displayName": "OtherField"
           }
         ]
       }
@@ -34,7 +36,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -58,7 +60,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "Other"

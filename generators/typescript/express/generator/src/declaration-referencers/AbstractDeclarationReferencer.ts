@@ -1,12 +1,11 @@
+import { assertNever } from "@fern-api/core-utils";
 import {
     ExportedDirectory,
     ExportedFilePath,
-    Reference,
     getDirectReferenceToExport,
-    getReferenceToExportFromRoot
+    getReferenceToExportFromRoot,
+    Reference
 } from "@fern-typescript/commons";
-
-import { assertNever } from "@fern-api/core-utils";
 
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
@@ -38,6 +37,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
         {
             name,
             importsManager,
+            exportsManager,
             referencedIn,
             subImport,
             importStrategy
@@ -50,6 +50,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
                     importsManager,
+                    exportsManager,
                     referencedIn,
                     subImport
                 });
@@ -59,6 +60,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     referencedIn,
                     importsManager,
+                    exportsManager,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport

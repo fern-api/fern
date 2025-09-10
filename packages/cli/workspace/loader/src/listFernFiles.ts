@@ -1,6 +1,5 @@
+import { AbsoluteFilePath, listFiles, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils";
 
 import { FernFile } from "./types/FernFile";
 

@@ -41,6 +41,17 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
+    public interface UrlFormEncodedGetters extends RequestBodyGetter {
+
+        List<EnrichedObjectProperty> properties();
+
+        static ImmutableUrlFormEncodedGetters.Builder builder() {
+            return ImmutableUrlFormEncodedGetters.builder();
+        }
+    }
+
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
     public interface ReferencedRequestBodyGetter extends RequestBodyGetter {
 
         MethodSpec requestBodyGetter();

@@ -28,7 +28,12 @@ GET request with basic auth scheme
 
 ```python
 from seed import SeedBasicAuthEnvironmentVariables
-client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedBasicAuthEnvironmentVariables(
+    username="YOUR_USERNAME",
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.basic_auth.get_with_basic_auth()
 
 ```
@@ -85,9 +90,15 @@ POST request with basic auth scheme
 
 ```python
 from seed import SeedBasicAuthEnvironmentVariables
-client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-, )
+
+client = SeedBasicAuthEnvironmentVariables(
+    username="YOUR_USERNAME",
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.basic_auth.post_with_basic_auth(
+    request={"key": "value"},
+)
 
 ```
 </dd>

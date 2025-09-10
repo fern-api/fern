@@ -1,13 +1,11 @@
-import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
-import tmp from "tmp-promise";
-import { Project } from "ts-morph";
-import urlJoin from "url-join";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
+import decompress from "decompress";
+import { cp, readdir, rm } from "fs/promises";
+import tmp from "tmp-promise";
+import urlJoin from "url-join";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
@@ -15,9 +13,10 @@ export declare namespace PersistedTypescriptProject {
         srcDirectory: RelativeFilePath;
         distDirectory: RelativeFilePath;
         testDirectory: RelativeFilePath;
-        yarnBuildCommand: string[];
-        yarnFormatCommand: string[];
+        buildCommand: string[];
+        formatCommand: string[];
         runScripts: boolean;
+        packageManager: "pnpm" | "yarn";
     }
 }
 
@@ -25,9 +24,10 @@ export class PersistedTypescriptProject {
     private directory: AbsoluteFilePath;
     private srcDirectory: RelativeFilePath;
     private distDirectory: RelativeFilePath;
+    private packageManager: "pnpm" | "yarn";
     private testDirectory: RelativeFilePath;
-    private yarnBuildCommand: string[];
-    private yarnFormatCommand: string[];
+    private buildCommand: string[];
+    private formatCommand: string[];
 
     private hasInstalled = false;
     private hasFormatted = false;
@@ -40,17 +40,19 @@ export class PersistedTypescriptProject {
         srcDirectory,
         distDirectory,
         testDirectory,
-        yarnBuildCommand,
-        yarnFormatCommand,
-        runScripts
+        buildCommand,
+        formatCommand,
+        runScripts,
+        packageManager
     }: PersistedTypescriptProject.Init) {
         this.directory = directory;
         this.srcDirectory = srcDirectory;
         this.distDirectory = distDirectory;
         this.testDirectory = testDirectory;
-        this.yarnBuildCommand = yarnBuildCommand;
-        this.yarnFormatCommand = yarnFormatCommand;
+        this.buildCommand = buildCommand;
+        this.formatCommand = formatCommand;
         this.runScripts = runScripts;
+        this.packageManager = packageManager;
     }
 
     public getSrcDirectory(): AbsoluteFilePath {
@@ -70,16 +72,24 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
 
-        await yarn(["install"], {
-            env: {
-                // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-            }
+        await pm(["install"], {
+            env:
+                this.packageManager === "yarn"
+                    ? {
+                          // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                      }
+                    : this.packageManager === "pnpm"
+                      ? {
+                            // allow modifying pnpm-lock.yaml, even when in CI
+                            PNPM_FROZEN_LOCKFILE: "false"
+                        }
+                      : undefined
         });
 
         this.hasInstalled = true;
@@ -96,11 +106,11 @@ export class PersistedTypescriptProject {
 
         await this.installDependencies(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnFormatCommand);
+        await pm(this.formatCommand);
 
         this.hasFormatted = true;
     }
@@ -116,30 +126,38 @@ export class PersistedTypescriptProject {
 
         await this.format(logger);
 
-        const yarn = createLoggingExecutable("yarn", {
+        const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
-        await yarn(this.yarnBuildCommand);
+        await pm(this.buildCommand);
 
         this.hasBuilt = true;
     }
 
-    public async copyProjectAsZipTo({
-        destinationZip,
+    public async copyProjectTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(this.directory, { logger, destinationZip });
+        await this.zipDirectoryContents(this.directory, { logger, destinationPath, zipFilename, unzipOutput });
     }
 
-    public async npmPackAsZipTo({
-        destinationZip,
+    public async npmPackTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.build(logger);
@@ -166,34 +184,62 @@ export class PersistedTypescriptProject {
         });
 
         // zip decompressed pack into destination
-        await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationZip });
+        await this.zipDirectoryContents(directoryOfDecompressedPack, {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
-    public async copySrcAsZipTo({
-        destinationZip,
+    public async copySrcTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.format(logger);
-        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationZip });
+        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
-    public async copyDistAsZipTo({
-        destinationZip,
+    public async copyDistTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.build(logger);
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationZip });
+        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
     private async zipDirectoryContents(
         directoryToZip: AbsoluteFilePath,
-        { destinationZip, logger }: { destinationZip: AbsoluteFilePath; logger: Logger }
+        {
+            destinationPath,
+            zipFilename,
+            logger,
+            unzipOutput
+        }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
     ) {
         const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
@@ -201,10 +247,20 @@ export class PersistedTypescriptProject {
             // zip is noisy
             doNotPipeOutput: true
         });
+        const destinationZip = join(destinationPath, RelativeFilePath.of(zipFilename));
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
         await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
         await cp(tmpZipLocation, destinationZip);
+
+        if (unzipOutput) {
+            // Unzip the file in the destination directory
+            await decompress(destinationZip, destinationPath, {
+                strip: 0
+            });
+            // Clean up (remove) the zip file after successful decompression
+            await rm(destinationZip);
+        }
     }
 
     public async publish({

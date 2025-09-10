@@ -11,6 +11,7 @@ import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.core.SeedFileUploadApiException;
 import com.seed.fileUpload.core.SeedFileUploadException;
 import com.seed.fileUpload.core.SeedFileUploadHttpResponse;
+import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
@@ -69,11 +70,11 @@ public class AsyncRawServiceClient {
             body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             String fileListMimeType = Files.probeContentType(fileList.toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
+                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType =
                         Files.probeContentType(maybeFile.get().toPath());
@@ -82,7 +83,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file",
                         maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
             }
             if (maybeFileList.isPresent()) {
                 String maybeFileListMimeType =
@@ -92,7 +93,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file_list",
                         maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(
@@ -207,7 +208,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -264,24 +265,24 @@ public class AsyncRawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "maybeString", request.getMaybeString().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "integer", request.getInteger(), false);
         if (request.getMaybeInteger().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), false);
+                    httpUrl, "maybeInteger", request.getMaybeInteger().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), true);
         if (request.getOptionalListOfStrings().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get().toString(),
-                    false);
+                    request.getOptionalListOfStrings().get(),
+                    true);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -339,7 +340,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
             body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
@@ -405,7 +406,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
             QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
         } catch (Exception e) {
@@ -474,11 +475,11 @@ public class AsyncRawServiceClient {
             QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             String fileListMimeType = Files.probeContentType(fileList.toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
+                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType =
                         Files.probeContentType(maybeFile.get().toPath());
@@ -487,7 +488,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file",
                         maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
             }
             if (maybeFileList.isPresent()) {
                 String maybeFileListMimeType =
@@ -497,7 +498,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file_list",
                         maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
@@ -598,7 +599,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "image_file",
                         imageFile.get().getName(),
-                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+                        RequestBody.create(imageFile.get(), imageFileMimeTypeMediaType));
             }
             if (request.getRequest().isPresent()) {
                 body.addFormDataPart(
@@ -627,6 +628,114 @@ public class AsyncRawServiceClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedFileUploadHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedFileUploadApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedFileUploadException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedFileUploadException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedFileUploadHttpResponse<String>> withInlineType(File file, InlineTypeRequest request) {
+        return withInlineType(file, request, null);
+    }
+
+    public CompletableFuture<SeedFileUploadHttpResponse<String>> withInlineType(
+            File file, InlineTypeRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("inline-type")
+                .build();
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+            body.addFormDataPart("request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedFileUploadHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedFileUploadApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedFileUploadException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedFileUploadException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedFileUploadHttpResponse<Void>> simple() {
+        return simple(null);
+    }
+
+    public CompletableFuture<SeedFileUploadHttpResponse<Void>> simple(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("snippet")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedFileUploadHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";

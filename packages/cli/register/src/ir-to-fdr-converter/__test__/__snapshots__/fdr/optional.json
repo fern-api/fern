@@ -50,6 +50,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -62,6 +63,7 @@
             },
             "description": "Id of the created resource"
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

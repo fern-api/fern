@@ -1,3 +1,3 @@
-export { BasicAuth } from "./BasicAuth";
-export { BearerToken } from "./BearerToken";
-export { OAuthTokenProvider } from "./OAuthTokenProvider";
+export { BasicAuth } from "./BasicAuth.js";
+export { BearerToken } from "./BearerToken.js";
+export { OAuthTokenProvider } from "./OAuthTokenProvider.js";

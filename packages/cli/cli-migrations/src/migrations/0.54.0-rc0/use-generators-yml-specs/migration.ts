@@ -1,19 +1,18 @@
-import chalk from "chalk";
-import { readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import YAML from "yaml";
-
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration-loader";
 import {
     AbsoluteFilePath,
     Directory,
-    File,
-    RelativeFilePath,
     doesPathExist,
+    File,
     getDirectoryContents,
-    join
+    join,
+    RelativeFilePath
 } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
+import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration";
 

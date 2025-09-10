@@ -1,9 +1,8 @@
-import path from "path";
-
 import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { keys } from "@fern-api/core-utils";
-import { RelativeFilePath, dirname, join, relative } from "@fern-api/fs-utils";
+import { dirname, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import path from "path";
 
 import { Rule, RuleViolation } from "../../Rule";
 

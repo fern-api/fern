@@ -3,6 +3,6 @@
  */
 
 export interface PatchProxyRequest {
-    application?: string;
-    requireAuth?: boolean;
+    application: string | null;
+    requireAuth: boolean | null;
 }

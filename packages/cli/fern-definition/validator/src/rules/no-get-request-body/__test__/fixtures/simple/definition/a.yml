@@ -29,3 +29,7 @@ service:
       request:
         query-parameters:
           limit: optional<string>
+    qux:
+      path: ""
+      method: HEAD
+      request: boolean

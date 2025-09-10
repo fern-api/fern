@@ -1,15 +1,13 @@
+import { entries } from "@fern-api/core-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import {
     ExportDeclaration,
     ExportedDirectory,
-    PackageId,
-    getExportedDirectoriesForFernFilepath
+    getExportedDirectoriesForFernFilepath,
+    PackageId
 } from "@fern-typescript/commons";
 import { PackageResolver } from "@fern-typescript/resolvers";
-
-import { entries } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 

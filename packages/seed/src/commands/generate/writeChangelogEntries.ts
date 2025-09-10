@@ -1,9 +1,7 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generators";
 import { writeFile } from "fs/promises";
 import moment from "moment";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-
-import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generators";
 
 export function writeChangelogEntries(version: string, entries: ChangelogEntry[] | undefined): string {
     // ## 0.0.1
@@ -95,9 +93,12 @@ function writeAsBullet(entry: string): string {
     return `- ${entry}`;
 }
 
-export async function writeChangelogsToFile(outputPath: AbsoluteFilePath, changelogs: Map<Date, Map<string, string>>) {
+export async function writeChangelogsToFile(
+    outputPath: AbsoluteFilePath,
+    changelogs: Map<string, Map<string, string>>
+) {
     for (const [releaseDate, versions] of changelogs.entries()) {
-        const changelogPath = join(outputPath, RelativeFilePath.of(`${moment(releaseDate).format("YYYY-MM-DD")}.mdx`));
+        const changelogPath = join(outputPath, RelativeFilePath.of(`${releaseDate}.mdx`));
 
         let changelogContent = "";
         for (const [_, changelog] of versions.entries()) {

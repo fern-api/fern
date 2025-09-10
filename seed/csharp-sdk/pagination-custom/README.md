@@ -3,13 +3,21 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedPagination)](https://nuget.org/packages/SeedPagination)
 
-The Seed C# library provides convenient access to the Seed API from C#.
+The Seed C# library provides convenient access to the Seed APIs from C#.
+
+## Requirements
+
+This SDK requires:
 
 ## Installation
 
 ```sh
 dotnet add package SeedPagination
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -19,11 +27,11 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Users.ListUsernamesCustomAsync(
+var items = await client.Users.ListUsernamesCustomAsync(
     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }
@@ -53,11 +61,11 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Users.ListUsernamesCustomAsync(
+var items = await client.Users.ListUsernamesCustomAsync(
     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }

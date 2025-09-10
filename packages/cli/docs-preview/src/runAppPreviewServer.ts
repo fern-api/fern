@@ -1,19 +1,16 @@
+import { wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { runExeca } from "@fern-api/logging-execa";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
-import { spawn } from "child_process";
-// import { loggingExeca } from "@fern-api/logging-execa";
 import cors from "cors";
 import express from "express";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
-import { type WebSocket, WebSocketServer } from "ws";
-
-import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
-// import { WebSocket } from "ws"
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { WebSocket, WebSocketServer } from "ws";
 
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
@@ -47,11 +44,6 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         css: undefined,
         js: undefined
     },
-    search: {
-        type: "legacyMultiAlgoliaIndex",
-        algoliaIndex: undefined
-    },
-    algoliaSearchIndex: undefined,
     jsFiles: undefined,
     id: undefined
 };
@@ -62,7 +54,8 @@ export async function runAppPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath
+    bundlePath,
+    backendPort
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -70,51 +63,77 @@ export async function runAppPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
+    backendPort: number;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
         try {
-            const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+            const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
                 throw new Error(
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, app: true });
+            await downloadBundle({
+                bucketUrl: url,
+                logger: context.logger,
+                preferCached: true,
+                app: true,
+                tryTar: true
+            });
         } catch (err) {
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+                context.logger.error("Failed to unzip .tar.gz bundle. Please report to support@buildwithfern.com");
             }
-            if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
-                context.logger.warn("Falling back to cached bundle...");
-            } else {
-                context.logger.warn("Please reach out to support@buildwithfern.com.");
-                return;
+
+            context.logger.debug("Falling back to .zip bundle");
+            try {
+                const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+                if (url == null) {
+                    throw new Error(
+                        "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
+                    );
+                }
+                await downloadBundle({
+                    bucketUrl: url,
+                    logger: context.logger,
+                    preferCached: true,
+                    app: true,
+                    tryTar: false
+                });
+            } catch (err) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                    context.logger.warn("Falling back to cached bundle...");
+                } else {
+                    context.logger.warn("Please reach out to support@buildwithfern.com.");
+                    return;
+                }
             }
         }
     }
 
     const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
-    const backendPort = port + 1;
 
     const env = {
         ...process.env,
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
         NEXT_DISABLE_CACHE: "1",
-        NODE_ENV: "development",
-        NODE_PATH: bundleRoot
+        NODE_ENV: "production",
+        NODE_PATH: bundleRoot,
+        NODE_OPTIONS: "--max-old-space-size=2048 --enable-source-maps"
     };
 
-    const serverProcess = spawn("node", [serverPath], {
+    const serverProcess = runExeca(context.logger, "node", [serverPath], {
         env,
-        detached: true,
-        stdio: ["ignore", "pipe", "pipe"]
+        doNotPipeOutput: true
     });
 
     serverProcess.stdout?.on("data", (data) => {
@@ -128,13 +147,15 @@ export async function runAppPreviewServer({
 
     context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     serverProcess.on("error", (err) => {
-        context.logger.error(`Server process error: ${err.message}`);
+        context.logger.debug(`Server process error: ${err.message}`);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     serverProcess.on("exit", (code, signal) => {
         if (code) {
-            context.logger.error(`Server process exited with code: ${code}`);
+            context.logger.debug(`Server process exited with code: ${code}`);
         } else if (signal) {
             context.logger.debug(`Server process killed with signal: ${signal}`);
         } else {
@@ -143,20 +164,72 @@ export async function runAppPreviewServer({
     });
 
     const cleanup = () => {
-        if (serverProcess.pid) {
+        if (!serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
-                process.kill(-serverProcess.pid, "SIGTERM");
+                // First try graceful shutdown
+                serverProcess.kill();
+
+                // If process doesn't exit within 2 seconds, force kill
+                setTimeout(() => {
+                    if (!serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
             } catch (err) {
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
+
+        context.logger.debug("Cleaning up WebSocket connections...");
+        for (const [ws, metadata] of connections) {
+            clearInterval(metadata.pingInterval);
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close(1000, "Server shutting down");
+            }
+        }
+        connections.clear();
+        httpServer.close();
     };
 
-    // clean up process
-    process.on("SIGINT", cleanup);
-    process.on("SIGTERM", cleanup);
+    // handle termination signals
+    const shutdownSignals = ["SIGTERM", "SIGINT"];
+    const failureSignals = ["SIGHUP"];
+    for (const shutSig of shutdownSignals) {
+        process.on(shutSig, () => {
+            context.logger.debug("Shutting down server...");
+            cleanup();
+        });
+    }
+    for (const failSig of failureSignals) {
+        process.on(failSig, () => {
+            context.logger.debug("Server failed, shutting down process...");
+            cleanup();
+        });
+    }
+
+    // handle normal exit
     process.on("exit", cleanup);
+
+    // handle uncaught exits
+    process.on("uncaughtException", (err) => {
+        context.logger.debug(`Uncaught exception: ${err}`);
+        cleanup();
+        process.exit(1);
+    });
+    process.on("unhandledRejection", (reason) => {
+        context.logger.debug(`Unhandled rejection: ${reason}`);
+        cleanup();
+        process.exit(1);
+    });
+
+    // Ensure cleanup runs before process exits
+    process.on("beforeExit", cleanup);
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
     context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
@@ -165,21 +238,106 @@ export async function runAppPreviewServer({
 
     const app = express();
     const httpServer = http.createServer(app);
-    const wss = new WebSocketServer({ server: httpServer });
+    const wss = new WebSocketServer({
+        server: httpServer,
+        clientTracking: true,
+        perMessageDeflate: false
+    });
 
-    const connections = new Set<WebSocket>();
-    function sendData(data: unknown) {
-        for (const connection of connections) {
-            connection.send(JSON.stringify(data));
+    const connections = new Map<
+        WebSocket,
+        {
+            id: string;
+            pingInterval: NodeJS.Timeout;
+            isAlive: boolean;
+            lastPong: number;
         }
+    >();
+
+    function sendData(data: unknown) {
+        const message = JSON.stringify(data);
+        const deadConnections: WebSocket[] = [];
+
+        for (const [connection, metadata] of connections) {
+            if (connection.readyState === WebSocket.OPEN) {
+                try {
+                    connection.send(message);
+                } catch (error) {
+                    context.logger.debug(`Failed to send message to connection ${metadata.id}: ${error}`);
+                    deadConnections.push(connection);
+                }
+            } else {
+                deadConnections.push(connection);
+            }
+        }
+
+        deadConnections.forEach((conn) => {
+            const metadata = connections.get(conn);
+            if (metadata) {
+                clearInterval(metadata.pingInterval);
+                connections.delete(conn);
+            }
+        });
     }
 
-    wss.on("connection", function connection(ws) {
-        connections.add(ws);
+    wss.on("connection", function connection(ws, req) {
+        const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`;
 
-        ws.on("close", function close() {
+        const metadata = {
+            id: connectionId,
+            isAlive: true,
+            lastPong: Date.now(),
+            pingInterval: setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    // check if we received a pong recently
+                    const now = Date.now();
+                    if (now - metadata.lastPong > 90000) {
+                        // 90 seconds timeout
+                        context.logger.debug(`Connection ${connectionId} timed out, closing`);
+                        ws.terminate();
+                        return;
+                    }
+
+                    metadata.isAlive = false;
+                    try {
+                        ws.send(JSON.stringify({ type: "ping", timestamp: now }));
+                    } catch (error) {
+                        context.logger.debug(`Failed to send ping to ${connectionId}: ${error}`);
+                        ws.terminate();
+                    }
+                }
+            }, 30000) // ping every 30 seconds
+        };
+
+        connections.set(ws, metadata);
+
+        ws.on("message", function message(data) {
+            try {
+                const parsed = JSON.parse(data.toString());
+                if (parsed.type === "pong") {
+                    metadata.isAlive = true;
+                    metadata.lastPong = Date.now();
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`);
+            }
+        });
+
+        ws.on("error", function error(err) {
+            context.logger.debug(`WebSocket error for connection ${connectionId}: ${err.message}`);
+        });
+
+        ws.on("close", function close(code, reason) {
+            clearInterval(metadata.pingInterval);
             connections.delete(ws);
         });
+
+        // Send initial connection confirmation
+        try {
+            ws.send(JSON.stringify({ type: "connected", connectionId }));
+        } catch (error) {
+            context.logger.debug(`Failed to send connection confirmation: ${error}`);
+        }
     });
 
     app.use(cors());
@@ -304,20 +462,14 @@ export async function runAppPreviewServer({
         return res.sendFile(`/${req.params[0]}`);
     });
 
-    app.get("/", (req, _res, next) => {
-        if (req.headers.upgrade === "websocket") {
-            return wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
-                wss.emit("connection", ws, req);
-            });
-        }
-        return next();
+    httpServer.listen(backendPort, () => {
+        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+        context.logger.info(`Development server ready on http://localhost:${port}`);
     });
-
-    app.listen(backendPort);
-
-    context.logger.debug(`Running server on http://localhost:${backendPort}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    await new Promise(() => {});
+    await new Promise(() => {
+        // intentionally empty
+    });
 }

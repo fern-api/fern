@@ -1308,8 +1308,26 @@
         ]
       }
     },
-    "V1AudioStreamPostParametersSchema": {
-      "name": "V1AudioStreamPostParametersSchema",
+    "audio_ExperimentalStreamCreate_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_ExperimentalStreamCreate_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "audio_GetSpeech_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_GetSpeech_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "V1AudioStreamPostParametersAccept": {
+      "name": "V1AudioStreamPostParametersAccept",
       "shape": {
         "type": "enum",
         "values": [
@@ -1324,11 +1342,93 @@
           }
         ]
       }
+    },
+    "audio_GetStream_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_GetStream_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "auth_CreateAccessToken_Response_200": {
+      "description": "Empty response body",
+      "name": "auth_CreateAccessToken_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_ListAPIKeys_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_ListAPIKeys_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_CreateAPIKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_CreateAPIKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_DeleteAPIKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_DeleteAPIKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_UpdateApiKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_UpdateApiKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_GetVoices_Response_200": {
+      "description": "Empty response body",
+      "name": "voices_GetVoices_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_CreateVoice_Response_200": {
+      "description": "Empty response body",
+      "name": "voices_CreateVoice_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_DeleteVoice_Response_204": {
+      "description": "Empty response body",
+      "name": "voices_DeleteVoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
-    "audio": {
-      "subpackageId": "audio",
+    "subpackage_audio": {
+      "subpackageId": "subpackage_audio",
+      "displayName": "audio",
       "name": "audio",
       "endpoints": [
         {
@@ -1343,7 +1443,7 @@
             }
           ],
           "id": "ExperimentalStreamCreate",
-          "originalEndpointId": "audio.ExperimentalStreamCreate",
+          "originalEndpointId": "endpoint_audio.ExperimentalStreamCreate",
           "name": "Experimental Stream Create",
           "path": {
             "pathParameters": [],
@@ -1373,27 +1473,123 @@
               }
             }
           },
-          "errorsV2": [],
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ExperimentalStreamRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_ExperimentalStreamCreate_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_ExperimentalStreamCreate_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/experimental/audio/stream",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1412,7 +1608,7 @@
             }
           ],
           "id": "GetSpeech",
-          "originalEndpointId": "audio.GetSpeech",
+          "originalEndpointId": "endpoint_audio.GetSpeech",
           "name": "Get Speech",
           "path": {
             "pathParameters": [],
@@ -1442,27 +1638,123 @@
               }
             }
           },
-          "errorsV2": [],
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GetSpeechRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_GetSpeech_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetSpeech_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/audio/speech",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1481,7 +1773,7 @@
             }
           ],
           "id": "GetStream",
-          "originalEndpointId": "audio.GetStream",
+          "originalEndpointId": "endpoint_audio.GetStream",
           "name": "Get Stream",
           "path": {
             "pathParameters": [],
@@ -1502,7 +1794,7 @@
               "key": "Accept",
               "type": {
                 "type": "id",
-                "value": "V1AudioStreamPostParametersSchema"
+                "value": "V1AudioStreamPostParametersAccept"
               }
             }
           ],
@@ -1519,10 +1811,101 @@
               }
             }
           },
-          "errorsV2": [],
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GetStreamRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_GetStream_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetStream_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/audio/stream",
               "pathParameters": {},
@@ -1531,17 +1914,22 @@
                 "Accept": "audio/mpeg"
               },
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1554,8 +1942,9 @@
       "types": [],
       "subpackages": []
     },
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
+      "displayName": "auth",
       "name": "auth",
       "endpoints": [
         {
@@ -1570,7 +1959,7 @@
             }
           ],
           "id": "CreateAccessToken",
-          "originalEndpointId": "auth.CreateAccessToken",
+          "originalEndpointId": "endpoint_auth.CreateAccessToken",
           "name": "Create Access Token",
           "path": {
             "pathParameters": [],
@@ -1590,7 +1979,7 @@
           "request": {
             "type": {
               "type": "json",
-              "contentType": "application/json",
+              "contentType": "application/x-www-form-urlencoded",
               "shape": {
                 "type": "reference",
                 "value": {
@@ -1600,10 +1989,65 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAccessTokenRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAccessTokenRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth_CreateAccessToken_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Contains the details of the token which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_CreateAccessToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contains the details of the token which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/auth/token",
               "pathParameters": {},
@@ -1618,7 +2062,12 @@
                   "grant_type": "client_credentials"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1631,8 +2080,9 @@
       "types": [],
       "subpackages": []
     },
-    "apikey": {
-      "subpackageId": "apikey",
+    "subpackage_apikey": {
+      "subpackageId": "subpackage_apikey",
+      "displayName": "apikey",
       "name": "apikey",
       "endpoints": [
         {
@@ -1647,7 +2097,7 @@
             }
           ],
           "id": "ListAPIKeys",
-          "originalEndpointId": "apikey.ListAPIKeys",
+          "originalEndpointId": "endpoint_apikey.ListAPIKeys",
           "name": "List API Keys",
           "path": {
             "pathParameters": [],
@@ -1664,16 +2114,47 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_ListAPIKeys_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "An array of all API keys for the user for the given request"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_ListAPIKeys_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An array of all API keys for the user for the given request"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1692,7 +2173,7 @@
             }
           ],
           "id": "CreateAPIKey",
-          "originalEndpointId": "apikey.CreateAPIKey",
+          "originalEndpointId": "endpoint_apikey.CreateAPIKey",
           "name": "Create API Key",
           "path": {
             "pathParameters": [],
@@ -1709,16 +2190,47 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_CreateAPIKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_CreateAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1737,7 +2249,7 @@
             }
           ],
           "id": "DeleteAPIKey",
-          "originalEndpointId": "apikey.DeleteAPIKey",
+          "originalEndpointId": "endpoint_apikey.DeleteAPIKey",
           "name": "Delete API Key",
           "path": {
             "pathParameters": [
@@ -1773,18 +2285,49 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_DeleteAPIKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "API key deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_DeleteAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API key deleted successfully"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1803,7 +2346,7 @@
             }
           ],
           "id": "UpdateApiKey",
-          "originalEndpointId": "apikey.UpdateApiKey",
+          "originalEndpointId": "endpoint_apikey.UpdateApiKey",
           "name": "Update Api Key",
           "path": {
             "pathParameters": [
@@ -1854,21 +2397,72 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_UpdateApiKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_UpdateApiKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": "string",
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": "string"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1881,8 +2475,9 @@
       "types": [],
       "subpackages": []
     },
-    "voices": {
-      "subpackageId": "voices",
+    "subpackage_voices": {
+      "subpackageId": "subpackage_voices",
+      "displayName": "voices",
       "name": "voices",
       "endpoints": [
         {
@@ -1897,7 +2492,7 @@
             }
           ],
           "id": "GetVoices",
-          "originalEndpointId": "voices.GetVoices",
+          "originalEndpointId": "endpoint_voices.GetVoices",
           "name": "Get Voices",
           "path": {
             "pathParameters": [],
@@ -1914,16 +2509,72 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_GetVoices_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "A list of voices"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_GetVoices_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of voices"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "No voices found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1942,7 +2593,7 @@
             }
           ],
           "id": "CreateVoice",
-          "originalEndpointId": "voices.CreateVoice",
+          "originalEndpointId": "endpoint_voices.CreateVoice",
           "name": "Create Voice",
           "path": {
             "pathParameters": [],
@@ -2002,23 +2653,160 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
-          "errorsV2": [],
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "voices_CreateVoice_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Name of the personal voice",
+                        "exploded": false
+                      },
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "sample",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data",
+                          "description": "Audio sample file"
+                        }
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "consent",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "User consent information in JSON format: {\"fullName\": \"\", \"email\": \"\"}\nFor example, {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}\nThis should include the fullName and email of the consenting individual.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_CreateVoice_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "A created voice"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_CreateVoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A created voice"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Current billing plan does not have access to voice cloning",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "name": "string",
+                "sample": "string",
+                "consent": "string"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "name": {
+                    "type": "json",
+                    "value": "string"
+                  },
+                  "sample": {
+                    "type": "filename",
+                    "value": "string"
+                  },
+                  "consent": {
+                    "type": "json",
+                    "value": "string"
+                  }
+                }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2037,7 +2825,7 @@
             }
           ],
           "id": "DeleteVoice",
-          "originalEndpointId": "voices.DeleteVoice",
+          "originalEndpointId": "endpoint_voices.DeleteVoice",
           "name": "Delete Voice",
           "path": {
             "pathParameters": [
@@ -2073,18 +2861,86 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_DeleteVoice_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Voice deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_DeleteVoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Voice deleted successfully"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Missing or invalid voice ID",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Voice not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v1/voices/",
+              "path": "/v1/voices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2124,11 +2980,16 @@
       "SpeechMarks"
     ],
     "subpackages": [
-      "audio",
-      "auth",
-      "apikey",
-      "voices"
+      "subpackage_audio",
+      "subpackage_auth",
+      "subpackage_apikey",
+      "subpackage_voices"
     ]
+  },
+  "auth": {
+    "type": "header",
+    "headerWireValue": "Authorization",
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

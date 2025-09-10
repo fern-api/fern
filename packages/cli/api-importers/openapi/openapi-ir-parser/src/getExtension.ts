@@ -1,7 +1,6 @@
+import { Logger } from "@fern-api/logger";
 import { compact } from "lodash-es";
 import { z } from "zod";
-
-import { Logger } from "@fern-api/logger";
 
 import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
@@ -26,7 +25,7 @@ type Extension<T> =
 export function getExtension<T>(object: object, extension: Extension<T>): T | undefined {
     const extensions = Array.isArray(extension) ? extension : [extension];
     for (const extension of extensions) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const extensionValue = (object as any)[extension];
         if (extensionValue != null) {
             return extensionValue as T;

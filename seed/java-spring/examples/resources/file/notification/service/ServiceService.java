@@ -5,8 +5,10 @@
 package resources.file.notification.service;
 
 import core.BearerAuth;
+import java.lang.String;
 import java.security.Principal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.types.types.Exception;
@@ -19,5 +21,6 @@ public interface ServiceService {
       value = "",
       produces = "application/json"
   )
-  Exception getException(@RequestHeader("Authorization") BearerAuth auth, Principal principal);
+  Exception getException(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @PathVariable("notificationId") String notificationId);
 }

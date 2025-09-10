@@ -1,1 +1,1 @@
-export * from "./FolderCFoo";
+export * from "./FolderCFoo.js";

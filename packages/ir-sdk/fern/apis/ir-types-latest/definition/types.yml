@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
   proto: proto.yml
@@ -46,6 +45,7 @@ types:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      displayName: optional<commons.DisplayName>
 
   Type:
     discriminant:
@@ -187,6 +187,7 @@ types:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      displayName: optional<commons.DisplayName>
       default: optional<NamedTypeDefault>
       inline:
         type: optional<boolean>
@@ -381,6 +382,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       value: ExampleTypeReference
+      propertyAccess: optional<ObjectPropertyAccess>
       originalTypeDeclaration:
         docs: |
           This property may have been brought in via extension. originalTypeDeclaration

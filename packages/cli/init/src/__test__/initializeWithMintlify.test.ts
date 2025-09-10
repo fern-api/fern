@@ -1,8 +1,7 @@
-import { vi } from "vitest";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { runMintlifyMigration } from "@fern-api/mintlify-importer";
+import { vi } from "vitest";
 
 import { initializeWithMintlify } from "../initializeWithMintlify";
 

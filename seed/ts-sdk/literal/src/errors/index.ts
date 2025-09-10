@@ -1,2 +1,2 @@
-export { SeedLiteralError } from "./SeedLiteralError";
-export { SeedLiteralTimeoutError } from "./SeedLiteralTimeoutError";
+export { SeedLiteralError } from "./SeedLiteralError.js";
+export { SeedLiteralTimeoutError } from "./SeedLiteralTimeoutError.js";

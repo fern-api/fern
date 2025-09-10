@@ -1,35 +1,36 @@
 /**
- * An enum representing different access levels, similar to Swift's access control levels.
- * This enum can be used to define and check access permissions for various parts of a TypeScript application.
+ * Swift access levels for controlling code visibility and accessibility.
  */
-export enum AccessLevel {
+export const AccessLevel = {
     /**
-     * Open: Accessible and subclassable/overridable outside the module.
-     * This is the highest (most permissive) access level.
+     * Most permissive. Accessible from other modules, allows subclassing and overriding.
      */
-    Open = "open",
+    Open: "open",
 
     /**
-     * Public: Accessible outside the module but not subclassable/overridable.
-     * Suitable for exposing an API to be used by other modules.
+     * Accessible from other modules, but subclassing/overriding restricted to defining module.
      */
-    Public = "public",
+    Public: "public",
 
     /**
-     * Internal: Accessible within the same module.
-     * The default access level for most parts of a module’s internal implementation.
+     * Accessible within the same package.
      */
-    Internal = "internal",
+    Package: "package",
 
     /**
-     * Fileprivate: Accessible within the same file.
-     * Useful for encapsulating implementation details that are shared across multiple types within a file but should not be accessible from other files.
+     * Default access level. Accessible within the same module only.
      */
-    Fileprivate = "fileprivate",
+    Internal: "internal",
 
     /**
-     * Private: Accessible within the same enclosing declaration (class, struct, or extension) and their extensions within the same file.
-     * Used for tightly encapsulating implementation details.
+     * Accessible within the same source file only.
      */
-    Private = "private"
-}
+    Fileprivate: "fileprivate",
+
+    /**
+     * Most restrictive. Accessible within the enclosing declaration only.
+     */
+    Private: "private"
+} as const;
+
+export type AccessLevel = (typeof AccessLevel)[keyof typeof AccessLevel];

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nawait client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"query\" });\n"
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = await client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"query\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         }
     ]

@@ -6,4 +6,4 @@ RUN apk update && apk add --no-cache build-base ruby ruby-dev && gem install rub
 
 COPY generators/ruby/sdk/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs", "ruby-sdk"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "ruby-sdk"]

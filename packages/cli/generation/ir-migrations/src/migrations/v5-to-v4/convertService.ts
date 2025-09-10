@@ -1,5 +1,4 @@
 import { IrVersions } from "../../ir-versions";
-import { ErrorResolver } from "./ErrorResolver";
 import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
 import { convertExampleTypeReference } from "./convertExampleTypeReference";
 import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath";
@@ -11,6 +10,7 @@ import {
     convertNameToV2
 } from "./convertName";
 import { convertTypeReference } from "./convertTypeReference";
+import { ErrorResolver } from "./ErrorResolver";
 
 export function convertService({
     service,

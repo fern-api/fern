@@ -1,0 +1,390 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.test"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.test();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateTestSubmissionStatus"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.updateTestSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendTestSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateWorkspaceSubmissionStatus"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.updateWorkspaceSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendWorkspaceSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCase"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCase(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"testCaseId\", {\n    result: {\n        result: {\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            },\n            actualResult: {\n                type: \"value\",\n                value: {\n                    type: \"integerValue\",\n                    value: 1\n                }\n            },\n            passed: true\n        },\n        stdout: \"stdout\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"methodName\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }, {\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"stdout\"\n        }, {\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"methodName\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }, {\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"stdout\"\n        }]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCaseV2"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCaseV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"testCaseId\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {\n            filename: \"filename\",\n            directory: \"directory\"\n        },\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"methodName\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }, {\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"stdout\"\n    }, {\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {\n            filename: \"filename\",\n            directory: \"directory\"\n        },\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"methodName\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }, {\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"stdout\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspace"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspace(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    workspaceRunDetails: {\n        exceptionV2: {\n            type: \"generic\",\n            exceptionType: \"exceptionType\",\n            exceptionMessage: \"exceptionMessage\",\n            exceptionStacktrace: \"exceptionStacktrace\"\n        },\n        exception: {\n            exceptionType: \"exceptionType\",\n            exceptionMessage: \"exceptionMessage\",\n            exceptionStacktrace: \"exceptionStacktrace\"\n        },\n        stdout: \"stdout\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"methodName\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }, {\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"stdout\"\n        }, {\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"methodName\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }, {\n                            variables: {\n                                \"variables\": {\n                                    type: \"integerValue\",\n                                    value: 1\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"stdout\"\n        }]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspaceV2"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspaceV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {\n            filename: \"filename\",\n            directory: \"directory\"\n        },\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"methodName\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }, {\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"stdout\"\n    }, {\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {\n            filename: \"filename\",\n            directory: \"directory\"\n        },\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"methodName\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }, {\n                        variables: {\n                            \"variables\": {\n                                type: \"integerValue\",\n                                value: 1\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"stdout\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET",
+                "identifier_override": "endpoint_homepage.getHomepageProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.homepage.getHomepageProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST",
+                "identifier_override": "endpoint_homepage.setHomepageProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.homepage.setHomepageProblems([\"string\", \"string\"]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET",
+                "identifier_override": "endpoint_migration.getAttemptedMigrations"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.migration.getAttemptedMigrations({\n    adminKeyHeader: \"admin-key-header\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST",
+                "identifier_override": "endpoint_playlist.createPlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"name\",\n        problems: [\"problems\", \"problems\"]\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylists"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.getPlaylists(1, {\n    limit: 1,\n    otherField: \"otherField\",\n    multiLineDocs: \"multiLineDocs\",\n    optionalMultipleField: \"optionalMultipleField\",\n    multipleField: \"multipleField\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.getPlaylist(1, \"playlistId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.updatePlaylist(1, \"playlistId\", {\n    name: \"name\",\n    problems: [\"problems\", \"problems\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_playlist.deletePlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.deletePlaylist(1, \"playlist_id\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.createProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.createProblem({\n    problemName: \"problemName\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"boards\"\n            }, {\n                type: \"html\",\n                value: \"boards\"\n            }]\n    },\n    files: {\n        [\"JAVA\"]: {\n            solutionFile: {\n                filename: \"filename\",\n                contents: \"contents\"\n            },\n            readOnlyFiles: [{\n                    filename: \"filename\",\n                    contents: \"contents\"\n                }, {\n                    filename: \"filename\",\n                    contents: \"contents\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }, {\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"id\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }, {\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }, {\n            testCase: {\n                id: \"id\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }, {\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"methodName\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.updateProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.updateProblem(\"problemId\", {\n    problemName: \"problemName\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"boards\"\n            }, {\n                type: \"html\",\n                value: \"boards\"\n            }]\n    },\n    files: {\n        [\"JAVA\"]: {\n            solutionFile: {\n                filename: \"filename\",\n                contents: \"contents\"\n            },\n            readOnlyFiles: [{\n                    filename: \"filename\",\n                    contents: \"contents\"\n                }, {\n                    filename: \"filename\",\n                    contents: \"contents\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }, {\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"id\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }, {\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }, {\n            testCase: {\n                id: \"id\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }, {\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"methodName\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_problem.deleteProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.deleteProblem(\"problemId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.getDefaultStarterFiles"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }, {\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"name\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    methodName: \"methodName\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST",
+                "identifier_override": "endpoint_submission.createExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.createExecutionSession(\"JAVA\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.getExecutionSession(\"sessionId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_submission.stopExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.stopExecutionSession(\"sessionId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSessionsState"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.getExecutionSessionsState();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT",
+                "identifier_override": "endpoint_sysprop.setNumWarmInstances"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.setNumWarmInstances(\"JAVA\", 1);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET",
+                "identifier_override": "endpoint_sysprop.getNumWarmInstances"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.getNumWarmInstances();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getLightweightProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getLatestProblem(\"problemId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getProblemVersion(\"problemId\", 1);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getLightweightProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getProblems();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getLatestProblem(\"problemId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getProblemVersion(\"problemId\", 1);\n"
+            }
+        }
+    ],
+    "types": {}
+}

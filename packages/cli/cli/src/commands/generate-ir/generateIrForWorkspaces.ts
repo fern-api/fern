@@ -1,5 +1,3 @@
-import path from "path";
-
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
@@ -8,6 +6,7 @@ import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
@@ -22,7 +21,8 @@ export async function generateIrForWorkspaces({
     keywords,
     smartCasing,
     readme,
-    directFromOpenapi
+    directFromOpenapi,
+    disableExamples
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -34,6 +34,7 @@ export async function generateIrForWorkspaces({
     smartCasing: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     directFromOpenapi: boolean;
+    disableExamples: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -46,15 +47,15 @@ export async function generateIrForWorkspaces({
                     generationLanguage,
                     keywords,
                     smartCasing,
-                    disableExamples: false,
+                    disableExamples,
                     audiences,
                     version,
                     readme,
                     directFromOpenapi
                 });
 
-                const irOutputFilePath = path.resolve(irFilepath);
-                await streamObjectToFile(AbsoluteFilePath.of(irOutputFilePath), intermediateRepresentation);
+                const irOutputFilePath = AbsoluteFilePath.of(path.resolve(irFilepath));
+                await streamObjectToFile(irOutputFilePath, intermediateRepresentation, { pretty: true });
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })
@@ -86,7 +87,12 @@ async function getIntermediateRepresentation({
 }): Promise<unknown> {
     let intermediateRepresentation;
     if (directFromOpenapi && workspace instanceof OSSWorkspace) {
-        intermediateRepresentation = await workspace.getIntermediateRepresentation({ context });
+        intermediateRepresentation = await workspace.getIntermediateRepresentation({
+            context,
+            audiences,
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
     } else {
         const fernWorkspace = await workspace.toFernWorkspace({ context });
 

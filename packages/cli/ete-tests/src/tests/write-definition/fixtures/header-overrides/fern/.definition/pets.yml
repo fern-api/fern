@@ -8,7 +8,8 @@ service:
       auth: false
       display-name: Create a pet
       examples:
-        - {}
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
       method: POST
       path: /pets
       source:
@@ -17,7 +18,9 @@ service:
       auth: false
       display-name: List all pets
       examples:
-        - response:
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
+          response:
             body:
               - id: 1000000
                 name: name
@@ -42,7 +45,9 @@ service:
       auth: false
       display-name: Info for a specific pet
       examples:
-        - path-parameters:
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
+          path-parameters:
             petId: petId
           response:
             body:

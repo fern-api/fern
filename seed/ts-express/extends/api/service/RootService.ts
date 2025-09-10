@@ -56,7 +56,9 @@ export class RootService {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedExtendsError) {
                         console.warn(

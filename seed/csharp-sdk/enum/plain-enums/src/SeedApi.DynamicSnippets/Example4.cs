@@ -12,11 +12,9 @@ public class Example4
             }
         );
 
-        await client.QueryParam.SendAsync(
-            new SendEnumAsQueryParamRequest{
-                Operand = Operand.GreaterThan,
-                OperandOrColor = Color.Red
-            }
+        await client.PathParam.SendAsync(
+            Operand.GreaterThan,
+            Color.Red
         );
     }
 

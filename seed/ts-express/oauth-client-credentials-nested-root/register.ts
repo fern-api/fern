@@ -3,15 +3,28 @@
  */
 
 import express from "express";
+import { SimpleService } from "./api/resources/simple/service/SimpleService";
 import { AuthService as auth_RootService } from "./api/resources/auth/service/AuthService";
+import { ApiService as nestedNoAuth_ApiService } from "./api/resources/nestedNoAuth/resources/api/service/ApiService";
+import { ApiService as nested_ApiService } from "./api/resources/nested/resources/api/service/ApiService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
+        simple: SimpleService;
         auth: {
             _root: auth_RootService;
+        };
+        nestedNoAuth: {
+            api: nestedNoAuth_ApiService;
+        };
+        nested: {
+            api: nested_ApiService;
         };
     },
 ): void {
     (expressApp as any).use("/", services.auth._root.toRouter());
+    (expressApp as any).use("/nested-no-auth", services.nestedNoAuth.api.toRouter());
+    (expressApp as any).use("/nested", services.nested.api.toRouter());
+    (expressApp as any).use("/", services.simple.toRouter());
 }

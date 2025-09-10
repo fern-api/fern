@@ -408,7 +408,8 @@ export class TypeLiteral extends AstNode {
         value
     }: {
         writer: Writer;
-        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow
+        value: any[];
     }): void {
         if (value.length === 0) {
             writer.write("[]");

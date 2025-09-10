@@ -3,8 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
-import { go } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -106,9 +105,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClientImportPath(): string {
-        if (this.customConfig?.packageLayout === "flat") {
-            return this.rootImportPath;
-        }
         return `${this.rootImportPath}/client`;
     }
 

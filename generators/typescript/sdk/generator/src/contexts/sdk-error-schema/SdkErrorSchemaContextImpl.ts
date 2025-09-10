@@ -1,11 +1,9 @@
-import { ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { CoreUtilities, ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
 import { SourceFile } from "ts-morph";
-
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -15,6 +13,7 @@ export declare namespace SdkErrorSchemaContextImpl {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
         errorResolver: ErrorResolver;
@@ -25,6 +24,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
     private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
     private errorResolver: ErrorResolver;
@@ -33,6 +33,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
         sourceFile,
         coreUtilities,
         importsManager,
+        exportsManager,
         sdkErrorSchemaDeclarationReferencer,
         sdkErrorSchemaGenerator,
         errorResolver
@@ -40,6 +41,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.sdkErrorSchemaDeclarationReferencer = sdkErrorSchemaDeclarationReferencer;
         this.sdkErrorSchemaGenerator = sdkErrorSchemaGenerator;
         this.errorResolver = errorResolver;
@@ -55,6 +57,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
                     useDynamicImport: true
                 }),
                 importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
                 referencedIn: this.sourceFile
             })
             .getExpression();
@@ -74,7 +77,8 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
             name: errorName,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 }

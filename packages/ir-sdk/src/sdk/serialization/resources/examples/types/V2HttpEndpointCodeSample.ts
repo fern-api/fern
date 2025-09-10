@@ -12,6 +12,7 @@ export const V2HttpEndpointCodeSample: core.serialization.ObjectSchema<
     FernIr.V2HttpEndpointCodeSample
 > = core.serialization
     .objectWithoutOptionalProperties({
+        name: core.serialization.string().optional(),
         language: core.serialization.string(),
         code: core.serialization.string(),
     })
@@ -19,6 +20,7 @@ export const V2HttpEndpointCodeSample: core.serialization.ObjectSchema<
 
 export declare namespace V2HttpEndpointCodeSample {
     export interface Raw extends WithDocs.Raw {
+        name?: string | null;
         language: string;
         code: string;
     }

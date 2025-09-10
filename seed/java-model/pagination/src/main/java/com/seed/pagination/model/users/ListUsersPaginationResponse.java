@@ -85,6 +85,9 @@ public final class ListUsersPaginationResponse {
     }
 
     public interface TotalCountStage {
+        /**
+         * <p>The totall number of /users</p>
+         */
         _FinalStage totalCount(int totalCount);
 
         Builder from(ListUsersPaginationResponse other);
@@ -131,6 +134,7 @@ public final class ListUsersPaginationResponse {
 
         /**
          * <p>The totall number of /users</p>
+         * <p>The totall number of /users</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -142,7 +146,9 @@ public final class ListUsersPaginationResponse {
 
         @java.lang.Override
         public _FinalStage addAllData(List<User> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

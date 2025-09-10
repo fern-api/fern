@@ -1,7 +1,7 @@
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
 
@@ -20,7 +20,8 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator
-        })
+        }),
+        displayName: undefined
     };
 
     return {

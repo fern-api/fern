@@ -3,22 +3,80 @@
  */
 package com.seed.pagination.resources.users.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Order {
-    ASC("asc"),
+public final class Order {
+    public static final Order ASC = new Order(Value.ASC, "asc");
 
-    DESC("desc");
+    public static final Order DESC = new Order(Value.DESC, "desc");
 
-    private final String value;
+    private final Value value;
 
-    Order(String value) {
+    private final String string;
+
+    Order(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof Order && this.string.equals(((Order) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case ASC:
+                return visitor.visitAsc();
+            case DESC:
+                return visitor.visitDesc();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Order valueOf(String value) {
+        switch (value) {
+            case "asc":
+                return ASC;
+            case "desc":
+                return DESC;
+            default:
+                return new Order(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        ASC,
+
+        DESC,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitAsc();
+
+        T visitDesc();
+
+        T visitUnknown(String unknownType);
     }
 }

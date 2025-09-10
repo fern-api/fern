@@ -1,10 +1,8 @@
-import path from "path";
-
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-
-import { Rule, RuleViolation } from "../../Rule";
+import path from "path";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 type RelativeDirectoryPath = string;
 type DeclaredName = string;

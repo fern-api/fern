@@ -14,9 +14,7 @@
  */
 export interface GetPlaylistsRequest {
     limit?: number;
-    /**
-     * i'm another field
-     */
+    /** i'm another field */
     otherField: string;
     /**
      * I'm a multiline

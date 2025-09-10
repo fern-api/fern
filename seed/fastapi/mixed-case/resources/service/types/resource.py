@@ -34,7 +34,12 @@ class Resource(UniversalRootModel):
     Examples
     --------
     from seed.mixed_case.resources.service import Resource_User
-    Resource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

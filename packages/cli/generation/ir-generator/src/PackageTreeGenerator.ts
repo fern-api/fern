@@ -1,5 +1,3 @@
-import { mapValues } from "lodash-es";
-
 import {
     ErrorDeclaration,
     ErrorId,
@@ -12,12 +10,11 @@ import {
     SubpackageId,
     TypeDeclaration,
     TypeId,
-    WebSocketChannelId,
-    WebhookGroupId
+    WebhookGroupId,
+    WebSocketChannelId
 } from "@fern-api/ir-sdk";
-
-import { IdGenerator } from "./IdGenerator";
-import { FilteredIr } from "./filtered-ir/FilteredIr";
+import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
+import { mapValues } from "lodash-es";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
 type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;
@@ -109,6 +106,12 @@ export class PackageTreeGenerator {
                             subpackage.service != null
                                 ? filteredIr.hasServiceId(subpackage.service)
                                     ? subpackage.service
+                                    : undefined
+                                : undefined,
+                        websocket:
+                            subpackage.websocket != null
+                                ? filteredIr.hasChannel(subpackage.websocket)
+                                    ? subpackage.websocket
                                     : undefined
                                 : undefined,
                         subpackages: subpackage.subpackages.filter((subpackageId) =>
@@ -217,6 +220,7 @@ export class PackageTreeGenerator {
                 docs: undefined,
                 fernFilepath: fernFilepathForNextParent,
                 name: nextPart,
+                displayName: undefined,
                 service: undefined,
                 types: [],
                 errors: [],

@@ -1,7 +1,6 @@
+import { TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { Converters } from "@fern-api/v2-importer-commons";
 
 export class ParameterConverter extends Converters.AbstractConverters
     .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
@@ -13,18 +12,21 @@ export class ParameterConverter extends Converters.AbstractConverters
         super({ context, breadcrumbs, parameter });
     }
 
-    public async convert(): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
+    public convert(): Converters.AbstractConverters.AbstractParameterConverter.Output | undefined {
         let typeReference: TypeReference | undefined;
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         if (this.parameter.schema != null) {
+            const schemaIdOverride = this.context.convertBreadcrumbsToName([...this.breadcrumbs, this.parameter.name]);
+
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
-                breadcrumbs: [...this.breadcrumbs, "schema"],
+                breadcrumbs: [...this.breadcrumbs, this.parameter.name, "schema"],
                 schemaOrReference: this.parameter.schema,
-                wrapAsOptional: this.parameter.required == null || !this.parameter.required
+                wrapAsOptional: this.parameter.required == null || !this.parameter.required,
+                schemaIdOverride
             });
-            const converted = await schemaOrReferenceConverter.convert();
+            const converted = schemaOrReferenceConverter.convert();
             if (converted != null) {
                 typeReference = converted.type;
                 inlinedTypes = converted.inlinedTypes ?? {};

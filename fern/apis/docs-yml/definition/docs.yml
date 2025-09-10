@@ -13,6 +13,8 @@ types:
       - go
       - ruby
       - csharp
+      - php
+      - swift
       - nodets
       - nodejs
       - dotnet
@@ -128,6 +130,7 @@ types:
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
+      products: optional<list<ProductConfig>>
       landing-page: optional<PageConfiguration>
       navigation:
         type: optional<NavigationConfig>
@@ -137,7 +140,10 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      # Deprecated
       "ai-chat": optional<AIChatConfig>
+
+      "ai-search": optional<AIChatConfig>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -162,19 +168,21 @@ types:
 
   TabId: string
 
-  AIChatConfig: 
-    properties: 
+  AIChatConfig:
+    properties:
       model: optional<AIChatModel>
-      "system-prompt": 
+      "system-prompt":
         type: optional<string>
-        docs: This is a system prompt that acts as context given to the LLM for AI chat. 
-    
-  AIChatModel: 
-    enum: 
+        docs: This is a system prompt that acts as context given to the LLM for AI chat.
+
+  AIChatModel:
+    enum:
       - value: "claude-3.5"
         name: claude_3_5
       - value: "claude-3.7"
         name: claude_3_7
+      - value: "claude-4"
+        name: claude_4
       - value: command-a
         name: command_a
 
@@ -246,7 +254,6 @@ types:
         docs: |
           @default: `main`
 
-
   VersionConfig:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -261,6 +268,21 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+
+  Availability:
+    enum:
+      - name: Stable
+        value: stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - name: Deprecated
+        value: deprecated
+      - name: Beta
+        value: beta
 
   VersionAvailability:
     enum:
@@ -419,6 +441,18 @@ types:
         docs: |
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
+
+      hide-nav-links:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter.
+
+      hide-feedback:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
   SearchbarPlacement:
     enum:
@@ -579,6 +613,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       noindex: optional<boolean>
+      availability: optional<Availability>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -604,6 +639,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -631,6 +667,7 @@ types:
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       skip-slug: optional<boolean>
       alphabetized:
         type: optional<boolean>
@@ -750,6 +787,8 @@ types:
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
       csharp: optional<SnippetLanguageConfiguration>
+      php: optional<SnippetLanguageConfiguration>
+      swift: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -1028,7 +1067,7 @@ types:
         type: optional<boolean>
         availability: deprecated
         docs: |
-          OpenAPI parser rewrite, now deprecated.  
+          OpenAPI parser rewrite, now deprecated.
       openapi-parser-v3:
         type: optional<boolean>
         availability: pre-release
@@ -1057,3 +1096,26 @@ types:
       message:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
+
+  ProductConfig:
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      display-name: string
+      path:
+        type: string
+        docs: The relative path to the version's docs.yml file.
+      subtitle: optional<string>
+      icon: optional<string>
+      image:
+        type: optional<string>
+        docs: The image to display in the product card. This will override the icon field if both are set.
+      slug:
+        type: optional<string>
+        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      versions: optional<list<VersionConfig>>
+
+  ProductFileConfig:
+    properties:
+      tabs: optional<map<TabId, TabConfig>>
+      landing-page: optional<PageConfiguration>
+      navigation: NavigationConfig

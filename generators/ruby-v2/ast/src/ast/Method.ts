@@ -1,4 +1,6 @@
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { KeywordParameter } from "./KeywordParameter";
 import { KeywordSplatParameter } from "./KeywordSplatParameter";
 import { Parameter } from "./Parameter";
@@ -6,8 +8,6 @@ import { PositionalParameter } from "./PositionalParameter";
 import { PositionalSplatParameter } from "./PositionalSplatParameter";
 import { Type } from "./Type";
 import { YieldParameter } from "./YieldParameter";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export type MethodKind = "instance" | "class";
 export const MethodKind = { Instance: "instance", Class_: "class" } as const;
@@ -42,6 +42,8 @@ export declare namespace Method {
         parameters?: ParameterArgs;
         /* The return type of the method. */
         returnType?: Type;
+        /* The statements of the method. */
+        statements?: AstNode[];
     }
 }
 
@@ -55,10 +57,10 @@ export class Method extends AstNode {
     public readonly keywordSplatParameter: KeywordSplatParameter | undefined;
     public readonly yieldParameter: YieldParameter | undefined;
     private readonly visibility: MethodVisibility;
-    private readonly statements: AstNode[] = [];
+    private readonly statements: AstNode[];
     public readonly returnType: Type;
 
-    constructor({ name, docstring, kind, visibility, parameters, returnType }: Method.Args) {
+    constructor({ name, docstring, kind, visibility, parameters, returnType, statements }: Method.Args) {
         super();
 
         this.name = name;
@@ -71,11 +73,36 @@ export class Method extends AstNode {
         this.keywordSplatParameter = parameters?.keywordSplat;
         this.yieldParameter = parameters?.yield;
         this.returnType = returnType ?? Type.untyped();
+        this.statements = statements ?? [];
+    }
+
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
     }
 
     public write(writer: Writer): void {
         if (this.docstring) {
             new Comment({ docs: this.docstring }).write(writer);
+        }
+
+        for (const positionalParameter of this.positionalParameters) {
+            if (this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @option ${positionalParameter.name} [`);
+            positionalParameter.type.writeTypeDefinition(writer);
+            writer.write("]");
+            writer.newLine();
+        }
+
+        if (this.returnType != null) {
+            if (this.positionalParameters.length > 0 || this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @return [`);
+            this.returnType.writeTypeDefinition(writer);
+            writer.write("]");
+            writer.newLine();
         }
 
         if (this.visibility !== MethodVisibility.Public) {
@@ -120,6 +147,8 @@ export class Method extends AstNode {
                     writer.newLine();
                 }
             });
+            writer.writeNewLineIfLastLineNot();
+
             writer.dedent();
 
             writer.write("end");

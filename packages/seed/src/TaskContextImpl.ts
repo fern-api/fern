@@ -1,8 +1,7 @@
 // HACKHACK: copied from cli folder
-import chalk from "chalk";
 
 import { addPrefixToString } from "@fern-api/core-utils";
-import { LogLevel, createLogger } from "@fern-api/logger";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
     FernCliError,
@@ -13,6 +12,7 @@ import {
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
+import chalk from "chalk";
 
 import { Log } from "./Log";
 import { logErrorMessage } from "./logErrorMessage";

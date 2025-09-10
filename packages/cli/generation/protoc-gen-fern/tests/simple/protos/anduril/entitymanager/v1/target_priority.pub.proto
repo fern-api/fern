@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/options.pub.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "TargetPriorityProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// The target prioritization associated with an entity.
+message TargetPriority {
+  // Describes the target priority in relation to high value target lists.
+  HighValueTarget high_value_target = 1 [(anduril.entitymanager.v1.overridable) = true];
+  // Describes whether the entity should be treated as a threat
+  Threat threat = 2;
+}
+
+// Describes whether something is a high value target or not.
+message HighValueTarget {
+  // Indicates whether the target matches any description from a high value target list.
+  bool is_high_value_target = 1;
+  // The priority associated with the target. If the target's description appears on multiple high value target lists,
+  // the priority will be a reflection of the highest priority of all of those list's target description.
+  //
+  // A lower value indicates the target is of a higher priority, with 1 being the highest possible priority. A value of
+  // 0 indicates there is no priority associated with this target.
+  uint32 target_priority = 2;
+  // All of the high value target descriptions that the target matches against.
+  repeated HighValueTargetMatch target_matches = 3;
+  // Indicates whether the target is a 'High Payoff Target'. Targets can be one or both of high value and high payoff.
+  bool is_high_payoff_target = 4;
+}
+
+message HighValueTargetMatch {
+  // The ID of the high value target list that matches the target description.
+  string high_value_target_list_id = 1;
+  // The ID of the specific high value target description within a high value target list that was matched against.
+  // The ID is considered to be a globally unique identifier across all high value target IDs.
+  string high_value_target_description_id = 2;
+}
+
+// Describes whether an entity is a threat or not.
+message Threat {
+  // Indicates that the entity has been determined to be a threat.
+  bool is_threat = 1;
+}

@@ -7,19 +7,17 @@ import (
     fern "github.com/enum/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.QueryParam.Send(
+    client.PathParam.Send(
         context.TODO(),
-        &fern.SendEnumAsQueryParamRequest{
-            Operand: fern.OperandGreaterThan,
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
+        fern.OperandGreaterThan,
+        &fern.ColorOrOperand{
+            Color: fern.ColorRed,
         },
     )
 }

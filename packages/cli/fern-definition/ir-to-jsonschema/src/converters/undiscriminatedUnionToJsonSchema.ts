@@ -1,6 +1,5 @@
-import { JSONSchema4 } from "json-schema";
-
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-api/ir-sdk";
+import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";

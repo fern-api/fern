@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/classification.pub.proto";
+import "anduril/entitymanager/v1/options.pub.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "SuppliesProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// Represents the state of supplies associated with an entity (available but not in condition to use immediately)
+message Supplies {
+  repeated Fuel fuel = 2 [(anduril.entitymanager.v1.overridable) = true];
+}
+
+// Fuel describes an entity's repository of fuels stores including current amount, operational requirements, and maximum authorized capacity
+message Fuel {
+  // unique fuel identifier
+  string fuel_id = 1;
+  // long form name of the fuel source.
+  string name = 2;
+  // timestamp the information was reported
+  google.protobuf.Timestamp reported_date = 3;
+  // amount of gallons on hand
+  uint32 amount_gallons = 4;
+  // how much the asset is allowed to have available (in gallons)
+  uint32 max_authorized_capacity_gallons = 5;
+  // minimum required for operations (in gallons)
+  uint32 operational_requirement_gallons = 6;
+  // fuel in a single asset may have different levels of classification
+  // use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED
+  Classification data_classification = 7;
+  // source of information
+  string data_source = 8;
+}

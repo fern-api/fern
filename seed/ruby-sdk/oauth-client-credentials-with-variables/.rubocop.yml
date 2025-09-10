@@ -1,0 +1,36 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+# Generated files may be more complex than standard, disable
+# these rules for now as a known limitation.
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false

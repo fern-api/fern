@@ -1,7 +1,6 @@
-import urlJoin from "url-join";
-
 import { generatorsYml } from "@fern-api/configuration";
 import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from "@fern-api/ir-sdk";
+import urlJoin from "url-join";
 
 export function convertReadmeConfig({
     readme,
@@ -12,9 +11,12 @@ export function convertReadmeConfig({
 }): ReadmeConfig {
     const readmeEndpointCache = new ReadmeEndpointCache(services);
     return {
+        apiName: readme.apiName,
+        disabledFeatures: readme.disabledSections?.map((section) => section.toUpperCase()),
         apiReferenceLink: readme.apiReferenceLink,
         bannerLink: readme.bannerLink,
         introduction: readme.introduction,
+        whiteLabel: false,
         defaultEndpoint:
             readme.defaultEndpoint != null
                 ? readmeEndpointCache.getEndpointForReadmeOrThrow(readme.defaultEndpoint).id

@@ -153,6 +153,10 @@ types:
     type: list<SdkGroup>
     docs: This is populated by `x-fern-sdk-method-name`
 
+  WithSdkMethodName:
+    properties:
+      sdkMethodName: optional<string>
+
   WithSdkGroupName:
     properties:
       groupName: optional<SdkGroupName>

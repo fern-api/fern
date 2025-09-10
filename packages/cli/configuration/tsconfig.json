@@ -5,18 +5,13 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../commons/core-utils"
     },
     {
       "path": "../../commons/path-utils"
-    },
-    {
-      "path": "../task-context"
     },
     {
       "path": "../fern-definition/schema"

@@ -14,6 +14,7 @@ public class Example0
         );
 
         await client.Complex.SearchAsync(
+            "index",
             new SearchRequest{
                 Pagination = new StartingAfterPaging{
                     PerPage = 1,

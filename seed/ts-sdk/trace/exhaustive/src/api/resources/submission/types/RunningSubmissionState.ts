@@ -14,31 +14,4 @@ export const RunningSubmissionState = {
     WritingSubmissionToFile: "WRITING_SUBMISSION_TO_FILE",
     CompilingSubmission: "COMPILING_SUBMISSION",
     RunningSubmission: "RUNNING_SUBMISSION",
-    _visit: <R>(value: RunningSubmissionState, visitor: RunningSubmissionState.Visitor<R>) => {
-        switch (value) {
-            case RunningSubmissionState.QueueingSubmission:
-                return visitor.queueingSubmission();
-            case RunningSubmissionState.KillingHistoricalSubmissions:
-                return visitor.killingHistoricalSubmissions();
-            case RunningSubmissionState.WritingSubmissionToFile:
-                return visitor.writingSubmissionToFile();
-            case RunningSubmissionState.CompilingSubmission:
-                return visitor.compilingSubmission();
-            case RunningSubmissionState.RunningSubmission:
-                return visitor.runningSubmission();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace RunningSubmissionState {
-    export interface Visitor<R> {
-        queueingSubmission: () => R;
-        killingHistoricalSubmissions: () => R;
-        writingSubmissionToFile: () => R;
-        compilingSubmission: () => R;
-        runningSubmission: () => R;
-        _other: () => R;
-    }
-}

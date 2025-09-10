@@ -1,3 +1,0 @@
-api:
-  - path: ../openapi.yml
-  - path: ../asyncapi.yml

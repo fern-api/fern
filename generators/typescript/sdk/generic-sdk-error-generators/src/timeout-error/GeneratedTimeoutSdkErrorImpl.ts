@@ -6,7 +6,7 @@ export class GeneratedTimeoutSdkErrorImpl
     extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedTimeoutSdkError
 {
-    private static MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
+    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
 
     public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context);

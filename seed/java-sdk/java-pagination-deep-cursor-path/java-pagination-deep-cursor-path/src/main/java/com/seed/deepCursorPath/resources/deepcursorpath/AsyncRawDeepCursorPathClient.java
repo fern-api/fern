@@ -90,15 +90,15 @@ public class AsyncRawDeepCursorPathClient {
                         Optional<D> d = request.getB()
                                 .map(B::getC)
                                 .flatMap(C::getD)
-                                .map(d_ -> D.builder()
+                                .map((D d_) -> D.builder()
                                         .from(d_)
                                         .startingAfter(startingAfter)
                                         .build());
-                        Optional<C> c = d.flatMap(d_ -> request.getB()
+                        Optional<C> c = d.flatMap((D d_) -> request.getB()
                                 .map(B::getC)
-                                .map(c_ -> C.builder().from(c_).d(d_).build()));
-                        Optional<B> b = c.flatMap(c_ -> request.getB()
-                                .map(b_ -> B.builder().from(b_).c(c_).build()));
+                                .map((C c_) -> C.builder().from(c_).d(d_).build()));
+                        Optional<B> b = c.flatMap((C c_) -> request.getB()
+                                .map((B b_) -> B.builder().from(b_).c(c_).build()));
                         A nextRequest = A.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
@@ -267,15 +267,17 @@ public class AsyncRawDeepCursorPathClient {
                         Optional<InlineD> b = request.getB()
                                 .map(B::getC)
                                 .flatMap(C::getB)
-                                .map(b_ -> InlineD.builder()
+                                .map((InlineD b_) -> InlineD.builder()
                                         .from(b_)
                                         .startingAfter(startingAfter)
                                         .build());
-                        Optional<InlineC> c = b.flatMap(b_ -> request.getB()
+                        Optional<InlineC> c = b.flatMap((InlineD b_) -> request.getB()
                                 .map(B::getC)
-                                .map(c_ -> InlineC.builder().from(c_).b(b_).build()));
-                        Optional<InlineD> b = c.flatMap(c_ -> request.getB()
-                                .map(b_ -> InlineD.builder().from(b_).c(c_).build()));
+                                .map((InlineC c_) ->
+                                        InlineC.builder().from(c_).b(b_).build()));
+                        Optional<InlineD> b = c.flatMap((InlineC c_) -> request.getB()
+                                .map((InlineD b_) ->
+                                        InlineD.builder().from(b_).c(c_).build()));
                         InlineA nextRequest =
                                 InlineA.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();

@@ -82,16 +82,25 @@ public final class DiscriminatedUnion1InlineType1 {
   }
 
   public interface FooStage {
+    /**
+     * <p>lorem ipsum</p>
+     */
     BarStage foo(@NotNull String foo);
 
     Builder from(DiscriminatedUnion1InlineType1 other);
   }
 
   public interface BarStage {
+    /**
+     * <p>lorem ipsum</p>
+     */
     RefStage bar(@NotNull DiscriminatedUnion1InlineType1InlineType1 bar);
   }
 
   public interface RefStage {
+    /**
+     * <p>lorem ipsum</p>
+     */
     _FinalStage ref(@NotNull ReferenceType ref);
   }
 
@@ -122,6 +131,7 @@ public final class DiscriminatedUnion1InlineType1 {
 
     /**
      * <p>lorem ipsum</p>
+     * <p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -133,6 +143,7 @@ public final class DiscriminatedUnion1InlineType1 {
 
     /**
      * <p>lorem ipsum</p>
+     * <p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -143,6 +154,7 @@ public final class DiscriminatedUnion1InlineType1 {
     }
 
     /**
+     * <p>lorem ipsum</p>
      * <p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */

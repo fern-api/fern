@@ -7,7 +7,7 @@
         "auth": false,
         "method": "GET",
         "id": "get",
-        "originalEndpointId": "get",
+        "originalEndpointId": "endpoint_.get",
         "name": "Simple endpoint",
         "path": {
           "pathParameters": [
@@ -63,6 +63,7 @@
             }
           }
         ],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -76,10 +77,26 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/simple",
             "pathParameters": {
@@ -93,13 +110,10 @@
               "some-header": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

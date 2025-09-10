@@ -6,15 +6,15 @@ export interface ObjectWithOptionalField {
     /** This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered. */
     string?: string;
     integer?: number;
-    long?: bigint;
+    long?: number | bigint;
     double?: number;
     bool?: boolean;
-    datetime?: Date;
+    datetime?: string;
     date?: string;
     uuid?: string;
     base64?: string;
     list?: string[];
-    set?: Set<string>;
+    set?: string[];
     map?: Record<number, string>;
-    bigint?: bigint;
+    bigint?: number | bigint;
 }

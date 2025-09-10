@@ -120,7 +120,7 @@
         "description": "",
         "method": "GET",
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -150,6 +150,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -161,33 +162,42 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UsersResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/list",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "meta": {
-                  "hasMore": true
-                },
-                "users": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
-                  }
-                ]
-              }
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "string",
+                  "name": "string",
+                  "email": "string",
+                  "age": 1
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -197,10 +207,10 @@
                 },
                 "users": [
                   {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "age": 1
                   }
                 ]
               }
@@ -216,7 +226,7 @@
         "description": "",
         "method": "GET",
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -258,6 +268,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -269,34 +280,42 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UsersResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/list-with-step",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42,
-              "limit": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "meta": {
-                  "hasMore": true
-                },
-                "users": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
-                  }
-                ]
-              }
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "string",
+                  "name": "string",
+                  "email": "string",
+                  "age": 1
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -306,10 +325,10 @@
                 },
                 "users": [
                   {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "age": 1
                   }
                 ]
               }

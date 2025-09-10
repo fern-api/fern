@@ -11,6 +11,7 @@ class MigrationStatus(str, enum.Enum):
     Examples
     --------
     from seed.examples.resources.types import MigrationStatus
+
     MigrationStatus.RUNNING
     """
 

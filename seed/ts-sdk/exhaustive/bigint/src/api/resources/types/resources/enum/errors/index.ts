@@ -1,1 +1,1 @@
-export * from "./ErrorWithEnumBody";
+export * from "./ErrorWithEnumBody.js";

@@ -1,8 +1,8 @@
 import { Argument } from "./Argument";
-import { Import } from "./Import";
-import { Variable, VariableType } from "./Variable";
 import { ClassReference, NilValue, OmittedValue } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
+import { Import } from "./Import";
+import { Variable, VariableType } from "./Variable";
 
 export declare namespace Parameter {
     export interface Init extends AstNode.Init {

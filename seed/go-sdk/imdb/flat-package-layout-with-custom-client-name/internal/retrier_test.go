@@ -107,7 +107,7 @@ func TestRetrier(t *testing.T) {
 			)
 
 			var response *Response
-			err := caller.Call(
+			_, err := caller.Call(
 				context.Background(),
 				&CallParams{
 					URL:                server.URL,

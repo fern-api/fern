@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v58
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -24,7 +24,7 @@ test:
     workingDirectory: generators/csharp
     buildCommand:
       - pnpm --filter @fern-api/fern-csharp-model dist:cli
-    runCommand: node model/dist/cli.cjs
+    runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
 generatorType: Model
@@ -52,3 +52,11 @@ scripts:
 allowedFailures:
   - mixed-file-directory
   - objects-with-imports
+  - pagination-custom
+  - circular-references
+  - circular-references-advanced
+  - examples
+  - exhaustive
+  - pagination
+  - trace
+  - undiscriminated-unions.

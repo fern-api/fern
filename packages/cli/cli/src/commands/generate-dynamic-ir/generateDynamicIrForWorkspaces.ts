@@ -1,8 +1,7 @@
-import path from "path";
-
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, streamObjectToFile, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";

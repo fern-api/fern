@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

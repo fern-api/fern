@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/oauth-client-credentials-custom)](https://www.npmjs.com/package/@fern/oauth-client-credentials-custom)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
 ## Installation
 
@@ -31,7 +31,7 @@ await client.auth.getTokenWithClientCredentials({
     cid: "cid",
     csr: "csr",
     scp: "scp",
-    entityId: "entity_id",
+    entity_id: "entity_id",
     scope: "scope",
 });
 ```
@@ -79,6 +79,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.auth.getTokenWithClientCredentials(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -139,8 +151,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

@@ -1,14 +1,17 @@
 import { FernToken } from "@fern-api/auth";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME,
-    fernConfigJson
+    generatorsYml
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { ContainerRunner } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
@@ -26,7 +29,10 @@ export async function generateWorkspace({
     useLocalDocker,
     keepDocker,
     absolutePathToPreview,
-    mode
+    mode,
+    runner,
+    inspect,
+    lfsOverride
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -40,6 +46,9 @@ export async function generateWorkspace({
     keepDocker: boolean;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: GenerationMode | undefined;
+    runner: ContainerRunner | undefined;
+    inspect: boolean;
+    lfsOverride: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -58,11 +67,16 @@ export async function generateWorkspace({
         );
     }
 
-    const group = workspace.generatorsConfiguration.groups.find(
+    let group = workspace.generatorsConfiguration.groups.find(
         (otherGroup) => otherGroup.groupName === groupNameOrDefault
     );
     if (group == null) {
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
+    }
+
+    // Apply lfs-override if specified
+    if (lfsOverride != null) {
+        group = applyLfsOverride(group, lfsOverride, context);
     }
 
     await validateAPIWorkspaceAndLogIssues({
@@ -73,11 +87,15 @@ export async function generateWorkspace({
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({
+            token,
             projectConfig,
             workspace,
             generatorGroup: group,
+            version,
             keepDocker,
-            context
+            context,
+            runner,
+            inspect
         });
     } else {
         if (!token) {
@@ -97,4 +115,91 @@ export async function generateWorkspace({
             mode
         });
     }
+}
+
+function applyLfsOverride(
+    group: generatorsYml.GeneratorGroup,
+    lfsOverridePath: string,
+    context: TaskContext
+): generatorsYml.GeneratorGroup {
+    const baseAbsolutePath = AbsoluteFilePath.of(resolve(cwd(), lfsOverridePath));
+
+    // Count generators and track languages for duplicate handling
+    const languageCount: Record<string, number> = {};
+    const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
+
+    for (const generator of group.generators) {
+        const language = generator.language ?? getLanguageFromGeneratorName(generator.name);
+
+        let outputPath: AbsoluteFilePath;
+
+        if (group.generators.length === 1) {
+            // Single generator: use the provided path directly
+            outputPath = baseAbsolutePath;
+        } else {
+            // Multiple generators: create subdirectories
+            const languageDir = language || "unknown";
+
+            if (languageCount[languageDir] == null) {
+                languageCount[languageDir] = 0;
+            }
+            languageCount[languageDir]++;
+
+            const dirName =
+                languageCount[languageDir] === 1 ? languageDir : `${languageDir}-${languageCount[languageDir]}`;
+
+            outputPath = join(baseAbsolutePath, RelativeFilePath.of(dirName));
+        }
+
+        // Create a new generator with local-file-system output mode
+        const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+            ...generator,
+            outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),
+            absolutePathToLocalOutput: outputPath
+        };
+
+        modifiedGenerators.push(modifiedGenerator);
+
+        context.logger.info(
+            `Overriding output for generator '${generator.name}' to local-file-system at: ${outputPath}`
+        );
+    }
+
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
+}
+
+function getLanguageFromGeneratorName(generatorName: string): string {
+    // Try to extract language from common generator naming patterns
+    if (generatorName.includes("typescript") || generatorName.includes("ts")) {
+        return "typescript";
+    }
+    if (generatorName.includes("python") || generatorName.includes("py")) {
+        return "python";
+    }
+    if (generatorName.includes("java")) {
+        return "java";
+    }
+    if (generatorName.includes("go")) {
+        return "go";
+    }
+    if (generatorName.includes("ruby")) {
+        return "ruby";
+    }
+    if (generatorName.includes("csharp") || generatorName.includes("c#")) {
+        return "csharp";
+    }
+    if (generatorName.includes("swift")) {
+        return "swift";
+    }
+    if (generatorName.includes("php")) {
+        return "php";
+    }
+    if (generatorName.includes("rust")) {
+        return "rust";
+    }
+    // If we can't determine the language, use the generator name itself
+    return generatorName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
 }

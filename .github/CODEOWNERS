@@ -1,29 +1,21 @@
-# General rule for everything
-* @dsinghvi
-
-# Specific rules for fern/
-fern/docs.yml @chdeskur
-fern/pages/* @chdeskur
-
 # Specific rules for generators
-generators/go/* @amckinney
-generators/go-v2/* @amckinney
-generators/php/* @amckinney
-generators/commons/* @amckinney
-generators/csharp/* @Swimburger
-generators/typescript/* @Swimburger
-generators/typescript-v2/* @Swimburger
-generators/java/* @dsinghvi
-generators/python/* @dsinghvi
-generators/python-v2/* @dsinghvi
-generators/ruby/* @dsinghvi
-generators/swift/* @dsinghvi
-generators/postman/* @dsinghvi
-generators/openapi/* @dsinghvi
+generators/go/* @dsinghvi @tjb9dc
+generators/go-v2/* @dsinghvi @tjb9dc
+generators/php/* @dsinghvi @tjb9dc
+generators/commons/* @Swimburger @tjb9dc
+generators/csharp/* @Swimburger @tjb9dc
+generators/typescript/* @Swimburger @tjb9dc
+generators/typescript-v2/* @Swimburger @tjb9dc
+generators/java/* @tstanmay13 @tjb9dc
+generators/python/* @dsinghvi @tjb9dc
+generators/python-v2/* @dsinghvi @tjb9dc
+generators/ruby/* @dsinghvi @tjb9dc
+generators/swift/* @kafkas @tjb9dc
+generators/postman/* @dsinghvi @tjb9dc
+generators/openapi/* @dsinghvi @tjb9dc
 
 # Specific rules for packages
-packages/cli/* @amckinney
-packages/cli/api-importers/* @eyw520
-packages/cli/docs-importers/* @eyw520
-packages/generators/cli/* @dsinghvi
-packages/generators/docker/* @dsinghvi
+packages/cli/* @dsinghvi @tjb9dc
+packages/cli/api-importers/* @eyw520 @tjb9dc
+packages/cli/api-importers/* @sahil485 @tjb9dc
+packages/cli/docs-importers/* @eyw520 @tjb9dc

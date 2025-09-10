@@ -10,7 +10,10 @@ export type PublishingConfig =
     | FernIr.PublishingConfig.Github
     /**
      * Publish directly from the generator */
-    | FernIr.PublishingConfig.Direct;
+    | FernIr.PublishingConfig.Direct
+    /**
+     * Do not publish anywhere but deposit files in the local filesystem */
+    | FernIr.PublishingConfig.Filesystem;
 
 export namespace PublishingConfig {
     export interface Github extends FernIr.GithubPublish, _Utils {
@@ -21,6 +24,10 @@ export namespace PublishingConfig {
         type: "direct";
     }
 
+    export interface Filesystem extends FernIr.Filesystem, _Utils {
+        type: "filesystem";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishingConfig._Visitor<_Result>) => _Result;
     }
@@ -28,6 +35,7 @@ export namespace PublishingConfig {
     export interface _Visitor<_Result> {
         github: (value: FernIr.GithubPublish) => _Result;
         direct: (value: FernIr.DirectPublish) => _Result;
+        filesystem: (value: FernIr.Filesystem) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -59,12 +67,27 @@ export const PublishingConfig = {
         };
     },
 
+    filesystem: (value: FernIr.Filesystem): FernIr.PublishingConfig.Filesystem => {
+        return {
+            ...value,
+            type: "filesystem",
+            _visit: function <_Result>(
+                this: FernIr.PublishingConfig.Filesystem,
+                visitor: FernIr.PublishingConfig._Visitor<_Result>,
+            ) {
+                return FernIr.PublishingConfig._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishingConfig, visitor: FernIr.PublishingConfig._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "github":
                 return visitor.github(value);
             case "direct":
                 return visitor.direct(value);
+            case "filesystem":
+                return visitor.filesystem(value);
             default:
                 return visitor._other(value as any);
         }

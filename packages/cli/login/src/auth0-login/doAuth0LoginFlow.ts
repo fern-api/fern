@@ -21,9 +21,6 @@ const SUCCESS_PAGE = `
       <div style="font-family: sans-serif; font-size: 20px; color: gray; margin-top: 15px;">
         Head back to your terminal to continue using Fern.
       </div>
-
-      <div data-tf-widget="RuultGU6" data-tf-opacity="100" data-tf-iframe-props="title=How did you hear about us?" data-tf-transitive-search-params data-tf-medium="snippet" style="width:100%;height:500px;"></div>
-      <script src="//embed.typeform.com/next/embed.js"></script>
     </div>
   </body>
 
@@ -127,10 +124,10 @@ function constructAuth0Url({
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
         response_type: "code",
-        connection: "github",
         scope: "openid profile email offline_access",
         redirect_uri: origin,
         audience
     });
-    return `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    return url;
 }

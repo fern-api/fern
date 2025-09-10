@@ -65,16 +65,15 @@ public partial class OrganizationsClient
 
     /// <example><code>
     /// await client.Organizations.GetOrganizationUserAsync(
-    ///     "tenant_id",
-    ///     "organization_id",
-    ///     "user_id",
-    ///     new GetOrganizationUserRequest()
+    ///     new GetOrganizationUserRequest
+    ///     {
+    ///         TenantId = "tenant_id",
+    ///         OrganizationId = "organization_id",
+    ///         UserId = "user_id",
+    ///     }
     /// );
     /// </code></example>
     public async Task<User> GetOrganizationUserAsync(
-        string tenantId,
-        string organizationId,
-        string userId,
         GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -88,9 +87,9 @@ public partial class OrganizationsClient
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/organizations/{1}/users/{2}",
-                        ValueConvert.ToPathParameterString(tenantId),
-                        ValueConvert.ToPathParameterString(organizationId),
-                        ValueConvert.ToPathParameterString(userId)
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.OrganizationId),
+                        ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     Options = options,
                 },

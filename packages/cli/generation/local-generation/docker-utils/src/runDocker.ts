@@ -1,8 +1,8 @@
-import { writeFile } from "fs/promises";
-import tmp from "tmp-promise";
-
+import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { writeFile } from "fs/promises";
+import tmp from "tmp-promise";
 
 export declare namespace runDocker {
     export interface Args {
@@ -10,8 +10,11 @@ export declare namespace runDocker {
         imageName: string;
         args?: string[];
         binds?: string[];
+        envVars?: Record<string, string>;
+        ports?: Record<string, string>;
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
+        runner?: ContainerRunner;
     }
 
     export interface Result {
@@ -24,10 +27,24 @@ export async function runDocker({
     imageName,
     args = [],
     binds = [],
+    envVars = {},
+    ports = {},
     writeLogsToFile = true,
-    removeAfterCompletion = false
+    removeAfterCompletion = false,
+    runner
 }: runDocker.Args): Promise<void> {
-    const tryRun = () => tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
+    const tryRun = () =>
+        tryRunDocker({
+            logger,
+            imageName,
+            args,
+            binds,
+            envVars,
+            ports,
+            removeAfterCompletion,
+            writeLogsToFile,
+            runner
+        });
     try {
         await tryRun();
     } catch (e) {
@@ -45,21 +62,29 @@ async function tryRunDocker({
     imageName,
     args,
     binds,
+    envVars = {},
+    ports = {},
     removeAfterCompletion,
-    writeLogsToFile
+    writeLogsToFile,
+    runner
 }: {
     logger: Logger;
     imageName: string;
     args: string[];
     binds: string[];
+    envVars?: Record<string, string>;
+    ports?: Record<string, string>;
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
+    runner?: ContainerRunner;
 }): Promise<void> {
     const dockerArgs = [
         "run",
         "--user",
         "root",
         ...binds.flatMap((bind) => ["-v", bind]),
+        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,
         ...args
@@ -67,7 +92,7 @@ async function tryRunDocker({
     // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
     // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, "docker", dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true

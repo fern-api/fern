@@ -12,8 +12,7 @@ export type HttpResponseBody =
     | FernIr.HttpResponseBody.Streaming
     /**
      * If there is a parameter that controls whether the response is streaming or not. Note
-     * that if this is the response then `sdkRequest.streamParameter` will always be populated.
-     *  */
+     * that if this is the response then `sdkRequest.streamParameter` will always be populated. */
     | FernIr.HttpResponseBody.StreamParameter;
 
 export namespace HttpResponseBody {

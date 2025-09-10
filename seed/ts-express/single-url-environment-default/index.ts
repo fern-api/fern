@@ -1,3 +1,3 @@
 export * as SeedSingleUrlEnvironmentDefault from "./api";
-export { register } from "./register";
 export { SeedSingleUrlEnvironmentDefaultError } from "./errors";
+export { register } from "./register";

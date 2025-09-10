@@ -75,6 +75,10 @@ public final class ListUsersBodyCursorPaginationRequest {
       return this;
     }
 
+    /**
+     * <p>The object that contains the cursor used for pagination
+     * in order to fetch the next page of results.</p>
+     */
     @JsonSetter(
         value = "pagination",
         nulls = Nulls.SKIP

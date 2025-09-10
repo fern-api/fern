@@ -1,13 +1,11 @@
-import { camelCase } from "lodash-es";
-
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { GlobalHeader } from "@fern-api/openapi-ir";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { camelCase } from "lodash-es";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";

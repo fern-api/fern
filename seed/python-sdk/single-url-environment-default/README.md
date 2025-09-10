@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_single-url-environment-default)](https://pypi.python.org/pypi/fern_single-url-environment-default)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -21,7 +21,10 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedSingleUrlEnvironmentDefault
-client = SeedSingleUrlEnvironmentDefault(token="YOUR_TOKEN", )
+
+client = SeedSingleUrlEnvironmentDefault(
+    token="YOUR_TOKEN",
+)
 client.dummy.get_dummy()
 ```
 
@@ -30,12 +33,21 @@ client.dummy.get_dummy()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedSingleUrlEnvironmentDefault
 import asyncio
-client = AsyncSeedSingleUrlEnvironmentDefault(token="YOUR_TOKEN", )
+
+from seed import AsyncSeedSingleUrlEnvironmentDefault
+
+client = AsyncSeedSingleUrlEnvironmentDefault(
+    token="YOUR_TOKEN",
+)
+
+
 async def main() -> None:
     await client.dummy.get_dummy()
-asyncio.run(main())```
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +56,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.dummy.get_dummy()
 except ApiError as e:
@@ -60,7 +73,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedSingleUrlEnvironmentDefault
-client = SeedSingleUrlEnvironmentDefault(..., )
+
+client = SeedSingleUrlEnvironmentDefault(
+    ...,
+)
 response = client.dummy.with_raw_response.get_dummy()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -93,7 +109,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedSingleUrlEnvironmentDefault
-client = SeedSingleUrlEnvironmentDefault(..., timeout=20.0, )
+
+client = SeedSingleUrlEnvironmentDefault(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.dummy.get_dummy(request_options={
@@ -107,9 +128,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedSingleUrlEnvironmentDefault
 import httpx
-client = SeedSingleUrlEnvironmentDefault(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedSingleUrlEnvironmentDefault
+
+client = SeedSingleUrlEnvironmentDefault(
+    ...,
+    httpx_client=httpx.Client(
+        proxy="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

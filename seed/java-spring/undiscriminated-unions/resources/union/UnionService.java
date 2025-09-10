@@ -4,6 +4,7 @@
 
 package resources.union;
 
+import java.lang.String;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import resources.union.types.Metadata;
 import resources.union.types.MetadataUnion;
 import resources.union.types.MyUnion;
+import resources.union.types.NestedUnionRoot;
 import resources.union.types.Request;
+import resources.union.types.UnionWithDuplicateTypes;
 
 @RequestMapping(
     path = "/"
@@ -44,4 +47,18 @@ public interface UnionService {
       consumes = "application/json"
   )
   boolean call(@RequestBody Request body);
+
+  @PostMapping(
+      value = "/duplicate",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  UnionWithDuplicateTypes duplicateTypesUnion(@RequestBody UnionWithDuplicateTypes body);
+
+  @PostMapping(
+      value = "/nested",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  String nestedUnions(@RequestBody NestedUnionRoot body);
 }

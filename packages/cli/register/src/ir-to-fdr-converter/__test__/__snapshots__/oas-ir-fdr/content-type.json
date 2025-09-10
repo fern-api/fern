@@ -1,30 +1,5 @@
 {
-  "types": {
-    "TestPostRequestBodySchemaMetadata": {
-      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodySchemaMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "ExamplePostRequestBodySchemaMetadata": {
-      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodySchemaMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    }
-  },
+  "types": {},
   "subpackages": {},
   "rootPackage": {
     "endpoints": [
@@ -33,7 +8,7 @@
         "description": "Test multipart request with different content types.\n",
         "method": "POST",
         "id": "testUpload",
-        "originalEndpointId": "testUpload",
+        "originalEndpointId": "endpoint_.testUpload",
         "name": "Test upload",
         "path": {
           "pathParameters": [
@@ -73,12 +48,32 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "id",
-                      "value": "TestPostRequestBodySchemaMetadata"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   "contentType": "multipart/form-data",
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "chunking_strategy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "unknown"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
                   "exploded": false
                 },
                 {
@@ -109,9 +104,87 @@
                 }
               ]
             },
+            "contentType": "multipart/form-data",
             "description": "Test request body\n"
           },
           "description": "Test request body\n"
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "testUpload_Request",
+                  "properties": [
+                    {
+                      "type": "bodyProperty",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "exploded": false
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "chunking_strategy",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "unknown"
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "exploded": false
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "filename",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "description": "Optional multipart section to override the filename.",
+                      "exploded": false
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "Binary file contents. The file name of the file will be used as the document ID."
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data",
+                "description": "Test request body\n"
+              },
+              "description": "Test request body\n"
+            }
+          ]
         },
         "response": {
           "type": {
@@ -126,29 +199,59 @@
           "statusCode": 201,
           "description": "The sample response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/test",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "file": "string"
+            },
             "requestBodyV3": {
               "type": "form",
-              "value": {}
+              "value": {
+                "metadata": {
+                  "type": "json"
+                },
+                "chunking_strategy": {
+                  "type": "json"
+                },
+                "filename": {
+                  "type": "json"
+                },
+                "file": {
+                  "type": "filename",
+                  "value": "string"
+                }
+              }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -161,7 +264,7 @@
         "description": "Test request with dual content types.\n",
         "method": "POST",
         "id": "testWithDualContentTypeRequestTypes",
-        "originalEndpointId": "testWithDualContentTypeRequestTypes",
+        "originalEndpointId": "endpoint_.testWithDualContentTypeRequestTypes",
         "name": "Test with dual Content-Type request types",
         "path": {
           "pathParameters": [
@@ -203,8 +306,16 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "id",
-                      "value": "ExamplePostRequestBodySchemaMetadata"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   }
                 }
@@ -212,6 +323,74 @@
             }
           },
           "description": "Test request body\n"
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "description": "Test request body\n"
+            },
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "description": "Test request body\n"
+            }
+          ]
         },
         "response": {
           "type": {
@@ -226,14 +405,30 @@
           "statusCode": 201,
           "description": "The sample response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/example",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
@@ -243,13 +438,10 @@
               "value": {}
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

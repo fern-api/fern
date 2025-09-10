@@ -73,15 +73,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -91,7 +91,6 @@ public class RawUsersClient {
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -150,7 +149,6 @@ public class RawUsersClient {
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -228,10 +226,11 @@ public class RawUsersClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
                 Optional<String> startingAfter =
                         parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
-                Optional<WithCursor> pagination = request.getPagination().map(pagination_ -> WithCursor.builder()
-                        .from(pagination_)
-                        .cursor(startingAfter)
-                        .build());
+                Optional<WithCursor> pagination = request.getPagination()
+                        .map((WithCursor pagination_) -> WithCursor.builder()
+                                .from(pagination_)
+                                .cursor(startingAfter)
+                                .build());
                 ListUsersBodyCursorPaginationRequest nextRequest = ListUsersBodyCursorPaginationRequest.builder()
                         .from(request)
                         .pagination(pagination)
@@ -272,15 +271,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -290,7 +289,6 @@ public class RawUsersClient {
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -302,7 +300,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                int newPageNumber =
+                        request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)
@@ -342,15 +341,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -360,7 +359,6 @@ public class RawUsersClient {
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -372,7 +370,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                double newPageNumber = request.getPage().map(page -> page + 1.0).orElse(1.0);
+                double newPageNumber =
+                        request.getPage().map((Double page) -> page + 1.0).orElse(1.0);
                 ListUsersDoubleOffsetPaginationRequest nextRequest = ListUsersDoubleOffsetPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)
@@ -436,9 +435,9 @@ public class RawUsersClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
                 int newPageNumber = request.getPagination()
                         .flatMap(WithPage::getPage)
-                        .map(page -> page + 1)
+                        .map((Integer page) -> page + 1)
                         .orElse(1);
-                Optional<WithPage> pagination = request.getPagination().map(pagination_ -> WithPage.builder()
+                Optional<WithPage> pagination = request.getPagination().map((WithPage pagination_) -> WithPage.builder()
                         .from(pagination_)
                         .page(newPageNumber)
                         .build());
@@ -481,21 +480,20 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -507,7 +505,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                int newPageNumber =
+                        request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListUsersOffsetStepPaginationRequest nextRequest = ListUsersOffsetStepPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)
@@ -547,21 +546,20 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -573,7 +571,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                int newPageNumber =
+                        request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListWithOffsetPaginationHasNextPageRequest nextRequest =
                         ListWithOffsetPaginationHasNextPageRequest.builder()
                                 .from(request)
@@ -613,13 +612,12 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "cursor", request.getCursor().get().toString(), false);
+                    httpUrl, "cursor", request.getCursor().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -671,13 +669,12 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "cursor", request.getCursor().get().toString(), false);
+                    httpUrl, "cursor", request.getCursor().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -734,7 +731,6 @@ public class RawUsersClient {
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -785,13 +781,12 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "offset", request.getOffset().get().toString(), false);
+                    httpUrl, "offset", request.getOffset().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -803,7 +798,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 UsernameContainer parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
-                int newPageNumber = request.getOffset().map(page -> page + 1).orElse(1);
+                int newPageNumber =
+                        request.getOffset().map((Integer page) -> page + 1).orElse(1);
                 ListWithGlobalConfigRequest nextRequest = ListWithGlobalConfigRequest.builder()
                         .from(request)
                         .offset(newPageNumber)

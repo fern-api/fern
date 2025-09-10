@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: bytes-download
+  version: ''
+paths:
+  /download-content/{id}:
+    get:
+      operationId: service_download
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+components:
+  schemas: {}
+  securitySchemes: {}

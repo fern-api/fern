@@ -30,8 +30,7 @@ export interface ChannelV3 {
     bindings?: Bindings;
     messages?: Record<MessageId, MessageV3>;
     servers?: OpenAPIV3.ReferenceObject[];
-    // TODO: Add support for reference objects
-    parameters?: Record<string, ChannelParameter>;
+    parameters?: Record<string, OpenAPIV3.ReferenceObject | ChannelParameter>;
     description?: string;
 }
 

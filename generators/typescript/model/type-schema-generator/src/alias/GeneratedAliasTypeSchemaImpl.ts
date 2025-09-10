@@ -1,9 +1,8 @@
+import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedAliasTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
-
-import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 

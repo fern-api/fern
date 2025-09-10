@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "isolatedModules": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts"],
+  "include": ["src/**/*.ts"]
+}

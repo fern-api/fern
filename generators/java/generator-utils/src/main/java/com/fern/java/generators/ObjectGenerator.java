@@ -256,6 +256,40 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         for (EnrichedObjectProperty prop : enrichedObjectProperties) {
             TypeName typeName = overriddenMapper.convertToTypeName(
                     true, prop.objectProperty().getValueType());
+
+            if (prop.allowMultiple()) {
+                boolean isCollection = prop.objectProperty()
+                        .getValueType()
+                        .visit(new TypeReferenceUtils.IsCollectionType(generatorContext));
+
+                if (!isCollection) {
+                    // optional<T> with allow-multiple should become optional<list<T>>
+                    if (prop.objectProperty().getValueType().isContainer()) {
+                        ContainerType container = prop.objectProperty()
+                                .getValueType()
+                                .getContainer()
+                                .get();
+                        if (container.isOptional() || container.isNullable()) {
+                            Preconditions.checkState(
+                                    typeName instanceof ParameterizedTypeName,
+                                    "Found optional/nullable with non-parameterized type name "
+                                            + prop.objectProperty()
+                                                    .getName()
+                                                    .getName()
+                                                    .getOriginalName());
+                            TypeName parameterType =
+                                    Objects.requireNonNull(((ParameterizedTypeName) typeName).typeArguments.get(0));
+                            typeName = ParameterizedTypeName.get(
+                                    ClassName.get(Optional.class),
+                                    ParameterizedTypeName.get(ClassName.get(List.class), parameterType));
+                        }
+                    } else {
+                        // T with allow-multiple should become list<T>
+                        typeName = ParameterizedTypeName.get(ClassName.get(List.class), typeName);
+                    }
+                }
+            }
+
             EnrichedObjectProperty overridden = EnrichedObjectProperty.builder()
                     .camelCaseKey(prop.camelCaseKey())
                     .pascalCaseKey(prop.pascalCaseKey())
@@ -267,6 +301,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
                     .generator(prop.generator())
                     .allowMultiple(prop.allowMultiple())
+                    .useNullableAnnotation(prop.useNullableAnnotation())
                     .wireKey(prop.wireKey())
                     .docs(prop.docs())
                     .literal(prop.literal())
@@ -317,7 +352,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                     ? ParameterizedTypeName.get(
                                             ClassName.get(Optional.class), ClassName.get(File.class))
                                     : ClassName.get(File.class),
-                            false);
+                            false,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList()));
         result.addAll(allowMultipleProperties.stream()
@@ -358,7 +394,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             false,
                             generatorContext.getCustomConfig().wrappedAliases(),
                             poetTypeName,
-                            !isCollection);
+                            !isCollection,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList()));
         if (selfInterface.isEmpty()) {
@@ -379,7 +416,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 inline,
                                 generatorContext.getCustomConfig().wrappedAliases(),
                                 poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()),
-                                false);
+                                false,
+                                generatorContext.getCustomConfig().useNullableAnnotation());
                     })
                     .collect(Collectors.toList()));
         }
@@ -408,7 +446,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             inline,
                             generatorContext.getCustomConfig().wrappedAliases(),
                             propertyMethodSpec.methodSpec().returnType,
-                            false);
+                            false,
+                            generatorContext.getCustomConfig().useNullableAnnotation());
                 })
                 .collect(Collectors.toList());
     }

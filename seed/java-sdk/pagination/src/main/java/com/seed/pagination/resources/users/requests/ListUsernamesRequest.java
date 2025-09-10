@@ -81,6 +81,10 @@ public final class ListUsernamesRequest {
             return this;
         }
 
+        /**
+         * <p>The cursor used for pagination in order to fetch
+         * the next page of results.</p>
+         */
         @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
         public Builder startingAfter(Optional<String> startingAfter) {
             this.startingAfter = startingAfter;

@@ -33,5 +33,5 @@ export function variable(arg: AST.Variable.Args): AST.Variable {
 }
 
 export * from "./ast";
-export { Type as Types, TypeLiteral, Reference } from "./ast";
+export { Reference, Type as Types, TypeLiteral } from "./ast";
 export * from "./ast/core";

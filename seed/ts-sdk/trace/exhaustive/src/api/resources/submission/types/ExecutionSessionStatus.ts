@@ -16,34 +16,4 @@ export const ExecutionSessionStatus = {
     RunningContainer: "RUNNING_CONTAINER",
     LiveContainer: "LIVE_CONTAINER",
     FailedToLaunch: "FAILED_TO_LAUNCH",
-    _visit: <R>(value: ExecutionSessionStatus, visitor: ExecutionSessionStatus.Visitor<R>) => {
-        switch (value) {
-            case ExecutionSessionStatus.CreatingContainer:
-                return visitor.creatingContainer();
-            case ExecutionSessionStatus.ProvisioningContainer:
-                return visitor.provisioningContainer();
-            case ExecutionSessionStatus.PendingContainer:
-                return visitor.pendingContainer();
-            case ExecutionSessionStatus.RunningContainer:
-                return visitor.runningContainer();
-            case ExecutionSessionStatus.LiveContainer:
-                return visitor.liveContainer();
-            case ExecutionSessionStatus.FailedToLaunch:
-                return visitor.failedToLaunch();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace ExecutionSessionStatus {
-    export interface Visitor<R> {
-        creatingContainer: () => R;
-        provisioningContainer: () => R;
-        pendingContainer: () => R;
-        runningContainer: () => R;
-        liveContainer: () => R;
-        failedToLaunch: () => R;
-        _other: () => R;
-    }
-}

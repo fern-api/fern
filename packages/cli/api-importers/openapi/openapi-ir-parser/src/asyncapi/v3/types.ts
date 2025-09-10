@@ -11,6 +11,7 @@ export interface DocumentV3 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<string, ChannelMessage>;
+        parameters?: Record<string, ChannelParameter>;
     };
 }
 
@@ -30,8 +31,7 @@ export interface ChannelV3 {
     bindings?: Bindings;
     messages?: Record<string, ChannelMessage>;
     servers?: OpenAPIV3.ReferenceObject[];
-    // TODO: Add support for reference objects
-    parameters?: Record<string, ChannelParameter>;
+    parameters?: Record<string, OpenAPIV3.ReferenceObject | ChannelParameter>;
     description?: string;
 }
 
@@ -44,7 +44,7 @@ export interface Operation {
 
 export type ChannelParameter = OpenAPIV3.ParameterObject & {
     description?: string;
-    location: string;
+    location?: string;
     enum?: string[];
     default?: string;
     examples?: string[];

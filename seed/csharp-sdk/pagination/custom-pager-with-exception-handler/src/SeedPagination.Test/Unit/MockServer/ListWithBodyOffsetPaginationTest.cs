@@ -59,10 +59,10 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListWithBodyOffsetPaginationAsync(
+        var items = await Client.Users.ListWithBodyOffsetPaginationAsync(
             new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

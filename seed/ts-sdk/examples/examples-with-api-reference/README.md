@@ -1,11 +1,11 @@
-# Seed TypeScript Library
+# CustomName TypeScript Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/examples)](https://www.npmjs.com/package/@fern/examples)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The CustomName TypeScript library provides convenient access to the CustomName APIs from TypeScript.
 
 ## Documentation
 
@@ -96,6 +96,18 @@ const response = await client.service.createMovie(..., {
 });
 ```
 
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.service.createMovie(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -158,8 +170,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel
@@ -181,13 +192,3 @@ const client = new SeedExamplesClient({
     fetcher: // provide your implementation here
 });
 ```
-
-## Contributing
-
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
-
-On the other hand, contributions to the README are always very welcome!

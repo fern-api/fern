@@ -1,8 +1,7 @@
-import { readFile } from "fs/promises";
-
 import { File } from "@fern-api/base-generator";
 import { csharp } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { readFile } from "fs/promises";
 
 export class PrebuiltUtilities {
     private utilitiesDirectory = RelativeFilePath.of("Utilities");

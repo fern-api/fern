@@ -18,6 +18,11 @@ receive the attention you expect.
 
 The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
+The repo relies on git-lfs to hande large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
+```sh
+brew install git-lfs
+```
+
 Once you have cloned or forked the repository, run through the steps below.
 
 ### Step 1: Install dependencies
@@ -43,6 +48,26 @@ To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser 
 To run the integration tests: `pnpm test:ete`.
 
 Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `pnpm test:update` or `pnpm test:ete:update`.
+
+<br>
+
+## Debugging
+
+For debugging TypeScript code in tests, use the debug compilation and test scripts:
+
+1. **Compile for debugging**: `pnpm compile:debug`
+   - Required for all debug workflows
+   - Uses `--sourceMap` flag to generate source maps for proper TypeScript debugging
+   - Slower than standard compilation, which is why source maps are disabled by default
+
+2. **Run tests with debugger**: `pnpm test:debug [test-file-name]`
+   - Starts tests with Node.js debugger enabled
+   - Optionally specify a test file name to run only that test
+   - Manually attach VS Code debugger by opening Command Palette (Cmd+Shift+P) and selecting "Debug: Attach to Node Process"
+
+**Limitations**: Debug scripts only work with vitest tests. Some -- but not all -- of the workflows they won't work with:
+- Local Fern CLI builds (compiled to single executable CJS file)
+- Generators (run in Docker containers, not all written in TypeScript)
 
 <br>
 
@@ -153,7 +178,7 @@ Below are some examples of using the command.
 - For a single generator: `pnpm seed test --generator python-sdk`
 - For a single generator and test definition: `pnpm seed test --generator python-sdk --fixture file-download`
 - For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
-- For running the generator locally (not on docker): `pnpm seed test --generator python-sdk`
+- For running the generator locally (not on docker): `pnpm seed test --generator python-sdk --local`
 
 ### Running seed against a custom fern definition
 
@@ -161,7 +186,7 @@ It may be valuable to run seed on a particular Fern definition or OpenAPI spec. 
 you can use the `seed run` command and point it at the fern folder:
 
 ```
-pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--audience <audience>]
+pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--output-path /path/for/sdk/output] [--audience <audience>]
 ```
 
 Below are some examples of using the command.
@@ -171,7 +196,6 @@ Below are some examples of using the command.
 - Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
 
 <br>
-
 ## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!

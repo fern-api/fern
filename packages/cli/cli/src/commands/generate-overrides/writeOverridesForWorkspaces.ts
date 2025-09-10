@@ -1,13 +1,12 @@
-import { readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
-import { RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-import { OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getAllOpenAPISpecs, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Schema } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -68,7 +67,7 @@ async function writeDefinitionForOpenAPIWorkspace({
             context,
             documents: await loader.loadDocuments({ context, specs: [spec] })
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let existingOverrides: any = {};
         if (spec.absoluteFilepathToOverrides !== undefined) {
             existingOverrides = await readExistingOverrides(spec.absoluteFilepathToOverrides, context);
@@ -88,7 +87,7 @@ async function writeDefinitionForOpenAPIWorkspace({
                     .split("/")
                     .map((part) => part.replace(".yml", ""))
                     .filter((part) => part !== "__package__");
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 const sdkMethodNameExtensions: Record<string, any> = {};
                 if (groupName.length > 0) {
                     sdkMethodNameExtensions["x-fern-sdk-group-name"] = groupName;
@@ -122,7 +121,7 @@ function writeModels(existingSchemas: Record<string, Record<string, unknown>>, s
         if (schemaId in existingSchemas) {
             continue;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const typeNameOverride: Record<string, any> = {};
         typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? (schema.nameOverride ?? schemaId) : schemaId;
         existingSchemas[schemaId] = typeNameOverride;

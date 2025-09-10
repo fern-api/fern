@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-import { readFile } from "fs/promises";
-
 import {
     AbstractGeneratorContext,
     AbstractGeneratorNotificationService,
@@ -10,6 +7,7 @@ import {
     NopGeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { readFile } from "fs/promises";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -131,7 +129,9 @@ async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> 
         unrecognizedObjectKeys: "passthrough"
     });
     if (!validatedConfig.ok) {
-        throw new Error(`The generator config failed to pass validation. ${validatedConfig.errors.join(", ")}`);
+        throw new Error(
+            `The generator config failed to pass validation. ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
+        );
     }
     return validatedConfig.value;
 }

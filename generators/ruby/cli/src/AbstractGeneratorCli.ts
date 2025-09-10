@@ -1,17 +1,15 @@
-import { cp, readdir } from "fs/promises";
-import tmp from "tmp-promise";
-
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorNotificationService,
     parseGeneratorConfig
 } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { cp, readdir } from "fs/promises";
+import tmp from "tmp-promise";
 
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 

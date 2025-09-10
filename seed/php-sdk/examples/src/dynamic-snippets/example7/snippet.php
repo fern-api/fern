@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\File\Service\Requests\GetFileRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->health->service->check(
-    'id-2sdx82h',
+$client->file->service->getFile(
+    'filename',
+    new GetFileRequest([
+        'xFileApiVersion' => 'X-File-API-Version',
+    ]),
 );

@@ -1,9 +1,8 @@
-import { camelCase } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { camelCase } from "lodash-es";
 
 function cleanSdkGroupName(groupName: SdkGroupName): SdkGroupName {
     const maybeNamespace = groupName.find((group) => typeof group === "object" && group.type === "namespace");

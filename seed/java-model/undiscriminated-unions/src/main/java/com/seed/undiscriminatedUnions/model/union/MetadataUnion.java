@@ -32,6 +32,7 @@ public final class MetadataUnion {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((Optional<Map<String, Object>>) this.value);
@@ -86,11 +87,11 @@ public final class MetadataUnion {
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Optional<Map<String, Object>>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, NamedMetadata.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

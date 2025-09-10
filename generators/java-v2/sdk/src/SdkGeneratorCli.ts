@@ -1,19 +1,18 @@
-import { writeFile } from "fs/promises";
-
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
+import { writeFile } from "fs/promises";
+import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -44,6 +43,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
+        if (context.isSelfHosted()) {
+            await this.generateGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -52,6 +54,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
+            // Pre-populate snippets cache following C# approach
+            await context.snippetGenerator.populateSnippetsCache();
+
             const snippetFilepath = context.config.output.snippetFilepath;
             let endpointSnippets: Endpoint[] = [];
             try {
@@ -70,6 +75,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
 
             try {
+                await this.generateReference({ context });
+            } catch (e) {
+                context.logger.warn("Failed to generate reference.md, this is OK.");
+            }
+
+            try {
                 await this.generateSnippetsJson({
                     context,
                     endpointSnippets,
@@ -79,6 +90,10 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 context.logger.warn("Failed to generate snippets.json, this is OK");
             }
         }
+
+        // Generate wire tests if enabled
+        const wireTestGenerator = new WireTestGenerator(context);
+        await wireTestGenerator.generate();
 
         await context.project.persist();
     }
@@ -141,6 +156,14 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         );
     }
 
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
     private async generateSnippetsJson({
         context,
         endpointSnippets,
@@ -165,5 +188,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             snippetFilepath,
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
+    }
+
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.pushToGitHub({ context });
     }
 }

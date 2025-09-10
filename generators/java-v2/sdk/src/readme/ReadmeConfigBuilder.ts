@@ -45,11 +45,42 @@ export class ReadmeConfigBuilder {
             organization: context.config.organization,
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
+            introduction: context.ir.readmeConfig?.introduction,
+            referenceMarkdownPath: "./reference.md",
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
             features
         };
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
+        const config = context.config;
+        if (config.output.mode.type === "github" && config.output.mode.publishInfo?.type === "maven") {
+            const coordinates = config.output.mode.publishInfo.coordinate.split(":");
+            const group = coordinates[0];
+            const artifact = coordinates[1];
+            const version = config.output.mode.version;
+            if (group && artifact && version) {
+                return FernGeneratorCli.LanguageInfo.java({ publishInfo: { group, artifact, version } });
+            } else {
+                const missingFields: string[] = [];
+                if (!group) {
+                    missingFields.push("group");
+                }
+                if (!artifact) {
+                    missingFields.push("artifact");
+                }
+                if (!version) {
+                    missingFields.push("version");
+                }
+                context.logger.debug(
+                    `Unable to populate Java language info. Missing required fields: ${missingFields.join(", ")}`
+                );
+            }
+        } else {
+            context.logger.debug("Unable to populate Java language info.");
+        }
         return FernGeneratorCli.LanguageInfo.java({});
     }
 }

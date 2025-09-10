@@ -1,1 +1,1 @@
-export { SeedExhaustiveError, SeedExhaustiveTimeoutError } from "./errors";
+export { SeedExhaustiveError, SeedExhaustiveTimeoutError } from "./errors/index.js";

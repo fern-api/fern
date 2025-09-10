@@ -1,8 +1,3 @@
-import chalk from "chalk";
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
-import YAML from "yaml";
-
 import {
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
@@ -12,8 +7,11 @@ import {
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry } from "@fern-fern/generators-sdk";
+import chalk from "chalk";
+import { readFile, writeFile } from "fs/promises";
+import path from "path";
+import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -59,7 +57,7 @@ export async function loadAndUpdateGenerators({
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
         // https://eemeli.org/yaml/#creating-nodes
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const groupName = (groupBlock.key as any).value as string;
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;

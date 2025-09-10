@@ -3,20 +3,16 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../../packages/commons/core-utils"
     },
     {
       "path": "../../../packages/commons/path-utils"
-    },
-    {
-      "path": "../../../packages/ir-sdk"
     },
     {
       "path": "../../browser-compatible-base"

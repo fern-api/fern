@@ -3,23 +3,20 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./src/**/__test__/**/generated"
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
       "path": "../../../../commons/core-utils"
     },
     {
-      "path": "../../../fern-definition/schema"
+      "path": "../../../configuration"
     },
     {
-      "path": "../../../configuration"
+      "path": "../../../fern-definition/schema"
     },
     {
       "path": "../../../logger"

@@ -703,6 +703,7 @@ client.service.create_big_entity(
         id="id",
     ),
     extended_movie=ExtendedMovie(
+        cast=["cast", "cast"],
         id="id",
         prequel="prequel",
         title="title",
@@ -712,7 +713,6 @@ client.service.create_big_entity(
         book="book",
         metadata={"metadata": {"key": "value"}},
         revenue=1000000,
-        cast=["cast", "cast"],
     ),
     entity=Entity(
         type="primitive",
@@ -1010,6 +1010,67 @@ client.service.create_big_entity(
 <dd>
 
 **moment:** `typing.Optional[Moment]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExamples
+from seed.environment import SeedExamplesEnvironment
+from seed.types import RefreshTokenRequest
+
+client = SeedExamples(
+    token="YOUR_TOKEN",
+    environment=SeedExamplesEnvironment.PRODUCTION,
+)
+client.service.refresh_token(
+    request=RefreshTokenRequest(
+        ttl=420,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[RefreshTokenRequest]` 
     
 </dd>
 </dl>

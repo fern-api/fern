@@ -1,7 +1,6 @@
+import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { Request } from "express";
 import { isEqualWith } from "lodash-es";
-
-import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 
 import { EqualResponse } from "./EqualRequestResponse";
 

@@ -1,19 +1,18 @@
-import chalk from "chalk";
-import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import YAML from "yaml";
-
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import {
     AbsoluteFilePath,
     Directory,
     File,
-    RelativeFilePath,
     getDirectoryContents,
     join,
+    RelativeFilePath,
     relativize
 } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration";
 
@@ -90,7 +89,7 @@ async function addApiConfigurationToSingleWorkspace({
                 yaml.dump({
                     api: {
                         path: join(
-                            await relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
+                            relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
                             RelativeFilePath.of(openapiDirectory.name),
                             RelativeFilePath.of(openapiDirectory.contents[0]?.name)
                         )
@@ -101,7 +100,7 @@ async function addApiConfigurationToSingleWorkspace({
         }
     } else {
         const generatorsYmlContents = yaml.load(existingGeneratorsYml.contents);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         if ((generatorsYmlContents as any)?.api != null) {
             // api config is already defined
         } else if (openapiDirectory != null && openapiDirectory.contents[0] != null) {
@@ -109,7 +108,7 @@ async function addApiConfigurationToSingleWorkspace({
             const parsedDocument = YAML.parseDocument(existingGeneratorsYml.contents);
             parsedDocument.set("api", {
                 path: join(
-                    await relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
+                    relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
                     RelativeFilePath.of(openapiDirectory.name),
                     RelativeFilePath.of(openapiDirectory.contents[0]?.name)
                 )

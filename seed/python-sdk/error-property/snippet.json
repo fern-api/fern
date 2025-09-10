@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_property-based-error.ThrowError"
             },
             "snippet": {
-                "sync_client": "from seed import SeedErrorProperty\nclient = SeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )\nclient.property_based_error.throw_error()\n",
-                "async_client": "from seed import AsyncSeedErrorProperty\nimport asyncio\nclient = AsyncSeedErrorProperty(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.property_based_error.throw_error()\nasyncio.run(main())",
+                "sync_client": "from seed import SeedErrorProperty\n\nclient = SeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.property_based_error.throw_error()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.property_based_error.throw_error()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

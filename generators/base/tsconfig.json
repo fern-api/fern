@@ -3,15 +3,11 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
-    {
-      "path": "../browser-compatible-base"
-    },
     {
       "path": "../../packages/cli/logger"
     },
@@ -23,6 +19,9 @@
     },
     {
       "path": "../../packages/commons/logging-execa"
+    },
+    {
+      "path": "../browser-compatible-base"
     }
   ]
 }

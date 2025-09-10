@@ -14,6 +14,7 @@ from ....core.route_args import get_route_args
 from ..types.id import Id
 from ..types.my_alias_object import MyAliasObject
 from ..types.my_collection_alias_object import MyCollectionAliasObject
+from ..types.my_inline_type import MyInlineType
 from ..types.my_object import MyObject
 from ..types.my_object_with_optional import MyObjectWithOptional
 from ..types.object_type import ObjectType
@@ -102,6 +103,12 @@ class AbstractServiceService(AbstractFernService):
         request: typing.Optional[typing.Optional[typing.Any]] = None,
     ) -> str: ...
 
+    @abc.abstractmethod
+    def with_inline_type(self, *, file: fastapi.UploadFile, request: MyInlineType) -> str: ...
+
+    @abc.abstractmethod
+    def simple(self) -> None: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -116,6 +123,8 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_with_form_encoding(router=router)
         cls.__init_with_form_encoded_containers(router=router)
         cls.__init_optional_args(router=router)
+        cls.__init_with_inline_type(router=router)
+        cls.__init_simple(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
@@ -455,4 +464,77 @@ class AbstractServiceService(AbstractFernService):
             response_model=str,
             description=AbstractServiceService.optional_args.__doc__,
             **get_route_args(cls.optional_args, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_inline_type(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_inline_type)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "file":
+                new_parameters.append(parameter.replace(default=fastapi.UploadFile))
+            elif parameter_name == "request":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.with_inline_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.with_inline_type)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.with_inline_type(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_inline_type' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.with_inline_type.__globals__)
+
+        router.post(
+            path="/inline-type",
+            response_model=str,
+            description=AbstractServiceService.with_inline_type.__doc__,
+            **get_route_args(cls.with_inline_type, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_simple(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.simple)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.simple, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.simple)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.simple(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'simple' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.simple.__globals__)
+
+        router.post(
+            path="/snippet",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.simple.__doc__,
+            **get_route_args(cls.simple, default_tag="service"),
         )(wrapper)

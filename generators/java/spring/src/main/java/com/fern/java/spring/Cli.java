@@ -23,6 +23,7 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.spring.generators.ApiExceptionGenerator;
 import com.fern.java.spring.generators.ErrorBodyGenerator;
 import com.fern.java.spring.generators.ExceptionGenerator;
+import com.fern.java.spring.generators.OptionalNullableGenerator;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
@@ -86,6 +87,10 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
+
+        OptionalNullableGenerator optionalNullableGenerator = new OptionalNullableGenerator(context);
+        GeneratedJavaFile optionalNullable = optionalNullableGenerator.generateFile();
+        this.addGeneratedFile(optionalNullable);
 
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();

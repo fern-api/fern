@@ -173,7 +173,7 @@ export function generateContainerExample({
                     keyType: containerType.keyType,
                     valueType: containerType.valueType
                 }),
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 jsonExample: { [keyExample.jsonExample as any]: valueExample.jsonExample }
             };
         }

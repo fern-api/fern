@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { GithubSelfhostedSchema } from "./GithubSelfhostedSchema";
 import { GithubCommitAndReleaseSchema } from "./GithubCommitAndReleaseSchema";
 import { GithubPullRequestSchema } from "./GithubPullRequestSchema";
 import { GithubPushSchema } from "./GithubPushSchema";
@@ -12,8 +13,17 @@ import { GithubPushSchema } from "./GithubPushSchema";
 export const GithubConfigurationSchema: core.serialization.Schema<
     serializers.GithubConfigurationSchema.Raw,
     FernDefinition.GithubConfigurationSchema
-> = core.serialization.undiscriminatedUnion([GithubCommitAndReleaseSchema, GithubPullRequestSchema, GithubPushSchema]);
+> = core.serialization.undiscriminatedUnion([
+    GithubSelfhostedSchema,
+    GithubCommitAndReleaseSchema,
+    GithubPullRequestSchema,
+    GithubPushSchema,
+]);
 
 export declare namespace GithubConfigurationSchema {
-    export type Raw = GithubCommitAndReleaseSchema.Raw | GithubPullRequestSchema.Raw | GithubPushSchema.Raw;
+    export type Raw =
+        | GithubSelfhostedSchema.Raw
+        | GithubCommitAndReleaseSchema.Raw
+        | GithubPullRequestSchema.Raw
+        | GithubPushSchema.Raw;
 }

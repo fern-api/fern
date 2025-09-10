@@ -1,27 +1,38 @@
+import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
+    ExportsManager,
+    getReferenceToExportViaNamespaceImport,
     ImportsManager,
-    Reference,
-    getReferenceToExportViaNamespaceImport
+    Reference
 } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
-
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 export declare namespace VersionDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
         apiVersion: ApiVersionScheme | undefined;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
 export class VersionDeclarationReferencer extends AbstractDeclarationReferencer {
     private apiVersion: ApiVersionScheme | undefined;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
 
-    constructor({ apiVersion, ...superInit }: VersionDeclarationReferencer.Init) {
+    constructor({
+        apiVersion,
+        relativePackagePath,
+        relativeTestPath,
+        ...superInit
+    }: VersionDeclarationReferencer.Init) {
         super(superInit);
         this.apiVersion = apiVersion;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
     }
 
     public getExportedFilepath(): ExportedFilePath {
@@ -54,9 +65,11 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
 
     public getReferenceToVersionEnum({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference | undefined {
         if (this.apiVersion == null) {
@@ -64,6 +77,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
         }
         return this.getReferenceToExport({
             importsManager,
+            exportsManager,
             sourceFile,
             exportedName: this.getExportedNameOfVersionEnum()
         });
@@ -83,10 +97,12 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
 
     private getReferenceToExport({
         importsManager,
+        exportsManager,
         sourceFile,
         exportedName
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
         exportedName: string;
     }): Reference {
@@ -96,6 +112,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "version",
             importsManager,
+            exportsManager,
             referencedIn: sourceFile
         });
     }

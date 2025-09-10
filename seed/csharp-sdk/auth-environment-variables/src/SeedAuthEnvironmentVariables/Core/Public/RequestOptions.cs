@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -6,6 +5,7 @@ using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables;
 
+[Serializable]
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>

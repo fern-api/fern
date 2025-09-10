@@ -1,14 +1,12 @@
-import { camelCase } from "lodash-es";
-
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
-    Options,
-    TypeInstance
+    Options
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
+import { camelCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";

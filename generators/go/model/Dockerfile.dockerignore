@@ -1,6 +1,2 @@
 *
-!go.mod
-!go.sum
-!cmd
-!internal
-!version.go
+!generators/go-v2/model/dist

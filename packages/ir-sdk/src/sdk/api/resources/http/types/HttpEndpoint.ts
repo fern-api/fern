@@ -11,6 +11,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     method: FernIr.HttpMethod;
     headers: FernIr.HttpHeader[];
     baseUrl: FernIr.EnvironmentBaseUrlId | undefined;
+    v2BaseUrls: FernIr.EnvironmentBaseUrlId[] | undefined;
     /** Overrides the service and endpoint level base paths */
     basePath: FernIr.HttpPath | undefined;
     path: FernIr.HttpPath;
@@ -19,8 +20,10 @@ export interface HttpEndpoint extends FernIr.Declaration {
     allPathParameters: FernIr.PathParameter[];
     queryParameters: FernIr.QueryParameter[];
     requestBody: FernIr.HttpRequestBody | undefined;
+    v2RequestBodies: FernIr.V2HttpRequestBodies | undefined;
     sdkRequest: FernIr.SdkRequest | undefined;
     response: FernIr.HttpResponse | undefined;
+    v2Responses: FernIr.V2HttpResponses | undefined;
     errors: FernIr.ResponseErrors;
     auth: boolean;
     idempotent: boolean;
@@ -30,4 +33,5 @@ export interface HttpEndpoint extends FernIr.Declaration {
     v2Examples: FernIr.V2HttpEndpointExamples | undefined;
     transport: FernIr.Transport | undefined;
     source: FernIr.HttpEndpointSource | undefined;
+    audiences: FernIr.AudienceReference[] | undefined;
 }

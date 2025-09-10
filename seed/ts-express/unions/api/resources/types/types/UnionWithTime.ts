@@ -20,7 +20,7 @@ import * as SeedUnions from "../../../index";
  * @example
  *     {
  *         type: "datetime",
- *         value: "1994-01-01T01:01:01Z"
+ *         value: new Date("1994-01-01T01:01:01.000Z")
  *     }
  */
 export type UnionWithTime =

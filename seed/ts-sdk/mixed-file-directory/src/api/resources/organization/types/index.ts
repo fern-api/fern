@@ -1,2 +1,2 @@
-export * from "./Organization";
-export * from "./CreateOrganizationRequest";
+export * from "./Organization.js";
+export * from "./CreateOrganizationRequest.js";

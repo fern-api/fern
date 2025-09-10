@@ -1,9 +1,9 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
-import { Import } from "../Import";
-import { Variable } from "../Variable";
 import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
+import { Import } from "../Import";
+import { Variable } from "../Variable";
 import { Function_ } from "./Function_";
 
 export interface BlockConfiguration {

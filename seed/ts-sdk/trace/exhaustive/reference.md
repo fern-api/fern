@@ -57,10 +57,9 @@ await client.v2.test();
 <dd>
 
 ```typescript
-await client.admin.updateTestSubmissionStatus(
-    SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.TestSubmissionStatus.stopped(),
-);
+await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+    type: "stopped",
+});
 ```
 
 </dd>
@@ -118,7 +117,10 @@ await client.admin.updateTestSubmissionStatus(
 ```typescript
 await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
     updateTime: "2024-01-15T09:30:00Z",
-    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running("QUEUEING_SUBMISSION"),
+    updateInfo: {
+        type: "running",
+        value: "QUEUEING_SUBMISSION",
+    },
 });
 ```
 
@@ -175,10 +177,9 @@ await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b
 <dd>
 
 ```typescript
-await client.admin.updateWorkspaceSubmissionStatus(
-    SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    SeedTrace.WorkspaceSubmissionStatus.stopped(),
-);
+await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+    type: "stopped",
+});
 ```
 
 </dd>
@@ -236,7 +237,10 @@ await client.admin.updateWorkspaceSubmissionStatus(
 ```typescript
 await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
     updateTime: "2024-01-15T09:30:00Z",
-    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running("QUEUEING_SUBMISSION"),
+    updateInfo: {
+        type: "running",
+        value: "QUEUEING_SUBMISSION",
+    },
 });
 ```
 
@@ -296,8 +300,17 @@ await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84
 await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "testCaseId", {
     result: {
         result: {
-            expectedResult: SeedTrace.VariableValue.integerValue(1),
-            actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue(1)),
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
+            actualResult: {
+                type: "value",
+                value: {
+                    type: "integerValue",
+                    value: 1,
+                },
+            },
             passed: true,
         },
         stdout: "stdout",
@@ -306,7 +319,10 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -319,12 +335,18 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -335,7 +357,10 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -348,12 +373,18 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -437,7 +468,10 @@ await client.admin.storeTracedTestCaseV2(
                 filename: "filename",
                 directory: "directory",
             },
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -450,12 +484,18 @@ await client.admin.storeTracedTestCaseV2(
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -470,7 +510,10 @@ await client.admin.storeTracedTestCaseV2(
                 filename: "filename",
                 directory: "directory",
             },
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -483,12 +526,18 @@ await client.admin.storeTracedTestCaseV2(
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -563,11 +612,12 @@ await client.admin.storeTracedTestCaseV2(
 ```typescript
 await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
     workspaceRunDetails: {
-        exceptionV2: SeedTrace.ExceptionV2.generic({
+        exceptionV2: {
+            type: "generic",
             exceptionType: "exceptionType",
             exceptionMessage: "exceptionMessage",
             exceptionStacktrace: "exceptionStacktrace",
-        }),
+        },
         exception: {
             exceptionType: "exceptionType",
             exceptionMessage: "exceptionMessage",
@@ -579,7 +629,10 @@ await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4b
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -592,12 +645,18 @@ await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4b
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -608,7 +667,10 @@ await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4b
         {
             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             lineNumber: 1,
-            returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
             expressionLocation: {
                 start: 1,
                 offset: 1,
@@ -621,12 +683,18 @@ await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4b
                     scopes: [
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                         {
                             variables: {
-                                variables: SeedTrace.DebugVariableValue.integerValue(1),
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
                             },
                         },
                     ],
@@ -699,7 +767,10 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
             filename: "filename",
             directory: "directory",
         },
-        returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+        returnValue: {
+            type: "integerValue",
+            value: 1,
+        },
         expressionLocation: {
             start: 1,
             offset: 1,
@@ -712,12 +783,18 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
                 scopes: [
                     {
                         variables: {
-                            variables: SeedTrace.DebugVariableValue.integerValue(1),
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
                         },
                     },
                     {
                         variables: {
-                            variables: SeedTrace.DebugVariableValue.integerValue(1),
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
                         },
                     },
                 ],
@@ -732,7 +809,10 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
             filename: "filename",
             directory: "directory",
         },
-        returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+        returnValue: {
+            type: "integerValue",
+            value: 1,
+        },
         expressionLocation: {
             start: 1,
             offset: 1,
@@ -745,12 +825,18 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
                 scopes: [
                     {
                         variables: {
-                            variables: SeedTrace.DebugVariableValue.integerValue(1),
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
                         },
                     },
                     {
                         variables: {
-                            variables: SeedTrace.DebugVariableValue.integerValue(1),
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
                         },
                     },
                 ],
@@ -907,7 +993,7 @@ await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTr
 
 ```typescript
 await client.migration.getAttemptedMigrations({
-    adminKeyHeader: "admin-key-header",
+    "admin-key-header": "admin-key-header",
 });
 ```
 
@@ -1357,7 +1443,16 @@ Creates a problem
 await client.problem.createProblem({
     problemName: "problemName",
     problemDescription: {
-        boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")],
+        boards: [
+            {
+                type: "html",
+                value: "boards",
+            },
+            {
+                type: "html",
+                value: "boards",
+            },
+        ],
     },
     files: {
         ["JAVA"]: {
@@ -1379,29 +1474,59 @@ await client.problem.createProblem({
     },
     inputParams: [
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
     ],
-    outputType: SeedTrace.VariableType.integerType(),
+    outputType: {
+        type: "integerType",
+    },
     testcases: [
         {
             testCase: {
                 id: "id",
-                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
             },
-            expectedResult: SeedTrace.VariableValue.integerValue(1),
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
         },
         {
             testCase: {
                 id: "id",
-                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
             },
-            expectedResult: SeedTrace.VariableValue.integerValue(1),
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
         },
     ],
     methodName: "methodName",
@@ -1471,7 +1596,16 @@ Updates a problem
 await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
     problemName: "problemName",
     problemDescription: {
-        boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")],
+        boards: [
+            {
+                type: "html",
+                value: "boards",
+            },
+            {
+                type: "html",
+                value: "boards",
+            },
+        ],
     },
     files: {
         ["JAVA"]: {
@@ -1493,29 +1627,59 @@ await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
     },
     inputParams: [
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
     ],
-    outputType: SeedTrace.VariableType.integerType(),
+    outputType: {
+        type: "integerType",
+    },
     testcases: [
         {
             testCase: {
                 id: "id",
-                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
             },
-            expectedResult: SeedTrace.VariableValue.integerValue(1),
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
         },
         {
             testCase: {
                 id: "id",
-                params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)],
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
             },
-            expectedResult: SeedTrace.VariableValue.integerValue(1),
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
         },
     ],
     methodName: "methodName",
@@ -1656,15 +1820,21 @@ Returns default starter files for problem
 await client.problem.getDefaultStarterFiles({
     inputParams: [
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
         {
-            variableType: SeedTrace.VariableType.integerType(),
+            variableType: {
+                type: "integerType",
+            },
             name: "name",
         },
     ],
-    outputType: SeedTrace.VariableType.integerType(),
+    outputType: {
+        type: "integerType",
+    },
     methodName: "methodName",
 });
 ```

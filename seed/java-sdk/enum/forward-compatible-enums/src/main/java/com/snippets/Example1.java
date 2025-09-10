@@ -20,10 +20,6 @@ public class Example1 {
                 .operandOrColor(
                     ColorOrOperand.ofColor(Color.RED)
                 )
-                .maybeOperand(Operand.GREATER_THAN)
-                .maybeOperandOrColor(
-                    ColorOrOperand.ofColor(Color.RED)
-                )
                 .build()
         );
     }

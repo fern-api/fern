@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_content-type)](https://pypi.python.org/pypi/fern_content-type)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -21,8 +21,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedContentTypes
-client = SeedContentTypes(base_url="https://yourhost.com/path/to/api", )
-client.service.patch(application='application', require_auth=True, )
+
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.patch(
+    application="application",
+    require_auth=True,
+)
 ```
 
 ## Async Client
@@ -30,12 +36,24 @@ client.service.patch(application='application', require_auth=True, )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedContentTypes
 import asyncio
-client = AsyncSeedContentTypes(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedContentTypes
+
+client = AsyncSeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.service.patch(application='application', require_auth=True, )
-asyncio.run(main())```
+    await client.service.patch(
+        application="application",
+        require_auth=True,
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,8 +62,9 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
-    client.service.patch()
+    client.service.patch(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -60,8 +79,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedContentTypes
-client = SeedContentTypes(..., )
-response = client.service.with_raw_response.patch()
+
+client = SeedContentTypes(
+    ...,
+)
+response = client.service.with_raw_response.patch(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -81,7 +103,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.patch(request_options={
+client.service.patch(..., request_options={
     "max_retries": 1
 })
 ```
@@ -93,10 +115,15 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedContentTypes
-client = SeedContentTypes(..., timeout=20.0, )
+
+client = SeedContentTypes(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
-client.service.patch(request_options={
+client.service.patch(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -107,9 +134,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedContentTypes
 import httpx
-client = SeedContentTypes(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedContentTypes
+
+client = SeedContentTypes(
+    ...,
+    httpx_client=httpx.Client(
+        proxy="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

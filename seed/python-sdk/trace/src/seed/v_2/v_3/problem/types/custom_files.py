@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 from .....commons.types.language import Language
-from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .....core.serialization import FieldMetadata
 from .basic_test_case_template import BasicTestCaseTemplate
 from .files import Files
@@ -33,6 +33,10 @@ class CustomFiles_Basic(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, F401, I001
+from .....commons.types.map_type import MapType  # noqa: E402, F401, I001
+
+
 class CustomFiles_Custom(UniversalBaseModel):
     value: typing.Dict[Language, Files]
     type: typing.Literal["custom"] = "custom"
@@ -47,3 +51,4 @@ class CustomFiles_Custom(UniversalBaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
+update_forward_refs(CustomFiles_Basic)

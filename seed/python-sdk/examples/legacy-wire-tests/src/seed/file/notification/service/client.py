@@ -51,11 +51,8 @@ class ServiceClient:
             notification_id="notification-hsy129x",
         )
         """
-        response = self._raw_client.get_exception(
-            notification_id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = self._raw_client.get_exception(notification_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -109,8 +106,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_exception(
-            notification_id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = await self._raw_client.get_exception(notification_id, request_options=request_options)
+        return _response.data

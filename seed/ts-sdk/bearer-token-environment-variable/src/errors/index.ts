@@ -1,2 +1,2 @@
-export { SeedBearerTokenEnvironmentVariableError } from "./SeedBearerTokenEnvironmentVariableError";
-export { SeedBearerTokenEnvironmentVariableTimeoutError } from "./SeedBearerTokenEnvironmentVariableTimeoutError";
+export { SeedBearerTokenEnvironmentVariableError } from "./SeedBearerTokenEnvironmentVariableError.js";
+export { SeedBearerTokenEnvironmentVariableTimeoutError } from "./SeedBearerTokenEnvironmentVariableTimeoutError.js";

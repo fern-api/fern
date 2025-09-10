@@ -1,4 +1,3 @@
-using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
@@ -27,11 +26,5 @@ public partial class SeedObjectsWithImportsClient
             }
         }
         _client = new RawClient(clientOptions);
-        Commons = new CommonsClient(_client);
-        File = new FileClient(_client);
     }
-
-    public CommonsClient Commons { get; }
-
-    public FileClient File { get; }
 }

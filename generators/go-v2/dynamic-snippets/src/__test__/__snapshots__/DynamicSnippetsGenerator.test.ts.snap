@@ -78,6 +78,7 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -108,15 +109,31 @@ func do() {
 				From:   "Quentin Tarantino",
 				Rating: 8.5,
 				Tag:    "tag-12efs9dv",
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"academyAward": true,
 					"releaseDate":  "2023-12-08",
-					"ratings": map[string]interface{}{
+					"ratings": map[string]any{
 						"rottenTomatoes": 97,
 						"imdb":           7.6,
 					},
 				},
 				Revenue: 1000000,
+			},
+			EventInfo: &commons.EventInfo{
+				Metadata: &commons.Metadata{
+					ID: "event-12345",
+					Data: map[string]string{
+						"key1": "val1",
+						"key2": "val2",
+					},
+					JSONString: acme.String(
+						"abc",
+					),
+				},
+			},
+			Migration: &acme.Migration{
+				Name:   "Migration 31 Aug",
+				Status: acme.MigrationStatusRunning,
 			},
 		},
 	)
@@ -164,14 +181,14 @@ func do() {
 			From:   "Hayao Miyazaki",
 			Rating: 8,
 			Tag:    "development",
-			Metadata: map[string]interface{}{
-				"actors": []interface{}{
+			Metadata: map[string]any{
+				"actors": []any{
 					"Christian Bale",
 					"Florence Pugh",
 					"Willem Dafoe",
 				},
 				"releaseDate": "2023-12-08",
-				"ratings": map[string]interface{}{
+				"ratings": map[string]any{
 					"rottenTomatoes": 97,
 					"imdb":           7.6,
 				},
@@ -825,6 +842,7 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -855,15 +873,31 @@ func do() {
 				From:   "Quentin Tarantino",
 				Rating: 8.5,
 				Tag:    "tag-12efs9dv",
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"academyAward": true,
 					"releaseDate":  "2023-12-08",
-					"ratings": map[string]interface{}{
+					"ratings": map[string]any{
 						"rottenTomatoes": 97,
 						"imdb":           7.6,
 					},
 				},
 				Revenue: 1000000,
+			},
+			EventInfo: &commons.EventInfo{
+				Metadata: &commons.Metadata{
+					ID: "event-12345",
+					Data: map[string]string{
+						"key1": "val1",
+						"key2": "val2",
+					},
+					JSONString: acme.String(
+						"abc",
+					),
+				},
+			},
+			Migration: &acme.Migration{
+				Name:   "Migration 31 Aug",
+				Status: acme.MigrationStatusRunning,
 			},
 		},
 	)
@@ -911,14 +945,14 @@ func do() {
 			From:   "Hayao Miyazaki",
 			Rating: 8,
 			Tag:    "development",
-			Metadata: map[string]interface{}{
-				"actors": []interface{}{
+			Metadata: map[string]any{
+				"actors": []any{
 					"Christian Bale",
 					"Florence Pugh",
 					"Willem Dafoe",
 				},
 				"releaseDate": "2023-12-08",
-				"ratings": map[string]interface{}{
+				"ratings": map[string]any{
 					"rottenTomatoes": 97,
 					"imdb":           7.6,
 				},

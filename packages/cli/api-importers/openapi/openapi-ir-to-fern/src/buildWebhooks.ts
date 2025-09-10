@@ -1,13 +1,11 @@
-import { camelCase, isEqual } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Webhook } from "@fern-api/openapi-ir";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName";
 import { tokenizeString } from "./utils/getEndpointLocation";

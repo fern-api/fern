@@ -1,6 +1,5 @@
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";

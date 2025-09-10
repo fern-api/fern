@@ -1,9 +1,7 @@
-import { readFile } from "fs/promises";
-
-import { PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
-import { fernConfigJson } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { fernConfigJson, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
 
 import { validateSchema } from "../commons/validateSchema";
 import { ProjectConfigSchema } from "./schema/ProjectConfigSchema";

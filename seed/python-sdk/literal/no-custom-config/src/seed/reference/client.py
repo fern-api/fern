@@ -55,10 +55,21 @@ class ReferenceClient:
         Examples
         --------
         from seed import SeedLiteral
-        from seed.reference import ContainerObject
-        from seed.reference import NestedObjectWithLiterals
-        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-        client.reference.send(query='What is the weather today', container_object=ContainerObject(nested_objects=[NestedObjectWithLiterals(str_prop='strProp', )], ), )
+        from seed.reference import ContainerObject, NestedObjectWithLiterals
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.reference.send(
+            query="What is the weather today",
+            container_object=ContainerObject(
+                nested_objects=[
+                    NestedObjectWithLiterals(
+                        str_prop="strProp",
+                    )
+                ],
+            ),
+        )
         """
         _response = self._raw_client.send(
             query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
@@ -107,13 +118,29 @@ class AsyncReferenceClient:
 
         Examples
         --------
-        from seed import AsyncSeedLiteral
-        from seed.reference import ContainerObject
-        from seed.reference import NestedObjectWithLiterals
         import asyncio
-        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedLiteral
+        from seed.reference import ContainerObject, NestedObjectWithLiterals
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.reference.send(query='What is the weather today', container_object=ContainerObject(nested_objects=[NestedObjectWithLiterals(str_prop='strProp', )], ), )
+            await client.reference.send(
+                query="What is the weather today",
+                container_object=ContainerObject(
+                    nested_objects=[
+                        NestedObjectWithLiterals(
+                            str_prop="strProp",
+                        )
+                    ],
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(

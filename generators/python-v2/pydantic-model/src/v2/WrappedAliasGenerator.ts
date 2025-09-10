@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
-import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/python-base";
+import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
 
 import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 

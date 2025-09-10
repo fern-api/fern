@@ -1,24 +1,18 @@
 import {
-    GetReferenceOpts,
-    getWriterForMultiLineUnionType,
-    maybeAddDocsNode,
-    maybeAddDocsStructure
-} from "@fern-typescript/commons";
+    ExampleTypeShape,
+    UndiscriminatedUnionMember,
+    UndiscriminatedUnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getWriterForMultiLineUnionType, maybeAddDocsStructure } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUndiscriminatedUnionType } from "@fern-typescript/contexts";
 import {
     ModuleDeclarationStructure,
     StatementStructures,
     StructureKind,
     TypeAliasDeclarationStructure,
-    WriterFunction,
-    ts
+    ts,
+    WriterFunction
 } from "ts-morph";
-
-import {
-    ExampleTypeShape,
-    UndiscriminatedUnionMember,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

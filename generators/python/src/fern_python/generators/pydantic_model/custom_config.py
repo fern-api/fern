@@ -43,19 +43,25 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     ```
     """
 
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
+    """
+
     use_pydantic_field_aliases: bool = True
 
     @pydantic.model_validator(mode="after")
-    def check_wrapped_aliases_v1_only(self) -> Self:
+    def check_wrapped_aliases_v1_or_v2_only(self) -> Self:
         version_compat = self.version
         use_wrapped_aliases = self.wrapped_aliases
 
         if use_wrapped_aliases and version_compat not in [
             PydanticVersionCompatibility.V1,
             PydanticVersionCompatibility.V1_ON_V2,
+            PydanticVersionCompatibility.V2,
         ]:
             raise ValueError(
-                "Wrapped aliases are only supported in Pydantic V1 or V1_ON_V2, please update your `version` field appropriately to continue using wrapped aliases."
+                "Wrapped aliases are only supported in Pydantic V1, V1_ON_V2, or V2, please update your `version` field appropriately to continue using wrapped aliases."
             )
 
         if self.enum_type != "literals":
@@ -70,7 +76,7 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     include_validators: bool = False
     # DEPRECATED: use `extra_fields` instead
     forbid_extra_fields: bool = False
-    extra_fields: Optional[Literal["allow", "forbid"]] = "allow"
+    extra_fields: Optional[Literal["allow", "forbid", "ignore"]] = "allow"
     skip_formatting: bool = False
     include_union_utils: bool = False
     package_name: Optional[str] = None

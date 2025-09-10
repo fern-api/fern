@@ -1,21 +1,19 @@
-import { difference } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     Availability,
+    convertNumberToSnakeCase,
     Encoding,
+    isSchemaEqual,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
-    Source,
-    convertNumberToSnakeCase,
-    isSchemaEqual
+    Source
 } from "@fern-api/openapi-ir";
-
-import { SchemaParserContext } from "./SchemaParserContext";
+import { difference } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
+import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
@@ -239,7 +237,7 @@ function processSubtypes({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
         return uniqueSubtypes[0];
     }
 
@@ -376,7 +374,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
         return uniqueSubtypes[0];
     }
 

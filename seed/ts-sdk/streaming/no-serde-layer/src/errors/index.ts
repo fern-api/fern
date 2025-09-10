@@ -1,2 +1,2 @@
-export { SeedStreamingError } from "./SeedStreamingError";
-export { SeedStreamingTimeoutError } from "./SeedStreamingTimeoutError";
+export { SeedStreamingError } from "./SeedStreamingError.js";
+export { SeedStreamingTimeoutError } from "./SeedStreamingTimeoutError.js";

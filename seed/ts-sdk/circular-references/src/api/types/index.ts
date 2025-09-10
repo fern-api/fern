@@ -1,2 +1,2 @@
-export * from "./ImportingA";
-export * from "./RootType";
+export * from "./ImportingA.js";
+export * from "./RootType.js";

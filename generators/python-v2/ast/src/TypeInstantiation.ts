@@ -1,9 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { Reference } from "./Reference";
-import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Reference } from "./Reference";
+import { Type } from "./Type";
 
 export interface NamedValue {
     name: string;
@@ -584,7 +583,8 @@ export class TypeInstantiation extends AstNode {
         value
     }: {
         writer: Writer;
-        value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow
+        value: any[];
     }): void {
         if (value.length === 0) {
             writer.write("[]");

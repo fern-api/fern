@@ -1,3 +1,23 @@
+import { FernToken } from "@fern-api/auth";
+import {
+    DEFINITION_DIRECTORY,
+    FERN_DIRECTORY,
+    fernConfigJson,
+    generatorsYml,
+    PROJECT_CONFIG_FILENAME,
+    ROOT_API_FILENAME
+} from "@fern-api/configuration";
+import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import {
+    migrateIntermediateRepresentationForGenerator,
+    migrateIntermediateRepresentationToVersionForGenerator
+} from "@fern-api/ir-migrations";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -6,28 +26,6 @@ import { relative } from "path";
 import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-
-import { FernToken } from "@fern-api/auth";
-import {
-    DEFINITION_DIRECTORY,
-    FERN_DIRECTORY,
-    PROJECT_CONFIG_FILENAME,
-    ROOT_API_FILENAME,
-    fernConfigJson,
-    generatorsYml
-} from "@fern-api/configuration";
-import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, stringifyLargeObject } from "@fern-api/fs-utils";
-import {
-    migrateIntermediateRepresentationForGenerator,
-    migrateIntermediateRepresentationToVersionForGenerator
-} from "@fern-api/ir-migrations";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
-import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
-
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 
 export async function createAndStartJob({
     projectConfig,
@@ -358,10 +356,10 @@ async function startJob({
 
 // Fiddle is on the old version of error serialization. Until we upgrade the
 // java generator to support the new implementation, we manually migrate
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
     if (error?.reason === "status-code") {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const body = error.body as any;
         switch (body?._error) {
             case "IllegalApiNameError":

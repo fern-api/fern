@@ -10,6 +10,10 @@ import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.publish.DirectPublish;
+import com.fern.ir.model.publish.Filesystem;
+import com.fern.ir.model.publish.GithubPublish;
+import com.fern.ir.model.publish.PublishingConfig.Visitor;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -35,6 +39,7 @@ import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
+import com.fern.java.client.generators.StreamTestGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
@@ -73,7 +78,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
+    public static void main(String... args) {
+        Cli cli = new Cli();
+        cli.run(args);
+    }
+
     private final List<String> subprojects = new ArrayList<>();
+
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
 
     public Cli() {
@@ -110,24 +121,66 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     }
 
     @Override
+    public boolean customConfigPublishToCentral(GeneratorConfig generatorConfig) {
+        return getCustomConfig(generatorConfig)
+                .publishTo()
+                .map(publishTo -> publishTo.equals("central"))
+                .orElse(false);
+    }
+
+    @Override
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             JavaSdkDownloadFilesCustomConfig customConfig) {
+        JavaSdkCustomConfig sdkCustomConfig = JavaSdkCustomConfig.builder()
+                .wrappedAliases(customConfig.wrappedAliases())
+                .clientClassName(customConfig.clientClassName())
+                .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
+                .baseExceptionClassName(customConfig.baseExceptionClassName())
+                .customDependencies(customConfig.customDependencies())
+                .useDefaultRequestParameterValues(customConfig.useDefaultRequestParameterValues())
+                .enableWireTests(customConfig.enableWireTests())
+                .useNullableAnnotation(customConfig.useNullableAnnotation())
+                .build();
+
+        Boolean generateFullProject = ir.getPublishConfig()
+                .map(publishConfig -> publishConfig.visit(new Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitDirect(DirectPublish value) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitGithub(GithubPublish value) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFilesystem(Filesystem value) {
+                        return value.getGenerateFullProject();
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object value) {
+                        throw new RuntimeException("Encountered unknown publish config: " + value);
+                    }
+                }))
+                .orElse(false);
+
+        if (generateFullProject) {
+            this.runInProjectModeHook(generatorExecClient, generatorConfig, ir, sdkCustomConfig);
+            return;
+        }
+
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
                 customConfig.packageLayout());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
-                JavaSdkCustomConfig.builder()
-                        .wrappedAliases(customConfig.wrappedAliases())
-                        .clientClassName(customConfig.clientClassName())
-                        .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
-                        .baseExceptionClassName(customConfig.baseExceptionClassName())
-                        .customDependencies(customConfig.customDependencies())
-                        .build(),
+                sdkCustomConfig,
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir, generatorExecClient);
@@ -140,35 +193,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             JavaSdkCustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        List<String> packagePrefixTokens = customConfig
-                .packagePrefix()
-                .map(List::of)
-                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
-                        ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
-        List<AuthScheme> resolvedAuthSchemes =
-                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
-        ClientGeneratorContext context = new ClientGeneratorContext(
-                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
-        SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
-        sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
-        subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-api")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-engine")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
-        TestGenerator testGenerator = new TestGenerator(context);
-        this.addGeneratedFile(testGenerator.generateFile());
+        this.runInProjectModeHook(generatorExecClient, generatorConfig, ir, customConfig);
     }
 
     @Override
@@ -281,6 +306,25 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(queryStringMapperGenerator.generateFile());
         QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
         this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
+
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-api")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-engine")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-params")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
 
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
@@ -440,13 +484,47 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
+            JavaSdkCustomConfig config = ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
+            return config;
         }
         return JavaSdkCustomConfig.builder().build();
     }
 
-    public static void main(String... args) {
-        Cli cli = new Cli();
-        cli.run(args);
+    private void runInProjectModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            JavaSdkCustomConfig customConfig) {
+        List<String> packagePrefixTokens = customConfig
+                .packagePrefix()
+                .map(List::of)
+                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
+                        ir, generatorConfig.getOrganization()));
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        List<AuthScheme> resolvedAuthSchemes =
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
+        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
+        SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
+        sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
+        subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
+        TestGenerator testGenerator = new TestGenerator(context);
+        this.addGeneratedFile(testGenerator.generateFile());
+        StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
+        this.addGeneratedFile(streamTestGenerator.generateFile());
+
+        // Generate wire tests if enabled
+        if (customConfig.enableWireTests()) {
+            // Add MockWebServer dependency
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                    .group("com.squareup.okhttp3")
+                    .artifact("mockwebserver")
+                    .version(ParsedGradleDependency.OKHTTP_VERSION)
+                    .build());
+            // Wire tests are generated by the java-v2 TypeScript generator
+        }
     }
 }

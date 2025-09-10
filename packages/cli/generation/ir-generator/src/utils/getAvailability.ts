@@ -1,4 +1,4 @@
-import { Availability, AvailabilityStatus } from "@fern-api/ir-sdk";
+import { Availability } from "@fern-api/ir-sdk";
 
 import { convertAvailability } from "../converters/convertDeclaration";
 

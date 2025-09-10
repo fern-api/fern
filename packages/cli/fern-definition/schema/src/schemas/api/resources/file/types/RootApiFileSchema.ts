@@ -20,5 +20,6 @@ export interface RootApiFileSchema
     "idempotency-headers"?: Record<string, FernDefinition.HttpHeaderSchema>;
     variables?: Record<string, FernDefinition.VariableDeclarationSchema>;
     pagination?: FernDefinition.PaginationSchema;
+    product?: FernDefinition.ProductDeclarationSchema;
     version?: FernDefinition.VersionDeclarationSchema;
 }

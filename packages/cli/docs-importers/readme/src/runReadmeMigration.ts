@@ -1,9 +1,8 @@
-import { writeFile } from "fs/promises";
-
 import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
 import { FernDocsBuilderImpl } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { writeFile } from "fs/promises";
 
 import { ReadmeImporter } from "./ReadmeImporter";
 

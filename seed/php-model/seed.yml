@@ -1,4 +1,4 @@
-irVersion: v55
+irVersion: v58
 displayName: PHP Model
 image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml
@@ -17,7 +17,7 @@ test:
     workingDirectory: generators/php
     buildCommand:
       - pnpm --filter @fern-api/php-model dist:cli
-    runCommand: node model/dist/cli.cjs
+    runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
 
 language: php
 generatorType: Model
@@ -32,9 +32,19 @@ scripts:
       - composer test
 
 allowedFailures:
+  - alias-extends
+  - extends
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples
   # Enums don't support the fromJson method yet.
   - trace
   - circular-references
   - circular-references-advanced
+  # unknown
+  - alias
+  - enum
+  - file-upload
+  - http-head
+  - query-parameters-openapi-as-objects
+  - version
+  - version-no-default

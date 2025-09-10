@@ -1,4 +1,4 @@
 {
-  "ignores": ["@types/jest", "globals", "@trivago/prettier-plugin-sort-imports", "@types/node"],
-  "ignore-patterns": ["lib"]
+  "ignores": ["@fern-api/api-workspace-commons"],
+  "ignore-patterns": ["lib", "dist"]
 }

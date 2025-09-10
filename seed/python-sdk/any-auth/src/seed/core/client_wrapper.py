@@ -12,11 +12,13 @@ class BaseClientWrapper:
         *,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
         self.api_key = api_key
         self._token = token
+        self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
 
@@ -26,6 +28,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_any-auth",
             "X-Fern-SDK-Version": "0.0.1",
+            **(self.get_custom_headers() or {}),
         }
         headers["X-API-Key"] = self.api_key
         token = self._get_token()
@@ -38,6 +41,9 @@ class BaseClientWrapper:
             return self._token
         else:
             return self._token()
+
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
 
     def get_base_url(self) -> str:
         return self._base_url
@@ -52,11 +58,12 @@ class SyncClientWrapper(BaseClientWrapper):
         *,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, token=token, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, token=token, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -71,11 +78,12 @@ class AsyncClientWrapper(BaseClientWrapper):
         *,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, token=token, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, token=token, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

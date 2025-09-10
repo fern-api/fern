@@ -131,8 +131,12 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                     {
                         Result = new TestCaseResult
                         {
-                            ExpectedResult = 1,
-                            ActualResult = 1,
+                            ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
+                            ActualResult = new ActualResult(
+                                new ActualResult.ValueInner(
+                                    new VariableValue(new VariableValue.IntegerValue(1))
+                                )
+                            ),
                             Passed = true,
                         },
                         Stdout = "stdout",
@@ -143,7 +147,9 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            ReturnValue = 1,
+                            ReturnValue = new DebugVariableValue(
+                                new DebugVariableValue.IntegerValue(1)
+                            ),
                             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                             Stack = new StackInformation
                             {
@@ -156,16 +162,26 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                                     {
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                     },
@@ -177,7 +193,9 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            ReturnValue = 1,
+                            ReturnValue = new DebugVariableValue(
+                                new DebugVariableValue.IntegerValue(1)
+                            ),
                             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                             Stack = new StackInformation
                             {
@@ -190,16 +208,26 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                                     {
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
+                                            Variables = new Dictionary<string, DebugVariableValue>()
                                             {
-                                                { "variables", 1 },
+                                                {
+                                                    "variables",
+                                                    new DebugVariableValue(
+                                                        new DebugVariableValue.IntegerValue(1)
+                                                    )
+                                                },
                                             },
                                         },
                                     },

@@ -2,7 +2,11 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FGo)
 
-The Seed Go library provides convenient access to the Seed API from Go.
+The Seed Go library provides convenient access to the Seed APIs from Go.
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -17,17 +21,14 @@ import (
     fern "github.com/enum/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
-    client.InlinedRequest.Send(
+    client.Headers.Send(
         context.TODO(),
-        &fern.SendEnumInlinedRequest{
+        &fern.SendEnumAsHeaderRequest{
             Operand: fern.OperandGreaterThan,
             MaybeOperand: fern.OperandGreaterThan.Ptr(),
             OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-            MaybeOperandOrColor: &fern.ColorOrOperand{
                 Color: fern.ColorRed,
             },
         },
@@ -52,7 +53,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.InlinedRequest.Send(...)
+response, err := client.Headers.Send(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -86,13 +87,26 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.InlinedRequest.Send(
+response, err := client.Headers.Send(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Headers.WithRawResponse.Send(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 
@@ -113,7 +127,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.InlinedRequest.Send(
+response, err := client.Headers.Send(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -127,7 +141,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.InlinedRequest.Send(ctx, ...)
+response, err := client.Headers.Send(ctx, ...)
 ```
 
 ## Contributing

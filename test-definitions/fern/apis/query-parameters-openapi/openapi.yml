@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info:
+  title: Query Parameters API
+  version: 1.0.0
+paths:
+  /user/getUsername:
+    get:
+      operationId: search
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: deadline
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: bytes
+          in: query
+          required: true
+          schema:
+            type: string
+            format: base64
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/User"
+        - name: userList
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"
+        - name: optionalDeadline
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: keyValue
+          in: query
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+        - name: optionalString
+          in: query
+          required: false
+        - name: nestedUser
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/NestedUser"
+        - name: optionalUser
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/User"
+        - name: excludeUser
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/User"
+          explode: true
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: neighbor
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/User"
+              - $ref: "#/components/schemas/NestedUser"
+              - type: string
+              - type: integer
+        - name: neighborRequired
+          in: query
+          required: true
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/User"
+              - $ref: "#/components/schemas/NestedUser"
+              - type: string
+              - type: integer
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: string
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    NestedUser:
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"

@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const V2EndpointLocationHttpMethod: core.serialization.Schema<
     serializers.V2EndpointLocationHttpMethod.Raw,
     FernIr.V2EndpointLocationHttpMethod
-> = core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+> = core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]);
 
 export declare namespace V2EndpointLocationHttpMethod {
-    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 }

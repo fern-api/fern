@@ -525,7 +525,7 @@ class SnippetTestFactory:
                 snippet_writer=snippet_writer,
                 service=service,
                 endpoint=endpoint,
-            )._generate_endpoint_snippet_raw(example=example)
+            ).generate_endpoint_snippet_raw(example=example)
 
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
             async_snippet = self._client_snippet(True, package_path, endpoint_snippet)

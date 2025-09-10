@@ -201,6 +201,16 @@
         }
       ]
     },
+    "product": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/products.ProductDeclarationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "version": {
       "oneOf": [
         {
@@ -780,7 +790,7 @@
       ],
       "additionalProperties": false
     },
-    "auth.BearerAuthSchemeSchema": {
+    "auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -811,6 +821,113 @@
         "scheme"
       ],
       "additionalProperties": false
+    },
+    "auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string"
+        },
+        "header-name": {
+          "type": "string"
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchemaObject": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchemaObject"
+        }
+      ]
+    },
+    "auth.InferredBearerAuthSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "bearer"
+        },
+        "get-token": {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
+    "auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredBearerAuthSchema"
+        }
+      ]
     },
     "auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
@@ -1528,6 +1645,129 @@
         },
         "header": {
           "$ref": "#/definitions/versioning.VersionDeclarationHeaderSchema"
+        }
+      },
+      "required": [
+        "values",
+        "header"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValueDetailed": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "versions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductValueDetailed"
+        }
+      ]
+    },
+    "products.ProductDeclarationHeaderObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductDeclarationHeaderSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderObjectSchema"
+        }
+      ]
+    },
+    "products.ProductDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/products.ProductValue"
+          }
+        },
+        "header": {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderSchema"
         }
       },
       "required": [

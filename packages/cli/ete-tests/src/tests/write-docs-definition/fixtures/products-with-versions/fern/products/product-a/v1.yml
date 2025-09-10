@@ -1,0 +1,11 @@
+navigation:
+  - section: Product A!
+    contents:
+      - page: Welcome
+        path: ../../pages/welcome.mdx
+      - page: Concepts
+        path: ../../pages/concepts.mdx
+      - page: SDKs
+        path: ../../pages/sdks.mdx
+        slug: sdks
+  - api: API Reference

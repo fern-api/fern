@@ -1,12 +1,11 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { Logger } from "@fern-api/logger";
 import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPIV3 } from "openapi-types";
 
 import { ParseOpenAPIOptions } from "../options";
-import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
+import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { WebsocketSessionExampleMessage } from "./getFernExamples";
 import { AsyncAPIV2 } from "./v2";
@@ -135,7 +134,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolved: any = this.document;
         for (const key of keys) {
             if (typeof resolved !== "object" || resolved == null) {

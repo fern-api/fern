@@ -4,8 +4,13 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public record RecordingResponseNotification
+[Serializable]
+public record RecordingResponseNotification : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("submissionId")]
     public required string SubmissionId { get; set; }
 
@@ -21,15 +26,11 @@ public record RecordingResponseNotification
     [JsonPropertyName("tracedFile")]
     public TracedFile? TracedFile { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

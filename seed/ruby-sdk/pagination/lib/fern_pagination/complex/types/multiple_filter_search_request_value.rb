@@ -16,9 +16,9 @@ module SeedPaginationClient
           return nil if struct.nil?
 
           return struct&.map do |item|
-            item = item.to_json
-            SeedPaginationClient::Complex::MultipleFilterSearchRequest.from_json(json_object: item)
-          end
+                   item = item.to_json
+                   SeedPaginationClient::Complex::MultipleFilterSearchRequest.from_json(json_object: item)
+                 end
         rescue StandardError
           # noop
         end
@@ -27,9 +27,9 @@ module SeedPaginationClient
           return nil if struct.nil?
 
           return struct&.map do |item|
-            item = item.to_json
-            SeedPaginationClient::Complex::SingleFilterSearchRequest.from_json(json_object: item)
-          end
+                   item = item.to_json
+                   SeedPaginationClient::Complex::SingleFilterSearchRequest.from_json(json_object: item)
+                 end
         rescue StandardError
           # noop
         end

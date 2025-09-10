@@ -5,9 +5,11 @@
 /**
  * @example
  *     {
+ *         user_id: "user_id",
  *         limit: 1
  *     }
  */
 export interface SearchUsersRequest {
+    user_id: string;
     limit?: number;
 }

@@ -1,6 +1,5 @@
-import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
-
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
 import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";

@@ -8,7 +8,7 @@ import pydantic
 import typing_extensions
 from ...commons.types.problem_id import ProblemId
 from ...commons.types.test_case import TestCase
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...core.serialization import FieldMetadata
 from .test_submission_status import TestSubmissionStatus
 from .workspace_submission_status import WorkspaceSubmissionStatus
@@ -31,6 +31,10 @@ class SubmissionTypeState_Test(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+
+
 class SubmissionTypeState_Workspace(UniversalBaseModel):
     type: typing.Literal["workspace"] = "workspace"
     status: WorkspaceSubmissionStatus
@@ -46,3 +50,4 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
+update_forward_refs(SubmissionTypeState_Test)

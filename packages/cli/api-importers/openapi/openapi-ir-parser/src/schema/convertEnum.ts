@@ -1,12 +1,12 @@
 import {
     Availability,
     EnumValue,
+    generateEnumNameFromValue,
     SchemaWithExample,
     SdkGroupName,
     Source,
-    generateEnumNameFromValue
+    VALID_ENUM_NAME_REGEX
 } from "@fern-api/openapi-ir";
-import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";

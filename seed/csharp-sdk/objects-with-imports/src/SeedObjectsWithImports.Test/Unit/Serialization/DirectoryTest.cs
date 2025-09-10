@@ -39,9 +39,9 @@ public class DirectoryTest
         var expectedObject = new Directory
         {
             Name = "root",
-            Files = new List<File>()
+            Files = new List<SeedObjectsWithImports.File>()
             {
-                new File
+                new SeedObjectsWithImports.File
                 {
                     Name = "file.txt",
                     Contents = "...",
@@ -53,9 +53,9 @@ public class DirectoryTest
                 new Directory
                 {
                     Name = "tmp",
-                    Files = new List<File>()
+                    Files = new List<SeedObjectsWithImports.File>()
                     {
-                        new File
+                        new SeedObjectsWithImports.File
                         {
                             Name = "another_file.txt",
                             Contents = "...",
@@ -99,9 +99,9 @@ public class DirectoryTest
         var actualObj = new Directory
         {
             Name = "root",
-            Files = new List<File>()
+            Files = new List<SeedObjectsWithImports.File>()
             {
-                new File
+                new SeedObjectsWithImports.File
                 {
                     Name = "file.txt",
                     Contents = "...",
@@ -113,9 +113,9 @@ public class DirectoryTest
                 new Directory
                 {
                     Name = "tmp",
-                    Files = new List<File>()
+                    Files = new List<SeedObjectsWithImports.File>()
                     {
-                        new File
+                        new SeedObjectsWithImports.File
                         {
                             Name = "another_file.txt",
                             Contents = "...",

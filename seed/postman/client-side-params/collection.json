@@ -1,0 +1,1308 @@
+{
+  "info": {
+    "name": "Client Side Params",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "List Resources",
+          "request": {
+            "description": "List resources with pagination",
+            "url": {
+              "raw": "{{baseUrl}}/api/resources?page=1&per_page=1&sort=created_at&order=desc&include_totals=true&fields=fields&search=search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "resources"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "description": "Zero-indexed page number",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "description": "Number of items per page",
+                  "value": "1"
+                },
+                {
+                  "key": "sort",
+                  "description": "Sort field",
+                  "value": "created_at"
+                },
+                {
+                  "key": "order",
+                  "description": "Sort order (asc or desc)",
+                  "value": "desc"
+                },
+                {
+                  "key": "include_totals",
+                  "description": "Whether to include total count",
+                  "value": "true"
+                },
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include",
+                  "value": "fields"
+                },
+                {
+                  "key": "search",
+                  "description": "Search query",
+                  "value": "search"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List resources with pagination",
+                "url": {
+                  "raw": "{{baseUrl}}/api/resources?page=1&per_page=1&sort=created_at&order=desc&include_totals=true&fields=fields&search=search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "resources"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Zero-indexed page number",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "description": "Number of items per page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "sort",
+                      "description": "Sort field",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "order",
+                      "description": "Sort order (asc or desc)",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "include_totals",
+                      "description": "Whether to include total count",
+                      "value": "true"
+                    },
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include",
+                      "value": "fields"
+                    },
+                    {
+                      "key": "search",
+                      "description": "Search query",
+                      "value": "search"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"description\": \"description\",\n        \"created_at\": \"2024-01-15T09:30:00Z\",\n        \"updated_at\": \"2024-01-15T09:30:00Z\",\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"description\": \"description\",\n        \"created_at\": \"2024-01-15T09:30:00Z\",\n        \"updated_at\": \"2024-01-15T09:30:00Z\",\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Resource",
+          "request": {
+            "description": "Get a single resource",
+            "url": {
+              "raw": "{{baseUrl}}/api/resources/:resourceId?include_metadata=true&format=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "resources",
+                ":resourceId"
+              ],
+              "query": [
+                {
+                  "key": "include_metadata",
+                  "description": "Include metadata in response",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "description": "Response format",
+                  "value": "json"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "resourceId",
+                  "description": null,
+                  "value": "resourceId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Get a single resource",
+                "url": {
+                  "raw": "{{baseUrl}}/api/resources/:resourceId?include_metadata=true&format=json",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "resources",
+                    ":resourceId"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_metadata",
+                      "description": "Include metadata in response",
+                      "value": "true"
+                    },
+                    {
+                      "key": "format",
+                      "description": "Response format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "resourceId",
+                      "description": null,
+                      "value": "resourceId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"description\": \"description\",\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\",\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Resources",
+          "request": {
+            "description": "Search resources with complex parameters",
+            "url": {
+              "raw": "{{baseUrl}}/api/resources/search?limit=1&offset=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "resources",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": "Maximum results to return",
+                  "value": "1"
+                },
+                {
+                  "key": "offset",
+                  "description": "Offset for pagination",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"query\": \"query\",\n    \"filters\": {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Search resources with complex parameters",
+                "url": {
+                  "raw": "{{baseUrl}}/api/resources/search?limit=1&offset=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "resources",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": "Maximum results to return",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offset",
+                      "description": "Offset for pagination",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\",\n    \"filters\": {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"results\": [\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"description\": \"description\",\n            \"created_at\": \"2024-01-15T09:30:00Z\",\n            \"updated_at\": \"2024-01-15T09:30:00Z\",\n            \"metadata\": {\n                \"metadata\": {\n                    \"key\": \"value\"\n                }\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"description\": \"description\",\n            \"created_at\": \"2024-01-15T09:30:00Z\",\n            \"updated_at\": \"2024-01-15T09:30:00Z\",\n            \"metadata\": {\n                \"metadata\": {\n                    \"key\": \"value\"\n                }\n            }\n        }\n    ],\n    \"total\": 1,\n    \"next_offset\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Users",
+          "request": {
+            "description": "List or search for users",
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=1&per_page=1&include_totals=true&sort=sort&connection=connection&q=q&search_engine=search_engine&fields=fields",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "description": "Page index of the results to return. First page is 0.",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "description": "Number of results per page.",
+                  "value": "1"
+                },
+                {
+                  "key": "include_totals",
+                  "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+                  "value": "true"
+                },
+                {
+                  "key": "sort",
+                  "description": "Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.",
+                  "value": "sort"
+                },
+                {
+                  "key": "connection",
+                  "description": "Connection filter",
+                  "value": "connection"
+                },
+                {
+                  "key": "q",
+                  "description": "Query string following Lucene query string syntax",
+                  "value": "q"
+                },
+                {
+                  "key": "search_engine",
+                  "description": "Search engine version (v1, v2, or v3)",
+                  "value": "search_engine"
+                },
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include or exclude",
+                  "value": "fields"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List or search for users",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users?page=1&per_page=1&include_totals=true&sort=sort&connection=connection&q=q&search_engine=search_engine&fields=fields",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Page index of the results to return. First page is 0.",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "description": "Number of results per page.",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_totals",
+                      "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+                      "value": "true"
+                    },
+                    {
+                      "key": "sort",
+                      "description": "Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.",
+                      "value": "sort"
+                    },
+                    {
+                      "key": "connection",
+                      "description": "Connection filter",
+                      "value": "connection"
+                    },
+                    {
+                      "key": "q",
+                      "description": "Query string following Lucene query string syntax",
+                      "value": "q"
+                    },
+                    {
+                      "key": "search_engine",
+                      "description": "Search engine version (v1, v2, or v3)",
+                      "value": "search_engine"
+                    },
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include or exclude",
+                      "value": "fields"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": "Returns either PaginatedUserResponse (if include_totals=true) or list<User> (if include_totals=false)",
+              "body": "{\n    \"users\": [\n        {\n            \"user_id\": \"user_id\",\n            \"email\": \"email\",\n            \"email_verified\": true,\n            \"username\": \"username\",\n            \"phone_number\": \"phone_number\",\n            \"phone_verified\": true,\n            \"created_at\": \"2024-01-15T09:30:00Z\",\n            \"updated_at\": \"2024-01-15T09:30:00Z\",\n            \"identities\": [\n                {\n                    \"connection\": \"connection\",\n                    \"user_id\": \"user_id\",\n                    \"provider\": \"provider\",\n                    \"is_social\": true,\n                    \"access_token\": \"access_token\",\n                    \"expires_in\": 1\n                },\n                {\n                    \"connection\": \"connection\",\n                    \"user_id\": \"user_id\",\n                    \"provider\": \"provider\",\n                    \"is_social\": true,\n                    \"access_token\": \"access_token\",\n                    \"expires_in\": 1\n                }\n            ],\n            \"app_metadata\": {\n                \"app_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"user_metadata\": {\n                \"user_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"picture\": \"picture\",\n            \"name\": \"name\",\n            \"nickname\": \"nickname\",\n            \"multifactor\": [\n                \"multifactor\",\n                \"multifactor\"\n            ],\n            \"last_ip\": \"last_ip\",\n            \"last_login\": \"2024-01-15T09:30:00Z\",\n            \"logins_count\": 1,\n            \"blocked\": true,\n            \"given_name\": \"given_name\",\n            \"family_name\": \"family_name\"\n        },\n        {\n            \"user_id\": \"user_id\",\n            \"email\": \"email\",\n            \"email_verified\": true,\n            \"username\": \"username\",\n            \"phone_number\": \"phone_number\",\n            \"phone_verified\": true,\n            \"created_at\": \"2024-01-15T09:30:00Z\",\n            \"updated_at\": \"2024-01-15T09:30:00Z\",\n            \"identities\": [\n                {\n                    \"connection\": \"connection\",\n                    \"user_id\": \"user_id\",\n                    \"provider\": \"provider\",\n                    \"is_social\": true,\n                    \"access_token\": \"access_token\",\n                    \"expires_in\": 1\n                },\n                {\n                    \"connection\": \"connection\",\n                    \"user_id\": \"user_id\",\n                    \"provider\": \"provider\",\n                    \"is_social\": true,\n                    \"access_token\": \"access_token\",\n                    \"expires_in\": 1\n                }\n            ],\n            \"app_metadata\": {\n                \"app_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"user_metadata\": {\n                \"user_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"picture\": \"picture\",\n            \"name\": \"name\",\n            \"nickname\": \"nickname\",\n            \"multifactor\": [\n                \"multifactor\",\n                \"multifactor\"\n            ],\n            \"last_ip\": \"last_ip\",\n            \"last_login\": \"2024-01-15T09:30:00Z\",\n            \"logins_count\": 1,\n            \"blocked\": true,\n            \"given_name\": \"given_name\",\n            \"family_name\": \"family_name\"\n        }\n    ],\n    \"start\": 1,\n    \"limit\": 1,\n    \"length\": 1,\n    \"total\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get User By Id",
+          "request": {
+            "description": "Get a user by ID",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:userId?fields=fields&include_fields=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":userId"
+              ],
+              "query": [
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include or exclude",
+                  "value": "fields"
+                },
+                {
+                  "key": "include_fields",
+                  "description": "true to include the fields specified, false to exclude them",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Get a user by ID",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/:userId?fields=fields&include_fields=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include or exclude",
+                      "value": "fields"
+                    },
+                    {
+                      "key": "include_fields",
+                      "description": "true to include the fields specified, false to exclude them",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"user_id\": \"user_id\",\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\",\n    \"identities\": [\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        },\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        }\n    ],\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"picture\": \"picture\",\n    \"name\": \"name\",\n    \"nickname\": \"nickname\",\n    \"multifactor\": [\n        \"multifactor\",\n        \"multifactor\"\n    ],\n    \"last_ip\": \"last_ip\",\n    \"last_login\": \"2024-01-15T09:30:00Z\",\n    \"logins_count\": 1,\n    \"blocked\": true,\n    \"given_name\": \"given_name\",\n    \"family_name\": \"family_name\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Create User",
+          "request": {
+            "description": "Create a new user",
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"connection\": \"connection\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Create a new user",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"connection\": \"connection\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"user_id\": \"user_id\",\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\",\n    \"identities\": [\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        },\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        }\n    ],\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"picture\": \"picture\",\n    \"name\": \"name\",\n    \"nickname\": \"nickname\",\n    \"multifactor\": [\n        \"multifactor\",\n        \"multifactor\"\n    ],\n    \"last_ip\": \"last_ip\",\n    \"last_login\": \"2024-01-15T09:30:00Z\",\n    \"logins_count\": 1,\n    \"blocked\": true,\n    \"given_name\": \"given_name\",\n    \"family_name\": \"family_name\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Update User",
+          "request": {
+            "description": "Update a user",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":userId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"password\": \"password\",\n    \"blocked\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Update a user",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"password\": \"password\",\n    \"blocked\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"user_id\": \"user_id\",\n    \"email\": \"email\",\n    \"email_verified\": true,\n    \"username\": \"username\",\n    \"phone_number\": \"phone_number\",\n    \"phone_verified\": true,\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\",\n    \"identities\": [\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        },\n        {\n            \"connection\": \"connection\",\n            \"user_id\": \"user_id\",\n            \"provider\": \"provider\",\n            \"is_social\": true,\n            \"access_token\": \"access_token\",\n            \"expires_in\": 1\n        }\n    ],\n    \"app_metadata\": {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"user_metadata\": {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"picture\": \"picture\",\n    \"name\": \"name\",\n    \"nickname\": \"nickname\",\n    \"multifactor\": [\n        \"multifactor\",\n        \"multifactor\"\n    ],\n    \"last_ip\": \"last_ip\",\n    \"last_login\": \"2024-01-15T09:30:00Z\",\n    \"logins_count\": 1,\n    \"blocked\": true,\n    \"given_name\": \"given_name\",\n    \"family_name\": \"family_name\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Delete User",
+          "request": {
+            "description": "Delete a user",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":userId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Delete a user",
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Connections",
+          "request": {
+            "description": "List all connections",
+            "url": {
+              "raw": "{{baseUrl}}/api/connections?strategy=strategy&name=name&fields=fields",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "connections"
+              ],
+              "query": [
+                {
+                  "key": "strategy",
+                  "description": "Filter by strategy type (e.g., auth0, google-oauth2, samlp)",
+                  "value": "strategy"
+                },
+                {
+                  "key": "name",
+                  "description": "Filter by connection name",
+                  "value": "name"
+                },
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include",
+                  "value": "fields"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List all connections",
+                "url": {
+                  "raw": "{{baseUrl}}/api/connections?strategy=strategy&name=name&fields=fields",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "connections"
+                  ],
+                  "query": [
+                    {
+                      "key": "strategy",
+                      "description": "Filter by strategy type (e.g., auth0, google-oauth2, samlp)",
+                      "value": "strategy"
+                    },
+                    {
+                      "key": "name",
+                      "description": "Filter by connection name",
+                      "value": "name"
+                    },
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include",
+                      "value": "fields"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"display_name\": \"display_name\",\n        \"strategy\": \"strategy\",\n        \"options\": {\n            \"options\": {\n                \"key\": \"value\"\n            }\n        },\n        \"enabled_clients\": [\n            \"enabled_clients\",\n            \"enabled_clients\"\n        ],\n        \"realms\": [\n            \"realms\",\n            \"realms\"\n        ],\n        \"is_domain_connection\": true,\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"display_name\": \"display_name\",\n        \"strategy\": \"strategy\",\n        \"options\": {\n            \"options\": {\n                \"key\": \"value\"\n            }\n        },\n        \"enabled_clients\": [\n            \"enabled_clients\",\n            \"enabled_clients\"\n        ],\n        \"realms\": [\n            \"realms\",\n            \"realms\"\n        ],\n        \"is_domain_connection\": true,\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Connection",
+          "request": {
+            "description": "Get a connection by ID",
+            "url": {
+              "raw": "{{baseUrl}}/api/connections/:connectionId?fields=fields",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "connections",
+                ":connectionId"
+              ],
+              "query": [
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include",
+                  "value": "fields"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "connectionId",
+                  "description": null,
+                  "value": "connectionId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Get a connection by ID",
+                "url": {
+                  "raw": "{{baseUrl}}/api/connections/:connectionId?fields=fields",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "connections",
+                    ":connectionId"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include",
+                      "value": "fields"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "connectionId",
+                      "description": null,
+                      "value": "connectionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"display_name\": \"display_name\",\n    \"strategy\": \"strategy\",\n    \"options\": {\n        \"options\": {\n            \"key\": \"value\"\n        }\n    },\n    \"enabled_clients\": [\n        \"enabled_clients\",\n        \"enabled_clients\"\n    ],\n    \"realms\": [\n        \"realms\",\n        \"realms\"\n    ],\n    \"is_domain_connection\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Clients",
+          "request": {
+            "description": "List all clients/applications",
+            "url": {
+              "raw": "{{baseUrl}}/api/clients?fields=fields&include_fields=true&page=1&per_page=1&include_totals=true&is_global=true&is_first_party=true&app_type=%5B%22app_type%22%2C%22app_type%22%5D",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include",
+                  "value": "fields"
+                },
+                {
+                  "key": "include_fields",
+                  "description": "Whether specified fields are included or excluded",
+                  "value": "true"
+                },
+                {
+                  "key": "page",
+                  "description": "Page number (zero-based)",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "description": "Number of results per page",
+                  "value": "1"
+                },
+                {
+                  "key": "include_totals",
+                  "description": "Include total count in response",
+                  "value": "true"
+                },
+                {
+                  "key": "is_global",
+                  "description": "Filter by global clients",
+                  "value": "true"
+                },
+                {
+                  "key": "is_first_party",
+                  "description": "Filter by first party clients",
+                  "value": "true"
+                },
+                {
+                  "key": "app_type",
+                  "description": "Filter by application type (spa, native, regular_web, non_interactive)",
+                  "value": "[\"app_type\",\"app_type\"]"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List all clients/applications",
+                "url": {
+                  "raw": "{{baseUrl}}/api/clients?fields=fields&include_fields=true&page=1&per_page=1&include_totals=true&is_global=true&is_first_party=true&app_type=%5B%22app_type%22%2C%22app_type%22%5D",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "clients"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include",
+                      "value": "fields"
+                    },
+                    {
+                      "key": "include_fields",
+                      "description": "Whether specified fields are included or excluded",
+                      "value": "true"
+                    },
+                    {
+                      "key": "page",
+                      "description": "Page number (zero-based)",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "description": "Number of results per page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_totals",
+                      "description": "Include total count in response",
+                      "value": "true"
+                    },
+                    {
+                      "key": "is_global",
+                      "description": "Filter by global clients",
+                      "value": "true"
+                    },
+                    {
+                      "key": "is_first_party",
+                      "description": "Filter by first party clients",
+                      "value": "true"
+                    },
+                    {
+                      "key": "app_type",
+                      "description": "Filter by application type (spa, native, regular_web, non_interactive)",
+                      "value": "[\"app_type\",\"app_type\"]"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"start\": 1,\n    \"limit\": 1,\n    \"length\": 1,\n    \"total\": 1,\n    \"clients\": [\n        {\n            \"client_id\": \"client_id\",\n            \"tenant\": \"tenant\",\n            \"name\": \"name\",\n            \"description\": \"description\",\n            \"global\": true,\n            \"client_secret\": \"client_secret\",\n            \"app_type\": \"app_type\",\n            \"logo_uri\": \"logo_uri\",\n            \"is_first_party\": true,\n            \"oidc_conformant\": true,\n            \"callbacks\": [\n                \"callbacks\",\n                \"callbacks\"\n            ],\n            \"allowed_origins\": [\n                \"allowed_origins\",\n                \"allowed_origins\"\n            ],\n            \"web_origins\": [\n                \"web_origins\",\n                \"web_origins\"\n            ],\n            \"grant_types\": [\n                \"grant_types\",\n                \"grant_types\"\n            ],\n            \"jwt_configuration\": {\n                \"jwt_configuration\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"signing_keys\": [\n                {\n                    \"signing_keys\": {\n                        \"key\": \"value\"\n                    }\n                },\n                {\n                    \"signing_keys\": {\n                        \"key\": \"value\"\n                    }\n                }\n            ],\n            \"encryption_key\": {\n                \"encryption_key\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"sso\": true,\n            \"sso_disabled\": true,\n            \"cross_origin_auth\": true,\n            \"cross_origin_loc\": \"cross_origin_loc\",\n            \"custom_login_page_on\": true,\n            \"custom_login_page\": \"custom_login_page\",\n            \"custom_login_page_preview\": \"custom_login_page_preview\",\n            \"form_template\": \"form_template\",\n            \"is_heroku_app\": true,\n            \"addons\": {\n                \"addons\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n            \"client_metadata\": {\n                \"client_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"mobile\": {\n                \"mobile\": {\n                    \"key\": \"value\"\n                }\n            }\n        },\n        {\n            \"client_id\": \"client_id\",\n            \"tenant\": \"tenant\",\n            \"name\": \"name\",\n            \"description\": \"description\",\n            \"global\": true,\n            \"client_secret\": \"client_secret\",\n            \"app_type\": \"app_type\",\n            \"logo_uri\": \"logo_uri\",\n            \"is_first_party\": true,\n            \"oidc_conformant\": true,\n            \"callbacks\": [\n                \"callbacks\",\n                \"callbacks\"\n            ],\n            \"allowed_origins\": [\n                \"allowed_origins\",\n                \"allowed_origins\"\n            ],\n            \"web_origins\": [\n                \"web_origins\",\n                \"web_origins\"\n            ],\n            \"grant_types\": [\n                \"grant_types\",\n                \"grant_types\"\n            ],\n            \"jwt_configuration\": {\n                \"jwt_configuration\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"signing_keys\": [\n                {\n                    \"signing_keys\": {\n                        \"key\": \"value\"\n                    }\n                },\n                {\n                    \"signing_keys\": {\n                        \"key\": \"value\"\n                    }\n                }\n            ],\n            \"encryption_key\": {\n                \"encryption_key\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"sso\": true,\n            \"sso_disabled\": true,\n            \"cross_origin_auth\": true,\n            \"cross_origin_loc\": \"cross_origin_loc\",\n            \"custom_login_page_on\": true,\n            \"custom_login_page\": \"custom_login_page\",\n            \"custom_login_page_preview\": \"custom_login_page_preview\",\n            \"form_template\": \"form_template\",\n            \"is_heroku_app\": true,\n            \"addons\": {\n                \"addons\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n            \"client_metadata\": {\n                \"client_metadata\": {\n                    \"key\": \"value\"\n                }\n            },\n            \"mobile\": {\n                \"mobile\": {\n                    \"key\": \"value\"\n                }\n            }\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Client",
+          "request": {
+            "description": "Get a client by ID",
+            "url": {
+              "raw": "{{baseUrl}}/api/clients/:clientId?fields=fields&include_fields=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clients",
+                ":clientId"
+              ],
+              "query": [
+                {
+                  "key": "fields",
+                  "description": "Comma-separated list of fields to include",
+                  "value": "fields"
+                },
+                {
+                  "key": "include_fields",
+                  "description": "Whether specified fields are included or excluded",
+                  "value": "true"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "clientId",
+                  "description": null,
+                  "value": "clientId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Get a client by ID",
+                "url": {
+                  "raw": "{{baseUrl}}/api/clients/:clientId?fields=fields&include_fields=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "clients",
+                    ":clientId"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "description": "Comma-separated list of fields to include",
+                      "value": "fields"
+                    },
+                    {
+                      "key": "include_fields",
+                      "description": "Whether specified fields are included or excluded",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "clientId",
+                      "description": null,
+                      "value": "clientId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"client_id\": \"client_id\",\n    \"tenant\": \"tenant\",\n    \"name\": \"name\",\n    \"description\": \"description\",\n    \"global\": true,\n    \"client_secret\": \"client_secret\",\n    \"app_type\": \"app_type\",\n    \"logo_uri\": \"logo_uri\",\n    \"is_first_party\": true,\n    \"oidc_conformant\": true,\n    \"callbacks\": [\n        \"callbacks\",\n        \"callbacks\"\n    ],\n    \"allowed_origins\": [\n        \"allowed_origins\",\n        \"allowed_origins\"\n    ],\n    \"web_origins\": [\n        \"web_origins\",\n        \"web_origins\"\n    ],\n    \"grant_types\": [\n        \"grant_types\",\n        \"grant_types\"\n    ],\n    \"jwt_configuration\": {\n        \"jwt_configuration\": {\n            \"key\": \"value\"\n        }\n    },\n    \"signing_keys\": [\n        {\n            \"signing_keys\": {\n                \"key\": \"value\"\n            }\n        },\n        {\n            \"signing_keys\": {\n                \"key\": \"value\"\n            }\n        }\n    ],\n    \"encryption_key\": {\n        \"encryption_key\": {\n            \"key\": \"value\"\n        }\n    },\n    \"sso\": true,\n    \"sso_disabled\": true,\n    \"cross_origin_auth\": true,\n    \"cross_origin_loc\": \"cross_origin_loc\",\n    \"custom_login_page_on\": true,\n    \"custom_login_page\": \"custom_login_page\",\n    \"custom_login_page_preview\": \"custom_login_page_preview\",\n    \"form_template\": \"form_template\",\n    \"is_heroku_app\": true,\n    \"addons\": {\n        \"addons\": {\n            \"key\": \"value\"\n        }\n    },\n    \"token_endpoint_auth_method\": \"token_endpoint_auth_method\",\n    \"client_metadata\": {\n        \"client_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"mobile\": {\n        \"mobile\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

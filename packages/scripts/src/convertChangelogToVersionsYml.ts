@@ -1,7 +1,6 @@
-import { readFile } from "fs/promises";
-
 import { resolve } from "@fern-api/fs-utils";
 import { INTERMEDIATE_REPRESENTATION_MIGRATOR } from "@fern-api/ir-migrations";
+import { readFile } from "fs/promises";
 
 interface ChangelogEntry {
     version: string;
@@ -166,7 +165,7 @@ export function formatOutput(newFormat: FormattedEntry[]): string {
 }
 
 export async function convertChangelogToVersions(inputPath: string, generatorName: string): Promise<string> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const absoluteInputPath = resolve(inputPath as any);
     const inputContent = await readFile(absoluteInputPath, "utf8");
     const entries = parseChangelog(inputContent);

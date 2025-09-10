@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: Test setting to disable usage of title param
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Shape:
+      type: object
+      discriminator:
+        propertyName: type
+      oneOf:
+        - $ref: '#/components/schemas/Triangle'
+        - $ref: '#/components/schemas/Square'
+    Triangle:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["triangle"]
+        base:
+          type: number
+        height:
+          type: number
+      required:
+        - type
+        - base
+        - height
+    Square:
+      type: object 
+      properties:
+        type:
+          type: string
+          enum: ["square"]
+        sideLength:
+          type: number
+      required:
+        - type
+        - sideLength

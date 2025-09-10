@@ -1,14 +1,18 @@
-# Seed Go Library
+# CustomName Go Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FGo)
 
-The Seed Go library provides convenient access to the Seed API from Go.
+The CustomName Go library provides convenient access to the CustomName APIs from Go.
 
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -26,7 +30,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() () {
+func do() {
     client := client.New(
         option.WithToken(
             "<token>",
@@ -42,6 +46,10 @@ func do() () {
                 },
             },
             ExtendedMovie: &fern.ExtendedMovie{
+                Cast: []string{
+                    "cast",
+                    "cast",
+                },
                 Id: "id",
                 Prequel: fern.String(
                     "prequel",
@@ -53,16 +61,12 @@ func do() () {
                 Book: fern.String(
                     "book",
                 ),
-                Metadata: map[string]interface{}{
-                    "metadata": map[string]interface{}{
+                Metadata: map[string]any{
+                    "metadata": map[string]any{
                         "key": "value",
                     },
                 },
                 Revenue: 1000000,
-                Cast: []string{
-                    "cast",
-                    "cast",
-                },
             },
             Entity: &fern.Entity{
                 Type: &fern.Type{
@@ -280,7 +284,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(seed.Environments.Production),
+    option.WithBaseURL(examples.Environments.Production),
 )
 ```
 
@@ -332,6 +336,19 @@ response, err := client.Service.CreateBigEntity(
 
 ## Advanced
 
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Service.WithRawResponse.CreateBigEntity(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -374,13 +391,3 @@ defer cancel()
 
 response, err := client.Service.CreateMovie(ctx, ...)
 ```
-
-## Contributing
-
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
-
-On the other hand, contributions to the README are always very welcome!

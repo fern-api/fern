@@ -260,17 +260,17 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
             ):
                 writer.write_node(
                     AST.VariableDeclaration(
-                        name="response",
+                        name="pager",
                         initializer=AST.Expression(
-                            f"client.{endpoint.endpoint_package_path}with_raw_response.{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(pagination_endpoint_id) else ''})"
+                            f"client.{endpoint.endpoint_package_path}{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(pagination_endpoint_id) else ''})"
                         ),
                     )
                 )
-                writer.write_line("print(response.headers)  # access the response headers")
+                writer.write_line("print(pager.response.headers)  # access the response headers for the first page")
                 writer.write_node(
                     AST.ForStatement(
                         target="item",
-                        iterable="response.data",
+                        iterable="pager",
                         body=[AST.Expression("print(item)  # access the underlying object(s)")],
                     )
                 )
@@ -278,13 +278,16 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 writer.write_node(
                     AST.ForStatement(
                         target="page",
-                        iterable="response.data.iter_pages()",
+                        iterable="pager.iter_pages()",
                         body=[
+                            AST.Expression(
+                                "print(page.response.headers)  # access the response headers for each page\n"
+                            ),
                             AST.ForStatement(
                                 target="item",
                                 iterable="page",
                                 body=[AST.Expression("print(item)  # access the underlying object(s)")],
-                            )
+                            ),
                         ],
                     )
                 )
@@ -355,7 +358,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                             AST.ClassInstantiation(
                                 class_=HttpX.CLIENT,
                                 kwargs=[
-                                    ("proxies", AST.Expression('"http://my.test.proxy.example.com"')),
+                                    ("proxy", AST.Expression('"http://my.test.proxy.example.com"')),
                                     ("transport", AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")')),
                                 ],
                             )
@@ -458,7 +461,14 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 return [
                     self._endpoint_snippet_map[endpoint_id].async_client for endpoint_id in async_client_endpoint_ids
                 ]
-            return [self._endpoint_snippet_map[self._default_endpoint_id].async_client]
+            # Check if async_client exists for the default endpoint
+            if self._default_endpoint_id in self._endpoint_snippet_map:
+                async_client = self._endpoint_snippet_map[self._default_endpoint_id].async_client
+                # Add a new line if it doesn't already end with one
+                if not async_client.endswith("\n"):
+                    async_client += "\n"
+                return [async_client]
+            return []
         except Exception as e:
             print(f"Failed to generage async client snippets with exception {e}")
             return []
@@ -525,15 +535,18 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         if ir.readme_config is not None and ir.readme_config.default_endpoint is not None:
             return ir.readme_config.default_endpoint
 
+        # TODO(tjb9dc): The below condition will never match due to non-overlapping endpoint ID types, need to fix
         # Prefer endpoints that will not be used in other feature-specific sections as the default,
         # otherwise just filter down the full list of endpoints.
-        endpoints_without_a_feature = self._endpoint_feature_map[ReadmeSnippetBuilder.NO_FEATURE_PLACEHOLDER_ID]
-        filtered_snippet_endpoints = [
-            endpoint for endpoint in snippets.endpoints if endpoint.id not in endpoints_without_a_feature
-        ]
-        if len(filtered_snippet_endpoints) == 0:
-            # All snippets are likely used for feature blocks, just re-use one, filtering down the original list
-            filtered_snippet_endpoints = snippets.endpoints
+        # endpoints_without_a_feature = self._endpoint_feature_map[ReadmeSnippetBuilder.NO_FEATURE_PLACEHOLDER_ID]
+        # filtered_snippet_endpoints = [
+        #     endpoint for endpoint in snippets.endpoints if endpoint.id not in endpoints_without_a_feature
+        # ]
+        # if len(filtered_snippet_endpoints) == 0:
+        #     # All snippets are likely used for feature blocks, just re-use one, filtering down the original list
+        #     filtered_snippet_endpoints = snippets.endpoints
+
+        filtered_snippet_endpoints = snippets.endpoints
 
         # Prefer POST endpoints because they include better request structures in snippets.
         default_endpoint = next(

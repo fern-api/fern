@@ -1,8 +1,4 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
-
-import { ExampleGenerator } from "./ExampleGenerator";
-import { Parameter } from "./Parameter";
-import { Property } from "./Property";
 import {
     ArrayReference,
     ClassReference,
@@ -10,7 +6,10 @@ import {
     DiscriminatedUnionClassReference
 } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
+import { ExampleGenerator } from "./ExampleGenerator";
 import { Function_ } from "./functions/Function_";
+import { Parameter } from "./Parameter";
+import { Property } from "./Property";
 
 export interface YardocDocString {
     readonly name: "docString";
@@ -111,7 +110,7 @@ export class Yardoc extends AstNode {
         if (
             parameter.type.length > 1 ||
             parameter.type[0] instanceof DiscriminatedUnionClassReference ||
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             (parameter.type.length === 1 && this.isUnion(parameter.type[0]!))
         ) {
             return this.writeParameterAsClass(parameter, startingTabSpaces);

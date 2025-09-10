@@ -2,13 +2,13 @@ import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
+import { Class_ } from "../classes/Class_";
+import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
+import { AstNode } from "../core/AstNode";
 import { ExampleGenerator } from "../ExampleGenerator";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Yardoc } from "../Yardoc";
-import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
-import { Class_ } from "../classes/Class_";
-import { AstNode } from "../core/AstNode";
 import { FunctionInvocation } from "./FunctionInvocation";
 
 export declare namespace Function_ {

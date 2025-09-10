@@ -1,14 +1,13 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyType } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
+import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
@@ -39,13 +38,16 @@ export class SimpleTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
+        if (this.packageManager === "pnpm") {
+            await this.generatePnpmWorkspace();
+        }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [SimpleTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -56,19 +58,24 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
+    private async generatePnpmWorkspace(): Promise<void> {
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
+    }
+
     private async generateNpmIgnore(): Promise<void> {
         await this.writeFileToVolume(
             RelativeFilePath.of(TypescriptProject.NPM_IGNORE_FILENAME),
             [
                 "node_modules",
-                SimpleTypescriptProject.SRC_DIRECTORY,
+                this.packagePath,
                 SimpleTypescriptProject.TEST_DIRECTORY,
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "tsconfig.json",
-                "yarn.lock"
+                "yarn.lock",
+                "pnpm-lock.yaml"
             ].join("\n")
         );
     }
@@ -93,8 +100,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
             skipLibCheck: true,
             declaration: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
-            rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
-            baseUrl: SimpleTypescriptProject.SRC_DIRECTORY
+            rootDir: this.packagePath,
+            baseUrl: this.packagePath
         };
 
         if (this.useLegacyExports) {
@@ -107,7 +114,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
-                        include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                        include: [this.packagePath],
                         exclude: []
                     },
                     undefined,
@@ -123,7 +130,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -142,7 +149,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: cjsCompilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -161,7 +168,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: esmCompilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -198,7 +205,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 license: this.npmPackage.license as any
             };
         }
@@ -273,10 +280,15 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     }, {}),
                     "./package.json": "./package.json"
                 },
-                files: [SimpleTypescriptProject.DIST_DIRECTORY, SimpleTypescriptProject.REFERENCE_FILENAME],
+                files: [
+                    SimpleTypescriptProject.DIST_DIRECTORY,
+                    SimpleTypescriptProject.REFERENCE_FILENAME,
+                    SimpleTypescriptProject.README_FILENAME,
+                    SimpleTypescriptProject.LICENSE_FILENAME
+                ],
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
-                    [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `yarn ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && yarn ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
+                    [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
@@ -295,40 +307,55 @@ export class SimpleTypescriptProject extends TypescriptProject {
         };
 
         packageJson = produce(packageJson, (draft) => {
-            if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = {
-                    ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies
-                };
+            const dependencies = {
+                ...this.dependencies[DependencyType.PROD],
+                ...this.extraDependencies
+            };
+            if (Object.keys(dependencies).length > 0) {
+                draft.dependencies = dependencies;
             }
-            if (
-                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
-                Object.keys(this.extraPeerDependencies).length > 0
-            ) {
-                draft.peerDependencies = {
-                    ...this.dependencies[DependencyType.PEER],
-                    ...this.extraPeerDependencies
-                };
+
+            const peerDependencies = {
+                ...this.dependencies[DependencyType.PEER],
+                ...this.extraPeerDependencies
+            };
+            if (Object.keys(peerDependencies).length > 0) {
+                draft.peerDependencies = peerDependencies;
             }
+
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
                 draft.peerDependenciesMeta = {
                     ...this.extraPeerDependenciesMeta
                 };
             }
-            draft.devDependencies = {
+
+            const devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
                 ...this.extraDevDependencies
             };
+            if (Object.keys(devDependencies).length > 0) {
+                draft.devDependencies = devDependencies;
+            }
 
             draft.browser = {
                 fs: false,
                 os: false,
-                path: false
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                path: false,
+                stream: false
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
-            draft["packageManager"] = "yarn@1.22.22";
+            if (this.packageManager === "yarn") {
+                draft["packageManager"] = "yarn@1.22.22";
+            }
+            if (this.packageManager === "pnpm") {
+                draft["packageManager"] = "pnpm@10.14.0";
+            }
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

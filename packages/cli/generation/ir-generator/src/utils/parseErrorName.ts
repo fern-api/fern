@@ -1,7 +1,7 @@
 import { DeclaredErrorName } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
 

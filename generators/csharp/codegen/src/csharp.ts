@@ -18,6 +18,7 @@ import {
     Or,
     Parameter,
     Set,
+    String_,
     Switch,
     Ternary,
     TestClass,
@@ -129,30 +130,35 @@ export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiati
     return new EnumInstantiation(args);
 }
 
+export function string_(args: String_.Args): String_ {
+    return new String_(args);
+}
+
 export {
-    Annotation,
     Access,
+    Annotation,
+    AnonymousFunction,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    convertReadOnlyPrimitiveTypes,
     Dictionary,
     Enum,
     Field,
     InstantiatedPrimitive,
     Interface,
     Method,
-    AnonymousFunction,
     MethodInvocation,
     MethodType,
     Parameter,
-    TypeParameter,
+    String_,
     Type,
     Type as Types,
     TypeLiteral,
-    Writer,
+    TypeParameter,
     VALID_READ_ONLY_MEMORY_TYPES,
-    convertReadOnlyPrimitiveTypes
+    Writer
 } from "./ast";
-export { type ConstructorField } from "./ast/TypeLiteral";
 export { AstNode } from "./ast/core/AstNode";
+export { type ConstructorField } from "./ast/TypeLiteral";

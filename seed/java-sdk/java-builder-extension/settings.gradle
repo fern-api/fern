@@ -1,0 +1,3 @@
+rootProject.name = 'java-builder-extension'
+
+include 'sample-app'

@@ -1,10 +1,7 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, SELF, php } from "@fern-api/php-codegen";
-
+import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, php, SELF } from "@fern-api/php-codegen";
 import {
     FernFilepath,
     IntermediateRepresentation,
@@ -18,6 +15,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { AsIsFiles } from "../../../base/src/AsIs";
 import { TRAITS_DIRECTORY } from "../constants";

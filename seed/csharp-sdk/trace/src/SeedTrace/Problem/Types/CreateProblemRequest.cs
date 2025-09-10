@@ -4,8 +4,13 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public record CreateProblemRequest
+[Serializable]
+public record CreateProblemRequest : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("problemName")]
     public required string ProblemName { get; set; }
 
@@ -21,7 +26,7 @@ public record CreateProblemRequest
         new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public required object OutputType { get; set; }
+    public required VariableType OutputType { get; set; }
 
     [JsonPropertyName("testcases")]
     public IEnumerable<TestCaseWithExpectedResult> Testcases { get; set; } =
@@ -30,15 +35,11 @@ public record CreateProblemRequest
     [JsonPropertyName("methodName")]
     public required string MethodName { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

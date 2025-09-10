@@ -391,6 +391,7 @@ def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod)
         put=lambda: "put",
         patch=lambda: "patch",
         delete=lambda: "delete",
+        head=lambda: "head",
     )
 
 

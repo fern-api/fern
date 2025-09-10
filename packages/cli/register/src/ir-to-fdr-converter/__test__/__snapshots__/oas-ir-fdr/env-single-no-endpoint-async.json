@@ -26,8 +26,8 @@
     }
   },
   "subpackages": {
-    "testChannel": {
-      "subpackageId": "testChannel",
+    "subpackage_testChannel": {
+      "subpackageId": "subpackage_testChannel",
       "name": "testChannel",
       "endpoints": [],
       "webhooks": [],
@@ -87,8 +87,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel2": {
-      "subpackageId": "testChannel2",
+    "subpackage_testChannel2": {
+      "subpackageId": "subpackage_testChannel2",
       "name": "testChannel2",
       "endpoints": [],
       "webhooks": [],
@@ -162,7 +162,7 @@
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -179,6 +179,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -192,23 +193,36 @@
           "statusCode": 200,
           "description": "A response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/pets",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -224,8 +238,8 @@
       "testChannel2_sendMessage"
     ],
     "subpackages": [
-      "testChannel",
-      "testChannel2"
+      "subpackage_testChannel",
+      "subpackage_testChannel2"
     ]
   },
   "snippetsConfiguration": {},

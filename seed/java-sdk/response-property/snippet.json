@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "87ce95bf",
+            "example_identifier": "354178cc",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "87ce95bf",
+            "example_identifier": "354178cc",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "204e83c9",
+            "example_identifier": "361535b2",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "87ce95bf",
+            "example_identifier": "354178cc",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "5a2f433d",
+            "example_identifier": "16a68a4d",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "7859d659",
+            "example_identifier": "448c10b2",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "65e90467",
+            "example_identifier": "30360e62",
             "id": {
                 "method": "POST",
                 "path": "/movie",

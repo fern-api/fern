@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

@@ -1,6 +1,3 @@
-import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
-
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
@@ -8,18 +5,23 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { camelCase, kebabCase } from "lodash-es";
+import urlJoin from "url-join";
 
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages";
 import { isSubpackage } from "./utils/isSubpackage";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
+import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
+
+const NUM_NEAREST_SUBPACKAGES = 1;
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
@@ -27,6 +29,7 @@ export class ApiReferenceNodeConverter {
     #visitedEndpoints = new Set<FernNavigation.V1.EndpointId>();
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
+    #visitedGrpcs = new Set<FernNavigation.V1.GrpcId>();
     #visitedSubpackages = new Set<string>();
     #nodeIdToSubpackageId = new Map<string, string[]>();
     #children: FernNavigation.V1.ApiPackageChild[] = [];
@@ -42,9 +45,11 @@ export class ApiReferenceNodeConverter {
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
+        private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
         private workspace?: FernWorkspace,
-        private hideChildren?: boolean
+        private hideChildren?: boolean,
+        private parentAvailability?: docsYml.RawSchemas.Availability
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
@@ -91,6 +96,7 @@ export class ApiReferenceNodeConverter {
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
@@ -113,7 +119,7 @@ export class ApiReferenceNodeConverter {
                 hidden: this.hideChildren
             }),
             children: this.#children,
-            availability: undefined,
+            availability: this.apiSection.availability ?? this.parentAvailability,
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
@@ -189,9 +195,7 @@ export class ApiReferenceNodeConverter {
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(
-                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
-                );
+                this.taskContext.logger.warn(packageReuseError(pkg.package));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -220,7 +224,7 @@ export class ApiReferenceNodeConverter {
                 icon: pkg.icon,
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -232,7 +236,7 @@ export class ApiReferenceNodeConverter {
             };
         } else {
             this.taskContext.logger.warn(
-                `Subpackage ${pkg.package} not found in ${this.apiDefinitionId}, treating it as a section`
+                cannotFindSubpackageByLocatorError(pkg.package, this.#holder.subpackageLocators)
             );
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
@@ -250,7 +254,7 @@ export class ApiReferenceNodeConverter {
                 icon: pkg.icon,
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -284,27 +288,30 @@ export class ApiReferenceNodeConverter {
 
         const nodeId = this.#idgen.get(overviewPageId ?? maybeFullSlug ?? parentSlug.get());
 
-        const subpackageIds = section.referencedSubpackages
+        const subPackageTuples = section.referencedSubpackages
             .map((locator) => {
                 const subpackage = this.#holder.getSubpackageByIdOrLocator(locator);
-                return subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
-            })
-            .filter((subpackageId) => {
-                if (subpackageId == null) {
-                    this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                const subpackageId = subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
+                if (subpackageId === undefined) {
+                    this.taskContext.logger.error(
+                        cannotFindSubpackageByLocatorError(locator, this.#holder.subpackageLocators)
+                    );
+                    return undefined;
                 }
-                return subpackageId != null;
+                return { subpackageId, locator };
             })
+            .filter((subPackageTuple) => subPackageTuple != undefined)
             .filter(isNonNullish);
 
-        this.#nodeIdToSubpackageId.set(nodeId, subpackageIds);
-        subpackageIds.forEach((subpackageId) => {
-            if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(
-                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
-                );
+        this.#nodeIdToSubpackageId.set(
+            nodeId,
+            subPackageTuples.map((subPackageTuple) => subPackageTuple.subpackageId)
+        );
+        subPackageTuples.forEach((subPackageTuple) => {
+            if (this.#visitedSubpackages.has(subPackageTuple.subpackageId)) {
+                this.taskContext.logger.error(packageReuseError(subPackageTuple.locator));
             }
-            this.#visitedSubpackages.add(subpackageId);
+            this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
 
         const urlSlug = section.slug ?? kebabCase(section.title);
@@ -323,7 +330,7 @@ export class ApiReferenceNodeConverter {
             icon: section.icon,
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
-            availability: undefined,
+            availability: this.parentAvailability,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex,
@@ -343,15 +350,15 @@ export class ApiReferenceNodeConverter {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
         // We need to determine which one it is.
-        const subpackage = this.#holder.getSubpackageByIdOrLocator(unknownIdentifier);
+        const subpackage =
+            this.#holder.getSubpackageByIdOrLocator(unknownIdentifier) ??
+            this.#holder.getSubpackageByIdOrLocator(camelCase(unknownIdentifier));
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(
-                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
-                );
+                this.taskContext.logger.error(packageReuseError(unknownIdentifier));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -369,7 +376,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: undefined,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -414,32 +421,38 @@ export class ApiReferenceNodeConverter {
         if (endpoint != null) {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
-                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
+                this.taskContext.logger.error(
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
+                );
+            } else {
+                if (this.#visitedEndpoints.has(endpointId)) {
+                    this.taskContext.logger.error(
+                        `Duplicate endpoint found in the API Reference layout: ${endpointId}`
+                    );
+                }
+                this.#visitedEndpoints.add(endpointId);
+                const endpointSlug =
+                    endpointItem.slug != null ? parentSlug.append(endpointItem.slug) : parentSlug.apply(endpoint);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${endpointId}`),
+                    type: "endpoint",
+                    method: endpoint.method,
+                    endpointId,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability:
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
+                    isResponseStream: endpoint.response?.type.type === "stream",
+                    title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                    slug: endpointSlug.get(),
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
             }
-            if (this.#visitedEndpoints.has(endpointId)) {
-                this.taskContext.logger.error(`Duplicate endpoint found in the API Reference layout: ${endpointId}`);
-            }
-            this.#visitedEndpoints.add(endpointId);
-            const endpointSlug =
-                endpointItem.slug != null ? parentSlug.append(endpointItem.slug) : parentSlug.apply(endpoint);
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${endpointId}`),
-                type: "endpoint",
-                method: endpoint.method,
-                endpointId,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                isResponseStream: endpoint.response?.type.type === "stream",
-                title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: endpointSlug.get(),
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                playground: this.#convertPlaygroundSettings(endpointItem.playground),
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
         }
 
         const webSocket =
@@ -452,31 +465,35 @@ export class ApiReferenceNodeConverter {
         if (webSocket != null) {
             const webSocketId = this.#holder.getWebSocketId(webSocket);
             if (webSocketId == null) {
-                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+            } else {
+                if (this.#visitedWebSockets.has(webSocketId)) {
+                    this.taskContext.logger.error(
+                        `Duplicate web socket found in the API Reference layout: ${webSocketId}`
+                    );
+                }
+                this.#visitedWebSockets.add(webSocketId);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${webSocketId}`),
+                    type: "webSocket",
+                    webSocketId,
+                    title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
+                    slug: (endpointItem.slug != null
+                        ? parentSlug.append(endpointItem.slug)
+                        : parentSlug.apply(webSocket)
+                    ).get(),
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability:
+                        FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
+                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
             }
-            if (this.#visitedWebSockets.has(webSocketId)) {
-                this.taskContext.logger.error(`Duplicate web socket found in the API Reference layout: ${webSocketId}`);
-            }
-            this.#visitedWebSockets.add(webSocketId);
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${webSocketId}`),
-                type: "webSocket",
-                webSocketId,
-                title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
-                slug: (endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply(webSocket)
-                ).get(),
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability),
-                playground: this.#convertPlaygroundSettings(endpointItem.playground),
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
         }
 
         const webhook =
@@ -489,31 +506,32 @@ export class ApiReferenceNodeConverter {
         if (webhook != null) {
             const webhookId = this.#holder.getWebhookId(webhook);
             if (webhookId == null) {
-                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+            } else {
+                if (this.#visitedWebhooks.has(webhookId)) {
+                    this.taskContext.logger.error(`Duplicate webhook found in the API Reference layout: ${webhookId}`);
+                }
+                this.#visitedWebhooks.add(webhookId);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${webhookId}`),
+                    type: "webhook",
+                    webhookId,
+                    method: webhook.method,
+                    title: endpointItem.title ?? webhook.name ?? urlJoin("/", ...webhook.path),
+                    slug: (endpointItem.slug != null
+                        ? parentSlug.append(endpointItem.slug)
+                        : parentSlug.apply(webhook)
+                    ).get(),
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: this.parentAvailability,
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
             }
-            if (this.#visitedWebhooks.has(webhookId)) {
-                this.taskContext.logger.error(`Duplicate webhook found in the API Reference layout: ${webhookId}`);
-            }
-            this.#visitedWebhooks.add(webhookId);
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${webhookId}`),
-                type: "webhook",
-                webhookId,
-                method: webhook.method,
-                title: endpointItem.title ?? webhook.name ?? urlJoin("/", ...webhook.path),
-                slug: (endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply(webhook)
-                ).get(),
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: undefined,
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
         }
 
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
@@ -556,39 +574,75 @@ export class ApiReferenceNodeConverter {
         let additionalChildren: FernNavigation.V1.ApiPackageChild[] = [];
 
         pkg.endpoints.forEach((endpoint) => {
-            const endpointId = this.#holder.getEndpointId(endpoint);
-            if (endpointId == null) {
-                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
-            }
-            if (this.#visitedEndpoints.has(endpointId)) {
-                return;
-            }
+            if (endpoint.protocol?.type === "grpc") {
+                const grpcId = this.#holder.getGrpcId(endpoint);
+                if (grpcId == null) {
+                    this.taskContext.logger.error(
+                        `Expected Grpc ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
+                    );
+                    return;
+                }
+                if (this.#visitedGrpcs.has(grpcId)) {
+                    return;
+                }
 
-            const endpointSlug = parentSlug.apply(endpoint);
-            additionalChildren.push({
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
-                type: "endpoint",
-                method: endpoint.method,
-                endpointId,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                isResponseStream: endpoint.response?.type.type === "stream",
-                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: endpointSlug.get(),
-                icon: undefined,
-                hidden: this.hideChildren,
-                playground: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            });
+                const grpcSlug = parentSlug.apply(endpoint);
+                additionalChildren.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${grpcId}`),
+                    type: "grpc",
+                    grpcId,
+                    title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                    method: endpoint.protocol?.methodType ?? "UNARY",
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: this.parentAvailability,
+                    slug: grpcSlug.get(),
+                    icon: undefined,
+                    hidden: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            } else {
+                const endpointId = this.#holder.getEndpointId(endpoint);
+                if (endpointId == null) {
+                    this.taskContext.logger.error(
+                        `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
+                    );
+                    return;
+                }
+                if (this.#visitedEndpoints.has(endpointId)) {
+                    return;
+                }
+
+                const endpointSlug = parentSlug.apply(endpoint);
+                additionalChildren.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
+                    type: "endpoint",
+                    method: endpoint.method,
+                    endpointId,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability:
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
+                    isResponseStream: endpoint.response?.type.type === "stream",
+                    title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                    slug: endpointSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            }
         });
 
         pkg.websockets.forEach((webSocket) => {
             const webSocketId = this.#holder.getWebSocketId(webSocket);
             if (webSocketId == null) {
-                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                return;
             }
             if (this.#visitedWebSockets.has(webSocketId)) {
                 return;
@@ -602,7 +656,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability),
+                availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
@@ -614,7 +668,8 @@ export class ApiReferenceNodeConverter {
         pkg.webhooks.forEach((webhook) => {
             const webhookId = this.#holder.getWebhookId(webhook);
             if (webhookId == null) {
-                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+                return;
             }
             if (this.#visitedWebhooks.has(webhookId)) {
                 return;
@@ -629,7 +684,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: undefined,
+                availability: this.parentAvailability,
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -644,6 +699,9 @@ export class ApiReferenceNodeConverter {
 
             const subpackage = this.#holder.getSubpackageByIdOrLocator(subpackageId);
             if (subpackage == null) {
+                // I'm not clear on how this line is reachable.
+                // If the pkg.subpackages are subpackageIds, and not locators, doesn't that imply they've already been
+                // resolved to an existing subpackage?
                 this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
             }
@@ -662,7 +720,7 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: undefined,
-                    availability: undefined,
+                    availability: this.parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -698,7 +756,7 @@ export class ApiReferenceNodeConverter {
                 : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(`Subpackage ${packageId} not found in ${this.apiDefinitionId}`);
+            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
             return [];
         }
 

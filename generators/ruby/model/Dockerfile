@@ -6,4 +6,4 @@ COPY generators/ruby/model/dist /dist
 # Install Ruby and Rubocop for formatting
 RUN apk update && apk add --no-cache build-base ruby ruby-dev && gem install rubocop
 
-ENTRYPOINT ["node", "/dist/cli.cjs", "ruby-model"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "ruby-model"]

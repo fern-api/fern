@@ -10,11 +10,13 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         version: typing.Optional[str] = None,
         audit_logging: typing.Optional[str] = None,
     ):
+        self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._version = version
@@ -26,10 +28,14 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_literal",
             "X-Fern-SDK-Version": "0.0.1",
+            **(self.get_custom_headers() or {}),
         }
         headers["X-API-Version"] = self._version if self._version is not None else "02-02-2024"
         headers["X-API-Enable-Audit-Logging"] = self._audit_logging if self._audit_logging is not None else "True"
         return headers
+
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
 
     def get_base_url(self) -> str:
         return self._base_url
@@ -42,13 +48,16 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         version: typing.Optional[str] = None,
         audit_logging: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging)
+        super().__init__(
+            headers=headers, base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -61,13 +70,16 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         version: typing.Optional[str] = None,
         audit_logging: typing.Optional[str] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging)
+        super().__init__(
+            headers=headers, base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging
+        )
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

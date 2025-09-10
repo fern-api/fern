@@ -1,0 +1,4 @@
+{
+  "ignores": ["@modelcontextprotocol/sdk"],
+  "ignore-patterns": ["lib", "dist"]
+}

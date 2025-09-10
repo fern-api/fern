@@ -72,15 +72,132 @@
     }
   },
   "subpackages": {
-    "user": {
-      "subpackageId": "user",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
       "name": "user",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
+          "id": "get_stream",
+          "originalEndpointId": "endpoint_user.get_stream",
+          "name": "Get Stream",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": true
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "StreamUser"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "Success!"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "description": "",
+              "path": "/user/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "stream": true
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "stream": true
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "get",
-          "originalEndpointId": "user.get",
+          "originalEndpointId": "endpoint_user.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -126,12 +243,10 @@
                   {
                     "key": "stream",
                     "valueType": {
-                      "type": "optional",
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean"
-                        }
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": false
                       }
                     }
                   }
@@ -139,44 +254,78 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "stream",
+                        "valueType": {
+                          "type": "literal",
+                          "value": {
+                            "type": "booleanLiteral",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "User"
               }
             },
             "statusCode": 200,
             "description": "Success!"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/user/",
+              "path": "/user/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "stream": false
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "stream": false
+                }
               },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": "foo"
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {
@@ -199,7 +348,7 @@
       "StreamUser"
     ],
     "subpackages": [
-      "user"
+      "subpackage_user"
     ]
   },
   "snippetsConfiguration": {},

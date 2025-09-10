@@ -59,7 +59,9 @@ export class OptionalService {
                         },
                         next,
                     );
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedObjectsWithImportsError) {
                         console.warn(

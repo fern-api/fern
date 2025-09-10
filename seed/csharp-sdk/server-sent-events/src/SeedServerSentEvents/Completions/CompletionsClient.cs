@@ -36,6 +36,7 @@ public partial class CompletionsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        /* SSE Not currently implemented */
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedServerSentEventsApiException(

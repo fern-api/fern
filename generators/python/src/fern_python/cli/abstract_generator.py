@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import os
 import re
-from abc import ABC, abstractmethod
 import textwrap
+from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
@@ -39,6 +39,20 @@ class AbstractGenerator(ABC):
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
+        if ir.publish_config is not None:
+            ir_publish_config = ir.publish_config.get_as_union()
+            if ir_publish_config.type == "filesystem" and ir_publish_config.generate_full_project:
+                package_version = "0.0.0"
+                package_name = "default_package_name"
+                if ir_publish_config.publish_target is not None:
+                    publish_target = ir_publish_config.publish_target.get_as_union()
+                    if publish_target.type == "pypi":
+                        if publish_target.version is not None:
+                            package_version = publish_target.version
+                        if publish_target.package_name is not None:
+                            package_name = publish_target.package_name
+
+                project_config = ProjectConfig(package_name=package_name, package_version=package_version)
         maybe_github_output_mode = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda _: None,
@@ -53,7 +67,10 @@ class AbstractGenerator(ABC):
             user_defined_toml = generator_config.custom_config.get("pyproject_toml")
 
         exclude_types_from_init_exports = False
-        if generator_config.custom_config is not None and "exclude_types_from_init_exports" in generator_config.custom_config:
+        if (
+            generator_config.custom_config is not None
+            and "exclude_types_from_init_exports" in generator_config.custom_config
+        ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
         with Project(
@@ -76,6 +93,7 @@ class AbstractGenerator(ABC):
             license_=generator_config.license,
             user_defined_toml=user_defined_toml,
             exclude_types_from_init_exports=exclude_types_from_init_exports,
+            lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -127,6 +145,10 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
+
+        self.postrun(
+            generator_exec_wrapper=generator_exec_wrapper,
+        )
 
     # We're trying not to change the casing more than we need to, so here
     # we're using the same casing as is given but just removing `-` and other special characters as
@@ -304,10 +326,24 @@ def test_client() -> None:
     ) -> None: ...
 
     @abstractmethod
+    def postrun(
+        self,
+        *,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None: ...
+
+    @abstractmethod
     def should_fix_files(self) -> bool: ...
 
     @abstractmethod
     def should_format_files(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool: ...
+
+    @abstractmethod
+    def should_use_lazy_imports(
         self,
         *,
         generator_config: GeneratorConfig,

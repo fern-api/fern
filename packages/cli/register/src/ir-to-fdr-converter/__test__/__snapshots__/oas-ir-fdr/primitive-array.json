@@ -1,92 +1,48 @@
 {
   "types": {
-    "SearchWithUnionGetRequestBodySchemaOneOfZero": {
-      "name": "SearchWithUnionGetRequestBodySchemaOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "SearchWithUnionGetRequestBodySchemaOneOfOne": {
-      "name": "SearchWithUnionGetRequestBodySchemaOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "getSearchWithUnion_Request": {
       "name": "getSearchWithUnion_Request",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SearchWithUnionGetRequestBodySchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionGetRequestBodySchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "SearchWithUnionGetRequestBodySchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionGetRequestBodySchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           }
         ]
       }
     },
-    "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchema": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchema",
+    "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           }
         ]
@@ -100,7 +56,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearch",
-        "originalEndpointId": "getSearch",
+        "originalEndpointId": "endpoint_.getSearch",
         "name": "Get Search",
         "path": {
           "pathParameters": [],
@@ -124,7 +80,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -134,6 +90,28 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -148,26 +126,41 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/search",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "string",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -179,7 +172,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnion",
-        "originalEndpointId": "getSearchWithUnion",
+        "originalEndpointId": "endpoint_.getSearchWithUnion",
         "name": "Get Search With Union",
         "path": {
           "pathParameters": [],
@@ -209,6 +202,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "getSearchWithUnion_Request"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -222,28 +232,41 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/search-with-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": "foo",
+            "requestBody": "string",
             "requestBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -255,7 +278,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnionAndNull",
-        "originalEndpointId": "getSearchWithUnionAndNull",
+        "originalEndpointId": "endpoint_.getSearchWithUnionAndNull",
         "name": "Get Search With Union And Null",
         "path": {
           "pathParameters": [],
@@ -279,14 +302,34 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithUnionAndNullGetRequestBodySchema"
+                  "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -301,26 +344,41 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/search-with-union-and-null",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "string",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

@@ -36,7 +36,7 @@ export function constructNpmPackage({
                 version: outputMode.version,
                 private: isPackagePrivate,
                 publishInfo: undefined,
-                repoUrl: outputMode.repoUrl,
+                repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
                 license: generatorConfig.license?._visit({
                     basic: (basic) => basic.id,
                     custom: (custom) => `See ${custom.filename}`,
@@ -48,4 +48,39 @@ export function constructNpmPackage({
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);
     }
+}
+
+function getRepoUrlFromUrl(repoUrl: string): string {
+    if (repoUrl.startsWith("https://github.com/")) {
+        return `github:${removeGitSuffix(repoUrl).replace("https://github.com/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://github.com/")) {
+        return `github:${removeGitSuffix(repoUrl).replace("ssh://github.com/", "")}`;
+    }
+    if (repoUrl.startsWith("https://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("https://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("ssh://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("https://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("https://gitlab.com/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("ssh://gitlab.com/", "")}`;
+    }
+    if (!repoUrl.startsWith("git+")) {
+        repoUrl = `git+${repoUrl}`;
+    }
+    if (!repoUrl.endsWith(".git")) {
+        repoUrl = `${repoUrl}.git`;
+    }
+    return repoUrl;
+}
+
+function removeGitSuffix(repoUrl: string): string {
+    if (repoUrl.endsWith(".git")) {
+        return repoUrl.slice(0, -4);
+    }
+    return repoUrl;
 }

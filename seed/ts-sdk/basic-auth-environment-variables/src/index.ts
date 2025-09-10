@@ -1,4 +1,6 @@
-export * as SeedBasicAuthEnvironmentVariables from "./api";
-export { SeedBasicAuthEnvironmentVariablesClient } from "./Client";
-export { SeedBasicAuthEnvironmentVariablesError, SeedBasicAuthEnvironmentVariablesTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedBasicAuthEnvironmentVariables from "./api/index.js";
+export {
+    SeedBasicAuthEnvironmentVariablesError,
+    SeedBasicAuthEnvironmentVariablesTimeoutError,
+} from "./errors/index.js";
+export { SeedBasicAuthEnvironmentVariablesClient } from "./Client.js";

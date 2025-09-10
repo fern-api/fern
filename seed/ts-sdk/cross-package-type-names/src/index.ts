@@ -1,4 +1,3 @@
-export * as SeedCrossPackageTypeNames from "./api";
-export { SeedCrossPackageTypeNamesClient } from "./Client";
-export { SeedCrossPackageTypeNamesError, SeedCrossPackageTypeNamesTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedCrossPackageTypeNames from "./api/index.js";
+export { SeedCrossPackageTypeNamesError, SeedCrossPackageTypeNamesTimeoutError } from "./errors/index.js";
+export { SeedCrossPackageTypeNamesClient } from "./Client.js";

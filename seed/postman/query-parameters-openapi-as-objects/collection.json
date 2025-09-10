@@ -1,0 +1,243 @@
+{
+  "info": {
+    "name": "Query Parameters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Search",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=date&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "user",
+            "getUsername"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "description": null,
+              "value": "1"
+            },
+            {
+              "key": "id",
+              "description": null,
+              "value": "id"
+            },
+            {
+              "key": "date",
+              "description": null,
+              "value": "date"
+            },
+            {
+              "key": "deadline",
+              "description": null,
+              "value": "2024-01-15T09:30:00Z"
+            },
+            {
+              "key": "bytes",
+              "description": null,
+              "value": "bytes"
+            },
+            {
+              "key": "user",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            },
+            {
+              "key": "userList",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            },
+            {
+              "key": "optionalDeadline",
+              "description": null,
+              "value": "2024-01-15T09:30:00Z"
+            },
+            {
+              "key": "keyValue",
+              "description": null,
+              "value": "{\"keyValue\":\"keyValue\"}"
+            },
+            {
+              "key": "optionalString",
+              "description": null,
+              "value": "optionalString"
+            },
+            {
+              "key": "nestedUser",
+              "description": null,
+              "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
+            },
+            {
+              "key": "optionalUser",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            },
+            {
+              "key": "excludeUser",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            },
+            {
+              "key": "filter",
+              "description": null,
+              "value": "filter"
+            },
+            {
+              "key": "neighbor",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            },
+            {
+              "key": "neighborRequired",
+              "description": null,
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=date&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "getUsername"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                },
+                {
+                  "key": "date",
+                  "description": null,
+                  "value": "date"
+                },
+                {
+                  "key": "deadline",
+                  "description": null,
+                  "value": "2024-01-15T09:30:00Z"
+                },
+                {
+                  "key": "bytes",
+                  "description": null,
+                  "value": "bytes"
+                },
+                {
+                  "key": "user",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "userList",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "optionalDeadline",
+                  "description": null,
+                  "value": "2024-01-15T09:30:00Z"
+                },
+                {
+                  "key": "keyValue",
+                  "description": null,
+                  "value": "{\"keyValue\":\"keyValue\"}"
+                },
+                {
+                  "key": "optionalString",
+                  "description": null,
+                  "value": "optionalString"
+                },
+                {
+                  "key": "nestedUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
+                },
+                {
+                  "key": "optionalUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "excludeUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "filter",
+                  "description": null,
+                  "value": "filter"
+                },
+                {
+                  "key": "neighbor",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "neighborRequired",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": "Successful response",
+          "body": "{\n    \"results\": [\n        \"results\",\n        \"results\"\n    ]\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

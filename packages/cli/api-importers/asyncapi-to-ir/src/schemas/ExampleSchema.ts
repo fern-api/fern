@@ -10,7 +10,7 @@ export const WebsocketSessionExampleMessageSchema = z.object({
 export const WebsocketSessionExtensionExampleSchema = z.object({
     summary: z.string().optional(),
     description: z.string().optional(),
-    queryParameters: z.record(z.string()).optional(),
+    "query-parameters": z.record(z.string()).optional(),
     headers: z.record(z.string()).optional(),
     messages: z.array(WebsocketSessionExampleMessageSchema)
 });

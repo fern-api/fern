@@ -24,9 +24,9 @@
         ]
       }
     },
-    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+    "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess": {
       "description": "Access level",
-      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess",
       "shape": {
         "type": "enum",
         "values": [
@@ -65,16 +65,16 @@
     }
   },
   "subpackages": {
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": false,
           "description": "",
           "method": "POST",
           "id": "Search",
-          "originalEndpointId": "Organizations.Search",
+          "originalEndpointId": "endpoint_organizations.Search",
           "name": "Search an organization",
           "path": {
             "pathParameters": [
@@ -133,13 +133,40 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
                       }
                     }
                   }
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Access level",
+                        "key": "access",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -152,15 +179,29 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Organizations_Search_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organization_id/search",
               "pathParameters": {
-                "id": "foo",
-                "organization_id": "foo"
+                "id": "id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -171,18 +212,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    "foo"
-                  ]
-                }
+                "results": [
+                  "string"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "results": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -206,7 +244,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetUser",
-        "originalEndpointId": "GetUser",
+        "originalEndpointId": "endpoint_.GetUser",
         "name": "Get User",
         "path": {
           "pathParameters": [
@@ -241,14 +279,15 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/user_id",
             "pathParameters": {
-              "user_id": "foo"
+              "user_id": "user_id"
             },
             "queryParameters": {},
             "headers": {},
@@ -264,7 +303,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetOrganizationUser",
-        "originalEndpointId": "GetOrganizationUser",
+        "originalEndpointId": "endpoint_.GetOrganizationUser",
         "name": "Get Organization User",
         "path": {
           "pathParameters": [
@@ -326,6 +365,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -337,34 +377,45 @@
           "statusCode": 200,
           "description": "Successful response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "GetOrganizationUser_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/organizations/",
+            "path": "/organizations/organization_id/users/user_id",
             "pathParameters": {
-              "organization_id": "foo",
-              "user_id": "foo"
+              "organization_id": "organization_id",
+              "user_id": "user_id"
             },
             "queryParameters": {
-              "limit": 42
+              "limit": 1
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "string"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "results": [
-                  "foo"
+                  "string"
                 ]
               }
             }
@@ -379,7 +430,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "Organizations"
+      "subpackage_organizations"
     ]
   },
   "snippetsConfiguration": {},

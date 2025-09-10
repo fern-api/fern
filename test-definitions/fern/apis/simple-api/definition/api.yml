@@ -1,0 +1,5 @@
+name: simple-api
+auth: bearer
+environments:
+  Production: https://api.example.com
+  Staging: https://staging-api.example.com

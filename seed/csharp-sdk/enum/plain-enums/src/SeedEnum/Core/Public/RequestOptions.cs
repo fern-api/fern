@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -6,6 +5,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
+[Serializable]
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>

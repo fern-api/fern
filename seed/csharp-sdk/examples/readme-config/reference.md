@@ -80,7 +80,7 @@ await client.CreateTypeAsync(BasicType.Primitive);
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> object</code></summary>
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, File.GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `GetFileRequest` 
+**request:** `File.GetFileRequest` 
     
 </dd>
 </dl>
@@ -385,7 +385,7 @@ await client.Service.CreateMovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> object</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -451,6 +451,7 @@ await client.Service.CreateBigEntityAsync(
         CastMember = new Actor { Name = "name", Id = "id" },
         ExtendedMovie = new ExtendedMovie
         {
+            Cast = new List<string>() { "cast", "cast" },
             Id = "id",
             Prequel = "prequel",
             Title = "title",
@@ -467,31 +468,38 @@ await client.Service.CreateBigEntityAsync(
                 },
             },
             Revenue = 1000000,
-            Cast = new List<string>() { "cast", "cast" },
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-        Metadata = "metadata",
-        CommonMetadata = new SeedExamples.Commons.Metadata
+        Metadata = new Metadata(new Metadata.Html("metadata")),
+        CommonMetadata = new Metadata
         {
             Id = "id",
             Data = new Dictionary<string, string>() { { "data", "data" } },
             JsonString = "jsonString",
         },
-        EventInfo = new SeedExamples.Commons.Metadata
-        {
-            Id = "id",
-            Data = new Dictionary<string, string>() { { "data", "data" } },
-            JsonString = "jsonString",
-        },
-        Data = "data",
+        EventInfo = new EventInfo(
+            new EventInfo.Metadata(
+                new Metadata
+                {
+                    Id = "id",
+                    Data = new Dictionary<string, string>() { { "data", "data" } },
+                    JsonString = "jsonString",
+                }
+            )
+        ),
+        Data = new Data(new Data.String("data")),
         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-        Exception = new ExceptionInfo
-        {
-            ExceptionType = "exceptionType",
-            ExceptionMessage = "exceptionMessage",
-            ExceptionStacktrace = "exceptionStacktrace",
-        },
-        Test = true,
+        Exception = new Exception(
+            new Exception.Generic(
+                new ExceptionInfo
+                {
+                    ExceptionType = "exceptionType",
+                    ExceptionMessage = "exceptionMessage",
+                    ExceptionStacktrace = "exceptionStacktrace",
+                }
+            )
+        ),
+        Test = new Test(new Test.And(true)),
         Node = new Node
         {
             Name = "name",
@@ -669,6 +677,46 @@ await client.Service.CreateBigEntityAsync(
 <dd>
 
 **request:** `BigEntity` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.RefreshTokenAsync(null);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RefreshTokenRequest?` 
     
 </dd>
 </dl>

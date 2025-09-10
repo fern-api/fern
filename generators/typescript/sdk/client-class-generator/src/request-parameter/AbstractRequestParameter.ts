@@ -1,7 +1,3 @@
-import { GetReferenceOpts, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -10,6 +6,9 @@ import {
     QueryParameter,
     SdkRequest
 } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { RequestParameter } from "./RequestParameter";
 
@@ -37,13 +36,23 @@ export abstract class AbstractRequestParameter implements RequestParameter {
 
     public getParameterDeclaration(context: SdkContext): OptionalKind<ParameterDeclarationStructure> {
         const typeInfo = this.getParameterType(context);
+        const typeText = getTextOfTsNode(typeInfo.type);
 
         return {
             name: this.getRequestParameterName(),
-            type: getTextOfTsNode(typeInfo.type),
+            type: context.exportAllRequestsAtRoot ? this.getRootLevelTypeReference(typeText, context) : typeText,
             hasQuestionToken: typeInfo.hasQuestionToken,
             initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined
         };
+    }
+
+    // if exportAllRequestsToRoot, just use the root.request style if possible
+    private getRootLevelTypeReference(typeText: string, context: SdkContext): string {
+        const namespaces = typeText.split(".");
+        if (namespaces.length <= 2 || namespaces.includes("types")) {
+            return typeText;
+        }
+        return `${namespaces[0]}.${namespaces.at(-1)}`;
     }
 
     protected getRequestParameterName(): string {

@@ -1,13 +1,12 @@
-import { findUp } from "find-up";
-
 import {
     AbsoluteFilePath,
     Directory,
-    RelativeFilePath,
     doesPathExist,
     getDirectoryContents,
-    join
+    join,
+    RelativeFilePath
 } from "@fern-api/fs-utils";
+import { findUp } from "find-up";
 
 import { Migration } from "../../../types/Migration";
 import { getAbsolutePathToDocsYaml } from "./docs-config";

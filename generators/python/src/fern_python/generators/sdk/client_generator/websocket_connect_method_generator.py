@@ -1,17 +1,12 @@
 from dataclasses import dataclass
-from typing import List, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    EndpointFunctionGenerator,
-)
-from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
-    WebsocketConnectResponseCodeWriter,
-)
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
@@ -64,13 +59,13 @@ class WebsocketConnectMethodGenerator:
 
         self._named_parameters_raw = self._get_websocket_named_parameters(websocket=self._websocket)
 
-        self._path_parameter_names = dict()
+        self._path_parameter_names: Dict[str, str] = dict()
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
                 _named_parameter_names.append(name)
-                self._path_parameter_names[path_parameter.name] = name
+                self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
@@ -131,7 +126,7 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.FunctionParameter] = []
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.FunctionParameter(
                         name=name,
@@ -222,7 +217,7 @@ class WebsocketConnectMethodGenerator:
 
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -266,9 +261,13 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write_line(
-                f'{self.WS_URL_VARIABLE} = {self._get_environment_as_str(websocket=websocket)} + "{websocket.path.head}"'
+            environment_url = self._get_multiple_base_url_environment_as_string(websocket=websocket)
+            url_prefix = (
+                environment_url
+                if environment_url
+                else f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
             )
+            writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
             if len(parameters) > 0:
                 writer.write("query_params = ")
                 writer.write_node(HttpX.query_params())
@@ -281,28 +280,119 @@ class WebsocketConnectMethodGenerator:
             headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:
                 writer.write_node(headers_expr)
-            writer.write_line(
-                f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
-                + f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}:'
-            )
-            with writer.indent():
-                writer.write_line(
-                    f'headers.update({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}["additional_headers"])'
+
+            writer.write_node(
+                AST.ConditionalTree(
+                    [
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression(
+                                (
+                                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
+                                    f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}'
+                                )
+                            ),
+                            code=[
+                                AST.Expression(
+                                    f'headers.update({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}["additional_headers"])'
+                                )
+                            ],
+                        )
+                    ],
+                    else_code=None,
                 )
-            writer.write_line("try:")
-            with writer.indent():
-                if is_async:
-                    writer.write_node(Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"))
-                    writer.write_line(
-                        f"yield {self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+            )
+
+            if is_async:
+                body = [
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(
+                                expression=Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"),
+                                as_variable="protocol",
+                            )
+                        ],
+                        body=[
+                            AST.YieldStatement(
+                                value=AST.Expression(
+                                    f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                                )
+                            )
+                        ],
+                        is_async=True,
                     )
-                else:
-                    writer.write_node(Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"))
-                    writer.write_line(
-                        f"yield {self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                ]
+            else:
+                body = [
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(
+                                expression=Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"),
+                                as_variable="protocol",
+                            )
+                        ],
+                        body=[
+                            AST.YieldStatement(
+                                value=AST.Expression(
+                                    f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                                )
+                            )
+                        ],
+                        is_async=False,
                     )
-            response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
-            response_code_writer.write(writer)
+                ]
+
+            writer.write_node(
+                AST.TryStatement(
+                    body=body,
+                    handlers=[
+                        AST.ExceptHandler(
+                            exception_type=AST.Expression(
+                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
+                            ),
+                            name="exc",
+                            body=[
+                                AST.VariableDeclaration(
+                                    name="status_code",
+                                    type_hint=AST.TypeHint.int_(),
+                                    initializer=AST.Expression("exc.status_code"),
+                                ),
+                                AST.ConditionalTree(
+                                    conditions=[
+                                        AST.IfConditionLeaf(
+                                            condition=AST.Expression("status_code == 401"),
+                                            code=[
+                                                AST.RaiseStatement(
+                                                    exception=self._context.core_utilities.instantiate_api_error(
+                                                        headers=AST.Expression("headers"),
+                                                        body=AST.Expression(
+                                                            '"Websocket initialized with invalid credentials."'
+                                                        ),
+                                                        status_code=AST.Expression("status_code"),
+                                                    )
+                                                )
+                                            ],
+                                        )
+                                    ],
+                                    else_code=None,
+                                ),
+                                AST.RaiseStatement(
+                                    exception=self._context.core_utilities.instantiate_api_error(
+                                        headers=AST.Expression("headers"),
+                                        body=AST.Expression(
+                                            '"Unexpected error when initializing websocket connection."'
+                                        ),
+                                        status_code=AST.Expression("status_code"),
+                                    )
+                                ),
+                            ],
+                        )
+                    ],
+                )
+            )
+
+            writer.write_line("")
 
         return AST.CodeWriter(write)
 
@@ -369,7 +459,7 @@ class WebsocketConnectMethodGenerator:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -432,9 +522,10 @@ class WebsocketConnectMethodGenerator:
         websocket: ir_types.WebSocketChannel,
         path_parameter_name: str,
     ) -> str:
-        for path_parameter in websocket.path_parameters:
-            if path_parameter.name == path_parameter_name:
-                return self._path_parameter_names[path_parameter.name]
+        for websocket_path_parameter in websocket.path_parameters:
+            websocket_path_parameter_name = get_parameter_name(websocket_path_parameter.name)
+            if websocket_path_parameter_name == path_parameter_name:
+                return self._path_parameter_names[websocket_path_parameter_name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
     def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
@@ -527,7 +618,7 @@ class WebsocketConnectMethodGenerator:
             context=self._context, object_=reference, type_reference=query_parameter.value_type
         )
 
-    def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> str:
+    def _get_multiple_base_url_environment_as_string(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
@@ -538,7 +629,7 @@ class WebsocketConnectMethodGenerator:
                     get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
                 return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
-        return ""
+        return None  # single base URL or no environment
 
     def _get_client_wrapper_headers_expression(self) -> str:
         return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"

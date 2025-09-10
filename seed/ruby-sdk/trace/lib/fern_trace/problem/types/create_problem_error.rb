@@ -28,10 +28,10 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::CreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct._type
-        when "generic"
-        end
-        member = SeedTraceClient::Problem::GenericCreateProblemError.from_json(json_object: json_object)
+        member = case struct._type
+                 when "generic"
+                 end
+        SeedTraceClient::Problem::GenericCreateProblemError.from_json(json_object: json_object)
         new(member: member, discriminant: struct._type)
       end
 

@@ -43,9 +43,13 @@ class UnknownClient:
         Examples
         --------
         from seed import SeedUnknownAsAny
-        client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
-        client.unknown.post(request={'key': 'value'}
-        , )
+
+        client = SeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.unknown.post(
+            request={"key": "value"},
+        )
         """
         _response = self._raw_client.post(request=request, request_options=request_options)
         return _response.data
@@ -68,9 +72,13 @@ class UnknownClient:
         Examples
         --------
         from seed import SeedUnknownAsAny
-        client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
-        client.unknown.post_object(unknown={'key': 'value'}
-        , )
+
+        client = SeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.unknown.post_object(
+            unknown={"key": "value"},
+        )
         """
         _response = self._raw_client.post_object(unknown=unknown, request_options=request_options)
         return _response.data
@@ -108,12 +116,21 @@ class AsyncUnknownClient:
 
         Examples
         --------
-        from seed import AsyncSeedUnknownAsAny
         import asyncio
-        client = AsyncSeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUnknownAsAny
+
+        client = AsyncSeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.unknown.post(request={'key': 'value'}
-            , )
+            await client.unknown.post(
+                request={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.post(request=request, request_options=request_options)
@@ -136,12 +153,21 @@ class AsyncUnknownClient:
 
         Examples
         --------
-        from seed import AsyncSeedUnknownAsAny
         import asyncio
-        client = AsyncSeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUnknownAsAny
+
+        client = AsyncSeedUnknownAsAny(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.unknown.post_object(unknown={'key': 'value'}
-            , )
+            await client.unknown.post_object(
+                unknown={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.post_object(unknown=unknown, request_options=request_options)

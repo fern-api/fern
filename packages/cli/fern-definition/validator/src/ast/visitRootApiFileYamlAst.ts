@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RootApiFileSchema, isOAuthScheme } from "@fern-api/fern-definition-schema";
+import { isOAuthScheme, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 
 import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
 import { visitPathParameters } from "./visitors/services/visitHttpService";
@@ -8,6 +8,7 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
     visitor.file?.(contents, []);
     visitObject(contents, {
         version: noop,
+        product: noop,
         name: noop,
         "default-url": noop,
         "display-name": noop,

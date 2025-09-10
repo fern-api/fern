@@ -269,7 +269,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -285,7 +285,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -458,7 +458,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -579,7 +579,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1190,7 +1190,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1206,7 +1206,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1223,7 +1223,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1240,7 +1240,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1258,7 +1258,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1274,7 +1274,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1290,7 +1290,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1306,7 +1306,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1322,7 +1322,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1338,7 +1338,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1364,7 +1364,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1380,7 +1380,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1418,7 +1418,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1434,7 +1434,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1466,7 +1466,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1482,7 +1482,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1508,7 +1508,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1524,7 +1524,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1540,7 +1540,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1568,7 +1568,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1584,7 +1584,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1600,7 +1600,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1616,7 +1616,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TranscriptContentSafetyLabels"
@@ -1630,7 +1630,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1646,7 +1646,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TranscriptIabCategoriesResult"
@@ -1660,7 +1660,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1676,7 +1676,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1693,7 +1693,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1709,7 +1709,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1736,7 +1736,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1752,7 +1752,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1768,7 +1768,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1784,7 +1784,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1816,7 +1816,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1832,7 +1832,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1848,7 +1848,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1865,7 +1865,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1881,7 +1881,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1898,7 +1898,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1914,7 +1914,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2236,7 +2236,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2525,9 +2525,30 @@
       "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
       "name": "AutoHighlightsResult",
       "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "A temporally-sequential array of Key Phrases",
+            "key": "results",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "AutoHighlightResult"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AutoHighlightsResultWrapper": {
+      "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
+      "name": "AutoHighlightsResult",
+      "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AutoHighlightsResult"
@@ -2634,7 +2655,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2735,7 +2756,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2840,7 +2861,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2904,7 +2925,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3340,29 +3361,6 @@
         ]
       }
     },
-    "LemurBaseParametersContextOneOfZero": {
-      "name": "LemurBaseParametersContextOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "LemurBaseParametersContextOneOfOne": {
-      "name": "LemurBaseParametersContextOneOfOne",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurBaseParametersContext": {
       "description": "Context to provide the model. This can be a string or a free-form JSON value.",
       "name": "LemurBaseParametersContext",
@@ -3370,17 +3368,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurBaseParametersContextOneOfZero",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContextOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "LemurBaseParametersContextOneOfOne",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContextOneOfOne"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -3501,29 +3507,6 @@
         ]
       }
     },
-    "LemurQuestionContextOneOfZero": {
-      "name": "LemurQuestionContextOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "LemurQuestionContextOneOfOne": {
-      "name": "LemurQuestionContextOneOfOne",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurQuestionContext": {
       "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
       "name": "LemurQuestionContext",
@@ -3531,17 +3514,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurQuestionContextOneOfZero",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContextOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "LemurQuestionContextOneOfOne",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContextOneOfOne"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -3682,6 +3673,83 @@
             }
           }
         ]
+      }
+    },
+    "TranscriptListParameters/properties/limit": {
+      "description": "Maximum amount of transcripts to retrieve",
+      "name": "TranscriptListParameters/properties/limit",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "long",
+            "default": 10
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/status": {
+      "description": "Filter by transcript status",
+      "name": "TranscriptListParameters/properties/status",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "TranscriptListParameters/properties/created_on": {
+      "description": "Only get transcripts created on this date",
+      "name": "TranscriptListParameters/properties/created_on",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/before_id": {
+      "description": "Get transcripts that were created before this transcript ID",
+      "name": "TranscriptListParameters/properties/before_id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/after_id": {
+      "description": "Get transcripts that were created after this transcript ID",
+      "name": "TranscriptListParameters/properties/after_id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/throttled_only": {
+      "description": "Only get throttled transcripts, overrides the status filter",
+      "name": "TranscriptListParameters/properties/throttled_only",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
       }
     },
     "SendAudio": {
@@ -3897,35 +3965,40 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
@@ -3974,14 +4047,16 @@
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           }
         ]
       }
@@ -4128,8 +4203,8 @@
         ]
       }
     },
-    "receiveMessage": {
-      "name": "receiveMessage",
+    "UserIdSubscribe": {
+      "name": "UserIdSubscribe",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4138,41 +4213,46 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "partialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "finalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
     },
-    "sendMessage": {
-      "name": "sendMessage",
+    "UserIdPublish": {
+      "name": "UserIdPublish",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4181,22 +4261,24 @@
             "type": {
               "type": "id",
               "value": "SendAudio"
-            }
+            },
+            "displayName": "sendAudio"
           },
           {
             "typeName": "TerminateSession",
             "type": {
               "type": "id",
               "value": "TerminateSession"
-            }
+            },
+            "displayName": "terminateSession"
           }
         ]
       }
     }
   },
   "subpackages": {
-    "files": {
-      "subpackageId": "files",
+    "subpackage_files": {
+      "subpackageId": "subpackage_files",
       "name": "files",
       "endpoints": [
         {
@@ -4211,7 +4293,7 @@
             }
           ],
           "id": "upload",
-          "originalEndpointId": "files.upload",
+          "originalEndpointId": "endpoint_files.upload",
           "name": "Upload an audio or video file which can be transcribed.",
           "path": {
             "pathParameters": [],
@@ -4228,6 +4310,24 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4239,10 +4339,114 @@
             "statusCode": 200,
             "description": "File uploaded successfully"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UploadedFile"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File uploaded successfully"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v2/upload",
               "pathParameters": {},
@@ -4250,15 +4454,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "upload_url": "foo"
-                }
+                "upload_url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "upload_url": "foo"
+                  "upload_url": "string"
                 }
               }
             }
@@ -4273,8 +4474,9 @@
       "types": [],
       "subpackages": []
     },
-    "transcript": {
-      "subpackageId": "transcript",
+    "subpackage_transcript": {
+      "subpackageId": "subpackage_transcript",
+      "displayName": "transcript",
       "name": "transcript",
       "endpoints": [
         {
@@ -4289,7 +4491,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "transcript.list",
+          "originalEndpointId": "endpoint_transcript.list",
           "name": "List transcripts",
           "path": {
             "pathParameters": [],
@@ -4373,6 +4575,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4384,63 +4587,157 @@
             "statusCode": 200,
             "description": "A list of transcripts filtered by `limit` and `status`"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TranscriptList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of transcripts filtered by `limit` and `status`"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 42,
-                "status": null,
-                "created_on": "foo",
-                "before_id": "foo",
-                "after_id": "foo",
-                "throttled_only": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "page_details": {
-                    "limit": 42,
-                    "result_count": 42,
-                    "current_url": "foo",
-                    "prev_url": "foo",
-                    "next_url": "foo"
-                  },
-                  "transcripts": [
-                    {
-                      "id": "foo",
-                      "resource_url": "foo",
-                      "status": "queued",
-                      "created": "foo",
-                      "completed": "foo",
-                      "audio_url": "foo"
-                    }
-                  ]
-                }
+                "page_details": {
+                  "limit": 1,
+                  "result_count": 1,
+                  "current_url": "string",
+                  "prev_url": "string",
+                  "next_url": "string"
+                },
+                "transcripts": [
+                  {
+                    "id": "string",
+                    "resource_url": "string",
+                    "status": "queued",
+                    "created": "string",
+                    "completed": "string",
+                    "audio_url": "string"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "page_details": {
-                    "limit": 42,
-                    "result_count": 42,
-                    "current_url": "foo",
-                    "prev_url": "foo",
-                    "next_url": "foo"
+                    "limit": 1,
+                    "result_count": 1,
+                    "current_url": "string",
+                    "prev_url": "string",
+                    "next_url": "string"
                   },
                   "transcripts": [
                     {
-                      "id": "foo",
-                      "resource_url": "foo",
+                      "id": "string",
+                      "resource_url": "string",
                       "status": "queued",
-                      "created": "foo",
-                      "completed": "foo",
-                      "audio_url": "foo"
+                      "created": "string",
+                      "completed": "string",
+                      "audio_url": "string"
                     }
                   ]
                 }
@@ -4463,7 +4760,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "transcript.create",
+          "originalEndpointId": "endpoint_transcript.create",
           "name": "Create a transcript from an audio file",
           "path": {
             "pathParameters": [],
@@ -4495,6 +4792,25 @@
             },
             "description": "Parameters to create a transcript."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTranscriptParameters"
+                    }
+                  },
+                  "description": "Parameters to create a transcript."
+                },
+                "description": "Parameters to create a transcript."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4506,294 +4822,399 @@
             "statusCode": 201,
             "description": "Transcript created and queued for processing."
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Transcript created and queued for processing."
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "audio_url": "string"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "audio_url": "string"
+                }
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
-                  "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
-                  "words": [
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
+                "status": "queued",
+                "language_code": "en_us",
+                "audio_url": "string",
+                "text": "string",
+                "words": [
+                  {
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "channel": "string",
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "words": [
+                      {
+                        "confidence": 0.5,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
+                      }
+                    ]
+                  }
+                ],
+                "confidence": 0.5,
+                "audio_duration": 1.1,
+                "punctuate": true,
+                "format_text": true,
+                "dual_channel": true,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
+                "webhook_auth": true,
+                "webhook_auth_header_name": "string",
+                "speed_boost": true,
+                "auto_highlights": true,
+                "auto_highlights_result": {
+                  "results": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
-                    }
-                  ],
-                  "utterances": [
-                    {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "words": [
+                      "count": 1,
+                      "rank": 0.5,
+                      "text": "string",
+                      "timestamps": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
-                  ],
-                  "confidence": 42,
-                  "audio_duration": 42,
-                  "punctuate": true,
-                  "format_text": true,
-                  "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
-                  "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
-                  "speed_boost": true,
-                  "auto_highlights": true,
-                  "auto_highlights_result": {
-                    "results": [
-                      {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
-                        "timestamps": [
-                          {
-                            "start": 42,
-                            "end": 42
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
-                  "word_boost": [
-                    "foo"
-                  ],
-                  "boost_param": "foo",
-                  "filter_profanity": true,
-                  "redact_pii": true,
-                  "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
-                  "redact_pii_policies": [
-                    "medical_process"
-                  ],
-                  "redact_pii_sub": "entity_type",
-                  "speaker_labels": true,
-                  "speakers_expected": 42,
-                  "content_safety": true,
-                  "content_safety_labels": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
-                          }
-                        ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
-                        },
-                        "summary": {},
-                        "severity_score_summary": {}
-                      }
-                    ]
-                  },
-                  "iab_categories": true,
-                  "iab_categories_result": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "relevance": 42,
-                            "label": "foo"
-                          }
-                        ],
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
+                  ]
+                },
+                "audio_start_from": 1,
+                "audio_end_at": 1,
+                "word_boost": [
+                  "string"
+                ],
+                "boost_param": "string",
+                "filter_profanity": true,
+                "redact_pii": true,
+                "redact_pii_audio": true,
+                "redact_pii_audio_quality": "string",
+                "redact_pii_policies": [
+                  "medical_process"
+                ],
+                "redact_pii_sub": "entity_type",
+                "speaker_labels": true,
+                "speakers_expected": 1,
+                "content_safety": true,
+                "content_safety_labels": {
+                  "status": "success",
+                  "results": [
+                    {
+                      "text": "string",
+                      "labels": [
+                        {
+                          "label": "string",
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
-                      }
-                    ],
-                    "summary": {}
-                  },
-                  "language_detection": true,
-                  "custom_spelling": [
-                    {
-                      "from": [
-                        "foo"
                       ],
-                      "to": "foo"
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      },
+                      "summary": {},
+                      "severity_score_summary": {}
                     }
-                  ],
-                  "auto_chapters": true,
-                  "chapters": [
+                  ]
+                },
+                "iab_categories": true,
+                "iab_categories_result": {
+                  "status": "success",
+                  "results": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "labels": [
+                        {
+                          "relevance": 0.5,
+                          "label": "string"
+                        }
+                      ],
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      }
                     }
                   ],
-                  "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
-                  "custom_topics": true,
-                  "topics": [
-                    "foo"
-                  ],
-                  "disfluencies": true,
-                  "sentiment_analysis": true,
-                  "sentiment_analysis_results": [
-                    {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
-                    }
-                  ],
-                  "entity_detection": true,
-                  "entities": [
-                    {
-                      "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
-                    }
-                  ],
-                  "speech_threshold": 42,
-                  "throttled": true,
-                  "error": "foo"
-                }
+                  "summary": {}
+                },
+                "language_detection": true,
+                "custom_spelling": [
+                  {
+                    "from": [
+                      "string"
+                    ],
+                    "to": "string"
+                  }
+                ],
+                "auto_chapters": true,
+                "chapters": [
+                  {
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "summarization": true,
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
+                "custom_topics": true,
+                "topics": [
+                  "string"
+                ],
+                "disfluencies": true,
+                "sentiment_analysis": true,
+                "sentiment_analysis_results": [
+                  {
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "sentiment": "POSITIVE",
+                    "confidence": 0.5,
+                    "speaker": "string"
+                  }
+                ],
+                "entity_detection": true,
+                "entities": [
+                  {
+                    "entity_type": "banking_information",
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "speech_threshold": 0.5,
+                "throttled": true,
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "language_code": "en_us",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 0.5,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 0.5,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 0.5,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -4805,16 +5226,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 0.5,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -4824,53 +5245,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 0.5,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -4891,7 +5312,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "transcript.get",
+          "originalEndpointId": "endpoint_transcript.get",
           "name": "Get the transcript",
           "path": {
             "pathParameters": [
@@ -4927,6 +5348,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4938,291 +5360,392 @@
             "statusCode": 200,
             "description": "The transcript resource"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The transcript resource"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
-                  "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
-                  "words": [
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
+                "status": "queued",
+                "language_code": "en_us",
+                "audio_url": "string",
+                "text": "string",
+                "words": [
+                  {
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "channel": "string",
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "words": [
+                      {
+                        "confidence": 0.5,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
+                      }
+                    ]
+                  }
+                ],
+                "confidence": 0.5,
+                "audio_duration": 1.1,
+                "punctuate": true,
+                "format_text": true,
+                "dual_channel": true,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
+                "webhook_auth": true,
+                "webhook_auth_header_name": "string",
+                "speed_boost": true,
+                "auto_highlights": true,
+                "auto_highlights_result": {
+                  "results": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
-                    }
-                  ],
-                  "utterances": [
-                    {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "words": [
+                      "count": 1,
+                      "rank": 0.5,
+                      "text": "string",
+                      "timestamps": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
-                  ],
-                  "confidence": 42,
-                  "audio_duration": 42,
-                  "punctuate": true,
-                  "format_text": true,
-                  "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
-                  "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
-                  "speed_boost": true,
-                  "auto_highlights": true,
-                  "auto_highlights_result": {
-                    "results": [
-                      {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
-                        "timestamps": [
-                          {
-                            "start": 42,
-                            "end": 42
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
-                  "word_boost": [
-                    "foo"
-                  ],
-                  "boost_param": "foo",
-                  "filter_profanity": true,
-                  "redact_pii": true,
-                  "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
-                  "redact_pii_policies": [
-                    "medical_process"
-                  ],
-                  "redact_pii_sub": "entity_type",
-                  "speaker_labels": true,
-                  "speakers_expected": 42,
-                  "content_safety": true,
-                  "content_safety_labels": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
-                          }
-                        ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
-                        },
-                        "summary": {},
-                        "severity_score_summary": {}
-                      }
-                    ]
-                  },
-                  "iab_categories": true,
-                  "iab_categories_result": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "relevance": 42,
-                            "label": "foo"
-                          }
-                        ],
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
+                  ]
+                },
+                "audio_start_from": 1,
+                "audio_end_at": 1,
+                "word_boost": [
+                  "string"
+                ],
+                "boost_param": "string",
+                "filter_profanity": true,
+                "redact_pii": true,
+                "redact_pii_audio": true,
+                "redact_pii_audio_quality": "string",
+                "redact_pii_policies": [
+                  "medical_process"
+                ],
+                "redact_pii_sub": "entity_type",
+                "speaker_labels": true,
+                "speakers_expected": 1,
+                "content_safety": true,
+                "content_safety_labels": {
+                  "status": "success",
+                  "results": [
+                    {
+                      "text": "string",
+                      "labels": [
+                        {
+                          "label": "string",
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
-                      }
-                    ],
-                    "summary": {}
-                  },
-                  "language_detection": true,
-                  "custom_spelling": [
-                    {
-                      "from": [
-                        "foo"
                       ],
-                      "to": "foo"
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      },
+                      "summary": {},
+                      "severity_score_summary": {}
                     }
-                  ],
-                  "auto_chapters": true,
-                  "chapters": [
+                  ]
+                },
+                "iab_categories": true,
+                "iab_categories_result": {
+                  "status": "success",
+                  "results": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "labels": [
+                        {
+                          "relevance": 0.5,
+                          "label": "string"
+                        }
+                      ],
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      }
                     }
                   ],
-                  "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
-                  "custom_topics": true,
-                  "topics": [
-                    "foo"
-                  ],
-                  "disfluencies": true,
-                  "sentiment_analysis": true,
-                  "sentiment_analysis_results": [
-                    {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
-                    }
-                  ],
-                  "entity_detection": true,
-                  "entities": [
-                    {
-                      "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
-                    }
-                  ],
-                  "speech_threshold": 42,
-                  "throttled": true,
-                  "error": "foo"
-                }
+                  "summary": {}
+                },
+                "language_detection": true,
+                "custom_spelling": [
+                  {
+                    "from": [
+                      "string"
+                    ],
+                    "to": "string"
+                  }
+                ],
+                "auto_chapters": true,
+                "chapters": [
+                  {
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "summarization": true,
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
+                "custom_topics": true,
+                "topics": [
+                  "string"
+                ],
+                "disfluencies": true,
+                "sentiment_analysis": true,
+                "sentiment_analysis_results": [
+                  {
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "sentiment": "POSITIVE",
+                    "confidence": 0.5,
+                    "speaker": "string"
+                  }
+                ],
+                "entity_detection": true,
+                "entities": [
+                  {
+                    "entity_type": "banking_information",
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "speech_threshold": 0.5,
+                "throttled": true,
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "language_code": "en_us",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 0.5,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 0.5,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 0.5,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -5234,16 +5757,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 0.5,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -5253,53 +5776,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 0.5,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -5320,7 +5843,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "transcript.delete",
+          "originalEndpointId": "endpoint_transcript.delete",
           "name": "Delete the transcript",
           "path": {
             "pathParameters": [
@@ -5356,6 +5879,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5367,291 +5891,392 @@
             "statusCode": 200,
             "description": "The deleted transcript response."
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The deleted transcript response."
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
-                  "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
-                  "words": [
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
+                "status": "queued",
+                "language_code": "en_us",
+                "audio_url": "string",
+                "text": "string",
+                "words": [
+                  {
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "channel": "string",
+                    "confidence": 0.5,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "words": [
+                      {
+                        "confidence": 0.5,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
+                      }
+                    ]
+                  }
+                ],
+                "confidence": 0.5,
+                "audio_duration": 1.1,
+                "punctuate": true,
+                "format_text": true,
+                "dual_channel": true,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
+                "webhook_auth": true,
+                "webhook_auth_header_name": "string",
+                "speed_boost": true,
+                "auto_highlights": true,
+                "auto_highlights_result": {
+                  "results": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
-                    }
-                  ],
-                  "utterances": [
-                    {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "words": [
+                      "count": 1,
+                      "rank": 0.5,
+                      "text": "string",
+                      "timestamps": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
-                  ],
-                  "confidence": 42,
-                  "audio_duration": 42,
-                  "punctuate": true,
-                  "format_text": true,
-                  "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
-                  "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
-                  "speed_boost": true,
-                  "auto_highlights": true,
-                  "auto_highlights_result": {
-                    "results": [
-                      {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
-                        "timestamps": [
-                          {
-                            "start": 42,
-                            "end": 42
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
-                  "word_boost": [
-                    "foo"
-                  ],
-                  "boost_param": "foo",
-                  "filter_profanity": true,
-                  "redact_pii": true,
-                  "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
-                  "redact_pii_policies": [
-                    "medical_process"
-                  ],
-                  "redact_pii_sub": "entity_type",
-                  "speaker_labels": true,
-                  "speakers_expected": 42,
-                  "content_safety": true,
-                  "content_safety_labels": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
-                          }
-                        ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
-                        },
-                        "summary": {},
-                        "severity_score_summary": {}
-                      }
-                    ]
-                  },
-                  "iab_categories": true,
-                  "iab_categories_result": {
-                    "status": "success",
-                    "results": [
-                      {
-                        "text": "foo",
-                        "labels": [
-                          {
-                            "relevance": 42,
-                            "label": "foo"
-                          }
-                        ],
-                        "timestamp": {
-                          "start": 42,
-                          "end": 42
+                  ]
+                },
+                "audio_start_from": 1,
+                "audio_end_at": 1,
+                "word_boost": [
+                  "string"
+                ],
+                "boost_param": "string",
+                "filter_profanity": true,
+                "redact_pii": true,
+                "redact_pii_audio": true,
+                "redact_pii_audio_quality": "string",
+                "redact_pii_policies": [
+                  "medical_process"
+                ],
+                "redact_pii_sub": "entity_type",
+                "speaker_labels": true,
+                "speakers_expected": 1,
+                "content_safety": true,
+                "content_safety_labels": {
+                  "status": "success",
+                  "results": [
+                    {
+                      "text": "string",
+                      "labels": [
+                        {
+                          "label": "string",
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
-                      }
-                    ],
-                    "summary": {}
-                  },
-                  "language_detection": true,
-                  "custom_spelling": [
-                    {
-                      "from": [
-                        "foo"
                       ],
-                      "to": "foo"
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      },
+                      "summary": {},
+                      "severity_score_summary": {}
                     }
-                  ],
-                  "auto_chapters": true,
-                  "chapters": [
+                  ]
+                },
+                "iab_categories": true,
+                "iab_categories_result": {
+                  "status": "success",
+                  "results": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "labels": [
+                        {
+                          "relevance": 0.5,
+                          "label": "string"
+                        }
+                      ],
+                      "timestamp": {
+                        "start": 1,
+                        "end": 1
+                      }
                     }
                   ],
-                  "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
-                  "custom_topics": true,
-                  "topics": [
-                    "foo"
-                  ],
-                  "disfluencies": true,
-                  "sentiment_analysis": true,
-                  "sentiment_analysis_results": [
-                    {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
-                    }
-                  ],
-                  "entity_detection": true,
-                  "entities": [
-                    {
-                      "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
-                    }
-                  ],
-                  "speech_threshold": 42,
-                  "throttled": true,
-                  "error": "foo"
-                }
+                  "summary": {}
+                },
+                "language_detection": true,
+                "custom_spelling": [
+                  {
+                    "from": [
+                      "string"
+                    ],
+                    "to": "string"
+                  }
+                ],
+                "auto_chapters": true,
+                "chapters": [
+                  {
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "summarization": true,
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
+                "custom_topics": true,
+                "topics": [
+                  "string"
+                ],
+                "disfluencies": true,
+                "sentiment_analysis": true,
+                "sentiment_analysis_results": [
+                  {
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "sentiment": "POSITIVE",
+                    "confidence": 0.5,
+                    "speaker": "string"
+                  }
+                ],
+                "entity_detection": true,
+                "entities": [
+                  {
+                    "entity_type": "banking_information",
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
+                  }
+                ],
+                "speech_threshold": 0.5,
+                "throttled": true,
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
-                  "language_code": "en",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "language_code": "en_us",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 0.5,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 0.5,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 0.5,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 0.5,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -5663,16 +6288,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 0.5,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -5682,53 +6307,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 0.5,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 0.5,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -5749,7 +6374,7 @@
             }
           ],
           "id": "getSubtitles",
-          "originalEndpointId": "transcript.getSubtitles",
+          "originalEndpointId": "endpoint_transcript.getSubtitles",
           "name": "Export transcript as SRT or VTT captions.",
           "path": {
             "pathParameters": [
@@ -5815,21 +6440,134 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "requestsV2": {},
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/srt",
               "pathParameters": {
-                "transcript_id": "foo",
+                "transcript_id": "transcript_id",
                 "subtitle_format": "srt"
               },
-              "queryParameters": {
-                "chars_per_caption": 42
-              },
+              "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n"
+              }
             }
           ],
           "protocol": {
@@ -5848,7 +6586,7 @@
             }
           ],
           "id": "getSentences",
-          "originalEndpointId": "transcript.getSentences",
+          "originalEndpointId": "endpoint_transcript.getSentences",
           "name": "Get the transcript split by sentences",
           "path": {
             "pathParameters": [
@@ -5884,6 +6622,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5895,62 +6634,163 @@
             "statusCode": 200,
             "description": "Exported sentences"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SentencesResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Exported sentences"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/sentences",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
-                  "sentences": [
-                    {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
-                      "words": [
-                        {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "id": "string",
+                "confidence": 0.5,
+                "audio_duration": 1.1,
+                "sentences": [
+                  {
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "confidence": 0.5,
+                    "words": [
+                      {
+                        "confidence": 0.5,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "id": "string",
+                  "confidence": 0.5,
+                  "audio_duration": 1.1,
                   "sentences": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
+                      "confidence": 0.5,
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 0.5,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
@@ -5975,7 +6815,7 @@
             }
           ],
           "id": "getParagraphs",
-          "originalEndpointId": "transcript.getParagraphs",
+          "originalEndpointId": "endpoint_transcript.getParagraphs",
           "name": "Get the transcript split by paragraphs",
           "path": {
             "pathParameters": [
@@ -6011,6 +6851,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6022,62 +6863,163 @@
             "statusCode": 200,
             "description": "Exported paragraphs"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ParagraphsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Exported paragraphs"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/paragraphs",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
-                  "paragraphs": [
-                    {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
-                      "words": [
-                        {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "id": "string",
+                "confidence": 0.5,
+                "audio_duration": 1.1,
+                "paragraphs": [
+                  {
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "confidence": 0.5,
+                    "words": [
+                      {
+                        "confidence": 0.5,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "id": "string",
+                  "confidence": 0.5,
+                  "audio_duration": 1.1,
                   "paragraphs": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
+                      "confidence": 0.5,
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 0.5,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
@@ -6102,7 +7044,7 @@
             }
           ],
           "id": "wordSearch",
-          "originalEndpointId": "transcript.wordSearch",
+          "originalEndpointId": "endpoint_transcript.wordSearch",
           "name": "Search the given transcript for words, numbers, or phrases",
           "path": {
             "pathParameters": [
@@ -6152,6 +7094,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6163,59 +7106,160 @@
             "statusCode": 200,
             "description": "Word search response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WordSearchResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Word search response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/word-search",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {
                 "words": [
-                  "foo"
+                  "string"
                 ]
               },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "total_count": 42,
-                  "matches": [
-                    {
-                      "text": "foo",
-                      "count": 42,
-                      "timestamps": [
-                        [
-                          42
-                        ]
-                      ],
-                      "indexes": [
-                        42
+                "id": "string",
+                "total_count": 1,
+                "matches": [
+                  {
+                    "text": "string",
+                    "count": 1,
+                    "timestamps": [
+                      [
+                        1
                       ]
-                    }
-                  ]
-                }
+                    ],
+                    "indexes": [
+                      1
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "total_count": 42,
+                  "id": "string",
+                  "total_count": 1,
                   "matches": [
                     {
-                      "text": "foo",
-                      "count": 42,
+                      "text": "string",
+                      "count": 1,
                       "timestamps": [
                         [
-                          42
+                          1
                         ]
                       ],
                       "indexes": [
-                        42
+                        1
                       ]
                     }
                   ]
@@ -6239,7 +7283,7 @@
             }
           ],
           "id": "getRedactedAudio",
-          "originalEndpointId": "transcript.getRedactedAudio",
+          "originalEndpointId": "endpoint_transcript.getRedactedAudio",
           "name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
           "path": {
             "pathParameters": [
@@ -6275,6 +7319,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6286,30 +7331,131 @@
             "statusCode": 200,
             "description": "The redacted audio object containing the status and URL to the redacted audio."
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RedactedAudioResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The redacted audio object containing the status and URL to the redacted audio."
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/redacted-audio",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "status": "redacted_audio_ready",
-                  "redacted_audio_url": "foo"
-                }
+                "status": "redacted_audio_ready",
+                "redacted_audio_url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "redacted_audio_ready",
-                  "redacted_audio_url": "foo"
+                  "redacted_audio_url": "string"
                 }
               }
             }
@@ -6324,8 +7470,9 @@
       "types": [],
       "subpackages": []
     },
-    "realtime": {
-      "subpackageId": "realtime",
+    "subpackage_realtime": {
+      "subpackageId": "subpackage_realtime",
+      "displayName": "realtime",
       "name": "realtime",
       "endpoints": [
         {
@@ -6340,7 +7487,7 @@
             }
           ],
           "id": "createTemporaryToken",
-          "originalEndpointId": "realtime.createTemporaryToken",
+          "originalEndpointId": "endpoint_realtime.createTemporaryToken",
           "name": "Create a temporary authentication token for real-time transcription",
           "path": {
             "pathParameters": [],
@@ -6372,6 +7519,25 @@
             },
             "description": "Parameters to create a temporary authentication token."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateRealtimeTemporaryTokenParameters"
+                    }
+                  },
+                  "description": "Parameters to create a temporary authentication token."
+                },
+                "description": "Parameters to create a temporary authentication token."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6383,35 +7549,136 @@
             "statusCode": 200,
             "description": "Temporary authentication token generated."
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RealtimeTemporaryTokenResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Temporary authentication token generated."
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/v2/realtime/token",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "expires_in": 42
+                "expires_in": 1
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "expires_in": 42
+                  "expires_in": 1
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": "foo"
-                }
+                "token": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "token": "foo"
+                  "token": "string"
                 }
               }
             }
@@ -6426,8 +7693,9 @@
       "types": [],
       "subpackages": []
     },
-    "lemur": {
-      "subpackageId": "lemur",
+    "subpackage_lemur": {
+      "subpackageId": "subpackage_lemur",
+      "displayName": "LeMUR",
       "name": "lemur",
       "endpoints": [
         {
@@ -6442,7 +7710,7 @@
             }
           ],
           "id": "summary",
-          "originalEndpointId": "lemur.summary",
+          "originalEndpointId": "endpoint_lemur.summary",
           "name": "Generate a custom summary from one or more transcripts.",
           "path": {
             "pathParameters": [],
@@ -6474,6 +7742,25 @@
             },
             "description": "Parameters to generate the summary."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurSummaryParameters"
+                    }
+                  },
+                  "description": "Parameters to generate the summary."
+                },
+                "description": "Parameters to generate the summary."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6485,10 +7772,114 @@
             "statusCode": 200,
             "description": "LeMUR summary response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurSummaryResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR summary response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/lemur/v3/generate/summary",
               "pathParameters": {},
@@ -6496,30 +7887,27 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "response": "foo"
-                }
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -6540,7 +7928,7 @@
             }
           ],
           "id": "questionAnswer",
-          "originalEndpointId": "lemur.questionAnswer",
+          "originalEndpointId": "endpoint_lemur.questionAnswer",
           "name": "Create answers to one or more questions about one or more transcripts.",
           "path": {
             "pathParameters": [],
@@ -6572,6 +7960,25 @@
             },
             "description": "Parameters to ask questions about the transcripts."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurQuestionAnswerParameters"
+                    }
+                  },
+                  "description": "Parameters to ask questions about the transcripts."
+                },
+                "description": "Parameters to ask questions about the transcripts."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6583,10 +7990,114 @@
             "statusCode": 200,
             "description": "LeMUR question & answer response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurQuestionAnswerResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR question & answer response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/lemur/v3/generate/question-answer",
               "pathParameters": {},
@@ -6594,11 +8105,11 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ],
                 "questions": [
                   {
-                    "question": "foo"
+                    "question": "string"
                   }
                 ]
               },
@@ -6606,36 +8117,33 @@
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ],
                   "questions": [
                     {
-                      "question": "foo"
+                      "question": "string"
                     }
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "response": [
-                    {
-                      "question": "foo",
-                      "answer": "foo"
-                    }
-                  ]
-                }
+                "request_id": "string",
+                "response": [
+                  {
+                    "question": "string",
+                    "answer": "string"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
+                  "request_id": "string",
                   "response": [
                     {
-                      "question": "foo",
-                      "answer": "foo"
+                      "question": "string",
+                      "answer": "string"
                     }
                   ]
                 }
@@ -6658,7 +8166,7 @@
             }
           ],
           "id": "actionItems",
-          "originalEndpointId": "lemur.actionItems",
+          "originalEndpointId": "endpoint_lemur.actionItems",
           "name": "Extract action items from one or more meeting transcripts.",
           "path": {
             "pathParameters": [],
@@ -6690,6 +8198,25 @@
             },
             "description": "Parameters to generate action items from transcripts."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurActionItemsParameters"
+                    }
+                  },
+                  "description": "Parameters to generate action items from transcripts."
+                },
+                "description": "Parameters to generate action items from transcripts."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6701,10 +8228,114 @@
             "statusCode": 200,
             "description": "LeMUR action items response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurActionItemsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR action items response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/lemur/v3/generate/action-items",
               "pathParameters": {},
@@ -6712,30 +8343,27 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "response": "foo"
-                }
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -6756,7 +8384,7 @@
             }
           ],
           "id": "task",
-          "originalEndpointId": "lemur.task",
+          "originalEndpointId": "endpoint_lemur.task",
           "name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
           "path": {
             "pathParameters": [],
@@ -6788,6 +8416,25 @@
             },
             "description": "Parameters to run the custom task."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurTaskParameters"
+                    }
+                  },
+                  "description": "Parameters to run the custom task."
+                },
+                "description": "Parameters to run the custom task."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6799,10 +8446,114 @@
             "statusCode": 200,
             "description": "LeMUR task response"
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurTaskResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR task response"
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/lemur/v3/generate/task",
               "pathParameters": {},
@@ -6810,32 +8561,29 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ],
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ],
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "response": "foo"
-                }
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -6856,7 +8604,7 @@
             }
           ],
           "id": "purgeRequestData",
-          "originalEndpointId": "lemur.purgeRequestData",
+          "originalEndpointId": "endpoint_lemur.purgeRequestData",
           "name": "Delete the data for a previously submitted LeMUR request.",
           "path": {
             "pathParameters": [
@@ -6892,6 +8640,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6903,31 +8652,132 @@
             "statusCode": 200,
             "description": "LeMUR request data deleted."
           },
-          "errorsV2": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurgeLemurRequestDataResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR request data deleted."
+              }
+            ]
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/lemur/v3/",
+              "path": "/lemur/v3/request_id",
               "pathParameters": {
-                "request_id": "foo"
+                "request_id": "request_id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "request_id_to_purge": "foo",
-                  "deleted": true
-                }
+                "request_id": "string",
+                "request_id_to_purge": "string",
+                "deleted": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "request_id_to_purge": "foo",
+                  "request_id": "string",
+                  "request_id_to_purge": "string",
                   "deleted": true
                 }
               }
@@ -6943,9 +8793,9 @@
       "types": [],
       "subpackages": []
     },
-    "/{userId}": {
-      "subpackageId": "/{userId}",
-      "name": "/{userId}",
+    "subpackage_userId": {
+      "subpackageId": "subpackage_userId",
+      "name": "userId",
       "endpoints": [],
       "webhooks": [],
       "websockets": [
@@ -6958,14 +8808,33 @@
               "baseUrl": "wss://api.assemblyai.com/v2/realtime/ws"
             }
           ],
-          "id": "/{userId}",
-          "name": "/{userId}",
+          "id": "userId",
+          "name": "User Id",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "The ID of the user.",
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
-                "value": "/{userId}"
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
               }
             ]
           },
@@ -6973,9 +8842,12 @@
             {
               "key": "Authentication",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "Authenticate using your AssemblyAI API key."
@@ -6983,22 +8855,15 @@
           ],
           "queryParameters": [
             {
-              "description": "The ID of the user.",
-              "key": "userId",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "description": "The sample rate of the streamed audio.",
               "key": "sample_rate",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
                 }
               }
             },
@@ -7006,9 +8871,12 @@
               "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
               "key": "word_boost",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -7016,36 +8884,39 @@
               "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
               "key": "token",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             }
           ],
           "messages": [
             {
-              "type": "receiveMessage",
-              "displayName": "receiveMessage",
+              "type": "subscribe",
+              "displayName": "subscribe",
               "origin": "server",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "receiveMessage"
+                  "value": "UserIdSubscribe"
                 }
               },
               "description": "Receive messages from the WebSocket"
             },
             {
-              "type": "sendMessage",
-              "displayName": "sendMessage",
+              "type": "publish",
+              "displayName": "publish",
               "origin": "client",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "sendMessage"
+                  "value": "UserIdPublish"
                 }
               },
               "description": "Send messages to the WebSocket"
@@ -7053,30 +8924,23 @@
           ],
           "examples": [
             {
+              "name": "",
+              "description": "",
               "path": "/{userId}",
               "pathParameters": {},
-              "queryParameters": {
-                "userId": "userId",
-                "sample_rate": 1,
-                "word_boost": "word_boost",
-                "token": "token"
-              },
-              "headers": {
-                "Authentication": "Authentication"
-              },
+              "queryParameters": {},
+              "headers": {},
               "messages": [
                 {
-                  "type": "sendMessage",
+                  "type": "publish",
                   "body": {
-                    "audio_data": "audio_data"
+                    "audio_data": "base64-encoded-audio-data"
                   }
                 },
                 {
-                  "type": "receiveMessage",
+                  "type": "publish",
                   "body": {
-                    "message_type": "SessionBegins",
-                    "session_id": "session_id",
-                    "expires_at": "2024-01-15T09:30:00Z"
+                    "terminate_session": true
                   }
                 }
               ]
@@ -7121,7 +8985,7 @@
       "ContentSafetyLabel",
       "ContentSafetyLabelResult",
       "SeverityScoreSummary",
-      "AutoHighlightsResult",
+      "AutoHighlightsResultWrapper",
       "AutoHighlightResult",
       "TranscriptWord",
       "TranscriptSentence",
@@ -7174,17 +9038,17 @@
       "TerminateSession"
     ],
     "subpackages": [
-      "files",
-      "transcript",
-      "realtime",
-      "lemur",
-      "/{userId}"
+      "subpackage_files",
+      "subpackage_transcript",
+      "subpackage_realtime",
+      "subpackage_lemur",
+      "subpackage_userId"
     ]
   },
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

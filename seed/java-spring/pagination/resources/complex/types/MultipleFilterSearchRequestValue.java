@@ -13,10 +13,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import core.ObjectMappers;
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +39,7 @@ public final class MultipleFilterSearchRequestValue {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visitListOfMultipleFilterSearchRequest((List<MultipleFilterSearchRequest>) this.value);
@@ -94,11 +96,11 @@ public final class MultipleFilterSearchRequestValue {
       Object value = p.readValueAs(Object.class);
       try {
         return ofListOfMultipleFilterSearchRequest(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<MultipleFilterSearchRequest>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return ofListOfSingleFilterSearchRequest(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<SingleFilterSearchRequest>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       throw new JsonParseException(p, "Failed to deserialize");
     }

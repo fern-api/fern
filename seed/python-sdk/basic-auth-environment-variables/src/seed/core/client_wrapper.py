@@ -12,11 +12,13 @@ class BaseClientWrapper:
         *,
         username: typing.Union[str, typing.Callable[[], str]],
         access_token: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
         self._username = username
         self._access_token = access_token
+        self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
 
@@ -26,6 +28,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_basic-auth-environment-variables",
             "X-Fern-SDK-Version": "0.0.1",
+            **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_access_token())._auth_header
         return headers
@@ -42,6 +45,9 @@ class BaseClientWrapper:
         else:
             return self._access_token()
 
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
+
     def get_base_url(self) -> str:
         return self._base_url
 
@@ -55,11 +61,14 @@ class SyncClientWrapper(BaseClientWrapper):
         *,
         username: typing.Union[str, typing.Callable[[], str]],
         access_token: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(username=username, access_token=access_token, base_url=base_url, timeout=timeout)
+        super().__init__(
+            username=username, access_token=access_token, headers=headers, base_url=base_url, timeout=timeout
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -74,11 +83,14 @@ class AsyncClientWrapper(BaseClientWrapper):
         *,
         username: typing.Union[str, typing.Callable[[], str]],
         access_token: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(username=username, access_token=access_token, base_url=base_url, timeout=timeout)
+        super().__init__(
+            username=username, access_token=access_token, headers=headers, base_url=base_url, timeout=timeout
+        )
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

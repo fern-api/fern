@@ -18,6 +18,7 @@ public interface ServiceService {
       value = "/{endpointParam}/{resourceParam}",
       produces = "application/json"
   )
-  void post(@PathVariable("resourceParam") String resourceParam,
+  void post(@PathVariable("serviceParam") String serviceParam,
+      @PathVariable("resourceParam") String resourceParam,
       @PathVariable("endpointParam") Integer endpointParam);
 }

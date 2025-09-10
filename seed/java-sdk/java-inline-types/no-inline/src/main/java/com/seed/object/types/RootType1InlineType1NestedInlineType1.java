@@ -101,20 +101,32 @@ public final class RootType1InlineType1NestedInlineType1 {
     }
 
     public interface FooStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         BarStage foo(@NotNull String foo);
 
         Builder from(RootType1InlineType1NestedInlineType1 other);
     }
 
     public interface BarStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         MyEnumStage bar(@NotNull String bar);
     }
 
     public interface MyEnumStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         RefStage myEnum(@NotNull InlineEnum1 myEnum);
     }
 
     public interface RefStage {
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
 
@@ -148,6 +160,7 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         /**
          * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -158,6 +171,7 @@ public final class RootType1InlineType1NestedInlineType1 {
         }
 
         /**
+         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -170,6 +184,7 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         /**
          * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -180,6 +195,7 @@ public final class RootType1InlineType1NestedInlineType1 {
         }
 
         /**
+         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

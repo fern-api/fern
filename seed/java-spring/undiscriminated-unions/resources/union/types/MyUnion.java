@@ -13,11 +13,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import core.ObjectMappers;
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -40,6 +41,7 @@ public final class MyUnion {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visit((String) this.value);
@@ -125,26 +127,26 @@ public final class MyUnion {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return ofListOfString(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       if (value instanceof Integer) {
         return of((Integer) value);
       }
       try {
         return ofListOfInteger(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return ofListOfListOfInteger(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<String>>() {}));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       throw new JsonParseException(p, "Failed to deserialize");
     }

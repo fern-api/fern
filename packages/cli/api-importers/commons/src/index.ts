@@ -1,7 +1,7 @@
 export { APIDefinitionImporter } from "./APIDefinitionImporter";
 export {
+    type FernDefinition,
     type FernDefinitionBuilder,
     FernDefinitionBuilderImpl,
-    type FernDefinition,
     type HttpServiceInfo
 } from "./FernDefinitionBuilder";

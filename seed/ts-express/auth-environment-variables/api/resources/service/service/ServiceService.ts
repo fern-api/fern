@@ -65,7 +65,9 @@ export class ServiceService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {
                     console.warn(
@@ -97,7 +99,9 @@ export class ServiceService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {
                     console.warn(

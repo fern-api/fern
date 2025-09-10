@@ -51,11 +51,8 @@ class ServiceClient:
             id="id-2sdx82h",
         )
         """
-        response = self._raw_client.check(
-            id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = self._raw_client.check(id, request_options=request_options)
+        return _response.data
 
     def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -81,10 +78,8 @@ class ServiceClient:
         )
         client.health.service.ping()
         """
-        response = self._raw_client.ping(
-            request_options=request_options,
-        )
-        return response.data
+        _response = self._raw_client.ping(request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -139,11 +134,8 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.check(
-            id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = await self._raw_client.check(id, request_options=request_options)
+        return _response.data
 
     async def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -177,7 +169,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.ping(
-            request_options=request_options,
-        )
-        return response.data
+        _response = await self._raw_client.ping(request_options=request_options)
+        return _response.data

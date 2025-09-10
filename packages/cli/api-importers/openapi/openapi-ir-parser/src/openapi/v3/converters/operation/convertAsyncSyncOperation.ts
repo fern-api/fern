@@ -1,6 +1,5 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
@@ -10,8 +9,8 @@ import { OperationContext } from "../contexts";
 import { convertHttpOperation } from "./convertHttpOperation";
 
 export interface AsyncAndSyncEndpoints {
-    async: EndpointWithExample;
-    sync: EndpointWithExample;
+    async: EndpointWithExample[];
+    sync: EndpointWithExample[];
 }
 
 export function convertAsyncSyncOperation({
@@ -67,23 +66,25 @@ export function convertAsyncSyncOperation({
         source
     });
 
-    asyncOperation.headers.push({
-        name: headerToIgnore,
-        schema: SchemaWithExample.literal({
-            nameOverride: undefined,
-            generatedName: getGeneratedTypeName([headerToIgnore], context.options.preserveSchemaIds),
-            title: undefined,
+    asyncOperation.forEach((operation) => {
+        operation.headers.push({
+            name: headerToIgnore,
+            schema: SchemaWithExample.literal({
+                nameOverride: undefined,
+                generatedName: getGeneratedTypeName([headerToIgnore], context.options.preserveSchemaIds),
+                title: undefined,
+                description: undefined,
+                availability: undefined,
+                value: LiteralSchemaValue.string(headerValue),
+                namespace: undefined,
+                groupName: undefined
+            }),
             description: undefined,
+            parameterNameOverride: undefined,
+            env: undefined,
             availability: undefined,
-            value: LiteralSchemaValue.string(headerValue),
-            namespace: undefined,
-            groupName: undefined
-        }),
-        description: undefined,
-        parameterNameOverride: undefined,
-        env: undefined,
-        availability: undefined,
-        source
+            source
+        });
     });
 
     return {

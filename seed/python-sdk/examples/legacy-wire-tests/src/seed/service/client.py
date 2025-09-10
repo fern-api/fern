@@ -19,6 +19,7 @@ from ..types.types.moment import Moment
 from ..types.types.movie import Movie
 from ..types.types.movie_id import MovieId
 from ..types.types.node import Node
+from ..types.types.refresh_token_request import RefreshTokenRequest
 from ..types.types.response import Response
 from ..types.types.test import Test
 from .raw_client import AsyncRawServiceClient, RawServiceClient
@@ -68,11 +69,8 @@ class ServiceClient:
             movie_id="movie-c06a4ad7",
         )
         """
-        response = self._raw_client.get_movie(
-            movie_id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     def create_movie(
         self,
@@ -141,7 +139,7 @@ class ServiceClient:
             revenue=1000000,
         )
         """
-        response = self._raw_client.create_movie(
+        _response = self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -153,7 +151,7 @@ class ServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def get_metadata(
         self,
@@ -194,13 +192,10 @@ class ServiceClient:
             tag="development",
         )
         """
-        response = self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
-            request_options=request_options,
+        _response = self._raw_client.get_metadata(
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def create_big_entity(
         self,
@@ -289,6 +284,7 @@ class ServiceClient:
                 id="id",
             ),
             extended_movie=ExtendedMovie(
+                cast=["cast", "cast"],
                 id="id",
                 prequel="prequel",
                 title="title",
@@ -298,7 +294,6 @@ class ServiceClient:
                 book="book",
                 metadata={"metadata": {"key": "value"}},
                 revenue=1000000,
-                cast=["cast", "cast"],
             ),
             entity=Entity(
                 type="primitive",
@@ -485,7 +480,7 @@ class ServiceClient:
             ),
         )
         """
-        response = self._raw_client.create_big_entity(
+        _response = self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -501,7 +496,39 @@ class ServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
+
+    def refresh_token(
+        self,
+        *,
+        request: typing.Optional[RefreshTokenRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[RefreshTokenRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.service.refresh_token()
+        """
+        _response = self._raw_client.refresh_token(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -553,11 +580,8 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(
-            movie_id,
-            request_options=request_options,
-        )
-        return response.data
+        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     async def create_movie(
         self,
@@ -634,7 +658,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_movie(
+        _response = await self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -646,7 +670,7 @@ class AsyncServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def get_metadata(
         self,
@@ -695,13 +719,10 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
-            request_options=request_options,
+        _response = await self._raw_client.get_metadata(
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def create_big_entity(
         self,
@@ -794,6 +815,7 @@ class AsyncServiceClient:
                     id="id",
                 ),
                 extended_movie=ExtendedMovie(
+                    cast=["cast", "cast"],
                     id="id",
                     prequel="prequel",
                     title="title",
@@ -803,7 +825,6 @@ class AsyncServiceClient:
                     book="book",
                     metadata={"metadata": {"key": "value"}},
                     revenue=1000000,
-                    cast=["cast", "cast"],
                 ),
                 entity=Entity(
                     type="primitive",
@@ -993,7 +1014,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_big_entity(
+        _response = await self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -1009,4 +1030,44 @@ class AsyncServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
+
+    async def refresh_token(
+        self,
+        *,
+        request: typing.Optional[RefreshTokenRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[RefreshTokenRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+
+
+        async def main() -> None:
+            await client.service.refresh_token()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.refresh_token(request=request, request_options=request_options)
+        return _response.data

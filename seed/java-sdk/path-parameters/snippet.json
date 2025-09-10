@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "7b766cb6",
+            "example_identifier": "37326ab",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/",
@@ -9,12 +9,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"organization_id\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"organization_id\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"tenant_id\", \"organization_id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"tenant_id\", \"organization_id\");\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "eb6c59e0",
+            "example_identifier": "42a498b9",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "726d9c76",
+            "example_identifier": "c99be3ff",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/organizations/{organization_id}/search",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "53e0d747",
+            "example_identifier": "ed87af0c",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/user/{user_id}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "6c56cae7",
+            "example_identifier": "b89d729d",
             "id": {
                 "method": "POST",
                 "path": "/{tenant_id}/user/",
@@ -61,12 +61,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            \"tenant_id\",\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    Arrays.asList(\"tags\", \"tags\")\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            \"tenant_id\",\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    Arrays.asList(\"tags\", \"tags\")\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "691c214a",
+            "example_identifier": "389d10d4",
             "id": {
                 "method": "PATCH",
                 "path": "/{tenant_id}/user/{user_id}",
@@ -74,12 +74,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            new ArrayList<String>(\n                                Arrays.asList(\"tags\", \"tags\")\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            new ArrayList<String>(\n                                Arrays.asList(\"tags\", \"tags\")\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            Arrays.asList(\"tags\", \"tags\")\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            Arrays.asList(\"tags\", \"tags\")\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "e101eb95",
+            "example_identifier": "43493df2",
             "id": {
                 "method": "GET",
                 "path": "/{tenant_id}/user/{user_id}/search",

@@ -11,7 +11,11 @@ class Name(UniversalBaseModel):
     Examples
     --------
     from seed.object import Name
-    Name(id='name-sdfg8ajk', value='name', )
+
+    Name(
+        id="name-sdfg8ajk",
+        value="name",
+    )
     """
 
     id: str

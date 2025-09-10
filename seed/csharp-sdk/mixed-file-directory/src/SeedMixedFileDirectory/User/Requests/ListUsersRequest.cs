@@ -3,6 +3,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory;
 
+[Serializable]
 public record ListUsersRequest
 {
     /// <summary>

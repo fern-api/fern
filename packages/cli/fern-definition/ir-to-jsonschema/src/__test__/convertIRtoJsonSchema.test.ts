@@ -1,12 +1,11 @@
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
-import { describe, expect, it } from "vitest";
-
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+import { describe, expect, it } from "vitest";
 
 import { convertIRtoJsonSchema } from "../convertIRtoJsonSchema";
 
@@ -59,7 +58,6 @@ describe("convertIRtoJsonSchema", async () => {
                     ajv.compile(jsonschema);
 
                     const json = JSON.stringify(jsonschema, undefined, 2);
-                    // eslint-disable-next-line jest/no-standalone-expect
                     await expect(json).toMatchFileSnapshot(
                         RelativeFilePath.of(
                             `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`

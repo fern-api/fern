@@ -61,7 +61,9 @@ export class HomepageService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
@@ -89,7 +91,9 @@ export class HomepageService {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(

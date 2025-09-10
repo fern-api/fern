@@ -1,5 +1,3 @@
-import chalk from "chalk";
-
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema";
 import {
@@ -9,6 +7,7 @@ import {
     FernFileContext,
     TypeResolver
 } from "@fern-api/ir-generator";
+import chalk from "chalk";
 
 import { RuleViolation } from "../../Rule";
 

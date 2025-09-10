@@ -1,12 +1,11 @@
-import { readFile } from "fs/promises";
-
 import { docsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { readdir, readFile } from "fs/promises";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { visitFilepath } from "./visitFilepath";
@@ -153,7 +152,8 @@ async function visitNavigationItem({
                 await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
             }
         },
-        orphaned: noop
+        orphaned: noop,
+        availability: noop
     });
 
     if (navigationItemIsPage(navigationItem)) {
@@ -186,6 +186,7 @@ async function visitNavigationItem({
                         [...nodePath, navigationItem.path]
                     );
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             } catch (err) {}
         }
     }
@@ -203,18 +204,56 @@ async function visitNavigationItem({
             );
         }
     }
+
+    if (navigationItemIsChangelog(navigationItem)) {
+        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
+        context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
+
+        if (await doesPathExist(changelogDir)) {
+            const files = await readdir(changelogDir);
+            context.logger.trace(`Validating ${files.length} files in changelog directory ${changelogDir}`);
+
+            await Promise.all(
+                files
+                    .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
+                    .map(async (file) => {
+                        const absoluteFilepath = resolve(changelogDir, file);
+                        const content = (await readFile(absoluteFilepath)).toString();
+                        context.logger.trace(`Validating markdown file: ${absoluteFilepath}`);
+
+                        await visitor.markdownPage?.(
+                            {
+                                title: file,
+                                content,
+                                absoluteFilepath
+                            },
+                            [...nodePath, "changelog", file]
+                        );
+                    })
+            );
+        } else {
+            context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
+        }
+    }
+}
+
+function navigationItemIsChangelog(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ChangelogConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
 }
 
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.PageConfiguration).page != null;
+    return (item as docsYml.RawSchemas.PageConfiguration)?.page != null;
 }
 
 function navigationItemIsApi(
     item: docsYml.RawSchemas.NavigationItem
 ): item is docsYml.RawSchemas.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null;
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration)?.api != null;
 }
 
 function navigationConfigIsTabbed(

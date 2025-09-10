@@ -52,8 +52,16 @@ class ReqWithHeadersClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.req_with_headers.get_with_custom_header(x_test_service_header='X-TEST-SERVICE-HEADER', x_test_endpoint_header='X-TEST-ENDPOINT-HEADER', request='string', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.req_with_headers.get_with_custom_header(
+            x_test_service_header="X-TEST-SERVICE-HEADER",
+            x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+            request="string",
+        )
         """
         _response = self._raw_client.get_with_custom_header(
             x_test_service_header=x_test_service_header,
@@ -105,11 +113,24 @@ class AsyncReqWithHeadersClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.req_with_headers.get_with_custom_header(x_test_service_header='X-TEST-SERVICE-HEADER', x_test_endpoint_header='X-TEST-ENDPOINT-HEADER', request='string', )
+            await client.req_with_headers.get_with_custom_header(
+                x_test_service_header="X-TEST-SERVICE-HEADER",
+                x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_custom_header(

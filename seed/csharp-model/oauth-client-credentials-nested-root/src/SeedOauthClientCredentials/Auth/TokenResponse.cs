@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Auth;
@@ -7,8 +8,13 @@ namespace SeedOauthClientCredentials.Auth;
 /// <summary>
 /// An OAuth token response.
 /// </summary>
-public record TokenResponse
+[Serializable]
+public record TokenResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("access_token")]
     public required string AccessToken { get; set; }
 
@@ -18,15 +24,11 @@ public record TokenResponse
     [JsonPropertyName("refresh_token")]
     public string? RefreshToken { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

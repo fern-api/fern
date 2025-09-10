@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewAcmeClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -15,8 +15,7 @@ func do() () {
             "<token>",
         ),
     )
-    client.Service.GetMovie(
+    client.Health.Service.Ping(
         context.TODO(),
-        "movie-c06a4ad7",
     )
 }

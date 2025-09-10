@@ -57,7 +57,7 @@ public final class RequestOptions {
         return new Builder();
     }
 
-    public static final class Builder {
+    public static class Builder {
         private String token = null;
 
         private Optional<Integer> timeout = Optional.empty();

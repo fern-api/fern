@@ -38,6 +38,8 @@ export interface ParseOpenAPIOptions {
     useBytesForBinaryResponse: boolean;
     /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
     respectForwardCompatibleEnums: boolean;
+    /* Whether or not to inline allOf schemas. */
+    inlineAllOfSchemas: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -52,6 +54,23 @@ export interface ParseOpenAPIOptions {
      * Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
      */
     additionalPropertiesDefaultsTo: boolean;
+
+    /**
+     * If true, convert strings with format date to strings.
+     * If false, convert strings with format date to dates.
+     */
+    typeDatesAsStrings: boolean;
+
+    /**
+     * If true, preserve the oneOf structure when there is only one schema in the oneOf array.
+     */
+    preserveSingleSchemaOneOf: boolean;
+
+    /**
+     * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
+     * This is useful for organizations with multiple APIs deployed to the same set of environments.
+     */
+    groupMultiApiEnvironments: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -75,14 +94,18 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultFormParameterEncoding: "json",
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
-    additionalPropertiesDefaultsTo: false
+    additionalPropertiesDefaultsTo: false,
+    typeDatesAsStrings: true,
+    preserveSingleSchemaOneOf: false,
+    inlineAllOfSchemas: false,
+    groupMultiApiEnvironments: false
 };
 
 export function getParseOptions({
     options,
     overrides
 }: {
-    options?: ParseOpenAPIOptions;
+    options?: Partial<ParseOpenAPIOptions>;
     overrides?: Partial<ParseOpenAPIOptions>;
 }): ParseOpenAPIOptions {
     return {
@@ -148,6 +171,22 @@ export function getParseOptions({
         additionalPropertiesDefaultsTo:
             overrides?.additionalPropertiesDefaultsTo ??
             options?.additionalPropertiesDefaultsTo ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo
+            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo,
+        typeDatesAsStrings:
+            overrides?.typeDatesAsStrings ??
+            options?.typeDatesAsStrings ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings,
+        preserveSingleSchemaOneOf:
+            overrides?.preserveSingleSchemaOneOf ??
+            options?.preserveSingleSchemaOneOf ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf,
+        inlineAllOfSchemas:
+            overrides?.inlineAllOfSchemas ??
+            options?.inlineAllOfSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
+        groupMultiApiEnvironments:
+            overrides?.groupMultiApiEnvironments ??
+            options?.groupMultiApiEnvironments ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments
     };
 }

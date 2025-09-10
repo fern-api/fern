@@ -3,6 +3,7 @@
  */
 
 import express from "express";
+import { HeadersService } from "./api/resources/headers/service/HeadersService";
 import { InlinedRequestService } from "./api/resources/inlinedRequest/service/InlinedRequestService";
 import { PathParamService } from "./api/resources/pathParam/service/PathParamService";
 import { QueryParamService } from "./api/resources/queryParam/service/QueryParamService";
@@ -10,11 +11,13 @@ import { QueryParamService } from "./api/resources/queryParam/service/QueryParam
 export function register(
     expressApp: express.Express | express.Router,
     services: {
+        headers: HeadersService;
         inlinedRequest: InlinedRequestService;
         pathParam: PathParamService;
         queryParam: QueryParamService;
     },
 ): void {
+    (expressApp as any).use("", services.headers.toRouter());
     (expressApp as any).use("", services.inlinedRequest.toRouter());
     (expressApp as any).use("", services.pathParam.toRouter());
     (expressApp as any).use("", services.queryParam.toRouter());

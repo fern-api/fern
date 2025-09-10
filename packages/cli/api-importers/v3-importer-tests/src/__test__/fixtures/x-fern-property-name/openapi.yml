@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-property-name`
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    BaseUser:
+      type: object
+      properties:
+        id:
+          x-fern-property-name: renamed_id
+          type: string
+          format: uuid

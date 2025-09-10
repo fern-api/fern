@@ -1,0 +1,89 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/organizations/{organization_id}/",
+                "method": "GET",
+                "identifier_override": "endpoint_organizations.getOrganization"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationAsync(\"tenant_id\", \"organization_id\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_organizations.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    \"tenant_id\",\n    \"organization_id\",\n    \"user_id\",\n    new GetOrganizationUserRequest()\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/organizations/{organization_id}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_organizations.searchOrganizations"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.SearchOrganizationsAsync(\n    \"tenant_id\",\n    \"organization_id\",\n    new SearchOrganizationsRequest { Limit = 1 }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenant_id\", \"user_id\", new GetUsersRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.CreateUserAsync(\n    \"tenant_id\",\n    new User\n    {\n        Name = \"name\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    \"tenant_id\",\n    \"user_id\",\n    new UpdateUserRequest\n    {\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"tenant_id\", \"user_id\", new SearchUsersRequest { Limit = 1 });\n"
+            }
+        }
+    ]
+}

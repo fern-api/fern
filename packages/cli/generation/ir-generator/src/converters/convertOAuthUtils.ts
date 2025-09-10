@@ -12,7 +12,7 @@ const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {
     responseProperties: {
         type: "access_token",
         access_token: ["access_token"],
-        expires_in: undefined,
+        expires_in: ["expires_in"],
         refresh_token: undefined
     }
 };
@@ -26,7 +26,7 @@ const DEFAULT_REFRESH_TOKEN_ENDPOINT: Omit<RefreshTokenEndpoint, "endpoint"> = {
         type: "access_token",
         access_token: ["access_token"],
         refresh_token: undefined,
-        expires_in: undefined
+        expires_in: ["expires_in"]
     }
 };
 
@@ -61,7 +61,7 @@ interface OAuthRefreshTokenRequestPropertyComponents {
     refresh_token: string[];
 }
 
-export function getTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
+export function get0AuthTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
     return {
         endpoint: oauthSchema["get-token"].endpoint,
         requestProperties: getTokenEndpointRequestProperties({

@@ -1,9 +1,8 @@
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
-
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
 
@@ -13,6 +12,7 @@ export declare namespace EnvironmentsContextImpl {
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }
 }
@@ -22,6 +22,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     private environmentsGenerator: EnvironmentsGenerator;
     private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
     constructor({
@@ -29,12 +30,14 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         environmentsGenerator,
         environmentsDeclarationReferencer,
         importsManager,
+        exportsManager,
         sourceFile
     }: EnvironmentsContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.environmentsGenerator = environmentsGenerator;
         this.environmentsDeclarationReferencer = environmentsDeclarationReferencer;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
     }
 
@@ -49,6 +52,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     public getReferenceToEnvironmentsEnum(): Reference {
         return this.environmentsDeclarationReferencer.getReferenceToEnvironmentsEnum({
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             sourceFile: this.sourceFile
         });
     }
@@ -56,6 +60,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     public getReferenceToFirstEnvironmentEnum(): Reference | undefined {
         return this.environmentsDeclarationReferencer.getReferenceToFirstEnvironmentEnum({
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             sourceFile: this.sourceFile
         });
     }
@@ -63,6 +68,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     public getReferenceToEnvironmentUrls(): Reference {
         return this.environmentsDeclarationReferencer.getReferenceToEnvironmentUrls({
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             sourceFile: this.sourceFile
         });
     }

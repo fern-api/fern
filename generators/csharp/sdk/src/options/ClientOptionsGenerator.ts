@@ -1,6 +1,6 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { Name } from "@fern-fern/ir-sdk/api";
 
@@ -25,7 +25,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         const class_ = csharp.class_({
             ...this.context.getClientOptionsClassReference(),
             partial: true,
-            access: csharp.Access.Public
+            access: csharp.Access.Public,
+            annotations: [this.context.getSerializableAttribute()]
         });
         const optionArgs: OptionArgs = {
             optional: false,

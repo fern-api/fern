@@ -1,24 +1,26 @@
-irVersion: v55
 displayName: TypeScript SDK
-image: fernapi/fern-typescript-node-sdk
+irVersion: v59
+image: fernapi/fern-typescript-sdk
+imageAliases: [fernapi/fern-typescript-node-sdk]
+changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
-  workingDirectory: generators/typescript
-  versionSubstitution: "$VERSION"
-  command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
-    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+  preBuildCommands:
+    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+  docker:
+    file: ./generators/typescript/sdk/cli/Dockerfile
+    image: fernapi/fern-typescript-sdk
+    aliases: [fernapi/fern-typescript-node-sdk]
+    context: .
 test:
   docker:
-    image: fernapi/fern-typescript-node-sdk:local
-    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+    image: fernapi/fern-typescript-sdk:latest
+    command:
+      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli compile
-      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
-    runCommand: node sdk/cli/dist/nodeCli.cjs
+      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+    runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test
 
@@ -27,9 +29,7 @@ generatorType: SDK
 defaultOutputMode: github
 
 customFixtureConfig:
-  customConfig:
-    generateWireTests: true
-    noSerdeLayer: true
+  customConfig: {}
 fixtures:
   imdb:
     - customConfig: null
@@ -40,7 +40,7 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummy: "dummy"
+          lodash: 4.17.21
       outputFolder: noScripts
     - customConfig:
         useBrandedStringAliases: true
@@ -54,6 +54,9 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+    - outputFolder: wrapper
+      customConfig:
+        streamType: 'wrapper'
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -62,6 +65,15 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
+    - customConfig:
+        packageManager: pnpm
+      outputFolder: use-pnpm
+    - customConfig:
+        omitFernHeaders: true
+      outputFolder: omit-fern-headers
+    - customConfig:
+        packagePath: src/test-packagePath
+      outputFolder: package-path
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig: null
@@ -70,38 +82,40 @@ fixtures:
         - audience2
       outputFolder: with-audiences
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde-layer
+        noSerdeLayer: false
+      outputFolder: serde-layer
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
       outputFolder: bundle
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
         packageJson:
-          version: "0.0.2"
+          version: '0.0.2'
           dependencies:
-            stream: "^0.0.2"
-            qs: "^6.11.2"
+            stream: '^0.0.2'
+            qs: '^6.11.2'
           files:
             - exampleFile
             - dist
           browser:
             command-exists: false
             execa: false
+          engines:
+            node: '>=16.0.0'
       outputFolder: custom-package-json
     - customConfig:
         retainOriginalCasing: true
@@ -112,18 +126,18 @@ fixtures:
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
-        namespaceExport: "Fiddle"
+        namespaceExport: 'Fiddle'
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         extraDependencies:
-          lodash-es: "^4.17.21"
+          lodash-es: '^4.17.21'
         extraDevDependencies:
-          jest: "^29.7.0"
+          jest: '^29.7.0'
         extraPeerDependencies:
-          "openai": "^4.47.1"
+          'openai': '^4.47.1'
         extraPeerDependenciesMeta:
-          "openai":
+          'openai':
             optional: true
       outputFolder: dev-dependencies
     - outputFolder: jsr
@@ -132,10 +146,28 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
-    - outputFolder: bigint-no-serde-layer
+    - outputFolder: bigint-serde-layer
       customConfig:
         useBigInt: true
-        noSerdeLayer: true
+        noSerdeLayer: false
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: web
+    - outputFolder: node-fetch
+      customConfig:
+        fetchSupport: node-fetch
+    - outputFolder: local-files
+      outputMode: local_files
+    - outputFolder: local-files-no-source
+      outputMode: local_files
+      customConfig:
+        outputSourceFiles: false
+    - customConfig:
+        neverThrowErrors: true
+      outputFolder: never-throw-errors
+    - customConfig:
+        exportAllRequestsAtRoot: true
+      outputFolder: export-all-requests-at-root
   error-property:
     - customConfig:
         private: true
@@ -154,6 +186,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-response-headers
+    - outputFolder: wrapper
+      customConfig:
+        streamType: 'wrapper'
+    - customConfig:
+        fileResponseType: 'stream'
+      outputFolder: stream
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -162,8 +200,14 @@ fixtures:
         inlinePathParameters: true
       outputFolder: inline
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde
+        noSerdeLayer: false
+      outputFolder: serde
+    - outputFolder: wrapper
+      customConfig:
+        streamType: 'wrapper'
+    - outputFolder: form-data-node16
+      customConfig:
+        formDataSupport: 'Node16'
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -174,30 +218,52 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde-layer-query
+        noSerdeLayer: false
+      outputFolder: serde-layer-query
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi-as-objects:
+    - customConfig: null
+      outputFolder: no-custom-config
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: use-default-request-parameter-values
+    - customConfig:
+        useDefaultRequestParameterValues: true
+        useBigInt: true
+      outputFolder: use-big-int-and-default-request-parameter-values
+    - customConfig:
+        flattenRequestParameters: true
+      outputFolder: flatten-request-parameters
   trace:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-zurg-trace
+        noSerdeLayer: false
+      outputFolder: serde-trace
     - customConfig:
-        noSerdeLayer: true
+        noSerdeLayer: false
         neverThrowErrors: true
-      outputFolder: no-zurg-no-throwing
+      outputFolder: serde-no-throwing
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         includeCredentialsOnCrossOriginRequests: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        timeoutInSeconds: "infinity"
+        timeoutInSeconds: 'infinity'
       outputFolder: exhaustive
   examples:
     - customConfig:
         includeApiReference: true
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -210,6 +276,12 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  oauth-client-credentials:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: false
+      outputFolder: serde
   oauth-client-credentials-nested-root:
     - customConfig: null
       outputFolder: no-custom-config
@@ -224,11 +296,9 @@ fixtures:
       outputFolder: retain-original-casing
   ts-inline-types:
     - customConfig:
-        noSerdeLayer: true
         enableInlineTypes: true
       outputFolder: inline
     - customConfig:
-        noSerdeLayer: true
         enableInlineTypes: false
       outputFolder: no-inline
   path-parameters:
@@ -241,53 +311,117 @@ fixtures:
       outputFolder: inline-path-parameters
     - customConfig:
         inlinePathParameters: true
-        noSerdeLayer: true
-      outputFolder: inline-path-parameters-no-serde
+        noSerdeLayer: false
+      outputFolder: inline-path-parameters-serde
     - customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
   websocket:
-    - outputFolder: websocket-base
+    - outputFolder: no-websocket-clients
+    - customConfig:
+        noSerdeLayer: false
+        shouldGenerateWebsocketClients: true
+      outputFolder: serde
     - customConfig:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-no-serde
+      outputFolder: no-serde
+  websocket-bearer-auth:
     - customConfig:
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-with-serde
+      outputFolder: websockets
+  websocket-inferred-auth:
+    - customConfig:
+        shouldGenerateWebsocketClients: true
+      outputFolder: websockets
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - mkdir cache
-      - yarn install --cache-folder ./cache
-      - yarn build
-      - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
+      - |
+        if grep -q '"packageManager": "pnpm' package.json; then
+          mkdir -p .pnpm-cache
+          echo "Enabling corepack and preparing pnpm..."
+          corepack enable
+          corepack prepare pnpm@10.14.0 --activate
+          echo "Running pnpm install..."
+          pnpm install
+          echo "Running pnpm build..."
+          if grep -q '"build":' package.json; then pnpm build; fi
+          echo "Running pnpm test..."
+          if grep -q '"test":' package.json; then pnpm test; fi
+        fi
+        if grep -q '"packageManager": "yarn' package.json; then
+          mkdir -p .yarn-cache
+          echo "Enabling corepack and preparing yarn..."
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          echo "Running yarn install..."
+          yarn install
+          echo "Running yarn build..."
+          if grep -q '"build":' package.json; then yarn build; fi
+          echo "Running yarn test..."
+          if grep -q '"test":' package.json; then yarn test; fi
+        fi
 allowedFailures:
-  - response-property
-  - plain-text
+  - accept-header
   - alias
+  - alias-extends
   - api-wide-base-path
-  - cross-package-type-names
-  - exhaustive:bundle
-  - exhaustive:dev-dependencies
-  - audiences:no-custom-config
-  - enum # throws b/c of undiscriminated union examples
-  - streaming-parameter
-  - imdb:noScripts
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - bytes-upload
   - circular-references
+  - circular-references-advanced
+  - content-type
+  - custom-auth
+  - enum
+  - error-property
+  - error-property:union-utils
+  - errors
+  - exhaustive:bundle
+  - exhaustive:custom-package-json
+  - exhaustive:dev-dependencies
+  - exhaustive:never-throw-errors
+  - extends
+  - file-download:file-download-response-headers
+  - file-download:no-custom-config
+  - file-download:stream
+  - file-download:wrapper
+  - literal
+  - mixed-case:no-custom-config
+  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
+  - package-yml
+  - pagination
+  - query-parameters-openapi:no-custom-config
+  - query-parameters-openapi-as-objects:no-custom-config
+  - trace:no-custom-config
+  - trace:serde-trace
+  - trace:serde-no-throwing
+  - trace:exhaustive
+  - unions
+  - version
+  - version-no-default
+
   # the below are likely related to changes made to example generation
-  - multi-url-environment-no-default
-  - objects-with-imports
-  - reserved-keywords
   - examples:examples-with-api-reference
   - examples:retain-original-casing
-  # on 12/16/2024 noticed 5 failures related to fixtures below
-  - exhaustive:custom-package-json
+
+  # unknown
+  - file-upload:no-custom-config
+  - file-upload:inline
+  - file-upload:serde
+  - file-upload:wrapper
+  - file-upload:form-data-node16
+  - http-head
   - idempotency-headers
-  - oauth-client-credentials-nested-root:never-throw-errors
-  - trace:no-zurg-no-throwing
-  - trace:exhaustive
-  # Dynamic snippets
-  - unions # Required base properties need to be included in the example generator.
+  - imdb:no-custom-config
+  - imdb:omit-undefined
+  - imdb:noScripts
+  - imdb:branded-string-aliases
+  - license
+  - oauth-client-credentials:no-custom-config
+  - ts-inline-types:inline

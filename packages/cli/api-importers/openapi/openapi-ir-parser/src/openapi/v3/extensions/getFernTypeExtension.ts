@@ -1,13 +1,13 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import { assertNever } from "@fern-api/core-utils";
 import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
-    SchemaWithExample
+    SchemaWithExample,
+    Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
@@ -345,8 +345,18 @@ export function getSchemaFromFernType({
                     namespace,
                     groupName
                 }),
-            named: () => {
-                return undefined;
+            named: (reference: string) => {
+                return SchemaWithExample.reference({
+                    schema: reference,
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description,
+                    availability,
+                    namespace,
+                    groupName,
+                    source: Source.openapi({ file: "<memory>" })
+                });
             }
         }
     });

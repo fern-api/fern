@@ -5,19 +5,20 @@ namespace SeedPagination.Core;
 
 internal static class SeedPaginationPagerFactory
 {
-    public static async Task<SeedPaginationPager<TItem>> CreateAsync<TItem>(
-        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
-        HttpRequestMessage initialRequest,
+    internal static async Task<SeedPaginationPager<TItem>> CreateAsync<TItem>(
+        SeedPaginationPagerContext context,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await sendRequest(initialRequest, cancellationToken).ConfigureAwait(false);
+        var response = await context
+            .SendRequest(context.InitialHttpRequest, cancellationToken)
+            .ConfigureAwait(false);
         var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =
             await SeedPaginationPager<TItem>
-                .ParseHttpCallAsync(initialRequest, response, cancellationToken)
+                .ParseHttpCallAsync(context.InitialHttpRequest, response, cancellationToken)
                 .ConfigureAwait(false);
         return new SeedPaginationPager<TItem>(
-            sendRequest,
+            context,
             nextPageRequest,
             hasNextPage,
             previousPageRequest,
@@ -32,18 +33,14 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
     private HttpRequestMessage? _nextPageRequest;
     private HttpRequestMessage? _previousPageRequest;
 
-    private readonly Func<
-        HttpRequestMessage,
-        CancellationToken,
-        Task<HttpResponseMessage>
-    > _sendRequest;
+    private readonly SeedPaginationPagerContext _context;
 
     public bool HasNextPage { get; private set; }
     public bool HasPreviousPage { get; private set; }
     public Page<TItem> CurrentPage { get; private set; }
 
-    public SeedPaginationPager(
-        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
+    internal SeedPaginationPager(
+        SeedPaginationPagerContext context,
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
         HttpRequestMessage? previousPageRequest,
@@ -51,7 +48,7 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
         Page<TItem> page
     )
     {
-        _sendRequest = sendRequest;
+        _context = context;
         _nextPageRequest = nextPageRequest;
         HasNextPage = hasNextPage;
         _previousPageRequest = previousPageRequest;
@@ -88,7 +85,7 @@ public class SeedPaginationPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _sendRequest(request, cancellationToken).ConfigureAwait(false);
+        var response = await _context.SendRequest(request, cancellationToken).ConfigureAwait(false);
         var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =
             await ParseHttpCallAsync(request, response, cancellationToken).ConfigureAwait(false);
         _nextPageRequest = nextPageRequest;

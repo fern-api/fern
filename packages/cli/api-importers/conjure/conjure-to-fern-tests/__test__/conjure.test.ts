@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
@@ -37,8 +37,8 @@ describe("ir", () => {
                         `Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                     );
                 }
-                // eslint-disable-next-line jest/no-standalone-expect
-                expect(
+                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
+                await expect(
                     JSON.stringify(await workspace.workspace.getDefinition({ context }), undefined, 2)
                 ).toMatchFileSnapshot(`__snapshots__/${fixture.name}.json`);
             },

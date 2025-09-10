@@ -36,7 +36,11 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedAccept
-        client = SeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedAccept(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.service.endpoint()
         """
         _response = self._raw_client.endpoint(request_options=request_options)
@@ -71,11 +75,20 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedAccept
         import asyncio
-        client = AsyncSeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedAccept
+
+        client = AsyncSeedAccept(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.service.endpoint()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.endpoint(request_options=request_options)

@@ -14,6 +14,7 @@ types:
   SeedWorkspaceConfiguration:
     properties:
       image: string
+      imageAliases: optional<list<string>>
       displayName: string
       irVersion: string
       test: TestConfiguration
@@ -48,6 +49,7 @@ types:
     properties:
       context: string
       image: string
+      aliases: optional<list<string>>
       file: string
 
   PublishDocker:
@@ -161,6 +163,7 @@ types:
       outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
+      license: optional<unknown>
 
   ReadmeConfig:
     properties:
@@ -168,6 +171,8 @@ types:
       bannerLink: optional<string>
       apiReferenceLink: optional<string>
       features: optional<map<string, list<ReadmeEndpoint>>>
+      apiName: optional<string>
+      disabledSections: optional<list<string>>
 
   ReadmeEndpoint:
     discriminated: false

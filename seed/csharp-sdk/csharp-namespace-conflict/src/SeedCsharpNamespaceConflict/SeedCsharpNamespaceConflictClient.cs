@@ -1,5 +1,3 @@
-using SeedCsharpNamespaceConflict.A;
-using SeedCsharpNamespaceConflict.B;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
@@ -28,14 +26,8 @@ public partial class SeedCsharpNamespaceConflictClient
             }
         }
         _client = new RawClient(clientOptions);
-        A = new AClient(_client);
-        B = new BClient(_client);
         Tasktest = new TasktestClient(_client);
     }
-
-    public AClient A { get; }
-
-    public BClient B { get; }
 
     public TasktestClient Tasktest { get; }
 }

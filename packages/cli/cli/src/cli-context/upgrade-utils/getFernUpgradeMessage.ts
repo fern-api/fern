@@ -1,7 +1,6 @@
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import boxen from "boxen";
 import chalk from "chalk";
-
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 import { FernUpgradeInfo } from "../CliContext";
 import { CliEnvironment } from "../CliEnvironment";

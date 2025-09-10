@@ -41,7 +41,7 @@
         "auth": false,
         "method": "POST",
         "id": "submitFormData",
-        "originalEndpointId": "submitFormData",
+        "originalEndpointId": "endpoint_.submitFormData",
         "name": "Submit form data",
         "path": {
           "pathParameters": [],
@@ -91,6 +91,43 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "The user's username",
+                      "key": "username",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "description": "The user's email address",
+                      "key": "email",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "email"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -102,10 +139,24 @@
           "statusCode": 200,
           "description": "Successful operation"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "submitFormData_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful operation"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/submit",
             "pathParameters": {},
@@ -124,11 +175,8 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "status": "success",
-                "message": "Data received successfully."
-              }
+              "status": "success",
+              "message": "Data received successfully."
             },
             "responseBodyV3": {
               "type": "json",

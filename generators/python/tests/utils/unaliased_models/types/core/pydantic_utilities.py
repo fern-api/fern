@@ -85,11 +85,9 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
-        @pydantic.model_serializer(mode="wrap", when_used="json")  # type: ignore # Pydantic v2
-        def serialize_model(
-            self, handler: pydantic.SerializerFunctionWrapHandler
-        ) -> typing.Any:  # type: ignore # Pydantic v2
-            serialized = handler(self)
+        @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore # Pydantic v2
+        def serialize_model(self) -> typing.Any:  # type: ignore # Pydantic v2
+            serialized = self.model_dump()
             data = {
                 k: serialize_datetime(v) if isinstance(v, dt.datetime) else v
                 for k, v in serialized.items()
@@ -196,9 +194,9 @@ class UniversalBaseModel(pydantic.BaseModel):
                 **kwargs_with_defaults_exclude_unset_include_fields
             )
 
-        return convert_and_respect_annotation_metadata(
+        return typing.cast(typing.Dict[str, typing.Any], convert_and_respect_annotation_metadata(
             object_=dict_dump, annotation=self.__class__, direction="write"
-        )
+        ))
 
 
 def deep_union_pydantic_dicts(

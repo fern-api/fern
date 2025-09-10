@@ -11,7 +11,11 @@ import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
+from .named_mixed_patch_request import NamedMixedPatchRequest
+from .optional_merge_patch_request import OptionalMergePatchRequest
+from .patch_complex_request import PatchComplexRequest
 from .patch_proxy_request import PatchProxyRequest
+from .regular_patch_request import RegularPatchRequest
 
 
 class AbstractServiceService(AbstractFernService):
@@ -26,6 +30,41 @@ class AbstractServiceService(AbstractFernService):
     @abc.abstractmethod
     def patch(self, *, body: PatchProxyRequest) -> None: ...
 
+    @abc.abstractmethod
+    def patch_complex(self, *, body: PatchComplexRequest, id: str) -> None:
+        """
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
+        """
+        ...
+
+    @abc.abstractmethod
+    def named_patch_with_mixed(self, *, body: NamedMixedPatchRequest, id: str) -> None:
+        """
+        Named request with mixed optional/nullable fields and merge-patch content type.
+        This should trigger the NPE issue when optional fields aren't initialized.
+        """
+        ...
+
+    @abc.abstractmethod
+    def optional_merge_patch_test(self, *, body: OptionalMergePatchRequest) -> None:
+        """
+        Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+        This endpoint should:
+        1. Not NPE when fields are not provided (tests initialization)
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+        """
+        ...
+
+    @abc.abstractmethod
+    def regular_patch(self, *, body: RegularPatchRequest, id: str) -> None:
+        """
+        Regular PATCH endpoint without merge-patch semantics
+        """
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -34,6 +73,10 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_patch(router=router)
+        cls.__init_patch_complex(router=router)
+        cls.__init_named_patch_with_mixed(router=router)
+        cls.__init_optional_merge_patch_test(router=router)
+        cls.__init_regular_patch(router=router)
 
     @classmethod
     def __init_patch(cls, router: fastapi.APIRouter) -> None:
@@ -70,4 +113,158 @@ class AbstractServiceService(AbstractFernService):
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.patch.__doc__,
             **get_route_args(cls.patch, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_patch_complex(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.patch_complex)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.patch_complex, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.patch_complex)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.patch_complex(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'patch_complex' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.patch_complex.__globals__)
+
+        router.patch(
+            path="/complex/{id}",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.patch_complex.__doc__,
+            **get_route_args(cls.patch_complex, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_named_patch_with_mixed(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.named_patch_with_mixed)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.named_patch_with_mixed, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.named_patch_with_mixed)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.named_patch_with_mixed(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'named_patch_with_mixed' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.named_patch_with_mixed.__globals__)
+
+        router.patch(
+            path="/named-mixed/{id}",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.named_patch_with_mixed.__doc__,
+            **get_route_args(cls.named_patch_with_mixed, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_optional_merge_patch_test(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.optional_merge_patch_test)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.optional_merge_patch_test, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.optional_merge_patch_test)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.optional_merge_patch_test(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'optional_merge_patch_test' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.optional_merge_patch_test.__globals__)
+
+        router.patch(
+            path="/optional-merge-patch-test",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.optional_merge_patch_test.__doc__,
+            **get_route_args(cls.optional_merge_patch_test, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_regular_patch(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.regular_patch)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.regular_patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.regular_patch)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.regular_patch(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'regular_patch' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.regular_patch.__globals__)
+
+        router.patch(
+            path="/regular/{id}",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.regular_patch.__doc__,
+            **get_route_args(cls.regular_patch, default_tag="service"),
         )(wrapper)

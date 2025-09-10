@@ -1,4 +1,4 @@
-import { AbstractConverter, AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractExtension } from "@fern-api/v3-importer-commons";
 
 import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema";
 
@@ -6,7 +6,7 @@ export interface WebsocketSessionExampleMessage {
     type: string;
     channelId?: string;
     messageId: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     value: any;
 }
 
@@ -53,7 +53,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
         return result.data.map((example) => ({
             summary: example.summary,
             description: example.description,
-            queryParameters: example.queryParameters,
+            queryParameters: example["query-parameters"],
             headers: example.headers,
             messages: example.messages.map((message) => ({
                 type: message.type,

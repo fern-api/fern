@@ -373,6 +373,11 @@ export class RawClient {
             case "PUT":
                 method = "Put";
                 break;
+            case "HEAD":
+                method = "Head";
+                break;
+            default:
+                assertNever(irMethod);
         }
         return csharp.codeblock((writer) => {
             writer.writeNode(csharp.classReference({ name: "HttpMethod", namespace: "System.Net.Http" }));

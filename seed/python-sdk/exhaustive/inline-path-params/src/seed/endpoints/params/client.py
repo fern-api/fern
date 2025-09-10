@@ -43,8 +43,14 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_path(param='param', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path(
+            param="param",
+        )
         """
         _response = self._raw_client.get_with_path(param=param, request_options=request_options)
         return _response.data
@@ -67,8 +73,14 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_inline_path(param='param', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_inline_path(
+            param="param",
+        )
         """
         _response = self._raw_client.get_with_inline_path(param=param, request_options=request_options)
         return _response.data
@@ -95,8 +107,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_query(query='query', number=1, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_query(
+            query="query",
+            number=1,
+        )
         """
         _response = self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
         return _response.data
@@ -127,8 +146,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_allow_multiple_query(query='query', number=1, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_allow_multiple_query(
+            query="query",
+            number=1,
+        )
         """
         _response = self._raw_client.get_with_allow_multiple_query(
             query=query, number=number, request_options=request_options
@@ -157,8 +183,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_path_and_query(param='param', query='query', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path_and_query(
+            param="param",
+            query="query",
+        )
         """
         _response = self._raw_client.get_with_path_and_query(param=param, query=query, request_options=request_options)
         return _response.data
@@ -185,8 +218,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.get_with_inline_path_and_query(param='param', query='query', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_inline_path_and_query(
+            param="param",
+            query="query",
+        )
         """
         _response = self._raw_client.get_with_inline_path_and_query(
             param=param, query=query, request_options=request_options
@@ -215,8 +255,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.modify_with_path(param='param', request='string', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.modify_with_path(
+            param="param",
+            request="string",
+        )
         """
         _response = self._raw_client.modify_with_path(param=param, request=request, request_options=request_options)
         return _response.data
@@ -243,8 +290,15 @@ class ParamsClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.params.modify_with_inline_path(param='param', request='string', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.modify_with_inline_path(
+            param="param",
+            request="string",
+        )
         """
         _response = self._raw_client.modify_with_inline_path(
             param=param, request=request, request_options=request_options
@@ -284,11 +338,22 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_path(param='param', )
+            await client.endpoints.params.get_with_path(
+                param="param",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_path(param=param, request_options=request_options)
@@ -311,11 +376,22 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_inline_path(param='param', )
+            await client.endpoints.params.get_with_inline_path(
+                param="param",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_inline_path(param=param, request_options=request_options)
@@ -342,11 +418,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_query(query='query', number=1, )
+            await client.endpoints.params.get_with_query(
+                query="query",
+                number=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
@@ -377,11 +465,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_allow_multiple_query(query='query', number=1, )
+            await client.endpoints.params.get_with_allow_multiple_query(
+                query="query",
+                number=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_allow_multiple_query(
@@ -410,11 +510,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_path_and_query(param='param', query='query', )
+            await client.endpoints.params.get_with_path_and_query(
+                param="param",
+                query="query",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_path_and_query(
@@ -443,11 +555,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.get_with_inline_path_and_query(param='param', query='query', )
+            await client.endpoints.params.get_with_inline_path_and_query(
+                param="param",
+                query="query",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_inline_path_and_query(
@@ -476,11 +600,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.modify_with_path(param='param', request='string', )
+            await client.endpoints.params.modify_with_path(
+                param="param",
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.modify_with_path(
@@ -509,11 +645,23 @@ class AsyncParamsClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.params.modify_with_inline_path(param='param', request='string', )
+            await client.endpoints.params.modify_with_inline_path(
+                param="param",
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.modify_with_inline_path(

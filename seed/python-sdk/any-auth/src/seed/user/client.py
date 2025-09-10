@@ -37,7 +37,12 @@ class UserClient:
         Examples
         --------
         from seed import SeedAnyAuth
-        client = SeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+
+        client = SeedAnyAuth(
+            base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.user.get()
         """
         _response = self._raw_client.get(request_options=request_options)
@@ -72,11 +77,21 @@ class AsyncUserClient:
 
         Examples
         --------
-        from seed import AsyncSeedAnyAuth
         import asyncio
-        client = AsyncSeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+
+        from seed import AsyncSeedAnyAuth
+
+        client = AsyncSeedAnyAuth(
+            base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
         async def main() -> None:
             await client.user.get()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(request_options=request_options)

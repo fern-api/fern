@@ -1,0 +1,10 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    download:
+      path: /download-content/{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: bytes

@@ -9,12 +9,12 @@ export interface ObjectWithOptionalField {
     long?: number;
     double?: number;
     bool?: boolean;
-    datetime?: Date;
+    datetime?: string;
     date?: string;
     uuid?: string;
     base64?: string;
     list?: string[];
-    set?: Set<string>;
+    set?: string[];
     map?: Record<number, string>;
     bigint?: string;
 }

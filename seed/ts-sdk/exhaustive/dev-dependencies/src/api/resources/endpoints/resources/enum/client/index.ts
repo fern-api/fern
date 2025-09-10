@@ -1,1 +1,1 @@
-export * as getAndReturnEnum from "./getAndReturnEnum";
+export * as getAndReturnEnum from "./getAndReturnEnum.js";

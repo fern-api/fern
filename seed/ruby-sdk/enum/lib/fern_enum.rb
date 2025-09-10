@@ -2,12 +2,15 @@
 
 require_relative "types_export"
 require_relative "requests"
+require_relative "fern_enum/headers/client"
 require_relative "fern_enum/inlined_request/client"
 require_relative "fern_enum/path_param/client"
 require_relative "fern_enum/query_param/client"
 
 module SeedEnumClient
   class Client
+    # @return [SeedEnumClient::HeadersClient]
+    attr_reader :headers
     # @return [SeedEnumClient::InlinedRequestClient]
     attr_reader :inlined_request
     # @return [SeedEnumClient::PathParamClient]
@@ -25,6 +28,7 @@ module SeedEnumClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @headers = SeedEnumClient::HeadersClient.new(request_client: @request_client)
       @inlined_request = SeedEnumClient::InlinedRequestClient.new(request_client: @request_client)
       @path_param = SeedEnumClient::PathParamClient.new(request_client: @request_client)
       @query_param = SeedEnumClient::QueryParamClient.new(request_client: @request_client)
@@ -32,6 +36,8 @@ module SeedEnumClient
   end
 
   class AsyncClient
+    # @return [SeedEnumClient::AsyncHeadersClient]
+    attr_reader :headers
     # @return [SeedEnumClient::AsyncInlinedRequestClient]
     attr_reader :inlined_request
     # @return [SeedEnumClient::AsyncPathParamClient]
@@ -49,6 +55,7 @@ module SeedEnumClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
+      @headers = SeedEnumClient::AsyncHeadersClient.new(request_client: @async_request_client)
       @inlined_request = SeedEnumClient::AsyncInlinedRequestClient.new(request_client: @async_request_client)
       @path_param = SeedEnumClient::AsyncPathParamClient.new(request_client: @async_request_client)
       @query_param = SeedEnumClient::AsyncQueryParamClient.new(request_client: @async_request_client)

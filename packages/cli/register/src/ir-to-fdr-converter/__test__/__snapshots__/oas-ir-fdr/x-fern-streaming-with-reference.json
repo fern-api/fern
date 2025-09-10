@@ -74,15 +74,123 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "subpackageId": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "subpackageId": "subpackage_chatCompletions",
       "name": "chatCompletions",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
+          "id": "create_stream",
+          "originalEndpointId": "endpoint_chatCompletions.create_stream",
+          "name": "Create Stream",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/completions/chat"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": true
+                      }
+                    }
+                  },
+                  {
+                    "key": "prompt",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "CompletionChunk"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "Success!"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Completion"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "description": "",
+              "path": "/completions/chat",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "stream": true,
+                "prompt": "string"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "stream": true,
+                  "prompt": "string"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -104,54 +212,113 @@
               "type": "json",
               "contentType": "application/json",
               "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "CreateCompletionRequest"
-                }
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": false
+                      }
+                    }
+                  },
+                  {
+                    "key": "prompt",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "stream",
+                        "valueType": {
+                          "type": "literal",
+                          "value": {
+                            "type": "booleanLiteral",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "key": "prompt",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
               "type": "reference",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "Completion"
               }
             },
             "statusCode": 200,
             "description": "Success!"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Completion"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "prompt": "foo"
+                "stream": false,
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "prompt": "foo"
+                  "stream": false,
+                  "prompt": "string"
                 }
               },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": "foo"
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {
@@ -175,7 +342,7 @@
       "CompletionChunk"
     ],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ]
   },
   "snippetsConfiguration": {},

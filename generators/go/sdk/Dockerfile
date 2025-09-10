@@ -1,5 +1,5 @@
 # Stage 1: Build Node CLI
-FROM node:20.18-alpine3.20 AS node
+FROM node:22.12-alpine3.20 AS node
 
 RUN apk --no-cache add git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
@@ -36,5 +36,7 @@ RUN chmod +x /bin/go-v2
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
+
+RUN npm install -f -g @fern-api/generator-cli
 
 ENTRYPOINT ["/fern-go-sdk"]

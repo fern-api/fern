@@ -1,16 +1,15 @@
-import { size } from "lodash-es";
-
 import { FernDefinition, ParsedFernFile } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { entries, keys } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath, dirname } from "@fern-api/fs-utils";
+import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { size } from "lodash-es";
 
 import { OSSWorkspace } from "../OSSWorkspace";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { LoadAPIWorkspace } from "./loadAPIWorkspace";
 import { loadDependency } from "./loadDependency";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export declare namespace processPackageMarkers {

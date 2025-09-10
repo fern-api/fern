@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 
@@ -199,6 +199,35 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`'${userAgent.value}'`)
             });
         }
+
+        if (this.context.ir.apiVersion != null) {
+            const apiVersion = this.context.ir.apiVersion;
+            const headerKey = apiVersion._visit({
+                header: (header) => {
+                    return header.header.name.wireValue;
+                },
+                _other: () => {
+                    return undefined;
+                }
+            });
+            const headerValue = apiVersion._visit({
+                header: (header) => {
+                    return header.value.default?.name.wireValue;
+                },
+                _other: () => {
+                    return undefined;
+                }
+            });
+            this.context.logger.debug(`headerKey: ${headerKey}`);
+            this.context.logger.debug(`headerValue: ${headerValue}`);
+            if (headerKey != null && headerValue != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${headerKey}'`),
+                    value: php.codeblock(`'${headerValue}'`)
+                });
+            }
+        }
+
         const headers = php.map({
             entries: headerEntries,
             multiline: true

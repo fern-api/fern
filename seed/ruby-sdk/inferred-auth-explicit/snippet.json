@@ -1,0 +1,159 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token/refresh",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.get_token_with_client_credentials(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token/refresh",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.auth.refresh_token(\n  x_api_key: \"X-Api-Key\",\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.simple.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_inferred_auth_explicit\"\n\ninferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: \"https://api.example.com\")\ninferred_auth_explicit.simple.get_something",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

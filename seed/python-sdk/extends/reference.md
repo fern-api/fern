@@ -13,8 +13,15 @@
 
 ```python
 from seed import SeedExtends
-client = SeedExtends(base_url="https://yourhost.com/path/to/api", )
-client.extended_inline_request_body(unique='unique', )
+
+client = SeedExtends(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.extended_inline_request_body(
+    unique="unique",
+    name="name",
+    docs="docs",
+)
 
 ```
 </dd>

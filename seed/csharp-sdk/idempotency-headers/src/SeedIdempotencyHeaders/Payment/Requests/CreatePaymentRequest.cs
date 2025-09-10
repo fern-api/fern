@@ -3,6 +3,7 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
+[Serializable]
 public record CreatePaymentRequest
 {
     [JsonPropertyName("amount")]

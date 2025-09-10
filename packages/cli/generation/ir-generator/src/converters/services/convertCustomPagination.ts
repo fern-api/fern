@@ -1,4 +1,3 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Pagination } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";

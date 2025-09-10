@@ -1,39 +1,43 @@
 #!/usr/bin/env node
-import { RUNTIME } from "@fern-typescript/fetcher";
+import type { ReadStream, WriteStream } from "node:tty";
+import { fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import {
+    GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml,
+    getFernDirectory,
+    loadProjectConfig,
+    PROJECT_CONFIG_FILENAME
+} from "@fern-api/configuration-loader";
+import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
+import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin, login, logout } from "@fern-api/login";
+import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
-import {
-    GENERATORS_CONFIGURATION_FILENAME,
-    PROJECT_CONFIG_FILENAME,
-    generatorsYml,
-    getFernDirectory,
-    loadProjectConfig
-} from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
-import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login } from "@fern-api/login";
-import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
-
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
@@ -48,13 +52,15 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+import { RUNTIME } from "./runtime";
 
 void runCli();
 
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
-    const cliContext = new CliContext(process.stdout);
+    const isLocal = process.argv.includes("--local");
+    const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -65,6 +71,12 @@ async function runCli() {
         setGlobalDispatcher(
             new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
         );
+    }
+
+    if (process.env.HTTP_PROXY != null) {
+        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
+        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        setGlobalDispatcher(proxyAgent);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -150,6 +162,7 @@ async function tryRunCli(cliContext: CliContext) {
         .demandCommand()
         .recommendCommands();
 
+    addDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -162,6 +175,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
+    addLogoutCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
@@ -178,10 +192,13 @@ async function tryRunCli(cliContext: CliContext) {
     });
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
+    addExportCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+
+    addProtocGenFernCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -324,6 +341,76 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
+function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "diff",
+        "Diff two versions of an API",
+        (yargs) =>
+            yargs
+                .option("from", {
+                    string: true,
+                    demandOption: true,
+                    description: "The previous version of the API"
+                })
+                .option("to", {
+                    string: true,
+                    demandOption: true,
+                    description: "The next version of the API"
+                })
+                .option("from-version", {
+                    string: true,
+                    description: "The previous version of the API (e.g. 1.1.0)"
+                })
+                .option("from-generator-version", {
+                    string: true,
+                    description: "The previous version of the generator (e.g. 1.1.0)"
+                })
+                .option("to-generator-version", {
+                    string: true,
+                    description: "The next version of the generator (e.g. 1.1.0)"
+                })
+                .option("quiet", {
+                    boolean: true,
+                    default: false,
+                    alias: "q",
+                    description: "Whether to suppress output written to stderr"
+                })
+                .middleware((argv) => {
+                    if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
+                        throw new Error(
+                            "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
+                        );
+                    }
+                }),
+        async (argv) => {
+            const fromVersion = undefinedIfNullish(argv.fromVersion);
+            const generatorVersions = undefinedIfSomeNullish({
+                from: argv.fromGeneratorVersion,
+                to: argv.toGeneratorVersion
+            });
+
+            const result = await diff({
+                context: cliContext,
+                from: argv.from,
+                to: argv.to,
+                fromVersion,
+                generatorVersions
+            });
+            if (fromVersion != null) {
+                // If the user specified the --from-version flag, we write the full
+                // JSON object to stdout.
+                const { errors, ...rest } = result;
+                cliContext.logger.info(JSON.stringify(rest));
+            }
+            if (!argv.quiet && result.errors.length > 0) {
+                cliContext.stderr.info(result.errors.join("\n"));
+            }
+            const code = result.bump === "major" ? 1 : 0;
+            await cliContext.exit({ code });
+        }
+    );
+}
+
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "token",
@@ -449,6 +536,26 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
+                })
+                .option("disable-snippets", {
+                    boolean: true,
+                    description: "Disable snippets in docs generation.",
+                    default: false
+                })
+                .option("runner", {
+                    choices: ["docker", "podman"],
+                    description: "Choose the container runtime to use for local generation.",
+                    default: undefined
+                })
+                .option("lfs-override", {
+                    type: "string",
+                    hidden: true,
+                    description: "Override output mode to local-file-system with the specified path"
+                })
+                .option("disable-dynamic-snippets", {
+                    boolean: true,
+                    description: "Upload dynamic SDK snippets in docs generation",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -468,10 +575,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     groupName: argv.group,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local,
+                    useLocalDocker: argv.local || argv.runner != null,
                     preview: argv.preview,
                     mode: argv.mode,
-                    force: argv.force
+                    force: argv.force,
+                    runner: argv.runner as ContainerRunner,
+                    inspect: false,
+                    lfsOverride: argv.lfsOverride
                 });
             }
             if (argv.docs != null) {
@@ -494,7 +604,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     instance: argv.instance,
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
-                    strictBrokenLinks: argv.strictBrokenLinks
+                    strictBrokenLinks: argv.strictBrokenLinks,
+                    disableTemplates: argv.disableSnippets,
+                    disableDynamicSnippets: argv.disableDynamicSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -511,7 +623,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 useLocalDocker: argv.local,
                 preview: argv.preview,
                 mode: argv.mode,
-                force: argv.force
+                force: argv.force,
+                runner: argv.runner as ContainerRunner,
+                inspect: false,
+                lfsOverride: argv.lfsOverride
             });
         }
     );
@@ -543,7 +658,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the IR for certain audiences"
                 })
                 .option("smart-casing", {
@@ -553,6 +668,11 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
+                })
+                .option("disable-examples", {
+                    boolean: true,
+                    description: "Whether to disable automatic example generation in the IR",
                     default: false
                 }),
         async (argv) => {
@@ -570,7 +690,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
                 readme: undefined,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                disableExamples: argv.disableExamples
             });
         }
     );
@@ -636,7 +757,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the IR for certain audiences"
                 })
                 .option("smart-casing", {
@@ -685,7 +806,7 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the FDR API definition for certain audiences"
                 })
                 .option("v2", {
@@ -706,7 +827,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
                     directFromOpenapi: false,
-                    cliContext
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else if (argv.fromOpenapi) {
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
@@ -716,7 +838,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
                     directFromOpenapi: true,
-                    cliContext
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else {
                 await generateFdrApiDefinitionForWorkspaces({
@@ -818,6 +941,16 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
+                })
+                .option("local", {
+                    boolean: true,
+                    description: "Run validation locally without sending data to Fern API.",
+                    default: false
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -828,7 +961,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks
+                errorOnBrokenLinks: argv.strictBrokenLinks,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
@@ -845,7 +979,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
+        `Upgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
         (yargs) =>
             yargs
                 .option("rc", {
@@ -909,6 +1043,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
+            });
+        }
+    );
+}
+
+function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "logout",
+        "Log out of Fern",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.runTask(async (context) => {
+                await cliContext.instrumentPostHogEvent({
+                    command: "fern logout"
+                });
+                await logout(context);
             });
         }
     );
@@ -1114,14 +1264,38 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 .option("beta", {
                     boolean: true,
                     default: false,
-                    description: "Run the beta app router development server"
+                    description: "Run the app router development server"
+                })
+                .option("legacy", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the legacy development server"
+                })
+                .option("backend-port", {
+                    number: true,
+                    description: "Run the development backend server on the following port"
                 }),
         async (argv) => {
+            if (argv.beta) {
+                cliContext.logger.warn(
+                    "--beta flag now accesses the same functionality as default and will be deprecated in a future release"
+                );
+            }
+
             let port: number;
             if (argv.port != null) {
                 port = argv.port;
             } else {
                 port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+            }
+
+            let backendPort: number;
+            if (argv.backendPort != null) {
+                backendPort = argv.backendPort;
+            } else {
+                backendPort = await getPort({
+                    port: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]
+                });
             }
             const bundlePath: string | undefined = argv.bundlePath;
             await previewDocsWorkspace({
@@ -1134,7 +1308,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                appPreview: argv.beta
+                legacyPreview: argv.legacy,
+                backendPort
             });
         }
     );
@@ -1228,4 +1403,81 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
             });
         }
     );
+}
+
+function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export <output-path>",
+        "Export your API to an OpenAPI spec",
+        (yargs) =>
+            yargs
+                .positional("output-path", {
+                    type: "string",
+                    description: "Path to write the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern export",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await generateOpenAPIForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                cliContext,
+                outputPath: resolve(cwd(), argv.outputPath)
+            });
+        }
+    );
+}
+
+function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "protoc-gen-fern",
+        false,
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+        (yargs) => {},
+        async () => {
+            const plugin = protocGenFern;
+            const data = await readBytes(process.stdin);
+            const req = fromBinary(CodeGeneratorRequestSchema, data);
+            const res = plugin.run(req);
+            await writeBytes(process.stdout, toBinary(CodeGeneratorResponseSchema, res));
+            process.exit(0);
+        }
+    );
+}
+
+function readBytes(stream: ReadStream): Promise<Uint8Array> {
+    return new Promise<Uint8Array>((resolve, reject) => {
+        const chunks: Uint8Array[] = [];
+        stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
+        stream.on("end", () => {
+            resolve(new Uint8Array(Buffer.concat(chunks)));
+        });
+        stream.on("error", (err) => {
+            reject(err);
+        });
+    });
+}
+
+function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        stream.write(data, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
 }

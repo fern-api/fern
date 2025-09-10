@@ -210,7 +210,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "xEndpointHeader: $FERN_INPUT",
+                                        "templateString": "X-Endpoint-Header: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

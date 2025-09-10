@@ -1,8 +1,37 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/enum)](https://central.sonatype.com/artifact/com.fern/enum)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
+
+## Installation
+
+### Gradle
+
+Add the dependency in your `build.gradle` file:
+
+```groovy
+dependencies {
+  implementation 'com.fern:enum'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>com.fern</groupId>
+  <artifactId>enum</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -12,7 +41,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.enum.SeedEnumClient;
-import com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;
+import com.seed.enum.resources.headers.requests.SendEnumAsHeaderRequest;
 import com.seed.enum.types.Color;
 import com.seed.enum.types.ColorOrOperand;
 import com.seed.enum.types.Operand;
@@ -23,17 +52,14 @@ public class Example {
             .builder()
             .build();
 
-        client.inlinedRequest().send(
-            SendEnumInlinedRequest
+        client.headers().send(
+            SendEnumAsHeaderRequest
                 .builder()
                 .operand(Operand.GREATER_THAN)
                 .operandOrColor(
                     ColorOrOperand.ofColor(Color.RED)
                 )
                 .maybeOperand(Operand.GREATER_THAN)
-                .maybeOperandOrColor(
-                    ColorOrOperand.ofColor(Color.RED)
-                )
                 .build()
         );
     }
@@ -61,7 +87,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.enum.core.SeedEnumApiException;
 
 try {
-    client.inlinedRequest().send(...);
+    client.headers().send(...);
 } catch (SeedEnumApiException e) {
     // Do something with the API exception...
 }
@@ -89,27 +115,24 @@ SeedEnumClient client = SeedEnumClient
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `maxRetries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.enum.core.RequestOptions;
+import com.seed.enum.SeedEnumClient;
 
-client.inlinedRequest().send(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedEnumClient client = SeedEnumClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts
@@ -127,11 +150,37 @@ SeedEnumClient client = SeedEnumClient
     .build();
 
 // Request level
-client.inlinedRequest().send(
+client.headers().send(
     ...,
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.enum.SeedEnumClient;
+import com.seed.enum.core.RequestOptions;
+
+// Client level
+SeedEnumClient client = SeedEnumClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.headers().send(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

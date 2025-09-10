@@ -1,6 +1,6 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
 
@@ -30,7 +30,8 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: csharp.Access.Public
+            access: csharp.Access.Public,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         for (const environment of this.multiUrlEnvironments.environments) {
@@ -55,7 +56,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                                     }
                                     return {
                                         name: baseUrl?.name.pascalCase.safeName ?? "",
-                                        assignment: csharp.codeblock(`"${url}"`)
+                                        assignment: csharp.codeblock(csharp.string_({ string: url }))
                                     };
                                 })
                             })

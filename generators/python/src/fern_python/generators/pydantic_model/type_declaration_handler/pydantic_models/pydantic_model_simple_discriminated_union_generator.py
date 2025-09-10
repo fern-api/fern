@@ -51,7 +51,6 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             with FernAwarePydanticModel(
                 class_name=self._base_class_name,
                 type_name=self._name,
-                extends=[],
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,

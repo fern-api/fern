@@ -12,8 +12,18 @@ class Node(UniversalBaseModel):
     Examples
     --------
     from seed.objects_with_imports import Node
-    from seed.objects_with_imports.resources.commons.resources.metadata import Metadata
-    Node(id='node-8dvgfja2', label='left', metadata=Metadata(id='metadata-kjasf923', data={'foo': 'bar', 'baz': 'qux'}, ), )
+    from seed.objects_with_imports.resources.commons.resources.metadata import (
+        Metadata,
+    )
+
+    Node(
+        id="node-8dvgfja2",
+        label="left",
+        metadata=Metadata(
+            id="metadata-kjasf923",
+            data={"foo": "bar", "baz": "qux"},
+        ),
+    )
     """
 
     id: str

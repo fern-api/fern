@@ -1,8 +1,7 @@
-import { readFile } from "fs/promises";
-
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
 import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
+import { readFile } from "fs/promises";
 
 import { Rule } from "../../Rule";
 import { ValidationViolation } from "../../ValidationViolation";

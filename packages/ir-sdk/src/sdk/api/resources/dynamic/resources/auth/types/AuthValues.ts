@@ -8,7 +8,8 @@ export type AuthValues =
     | FernIr.dynamic.AuthValues.Basic
     | FernIr.dynamic.AuthValues.Bearer
     | FernIr.dynamic.AuthValues.Header
-    | FernIr.dynamic.AuthValues.Oauth;
+    | FernIr.dynamic.AuthValues.Oauth
+    | FernIr.dynamic.AuthValues.Inferred;
 
 export namespace AuthValues {
     export interface Basic extends FernIr.dynamic.BasicAuthValues, _Utils {
@@ -27,6 +28,10 @@ export namespace AuthValues {
         type: "oauth";
     }
 
+    export interface Inferred extends FernIr.dynamic.InferredAuthValues, _Utils {
+        type: "inferred";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.AuthValues._Visitor<_Result>) => _Result;
     }
@@ -36,6 +41,7 @@ export namespace AuthValues {
         bearer: (value: FernIr.dynamic.BearerAuthValues) => _Result;
         header: (value: FernIr.dynamic.HeaderAuthValues) => _Result;
         oauth: (value: FernIr.dynamic.OAuthValues) => _Result;
+        inferred: (value: FernIr.dynamic.InferredAuthValues) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -93,6 +99,19 @@ export const AuthValues = {
         };
     },
 
+    inferred: (value: FernIr.dynamic.InferredAuthValues): FernIr.dynamic.AuthValues.Inferred => {
+        return {
+            ...value,
+            type: "inferred",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.AuthValues.Inferred,
+                visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.AuthValues._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.dynamic.AuthValues,
         visitor: FernIr.dynamic.AuthValues._Visitor<_Result>,
@@ -106,6 +125,8 @@ export const AuthValues = {
                 return visitor.header(value);
             case "oauth":
                 return visitor.oauth(value);
+            case "inferred":
+                return visitor.inferred(value);
             default:
                 return visitor._other(value as any);
         }

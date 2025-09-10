@@ -64,8 +64,8 @@ await client.organizations.getOrganization("organization_id");
 
 ```typescript
 await client.organizations.getOrganizationUser({
-    organizationId: "organization_id",
-    userId: "user_id",
+    organization_id: "organization_id",
+    user_id: "user_id",
 });
 ```
 
@@ -175,7 +175,7 @@ await client.organizations.searchOrganizations("organization_id", {
 
 ```typescript
 await client.user.getUser({
-    userId: "user_id",
+    user_id: "user_id",
 });
 ```
 
@@ -276,7 +276,7 @@ await client.user.createUser({
 
 ```typescript
 await client.user.updateUser({
-    userId: "user_id",
+    user_id: "user_id",
     body: {
         name: "name",
         tags: ["tags", "tags"],
@@ -330,7 +330,7 @@ await client.user.updateUser({
 
 ```typescript
 await client.user.searchUsers({
-    userId: "user_id",
+    user_id: "user_id",
     limit: 1,
 });
 ```

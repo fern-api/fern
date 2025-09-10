@@ -4,6 +4,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.Headers.SendAsync(\n    new SendEnumAsHeaderRequest\n    {\n        Operand = Operand.GreaterThan,\n        MaybeOperand = Operand.GreaterThan,\n        OperandOrColor = Color.Red,\n        MaybeOperandOrColor = null,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined-request.send"

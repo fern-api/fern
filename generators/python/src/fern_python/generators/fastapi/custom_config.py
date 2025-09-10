@@ -8,7 +8,7 @@ from fern_python.generators.pydantic_model.custom_config import (
 
 
 class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
-    extra_fields: Optional[Literal["allow", "forbid"]] = "forbid"
+    extra_fields: Optional[Literal["allow", "forbid", "ignore"]] = "forbid"
     use_str_enums: bool = False
     enum_type: EnumTypes = "python_enums"
 
@@ -21,3 +21,13 @@ class FastAPICustomConfig(pydantic.BaseModel):
 
     class Config:
         extra = pydantic.Extra.forbid
+
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
+    """
+
+    @pydantic.model_validator(mode="after")
+    def propagate_use_inheritance_for_extended_models(self) -> "FastAPICustomConfig":
+        self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
+        return self

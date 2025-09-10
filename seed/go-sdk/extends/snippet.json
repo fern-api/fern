@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extends/fern\"\n\tfernclient \"github.com/extends/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.ExtendedInlineRequestBody(\n\tcontext.TODO(),\n\t\u0026fern.Inlined{\n\t\tUnique: \"unique\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extends/fern\"\n\tfernclient \"github.com/extends/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.ExtendedInlineRequestBody(\n\tcontext.TODO(),\n\t\u0026fern.Inlined{\n\t\tUnique: \"unique\",\n\t\tName:   \"name\",\n\t\tDocs:   \"docs\",\n\t},\n)\n"
             }
         }
     ]

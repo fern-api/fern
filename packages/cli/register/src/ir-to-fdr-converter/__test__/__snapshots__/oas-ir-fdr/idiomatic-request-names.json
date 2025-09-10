@@ -81,7 +81,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -118,7 +119,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -184,7 +186,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -222,7 +225,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -235,7 +239,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -252,15 +257,15 @@
     }
   },
   "subpackages": {
-    "OrganizationUsers": {
-      "subpackageId": "OrganizationUsers",
-      "name": "OrganizationUsers",
+    "subpackage_organizationUsers": {
+      "subpackageId": "subpackage_organizationUsers",
+      "name": "organizationUsers",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "listOrganizationUsers",
-          "originalEndpointId": "OrganizationUsers.listOrganizationUsers",
+          "originalEndpointId": "endpoint_organizationUsers.listOrganizationUsers",
           "name": "List organization users",
           "path": {
             "pathParameters": [
@@ -320,6 +325,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -331,61 +337,69 @@
             "statusCode": 200,
             "description": "User created successfully"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User created successfully"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organizationId/users",
               "pathParameters": {
-                "organizationId": "foo"
+                "organizationId": "organizationId"
               },
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "users": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
-                      "settings": {
-                        "theme": "foo",
-                        "notifications": true,
-                        "lastModified": "foo"
-                      },
-                      "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
-                        "accountStatus": "active"
-                      }
+                "users": [
+                  {
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "settings": {
+                      "theme": "string",
+                      "notifications": true,
+                      "lastModified": "2024-01-15T09:30:00Z"
+                    },
+                    "stats": {
+                      "totalLogins": 1,
+                      "lastLoginTime": "2024-01-15T09:30:00Z",
+                      "accountStatus": "active"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "users": [
                     {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
+                      "id": "string",
+                      "name": "string",
+                      "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
-                        "theme": "foo",
+                        "theme": "string",
                         "notifications": true,
-                        "lastModified": "foo"
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     }
@@ -404,15 +418,15 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "listUsers",
-          "originalEndpointId": "Users.listUsers",
+          "originalEndpointId": "endpoint_users.listUsers",
           "name": "List users",
           "path": {
             "pathParameters": [],
@@ -454,6 +468,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -465,59 +480,67 @@
             "statusCode": 200,
             "description": "User created successfully"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User created successfully"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
               "description": "",
               "path": "/users",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "users": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
-                      "settings": {
-                        "theme": "foo",
-                        "notifications": true,
-                        "lastModified": "foo"
-                      },
-                      "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
-                        "accountStatus": "active"
-                      }
+                "users": [
+                  {
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "settings": {
+                      "theme": "string",
+                      "notifications": true,
+                      "lastModified": "2024-01-15T09:30:00Z"
+                    },
+                    "stats": {
+                      "totalLogins": 1,
+                      "lastLoginTime": "2024-01-15T09:30:00Z",
+                      "accountStatus": "active"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "users": [
                     {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
+                      "id": "string",
+                      "name": "string",
+                      "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
-                        "theme": "foo",
+                        "theme": "string",
                         "notifications": true,
-                        "lastModified": "foo"
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     }
@@ -543,7 +566,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [
@@ -578,6 +601,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -589,52 +613,63 @@
           "statusCode": 200,
           "description": "User retrieved successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "string",
+              "name": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z",
+              "settings": {
+                "theme": "string",
+                "notifications": true,
+                "lastModified": "2024-01-15T09:30:00Z"
+              },
+              "stats": {
+                "totalLogins": 1,
+                "lastLoginTime": "2024-01-15T09:30:00Z",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
+                "id": "string",
+                "name": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "settings": {
-                  "theme": "foo",
+                  "theme": "string",
                   "notifications": true,
-                  "lastModified": "foo"
+                  "lastModified": "2024-01-15T09:30:00Z"
                 },
                 "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
+                  "totalLogins": 1,
+                  "lastLoginTime": "2024-01-15T09:30:00Z",
                   "accountStatus": "active"
                 }
               }
@@ -656,8 +691,8 @@
       "UserStats"
     ],
     "subpackages": [
-      "OrganizationUsers",
-      "Users"
+      "subpackage_organizationUsers",
+      "subpackage_users"
     ]
   },
   "snippetsConfiguration": {},

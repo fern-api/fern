@@ -12,12 +12,11 @@ import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-
-import { RemoteTaskHandler } from "./RemoteTaskHandler";
-import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+import { RemoteTaskHandler } from "./RemoteTaskHandler";
+import { SourceUploader } from "./SourceUploader";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -77,7 +76,8 @@ export async function runRemoteGenerationForGenerator({
         smartCasing: generatorInvocation.smartCasing,
         exampleGeneration: {
             disabled: generatorInvocation.disableExamples,
-            skipAutogenerationIfManualExamplesExist: true
+            skipAutogenerationIfManualExamplesExist: true,
+            skipErrorAutogenerationIfManualErrorExamplesExist: false
         },
         audiences,
         readme,
@@ -97,8 +97,11 @@ export async function runRemoteGenerationForGenerator({
             javaSdk: undefined,
             rubySdk: undefined,
             goSdk: undefined,
-            csharpSdk: undefined
-        }
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined
+        },
+        context: interactiveTaskContext
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
@@ -276,4 +279,16 @@ function convertToFdrApiDefinitionSources(
             }
         ])
     );
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

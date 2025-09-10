@@ -1,10 +1,9 @@
-import { keyBy } from "lodash-es";
-
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { keyBy } from "lodash-es";
 
-import { FernFileContext, constructFernFileContext } from "../FernFileContext";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
@@ -56,7 +55,7 @@ export function validateObjectExample({
 
     // ensure required properties are present, we treat unknown as optional
     const requiredProperties = allPropertiesForObject.filter(
-        (property) => !property.isOptional && property.resolvedPropertyType._type !== "unknown"
+        (property) => !property.isNullable && !property.isOptional && property.resolvedPropertyType._type !== "unknown"
     );
     for (const requiredProperty of requiredProperties) {
         // don't error on literal properties

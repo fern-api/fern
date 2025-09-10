@@ -4214,7 +4214,7 @@ This error response may have one of the following `type` values:
               "allows": {
                 "access": "read-only",
                 "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
-                "type": "FullAccountPermissions",
+                "type": "optional<FullAccountPermissions>",
               },
               "electronicStatements": {
                 "docs": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -4344,7 +4344,7 @@ This error response may have one of the following `type` values:
               "label": {
                 "access": "read-only",
                 "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 80,
@@ -4538,7 +4538,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "items": {
                 "access": "read-only",
                 "docs": "The array of items in this page of accounts. This array may be empty.",
-                "type": "list<AccountItem>",
+                "type": "optional<list<AccountItem>>",
               },
               "limit": {
                 "default": 100,
@@ -5108,7 +5108,7 @@ The client can use this value to localize the `items[].time` values to the local
               "maximumOverdraftAccounts": {
                 "access": "read-only",
                 "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
-                "type": "integer",
+                "type": "optional<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -5476,7 +5476,7 @@ The client can use this value to localize the `items[].time` values to the local
               "maximumOverdraftAccounts": {
                 "access": "read-only",
                 "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
-                "type": "integer",
+                "type": "optional<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -5743,7 +5743,7 @@ The client can use this value to localize the `items[].time` values to the local
               "id": {
                 "access": "read-only",
                 "docs": "The unique ID of this transaction's category.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 32,
@@ -5900,7 +5900,7 @@ The client can use this value to localize the `items[].time` values to the local
               "id": {
                 "access": "read-only",
                 "docs": "This transaction's unique identifier.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 128,
@@ -5924,7 +5924,7 @@ The client can use this value to localize the `items[].time` values to the local
               "occurredOn": {
                 "access": "read-only",
                 "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "date",
                   "maxLength": undefined,
@@ -6411,7 +6411,7 @@ The response may include dates prior to requested the start date, as that is use
               "state": {
                 "access": "read-only",
                 "docs": "The state of this transfer resource.",
-                "type": "TransferState",
+                "type": "optional<TransferState>",
               },
               "updatedBy": {
                 "access": "read-only",
@@ -10966,7 +10966,7 @@ types:
     docs: An internal customer account.
     properties:
       allows:
-        type: FullAccountPermissions
+        type: optional<FullAccountPermissions>
         docs: >-
           Flags which indicate the permissions the current authorized user has
           on this account resource.
@@ -11015,7 +11015,7 @@ types:
     properties:
       items: unknown
       maximumOverdraftAccounts:
-        type: integer
+        type: optional<integer>
         docs: >-
           The maximum number of overdraft protection accounts that may be linked
           to the account.
@@ -11068,7 +11068,7 @@ types:
       `{accountId}`.
     properties:
       maximumOverdraftAccounts:
-        type: integer
+        type: optional<integer>
         docs: >-
           The maximum number of overdraft protection accounts that may be linked
           to the account.
@@ -11089,8 +11089,8 @@ types:
       `accounts`, `externalAccounts` or `outsideAccounts` collections.
     properties:
       items:
+        type: optional<list<AccountItem>>
         docs: The array of items in this page of accounts. This array may be empty.
-        type: list<AccountItem>
         access: read-only
       count:
         type: optional<integer>
@@ -11156,7 +11156,7 @@ types:
           The unique identifier for this account resource. This is an immutable
           opaque string.
       label:
-        type: string
+        type: optional<string>
         docs: >-
           The human-readable label for this account. This is either the
           `nickname` (if assigned for the current customer), or the
@@ -11919,7 +11919,7 @@ types:
       schemas.
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: This transaction's unique identifier.
         validation:
           pattern: ^[-_:,.~$a-zA-Z0-9]{6,128}$
@@ -11935,7 +11935,7 @@ types:
         type: TransactionSubType
         docs: The transaction's kind of debit or credit.
       occurredOn:
-        type: string
+        type: optional<string>
         docs: >-
           The date of the transaction in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
@@ -12061,7 +12061,7 @@ types:
       label:
         type: TransactionCategoryLabel
       id:
-        type: string
+        type: optional<string>
         docs: The unique ID of this transaction's category.
         validation:
           pattern: ^[-_:.~$a-zA-Z0-9]{1,32}$
@@ -12447,7 +12447,7 @@ types:
         type: TransferItemSchedule
         docs: When the transfer should occur and any recurrence.
       state:
-        type: TransferState
+        type: optional<TransferState>
         docs: The state of this transfer resource.
         access: read-only
       processedAt:
@@ -15654,19 +15654,16 @@ The default response lists only recent transactions. Normally, this is transacti
                           "amount": "0.00",
                           "balance": "8509.38",
                           "category": {
-                            "id": "id",
                             "label": "label",
                           },
                           "check": {
                             "number": 1,
                           },
-                          "createdOn": "2023-05-18",
                           "description": "description",
                           "id": "d62c0701-0d74",
                           "memo": "memo",
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "balance",
                         },
@@ -15682,7 +15679,6 @@ The default response lists only recent transactions. Normally, this is transacti
                             "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
                             "number": 8412,
                           },
-                          "createdOn": "2023-05-18",
                           "description": "description",
                           "id": "88f5bf17-ecc4",
                           "memo": "Paid electric bill",
@@ -15693,7 +15689,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           },
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "debit",
                         },
@@ -16014,8 +16009,6 @@ service:
                   type: balance
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '0.00'
                   posted: true
                   balance: '8509.38'
@@ -16023,15 +16016,12 @@ service:
                   description: description
                   category:
                     label: label
-                    id: id
                   check:
                     number: 1
                 - id: 88f5bf17-ecc4
                   type: debit
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '1276.21'
                   posted: true
                   balance: '8509.38'

@@ -1,8 +1,7 @@
-import { camelCase, isEqual } from "lodash-es";
-
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils";
+import { AbsoluteFilePath, basename, dirname, join, RelativeFilePath, relative } from "@fern-api/path-utils";
+import { camelCase, isEqual } from "lodash-es";
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
@@ -23,7 +22,11 @@ export interface FernDefinitionBuilder {
 
     getGlobalHeaderNames(): Set<string>;
 
+    getAuthHeaderName(): string | undefined;
+
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
+
+    getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema>;
 
     addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
@@ -228,6 +231,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         return new Set(headerNames);
     }
 
+    public getAuthHeaderName(): string | undefined {
+        // Get header from auth schemes
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
+                if (isHeaderAuthScheme(scheme)) {
+                    return scheme.header;
+                }
+            }
+            return "Authorization";
+        }
+        return undefined;
+    }
+
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
         const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null && maybeVersionHeader === name) {
@@ -237,6 +253,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.headers = {};
         }
         this.rootApiFile.headers[name] = schema;
+    }
+
+    public getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
+        return this.rootApiFile.headers ?? {};
     }
 
     public addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {

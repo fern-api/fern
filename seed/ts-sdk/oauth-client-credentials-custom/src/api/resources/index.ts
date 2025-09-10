@@ -1,3 +1,6 @@
-export * as auth from "./auth";
-export * from "./auth/types";
-export * from "./auth/client/requests";
+export * as auth from "./auth/index.js";
+export * from "./auth/types/index.js";
+export * as nestedNoAuth from "./nestedNoAuth/index.js";
+export * as nested from "./nested/index.js";
+export * as simple from "./simple/index.js";
+export * from "./auth/client/requests/index.js";

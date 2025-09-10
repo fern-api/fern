@@ -8,3 +8,4 @@ export * as object from "./object";
 export * as params from "./params";
 export * as primitive from "./primitive";
 export * as union from "./union";
+export * as urls from "./urls";

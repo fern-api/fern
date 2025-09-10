@@ -32,7 +32,14 @@ public partial class SeedExtendsClient
     }
 
     /// <example><code>
-    /// await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new Inlined
+    ///     {
+    ///         Unique = "unique",
+    ///         Name = "name",
+    ///         Docs = "docs",
+    ///     }
+    /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         Inlined request,

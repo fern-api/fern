@@ -3,6 +3,9 @@
 namespace Seed;
 
 use Seed\Auth\AuthClient;
+use Seed\NestedNoAuth\NestedNoAuthClient;
+use Seed\Nested\NestedClient;
+use Seed\Simple\SimpleClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
@@ -12,6 +15,21 @@ class SeedClient
      * @var AuthClient $auth
      */
     public AuthClient $auth;
+
+    /**
+     * @var NestedNoAuthClient $nestedNoAuth
+     */
+    public NestedNoAuthClient $nestedNoAuth;
+
+    /**
+     * @var NestedClient $nested
+     */
+    public NestedClient $nested;
+
+    /**
+     * @var SimpleClient $simple
+     */
+    public SimpleClient $simple;
 
     /**
      * @var array{
@@ -64,5 +82,8 @@ class SeedClient
         );
 
         $this->auth = new AuthClient($this->client, $this->options);
+        $this->nestedNoAuth = new NestedNoAuthClient($this->client, $this->options);
+        $this->nested = new NestedClient($this->client, $this->options);
+        $this->simple = new SimpleClient($this->client, $this->options);
     }
 }

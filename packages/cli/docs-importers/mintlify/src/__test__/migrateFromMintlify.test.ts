@@ -1,9 +1,8 @@
-import { mkdir, rmdir } from "fs/promises";
-import path from "path";
-
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { mkdir, rm } from "fs/promises";
+import path from "path";
 
 import { runMintlifyMigration } from "../runMintlifyMigration";
 
@@ -21,7 +20,7 @@ describe("add-generator-groups", () => {
             const outputPath = join(OUTPUTS_PATH, RelativeFilePath.of(fixture));
 
             if (await doesPathExist(outputPath)) {
-                await rmdir(outputPath, { recursive: true });
+                await rm(outputPath, { recursive: true });
             }
 
             await mkdir(outputPath, { recursive: true });

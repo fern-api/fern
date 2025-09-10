@@ -2,20 +2,20 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
 import {
     DefinitionFileSchema,
-    RawSchemas,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition
+    isRawUndiscriminatedUnionDefinition,
+    RawSchemas
 } from "@fern-api/fern-definition-schema";
 import {
+    constructFernFileContext,
     FernFileContext,
+    getAllPropertiesForObject,
     ResolvedContainerType,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl,
-    constructFernFileContext,
-    getAllPropertiesForObject
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 
 import { RuleRunnerArgs } from "./Rule";

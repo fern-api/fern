@@ -2,7 +2,11 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FGo)
 
-The Seed Go library provides convenient access to the Seed API from Go.
+The Seed Go library provides convenient access to the Seed APIs from Go.
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -18,7 +22,7 @@ import (
     fern "github.com/pagination/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",
@@ -26,6 +30,7 @@ func do() () {
     )
     client.Complex.Search(
         context.TODO(),
+        "index",
         &fern.SearchRequest{
             Pagination: &fern.StartingAfterPaging{
                 PerPage: 1,
@@ -72,30 +77,28 @@ page, err := client.Complex.Search(
     ...
 )
 if err != nil {
-    return nil, err
+    return err
 }
 iter := page.Iterator()
 for iter.Next(ctx) {
     item := iter.Current()
-    fmt.Printf("Got item: %v\
-", *item)
+    fmt.Printf("Got item: %v", *item)
 }
 if err := iter.Err(); err != nil {
-    // Handle the error!
+    return err
 }
 
 // Alternatively, iterate page-by-page.
 for page != nil {
     for _, item := range page.Results {
-        fmt.Printf("Got item: %v\
-", *item)
+        fmt.Printf("Got item: %v", *item)
     }
     page, err = page.GetNextPage(ctx)
     if errors.Is(err, core.ErrNoPages) {
         break
     }
     if err != nil {
-        // Handle the error!
+        return err
     }
 }
 ```
@@ -147,6 +150,19 @@ response, err := client.Complex.Search(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Complex.WithRawResponse.Search(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

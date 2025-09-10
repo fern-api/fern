@@ -26,11 +26,5 @@ public partial class SeedApiClient
             }
         }
         _client = new RawClient(clientOptions);
-        A = new AClient(_client);
-        Ast = new AstClient(_client);
     }
-
-    public AClient A { get; }
-
-    public AstClient Ast { get; }
 }

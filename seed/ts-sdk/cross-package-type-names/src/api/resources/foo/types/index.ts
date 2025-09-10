@@ -1,2 +1,2 @@
-export * from "./ImportingType";
-export * from "./OptionalString";
+export * from "./ImportingType.js";
+export * from "./OptionalString.js";

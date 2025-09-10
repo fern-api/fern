@@ -1,0 +1,4 @@
+{
+  "ignores": ["@fern-api/configuration"],
+  "ignore-patterns": ["lib"]
+}

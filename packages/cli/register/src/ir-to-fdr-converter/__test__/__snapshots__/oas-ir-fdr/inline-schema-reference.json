@@ -66,8 +66,8 @@
         ]
       }
     },
-    "ExampleGetResponsesSchemaOneOfThree": {
-      "name": "ExampleGetResponsesSchemaOneOfThree",
+    "GetExampleResponse2003": {
+      "name": "GetExampleResponse2003",
       "shape": {
         "type": "object",
         "extends": [],
@@ -85,7 +85,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "GetExampleResponse2003"
     },
     "getExample_Response_200": {
       "name": "getExample_Response_200",
@@ -97,21 +98,24 @@
             "type": {
               "type": "id",
               "value": "Schema1"
-            }
+            },
+            "displayName": "Schema1"
           },
           {
             "typeName": "Schema2",
             "type": {
               "type": "id",
               "value": "Schema2"
-            }
+            },
+            "displayName": "Schema2"
           },
           {
-            "typeName": "ExampleGetResponsesSchemaOneOfThree",
+            "typeName": "GetExampleResponse2003",
             "type": {
               "type": "id",
-              "value": "ExampleGetResponsesSchemaOneOfThree"
-            }
+              "value": "GetExampleResponse2003"
+            },
+            "displayName": "GetExampleResponse2003"
           }
         ]
       }
@@ -124,7 +128,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -141,6 +145,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -152,10 +157,24 @@
           "statusCode": 200,
           "description": "Successful response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getExample_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
             "description": "",
             "path": "/example",
             "pathParameters": {},
@@ -163,15 +182,12 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "foo"
-              }
+              "message": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "message": "foo"
+                "message": "string"
               }
             }
           }

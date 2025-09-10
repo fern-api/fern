@@ -1,6 +1,6 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-
 import {
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
@@ -14,15 +14,58 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
-
-import {
-    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-    DOCKER_PATH_TO_IR,
-    DOCKER_PATH_TO_SNIPPET,
-    DOCKER_PATH_TO_SNIPPET_TEMPLATES
-} from "./constants";
+import * as fs from "fs";
+import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
+
+function extractLicenseInfo(
+    generatorInvocation: GeneratorInvocation,
+    absolutePathToFernConfig?: AbsoluteFilePath
+): FernGeneratorExec.LicenseConfig | undefined {
+    // Check if there's a license field in github config
+    if (
+        generatorInvocation.raw?.github != null &&
+        typeof generatorInvocation.raw.github === "object" &&
+        "license" in generatorInvocation.raw.github
+    ) {
+        const githubConfig = generatorInvocation.raw.github as { license?: string | { custom: string } };
+
+        if (githubConfig.license != null) {
+            if (typeof githubConfig.license === "string") {
+                if (githubConfig.license === "MIT" || githubConfig.license === "Apache-2.0") {
+                    return FernGeneratorExec.LicenseConfig.basic({
+                        id:
+                            githubConfig.license === "MIT"
+                                ? FernGeneratorExec.LicenseId.Mit
+                                : FernGeneratorExec.LicenseId.Apache2
+                    });
+                }
+            } else if (typeof githubConfig.license === "object" && "custom" in githubConfig.license) {
+                return FernGeneratorExec.LicenseConfig.custom({
+                    filename: path.basename(githubConfig.license.custom)
+                });
+            }
+        }
+    }
+
+    if (generatorInvocation.raw?.metadata?.license != null) {
+        const license = generatorInvocation.raw.metadata.license;
+        if (typeof license === "string") {
+            if (license === "MIT" || license === "Apache-2.0") {
+                return FernGeneratorExec.LicenseConfig.basic({
+                    id: license === "MIT" ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
+                });
+            }
+        } else if (typeof license === "object" && "custom" in license) {
+            return FernGeneratorExec.LicenseConfig.custom({
+                filename: path.basename(license.custom)
+            });
+        }
+    }
+
+    return undefined;
+}
 
 export declare namespace getGeneratorConfig {
     export interface Args {
@@ -33,14 +76,16 @@ export declare namespace getGeneratorConfig {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
+        absolutePathToFernConfig: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
-    }
-
-    export interface Return {
-        config: FernGeneratorExec.GeneratorConfig;
-        binds: string[];
+        paths: {
+            snippetPath: AbsoluteFilePath | undefined;
+            snippetTemplatePath: AbsoluteFilePath | undefined;
+            irPath: AbsoluteFilePath;
+            outputDirectory: AbsoluteFilePath;
+        };
     }
 }
 
@@ -107,30 +152,83 @@ export function getGeneratorConfig({
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
     absolutePathToSnippetTemplates,
+    absolutePathToFernConfig,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
-}: getGeneratorConfig.Args): getGeneratorConfig.Return {
-    const binds: string[] = [];
+    generatePaginatedClients,
+    paths
+}: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
+    let enhancedCustomConfig = customConfig;
+    const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
+
+    if (licenseInfo != null && licenseInfo.type === "custom") {
+        let licenseName: string | undefined;
+        if (
+            generatorInvocation.raw?.github != null &&
+            typeof generatorInvocation.raw.github === "object" &&
+            "license" in generatorInvocation.raw.github
+        ) {
+            const githubConfig = generatorInvocation.raw.github as { license?: string | { custom: string } };
+            if (
+                githubConfig.license != null &&
+                typeof githubConfig.license === "object" &&
+                "custom" in githubConfig.license
+            ) {
+                const licensePath = githubConfig.license.custom;
+
+                try {
+                    // Use the directory of fern.config.json as base for relative paths
+                    const baseDir = absolutePathToFernConfig ? path.dirname(absolutePathToFernConfig) : process.cwd();
+
+                    const absoluteLicensePath = path.isAbsolute(licensePath)
+                        ? licensePath
+                        : path.resolve(baseDir, licensePath);
+                    const content = fs.readFileSync(absoluteLicensePath, "utf-8");
+
+                    let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";
+
+                    firstLine = firstLine.trim().replace(/^#+\s*/, "");
+
+                    firstLine = firstLine.replace(/[.:;]+$/, "").trim();
+
+                    licenseName = firstLine;
+                } catch (error) {
+                    // Silently fall back to no license name
+                }
+            }
+        }
+
+        if (licenseName != null) {
+            enhancedCustomConfig = {
+                ...(customConfig as Record<string, unknown>),
+                _fernLicenseName: licenseName
+            };
+        }
+    }
+    const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         publishV2: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         downloadFiles: () => {
-            return {
+            const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: outputDirectory,
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
+            return outputConfig;
         },
         github: (value) => {
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
@@ -140,16 +238,14 @@ export function getGeneratorConfig({
                     publishInfo: getGithubPublishConfig(value.publishInfo),
                     installationToken: undefined // Don't attempt to clone the repository when generating locally.
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: outputDirectory,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+                outputConfig.snippetFilepath = snippetPath;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+                outputConfig.snippetTemplateFilepath = snippetTemplatePath;
             }
             return outputConfig;
         },
@@ -168,16 +264,14 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: outputDirectory,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+                outputConfig.snippetFilepath = snippetPath;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+                outputConfig.snippetTemplateFilepath = snippetTemplatePath;
             }
             return outputConfig;
         },
@@ -186,28 +280,31 @@ export function getGeneratorConfig({
         }
     });
     return {
-        binds,
-        config: {
-            irFilepath: DOCKER_PATH_TO_IR,
-            output,
-            publish: undefined,
-            customConfig,
-            workspaceName,
-            organization,
-            environment: FernGeneratorExec.GeneratorEnvironment.local(),
-            dryRun: false,
-            whitelabel: false,
-            writeUnitTests,
-            generateOauthClients,
-            generatePaginatedClients
-        }
+        irFilepath: irPath,
+        output,
+        publish: undefined,
+        customConfig: enhancedCustomConfig,
+        workspaceName,
+        organization,
+        environment: FernGeneratorExec.GeneratorEnvironment.local(),
+        dryRun: false,
+        whitelabel: false,
+        writeUnitTests,
+        generateOauthClients,
+        generatePaginatedClients,
+        license: licenseInfo
     };
 }
 
 function newDummyPublishOutputConfig(
     version: string,
-    multipleOutputMode: PublishOutputMode | PublishOutputModeV2
+    multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
+    generatorInvocation: GeneratorInvocation,
+    paths: {
+        outputDirectory: AbsoluteFilePath;
+    }
 ): FernGeneratorExec.GeneratorOutputConfig {
+    const { outputDirectory } = paths;
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
@@ -225,55 +322,20 @@ function newDummyPublishOutputConfig(
         });
     }
 
+    let repoUrl = "";
+    if (generatorInvocation.raw?.github != null) {
+        if (isGithubSelfhosted(generatorInvocation.raw.github)) {
+            repoUrl = generatorInvocation.raw.github.uri;
+        } else {
+            repoUrl = generatorInvocation.raw?.github.repository;
+        }
+    }
+
     return {
-        mode: FernGeneratorExec.OutputMode.publish({
-            registries: {
-                maven: {
-                    group: "",
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? ""
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    scope: "",
-                    token: (outputMode as NpmOutput)?.token ?? ""
-                }
-            },
-            publishTarget: undefined,
-            registriesV2: {
-                maven: {
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? "",
-                    coordinate: (outputMode as MavenOutput)?.coordinate ?? "",
-                    signature: (outputMode as MavenOutput)?.signature
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    token: (outputMode as NpmOutput)?.token ?? "",
-                    packageName: (outputMode as NpmOutput)?.packageName ?? ""
-                },
-                pypi: {
-                    packageName: (outputMode as PypiOutput)?.coordinate ?? "",
-                    password: (outputMode as PypiOutput)?.password ?? "",
-                    registryUrl: (outputMode as PypiOutput)?.registryUrl ?? "",
-                    username: (outputMode as PypiOutput)?.username ?? "",
-                    pypiMetadata: (outputMode as PypiOutput)?.pypiMetadata
-                },
-                rubygems: {
-                    registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as RubyGemsOutput)?.apiKey ?? "",
-                    packageName: (outputMode as RubyGemsOutput)?.packageName ?? ""
-                },
-                nuget: {
-                    registryUrl: (outputMode as NugetOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as NugetOutput)?.apiKey ?? "",
-                    packageName: (outputMode as NugetOutput)?.packageName ?? ""
-                }
-            },
+        mode: FernGeneratorExec.OutputMode.github({
+            repoUrl,
             version
         }),
-        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+        path: outputDirectory
     };
 }

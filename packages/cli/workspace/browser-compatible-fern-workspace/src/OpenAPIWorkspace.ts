@@ -1,11 +1,10 @@
-import { OpenAPI } from "openapi-types";
-
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPI } from "openapi-types";
 
 import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
 
@@ -49,7 +48,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             objectQueryParameters: spec.settings?.objectQueryParameters,
             exampleGeneration: spec.settings?.exampleGeneration,
             useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
-            respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums
+            respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
+            inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

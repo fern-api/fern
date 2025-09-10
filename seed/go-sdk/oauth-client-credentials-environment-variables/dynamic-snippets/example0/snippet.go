@@ -7,11 +7,12 @@ import (
     fern "github.com/oauth-client-credentials-environment-variables/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        nil,
     )
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),

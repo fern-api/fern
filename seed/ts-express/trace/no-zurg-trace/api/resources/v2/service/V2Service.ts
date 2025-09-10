@@ -51,7 +51,9 @@ export class V2Service {
                     },
                     next,
                 );
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(

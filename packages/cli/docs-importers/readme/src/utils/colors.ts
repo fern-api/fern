@@ -1,7 +1,6 @@
+import { docsYml } from "@fern-api/configuration";
 import type { Root as HastRoot } from "hast";
 import { CONTINUE, visit } from "unist-util-visit";
-
-import { docsYml } from "@fern-api/configuration";
 
 import { defaultColors } from "../constants";
 

@@ -1,16 +1,14 @@
+import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { createFiddleService } from "@fern-api/core";
+import { YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
 import path from "path";
 import { create as createTar } from "tar";
 import tmp from "tmp-promise";
-
-import { FernToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { createFiddleService } from "@fern-api/core";
-import { YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { Project } from "@fern-api/project-loader";
-
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { CliContext } from "../../cli-context/CliContext";
 

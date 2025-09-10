@@ -1,8 +1,3 @@
-import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
-import { Project } from "ts-morph";
-
 import {
     ApiAuth,
     AuthScheme,
@@ -24,8 +19,11 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
-import { TemplateInput } from "@fern-fern/snippet-sdk/api";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
+import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { Project } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";
@@ -592,7 +590,7 @@ export class TemplateGenerator {
                           isOptional: true,
                           containerTemplateString: this.getAsNamedParameterTemplate(
                               name,
-                              `new Set([\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}])`
+                              `[\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}]`
                           ),
                           delimiter: `,\n${childTabs}`,
                           innerTemplate,
@@ -1100,6 +1098,10 @@ export class TemplateGenerator {
                             })
                         )
                     );
+                },
+                inferred: () => {
+                    return;
+                    // TODO: Handle inferred auth scheme
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);

@@ -40,21 +40,6 @@ Options:
                                                       [boolean] [default: false]"
 `;
 
-exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"Warnings for generators.yml:
-	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
-[api]: Warnings for generators.yml:
-[api]: 	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
-              ╭──────────────────────────────────────────────────╮
-              │                                                  │
-              │                Generator Upgrades                │
-              │                                                  │
-              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.7   │
-              │                                                  │
-              │                                                  │
-              ╰──────────────────────────────────────────────────╯"
-`;
-
 exports[`fern generator upgrade > fern generator upgrade message 1`] = `
 "         ╭────────────────────────────────────────────────────────────╮
          │                                                            │

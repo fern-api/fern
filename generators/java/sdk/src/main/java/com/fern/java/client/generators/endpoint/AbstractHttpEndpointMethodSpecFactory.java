@@ -156,7 +156,9 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
                             && httpEndpoint.getQueryParameters().isEmpty()
                             && generatedWrappedRequest.requestBodyGetter().isPresent()
                             && !(generatedWrappedRequest.requestBodyGetter().get()
-                                    instanceof FileUploadRequestBodyGetters)) {
+                                    instanceof FileUploadRequestBodyGetters)
+                            && !(generatedWrappedRequest.requestBodyGetter().get()
+                                    instanceof GeneratedWrappedRequest.UrlFormEncodedGetters)) {
                         OnlyRequestEndpointWriterVariableNameContext variables =
                                 new OnlyRequestEndpointWriterVariableNameContext(
                                         clientGeneratorContext,

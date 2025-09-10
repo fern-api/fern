@@ -1,8 +1,7 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
-import { readFile, readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { FernSeedConfig } from "./config";
 
@@ -45,8 +44,7 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
         const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
         workspaces.push({
             absolutePathToWorkspace,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            workspaceConfig: yaml.load(seedConfig.toString()) as any as FernSeedConfig.SeedWorkspaceConfiguration,
+            workspaceConfig: yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.SeedWorkspaceConfiguration,
             workspaceName: workspace
         });
     }
@@ -79,7 +77,7 @@ export async function loadCliWorkspace(): Promise<CliWorkspace> {
 
     const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(CLI_SEED_DIRECTORY));
     const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
-    const workspaceConfig = yaml.load(seedConfig.toString()) as any as FernSeedConfig.CliSeedWorkspaceConfiguration;
+    const workspaceConfig = yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.CliSeedWorkspaceConfiguration;
 
     return {
         workspaceName: CLI_SEED_DIRECTORY,

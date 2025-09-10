@@ -13,9 +13,9 @@ public class Example6
         );
 
         await client.User.SearchUsersAsync(
-            "tenant_id",
-            "user_id",
             new SearchUsersRequest{
+                TenantId = "tenant_id",
+                UserId = "user_id",
                 Limit = 1
             }
         );

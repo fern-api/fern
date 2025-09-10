@@ -1477,7 +1477,8 @@
         "POST",
         "PUT",
         "PATCH",
-        "DELETE"
+        "DELETE",
+        "HEAD"
       ]
     },
     "variables.VariableReferenceSchema": {

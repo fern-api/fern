@@ -47,7 +47,9 @@ class Project:
         license_: Optional[LicenseConfig],
         user_defined_toml: Optional[str] = None,
         exclude_types_from_init_exports: Optional[bool] = False,
+        lazy_imports: bool = True,
     ) -> None:
+        relative_path_to_project = relative_path_to_project.replace(".", "/")
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
         else:
@@ -60,7 +62,7 @@ class Project:
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
-        self._module_manager = ModuleManager(sorted_modules=sorted_modules)
+        self._module_manager = ModuleManager(sorted_modules=sorted_modules, lazy_imports=lazy_imports)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._whitelabel = whitelabel
@@ -146,10 +148,7 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(
-                should_format=False, 
-                should_sort_imports=True
-            )
+            writer = WriterImpl(should_format=False, should_sort_imports=True)
             read_file = existing_file.read()
             if string_replacements is not None:
                 for k, v in string_replacements.items():

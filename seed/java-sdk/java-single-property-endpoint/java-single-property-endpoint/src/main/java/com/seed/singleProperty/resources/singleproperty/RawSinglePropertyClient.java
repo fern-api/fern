@@ -43,14 +43,13 @@ public class RawSinglePropertyClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "include-remote-data",
-                    request.getIncludeRemoteData().get().toString(),
+                    request.getIncludeRemoteData().get(),
                     false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

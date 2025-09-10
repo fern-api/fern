@@ -4,9 +4,10 @@ import (
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
     context "context"
+    file "github.com/examples/fern/file"
 )
 
-func do() () {
+func do() {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -15,8 +16,11 @@ func do() () {
             "<token>",
         ),
     )
-    client.Health.Service.Check(
+    client.File.Service.GetFile(
         context.TODO(),
-        "id-2sdx82h",
+        "filename",
+        &file.GetFileRequest{
+            XFileApiVersion: "X-File-API-Version",
+        },
     )
 }
