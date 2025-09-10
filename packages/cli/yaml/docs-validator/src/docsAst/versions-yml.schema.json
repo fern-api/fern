@@ -536,6 +536,16 @@
               "type": "null"
             }
           ]
+        },
+        "php": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
