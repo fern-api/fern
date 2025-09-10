@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.12.4
+  createdAt: "2025-09-09"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed incorrect handling of schema `date` fields — now decoded into a new `CalendarDate` type.
+  irVersion: 59
+
 - version: 0.12.3
   createdAt: "2025-09-09"
   changelogEntry:
