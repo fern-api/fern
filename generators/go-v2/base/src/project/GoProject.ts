@@ -3,7 +3,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
