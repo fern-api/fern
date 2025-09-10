@@ -499,23 +499,23 @@ client.nullableOptional().createComplexProfile(
             )
         )
         .nullableArray(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("nullableArray", "nullableArray")
             )
         )
         .optionalArray(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("optionalArray", "optionalArray")
             )
         )
         .optionalNullableArray(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("optionalNullableArray", "optionalNullableArray")
             )
         )
         .nullableListOfNullables(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("nullableListOfNullables", "nullableListOfNullables")
+            Optional.of(
+                Arrays.asList(Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))
             )
         )
         .nullableMapOfNullables(
@@ -535,7 +535,7 @@ client.nullableOptional().createComplexProfile(
             }}
         )
         .nullableListOfUnions(
-            new ArrayList<NotificationMethod>(
+            Optional.of(
                 Arrays.asList(
                     NotificationMethod.email(
                         EmailNotification
@@ -712,7 +712,7 @@ client.nullableOptional().updateComplexProfile(
             )
         )
         .nullableArray(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("nullableArray", "nullableArray")
             )
         )
@@ -856,7 +856,7 @@ client.nullableOptional().testDeserialization(
             )
         )
         .nullableList(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("nullableList", "nullableList")
             )
         )
@@ -1077,17 +1077,17 @@ client.nullableOptional().updateTags(
     UpdateTagsRequest
         .builder()
         .tags(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("tags", "tags")
             )
         )
         .categories(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("categories", "categories")
             )
         )
         .labels(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("labels", "labels")
             )
         )
@@ -1180,7 +1180,7 @@ client.nullableOptional().getSearchResults(
             }}
         )
         .includeTypes(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("includeTypes", "includeTypes")
             )
         )

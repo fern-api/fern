@@ -2,8 +2,8 @@ package com.snippets;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.UploadDocumentRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class Example1 {
                 .builder()
                 .author("author")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )

@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example0 {
@@ -16,9 +15,7 @@ public class Example0 {
             CreateUsernameRequest
                 .builder()
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .username("username")
                 .password("password")

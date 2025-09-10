@@ -4,7 +4,6 @@ import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.commons.types.VariableType;
 import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
 import com.seed.trace.resources.problem.types.VariableTypeAndName;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example23 {
@@ -19,23 +18,21 @@ public class Example23 {
             GetDefaultStarterFilesRequest
                 .builder()
                 .inputParams(
-                    new ArrayList<VariableTypeAndName>(
-                        Arrays.asList(
-                            VariableTypeAndName
-                                .builder()
-                                .variableType(
-                                    VariableType.integerType()
-                                )
-                                .name("name")
-                                .build(),
-                            VariableTypeAndName
-                                .builder()
-                                .variableType(
-                                    VariableType.integerType()
-                                )
-                                .name("name")
-                                .build()
-                        )
+                    Arrays.asList(
+                        VariableTypeAndName
+                            .builder()
+                            .variableType(
+                                VariableType.integerType()
+                            )
+                            .name("name")
+                            .build(),
+                        VariableTypeAndName
+                            .builder()
+                            .variableType(
+                                VariableType.integerType()
+                            )
+                            .name("name")
+                            .build()
                     )
                 )
                 .outputType(
