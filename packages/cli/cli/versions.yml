@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Availability is now inherited by children when set in the `docs.yml` navigation.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.1
+
+- changelogEntry:
+    - summary: |
         Add support for translating deprecated flags in protobuf to availability status in fern-ir.
       type: feat
   irVersion: 59
