@@ -420,7 +420,7 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-        
+
         // todo: add when available
         rust: undefined
     };

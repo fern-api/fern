@@ -85,30 +85,28 @@ export function convertDocsSnippetsConfigToFdr(
                   }
                 : undefined,
         phpSdk:
-        snippetsConfiguration.php != null
-        ? {
-              package:
-                  typeof snippetsConfiguration.php === "string"
-                      ? snippetsConfiguration.php
-                      : snippetsConfiguration.php.package,
-              version:
-                  typeof snippetsConfiguration.php === "string"
-                      ? undefined
-                      : snippetsConfiguration.php.version
-          }
-        : undefined,
+            snippetsConfiguration.php != null
+                ? {
+                      package:
+                          typeof snippetsConfiguration.php === "string"
+                              ? snippetsConfiguration.php
+                              : snippetsConfiguration.php.package,
+                      version:
+                          typeof snippetsConfiguration.php === "string" ? undefined : snippetsConfiguration.php.version
+                  }
+                : undefined,
         swiftSdk:
-        snippetsConfiguration.swift != null
-        ? {
-              package:
-                  typeof snippetsConfiguration.swift === "string"
-                      ? snippetsConfiguration.swift
-                      : snippetsConfiguration.swift.package,
-              version:
-                  typeof snippetsConfiguration.swift === "string"
-                      ? undefined
-                      : snippetsConfiguration.swift.version
-          }
-        : undefined,
+            snippetsConfiguration.swift != null
+                ? {
+                      package:
+                          typeof snippetsConfiguration.swift === "string"
+                              ? snippetsConfiguration.swift
+                              : snippetsConfiguration.swift.package,
+                      version:
+                          typeof snippetsConfiguration.swift === "string"
+                              ? undefined
+                              : snippetsConfiguration.swift.version
+                  }
+                : undefined
     };
 }

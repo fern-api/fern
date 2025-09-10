@@ -81,7 +81,7 @@ describe("fdr", async () => {
                     goSdk: undefined,
                     csharpSdk: undefined,
                     phpSdk: undefined,
-                    swiftSdk: undefined,
+                    swiftSdk: undefined
                 },
                 playgroundConfig: {
                     oauth: true

@@ -44,7 +44,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                         goSdk: undefined,
                         csharpSdk: undefined,
                         phpSdk: undefined,
-                        swiftSdk: undefined,
+                        swiftSdk: undefined
                     },
                     context
                 });
