@@ -5,10 +5,10 @@ import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptional
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Example18 {
@@ -36,7 +36,7 @@ public class Example18 {
                         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .base64("SGVsbG8gd29ybGQh".getBytes())
                         .list(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("list", "list")
                             )
                         )

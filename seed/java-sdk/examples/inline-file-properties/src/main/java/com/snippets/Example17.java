@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -19,9 +18,7 @@ public class Example17 {
                 .builder()
                 .xApiVersion("0.0.1")
                 .tag(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("development")
-                    )
+                    Arrays.asList(Optional.of("development"))
                 )
                 .shallow(false)
                 .build()

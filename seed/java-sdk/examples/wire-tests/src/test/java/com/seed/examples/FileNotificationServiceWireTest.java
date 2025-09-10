@@ -31,7 +31,7 @@ public class FileNotificationServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-        client.file().notification().service().getException("notification-hsy129x");;
+        client.file().notification().service().getException("notification-hsy129x");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

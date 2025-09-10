@@ -14,9 +14,7 @@
 
 ```java
 client.endpoints().container().getAndReturnListOfPrimitives(
-    new ArrayList<String>(
-        Arrays.asList("string", "string")
-    )
+    Arrays.asList("string", "string")
 );
 ```
 </dd>
@@ -58,17 +56,15 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 
 ```java
 client.endpoints().container().getAndReturnListOfObjects(
-    new ArrayList<ObjectWithRequiredField>(
-        Arrays.asList(
-            ObjectWithRequiredField
-                .builder()
-                .string("string")
-                .build(),
-            ObjectWithRequiredField
-                .builder()
-                .string("string")
-                .build()
-        )
+    Arrays.asList(
+        ObjectWithRequiredField
+            .builder()
+            .string("string")
+            .build(),
+        ObjectWithRequiredField
+            .builder()
+            .string("string")
+            .build()
     )
 );
 ```
@@ -355,7 +351,7 @@ client.endpoints().contentType().postJsonPatchContentType(
         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .base64("SGVsbG8gd29ybGQh".getBytes())
         .list(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("list", "list")
             )
         )
@@ -424,7 +420,7 @@ client.endpoints().contentType().postJsonPatchContentWithCharsetType(
         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .base64("SGVsbG8gd29ybGQh".getBytes())
         .list(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("list", "list")
             )
         )
@@ -675,7 +671,7 @@ client.endpoints().httpMethods().testPatch(
         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .base64("SGVsbG8gd29ybGQh".getBytes())
         .list(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("list", "list")
             )
         )
@@ -793,7 +789,7 @@ client.endpoints().object().getAndReturnWithOptionalField(
         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .base64("SGVsbG8gd29ybGQh".getBytes())
         .list(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("list", "list")
             )
         )
@@ -962,7 +958,7 @@ client.endpoints().object().getAndReturnNestedWithOptionalField(
                 .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                 .base64("SGVsbG8gd29ybGQh".getBytes())
                 .list(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("list", "list")
                     )
                 )
@@ -1038,7 +1034,7 @@ client.endpoints().object().getAndReturnNestedWithRequiredField(
                 .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                 .base64("SGVsbG8gd29ybGQh".getBytes())
                 .list(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("list", "list")
                     )
                 )
@@ -1105,77 +1101,75 @@ client.endpoints().object().getAndReturnNestedWithRequiredField(
 
 ```java
 client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
-    new ArrayList<NestedObjectWithRequiredField>(
-        Arrays.asList(
-            NestedObjectWithRequiredField
-                .builder()
-                .string("string")
-                .nestedObject(
-                    ObjectWithOptionalField
-                        .builder()
-                        .string("string")
-                        .integer(1)
-                        .long_(1000000L)
-                        .double_(1.1)
-                        .bool(true)
-                        .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .date("2023-01-15")
-                        .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .base64("SGVsbG8gd29ybGQh".getBytes())
-                        .list(
-                            new ArrayList<String>(
-                                Arrays.asList("list", "list")
-                            )
+    Arrays.asList(
+        NestedObjectWithRequiredField
+            .builder()
+            .string("string")
+            .nestedObject(
+                ObjectWithOptionalField
+                    .builder()
+                    .string("string")
+                    .integer(1)
+                    .long_(1000000L)
+                    .double_(1.1)
+                    .bool(true)
+                    .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .date("2023-01-15")
+                    .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .base64("SGVsbG8gd29ybGQh".getBytes())
+                    .list(
+                        Optional.of(
+                            Arrays.asList("list", "list")
                         )
-                        .set(
-                            new HashSet<String>(
-                                Arrays.asList("set")
-                            )
+                    )
+                    .set(
+                        new HashSet<String>(
+                            Arrays.asList("set")
                         )
-                        .map(
-                            new HashMap<Integer, String>() {{
-                                put(1, "map");
-                            }}
+                    )
+                    .map(
+                        new HashMap<Integer, String>() {{
+                            put(1, "map");
+                        }}
+                    )
+                    .bigint(new BigInteger("1000000"))
+                    .build()
+            )
+            .build(),
+        NestedObjectWithRequiredField
+            .builder()
+            .string("string")
+            .nestedObject(
+                ObjectWithOptionalField
+                    .builder()
+                    .string("string")
+                    .integer(1)
+                    .long_(1000000L)
+                    .double_(1.1)
+                    .bool(true)
+                    .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                    .date("2023-01-15")
+                    .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .base64("SGVsbG8gd29ybGQh".getBytes())
+                    .list(
+                        Optional.of(
+                            Arrays.asList("list", "list")
                         )
-                        .bigint(new BigInteger("1000000"))
-                        .build()
-                )
-                .build(),
-            NestedObjectWithRequiredField
-                .builder()
-                .string("string")
-                .nestedObject(
-                    ObjectWithOptionalField
-                        .builder()
-                        .string("string")
-                        .integer(1)
-                        .long_(1000000L)
-                        .double_(1.1)
-                        .bool(true)
-                        .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .date("2023-01-15")
-                        .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .base64("SGVsbG8gd29ybGQh".getBytes())
-                        .list(
-                            new ArrayList<String>(
-                                Arrays.asList("list", "list")
-                            )
+                    )
+                    .set(
+                        new HashSet<String>(
+                            Arrays.asList("set")
                         )
-                        .set(
-                            new HashSet<String>(
-                                Arrays.asList("set")
-                            )
-                        )
-                        .map(
-                            new HashMap<Integer, String>() {{
-                                put(1, "map");
-                            }}
-                        )
-                        .bigint(new BigInteger("1000000"))
-                        .build()
-                )
-                .build()
-        )
+                    )
+                    .map(
+                        new HashMap<Integer, String>() {{
+                            put(1, "map");
+                        }}
+                    )
+                    .bigint(new BigInteger("1000000"))
+                    .build()
+            )
+            .build()
     )
 );
 ```
@@ -2312,7 +2306,7 @@ client.inlinedRequests().postWithObjectBodyandResponse(
                 .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                 .base64("SGVsbG8gd29ybGQh".getBytes())
                 .list(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("list", "list")
                     )
                 )
