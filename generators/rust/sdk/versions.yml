@@ -2,7 +2,7 @@
 - version: 0.0.8
   createdAt: "2025-09-10"
   changelogEntry:
-    - type: feat
+    - type: chore
       summary: enhanced error handling and rustfmt
   irVersion: 58
 
