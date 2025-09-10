@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add back support for local filesystem output mode.
-      type: feat
+      type: fix
   createdAt: "2025-09-10"
   irVersion: 59
 
