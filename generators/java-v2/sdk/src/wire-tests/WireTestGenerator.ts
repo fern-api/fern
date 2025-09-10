@@ -77,7 +77,8 @@ export class WireTestGenerator {
             writer.writeLine('.setBody("{}"));');
             writer.dedent();
 
-            writer.writeLine(`${methodCall};`);
+            // Add semicolon only if the method call doesn't already end with one
+            writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
 
             writer.writeLine("RecordedRequest request = server.takeRequest();");
             writer.writeLine("Assertions.assertNotNull(request);");
@@ -195,8 +196,7 @@ export class WireTestGenerator {
 
         return testClass.toString({
             packageName: this.context.getRootPackageName(),
-            customConfig: this.context.customConfig ?? {},
-            formatter: undefined
+            customConfig: this.context.customConfig ?? {}
         });
     }
 
