@@ -525,7 +525,7 @@ var client = new AcmeClient(
 
 await client.CreateUserAsync(
     new User{
-        Id = "id",
+        ID = "id",
         Password = "password",
         Profile = new UserProfile{
             Name = "name",

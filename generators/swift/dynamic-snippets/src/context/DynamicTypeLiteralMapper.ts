@@ -155,7 +155,8 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): swift.Expression {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
-            discriminatedUnion,
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            discriminatedUnion: discriminatedUnion as any,
             value
         });
         if (discriminatedUnionTypeInstance == null) {
@@ -251,7 +252,8 @@ export class DynamicTypeLiteralMapper {
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): swift.FunctionArgument[] {
         const properties = this.context.associateByWireValue({
-            parameters: singleDiscriminatedUnionType.properties ?? [],
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            parameters: (singleDiscriminatedUnionType.properties ?? []) as any,
             values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
 
             // We're only selecting the base properties here. The rest of the properties
@@ -308,7 +310,8 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): swift.Expression {
         const properties = this.context.associateByWireValue({
-            parameters: object_.properties,
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            parameters: object_.properties as any,
             values: this.context.getRecord(value) ?? {}
         });
         return swift.Expression.structInitialization({

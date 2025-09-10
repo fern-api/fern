@@ -717,7 +717,7 @@ func do() {
 	client.CreateUser(
 		context.TODO(),
 		&acme.User{
-			Id:       "id",
+			ID:       "id",
 			Password: "password",
 			Profile: &acme.UserProfile{
 				Name:         "name",
@@ -1544,7 +1544,7 @@ func do() {
 	client.CreateUser(
 		context.TODO(),
 		&acme.User{
-			Id:       "id",
+			ID:       "id",
 			Password: "password",
 			Profile: &acme.UserProfile{
 				Name:         "name",

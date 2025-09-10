@@ -184,7 +184,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            ir: convertIr(dynamicIr) as any,
             config: context.config
         });
 
