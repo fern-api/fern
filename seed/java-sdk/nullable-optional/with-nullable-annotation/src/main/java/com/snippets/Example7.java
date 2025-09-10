@@ -10,8 +10,8 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example7 {
     public static void main(String[] args) {
@@ -62,7 +62,7 @@ public class Example7 {
                     )
                 )
                 .nullableArray(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("nullableArray", "nullableArray")
                     )
                 )
