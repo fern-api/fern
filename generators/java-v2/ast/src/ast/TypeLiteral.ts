@@ -102,6 +102,7 @@ interface List {
     type: "list";
     valueType: Type;
     values: TypeLiteral[];
+    isParameter?: boolean; // If true, generates Arrays.asList() directly for method parameters instead of wrapping with new ArrayList()
 }
 
 interface Long {
@@ -339,11 +340,20 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static list({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
+    public static list({
+        valueType,
+        values,
+        isParameter
+    }: {
+        valueType: Type;
+        values: TypeLiteral[];
+        isParameter?: boolean;
+    }): TypeLiteral {
         return new this({
             type: "list",
             valueType,
-            values
+            values,
+            isParameter
         });
     }
 
@@ -603,6 +613,18 @@ export class TypeLiteral extends AstNode {
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: List | Set }): void {
         const classReference = iterable.type === "list" ? ArrayListClassReference : HashSetClassReference;
         const values = filterNopValues({ values: iterable.values });
+
+        if (iterable.type === "list" && iterable.isParameter && values.length > 0) {
+            writer.writeNode(
+                java.invokeMethod({
+                    on: ArraysClassReference,
+                    method: "asList",
+                    arguments_: values
+                })
+            );
+            return;
+        }
+
         if (values.length === 0) {
             writer.write(`new ${classReference.name}<`);
             writer.writeNode(iterable.valueType);
@@ -664,15 +686,14 @@ export class TypeLiteral extends AstNode {
         value: any[];
     }): void {
         if (value.length === 0) {
-            writer.write("new");
+            writer.write("new ");
             writer.writeNode(ArrayListClassReference);
             writer.write("<Object>()");
             return;
         }
-        writer.writeLine("new");
+        writer.write("new ");
         writer.writeNode(ArrayListClassReference);
-        writer.write("<Object>() {");
-        writer.indent();
+        writer.write("<Object>(");
         writer.writeNode(
             java.invokeMethod({
                 on: ArraysClassReference,
@@ -680,9 +701,7 @@ export class TypeLiteral extends AstNode {
                 arguments_: value.map((element) => TypeLiteral.unknown(element))
             })
         );
-        writer.writeNewLineIfLastLineNot();
-        writer.dedent();
-        writer.write("}");
+        writer.write(")");
     }
 
     private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
