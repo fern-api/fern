@@ -614,7 +614,6 @@ export class TypeLiteral extends AstNode {
         const classReference = iterable.type === "list" ? ArrayListClassReference : HashSetClassReference;
         const values = filterNopValues({ values: iterable.values });
 
-        // For list parameters, just use Arrays.asList directly without ArrayList wrapper
         if (iterable.type === "list" && iterable.isParameter && values.length > 0) {
             writer.writeNode(
                 java.invokeMethod({

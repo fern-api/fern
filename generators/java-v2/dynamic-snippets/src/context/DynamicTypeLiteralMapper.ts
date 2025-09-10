@@ -55,7 +55,6 @@ export class DynamicTypeLiteralMapper {
             }
             case "nullable":
             case "optional":
-                // Special handling for optional lists - wrap the entire list, not individual items
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
                     return java.TypeLiteral.optional({
@@ -92,7 +91,6 @@ export class DynamicTypeLiteralMapper {
             return java.TypeLiteral.nop();
         }
 
-        // Check if the list item type is optional
         const isItemOptional = list.type === "optional" || list.type === "nullable";
 
         return java.TypeLiteral.list({
@@ -100,7 +98,6 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    // If the list item type is optional, wrap each value with Optional
                     if (isItemOptional) {
                         return java.TypeLiteral.optional({
                             value: this.convert({ typeReference: list.value, value: v }),

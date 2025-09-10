@@ -77,7 +77,6 @@ export class WireTestGenerator {
             writer.writeLine('.setBody("{}"));');
             writer.dedent();
 
-            // Add semicolon only if the method call doesn't already end with one
             writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
 
             writer.writeLine("RecordedRequest request = server.takeRequest();");
