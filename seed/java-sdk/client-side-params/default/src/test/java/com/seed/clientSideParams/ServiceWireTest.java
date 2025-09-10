@@ -42,7 +42,7 @@ public class ServiceWireTest {
                 .fields("fields")
                 .search("search")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -59,7 +59,7 @@ public class ServiceWireTest {
                 .includeMetadata(true)
                 .format("json")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -83,7 +83,7 @@ public class ServiceWireTest {
                     }}
                 )
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -105,7 +105,7 @@ public class ServiceWireTest {
                 .searchEngine("search_engine")
                 .fields("fields")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -122,7 +122,7 @@ public class ServiceWireTest {
                 .fields("fields")
                 .includeFields(true)
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -157,7 +157,7 @@ public class ServiceWireTest {
                     }}
                 )
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -193,7 +193,7 @@ public class ServiceWireTest {
                 .password("password")
                 .blocked(true)
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
@@ -203,7 +203,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-        client.service().deleteUser("userId");;
+        client.service().deleteUser("userId");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("DELETE", request.getMethod());
@@ -220,7 +220,7 @@ public class ServiceWireTest {
                 .name("name")
                 .fields("fields")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -236,7 +236,7 @@ public class ServiceWireTest {
                 .builder()
                 .fields("fields")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -257,12 +257,12 @@ public class ServiceWireTest {
                 .isGlobal(true)
                 .isFirstParty(true)
                 .appType(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("app_type", "app_type")
                     )
                 )
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -279,7 +279,7 @@ public class ServiceWireTest {
                 .fields("fields")
                 .includeFields(true)
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

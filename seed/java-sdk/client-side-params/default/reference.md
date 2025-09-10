@@ -885,7 +885,7 @@ client.service().listClients(
         .isGlobal(true)
         .isFirstParty(true)
         .appType(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("app_type", "app_type")
             )
         )

@@ -99,7 +99,7 @@ client.service().patchComplex(
             }}
         )
         .tags(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("tags", "tags")
             )
         )

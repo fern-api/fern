@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.playlist.requests.GetPlaylistsRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -21,14 +20,10 @@ public class Example13 {
                 .otherField("otherField")
                 .multiLineDocs("multiLineDocs")
                 .optionalMultipleField(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("optionalMultipleField")
-                    )
+                    Arrays.asList(Optional.of("optionalMultipleField"))
                 )
                 .multipleField(
-                    new ArrayList<String>(
-                        Arrays.asList("multipleField")
-                    )
+                    Arrays.asList("multipleField")
                 )
                 .limit(1)
                 .build()

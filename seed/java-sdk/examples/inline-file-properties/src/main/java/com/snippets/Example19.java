@@ -23,9 +23,9 @@ import com.seed.examples.resources.types.types.Tree;
 import com.seed.examples.types.BasicType;
 import com.seed.examples.types.Type;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Example19 {
@@ -52,9 +52,7 @@ public class Example19 {
                     ExtendedMovie
                         .builder()
                         .cast(
-                            new ArrayList<String>(
-                                Arrays.asList("cast", "cast")
-                            )
+                            Arrays.asList("cast", "cast")
                         )
                         .id("id")
                         .title("title")
@@ -140,50 +138,62 @@ public class Example19 {
                         .builder()
                         .name("name")
                         .nodes(
-                            new ArrayList<Node>(
+                            Optional.of(
                                 Arrays.asList(
                                     Node
                                         .builder()
                                         .name("name")
                                         .nodes(
-                                            new ArrayList<Node>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
                                             )
                                         )
                                         .trees(
-                                            new ArrayList<Tree>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Tree
                                                         .builder()
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Tree
                                                         .builder()
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
@@ -194,44 +204,56 @@ public class Example19 {
                                         .builder()
                                         .name("name")
                                         .nodes(
-                                            new ArrayList<Node>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
                                             )
                                         )
                                         .trees(
-                                            new ArrayList<Tree>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Tree
                                                         .builder()
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Tree
                                                         .builder()
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
@@ -242,31 +264,39 @@ public class Example19 {
                             )
                         )
                         .trees(
-                            new ArrayList<Tree>(
+                            Optional.of(
                                 Arrays.asList(
                                     Tree
                                         .builder()
                                         .nodes(
-                                            new ArrayList<Node>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
@@ -276,26 +306,34 @@ public class Example19 {
                                     Tree
                                         .builder()
                                         .nodes(
-                                            new ArrayList<Node>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Node
                                                         .builder()
                                                         .name("name")
                                                         .nodes(
-                                                            new ArrayList<Node>()
+                                                            Optional.of(
+                                                                new ArrayList<Node>()
+                                                            )
                                                         )
                                                         .trees(
-                                                            new ArrayList<Tree>()
+                                                            Optional.of(
+                                                                new ArrayList<Tree>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
@@ -312,7 +350,7 @@ public class Example19 {
                         .builder()
                         .name("name")
                         .files(
-                            new ArrayList<File>(
+                            Optional.of(
                                 Arrays.asList(
                                     File
                                         .builder()
@@ -328,13 +366,13 @@ public class Example19 {
                             )
                         )
                         .directories(
-                            new ArrayList<Directory>(
+                            Optional.of(
                                 Arrays.asList(
                                     Directory
                                         .builder()
                                         .name("name")
                                         .files(
-                                            new ArrayList<File>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     File
                                                         .builder()
@@ -350,26 +388,34 @@ public class Example19 {
                                             )
                                         )
                                         .directories(
-                                            new ArrayList<Directory>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Directory
                                                         .builder()
                                                         .name("name")
                                                         .files(
-                                                            new ArrayList<File>()
+                                                            Optional.of(
+                                                                new ArrayList<File>()
+                                                            )
                                                         )
                                                         .directories(
-                                                            new ArrayList<Directory>()
+                                                            Optional.of(
+                                                                new ArrayList<Directory>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Directory
                                                         .builder()
                                                         .name("name")
                                                         .files(
-                                                            new ArrayList<File>()
+                                                            Optional.of(
+                                                                new ArrayList<File>()
+                                                            )
                                                         )
                                                         .directories(
-                                                            new ArrayList<Directory>()
+                                                            Optional.of(
+                                                                new ArrayList<Directory>()
+                                                            )
                                                         )
                                                         .build()
                                                 )
@@ -380,7 +426,7 @@ public class Example19 {
                                         .builder()
                                         .name("name")
                                         .files(
-                                            new ArrayList<File>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     File
                                                         .builder()
@@ -396,26 +442,34 @@ public class Example19 {
                                             )
                                         )
                                         .directories(
-                                            new ArrayList<Directory>(
+                                            Optional.of(
                                                 Arrays.asList(
                                                     Directory
                                                         .builder()
                                                         .name("name")
                                                         .files(
-                                                            new ArrayList<File>()
+                                                            Optional.of(
+                                                                new ArrayList<File>()
+                                                            )
                                                         )
                                                         .directories(
-                                                            new ArrayList<Directory>()
+                                                            Optional.of(
+                                                                new ArrayList<Directory>()
+                                                            )
                                                         )
                                                         .build(),
                                                     Directory
                                                         .builder()
                                                         .name("name")
                                                         .files(
-                                                            new ArrayList<File>()
+                                                            Optional.of(
+                                                                new ArrayList<File>()
+                                                            )
                                                         )
                                                         .directories(
-                                                            new ArrayList<Directory>()
+                                                            Optional.of(
+                                                                new ArrayList<Directory>()
+                                                            )
                                                         )
                                                         .build()
                                                 )

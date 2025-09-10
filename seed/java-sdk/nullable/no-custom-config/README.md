@@ -45,7 +45,6 @@ import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
 import com.seed.nullable.resources.nullable.types.Metadata;
 import com.seed.nullable.resources.nullable.types.Status;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -61,7 +60,7 @@ public class Example {
                 .builder()
                 .username("username")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )

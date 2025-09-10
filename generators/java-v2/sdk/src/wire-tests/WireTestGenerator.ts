@@ -77,7 +77,7 @@ export class WireTestGenerator {
             writer.writeLine('.setBody("{}"));');
             writer.dedent();
 
-            writer.writeLine(`${methodCall};`);
+            writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
 
             writer.writeLine("RecordedRequest request = server.takeRequest();");
             writer.writeLine("Assertions.assertNotNull(request);");
@@ -195,8 +195,7 @@ export class WireTestGenerator {
 
         return testClass.toString({
             packageName: this.context.getRootPackageName(),
-            customConfig: this.context.customConfig ?? {},
-            formatter: undefined
+            customConfig: this.context.customConfig ?? {}
         });
     }
 
