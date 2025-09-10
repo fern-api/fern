@@ -69,6 +69,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.info("=== CALLING persist ===");
         await context.project.persist();
         context.logger.info("=== PERSIST COMPLETE ===");
+
+        context.logger.info("=== RUNNING rustfmt ===");
+        await this.runRustfmt(context);
+        context.logger.info("=== RUSTFMT COMPLETE ===");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
@@ -403,5 +407,55 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
+    }
+
+    private async runRustfmt(context: SdkGeneratorContext): Promise<void> {
+        const { spawn } = require("child_process");
+        const outputDir = context.project.absolutePathToOutputDirectory;
+
+        return new Promise((resolve) => {
+            context.logger.debug(`Running rustfmt in directory: ${outputDir}`);
+
+            // Run rustfmt with the configuration file
+            const rustfmt = spawn("rustfmt", ["--edition=2021", "--config-path=rustfmt.toml", "src/**/*.rs"], {
+                cwd: outputDir,
+                shell: true,
+                stdio: "pipe"
+            });
+
+            let stdout = "";
+            let stderr = "";
+
+            rustfmt.stdout?.on("data", (data: Buffer) => {
+                stdout += data.toString();
+            });
+
+            rustfmt.stderr?.on("data", (data: Buffer) => {
+                stderr += data.toString();
+            });
+
+            rustfmt.on("close", (code: number | null) => {
+                if (code === 0) {
+                    context.logger.info("rustfmt completed successfully");
+                    if (stdout.trim()) {
+                        context.logger.debug(`rustfmt stdout: ${stdout.trim()}`);
+                    }
+                } else {
+                    context.logger.warn(`rustfmt exited with code ${code}`);
+                    if (stderr.trim()) {
+                        context.logger.warn(`rustfmt stderr: ${stderr.trim()}`);
+                    }
+                }
+                // Always resolve - don't fail generation if formatting fails
+                resolve();
+            });
+
+            rustfmt.on("error", (error: Error) => {
+                context.logger.warn(`rustfmt error: ${error.message}`);
+                context.logger.debug("rustfmt may not be installed or available in PATH");
+                // Always resolve - don't fail generation if formatting fails
+                resolve();
+            });
+        });
     }
 }
