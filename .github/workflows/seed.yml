@@ -36,8 +36,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for seed changes
         id: seed-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             .github/actions/cached-seed/action.yaml
@@ -48,27 +49,31 @@ jobs:
             packages/cli/generation/ir-generator/**
             test-definitions/**
             test-definitions-openapi/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for ruby changes
         id: ruby-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/ruby/**
             seed/ruby-sdk/**
             seed/ruby-model/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for ruby-v2 changes
         id: ruby-v2-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/ruby-v2/**
             seed/ruby-sdk-v2/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for openapi changes
         id: openapi-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
               generators/openapi/**
               seed/openapi/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for python changes
         id: python-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/python/**
@@ -76,58 +81,66 @@ jobs:
             seed/pydantic-v2/**
             seed/python-sdk/**
             seed/fastapi/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for postman changes
         id: postman-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/postman/**
             seed/postman/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for java changes
         id: java-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/java/**
             seed/java-sdk/**
             seed/java-model/**
             seed/java-spring/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for typescript changes
         id: typescript-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             typescript:
               generators/typescript/**
               seed/ts-sdk/**
               seed/ts-express/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for go changes
         id: go-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/go/**
             seed/go-sdk/**
             seed/go-model/**
             seed/go-fiber/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for csharp changes
         id: csharp-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/csharp/**
             seed/csharp-sdk/**
             seed/csharp-model/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for php changes
         id: php-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/php/**
             seed/php-sdk/**
             seed/php-model/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for swift changes
         id: swift-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/swift/**
             seed/swift-sdk/**
-      - uses: ./.github/actions/check-for-changed-files
+      - name: Check for rust changes
         id: rust-changes
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             generators/rust/**
