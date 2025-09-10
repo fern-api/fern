@@ -1,10 +1,9 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ts } from "@fern-api/typescript-ast";
-
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { ObjectPropertyAccess } from "@fern-api/dynamic-ir-sdk/api";
+import { ts } from "@fern-api/typescript-ast";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 const UNION_VALUE_KEY = "value";
 
