@@ -228,13 +228,21 @@ function getPublishConfig({
             // Extract Maven configuration from Java generator config
             const config = generatorInvocation.raw?.config;
             
+            // Define proper type for Java generator configuration
+            interface JavaGeneratorConfig {
+                group?: unknown;
+                artifact?: unknown;
+                'package-prefix'?: unknown;
+                [key: string]: unknown;
+            }
+            
             // Support both styles: package-prefix/package_name and group/artifact
             const mavenCoordinate = (() => {
                 if (!config || typeof config !== "object" || config === null) {
                     return undefined;
                 }
                 
-                const configObj = config as Record<string, unknown>;
+                const configObj = config as JavaGeneratorConfig;
                 
                 if (typeof configObj.group === "string" && typeof configObj.artifact === "string") {
                     return {

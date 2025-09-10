@@ -316,7 +316,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
         
-        // Extract Maven coordinate from filesystem publishTarget (similar to Python generator)
+        // Note: AtomicReference is used here to capture the value from within the visitor pattern,
+        // not for thread safety. Java requires effectively final variables in anonymous inner classes.
         final AtomicReference<Optional<MavenCoordinate>> maybeMavenCoordinate = new AtomicReference<>(Optional.empty());
         
         Boolean generateFullProject = ir.getPublishConfig()
