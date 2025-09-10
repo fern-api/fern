@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, RustFile, RustFormatter } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, RustFile, formatRustCode } from "@fern-api/rust-base";
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -31,7 +31,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         return ModelCustomConfigSchema.parse({});
     }
 
-    protected publishPackage(context: ModelGeneratorContext): Promise<void> {
+    protected publishPackage(_context: ModelGeneratorContext): Promise<void> {
         throw new Error("Publishing is not supported for model generator");
     }
 
@@ -67,7 +67,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         await context.project.persist();
 
         context.logger.info("=== RUNNING rustfmt ===");
-        await RustFormatter.format({
+        await formatRustCode({
             outputDir: context.project.absolutePathToOutputDirectory,
             logger: context.logger
         });
