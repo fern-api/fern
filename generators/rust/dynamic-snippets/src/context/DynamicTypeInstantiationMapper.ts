@@ -142,7 +142,9 @@ export class DynamicTypeInstantiationMapper {
             return rust.Expression.none();
         }
         // For optional/nullable, use the inner type's value structure
-        const innerTypeRef = (typeReference as any).value || ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        const innerTypeRef =
+            (typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable).value ||
+            ({ type: "unknown" } as FernIr.dynamic.TypeReference);
         const innerValue = this.convert({ typeReference: innerTypeRef, value });
         return rust.Expression.functionCall("Some", [innerValue]);
     }
@@ -158,7 +160,9 @@ export class DynamicTypeInstantiationMapper {
             return rust.Expression.vec([]);
         }
         // For lists, use the inner type's value structure
-        const innerTypeRef = (typeReference as any).value || ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        const innerTypeRef =
+            (typeReference as FernIr.dynamic.TypeReference.List).value ||
+            ({ type: "unknown" } as FernIr.dynamic.TypeReference);
         const elements = value.map((item) => this.convert({ typeReference: innerTypeRef, value: item }));
         return rust.Expression.vec(elements);
     }
