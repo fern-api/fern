@@ -77,24 +77,20 @@ export class WireTestGenerator {
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);
             writer.indent();
 
-            // Get expected request and response from the clean test example
             const expectedRequestJson = testExample.request.body;
             const expectedResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
 
-            // Use actual response data if available, otherwise generate minimal mock
             const mockResponseBody = expectedResponseJson
                 ? JSON.stringify(expectedResponseJson)
                 : this.generateMockResponseForEndpoint(endpoint);
 
-            // Set up mock response
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
             writer.writeLine(`.setResponseCode(${responseStatusCode})`);
             writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
             writer.dedent();
 
-            // Execute the client method and capture response if endpoint returns a value
             const hasResponseBody = endpoint.response?.body != null;
             if (hasResponseBody) {
                 writer.writeLine(`var response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`);
@@ -102,12 +98,10 @@ export class WireTestGenerator {
                 writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
             }
 
-            // Validate the request
             writer.writeLine("RecordedRequest request = server.takeRequest();");
             writer.writeLine("Assertions.assertNotNull(request);");
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
 
-            // Validate request body if expected
             if (expectedRequestJson !== undefined && expectedRequestJson !== null) {
                 writer.writeLine("");
                 writer.writeLine("// Validate request body");
@@ -122,7 +116,6 @@ export class WireTestGenerator {
                 );
             }
 
-            // Validate response body if we have expected response data
             if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
                 writer.writeLine("");
                 writer.writeLine("// Validate response body");
@@ -137,7 +130,6 @@ export class WireTestGenerator {
                     'Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");'
                 );
             } else if (hasResponseBody) {
-                // Fallback validation when no expected response data is available
                 writer.writeLine("");
                 writer.writeLine("// Validate response deserialization");
                 writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
@@ -221,14 +213,11 @@ export class WireTestGenerator {
         const className = `${this.toClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
 
-        // Initialize the test data extractor for clean separation
         const testDataExtractor = new WireTestDataExtractor(this.context);
 
-        // Map to store endpoint test data and snippets
         const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
 
         for (const endpoint of endpoints) {
-            // Extract test data directly from static IR
             const testExamples = testDataExtractor.getTestExamples(endpoint);
             if (testExamples.length === 0) {
                 continue;
@@ -244,7 +233,6 @@ export class WireTestGenerator {
                             firstDynamicExample,
                             dynamicSnippetsGenerator
                         );
-                        // Use the first test example with the generated snippet
                         const firstTestExample = testExamples[0];
                         if (firstTestExample) {
                             endpointTests.set(endpoint.id, {
@@ -263,10 +251,8 @@ export class WireTestGenerator {
         const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
 
         const testClass = java.codeblock((writer) => {
-            // Write test class boilerplate (imports, fields, setup/teardown)
             this.createTestClassBoilerplate(className, clientClassName, hasAuth)(writer);
 
-            // Add test methods for each endpoint that has test data
             for (const endpoint of endpoints) {
                 const testData = endpointTests.get(endpoint.id);
                 if (testData) {
@@ -299,7 +285,6 @@ export class WireTestGenerator {
     private extractMethodCall(fullSnippet: string): string {
         const lines = fullSnippet.split("\n");
 
-        // Find the line where client is instantiated and where the client call starts
         let clientInstantiationIndex = -1;
         let clientCallStartIndex = -1;
 
@@ -309,7 +294,6 @@ export class WireTestGenerator {
                 continue;
             }
 
-            // Look for client instantiation (contains "client =" or specific client class name)
             if (line.includes("client =") || line.includes("Client client =")) {
                 clientInstantiationIndex = i;
             }
@@ -326,7 +310,6 @@ export class WireTestGenerator {
             return "// TODO: Add client call";
         }
 
-        // Extract the complete method call
         const methodCallLines: string[] = [];
         let braceDepth = 0;
         let parenDepth = 0;
@@ -341,7 +324,6 @@ export class WireTestGenerator {
             if (line !== undefined) {
                 methodCallLines.push(line);
 
-                // Track brace and parenthesis depth
                 for (const char of line) {
                     if (char === "{") {
                         braceDepth++;
@@ -354,7 +336,6 @@ export class WireTestGenerator {
                     }
                 }
 
-                // Check for statement termination
                 if (line.includes(";") && braceDepth === 0 && parenDepth === 0) {
                     foundSemicolon = true;
                     break;
@@ -367,7 +348,6 @@ export class WireTestGenerator {
             return "// TODO: Add client call";
         }
 
-        // Clean up the extracted lines - remove common indentation
         const nonEmptyLines = methodCallLines.filter((line) => line && line.trim().length > 0);
         if (nonEmptyLines.length === 0) {
             return "// TODO: Add client call";
@@ -430,7 +410,6 @@ export class WireTestGenerator {
             return "{}";
         }
 
-        // Return a simple mock response as fallback
         return JSON.stringify({
             id: "test-id",
             name: "test-name",
