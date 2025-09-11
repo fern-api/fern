@@ -7,7 +7,7 @@ import { SeedBasicAuthEnvironmentVariablesClient } from "../../src/Client";
 import * as SeedBasicAuthEnvironmentVariables from "../../src/api/index";
 
 describe("BasicAuth", () => {
-    test("getWithBasicAuth (14b143fa)", async () => {
+    test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -22,7 +22,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("getWithBasicAuth (135b91bb)", async () => {
+    test("getWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -42,7 +42,7 @@ describe("BasicAuth", () => {
         );
     });
 
-    test("postWithBasicAuth (91843eb7)", async () => {
+    test("postWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -66,7 +66,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithBasicAuth (8264039e)", async () => {
+    test("postWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -95,7 +95,7 @@ describe("BasicAuth", () => {
         );
     });
 
-    test("postWithBasicAuth (7eabe5c4)", async () => {
+    test("postWithBasicAuth (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
