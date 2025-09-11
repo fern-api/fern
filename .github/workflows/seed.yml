@@ -37,12 +37,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
+          # Get sufficient history to check for changes
           fetch-depth: 200
+
       - name: Check for seed changes
         id: seed-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             .github/actions/cached-seed/action.yaml
             .github/actions/install/action.yaml
@@ -54,34 +55,30 @@ jobs:
             test-definitions-openapi/**
       - name: Check for ruby changes
         id: ruby-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/ruby/**
             seed/ruby-sdk/**
             seed/ruby-model/**
       - name: Check for ruby-v2 changes
         id: ruby-v2-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/ruby-v2/**
             seed/ruby-sdk-v2/**
       - name: Check for openapi changes
         id: openapi-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
               generators/openapi/**
               seed/openapi/**
       - name: Check for python changes
         id: python-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/python/**
             seed/pydantic/**
@@ -90,17 +87,15 @@ jobs:
             seed/fastapi/**
       - name: Check for postman changes
         id: postman-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/postman/**
             seed/postman/**
       - name: Check for java changes
         id: java-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/java/**
             seed/java-sdk/**
@@ -108,9 +103,8 @@ jobs:
             seed/java-spring/**
       - name: Check for typescript changes
         id: typescript-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             typescript:
               generators/typescript/**
@@ -118,9 +112,8 @@ jobs:
               seed/ts-express/**
       - name: Check for go changes
         id: go-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/go/**
             seed/go-sdk/**
@@ -128,108 +121,157 @@ jobs:
             seed/go-fiber/**
       - name: Check for csharp changes
         id: csharp-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/csharp/**
             seed/csharp-sdk/**
             seed/csharp-model/**
       - name: Check for php changes
         id: php-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/php/**
             seed/php-sdk/**
             seed/php-model/**
       - name: Check for swift changes
         id: swift-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/swift/**
             seed/swift-sdk/**
       - name: Check for rust changes
         id: rust-changes
-        uses: tj-actions/changed-files@v46
+        uses: ./.github/actions/check-for-changed-files
         with:
-          fetch_depth: 30
           files: |
             generators/rust/**
             seed/rust-sdk/**
-      
-      # - uses: dorny/paths-filter@v3
-      #   id: filter
+
+      # - name: Check for seed changes
+      #   id: seed-changes
+      #   uses: tj-actions/changed-files@v46
       #   with:
-      #     filters: |
-      #       seed:
-      #         - '.github/actions/cached-seed/action.yaml'
-      #         - '.github/actions/install/action.yaml'
-      #         - '.github/workflows/seed.yml'
-      #         - 'packages/seed/**'
-      #         - 'packages/ir-sdk/fern/apis/**'
-      #         - 'packages/cli/generation/ir-generator/**'
-      #         - 'test-definitions/**'
-      #         - 'test-definitions-openapi/**'
-      #       ruby:
-      #         - 'generators/ruby/**'
-      #         - 'seed/ruby-sdk/**'
-      #         - 'seed/ruby-model/**'
-      #       ruby-v2:
-      #         - 'generators/ruby-v2/**'
-      #         - 'seed/ruby-sdk-v2/**'
-      #       openapi:
-      #         - 'generators/openapi/**'
-      #         - 'seed/openapi/**'
-      #       python:
-      #         - 'generators/python/**'
-      #         - 'seed/pydantic/**'
-      #         - 'seed/pydantic-v2/**'
-      #         - 'seed/python-sdk/**'
-      #         - 'seed/fastapi/**'
-      #       postman:
-      #         - 'generators/postman/**'
-      #         - 'seed/postman/**'
-      #       java:
-      #         - 'generators/java/**'
-      #         - 'seed/java-sdk/**'
-      #         - 'seed/java-model/**'
-      #         - 'seed/java-spring/**'
+      #     fetch_depth: 30
+      #     files: |
+      #       .github/actions/cached-seed/action.yaml
+      #       .github/actions/install/action.yaml
+      #       .github/workflows/seed.yml
+      #       packages/seed/**
+      #       packages/ir-sdk/fern/apis/**
+      #       packages/cli/generation/ir-generator/**
+      #       test-definitions/**
+      #       test-definitions-openapi/**
+      # - name: Check for ruby changes
+      #   id: ruby-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/ruby/**
+      #       seed/ruby-sdk/**
+      #       seed/ruby-model/**
+      # - name: Check for ruby-v2 changes
+      #   id: ruby-v2-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/ruby-v2/**
+      #       seed/ruby-sdk-v2/**
+      # - name: Check for openapi changes
+      #   id: openapi-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #         generators/openapi/**
+      #         seed/openapi/**
+      # - name: Check for python changes
+      #   id: python-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/python/**
+      #       seed/pydantic/**
+      #       seed/pydantic-v2/**
+      #       seed/python-sdk/**
+      #       seed/fastapi/**
+      # - name: Check for postman changes
+      #   id: postman-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/postman/**
+      #       seed/postman/**
+      # - name: Check for java changes
+      #   id: java-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/java/**
+      #       seed/java-sdk/**
+      #       seed/java-model/**
+      #       seed/java-spring/**
+      # - name: Check for typescript changes
+      #   id: typescript-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
       #       typescript:
-      #         - 'generators/typescript/**'
-      #         - 'seed/ts-sdk/**'
-      #         - 'seed/ts-express/**'
-      #       go:
-      #         - 'generators/go/**'
-      #         - 'seed/go-sdk/**'
-      #         - 'seed/go-model/**'
-      #         - 'seed/go-fiber/**'
-      #       csharp:
-      #         - 'generators/csharp/**'
-      #         - 'seed/csharp-sdk/**'
-      #         - 'seed/csharp-model/**'
-      #       php:
-      #         - 'generators/php/**'
-      #         - 'seed/php-sdk/**'
-      #         - 'seed/php-model/**'
-      #       swift:
-      #         - 'generators/swift/**'
-      #         - 'seed/swift-sdk/**'
-      #       rust:
-      #         - 'generators/rust/**'
-      #         - 'seed/rust-sdk/**'
-   
-      # CHRISM - need to retry on failure???
-      # - name: retry-on-failure
-      #   if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
-      #   env:
-      #     GH_REPO: ${{ github.repository }}
-      #     GH_TOKEN: ${{ github.token }}
-      #     GH_DEBUG: api
-      #   run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
+      #         generators/typescript/**
+      #         seed/ts-sdk/**
+      #         seed/ts-express/**
+      # - name: Check for go changes
+      #   id: go-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/go/**
+      #       seed/go-sdk/**
+      #       seed/go-model/**
+      #       seed/go-fiber/**
+      # - name: Check for csharp changes
+      #   id: csharp-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/csharp/**
+      #       seed/csharp-sdk/**
+      #       seed/csharp-model/**
+      # - name: Check for php changes
+      #   id: php-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/php/**
+      #       seed/php-sdk/**
+      #       seed/php-model/**
+      # - name: Check for swift changes
+      #   id: swift-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/swift/**
+      #       seed/swift-sdk/**
+      # - name: Check for rust changes
+      #   id: rust-changes
+      #   uses: tj-actions/changed-files@v46
+      #   with:
+      #     fetch_depth: 30
+      #     files: |
+      #       generators/rust/**
+      #       seed/rust-sdk/**
 
   ruby-model:
     runs-on: Seed
