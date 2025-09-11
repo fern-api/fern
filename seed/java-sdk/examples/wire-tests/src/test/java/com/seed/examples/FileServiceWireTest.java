@@ -30,8 +30,8 @@ public class FileServiceWireTest {
     @Test
     public void testGetFile() throws Exception {
         server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setResponseCode(404)
+            .setBody("\"A file with that name was not found!\""));
         var response = client.file().service().getFile(
             "file.txt",
             GetFileRequest

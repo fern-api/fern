@@ -31,24 +31,25 @@ public class ServiceWireTest {
     public void testGetMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setBody("{\"id\":\"movie-c06a4ad7\",\"prequel\":\"movie-cv9b914f\",\"title\":\"The Boy and the Heron\",\"from\":\"Hayao Miyazaki\",\"rating\":8,\"type\":\"movie\",\"tag\":\"tag-wf9as23d\",\"metadata\":{\"actors\":[\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"],\"releaseDate\":\"2023-12-08\",\"ratings\":{\"rottenTomatoes\":97,\"imdb\":7.6}},\"revenue\":1000000}"));
         var response = client.service().getMovie("movie-c06a4ad7");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
         
-        // Validate response deserialization
+        // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "{\"id\":\"movie-c06a4ad7\",\"prequel\":\"movie-cv9b914f\",\"title\":\"The Boy and the Heron\",\"from\":\"Hayao Miyazaki\",\"rating\":8,\"type\":\"movie\",\"tag\":\"tag-wf9as23d\",\"metadata\":{\"actors\":[\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"],\"releaseDate\":\"2023-12-08\",\"ratings\":{\"rottenTomatoes\":97,\"imdb\":7.6}},\"revenue\":1000000}";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
     @Test
     public void testCreateMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setBody("\"movie-c06a4ad7\""));
         var response = client.service().createMovie(
             Movie
                 .builder()
@@ -83,18 +84,19 @@ public class ServiceWireTest {
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
         
-        // Validate response deserialization
+        // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "\"movie-c06a4ad7\"";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
     @Test
     public void testGetMetadata() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setBody("{\"type\":\"html\",\"extra\":{\"version\":\"0.0.1\",\"tenancy\":\"test\"},\"tags\":[\"development\",\"public\"],\"value\":\"<head>...</head>\"}"));
         var response = client.service().getMetadata(
             GetMetadataRequest
                 .builder()
@@ -109,18 +111,19 @@ public class ServiceWireTest {
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
         
-        // Validate response deserialization
+        // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "{\"type\":\"html\",\"extra\":{\"version\":\"0.0.1\",\"tenancy\":\"test\"},\"tags\":[\"development\",\"public\"],\"value\":\"<head>...</head>\"}";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
     @Test
     public void testCreateBigEntity() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setBody("{\"response\":{\"key\":\"value\"},\"identifiers\":[{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"},{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"}]}"));
         var response = client.service().createBigEntity(
             BigEntity
                 .builder()
@@ -587,12 +590,13 @@ public class ServiceWireTest {
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
         
-        // Validate response deserialization
+        // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "{\"response\":{\"key\":\"value\"},\"identifiers\":[{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"},{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"}]}";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
     @Test
     public void testRefreshToken() throws Exception {

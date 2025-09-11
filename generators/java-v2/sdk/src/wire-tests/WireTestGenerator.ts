@@ -7,6 +7,7 @@ import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { WireTestDataExtractor, WireTestExample } from "./WireTestDataExtractor";
 
 export class WireTestGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -63,10 +64,10 @@ export class WireTestGenerator {
         };
     }
 
-    private createTestMethodFromDynamic(
-        endpoint: HttpEndpoint, 
+    private createTestMethod(
+        endpoint: HttpEndpoint,
         snippet: string,
-        dynamicExample: dynamic.EndpointExample
+        testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
             const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
@@ -76,15 +77,13 @@ export class WireTestGenerator {
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);
             writer.indent();
 
-            // Get expected request and response from the dynamic example
-            const expectedRequestJson = dynamicExample.requestBody;
-            // @ts-ignore - accessing extended fields for wire tests
-            const expectedResponseJson = dynamicExample.responseBody;
-            // @ts-ignore - accessing extended fields for wire tests
-            const responseStatusCode = dynamicExample.responseStatusCode ?? 200;
-            
+            // Get expected request and response from the clean test example
+            const expectedRequestJson = testExample.request.body;
+            const expectedResponseJson = testExample.response.body;
+            const responseStatusCode = testExample.response.statusCode;
+
             // Use actual response data if available, otherwise generate minimal mock
-            const mockResponseBody = expectedResponseJson 
+            const mockResponseBody = expectedResponseJson
                 ? JSON.stringify(expectedResponseJson)
                 : this.generateMockResponseForEndpoint(endpoint);
 
@@ -113,29 +112,35 @@ export class WireTestGenerator {
                 writer.writeLine("");
                 writer.writeLine("// Validate request body");
                 writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
-                writer.writeLine(`String expectedRequestBody = ${JSON.stringify(JSON.stringify(expectedRequestJson))};`);
+                writer.writeLine(
+                    `String expectedRequestBody = ${JSON.stringify(JSON.stringify(expectedRequestJson))};`
+                );
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
-                writer.writeLine("Assertions.assertEquals(expectedJson, actualJson, \"Request body does not match expected\");");
+                writer.writeLine(
+                    'Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");'
+                );
             }
 
             // Validate response body if we have expected response data
             if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
                 writer.writeLine("");
                 writer.writeLine("// Validate response body");
-                writer.writeLine("Assertions.assertNotNull(response, \"Response should not be null\");");
-                
+                writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
+
                 // Serialize the actual response and compare with expected
                 writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
                 writer.writeLine(`String expectedResponseBody = ${JSON.stringify(mockResponseBody)};`);
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
-                writer.writeLine("Assertions.assertEquals(expectedResponseNode, actualResponseNode, \"Response body does not match expected\");");
+                writer.writeLine(
+                    'Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");'
+                );
             } else if (hasResponseBody) {
                 // Fallback validation when no expected response data is available
                 writer.writeLine("");
                 writer.writeLine("// Validate response deserialization");
-                writer.writeLine("Assertions.assertNotNull(response, \"Response should not be null\");");
+                writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
                 writer.writeLine("// Verify the response can be serialized back to JSON");
                 writer.writeLine("String responseJson = objectMapper.writeValueAsString(response);");
                 writer.writeLine("Assertions.assertNotNull(responseJson);");
@@ -146,7 +151,6 @@ export class WireTestGenerator {
             writer.writeLine("}");
         };
     }
-
 
     public async generate(): Promise<void> {
         if (!this.context.customConfig["enable-wire-tests"]) {
@@ -217,20 +221,39 @@ export class WireTestGenerator {
         const className = `${this.toClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
 
-        // Map to store endpoint snippets and their corresponding dynamic examples
-        const endpointData = new Map<string, { snippet: string; dynamicExample: dynamic.EndpointExample }>();
-        
+        // Initialize the test data extractor for clean separation
+        const testDataExtractor = new WireTestDataExtractor(this.context);
+
+        // Map to store endpoint test data and snippets
+        const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
+
         for (const endpoint of endpoints) {
+            // Extract test data directly from static IR
+            const testExamples = testDataExtractor.getTestExamples(endpoint);
+            if (testExamples.length === 0) {
+                continue;
+            }
+
+            // Generate snippet using dynamic snippets (only for code generation)
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = dynamicEndpoint.examples[0];
-                if (firstExample) {
+                const firstDynamicExample = dynamicEndpoint.examples[0];
+                if (firstDynamicExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(firstExample, dynamicSnippetsGenerator);
-                        endpointData.set(endpoint.id, { snippet, dynamicExample: firstExample });
+                        const snippet = await this.generateSnippetForExample(
+                            firstDynamicExample,
+                            dynamicSnippetsGenerator
+                        );
+                        // Use the first test example with the generated snippet
+                        const firstTestExample = testExamples[0];
+                        if (firstTestExample) {
+                            endpointTests.set(endpoint.id, {
+                                snippet,
+                                testExample: firstTestExample
+                            });
+                        }
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        // Skip this endpoint if snippet generation fails
                         continue;
                     }
                 }
@@ -243,11 +266,11 @@ export class WireTestGenerator {
             // Write test class boilerplate (imports, fields, setup/teardown)
             this.createTestClassBoilerplate(className, clientClassName, hasAuth)(writer);
 
-            // Add test methods for each endpoint that has a successfully generated snippet
+            // Add test methods for each endpoint that has test data
             for (const endpoint of endpoints) {
-                const data = endpointData.get(endpoint.id);
-                if (data) {
-                    this.createTestMethodFromDynamic(endpoint, data.snippet, data.dynamicExample)(writer);
+                const testData = endpointTests.get(endpoint.id);
+                if (testData) {
+                    this.createTestMethod(endpoint, testData.snippet, testData.testExample)(writer);
                 }
             }
 
@@ -398,19 +421,17 @@ export class WireTestGenerator {
     /**
      * Generate a minimal valid mock response body for an endpoint.
      * This creates a basic JSON structure that the SDK can deserialize.
+     * Used as a fallback when no example response data is available.
      */
     private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
         const responseBody = endpoint.response?.body;
-        
+
         if (!responseBody || responseBody.type !== "json") {
             return "{}";
         }
 
-        // For now, return a simple mock response
-        // In the future, we could generate more realistic responses based on the type
-        // But for wire tests, we mainly care about request validation and basic deserialization
+        // Return a simple mock response as fallback
         return JSON.stringify({
-            // Add some basic fields based on common patterns
             id: "test-id",
             name: "test-name",
             value: "test-value",
@@ -418,5 +439,4 @@ export class WireTestGenerator {
             data: {}
         });
     }
-
 }

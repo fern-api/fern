@@ -784,26 +784,9 @@ export class DynamicSnippetsConverter {
                         return [parameter.name.wireValue, parameter.value.jsonExample];
                     })
                 ),
-                requestBody: example.example?.request?.jsonExample,
-                // Add response body for wire test validation
-                // @ts-ignore - adding extra field for wire tests
-                responseBody: example.example?.response?.body?.jsonExample,
-                responseStatusCode: this.getResponseStatusCode(example.example?.response)
+                requestBody: example.example?.request?.jsonExample
             });
         }
         return requests;
-    }
-
-    private getResponseStatusCode(response: any): number {
-        if (!response) {
-            return 200;
-        }
-        // Check if it's an error response
-        if (response.error) {
-            // Try to get status code from error definition
-            return response.error.statusCode ?? 500;
-        }
-        // Default to 200 for success responses
-        return 200;
     }
 }

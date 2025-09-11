@@ -41,17 +41,18 @@ public class HealthServiceWireTest {
     public void testPing() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+            .setBody("true"));
         var response = client.health().service().ping();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
         
-        // Validate response deserialization
+        // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "true";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
 }
