@@ -60,6 +60,24 @@ runs:
           seed
           language/${{ inputs.language-name }}
 
+    - name: Log PR Creation Failure
+      if: steps.cpr.outputs.pull-request-operation != 'created'
+      env:
+        FORCE_COLOR: "2"
+      shell: bash
+      # Print in yellow and reset
+      run: |
+        echo -e "\033[33mPR was not created\033[0m"
+
+    - name: Log PR Details
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      env:
+        FORCE_COLOR: "2"
+      shell: bash
+      # Print in green and reset
+      run: |
+        echo -e "\033[32mPR Created: ${{ steps.cpr.outputs.pull-request-url }}\033[0m"
+
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@v3
