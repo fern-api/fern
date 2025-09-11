@@ -1,0 +1,68 @@
+name: Auto Update Seed
+description: Run seed and then automatically create and merge PR with changes
+
+# Note: mostly matching inputs to cached-seed since this is a passthrough file
+# However, we don't need to validate git diff since we are always updating the seed
+inputs:
+  generator-name:
+    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    required: true
+  generator-path:
+    description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
+    required: true
+  language-name:
+    description: The name of the language (e.g., go, ruby)
+    required: true
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: "false"
+  allow-unexpected-failures:
+    description: Whether to allow unexpected failures during seed generation
+    required: false
+    default: "false"
+  cache-disabled:
+    description: "Whether to skip caching and always regenerate"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run seed
+      uses: ./.github/actions/cached-seed
+      with:
+        generator-name: ${{ inputs.generator-name }}
+        generator-path: ${{ inputs.generator-path }}
+        validate-git-diff: false
+        allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
+        skip-scripts: ${{ inputs.skip-scripts }}
+        cache-disabled: ${{ inputs.cache-disabled }}
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.FERN_GITHUB_PAT }}
+        commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
+        title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
+        branch: update-${{ inputs.generator-name }}-seed
+        delete-branch: true
+        labels: |
+          seed
+          language/${{ inputs.language-name }}
+
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: peter-evans/enable-pull-request-automerge@v3
+      with:
+        token: ${{ secrets.FERN_GITHUB_PAT }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash
+
+    - name: Approve PR
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: ./.github/actions/auto-approve
+      with:
+        approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
