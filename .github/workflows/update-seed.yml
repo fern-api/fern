@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/test-auto-seed-update # just for testing
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"

@@ -47,6 +47,7 @@ runs:
         commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         branch: update-${{ inputs.generator-name }}-seed
+        base: mallinson/test-auto-seed-update # just for testing
         delete-branch: true
         labels: |
           seed
