@@ -60,7 +60,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getInternalTestAsIsFiles(): string[] {
-        return [AsIsFiles.TestMain];
+        return [AsIsFiles.MainTest];
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
