@@ -4,7 +4,6 @@
 ![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
 
 The Seed Swift library provides convenient access to the Seed APIs from Swift.
-Force diff in seed for swift
 
 ## Requirements
 
