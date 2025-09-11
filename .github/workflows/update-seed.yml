@@ -27,74 +27,24 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.seed }}
-      ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
-      openapi: ${{ steps.filter.outputs.openapi }}
-      python: ${{ steps.filter.outputs.python }}
-      postman: ${{ steps.filter.outputs.postman }}
-      java: ${{ steps.filter.outputs.java }}
-      typescript: ${{ steps.filter.outputs.typescript }}
-      go: ${{ steps.filter.outputs.go }}
-      csharp: ${{ steps.filter.outputs.csharp }}
-      php: ${{ steps.filter.outputs.php }}
+      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed.any_changed }}
+      ruby: ${{ steps.get-generator-changes.outputs.ruby.any_changed }}
+      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2.any_changed }}
+      openapi: ${{ steps.get-generator-changes.outputs.openapi.any_changed }}
+      python: ${{ steps.get-generator-changes.outputs.python.any_changed }}
+      postman: ${{ steps.get-generator-changes.outputs.postman.any_changed }}
+      java: ${{ steps.get-generator-changes.outputs.java.any_changed }}
+      typescript: ${{ steps.get-generator-changes.outputs.typescript.any_changed }}
+      go: ${{ steps.get-generator-changes.outputs.go.any_changed }}
+      csharp: ${{ steps.get-generator-changes.outputs.csharp.any_changed }}
+      php: ${{ steps.get-generator-changes.outputs.php.any_changed }}
+      swift: ${{ steps.get-generator-changes.outputs.swift.any_changed }}
+      rust: ${{ steps.get-generator-changes.outputs.rust.any_changed }}
     steps:
       - if: github.event_name != 'workflow_dispatch'
-        uses: actions/checkout@v4
-      - if: github.event_name != 'workflow_dispatch'
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            seed:
-              - '.github/workflows/update-seed.yml'
-              - 'packages/seed/**'
-              - 'packages/ir-sdk/fern/apis/**'
-              - 'packages/cli/generation/ir-generator/**'
-              - 'test-definitions/**'
-              - 'test-definitions-openapi/**'
-            ruby:
-              - 'generators/ruby/**'
-              - seed/ruby-sdk/seed.yml
-              - seed/ruby-model/seed.yml
-            ruby-v2:
-              - 'generators/ruby-v2/**'
-              - seed/ruby-sdk-v2/seed.yml
-            openapi:
-              - 'generators/openapi/**'
-              - seed/openapi/seed.yml
-            python:
-              - 'generators/python/**'
-              - seed/pydantic/seed.yml
-              - seed/pydantic-v2/seed.yml
-              - seed/python-sdk/seed.yml
-              - seed/fastapi/seed.yml
-            postman:
-              - 'generators/postman/**'
-              - seed/postman/seed.yml
-            java:
-              - 'generators/java/**'
-              - seed/java-sdk/seed.yml
-              - seed/java-model/seed.yml
-              - seed/java-spring/seed.yml
-            typescript:
-              - 'generators/typescript/**'
-              - seed/ts-sdk/seed.yml
-              - seed/ts-express/seed.yml
-            go:
-              - 'generators/go/**'
-              - seed/go-sdk/seed.yml
-              - seed/go-model/seed.yml
-              - seed/go-fiber/seed.yml
-            csharp:
-              - 'generators/csharp/**'
-              - seed/csharp-sdk/seed.yml
-              - seed/csharp-model/seed.yml
-            php:
-              - 'generators/php/**'
-              - seed/php-sdk/seed.yml
-              - seed/php-model/seed.yml
-
+        name: Get generator changes
+        id: get-generator-changes
+        uses: ./.github/actions/get-generator-changes
   ruby-model:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}

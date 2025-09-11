@@ -21,25 +21,22 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.filter.outputs.changes }}
+      packages: ${{ steps.changes.outputs.all_changed_files }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
         with:
-          filters: |
-            ts:
-              - 'docker/seed/Dockerfile.ts'
-              - '.github/workflows/seed-dockers.yml'
-            java:
-              - 'docker/seed/Dockerfile.java'
-              - '.github/workflows/seed-dockers.yml'
-            python:
-              - 'docker/seed/Dockerfile.python'
-              - '.github/workflows/seed-dockers.yml'
-            csharp:
-              - 'docker/seed/Dockerfile.csharp'
-              - '.github/workflows/seed-dockers.yml'
+          fetch-depth: 200
+
+      - uses: ./.github/actions/get-generator-changes
+        id: changes
+        with:
+          files: |
+            .github/workflows/seed-dockers.yml
+            docker/seed/Dockerfile.ts
+            docker/seed/Dockerfile.java
+            docker/seed/Dockerfile.python
+            docker/seed/Dockerfile.csharp
+
   generate-sha:
     runs-on: ubuntu-latest
     outputs:
