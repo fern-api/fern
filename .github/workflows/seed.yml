@@ -37,7 +37,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 30
+          fetch-depth: 200
       - name: Check for seed changes
         id: seed-changes
         uses: tj-actions/changed-files@v46
