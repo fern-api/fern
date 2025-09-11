@@ -42,6 +42,13 @@ jobs:
       rust: ${{ steps.get-generator-changes.outputs.rust.any_changed }}
     steps:
       - if: github.event_name != 'workflow_dispatch'
+        name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          # Get sufficient history to check for changes
+          fetch-depth: 200
+
+      - if: github.event_name != 'workflow_dispatch'
         name: Get generator changes
         id: get-generator-changes
         uses: ./.github/actions/get-generator-changes
