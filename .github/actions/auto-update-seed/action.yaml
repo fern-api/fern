@@ -53,7 +53,7 @@ runs:
         commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         branch: update-${{ inputs.generator-name }}-seed
-        body: "Auto-generated PR, triggered by GitHub event: ${GITHUB_EVENT_NAME} from branch: ${GITHUB_REF_NAME}"
+        body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}"
         base: mallinson/test-auto-seed-update # just for testing
         delete-branch: true
         labels: |
