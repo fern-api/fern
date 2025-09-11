@@ -25,12 +25,13 @@ cargo add seed_enum
 Instantiate and use the client with the following:
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient};
+use seed_enum::{ClientConfig, EnumClient, SendEnumAsHeaderRequest};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = EnumClient::new(config).expect("Failed to build client");
+    client.headers_send(SendEnumAsHeaderRequest { operand: ">", maybe_operand: Some(">"), operand_or_color: "red" }).await;
 }
 ```
 

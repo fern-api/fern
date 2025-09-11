@@ -31,6 +31,7 @@ use seed_alias::{ClientConfig, AliasClient};
 async fn main() {
     let config = ClientConfig {};
     let client = AliasClient::new(config).expect("Failed to build client");
+    client.get("typeId").await;
 }
 ```
 
