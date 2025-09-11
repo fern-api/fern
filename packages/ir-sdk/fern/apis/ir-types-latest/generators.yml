@@ -23,7 +23,7 @@ groups:
           package-name: "@fern-api/dynamic-ir-sdk"
           token: ${NPM_TOKEN}
         config:
-          noOptionalProperties: true
+          noOptionalProperties: false
           noSerdeLayer: true
   node:
     generators:
