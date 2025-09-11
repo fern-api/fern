@@ -29,10 +29,6 @@ export class EndpointSnippetsGenerator {
     }
 
     public async populateSnippetsCache(): Promise<void> {
-        if (this.snippetsCacheInitialized) {
-            return;
-        }
-
         const endpointSnippetsById = new Map<string, EndpointSnippets>();
         const dynamicIr = this.context.ir.dynamic;
 
@@ -102,8 +98,6 @@ export class EndpointSnippetsGenerator {
         endpointSnippetsById.forEach((value, key) => {
             this.snippetsCache.set(key, value);
         });
-
-        this.snippetsCacheInitialized = true;
     }
 
     public getSnippetsForEndpoint(endpointId: string): EndpointSnippets | undefined {
