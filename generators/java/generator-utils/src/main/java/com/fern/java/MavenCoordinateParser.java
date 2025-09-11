@@ -28,7 +28,6 @@ public final class MavenCoordinateParser {
             );
         }
         
-        // Validate characters (Maven allows alphanumeric, -, _, .)
         if (!group.matches("[a-zA-Z0-9._-]+") || !artifact.matches("[a-zA-Z0-9._-]+")) {
             throw new IllegalArgumentException(
                 "Invalid characters in Maven coordinate: " + coordinate

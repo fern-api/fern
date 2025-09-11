@@ -225,10 +225,8 @@ function getPublishConfig({
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
         } else if (generatorInvocation.language === "java") {
-            // Extract Maven configuration from Java generator config
             const config = generatorInvocation.raw?.config;
             
-            // Define proper type for Java generator configuration
             interface JavaGeneratorConfig {
                 group?: unknown;
                 artifact?: unknown;
@@ -267,7 +265,6 @@ function getPublishConfig({
                 : undefined;
             
             if (coordinate) {
-                // Use provided version or default to "0.0.0" for local generation
                 const mavenVersion = version ?? "0.0.0";
                 publishTarget = PublishTarget.maven({
                     coordinate,

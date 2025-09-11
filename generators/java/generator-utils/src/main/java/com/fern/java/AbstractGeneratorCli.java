@@ -316,8 +316,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
         
-        // Note: AtomicReference is used here to capture the value from within the visitor pattern,
-        // not for thread safety. Java requires effectively final variables in anonymous inner classes.
+        // Note: AtomicReference is used here to capture the value from within the visitor pattern
+        // Java requires effectively final variables in anonymous inner classes.
         final AtomicReference<Optional<MavenCoordinate>> maybeMavenCoordinate = new AtomicReference<>(Optional.empty());
         
         Boolean generateFullProject = ir.getPublishConfig()
@@ -335,7 +335,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                             @Override
                             public Boolean visitFilesystem(Filesystem value) {
-                                // Extract Maven coordinate from publishTarget if present
                                 if (value.getGenerateFullProject() && value.getPublishTarget().isPresent()) {
                                     com.fern.ir.model.publish.PublishTarget target = value.getPublishTarget().get();
                                     target.visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
@@ -385,7 +384,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         }))
                 .orElse(false);
         if (generateFullProject) {
-            // Pass the extracted Maven coordinate (or empty if none was found) to addRootProjectFiles
             addRootProjectFiles(maybeMavenCoordinate.get(), true, false, generatorConfig);
         }
         generatedFiles.forEach(
