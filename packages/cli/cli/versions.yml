@@ -5,7 +5,7 @@
       type: feat
   irVersion: 59
   createdAt: "2025-09-11"
-  version: 0.75.5
+  version: 0.76.0
 
 - changelogEntry:
     - summary: |
