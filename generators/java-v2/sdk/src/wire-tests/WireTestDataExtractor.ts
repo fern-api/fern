@@ -15,9 +15,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class WireTestDataExtractor {
     constructor(private readonly context: SdkGeneratorContext) {}
 
-    /**
-     * Extract test examples from an endpoint, including both request and response data.
-     */
     public getTestExamples(endpoint: HttpEndpoint): WireTestExample[] {
         const examples: WireTestExample[] = [];
 
@@ -45,9 +42,6 @@ export class WireTestDataExtractor {
         return examples;
     }
 
-    /**
-     * Extract test data from a single example.
-     */
     private extractTestExample(example: ExampleEndpointCall, endpoint: HttpEndpoint): WireTestExample | undefined {
         return {
             id: example.id || `${endpoint.id}-example`,
@@ -65,9 +59,6 @@ export class WireTestDataExtractor {
         };
     }
 
-    /**
-     * Extract request body from an ExampleRequestBody.
-     */
     private extractRequestBody(request: ExampleRequestBody | undefined): unknown | undefined {
         if (!request) {
             return undefined;
@@ -90,9 +81,6 @@ export class WireTestDataExtractor {
         });
     }
 
-    /**
-     * Extract response body from an ExampleResponse.
-     */
     private extractResponseBody(response: ExampleResponse | undefined): unknown | undefined {
         if (!response) {
             return undefined;
@@ -122,9 +110,6 @@ export class WireTestDataExtractor {
         });
     }
 
-    /**
-     * Get the expected response status code from an ExampleResponse.
-     */
     private getResponseStatusCode(response: ExampleResponse | undefined): number {
         if (!response) {
             return 200;
@@ -140,9 +125,6 @@ export class WireTestDataExtractor {
         });
     }
 
-    /**
-     * Extract headers from an example.
-     */
     private extractHeaders(example: ExampleEndpointCall): Record<string, string> {
         const headers: Record<string, string> = {};
 
@@ -153,9 +135,6 @@ export class WireTestDataExtractor {
         return headers;
     }
 
-    /**
-     * Extract query parameters from an example.
-     */
     private extractQueryParams(example: ExampleEndpointCall): Record<string, string> {
         const params: Record<string, string> = {};
 
@@ -166,9 +145,6 @@ export class WireTestDataExtractor {
         return params;
     }
 
-    /**
-     * Extract path parameters from an example.
-     */
     private extractPathParams(example: ExampleEndpointCall): Record<string, string> {
         const params: Record<string, string> = {};
 
@@ -183,9 +159,6 @@ export class WireTestDataExtractor {
         return params;
     }
 
-    /**
-     * Convert an ExampleTypeReference to its raw JSON representation.
-     */
     private createRawJsonExample(typeRef: ExampleTypeReference): unknown {
         const { shape, jsonExample } = typeRef;
 
@@ -264,9 +237,6 @@ export class WireTestDataExtractor {
     }
 }
 
-/**
- * Represents test data extracted from an IR example for wire testing.
- */
 export interface WireTestExample {
     id: string;
     name?: string;
