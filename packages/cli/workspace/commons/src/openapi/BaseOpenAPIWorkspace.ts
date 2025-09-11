@@ -14,6 +14,7 @@ export declare namespace BaseOpenAPIWorkspace {
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
         respectNullableSchemas: boolean | undefined;
+        coerceNullableToOptional: boolean | undefined;
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
@@ -29,6 +30,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
     public respectNullableSchemas: boolean | undefined;
+    public coerceNullableToOptional: boolean | undefined;
     public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
@@ -42,6 +44,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.respectNullableSchemas = args.respectNullableSchemas;
+        this.coerceNullableToOptional = args.coerceNullableToOptional;
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;

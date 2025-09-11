@@ -5783,6 +5783,7 @@
     "typeDatesAsStrings": true,
     "preserveSingleSchemaOneOf": false,
     "inlineAllOfSchemas": false,
-    "groupMultiApiEnvironments": false
+    "groupMultiApiEnvironments": false,
+    "coerceNullableToOptional": true
   }
 }

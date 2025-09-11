@@ -467,12 +467,23 @@ export function buildReferenceTypeReference({
         type: schemaName
     });
 
-    const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
+    console.log("context.coerceNullableToOptional", context.coerceNullableToOptional);
+    const type =
+        resolvedSchema.type === "nullable"
+            ? context.coerceNullableToOptional
+                ? `optional<${typeWithPrefix}>`
+                : `nullable<${typeWithPrefix}>`
+            : typeWithPrefix;
     if (schema.description == null && displayName == null) {
         return type;
     }
     return {
-        type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
+        type:
+            resolvedSchema.type === "nullable"
+                ? context.coerceNullableToOptional
+                    ? `optional<${typeWithPrefix}>`
+                    : `nullable<${typeWithPrefix}>`
+                : typeWithPrefix,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
@@ -603,10 +614,7 @@ export function buildNullableTypeReference({
         itemValidation == null &&
         schema.title == null
     ) {
-        return wrapOptionalIfNotAlready({
-            typeReference: type,
-            itemType
-        });
+        return type;
     }
     const result: RawSchemas.TypeReferenceSchema = {
         type
@@ -625,10 +633,7 @@ export function buildNullableTypeReference({
     }
 
     // Nullable schemas are always treated as optional.
-    return wrapOptionalIfNotAlready({
-        typeReference: result,
-        itemType
-    });
+    return result;
 }
 
 export function buildOptionalTypeReference({

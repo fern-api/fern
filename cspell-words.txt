@@ -305,6 +305,7 @@ jose
 journaled
 jrbwp
 jsdom
+jsklan
 jsonable
 jsonify
 Jsonify

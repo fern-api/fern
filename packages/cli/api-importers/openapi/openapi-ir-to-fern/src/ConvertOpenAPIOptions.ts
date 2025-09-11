@@ -52,6 +52,13 @@ export interface ConvertOpenAPIOptions {
      * Overrides the auth schema that would be detected from the OpenAPI spec.
      */
     auth?: RawSchemas.ApiAuthSchema;
+
+    /**
+     * If true, the converter will convert nullable schemas to optional nullable.
+     * If false, the converter will convert nullable schemas to required nullable.
+     * Defaults to true.
+     */
+    coerceNullableToOptional: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -63,7 +70,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: false,
     useBytesForBinaryResponse: false,
-    respectForwardCompatibleEnums: false
+    respectForwardCompatibleEnums: false,
+    coerceNullableToOptional: true
 };
 
 export function getConvertOptions({
@@ -109,6 +117,10 @@ export function getConvertOptions({
         respectForwardCompatibleEnums:
             overrides?.respectForwardCompatibleEnums ??
             options?.respectForwardCompatibleEnums ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums,
+        coerceNullableToOptional:
+            overrides?.coerceNullableToOptional ??
+            options?.coerceNullableToOptional ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceNullableToOptional
     };
 }

@@ -15,6 +15,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
     "idiomatic-request-names": core.serialization.boolean().optional(),
+    "coerce-nullable-to-optional": core.serialization.boolean().optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -24,5 +25,6 @@ export declare namespace BaseApiSettingsSchema {
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
         "idiomatic-request-names"?: boolean | null;
+        "coerce-nullable-to-optional"?: boolean | null;
     }
 }

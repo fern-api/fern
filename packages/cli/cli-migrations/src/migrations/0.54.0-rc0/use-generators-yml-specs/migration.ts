@@ -378,7 +378,8 @@ function convertDeprecatedApiSettingsToOpenApiSettings(
         "only-include-referenced-schemas": deprecatedApiSettings["only-include-referenced-schemas"],
         "prefer-undiscriminated-unions-with-literals": deprecatedApiSettings?.unions === "v1" ? true : undefined,
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
-        "title-as-schema-name": deprecatedApiSettings["use-title"]
+        "title-as-schema-name": deprecatedApiSettings["use-title"],
+        "coerce-nullable-to-optional": deprecatedApiSettings["coerce-nullable-to-optional"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {
@@ -394,7 +395,8 @@ function convertDeprecatedApiSettingsToAsyncApiSettings(
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
-        "message-naming": deprecatedApiSettings["message-naming"]
+        "message-naming": deprecatedApiSettings["message-naming"],
+        "coerce-nullable-to-optional": deprecatedApiSettings["coerce-nullable-to-optional"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {

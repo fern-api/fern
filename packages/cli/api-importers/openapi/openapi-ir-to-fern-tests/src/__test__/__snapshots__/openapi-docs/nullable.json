@@ -104,7 +104,7 @@
                 "name": "GetUsersUserIdRequest",
                 "query-parameters": {
                   "activated": "string",
-                  "email": "optional<nullable<string>>",
+                  "email": "nullable<string>",
                 },
               },
               "response": {
@@ -314,7 +314,7 @@
         name: GetUsersUserIdRequest
         query-parameters:
           activated: string
-          email: optional<nullable<string>>
+          email: nullable<string>
       response:
         docs: User retrieved successfully
         type: User

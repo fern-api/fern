@@ -158,6 +158,12 @@ types:
       idiomatic-request-names:
         type: optional<boolean>
         docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
+      coerce-nullable-to-optional:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will convert nullable schemas to optional nullable.
+          If false, the converter will convert nullable schemas to required nullable.
+          Defaults to true.
 
   UnionSettingsSchema:
     enum:
@@ -251,6 +257,13 @@ types:
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
       idiomatic-request-names: optional<boolean>
+      coerce-nullable-to-optional:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will convert nullable schemas to optional nullable.
+          If false, the converter will convert nullable schemas to required nullable.
+          Defaults to true.
+        default: true
 
   OpenAPISettingsSchema:
     extends:

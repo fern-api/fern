@@ -1549,6 +1549,16 @@
             }
           ]
         },
+        "coerce-nullable-to-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1798,6 +1808,16 @@
           ]
         },
         "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-nullable-to-optional": {
           "oneOf": [
             {
               "type": "boolean"

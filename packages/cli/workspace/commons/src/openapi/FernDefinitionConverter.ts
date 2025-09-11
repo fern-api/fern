@@ -31,6 +31,7 @@ export class FernDefinitionConverter {
                     ...settings,
                     respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.args.respectReadonlySchemas,
                     respectNullableSchemas: settings?.respectNullableSchemas ?? this.args.respectNullableSchemas,
+                    coerceNullableToOptional: settings?.coerceNullableToOptional ?? this.args.coerceNullableToOptional,
                     onlyIncludeReferencedSchemas:
                         settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
                     inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,
@@ -38,7 +39,7 @@ export class FernDefinitionConverter {
                     useBytesForBinaryResponse:
                         settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
                     respectForwardCompatibleEnums:
-                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums
+                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums,
                 }
             }),
             authOverrides:

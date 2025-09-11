@@ -43,6 +43,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             generatorsConfiguration,
             respectReadonlySchemas: spec.settings?.respectReadonlySchemas,
             respectNullableSchemas: spec.settings?.respectNullableSchemas,
+            coerceNullableToOptional: spec.settings?.coerceNullableToOptional,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,

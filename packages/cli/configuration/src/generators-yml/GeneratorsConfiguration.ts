@@ -74,6 +74,7 @@ export interface APIDefinitionSettings {
     preserveSingleSchemaOneOf: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
     groupMultiApiEnvironments: boolean | undefined;
+    coerceNullableToOptional: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

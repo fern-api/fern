@@ -42,6 +42,7 @@ export class OpenApiIrConverterContext {
     public inlinePathParameters: boolean;
     public useBytesForBinaryResponse: boolean;
     public respectForwardCompatibleEnums: boolean;
+    public coerceNullableToOptional: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -92,6 +93,7 @@ export class OpenApiIrConverterContext {
         this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
         this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
+        this.coerceNullableToOptional = options?.coerceNullableToOptional ?? true;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });

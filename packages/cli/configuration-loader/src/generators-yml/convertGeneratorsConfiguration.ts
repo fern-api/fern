@@ -29,7 +29,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     inlineAllOfSchemas: undefined,
-    groupMultiApiEnvironments: undefined
+    groupMultiApiEnvironments: undefined,
+    coerceNullableToOptional: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -84,9 +85,10 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
         asyncApiMessageNaming: settings?.["message-naming"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        coerceNullableToOptional: settings?.["coerce-nullable-to-optional"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
     };
 }
 
@@ -109,7 +111,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
-        groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
+        groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
     };
 }
 
@@ -131,7 +133,8 @@ function parseBaseApiDefinitionSettingsSchema(
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
-        respectNullableSchemas: settings?.["respect-nullable-schemas"]
+        respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        coerceNullableToOptional: settings?.["coerce-nullable-to-optional"]
     };
 }
 

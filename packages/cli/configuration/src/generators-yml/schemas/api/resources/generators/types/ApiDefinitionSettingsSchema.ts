@@ -28,4 +28,10 @@ export interface ApiDefinitionSettingsSchema {
     "inline-path-parameters"?: boolean;
     /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
     "idiomatic-request-names"?: boolean;
+    /**
+     * If true, the converter will convert nullable schemas to optional nullable.
+     * If false, the converter will convert nullable schemas to required nullable.
+     * Defaults to true.
+     */
+    "coerce-nullable-to-optional"?: boolean;
 }

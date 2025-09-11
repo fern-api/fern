@@ -71,6 +71,8 @@ export interface ParseOpenAPIOptions {
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
     groupMultiApiEnvironments: boolean;
+
+    coerceNullableToOptional: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -98,7 +100,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     typeDatesAsStrings: true,
     preserveSingleSchemaOneOf: false,
     inlineAllOfSchemas: false,
-    groupMultiApiEnvironments: false
+    groupMultiApiEnvironments: false,
+    coerceNullableToOptional: true
 };
 
 export function getParseOptions({
@@ -187,6 +190,10 @@ export function getParseOptions({
         groupMultiApiEnvironments:
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments
+            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments,
+        coerceNullableToOptional:
+            overrides?.coerceNullableToOptional ??
+            options?.coerceNullableToOptional ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceNullableToOptional
     };
 }
