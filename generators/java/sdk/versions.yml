@@ -1,3 +1,11 @@
+- version: 3.0.2
+  changelogEntry:
+    - summary: |
+        Support Maven publishTarget from IR for local filesystem SDK generation.
+      type: feat
+  createdAt: "2025-09-11"
+  irVersion: 59
+
 - version: 3.0.1
   changelogEntry:
     - summary: |

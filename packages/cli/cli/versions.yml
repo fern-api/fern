@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add Maven publishTarget support for Java generators with local filesystem output.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.75.5
+
+- changelogEntry:
+    - summary: |
         Enable dynamic SDK snippets for PHP in docs.
       type: fix
   irVersion: 59
