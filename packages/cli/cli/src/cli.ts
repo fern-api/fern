@@ -554,7 +554,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("disable-dynamic-snippets", {
                     boolean: true,
-                    description: "Upload dynamic SDK snippets in docs generation",
+                    description: "Disable dynamic SDK snippets in docs generation",
                     default: false
                 }),
         async (argv) => {
