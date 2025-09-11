@@ -110,7 +110,9 @@ export class EndpointSnippetGenerator {
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
-            })
+            }),
+            // Add the actual API method call
+            this.callMethod({ endpoint, snippet })
         ]);
 
         // Create the standalone function
@@ -146,14 +148,20 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = [
+        const imports = ["ClientConfig", this.getClientName({ endpoint })];
+
+        // Add request struct import if this endpoint uses an inlined request
+        if (endpoint.request.type === "inlined") {
+            const requestStructName = this.context.getStructName(endpoint.request.declaration.name);
+            imports.push(requestStructName);
+        }
+
+        return [
             new rust.UseStatement({
                 path: this.context.getPackageName(),
-                items: ["ClientConfig", this.getClientName({ endpoint })]
+                items: imports
             })
         ];
-
-        return imports;
     }
 
     private getClientConfigStruct({
