@@ -103,9 +103,7 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
             kwargs = []
             for param in self._get_constructor_parameters(is_async=is_async):
                 if param.constructor_parameter_name not in seen_param_names:
-                    kwargs.append(
-                        (param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name))
-                    )
+                    kwargs.append((param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name)))
                     seen_param_names.add(param.constructor_parameter_name)
 
             # Initialize the raw client with the client_wrapper

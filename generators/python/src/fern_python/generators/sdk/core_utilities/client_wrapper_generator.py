@@ -302,9 +302,7 @@ class ClientWrapperGenerator:
             param_assignments = []
             for param in constructor_parameters:
                 if param.constructor_parameter_name not in seen_param_names:
-                    param_assignments.append(
-                        f"{param.constructor_parameter_name}={param.constructor_parameter_name}"
-                    )
+                    param_assignments.append(f"{param.constructor_parameter_name}={param.constructor_parameter_name}")
                     seen_param_names.add(param.constructor_parameter_name)
             writer.write_line(
                 "super().__init__("

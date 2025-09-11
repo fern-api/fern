@@ -125,11 +125,11 @@ class UncheckedBaseModel(UniversalBaseModel):
 def _validate_collection_items_compatible(collection: typing.Any, target_type: typing.Type[typing.Any]) -> bool:
     """
     Validate that all items in a collection are compatible with the target type.
-    
+
     Args:
         collection: The collection to validate (list, set, or dict values)
         target_type: The target type to validate against
-        
+
     Returns:
         True if all items are compatible, False otherwise
     """
