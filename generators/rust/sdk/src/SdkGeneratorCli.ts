@@ -7,9 +7,9 @@ import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { mkdir, writeFile } from "fs/promises";
+import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
