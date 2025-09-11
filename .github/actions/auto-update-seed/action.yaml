@@ -25,6 +25,12 @@ inputs:
     description: "Whether to skip caching and always regenerate"
     required: false
     default: "true"
+  secret-fern-github-pat:
+    description: "GitHub Access Token for Fern"
+    required: true
+  secret-pr-bot-gh-pat:
+    description: "GitHub Access Token for PR Bot"
+    required: true
 
 runs:
   using: "composite"
@@ -43,7 +49,7 @@ runs:
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
-        token: ${{ secrets.FERN_GITHUB_PAT }}
+        token: ${{ inputs.secret-fern-github-pat }}
         commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         branch: update-${{ inputs.generator-name }}-seed
@@ -58,7 +64,7 @@ runs:
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@v3
       with:
-        token: ${{ secrets.FERN_GITHUB_PAT }}
+        token: ${{ inputs.secret-fern-github-pat }}
         pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
         merge-method: squash
 
@@ -66,5 +72,5 @@ runs:
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: ./.github/actions/auto-approve
       with:
-        approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+        approver-gh-token: ${{ inputs.secret-pr-bot-gh-pat }}
         pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
