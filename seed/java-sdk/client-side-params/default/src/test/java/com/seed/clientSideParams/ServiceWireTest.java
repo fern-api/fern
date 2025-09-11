@@ -1,5 +1,6 @@
 package com.seed.clientSideParams;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -87,6 +88,13 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+        
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "{\"query\":\"query\",\"filters\":{\"filters\":{\"key\":\"value\"}}}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
     }
     @Test
     public void testListUsers() throws Exception {
@@ -161,6 +169,13 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+        
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "{\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"password\":\"password\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"connection\":\"connection\"}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
     }
     @Test
     public void testUpdateUser() throws Exception {
@@ -197,6 +212,13 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
+        
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "{\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"password\":\"password\",\"blocked\":true}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
     }
     @Test
     public void testDeleteUser() throws Exception {

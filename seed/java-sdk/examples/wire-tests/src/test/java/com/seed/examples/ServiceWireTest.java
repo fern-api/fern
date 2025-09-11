@@ -1,5 +1,6 @@
 package com.seed.examples;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -30,18 +31,25 @@ public class ServiceWireTest {
     public void testGetMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.service().getMovie("movie-c06a4ad7");
+            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+        var response = client.service().getMovie("movie-c06a4ad7");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+        
+        // Validate response deserialization
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Verify the response can be serialized back to JSON
+        String responseJson = objectMapper.writeValueAsString(response);
+        Assertions.assertNotNull(responseJson);
+        Assertions.assertFalse(responseJson.isEmpty());
     }
     @Test
     public void testCreateMovie() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.service().createMovie(
+            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+        var response = client.service().createMovie(
             Movie
                 .builder()
                 .id("movie-c06a4ad7")
@@ -67,13 +75,27 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+        
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "{\"id\":\"movie-c06a4ad7\",\"prequel\":\"movie-cv9b914f\",\"title\":\"The Boy and the Heron\",\"from\":\"Hayao Miyazaki\",\"rating\":8,\"type\":\"movie\",\"tag\":\"tag-wf9as23d\",\"metadata\":{\"actors\":[\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"],\"releaseDate\":\"2023-12-08\",\"ratings\":{\"rottenTomatoes\":97,\"imdb\":7.6}},\"revenue\":1000000}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        
+        // Validate response deserialization
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Verify the response can be serialized back to JSON
+        String responseJson = objectMapper.writeValueAsString(response);
+        Assertions.assertNotNull(responseJson);
+        Assertions.assertFalse(responseJson.isEmpty());
     }
     @Test
     public void testGetMetadata() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.service().getMetadata(
+            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+        var response = client.service().getMetadata(
             GetMetadataRequest
                 .builder()
                 .xApiVersion("0.0.1")
@@ -86,13 +108,20 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+        
+        // Validate response deserialization
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Verify the response can be serialized back to JSON
+        String responseJson = objectMapper.writeValueAsString(response);
+        Assertions.assertNotNull(responseJson);
+        Assertions.assertFalse(responseJson.isEmpty());
     }
     @Test
     public void testCreateBigEntity() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.service().createBigEntity(
+            .setBody("{\"id\":\"test-id\",\"name\":\"test-name\",\"value\":\"test-value\",\"success\":true,\"data\":{}}"));
+        var response = client.service().createBigEntity(
             BigEntity
                 .builder()
                 .castMember(
@@ -550,6 +579,20 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+        
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "{\"castMember\":{\"name\":\"name\",\"id\":\"id\"},\"extendedMovie\":{\"cast\":[\"cast\",\"cast\"],\"id\":\"id\",\"prequel\":\"prequel\",\"title\":\"title\",\"from\":\"from\",\"rating\":1.1,\"type\":\"movie\",\"tag\":\"tag\",\"book\":\"book\",\"metadata\":{\"metadata\":{\"key\":\"value\"}},\"revenue\":1000000},\"entity\":{\"type\":\"primitive\",\"name\":\"name\"},\"metadata\":{\"type\":\"html\",\"value\":\"metadata\",\"extra\":{\"extra\":\"extra\"},\"tags\":[\"tags\"]},\"commonMetadata\":{\"id\":\"id\",\"data\":{\"data\":\"data\"},\"jsonString\":\"jsonString\"},\"eventInfo\":{\"type\":\"metadata\",\"id\":\"id\",\"data\":{\"data\":\"data\"},\"jsonString\":\"jsonString\"},\"data\":{\"type\":\"string\",\"value\":\"data\"},\"migration\":{\"name\":\"name\",\"status\":\"RUNNING\"},\"exception\":{\"type\":\"generic\",\"exceptionType\":\"exceptionType\",\"exceptionMessage\":\"exceptionMessage\",\"exceptionStacktrace\":\"exceptionStacktrace\"},\"test\":{\"type\":\"and\",\"value\":true},\"node\":{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}],\"trees\":[{\"nodes\":[]},{\"nodes\":[]}]},{\"name\":\"name\",\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}],\"trees\":[{\"nodes\":[]},{\"nodes\":[]}]}],\"trees\":[{\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}]},{\"nodes\":[{\"name\":\"name\",\"nodes\":[],\"trees\":[]},{\"name\":\"name\",\"nodes\":[],\"trees\":[]}]}]},\"directory\":{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[],\"directories\":[]},{\"name\":\"name\",\"files\":[],\"directories\":[]}]},{\"name\":\"name\",\"files\":[{\"name\":\"name\",\"contents\":\"contents\"},{\"name\":\"name\",\"contents\":\"contents\"}],\"directories\":[{\"name\":\"name\",\"files\":[],\"directories\":[]},{\"name\":\"name\",\"files\":[],\"directories\":[]}]}]},\"moment\":{\"id\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\"date\":\"2023-01-15\",\"datetime\":\"2024-01-15T09:30:00Z\"}}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        
+        // Validate response deserialization
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Verify the response can be serialized back to JSON
+        String responseJson = objectMapper.writeValueAsString(response);
+        Assertions.assertNotNull(responseJson);
+        Assertions.assertFalse(responseJson.isEmpty());
     }
     @Test
     public void testRefreshToken() throws Exception {
