@@ -70,6 +70,8 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk:
     needs: changes
@@ -88,6 +90,8 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-v2:
     needs: changes
@@ -106,6 +110,8 @@ jobs:
           generator-path: generators/ruby-v2
           language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   pydantic-model:
     needs: changes
@@ -124,6 +130,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   python-sdk:
     needs: changes
@@ -142,6 +150,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   fastapi:
     needs: changes
@@ -160,6 +170,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   openapi:
     needs: changes
@@ -178,6 +190,8 @@ jobs:
           generator-path: generators/openapi
           language-name: openapi
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   postman:
     needs: changes
@@ -196,6 +210,8 @@ jobs:
           generator-path: generators/postman
           language-name: postman
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-sdk:
     needs: changes
@@ -214,6 +230,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-model:
     needs: changes
@@ -232,6 +250,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-spring:
     needs: changes
@@ -250,6 +270,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-sdk:
     needs: changes
@@ -268,6 +290,8 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-express:
     needs: changes
@@ -286,6 +310,8 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-fiber:
     needs: changes
@@ -304,6 +330,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-model:
     needs: changes
@@ -322,6 +350,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-sdk:
     needs: changes
@@ -339,6 +369,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-model:
     needs: changes
@@ -357,6 +389,8 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-sdk:
     needs: changes
@@ -375,6 +409,8 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-model:
     needs: changes
@@ -393,6 +429,8 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-sdk:
     needs: changes
@@ -410,6 +448,8 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   swift-sdk:
     needs: changes
@@ -428,3 +468,5 @@ jobs:
           generator-path: generators/swift
           language-name: swift
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
