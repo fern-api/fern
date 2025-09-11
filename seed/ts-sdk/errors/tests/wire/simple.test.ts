@@ -7,7 +7,7 @@ import { SeedErrorsClient } from "../../src/Client";
 import * as SeedErrors from "../../src/api/index";
 
 describe("Simple", () => {
-    test("fooWithoutEndpointError (38e631f7)", async () => {
+    test("fooWithoutEndpointError (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -29,7 +29,7 @@ describe("Simple", () => {
         });
     });
 
-    test("fooWithoutEndpointError (894c9afe)", async () => {
+    test("fooWithoutEndpointError (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -55,7 +55,7 @@ describe("Simple", () => {
         );
     });
 
-    test("fooWithoutEndpointError (22cbdac)", async () => {
+    test("fooWithoutEndpointError (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -81,7 +81,7 @@ describe("Simple", () => {
         );
     });
 
-    test("fooWithoutEndpointError (f542a668)", async () => {
+    test("fooWithoutEndpointError (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -107,7 +107,7 @@ describe("Simple", () => {
         );
     });
 
-    test("foo (38e631f7)", async () => {
+    test("foo (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -129,7 +129,7 @@ describe("Simple", () => {
         });
     });
 
-    test("foo (c3630df8)", async () => {
+    test("foo (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -155,7 +155,7 @@ describe("Simple", () => {
         );
     });
 
-    test("foo (34253fa0)", async () => {
+    test("foo (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -181,7 +181,7 @@ describe("Simple", () => {
         );
     });
 
-    test("foo (894c9afe)", async () => {
+    test("foo (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -207,7 +207,7 @@ describe("Simple", () => {
         );
     });
 
-    test("foo (22cbdac)", async () => {
+    test("foo (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -233,7 +233,7 @@ describe("Simple", () => {
         );
     });
 
-    test("foo (f542a668)", async () => {
+    test("foo (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -259,7 +259,7 @@ describe("Simple", () => {
         );
     });
 
-    test("fooWithExamples (200aeafb)", async () => {
+    test("fooWithExamples (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
@@ -281,7 +281,7 @@ describe("Simple", () => {
         });
     });
 
-    test("fooWithExamples (2a092bdd)", async () => {
+    test("fooWithExamples (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
@@ -307,7 +307,7 @@ describe("Simple", () => {
         );
     });
 
-    test("fooWithExamples (65d7c262)", async () => {
+    test("fooWithExamples (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
