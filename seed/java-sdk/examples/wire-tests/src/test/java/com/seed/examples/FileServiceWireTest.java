@@ -37,7 +37,7 @@ public class FileServiceWireTest {
                 .builder()
                 .xFileApiVersion("0.0.2")
                 .build()
-        );;
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

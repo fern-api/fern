@@ -1,6 +1,3 @@
-
-
-
 from datetime import datetime, date
 from typing import Any, cast, List, Union
 import uuid
@@ -33,7 +30,7 @@ def test_construct_valid() -> None:
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
         "any": "something here",
-        "additional_field": "this here"
+        "additional_field": "this here",
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
@@ -63,7 +60,10 @@ def test_construct_valid() -> None:
     circle_expectation = Shape_Circle(id="another_string", radius=2.3)
     assert cast_response.second_union is not None
     assert cast_response.second_union.id == circle_expectation.id
-    assert isinstance(cast_response.second_union, Shape_Circle) and cast_response.second_union.radius == circle_expectation.radius
+    assert (
+        isinstance(cast_response.second_union, Shape_Circle)
+        and cast_response.second_union.radius == circle_expectation.radius
+    )
     assert cast_response.second_union.type == circle_expectation.type
 
     assert cast_response.undiscriminated_union is not None
@@ -150,7 +150,7 @@ def test_construct_valid() -> None:
 #     assert cast_response.map_ == "hello world"
 #     assert cast_response.enum == "bread"
 #     assert cast_response.any is None
-    
+
 #     shape_expectation = Shape_Square(id="123", length=1.1)
 #     assert cast_response.union is not None
 #     assert cast_response.union.id == shape_expectation.id
@@ -209,29 +209,21 @@ def test_construct_primitives() -> None:
 def test_construct_list_of_objects() -> None:
     """Test the new functionality for handling lists of objects in undiscriminated unions."""
     # Test with list of Circle objects
-    circle_list_data = [
-        {"radius": 1.5},
-        {"radius": 2.0},
-        {"radius": 3.2}
-    ]
-    
+    circle_list_data = [{"radius": 1.5}, {"radius": 2.0}, {"radius": 3.2}]
+
     result = construct_type(type_=List[Circle], object_=circle_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 3
     for i, circle in enumerate(result):
         assert isinstance(circle, Circle)
         assert circle.radius == circle_list_data[i]["radius"]
-    
+
     # Test with list of Square objects
-    square_list_data = [
-        {"length": 4.0},
-        {"length": 5.5},
-        {"length": 6.1}
-    ]
-    
+    square_list_data = [{"length": 4.0}, {"length": 5.5}, {"length": 6.1}]
+
     result = construct_type(type_=List[Square], object_=square_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 3
     for i, square in enumerate(result):
@@ -242,30 +234,22 @@ def test_construct_list_of_objects() -> None:
 def test_construct_undiscriminated_union_with_list() -> None:
     """Test undiscriminated union handling with lists of objects."""
     from .example_models.types.resources.types import UndiscriminatedShape
-    
+
     # Test with list of Circle objects in undiscriminated union
-    circle_list_data = [
-        {"radius": 1.0},
-        {"radius": 2.5},
-        {"radius": 3.0}
-    ]
-    
+    circle_list_data = [{"radius": 1.0}, {"radius": 2.5}, {"radius": 3.0}]
+
     result = construct_type(type_=List[UndiscriminatedShape], object_=circle_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 3
     for circle in result:
         assert isinstance(circle, Circle)
-    
+
     # Test with list of Square objects in undiscriminated union
-    square_list_data = [
-        {"length": 4.0},
-        {"length": 5.0},
-        {"length": 6.0}
-    ]
-    
+    square_list_data = [{"length": 4.0}, {"length": 5.0}, {"length": 6.0}]
+
     result = construct_type(type_=List[UndiscriminatedShape], object_=square_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 3
     for square in result:
@@ -275,7 +259,7 @@ def test_construct_undiscriminated_union_with_list() -> None:
 def test_construct_mixed_list_in_undiscriminated_union() -> None:
     """Test undiscriminated union handling with mixed list of objects."""
     from .example_models.types.resources.types import UndiscriminatedShape
-    
+
     # Test with mixed list of Circle and Square objects
     mixed_list_data = [
         {"radius": 1.0},  # Circle
@@ -283,22 +267,22 @@ def test_construct_mixed_list_in_undiscriminated_union() -> None:
         {"radius": 2.5},  # Circle
         {"length": 5.0},  # Square
     ]
-    
+
     result = construct_type(type_=List[UndiscriminatedShape], object_=mixed_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 4
-    
+
     # Check that each item is correctly parsed
     assert isinstance(result[0], Circle)
     assert result[0].radius == 1.0
-    
+
     assert isinstance(result[1], Square)
     assert result[1].length == 4.0
-    
+
     assert isinstance(result[2], Circle)
     assert result[2].radius == 2.5
-    
+
     assert isinstance(result[3], Square)
     assert result[3].length == 5.0
 
@@ -306,7 +290,7 @@ def test_construct_mixed_list_in_undiscriminated_union() -> None:
 def test_construct_list_with_invalid_objects() -> None:
     """Test list handling when some objects are invalid."""
     from .example_models.types.resources.types import UndiscriminatedShape
-    
+
     # Test with list containing invalid objects
     invalid_list_data = [
         {"radius": 1.0},  # Valid Circle
@@ -314,17 +298,17 @@ def test_construct_list_with_invalid_objects() -> None:
         {"length": 4.0},  # Valid Square
         {"another_invalid": 123},  # Invalid object
     ]
-    
+
     result = construct_type(type_=List[UndiscriminatedShape], object_=invalid_list_data)
-    
+
     # Should still return a list, but invalid objects might be handled differently
     assert isinstance(result, list)
     assert len(result) == 4
-    
+
     # Valid objects should be correctly parsed
     assert isinstance(result[0], Circle)
     assert result[0].radius == 1.0
-    
+
     assert isinstance(result[2], Square)
     assert result[2].length == 4.0
 
@@ -332,9 +316,9 @@ def test_construct_list_with_invalid_objects() -> None:
 def test_construct_empty_list() -> None:
     """Test handling of empty lists in undiscriminated unions."""
     from .example_models.types.resources.types import UndiscriminatedShape
-        
+
     result = construct_type(type_=List[UndiscriminatedShape], object_=[])
-    
+
     assert isinstance(result, list)
     assert len(result) == 0
 
@@ -343,17 +327,17 @@ def test_construct_list_with_primitive_types() -> None:
     """Test list handling with primitive types (should not use the new list parsing logic)."""
     # Test with list of strings
     string_list_data = ["hello", "world", "test"]
-    
+
     result = construct_type(type_=List[str], object_=string_list_data)
-    
+
     assert isinstance(result, list)
     assert result == string_list_data
-    
+
     # Test with list of integers
     int_list_data = [1, 2, 3, 4, 5]
-    
+
     result = construct_type(type_=List[int], object_=int_list_data)
-    
+
     assert isinstance(result, list)
     assert result == int_list_data
 
@@ -361,28 +345,19 @@ def test_construct_list_with_primitive_types() -> None:
 def test_construct_nested_lists() -> None:
     """Test handling of nested lists with objects."""
     from .example_models.types.resources.types import UndiscriminatedShape
-    
+
     # Test with nested list structure
-    nested_list_data = [
-        [
-            {"radius": 1.0},
-            {"length": 4.0}
-        ],
-        [
-            {"radius": 2.0},
-            {"length": 5.0}
-        ]
-    ]
-    
+    nested_list_data = [[{"radius": 1.0}, {"length": 4.0}], [{"radius": 2.0}, {"length": 5.0}]]
+
     result = construct_type(type_=List[List[UndiscriminatedShape]], object_=nested_list_data)
-    
+
     assert isinstance(result, list)
     assert len(result) == 2
-    
+
     for sublist in result:
         assert isinstance(sublist, list)
         assert len(sublist) == 2
-        
+
         # Check first sublist
         if sublist == result[0]:
             assert isinstance(sublist[0], Circle)
@@ -405,11 +380,7 @@ def test_undiscriminated_union_with_list_types() -> None:
     TestUnion = cast(type[Any], Union[str, List[Circle], List[Square], int])
 
     # Test with list of Circle data - should match List[Circle]
-    circle_list_data = [
-        {"radius": 1.5},
-        {"radius": 2.0},
-        {"radius": 3.2}
-    ]
+    circle_list_data = [{"radius": 1.5}, {"radius": 2.0}, {"radius": 3.2}]
 
     result = construct_type(type_=TestUnion, object_=circle_list_data)
 
@@ -420,11 +391,7 @@ def test_undiscriminated_union_with_list_types() -> None:
         assert circle.radius == circle_list_data[i]["radius"]
 
     # Test with list of Square data - should match List[Square]
-    square_list_data = [
-        {"length": 4.0},
-        {"length": 5.5},
-        {"length": 6.1}
-    ]
+    square_list_data = [{"length": 4.0}, {"length": 5.5}, {"length": 6.1}]
 
     result = construct_type(type_=TestUnion, object_=square_list_data)
 
@@ -525,10 +492,7 @@ def test_undiscriminated_union_list_parsing_failures() -> None:
     assert len(result) == 0
 
     # Test with list containing invalid objects - should fallback gracefully
-    invalid_list_data = [
-        {"invalid_field": "value"},
-        {"another_invalid": 123}
-    ]
+    invalid_list_data = [{"invalid_field": "value"}, {"another_invalid": 123}]
     result = construct_type(type_=TestUnion, object_=invalid_list_data)
     # The result behavior depends on implementation - it should either parse or fallback
     assert result is not None
@@ -547,10 +511,7 @@ def test_nested_undiscriminated_union_with_lists() -> None:
     TestUnion = cast(type[Any], Union[List[List[Circle]], List[Square], str])
 
     # Test with nested list of Circles
-    nested_circle_data = [
-        [{"radius": 1.0}, {"radius": 2.0}],
-        [{"radius": 3.0}, {"radius": 4.0}]
-    ]
+    nested_circle_data = [[{"radius": 1.0}, {"radius": 2.0}], [{"radius": 3.0}, {"radius": 4.0}]]
 
     result = construct_type(type_=TestUnion, object_=nested_circle_data)
 
@@ -609,24 +570,24 @@ def test_undiscriminated_union_list_type_precedence() -> None:
 #         {"radius": 2.0},
 #         {"radius": 3.2}
 #     ]
-    
+
 #     result = construct_type(type_=set[Circle], object_=circle_set_data)
-    
+
 #     assert isinstance(result, set)
 #     assert len(result) == 3
 #     for circle in result:
 #         assert isinstance(circle, Circle)
 #         assert circle.radius in [1.5, 2.0, 3.2]
-    
+
 #     # Test with set of Square objects
 #     square_set_data = [
 #         {"length": 4.0},
 #         {"length": 5.5},
 #         {"length": 6.1}
 #     ]
-    
+
 #     result = construct_type(type_=set[Square], object_=square_set_data)
-    
+
 #     assert isinstance(result, set)
 #     assert len(result) == 3
 #     for square in result:
@@ -644,23 +605,23 @@ def test_undiscriminated_union_list_type_precedence() -> None:
 #         {"radius": 2.5},
 #         {"radius": 3.0}
 #     ]
-    
+
 #     result = construct_type(type_=set[Circle], object_=circle_set_data)
-    
+
 #     assert isinstance(result, set)
 #     assert len(result) == 3
 #     for circle in result:
 #         assert isinstance(circle, Circle)
-    
+
 #     # Test with set of Square objects in undiscriminated union
 #     square_set_data = [
 #         {"length": 4.0},
 #         {"length": 5.0},
 #         {"length": 6.0}
 #     ]
-    
+
 #     result = construct_type(type_=set[Square], object_=square_set_data)
-    
+
 #     assert isinstance(result, set)
 #     assert len(result) == 3
 #     for square in result:
@@ -678,10 +639,10 @@ def test_undiscriminated_union_list_type_precedence() -> None:
 #         {"radius": 2.5},  # Circle
 #         {"length": 5.0},  # Square
 #     ]
-    
+
 #     # This should work with the current implementation since it processes each item individually
 #     result = construct_type(type_=set[Circle], object_=mixed_set_data)
-    
+
 #     assert isinstance(result, set)
 #     # Only Circle objects should be successfully parsed
 #     circle_count = sum(1 for item in result if isinstance(item, Circle))
@@ -693,29 +654,21 @@ def test_construct_dict_of_objects() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Test with dict of Circle objects
-    circle_dict_data = {
-        "circle1": {"radius": 1.5},
-        "circle2": {"radius": 2.0},
-        "circle3": {"radius": 3.2}
-    }
-    
+    circle_dict_data = {"circle1": {"radius": 1.5}, "circle2": {"radius": 2.0}, "circle3": {"radius": 3.2}}
+
     result = construct_type(type_=dict[str, Circle], object_=circle_dict_data)
-    
+
     assert isinstance(result, dict)
     assert len(result) == 3
     for key, circle in result.items():
         assert isinstance(circle, Circle)
         assert key in ["circle1", "circle2", "circle3"]
-    
+
     # Test with dict of Square objects
-    square_dict_data = {
-        "square1": {"length": 4.0},
-        "square2": {"length": 5.5},
-        "square3": {"length": 6.1}
-    }
-    
+    square_dict_data = {"square1": {"length": 4.0}, "square2": {"length": 5.5}, "square3": {"length": 6.1}}
+
     result = construct_type(type_=dict[str, Square], object_=square_dict_data)
-    
+
     assert isinstance(result, dict)
     assert len(result) == 3
     for key, square in result.items():
@@ -728,28 +681,20 @@ def test_construct_undiscriminated_union_with_dict() -> None:
     from .example_models.types.resources.types import Circle, Square
 
     # Test with dict of Circle objects in undiscriminated union
-    circle_dict_data = {
-        "circle1": {"radius": 1.0},
-        "circle2": {"radius": 2.5},
-        "circle3": {"radius": 3.0}
-    }
-    
+    circle_dict_data = {"circle1": {"radius": 1.0}, "circle2": {"radius": 2.5}, "circle3": {"radius": 3.0}}
+
     result = construct_type(type_=dict[str, Circle], object_=circle_dict_data)
-    
+
     assert isinstance(result, dict)
     assert len(result) == 3
     for circle in result.values():
         assert isinstance(circle, Circle)
-    
+
     # Test with dict of Square objects in undiscriminated union
-    square_dict_data = {
-        "square1": {"length": 4.0},
-        "square2": {"length": 5.0},
-        "square3": {"length": 6.0}
-    }
-    
+    square_dict_data = {"square1": {"length": 4.0}, "square2": {"length": 5.0}, "square3": {"length": 6.0}}
+
     result = construct_type(type_=dict[str, Square], object_=square_dict_data)
-    
+
     assert isinstance(result, dict)
     assert len(result) == 3
     for square in result.values():
@@ -767,14 +712,14 @@ def test_construct_undiscriminated_union_with_dict() -> None:
 #         {"radius": 2.0},  # Valid Circle
 #         {"another_invalid": 123},  # Invalid object
 #     ]
-    
+
 #     result = construct_type(type_=set[Circle], object_=invalid_set_data)
-    
+
 #     # Should still return a set, but invalid objects might be handled differently
 #     assert isinstance(result, set)
 #     # Valid objects should be correctly parsed
 #     valid_circles = [circle for circle in result if isinstance(circle, Circle)]
-    # assert len(valid_circles) > 0
+# assert len(valid_circles) > 0
 
 
 def test_construct_dict_with_invalid_objects() -> None:
@@ -788,9 +733,9 @@ def test_construct_dict_with_invalid_objects() -> None:
         "valid2": {"radius": 2.0},  # Valid Circle
         "invalid2": {"another_invalid": 123},  # Invalid object
     }
-    
+
     result = construct_type(type_=dict[str, Circle], object_=invalid_dict_data)
-    
+
     # Should still return a dict, but invalid objects might be handled differently
     assert isinstance(result, dict)
     # Valid objects should be correctly parsed
@@ -801,9 +746,9 @@ def test_construct_dict_with_invalid_objects() -> None:
 def test_construct_empty_set() -> None:
     """Test handling of empty sets in undiscriminated unions."""
     from .example_models.types.resources.types import Circle
-    
+
     result = construct_type(type_=set[Circle], object_=set())
-    
+
     assert isinstance(result, set)
     assert len(result) == 0
 
@@ -811,9 +756,9 @@ def test_construct_empty_set() -> None:
 def test_construct_empty_dict() -> None:
     """Test handling of empty dictionaries in undiscriminated unions."""
     from .example_models.types.resources.types import Circle
-    
+
     result = construct_type(type_=dict[str, Circle], object_={})
-    
+
     assert isinstance(result, dict)
     assert len(result) == 0
 
@@ -822,17 +767,17 @@ def test_construct_set_with_primitive_types() -> None:
     """Test set handling with primitive types (should not use the new set parsing logic)."""
     # Test with set of strings
     string_set_data = ["hello", "world", "test"]
-    
+
     result = construct_type(type_=set[str], object_=string_set_data)
-    
+
     assert isinstance(result, set)
     assert result == {"hello", "world", "test"}
-    
+
     # Test with set of integers
     int_set_data = [1, 2, 3, 4, 5]
-    
+
     result = construct_type(type_=set[int], object_=int_set_data)
-    
+
     assert isinstance(result, set)
     assert result == {1, 2, 3, 4, 5}
 
@@ -841,17 +786,17 @@ def test_construct_dict_with_primitive_types() -> None:
     """Test dict handling with primitive types (should not use the new dict parsing logic)."""
     # Test with dict of strings
     string_dict_data = {"key1": "value1", "key2": "value2"}
-    
+
     result = construct_type(type_=dict[str, str], object_=string_dict_data)
-    
+
     assert isinstance(result, dict)
     assert result == {"key1": "value1", "key2": "value2"}
-    
+
     # Test with dict of integers
     int_dict_data = {"a": 1, "b": 2, "c": 3}
-    
+
     result = construct_type(type_=dict[str, int], object_=int_dict_data)
-    
+
     assert isinstance(result, dict)
     assert result == {"a": 1, "b": 2, "c": 3}
 
@@ -1042,4 +987,3 @@ def test_construct_dict_with_primitive_types() -> None:
 #     assert len(result) == 1
 #     assert isinstance(list(result.values())[0], Circle)
 #     assert list(result.values())[0].radius == 1.0
-

@@ -25,9 +25,7 @@ public class Example15 {
                 .tag("tag-wf9as23d")
                 .metadata(
                     new HashMap<String, Object>() {{
-                        put("actors", new
-                        ArrayList<Object>() {Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")
-                        });
+                        put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
                         put("releaseDate", "2023-12-08");
                         put("ratings", new 
                         HashMap<String, Object>() {{put("rottenTomatoes", 97);

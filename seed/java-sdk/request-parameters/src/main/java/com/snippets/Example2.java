@@ -6,7 +6,6 @@ import com.seed.requestParameters.resources.user.types.NestedUser;
 import com.seed.requestParameters.resources.user.types.User;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -31,34 +30,26 @@ public class Example2 {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build(),
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build(),
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .keyValue(
@@ -75,33 +66,25 @@ public class Example2 {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
+                                    Arrays.asList("tags", "tags")
                                 )
                                 .build()
                         )
                         .build()
                 )
                 .excludeUser(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .filter(
-                    new ArrayList<String>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList("filter")
                 )
                 .longParam(1000000L)
                 .bigIntParam(new BigInteger("1000000"))
@@ -112,9 +95,7 @@ public class Example2 {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )

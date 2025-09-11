@@ -9,14 +9,10 @@ import pydantic
 
 
 class Square(UncheckedBaseModel):
-    length_measurement: typing_extensions.Annotated[
-        float, FieldMetadata(alias="lengthMeasurement")
-    ]
+    length_measurement: typing_extensions.Annotated[float, FieldMetadata(alias="lengthMeasurement")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

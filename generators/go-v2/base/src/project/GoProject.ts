@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
+import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
@@ -54,9 +54,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async writeGoMod(): Promise<void> {
         const moduleConfig = this.getModuleConfig({ config: this.context.config });
-        if (moduleConfig == null) {
-            return;
-        }
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
         await this.writeRawFile(moduleConfigWriter.generate());
@@ -120,39 +117,25 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    private getModuleConfig({
-        config
-    }: {
-        config: FernGeneratorExec.config.GeneratorConfig;
-    }): ModuleConfig | undefined {
-        const githubConfig = this.getGithubOutputMode({ outputMode: config.output.mode });
-        if (githubConfig == null && this.context.customConfig.module == null) {
-            return undefined;
-        }
-        if (githubConfig == null) {
-            return this.context.customConfig.module;
-        }
-        const modulePath = resolveRootImportPath({ config, customConfig: this.context.customConfig });
-        if (this.context.customConfig.module == null) {
-            return {
-                ...ModuleConfig.DEFAULT,
-                path: modulePath
-            };
-        }
-        return {
-            path: modulePath,
-            version: this.context.customConfig.module.version,
-            imports: this.context.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
-        };
-    }
-
-    private getGithubOutputMode({ outputMode }: { outputMode: OutputMode }): GithubOutputMode | undefined {
+    private getModuleConfig({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): ModuleConfig {
+        const outputMode = config.output.mode as OutputMode;
         switch (outputMode.type) {
             case "github":
-                return outputMode;
-            case "publish":
             case "downloadFiles":
-                return undefined;
+            case "publish": {
+                const modulePath = resolveRootImportPath({ config, customConfig: this.context.customConfig });
+                if (this.context.customConfig.module == null) {
+                    return {
+                        ...ModuleConfig.DEFAULT,
+                        path: modulePath
+                    };
+                }
+                return {
+                    path: this.context.customConfig.module.path,
+                    version: this.context.customConfig.module.version ?? ModuleConfig.DEFAULT.version,
+                    imports: this.context.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
+                };
+            }
             default:
                 assertNever(outputMode);
         }

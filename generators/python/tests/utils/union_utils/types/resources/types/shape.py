@@ -17,23 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def circle(self, value: resources_types_circle_Circle) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(
-                root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle")
-            )  # type: ignore
+            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
         else:
-            return Shape(
-                __root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle")
-            )  # type: ignore
+            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
 
     def square(self, value: resources_types_square_Square) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(
-                root=_Shape.Square(**value.dict(exclude_unset=True), type="square")
-            )  # type: ignore
+            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
         else:
-            return Shape(
-                __root__=_Shape.Square(**value.dict(exclude_unset=True), type="square")
-            )  # type: ignore
+            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
 
 
 class Shape(UniversalRootModel):
@@ -85,17 +77,9 @@ class Shape(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "circle":
-            return circle(
-                resources_types_circle_Circle(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return circle(resources_types_circle_Circle(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "square":
-            return square(
-                resources_types_square_Square(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return square(resources_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _Shape:

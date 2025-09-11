@@ -10,7 +10,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -113,23 +112,23 @@ public class Example5 {
                     )
                 )
                 .nullableArray(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("nullableArray", "nullableArray")
                     )
                 )
                 .optionalArray(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("optionalArray", "optionalArray")
                     )
                 )
                 .optionalNullableArray(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("optionalNullableArray", "optionalNullableArray")
                     )
                 )
                 .nullableListOfNullables(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("nullableListOfNullables", "nullableListOfNullables")
+                    Optional.of(
+                        Arrays.asList(Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))
                     )
                 )
                 .nullableMapOfNullables(
@@ -149,7 +148,7 @@ public class Example5 {
                     }}
                 )
                 .nullableListOfUnions(
-                    new ArrayList<NotificationMethod>(
+                    Optional.of(
                         Arrays.asList(
                             NotificationMethod.email(
                                 EmailNotification

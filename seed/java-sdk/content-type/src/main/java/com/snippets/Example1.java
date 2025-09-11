@@ -2,9 +2,9 @@ package com.snippets;
 
 import com.seed.contentTypes.SeedContentTypesClient;
 import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class Example1 {
                     }}
                 )
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )
