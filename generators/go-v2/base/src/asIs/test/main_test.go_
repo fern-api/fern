@@ -1,4 +1,4 @@
-package wiremock_test
+package wiremock
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"os"
 	"testing"
 
+	gowiremock "github.com/wiremock/go-wiremock"
 	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 )
 
@@ -13,7 +14,7 @@ import (
 var (
 	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
 	WireMockBaseURL   string
-	WireMockClient    *wiremocktestcontainersgo.WireMockClient
+	WireMockClient    *gowiremock.Client
 )
 
 // TestMain sets up shared test fixtures for all tests in this package

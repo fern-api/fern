@@ -4,5 +4,5 @@ export enum AsIsFiles {
     ExtraPropertiesTest = "internal/extra_properties_test.go_",
     Stringer = "internal/stringer.go_",
     Time = "internal/time.go_",
-    TestMain = "test/test_main.go_"
+    MainTest = "test/main_test.go_"
 }
