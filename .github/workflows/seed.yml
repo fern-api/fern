@@ -37,11 +37,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 30
       - name: Check for seed changes
         id: seed-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             .github/actions/cached-seed/action.yaml
             .github/actions/install/action.yaml
@@ -55,6 +56,7 @@ jobs:
         id: ruby-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/ruby/**
             seed/ruby-sdk/**
@@ -63,6 +65,7 @@ jobs:
         id: ruby-v2-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/ruby-v2/**
             seed/ruby-sdk-v2/**
@@ -70,6 +73,7 @@ jobs:
         id: openapi-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
               generators/openapi/**
               seed/openapi/**
@@ -77,6 +81,7 @@ jobs:
         id: python-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/python/**
             seed/pydantic/**
@@ -87,6 +92,7 @@ jobs:
         id: postman-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/postman/**
             seed/postman/**
@@ -94,6 +100,7 @@ jobs:
         id: java-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/java/**
             seed/java-sdk/**
@@ -103,6 +110,7 @@ jobs:
         id: typescript-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             typescript:
               generators/typescript/**
@@ -112,6 +120,7 @@ jobs:
         id: go-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/go/**
             seed/go-sdk/**
@@ -121,6 +130,7 @@ jobs:
         id: csharp-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/csharp/**
             seed/csharp-sdk/**
@@ -129,6 +139,7 @@ jobs:
         id: php-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/php/**
             seed/php-sdk/**
@@ -137,6 +148,7 @@ jobs:
         id: swift-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/swift/**
             seed/swift-sdk/**
@@ -144,6 +156,7 @@ jobs:
         id: rust-changes
         uses: tj-actions/changed-files@v46
         with:
+          fetch_depth: 30
           files: |
             generators/rust/**
             seed/rust-sdk/**
