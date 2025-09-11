@@ -1167,8 +1167,8 @@ importers:
         specifier: 53.9.0
         version: 53.9.0
       '@fern-fern/postman-sdk':
-        specifier: 0.1.2
-        version: 0.1.2
+        specifier: 0.1.3
+        version: 0.1.3
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.20
@@ -9567,8 +9567,8 @@ packages:
   '@fern-fern/legacy-docs-config@0.0.58':
     resolution: {integrity: sha512-uSGlM9UFgNsILEHxKRUm5Vi06nna9+XZTMm245o0pmLdrucHfoO9N558e6khDYtfBxPIJVGUf1C1Et04mKX0kg==}
 
-  '@fern-fern/postman-sdk@0.1.2':
-    resolution: {integrity: sha512-OOL1f3+PWl4zLNlV3Bve7h/PrMlVghFQSTScMFtqQPmjokDUl2x+TsFb9uz0hZXblVN2ARoc+x3cPG4URRUApg==}
+  '@fern-fern/postman-sdk@0.1.3':
+    resolution: {integrity: sha512-LILtsy0R7OFGQsLRgdxCFthMRTA2udfmLQgxIAtg9k5xdnO5Tcj4X6KlrZgVVRU40iHC69yyZkfL5HTEE24+TA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/snippet-sdk@0.0.6434':
@@ -16361,7 +16361,7 @@ snapshots:
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
-  '@fern-fern/postman-sdk@0.1.2': {}
+  '@fern-fern/postman-sdk@0.1.3': {}
 
   '@fern-fern/snippet-sdk@0.0.6434':
     dependencies:

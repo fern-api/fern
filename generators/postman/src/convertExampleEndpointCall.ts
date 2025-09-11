@@ -6,7 +6,7 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
+import { FernPostman } from "@fern-fern/postman-sdk";
 import { isEqual, startCase } from "lodash";
 
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
@@ -21,13 +21,13 @@ export function convertExampleEndpointCall({
     allTypes
 }: {
     ir: IntermediateRepresentation;
-    authHeaders: PostmanHeader[];
+    authHeaders: FernPostman.PostmanHeader[];
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     example: ExampleEndpointCall;
     allErrors: ErrorDeclaration[];
     allTypes: TypeDeclaration[];
-}): PostmanExampleResponse {
+}): FernPostman.PostmanExampleResponse {
     const generatedRequest = new GeneratedExampleRequest({
         ir,
         authHeaders,
@@ -63,7 +63,7 @@ export function convertExampleEndpointCall({
             },
             _other: () => ""
         }),
-        postmanPreviewlanguage: "json"
+        _postman_previewlanguage: "json"
     };
 }
 
@@ -80,7 +80,7 @@ function getNameAndStatus({
 }: {
     example: ExampleEndpointCall;
     allErrors: ErrorDeclaration[];
-}): Pick<PostmanExampleResponse, "name" | "status" | "code"> {
+}): Pick<FernPostman.PostmanExampleResponse, "name" | "status" | "code"> {
     if (example.response.type === "ok") {
         return {
             name: "Success",
