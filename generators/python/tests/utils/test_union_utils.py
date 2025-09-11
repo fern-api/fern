@@ -7,13 +7,11 @@ def test_union_utils() -> None:
     dummy = '{ "type": "circle", "radius": 1.1 }'
     circle = Shape.parse_raw(dummy)
 
-    is_circle = circle.visit(
-        circle=lambda _: True,
-        square=lambda _: False
-    )
+    is_circle = circle.visit(circle=lambda _: True, square=lambda _: False)
 
     assert is_circle
     assert circle.dict() == json.loads(dummy)
+
 
 def test_equality() -> None:
     dummy = '{ "type": "circle", "radius": 1.1 }'

@@ -25,7 +25,7 @@ class Publisher:
 
     def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_fix:
-            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache"]
+            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
             if path is not None:
                 command.append(path)
             self._run_command(
