@@ -11,33 +11,25 @@ public final class MavenCoordinateParser {
         if (coordinate == null || coordinate.trim().isEmpty()) {
             throw new IllegalArgumentException("Maven coordinate cannot be null or empty");
         }
-        
+
         String[] splitCoordinate = coordinate.split(":");
         if (splitCoordinate.length != 2) {
             throw new IllegalArgumentException(
-                "Invalid maven coordinate format. Expected 'groupId:artifactId', got: " + coordinate
-            );
+                    "Invalid maven coordinate format. Expected 'groupId:artifactId', got: " + coordinate);
         }
-        
+
         String group = splitCoordinate[0].trim();
         String artifact = splitCoordinate[1].trim();
-        
+
         if (group.isEmpty() || artifact.isEmpty()) {
-            throw new IllegalArgumentException(
-                "Group ID and Artifact ID cannot be empty in coordinate: " + coordinate
-            );
+            throw new IllegalArgumentException("Group ID and Artifact ID cannot be empty in coordinate: " + coordinate);
         }
-        
+
         if (!group.matches("[a-zA-Z0-9._-]+") || !artifact.matches("[a-zA-Z0-9._-]+")) {
-            throw new IllegalArgumentException(
-                "Invalid characters in Maven coordinate: " + coordinate
-            );
+            throw new IllegalArgumentException("Invalid characters in Maven coordinate: " + coordinate);
         }
-        
-        return MavenArtifactAndGroup.builder()
-                .group(group)
-                .artifact(artifact)
-                .build();
+
+        return MavenArtifactAndGroup.builder().group(group).artifact(artifact).build();
     }
 
     @Value.Immutable

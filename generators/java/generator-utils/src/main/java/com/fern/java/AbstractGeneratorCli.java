@@ -315,11 +315,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             IntermediateRepresentation ir,
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
-        
+
         // Note: AtomicReference is used here to capture the value from within the visitor pattern
         // Java requires effectively final variables in anonymous inner classes.
         final AtomicReference<Optional<MavenCoordinate>> maybeMavenCoordinate = new AtomicReference<>(Optional.empty());
-        
+
         Boolean generateFullProject = ir.getPublishConfig()
                 .map(publishConfig ->
                         publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
@@ -335,8 +335,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                             @Override
                             public Boolean visitFilesystem(Filesystem value) {
-                                if (value.getGenerateFullProject() && value.getPublishTarget().isPresent()) {
-                                    com.fern.ir.model.publish.PublishTarget target = value.getPublishTarget().get();
+                                if (value.getGenerateFullProject()
+                                        && value.getPublishTarget().isPresent()) {
+                                    com.fern.ir.model.publish.PublishTarget target =
+                                            value.getPublishTarget().get();
                                     target.visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
                                         @Override
                                         public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget value) {
@@ -349,15 +351,21 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                         }
 
                                         @Override
-                                        public Void visitMaven(com.fern.ir.model.publish.MavenPublishTarget mavenTarget) {
+                                        public Void visitMaven(
+                                                com.fern.ir.model.publish.MavenPublishTarget mavenTarget) {
                                             if (mavenTarget.getCoordinate().isPresent()) {
-                                                String coordinateStr = mavenTarget.getCoordinate().get();
-                                                MavenArtifactAndGroup parsed = MavenCoordinateParser.parse(coordinateStr);
+                                                String coordinateStr = mavenTarget
+                                                        .getCoordinate()
+                                                        .get();
+                                                MavenArtifactAndGroup parsed =
+                                                        MavenCoordinateParser.parse(coordinateStr);
                                                 MavenCoordinate coord = MavenCoordinate.builder()
-                                                    .group(parsed.group())
-                                                    .artifact(parsed.artifact())
-                                                    .version(mavenTarget.getVersion().orElse("0.0.0"))
-                                                    .build();
+                                                        .group(parsed.group())
+                                                        .artifact(parsed.artifact())
+                                                        .version(mavenTarget
+                                                                .getVersion()
+                                                                .orElse("0.0.0"))
+                                                        .build();
                                                 maybeMavenCoordinate.set(Optional.of(coord));
                                             }
                                             return null;
