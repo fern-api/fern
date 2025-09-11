@@ -34,8 +34,7 @@ jobs:
       swift: ${{ steps.get-generator-changes.outputs.swift.any_changed }}
       rust: ${{ steps.get-generator-changes.outputs.rust.any_changed }}
     steps:
-      - if: github.event_name != 'workflow_dispatch'
-        name: Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
