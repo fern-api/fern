@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 200
 
-      - uses: ./.github/actions/get-generator-changes
+      - uses: ./.github/actions/check-for-changed-files
         id: changes
         with:
           files: |

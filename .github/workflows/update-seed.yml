@@ -27,19 +27,19 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed.any_changed }}
-      ruby: ${{ steps.get-generator-changes.outputs.ruby.any_changed }}
-      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2.any_changed }}
-      openapi: ${{ steps.get-generator-changes.outputs.openapi.any_changed }}
-      python: ${{ steps.get-generator-changes.outputs.python.any_changed }}
-      postman: ${{ steps.get-generator-changes.outputs.postman.any_changed }}
-      java: ${{ steps.get-generator-changes.outputs.java.any_changed }}
-      typescript: ${{ steps.get-generator-changes.outputs.typescript.any_changed }}
-      go: ${{ steps.get-generator-changes.outputs.go.any_changed }}
-      csharp: ${{ steps.get-generator-changes.outputs.csharp.any_changed }}
-      php: ${{ steps.get-generator-changes.outputs.php.any_changed }}
-      swift: ${{ steps.get-generator-changes.outputs.swift.any_changed }}
-      rust: ${{ steps.get-generator-changes.outputs.rust.any_changed }}
+      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed }}
+      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
+      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
+      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
+      python: ${{ steps.get-generator-changes.outputs.python }}
+      postman: ${{ steps.get-generator-changes.outputs.postman }}
+      java: ${{ steps.get-generator-changes.outputs.java }}
+      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
+      go: ${{ steps.get-generator-changes.outputs.go }}
+      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
+      php: ${{ steps.get-generator-changes.outputs.php }}
+      swift: ${{ steps.get-generator-changes.outputs.swift }}
+      rust: ${{ steps.get-generator-changes.outputs.rust }}
     steps:
       - if: github.event_name != 'workflow_dispatch'
         name: Checkout repo
