@@ -2,6 +2,10 @@ name: Check for Changed Files
 description: Run checks to look for file changes for input paths.
 
 inputs:
+  fetch_depth:
+    description: The depth to fetch the repository, helps to speed up process to have sufficient history
+    required: false
+    default: "30"
   files:
     description: File paths to check for changes (e.g., generators/java-sdk/**, .github/actions/cached-seed/action.yaml)
     required: true
@@ -36,4 +40,5 @@ runs:
       id: check-for-changes
       uses: tj-actions/changed-files@v46
       with:
+        fetch_depth: ${{ inputs.fetch_depth }}
         files: ${{ inputs.files }}
