@@ -61,7 +61,6 @@ export class NameRegistry {
      */
     private readonly typeNames = new Map<string, Set<string>>();
 
-
     private readonly implicitNamespaces = new Set<string>();
 
     /**
@@ -240,12 +239,12 @@ export class NameRegistry {
                 }
             }
 
-            for( const each of this.implicitNamespaces) {
-                if( namespace.startsWith(each)) {
+            for (const each of this.implicitNamespaces) {
+                if (namespace.startsWith(each)) {
                     // get the next word of the namespace
                     const trimmed = namespace.split(".")[each.split(".").length];
 
-                    if( trimmed) {
+                    if (trimmed) {
                         this.trackTypeName(trimmed, namespace);
                     }
                 }
@@ -494,7 +493,6 @@ export class NameRegistry {
 
         return namespace;
     }
-
 
     public log(): void {
         const unmodified: string[] = [];

@@ -276,26 +276,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             );
 
             if (request.endpoint) {
-              try {
-                const endpoints = this.resolveEndpointLocationOrThrow(request.endpoint);
-                for (const endpoint of endpoints) {
-                    switch (endpoint.request.type) {
-                        case "inlined":
-                            this.csharp.nameRegistry.trackType(
-                                this.csharp.classReference({
-                                    name: this.getClassName(endpoint.request.declaration.name),
-                                    namespace: this.getNamespace(endpoint.request.declaration.fernFilepath)
-                                })
-                            );
-                            break;
+                try {
+                    const endpoints = this.resolveEndpointLocationOrThrow(request.endpoint);
+                    for (const endpoint of endpoints) {
+                        switch (endpoint.request.type) {
+                            case "inlined":
+                                this.csharp.nameRegistry.trackType(
+                                    this.csharp.classReference({
+                                        name: this.getClassName(endpoint.request.declaration.name),
+                                        namespace: this.getNamespace(endpoint.request.declaration.fernFilepath)
+                                    })
+                                );
+                                break;
 
-                        case "body":
-                            break;
+                            case "body":
+                                break;
+                        }
                     }
+                } catch (error) {
+                    // skip endpoints that can't be resolved
                 }
-              } catch (error) {
-                // skip endpoints that can't be resolved
-              }
             }
         }
 

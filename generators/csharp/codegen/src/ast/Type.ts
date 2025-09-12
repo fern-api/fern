@@ -318,7 +318,7 @@ export class Type extends AstNode {
                     writer.addReference(oneOf);
                     writer.writeNode(oneOf);
                 }
-               
+
                 break;
             case "oneOfBase":
                 {

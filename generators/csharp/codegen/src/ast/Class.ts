@@ -162,10 +162,10 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
-      // tell the writer of any namespaces that this class references
-      this.namespaceReferences.forEach((namespace) => {
-        writer.addNamespace(namespace);
-      });
+        // tell the writer of any namespaces that this class references
+        this.namespaceReferences.forEach((namespace) => {
+            writer.addNamespace(namespace);
+        });
 
         if (!this.isNestedClass) {
             writer.writeLine(`namespace ${this.namespace};`);
@@ -411,7 +411,7 @@ export class Class extends AstNode {
     }
 
     public addNamespaceReference(namespace: string) {
-      this.namespaceReferences.push(namespace);
+        this.namespaceReferences.push(namespace);
     }
 }
 

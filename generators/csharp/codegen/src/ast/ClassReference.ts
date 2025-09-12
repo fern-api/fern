@@ -84,9 +84,12 @@ export class ClassReference extends AstNode {
             this.csharp.nameRegistry.isAmbiguousTypeName(this.name) ||
             this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name) ||
             // check if the type is registered in another referenced namespace
-            writer.getReferencedNamespaces().some((each) => each !== this.namespace && this.csharp.nameRegistry.isRegistered(`${each}.${this.name}`));
+            writer
+                .getReferencedNamespaces()
+                .some(
+                    (each) => each !== this.namespace && this.csharp.nameRegistry.isRegistered(`${each}.${this.name}`)
+                );
 
-        
         const shouldGlobal =
             // if the type is global, then we need to globally qualify the type
             this.global ||
@@ -117,10 +120,10 @@ export class ClassReference extends AstNode {
                     });
                     // check to see if the abbreviation would be ambiguous
                     const segments = typeQualification.split(".");
-                    if( this.csharp.nameRegistry.isAmbiguousTypeName(segments[0])) {
-                      writer.write(fqName);
+                    if (this.csharp.nameRegistry.isAmbiguousTypeName(segments[0])) {
+                        writer.write(fqName);
                     } else {
-                      writer.write(`${typeQualification}${this.scopedName}`);
+                        writer.write(`${typeQualification}${this.scopedName}`);
                     }
                 } else if (isAmbiguous && this.resolveNamespace() !== writer.getNamespace()) {
                     // If the class is ambiguous and not in this specific namespace

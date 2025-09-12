@@ -1326,7 +1326,6 @@ export class CsharpGeneratorContext<
         this.csharp.nameRegistry.trackType(this.getRequestOptionsInterfaceReference());
         this.csharp.nameRegistry.trackType(this.getEnvironmentsClassReference());
 
-
         // subpackages
         Object.entries(this.ir.subpackages).forEach(([_, subpackage]) => {
             // generate the subpackage class reference and use canonicalization to ensure
@@ -1347,10 +1346,10 @@ export class CsharpGeneratorContext<
                             }
                         },
                         justRequestBody: (value) => {
-                          // no-op
+                            // no-op
                         },
                         _other: (value) => {
-                          // no-op
+                            // no-op
                         }
                     });
                 }
