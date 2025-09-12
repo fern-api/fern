@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.nullable.SeedNullableClient;
 import com.seed.nullable.resources.nullable.requests.GetUsersRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -17,19 +16,13 @@ public class Example0 {
             GetUsersRequest
                 .builder()
                 .usernames(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("usernames")
-                    )
+                    Arrays.asList(Optional.of("usernames"))
                 )
                 .activated(
-                    new ArrayList<Optional<Boolean>>(
-                        Arrays.asList(true)
-                    )
+                    Arrays.asList(Optional.of(true))
                 )
                 .tags(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("tags")
-                    )
+                    Arrays.asList("tags")
                 )
                 .avatar("avatar")
                 .extra(true)

@@ -6,7 +6,7 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 import { SeedExamplesClient } from "../../../src/Client";
 
 describe("Service", () => {
-    test("check (Example0)", async () => {
+    test("check (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
@@ -16,7 +16,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("check (Example2)", async () => {
+    test("check (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 

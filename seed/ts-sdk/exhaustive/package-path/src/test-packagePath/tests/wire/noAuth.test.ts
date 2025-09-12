@@ -7,7 +7,7 @@ import { SeedExhaustiveClient } from "../../Client.js";
 import * as SeedExhaustive from "../../api/index.js";
 
 describe("NoAuth", () => {
-    test("postWithNoAuth (91843eb7)", async () => {
+    test("postWithNoAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -27,7 +27,7 @@ describe("NoAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithNoAuth (4ca6cb0d)", async () => {
+    test("postWithNoAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };

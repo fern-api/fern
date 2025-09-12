@@ -16,7 +16,7 @@ export async function generateDocsWorkspace({
     brokenLinks,
     strictBrokenLinks,
     disableTemplates,
-    dynamicSnippets
+    disableDynamicSnippets
 }: {
     project: Project;
     cliContext: CliContext;
@@ -25,7 +25,7 @@ export async function generateDocsWorkspace({
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
-    dynamicSnippets: boolean | undefined;
+    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -91,7 +91,7 @@ export async function generateDocsWorkspace({
             instanceUrl: instance,
             preview,
             disableTemplates,
-            dynamicSnippets
+            disableDynamicSnippets
         });
     });
 }

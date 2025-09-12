@@ -16,7 +16,6 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example {
@@ -27,9 +26,7 @@ public class Example {
             .build();
 
         client.endpoints().container().getAndReturnListOfPrimitives(
-            new ArrayList<String>(
-                Arrays.asList("string", "string")
-            )
+            Arrays.asList("string", "string")
         );
     }
 }

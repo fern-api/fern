@@ -2,8 +2,8 @@ package com.snippets;
 
 import com.seed.clientSideParams.SeedClientSideParamsClient;
 import com.seed.clientSideParams.resources.service.requests.ListClientsRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example10 {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Example10 {
                 .isGlobal(true)
                 .isFirstParty(true)
                 .appType(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("app_type", "app_type")
                     )
                 )

@@ -1,3 +1,21 @@
+- version: 3.1.0
+  changelogEntry:
+    - summary: |
+        Support Maven publishTarget from IR for local filesystem SDK generation.
+      type: feat
+  createdAt: "2025-09-11"
+  irVersion: 59
+
+- version: 3.0.1
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in generated SDK snippets for collections with optional types and unknown size arrays.
+        Generated documentation (README.md and reference.md) now shows cleaner, more idiomatic Java code examples
+        using `Arrays.asList()` directly instead of unnecessary `ArrayList` wrapping.
+      type: fix
+  createdAt: "2025-09-10"
+  irVersion: 59
+
 - version: 3.0.0
   changelogEntry:
     - summary: |

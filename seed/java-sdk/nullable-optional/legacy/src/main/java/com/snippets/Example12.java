@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -24,7 +23,7 @@ public class Example12 {
                     }}
                 )
                 .includeTypes(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("includeTypes", "includeTypes")
                     )
                 )

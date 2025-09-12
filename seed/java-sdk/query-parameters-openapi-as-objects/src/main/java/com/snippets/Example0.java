@@ -7,7 +7,6 @@ import com.seed.api.types.SearchRequestNeighbor;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -32,20 +31,20 @@ public class Example0 {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -54,13 +53,13 @@ public class Example0 {
                     )
                 )
                 .excludeUser(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -69,9 +68,7 @@ public class Example0 {
                     )
                 )
                 .filter(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList(Optional.of("filter"))
                 )
                 .neighborRequired(
                     SearchRequestNeighborRequired.ofUser(
@@ -79,7 +76,7 @@ public class Example0 {
                             .builder()
                             .name("name")
                             .tags(
-                                new ArrayList<String>(
+                                Optional.of(
                                     Arrays.asList("tags", "tags")
                                 )
                             )
@@ -102,7 +99,7 @@ public class Example0 {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -115,7 +112,7 @@ public class Example0 {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -127,7 +124,7 @@ public class Example0 {
                             .builder()
                             .name("name")
                             .tags(
-                                new ArrayList<String>(
+                                Optional.of(
                                     Arrays.asList("tags", "tags")
                                 )
                             )

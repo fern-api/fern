@@ -42,8 +42,8 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.UploadDocumentRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
@@ -57,7 +57,7 @@ public class Example {
                 .builder()
                 .author("author")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )

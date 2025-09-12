@@ -1245,6 +1245,26 @@
               "type": "null"
             }
           ]
+        },
+        "php": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "swift": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2647,6 +2667,8 @@
         "go",
         "ruby",
         "csharp",
+        "php",
+        "swift",
         "nodets",
         "nodejs",
         "dotnet",

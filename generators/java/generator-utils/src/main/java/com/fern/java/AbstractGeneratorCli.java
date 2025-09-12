@@ -53,6 +53,22 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
+    /**
+     * Result object for publish configuration extraction, replacing AtomicReference pattern. This provides a cleaner
+     * approach to returning multiple values from the visitor pattern.
+     */
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    public interface PublishConfigResult {
+        boolean generateFullProject();
+
+        Optional<MavenCoordinate> mavenCoordinate();
+
+        static ImmutablePublishConfigResult.GenerateFullProjectBuildStage builder() {
+            return ImmutablePublishConfigResult.builder();
+        }
+    }
+
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface MavenPackageCoordinate {
@@ -314,36 +330,108 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             IntermediateRepresentation ir,
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
-        Boolean generateFullProject = ir.getPublishConfig()
-                .map(publishConfig ->
-                        publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
+
+        // Extract publish configuration using a cleaner object-based approach
+        PublishConfigResult publishResult = ir.getPublishConfig()
+                .map(publishConfig -> publishConfig.visit(
+                        new com.fern.ir.model.publish.PublishingConfig.Visitor<PublishConfigResult>() {
                             @Override
-                            public Boolean visitDirect(DirectPublish value) {
-                                return false;
+                            public PublishConfigResult visitDirect(DirectPublish value) {
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(false)
+                                        .mavenCoordinate(Optional.empty())
+                                        .build();
                             }
 
                             @Override
-                            public Boolean visitGithub(GithubPublish value) {
-                                return false;
+                            public PublishConfigResult visitGithub(GithubPublish value) {
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(false)
+                                        .mavenCoordinate(Optional.empty())
+                                        .build();
                             }
 
                             @Override
-                            public Boolean visitFilesystem(Filesystem value) {
-                                return value.getGenerateFullProject();
+                            public PublishConfigResult visitFilesystem(Filesystem value) {
+                                Optional<MavenCoordinate> mavenCoordinate = Optional.empty();
+
+                                if (value.getGenerateFullProject()
+                                        && value.getPublishTarget().isPresent()) {
+                                    com.fern.ir.model.publish.PublishTarget target =
+                                            value.getPublishTarget().get();
+                                    mavenCoordinate = target.visit(
+                                            new com.fern.ir.model.publish.PublishTarget.Visitor<
+                                                    Optional<MavenCoordinate>>() {
+                                                @Override
+                                                public Optional<MavenCoordinate> visitPostman(
+                                                        com.fern.ir.model.publish.PostmanPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitNpm(
+                                                        com.fern.ir.model.publish.NpmPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitMaven(
+                                                        com.fern.ir.model.publish.MavenPublishTarget mavenTarget) {
+                                                    if (mavenTarget
+                                                            .getCoordinate()
+                                                            .isPresent()) {
+                                                        String coordinateStr = mavenTarget
+                                                                .getCoordinate()
+                                                                .get();
+                                                        MavenArtifactAndGroup parsed =
+                                                                MavenCoordinateParser.parse(coordinateStr);
+                                                        MavenCoordinate coord = MavenCoordinate.builder()
+                                                                .group(parsed.group())
+                                                                .artifact(parsed.artifact())
+                                                                .version(mavenTarget
+                                                                        .getVersion()
+                                                                        .orElse("0.0.0"))
+                                                                .build();
+                                                        return Optional.of(coord);
+                                                    }
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitPypi(
+                                                        com.fern.ir.model.publish.PypiPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> _visitUnknown(Object value) {
+                                                    return Optional.empty();
+                                                }
+                                            });
+                                }
+
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(value.getGenerateFullProject())
+                                        .mavenCoordinate(mavenCoordinate)
+                                        .build();
                             }
 
                             @Override
-                            public Boolean _visitUnknown(Object value) {
+                            public PublishConfigResult _visitUnknown(Object value) {
                                 throw new RuntimeException("Encountered unknown publish config: " + value);
                             }
                         }))
-                .orElse(false);
-        if (generateFullProject) {
-            addRootProjectFiles(Optional.empty(), true, false, generatorConfig);
+                .orElse(PublishConfigResult.builder()
+                        .generateFullProject(false)
+                        .mavenCoordinate(Optional.empty())
+                        .build());
+
+        if (publishResult.generateFullProject()) {
+            addRootProjectFiles(publishResult.mavenCoordinate(), true, false, generatorConfig);
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
-        if (generateFullProject) {
+        if (publishResult.generateFullProject()) {
             runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
             runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
         }

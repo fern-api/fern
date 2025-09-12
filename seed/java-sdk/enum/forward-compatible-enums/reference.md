@@ -288,25 +288,19 @@ client.queryParam().sendList(
     SendEnumListAsQueryParamRequest
         .builder()
         .operand(
-            new ArrayList<Operand>(
-                Arrays.asList(Operand.GREATER_THAN)
-            )
+            Arrays.asList(Operand.GREATER_THAN)
         )
         .maybeOperand(
-            new ArrayList<Optional<Operand>>(
-                Arrays.asList(Operand.GREATER_THAN)
-            )
+            Arrays.asList(Optional.of(Operand.GREATER_THAN))
         )
         .operandOrColor(
-            new ArrayList<ColorOrOperand>(
-                Arrays.asList(
-                    ColorOrOperand.ofColor(Color.RED)
-                )
+            Arrays.asList(
+                ColorOrOperand.ofColor(Color.RED)
             )
         )
         .maybeOperandOrColor(
-            new ArrayList<Optional<ColorOrOperand>>(
-                Arrays.asList(
+            Arrays.asList(
+                Optional.of(
                     ColorOrOperand.ofColor(Color.RED)
                 )
             )

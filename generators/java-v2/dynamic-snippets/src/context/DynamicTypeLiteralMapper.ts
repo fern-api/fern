@@ -55,6 +55,13 @@ export class DynamicTypeLiteralMapper {
             }
             case "nullable":
             case "optional":
+                if (args.typeReference.value.type === "list") {
+                    const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
+                    return java.TypeLiteral.optional({
+                        value: listLiteral,
+                        useOf: true
+                    });
+                }
                 return java.TypeLiteral.optional({
                     value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
 
@@ -83,16 +90,26 @@ export class DynamicTypeLiteralMapper {
             });
             return java.TypeLiteral.nop();
         }
+
+        const isItemOptional = list.type === "optional" || list.type === "nullable";
+
         return java.TypeLiteral.list({
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
+                    if (isItemOptional) {
+                        return java.TypeLiteral.optional({
+                            value: this.convert({ typeReference: list.value, value: v }),
+                            useOf: true
+                        });
+                    }
                     return this.convert({ typeReference: list, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
-            })
+            }),
+            isParameter: true // For dynamic snippets, we're generating method parameters
         });
     }
 
@@ -489,7 +506,7 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getUndiscriminatedUnionFieldNameForLiteral({
-        literal
+        literal: _literal
     }: {
         literal: FernIr.dynamic.LiteralType;
     }): string | undefined {

@@ -245,9 +245,7 @@ client.user().createUser(
         .builder()
         .name("name")
         .tags(
-            new ArrayList<String>(
-                Arrays.asList("tags", "tags")
-            )
+            Arrays.asList("tags", "tags")
         )
         .build()
 );
@@ -307,9 +305,7 @@ client.user().updateUser(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )
