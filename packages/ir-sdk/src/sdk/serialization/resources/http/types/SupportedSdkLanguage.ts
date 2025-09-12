@@ -9,8 +9,31 @@ import * as core from "../../../../core";
 export const SupportedSdkLanguage: core.serialization.Schema<
     serializers.SupportedSdkLanguage.Raw,
     FernIr.SupportedSdkLanguage
-> = core.serialization.enum_(["curl", "python", "javascript", "typescript", "go", "ruby", "csharp", "java"]);
+> = core.serialization.enum_([
+    "curl",
+    "python",
+    "javascript",
+    "typescript",
+    "go",
+    "ruby",
+    "csharp",
+    "java",
+    "php",
+    "rust",
+    "swift",
+]);
 
 export declare namespace SupportedSdkLanguage {
-    export type Raw = "curl" | "python" | "javascript" | "typescript" | "go" | "ruby" | "csharp" | "java";
+    export type Raw =
+        | "curl"
+        | "python"
+        | "javascript"
+        | "typescript"
+        | "go"
+        | "ruby"
+        | "csharp"
+        | "java"
+        | "php"
+        | "rust"
+        | "swift";
 }

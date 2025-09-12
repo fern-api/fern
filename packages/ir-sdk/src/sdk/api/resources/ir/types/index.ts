@@ -1,5 +1,6 @@
 export * from "./IntermediateRepresentation";
 export * from "./ReadmeConfig";
+export * from "./ReadmeCustomSection";
 export * from "./SourceConfig";
 export * from "./ApiDefinitionSourceId";
 export * from "./ApiDefinitionSource";
