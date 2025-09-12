@@ -1,6 +1,8 @@
+use crate::color::Color;
+use crate::operand::Operand;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum ColorOrOperand {
         Color(Color),
