@@ -474,7 +474,6 @@ jobs:
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-
   rust-model:
     needs: changes
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
