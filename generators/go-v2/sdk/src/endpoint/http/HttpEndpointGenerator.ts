@@ -118,7 +118,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         streamingResponse: StreamingResponse;
     }): go.CodeBlock {
-        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        // const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const errorDecoder = undefined;
         const streamPayload = this.context.getStreamPayload(streamingResponse);
         const streamerVariable = go.codeblock("streamer");
         return go.codeblock((writer) => {
@@ -167,7 +168,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         pagination: Pagination;
     }): go.CodeBlock {
-        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        // const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const errorDecoder = undefined;
         const paginationInfo = getPaginationInfo({
             context: this.context,
             pagination,
@@ -290,7 +292,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
     }): go.CodeBlock {
-        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        // const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const errorDecoder = undefined;
         return go.codeblock((writer) => {
             writer.writeNode(
                 this.prepareRequestCall({
