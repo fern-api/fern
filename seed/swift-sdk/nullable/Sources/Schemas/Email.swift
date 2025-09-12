@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias Email = JSONValue
+public typealias Email = Nullable<String>

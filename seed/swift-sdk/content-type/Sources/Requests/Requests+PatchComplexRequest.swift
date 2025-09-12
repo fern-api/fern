@@ -7,11 +7,11 @@ extension Requests {
         public let active: Bool?
         public let metadata: [String: JSONValue]?
         public let tags: [String]?
-        public let email: JSONValue?
-        public let nickname: JSONValue?
-        public let bio: JSONValue?
-        public let profileImageUrl: JSONValue?
-        public let settings: JSONValue?
+        public let email: Nullable<String>?
+        public let nickname: Nullable<String>?
+        public let bio: Nullable<String>?
+        public let profileImageUrl: Nullable<String>?
+        public let settings: Nullable<[String: JSONValue]>?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -21,11 +21,11 @@ extension Requests {
             active: Bool? = nil,
             metadata: [String: JSONValue]? = nil,
             tags: [String]? = nil,
-            email: JSONValue? = nil,
-            nickname: JSONValue? = nil,
-            bio: JSONValue? = nil,
-            profileImageUrl: JSONValue? = nil,
-            settings: JSONValue? = nil,
+            email: Nullable<String>? = nil,
+            nickname: Nullable<String>? = nil,
+            bio: Nullable<String>? = nil,
+            profileImageUrl: Nullable<String>? = nil,
+            settings: Nullable<[String: JSONValue]>? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.name = name
@@ -48,11 +48,11 @@ extension Requests {
             self.active = try container.decodeIfPresent(Bool.self, forKey: .active)
             self.metadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .metadata)
             self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
-            self.email = try container.decodeIfPresent(JSONValue.self, forKey: .email)
-            self.nickname = try container.decodeIfPresent(JSONValue.self, forKey: .nickname)
-            self.bio = try container.decodeIfPresent(JSONValue.self, forKey: .bio)
-            self.profileImageUrl = try container.decodeIfPresent(JSONValue.self, forKey: .profileImageUrl)
-            self.settings = try container.decodeIfPresent(JSONValue.self, forKey: .settings)
+            self.email = try container.decodeNullableIfPresent(String.self, forKey: .email)
+            self.nickname = try container.decodeNullableIfPresent(String.self, forKey: .nickname)
+            self.bio = try container.decodeNullableIfPresent(String.self, forKey: .bio)
+            self.profileImageUrl = try container.decodeNullableIfPresent(String.self, forKey: .profileImageUrl)
+            self.settings = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .settings)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -64,11 +64,11 @@ extension Requests {
             try container.encodeIfPresent(self.active, forKey: .active)
             try container.encodeIfPresent(self.metadata, forKey: .metadata)
             try container.encodeIfPresent(self.tags, forKey: .tags)
-            try container.encodeIfPresent(self.email, forKey: .email)
-            try container.encodeIfPresent(self.nickname, forKey: .nickname)
-            try container.encodeIfPresent(self.bio, forKey: .bio)
-            try container.encodeIfPresent(self.profileImageUrl, forKey: .profileImageUrl)
-            try container.encodeIfPresent(self.settings, forKey: .settings)
+            try container.encodeNullableIfPresent(self.email, forKey: .email)
+            try container.encodeNullableIfPresent(self.nickname, forKey: .nickname)
+            try container.encodeNullableIfPresent(self.bio, forKey: .bio)
+            try container.encodeNullableIfPresent(self.profileImageUrl, forKey: .profileImageUrl)
+            try container.encodeNullableIfPresent(self.settings, forKey: .settings)
         }
 
         /// Keys for encoding/decoding struct properties.

@@ -6,7 +6,7 @@ extension Requests {
         public let optionalString: String?
         public let optionalInteger: Int?
         public let optionalBoolean: Bool?
-        public let nullableString: JSONValue
+        public let nullableString: Nullable<String>
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -15,7 +15,7 @@ extension Requests {
             optionalString: String? = nil,
             optionalInteger: Int? = nil,
             optionalBoolean: Bool? = nil,
-            nullableString: JSONValue,
+            nullableString: Nullable<String>,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.requiredField = requiredField
@@ -32,7 +32,7 @@ extension Requests {
             self.optionalString = try container.decodeIfPresent(String.self, forKey: .optionalString)
             self.optionalInteger = try container.decodeIfPresent(Int.self, forKey: .optionalInteger)
             self.optionalBoolean = try container.decodeIfPresent(Bool.self, forKey: .optionalBoolean)
-            self.nullableString = try container.decode(JSONValue.self, forKey: .nullableString)
+            self.nullableString = try container.decode(Nullable<String>.self, forKey: .nullableString)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

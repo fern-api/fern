@@ -38,8 +38,9 @@ export class DynamicTypeMapper {
                 return this.convertNamed({ named });
             }
             case "optional":
-            case "nullable":
                 return swift.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+            case "nullable":
+                return swift.Type.nullable(this.convert({ typeReference: args.typeReference.value }));
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":

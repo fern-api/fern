@@ -2,17 +2,17 @@ import Foundation
 
 public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let username: String
-    public let email: JSONValue
+    public let email: Nullable<String>
     public let phone: String?
-    public let address: JSONValue?
+    public let address: Nullable<Address>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         username: String,
-        email: JSONValue,
+        email: Nullable<String>,
         phone: String? = nil,
-        address: JSONValue? = nil,
+        address: Nullable<Address>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.username = username
@@ -25,9 +25,9 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.username = try container.decode(String.self, forKey: .username)
-        self.email = try container.decode(JSONValue.self, forKey: .email)
+        self.email = try container.decode(Nullable<String>.self, forKey: .email)
         self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
-        self.address = try container.decodeIfPresent(JSONValue.self, forKey: .address)
+        self.address = try container.decodeNullableIfPresent(Address.self, forKey: .address)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -37,7 +37,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         try container.encode(self.username, forKey: .username)
         try container.encode(self.email, forKey: .email)
         try container.encodeIfPresent(self.phone, forKey: .phone)
-        try container.encodeIfPresent(self.address, forKey: .address)
+        try container.encodeNullableIfPresent(self.address, forKey: .address)
     }
 
     /// Keys for encoding/decoding struct properties.

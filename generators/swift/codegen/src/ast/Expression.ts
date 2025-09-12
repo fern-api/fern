@@ -16,6 +16,7 @@ type Reference = {
 type MemberAccess = {
     type: "member-access";
     target: Expression | Type;
+    optionalChain?: true;
     memberName: string;
 };
 
@@ -210,6 +211,9 @@ export class Expression extends AstNode {
                 break;
             case "member-access":
                 this.internalExpression.target.write(writer);
+                if (this.internalExpression.optionalChain) {
+                    writer.write("?");
+                }
                 writer.write(".");
                 writer.write(this.internalExpression.memberName);
                 break;

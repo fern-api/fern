@@ -3,10 +3,10 @@ import Foundation
 public struct UserResponse: Codable, Hashable, Sendable {
     public let id: String
     public let username: String
-    public let email: JSONValue
+    public let email: Nullable<String>
     public let phone: String?
     public let createdAt: Date
-    public let updatedAt: JSONValue
+    public let updatedAt: Nullable<Date>
     public let address: Address?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
@@ -14,10 +14,10 @@ public struct UserResponse: Codable, Hashable, Sendable {
     public init(
         id: String,
         username: String,
-        email: JSONValue,
+        email: Nullable<String>,
         phone: String? = nil,
         createdAt: Date,
-        updatedAt: JSONValue,
+        updatedAt: Nullable<Date>,
         address: Address? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -35,10 +35,10 @@ public struct UserResponse: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.username = try container.decode(String.self, forKey: .username)
-        self.email = try container.decode(JSONValue.self, forKey: .email)
+        self.email = try container.decode(Nullable<String>.self, forKey: .email)
         self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(JSONValue.self, forKey: .updatedAt)
+        self.updatedAt = try container.decode(Nullable<Date>.self, forKey: .updatedAt)
         self.address = try container.decodeIfPresent(Address.self, forKey: .address)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

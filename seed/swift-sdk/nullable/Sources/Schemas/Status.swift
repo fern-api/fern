@@ -57,12 +57,12 @@ public enum Status: Codable, Hashable, Sendable {
 
     public struct Archived: Codable, Hashable, Sendable {
         public let type: String = "archived"
-        public let value: JSONValue
+        public let value: Nullable<Date>
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: JSONValue,
+            value: Nullable<Date>,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -71,7 +71,7 @@ public enum Status: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(JSONValue.self, forKey: .value)
+            self.value = try container.decode(Nullable<Date>.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

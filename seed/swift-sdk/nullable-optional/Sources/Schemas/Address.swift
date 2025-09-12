@@ -3,10 +3,10 @@ import Foundation
 /// Nested object for testing
 public struct Address: Codable, Hashable, Sendable {
     public let street: String
-    public let city: JSONValue
+    public let city: Nullable<String>
     public let state: String?
     public let zipCode: String
-    public let country: JSONValue?
+    public let country: Nullable<String>?
     public let buildingId: NullableUserId
     public let tenantId: OptionalUserId
     /// Additional properties that are not explicitly defined in the schema
@@ -14,10 +14,10 @@ public struct Address: Codable, Hashable, Sendable {
 
     public init(
         street: String,
-        city: JSONValue,
+        city: Nullable<String>,
         state: String? = nil,
         zipCode: String,
-        country: JSONValue? = nil,
+        country: Nullable<String>? = nil,
         buildingId: NullableUserId,
         tenantId: OptionalUserId,
         additionalProperties: [String: JSONValue] = .init()
@@ -35,10 +35,10 @@ public struct Address: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.street = try container.decode(String.self, forKey: .street)
-        self.city = try container.decode(JSONValue.self, forKey: .city)
+        self.city = try container.decode(Nullable<String>.self, forKey: .city)
         self.state = try container.decodeIfPresent(String.self, forKey: .state)
         self.zipCode = try container.decode(String.self, forKey: .zipCode)
-        self.country = try container.decodeIfPresent(JSONValue.self, forKey: .country)
+        self.country = try container.decodeNullableIfPresent(String.self, forKey: .country)
         self.buildingId = try container.decode(NullableUserId.self, forKey: .buildingId)
         self.tenantId = try container.decode(OptionalUserId.self, forKey: .tenantId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -51,7 +51,7 @@ public struct Address: Codable, Hashable, Sendable {
         try container.encode(self.city, forKey: .city)
         try container.encodeIfPresent(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
-        try container.encodeIfPresent(self.country, forKey: .country)
+        try container.encodeNullableIfPresent(self.country, forKey: .country)
         try container.encode(self.buildingId, forKey: .buildingId)
         try container.encode(self.tenantId, forKey: .tenantId)
     }

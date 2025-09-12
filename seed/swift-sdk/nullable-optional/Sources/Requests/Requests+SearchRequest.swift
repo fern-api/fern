@@ -3,15 +3,15 @@ import Foundation
 extension Requests {
     public struct SearchRequest: Codable, Hashable, Sendable {
         public let query: String
-        public let filters: [String: JSONValue]?
-        public let includeTypes: JSONValue
+        public let filters: [String: Nullable<String>]?
+        public let includeTypes: Nullable<[String]>
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
             query: String,
-            filters: [String: JSONValue]? = nil,
-            includeTypes: JSONValue,
+            filters: [String: Nullable<String>]? = nil,
+            includeTypes: Nullable<[String]>,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.query = query
@@ -23,8 +23,8 @@ extension Requests {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.query = try container.decode(String.self, forKey: .query)
-            self.filters = try container.decodeIfPresent([String: JSONValue].self, forKey: .filters)
-            self.includeTypes = try container.decode(JSONValue.self, forKey: .includeTypes)
+            self.filters = try container.decodeIfPresent([String: Nullable<String>].self, forKey: .filters)
+            self.includeTypes = try container.decode(Nullable<[String]>.self, forKey: .includeTypes)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

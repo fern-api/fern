@@ -5,7 +5,7 @@ extension Requests {
         public let username: String
         public let tags: [String]?
         public let metadata: Metadata?
-        public let avatar: JSONValue?
+        public let avatar: Nullable<String>?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -13,7 +13,7 @@ extension Requests {
             username: String,
             tags: [String]? = nil,
             metadata: Metadata? = nil,
-            avatar: JSONValue? = nil,
+            avatar: Nullable<String>? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.username = username
@@ -28,7 +28,7 @@ extension Requests {
             self.username = try container.decode(String.self, forKey: .username)
             self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
             self.metadata = try container.decodeIfPresent(Metadata.self, forKey: .metadata)
-            self.avatar = try container.decodeIfPresent(JSONValue.self, forKey: .avatar)
+            self.avatar = try container.decodeNullableIfPresent(String.self, forKey: .avatar)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -38,7 +38,7 @@ extension Requests {
             try container.encode(self.username, forKey: .username)
             try container.encodeIfPresent(self.tags, forKey: .tags)
             try container.encodeIfPresent(self.metadata, forKey: .metadata)
-            try container.encodeIfPresent(self.avatar, forKey: .avatar)
+            try container.encodeNullableIfPresent(self.avatar, forKey: .avatar)
         }
 
         /// Keys for encoding/decoding struct properties.
