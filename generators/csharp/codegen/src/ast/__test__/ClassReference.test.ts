@@ -1,4 +1,4 @@
-import { CSharp, ast } from "../..";
+import { CSharp } from "../..";
 
 const csharp = new CSharp();
 describe("class reference", () => {

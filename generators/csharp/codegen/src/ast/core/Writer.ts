@@ -92,6 +92,10 @@ export class Writer extends AbstractWriter {
         return alias;
     }
 
+    public getReferencedNamespaces(): string[] {
+        return Object.keys(this.references);
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }

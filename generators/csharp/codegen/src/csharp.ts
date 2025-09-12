@@ -40,14 +40,10 @@ import { stacktrace } from "./utils/stacktrace";
 export class CSharp {
     public readonly nameRegistry = new NameRegistry();
 
-    constructor() {}
-
     frozen = false;
 
     freezeClassReferences() {
         this.frozen = true;
-        // dump the name registry to a file
-        // this.log();
     }
     seen = new Map<string, number>();
 
@@ -659,14 +655,6 @@ export class CSharp {
         },
 
         reference: (value: AstNode) => {
-            if (value instanceof ClassReference) {
-                console.log(`Why are you using a classReference: ${value.namespace}.${value.name}`);
-                console.log(
-                    stacktrace()
-                        .map((each) => `   ${each.fn} - ${each.path}:${each.position}`)
-                        .join("\n")
-                );
-            }
             return new TypeLiteral(
                 {
                     type: "reference",

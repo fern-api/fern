@@ -5,9 +5,9 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { Config } from "./Config";
+import { SNIPPET_NAMESPACE } from "./constants";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
-import { SNIPPET_NAMESPACE } from "./constants";
 
 const SNIPPET_CLASS_NAME = "Example";
 const SNIPPET_METHOD_NAME = "Do";
@@ -98,6 +98,11 @@ export class EndpointSnippetGenerator {
             namespace: SNIPPET_NAMESPACE,
             access: ast.Access.Public
         });
+
+        // before we add the method, we're going to make the class aware of the root client namespace 
+        // which can help when finding out if we're going to have an ambiguous type of some kind.
+        class_.addNamespaceReference(this.context.getRootClientClassReference().namespace);
+
         class_.addMethod(
             this.csharp.method({
                 name: SNIPPET_METHOD_NAME,

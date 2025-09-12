@@ -79,31 +79,24 @@ export class ClassReference extends AstNode {
     }
 
     private writeInternal(writer: Writer, isAttribute: boolean): void {
-        // the name without any namespace qualifier, but with the enclosing type if it exists
-        // const scopedName = this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
-
         // if the name (or the enclosing type name) is ambiguous
-        // const isAmbiguous = nameRegistry.isAmbiguousTypeName(scopedName) || nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
         const isAmbiguous =
             this.csharp.nameRegistry.isAmbiguousTypeName(this.name) ||
-            this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
+            this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name) ||
+            // check if the type is registered in another referenced namespace
+            writer.getReferencedNamespaces().some((each) => each !== this.namespace && this.csharp.nameRegistry.isRegistered(`${each}.${this.name}`));
 
-        // if the first segment in a fqname is ambiguous, then we need to globally qualify the type
+        
         const shouldGlobal =
+            // if the type is global, then we need to globally qualify the type
             this.global ||
+            // if the first segment in a fqname is ambiguous, then we need to globally qualify the type if it gets expanded
             this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
+            // or we always are going to be using fully qualified namespaces
             writer.shouldUseFullyQualifiedNamespaces();
 
-        // the fully qualified namespace of the type
-        // const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
-        // const fqNamespace = this.enclosingType?.namespace ?? this.namespace;
-
-        // the fully qualified name of the type (including the namespace and enclosing type if it exists)
-        // const fqName = `${fqNamespace}.${scopedName}`;
-        // const fqName = this.fullyQualifiedName;
-
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const globalFqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
+        const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
 
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
@@ -111,8 +104,8 @@ export class ClassReference extends AstNode {
         } else {
             if (this.fullyQualified) {
                 // explicitly express namespaces
-                writer.addReference(this);
-                writer.write(globalFqName);
+                //writer.addReference(this);
+                writer.write(fqName);
             } else {
                 // if the class needs to be partially qualified, or we're skipping imports,
                 // we need to at least partially qualify the type
@@ -122,12 +115,18 @@ export class ClassReference extends AstNode {
                         namespaceToBeWrittenTo: writer.getNamespace(),
                         isAttribute
                     });
-                    writer.write(`${typeQualification}${this.scopedName}`);
+                    // check to see if the abbreviation would be ambiguous
+                    const segments = typeQualification.split(".");
+                    if( this.csharp.nameRegistry.isAmbiguousTypeName(segments[0])) {
+                      writer.write(fqName);
+                    } else {
+                      writer.write(`${typeQualification}${this.scopedName}`);
+                    }
                 } else if (isAmbiguous && this.resolveNamespace() !== writer.getNamespace()) {
                     // If the class is ambiguous and not in this specific namespace
                     // we must to fully qualify the type
-                    writer.addReference(this);
-                    writer.write(globalFqName);
+                    // writer.addReference(this);
+                    writer.write(fqName);
                 } else {
                     // If the class is not ambiguous and is in this specific namespace,
                     // we can use the short name

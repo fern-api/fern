@@ -37,6 +37,7 @@ export class Class extends AstNode {
     private readonly doc: XmlDocBlock;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
+    public readonly namespaceReferences: string[] = [];
 
     private fields: Field[] = [];
     private constructors: Class.Constructor[] = [];
@@ -161,6 +162,11 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
+      // tell the writer of any namespaces that this class references
+      this.namespaceReferences.forEach((namespace) => {
+        writer.addNamespace(namespace);
+      });
+
         if (!this.isNestedClass) {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
@@ -402,6 +408,10 @@ export class Class extends AstNode {
             writer.writeNode(operator.body);
             writer.writeLine("}");
         }
+    }
+
+    public addNamespaceReference(namespace: string) {
+      this.namespaceReferences.push(namespace);
     }
 }
 

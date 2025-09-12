@@ -117,9 +117,10 @@ export class Method extends AstNode {
                 } else {
                     // Don't add a class reference for Task<T> since we don't want the writer
                     // to detect a conflict between Task<T> and Task and add a fully qualified name
-                    writer.write("Task<");
-                    this.return.write(writer);
-                    writer.write(">");
+                    // writer.write("Task<");
+                    // this.return.write(writer);
+                    // writer.write(">");
+                    writer.writeNode(this.csharp.System.Threading.Tasks.Task(this.return));
                 }
             } else {
                 this.return.write(writer);

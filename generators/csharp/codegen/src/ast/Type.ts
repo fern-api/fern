@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { cloneDeep } from "lodash-es";
+import { type CSharp } from "../csharp";
 import { ClassReference } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { TypeParameter } from "./TypeParameter";
-import { type CSharp } from "../csharp";
 
 type InternalType =
     | Integer
@@ -313,29 +313,19 @@ export class Type extends AstNode {
                 writer.write(this.internalType.value.name);
                 break;
             case "oneOf":
-                // TODO: UNHACK THIS
-                // writer.addReference(this.nameRegistry.OneOf.OneOf());
-
-                writer.write("OneOf<");
-                this.internalType.memberValues.forEach((value, index) => {
-                    if (index !== 0) {
-                        writer.write(", ");
-                    }
-                    value.write(writer);
-                });
-                writer.write(">");
+                {
+                    const oneOf = this.csharp.OneOf.OneOf(this.internalType.memberValues);
+                    writer.addReference(oneOf);
+                    writer.writeNode(oneOf);
+                }
+               
                 break;
             case "oneOfBase":
-                // TODO: UNHACK THIS
-                // writer.addReference(this.nameRegistry.OneOf.OneOfBase());
-                writer.write("OneOfBase<");
-                this.internalType.memberValues.forEach((value, index) => {
-                    if (index !== 0) {
-                        writer.write(", ");
-                    }
-                    value.write(writer);
-                });
-                writer.write(">");
+                {
+                    const oneOfBase = this.csharp.OneOf.OneOfBase(this.internalType.memberValues);
+                    writer.addReference(oneOfBase);
+                    writer.writeNode(oneOfBase);
+                }
                 break;
             case "stringEnum":
                 // todo: how to get a proper reference to the <namespace>.StringEnum class

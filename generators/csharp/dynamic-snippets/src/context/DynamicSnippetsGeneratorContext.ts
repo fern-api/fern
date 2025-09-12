@@ -3,7 +3,7 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { BaseCsharpCustomConfigSchema, ast, CSharp } from "@fern-api/csharp-codegen";
+import { ast, BaseCsharpCustomConfigSchema, CSharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { SNIPPET_NAMESPACE } from "../constants";
@@ -25,14 +25,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     constructor({
         ir,
         config,
-        options
+        options,
+        csharp
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
+        csharp?: CSharp;
     }) {
         super({ ir, config, options });
-        this.csharp = new CSharp();
+        this.csharp = csharp ?? new CSharp();
 
         this.ir = ir;
         this.customConfig =
@@ -54,7 +56,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return new DynamicSnippetsGeneratorContext({
             ir: this.ir,
             config: this.config,
-            options: this.options
+            options: this.options,
+            csharp: this.csharp
         });
     }
 
@@ -243,6 +246,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public precalculate(requests: Partial<FernIr.dynamic.EndpointSnippetRequest>[]): void {
         console.log(`=== STARTING PRECALCULATE [DSG] ${process.pid} ===`);
+
+        this.csharp.nameRegistry.addImplicitNamespace(this.getRootNamespace());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.KeyValuePair());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.IEnumerable());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.IAsyncEnumerable());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.HashSet());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.List());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.Dictionary());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Threading.Tasks.Task());
+
         // generate the names for the model types
         Object.entries(this.ir.types)
             .sort((a, b) => {
@@ -263,6 +276,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             );
 
             if (request.endpoint) {
+              try {
                 const endpoints = this.resolveEndpointLocationOrThrow(request.endpoint);
                 for (const endpoint of endpoints) {
                     switch (endpoint.request.type) {
@@ -279,6 +293,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                             break;
                     }
                 }
+              } catch (error) {
+                // skip endpoints that can't be resolved
+              }
             }
         }
 

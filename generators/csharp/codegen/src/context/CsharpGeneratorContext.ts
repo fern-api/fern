@@ -1133,6 +1133,14 @@ export class CsharpGeneratorContext<
     precalculate() {
         console.log(`=== STARTING PRECALCULATE ${process.pid} ===`);
 
+        this.csharp.nameRegistry.addImplicitNamespace(this.getNamespace());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.KeyValuePair());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.IEnumerable());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.IAsyncEnumerable());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.HashSet());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.List());
+        this.csharp.nameRegistry.trackType(this.csharp.System.Collections.Generic.Dictionary());
+
         // types that can get used
         this.csharp.nameRegistry.trackType(this.getReadOnlyAdditionalPropertiesClassReference());
         this.csharp.nameRegistry.trackType(this.getJsonUtilsClassReference());
@@ -1186,8 +1194,6 @@ export class CsharpGeneratorContext<
                     );
 
                     for (const property of otd.properties) {
-                        // console.log(`PROP: ${property.name.name.originalName} ${property.valueType.type}`);
-                        // const type = this.csharpTypeMapper.convert({ reference: property.valueType });
                         switch (property.valueType.type) {
                             case "named":
                                 {
@@ -1320,6 +1326,7 @@ export class CsharpGeneratorContext<
         this.csharp.nameRegistry.trackType(this.getRequestOptionsInterfaceReference());
         this.csharp.nameRegistry.trackType(this.getEnvironmentsClassReference());
 
+
         // subpackages
         Object.entries(this.ir.subpackages).forEach(([_, subpackage]) => {
             // generate the subpackage class reference and use canonicalization to ensure
@@ -1337,24 +1344,15 @@ export class CsharpGeneratorContext<
                                     subpackage.service,
                                     wrapper.wrapperName
                                 );
-                                // nameRegistry.canonicalizeName(requestWrapperReference);
-                                // we don't explicity call canonicalize name now, since we assume it when this.csharp.classReference is called
                             }
                         },
                         justRequestBody: (value) => {
-                            // console.log(`REQBODY: for ${subpackage.service}::${endpoint.name.originalName}::${value.requestBodyType.type}`)
+                          // no-op
                         },
                         _other: (value) => {
-                            // console.log(`OTHER: for ${subpackage.service}::${endpoint.name.originalName}::${value.type}`)
+                          // no-op
                         }
                     });
-
-                    // const requestWrapperReference = this.getRequestWrapperReference(subpackage.service, endpoint.name);
-                    // const canonicalizedRequestWrapperReference = nameRegistry.canonicalizeName(requestWrapperReference);
-                    // console.log(
-                    // `REQWRAP: for ${subpackage.service}::${endpoint.name.originalName} -> ${requestWrapperReference.namespace}.${requestWrapperReference.name} => ${canonicalizedRequestWrapperReference.namespace}.${canonicalizedRequestWrapperReference.name}`
-                    //);
-                    // nameRegistry.canonicalizeName(this.getRequestWrapperReference(subpackage.service, endpoint.name))
                 }
             }
 
@@ -1400,9 +1398,6 @@ export class CsharpGeneratorContext<
                         name: `${this.csharpTypeMapper.convertToClassReference(typeDeclaration.name).name}Test`,
                         namespace: this.getTestNamespace()
                     });
-                    // we don't explicity call canonicalize name now, since we assume it when this.csharp.classReference is called
-                    // const newTestType = nameRegistry.canonicalizeName( testType);
-                    // console.log(`Union Test: ${testType.namespace}.${testType.name} -> ${newTestType.namespace}.${newTestType.name}`);
                 }
             }
 
