@@ -1,7 +1,7 @@
+use crate::json::Json;
 use serde::{Deserialize, Serialize};
-use crate::types::json::Json;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct NestedType {
     #[serde(flatten)]
     pub json_fields: Json,

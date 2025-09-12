@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add missing reserved keywords for Ruby language.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.3
+
+- changelogEntry:
+    - summary: |
+        Additional handling of OpenAPI parsing failures for security schemes.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.2
+
+- changelogEntry:
+    - summary: |
         Handle OpenAPI parsing failures for security schemes gracefully.
       type: fix
   irVersion: 59
