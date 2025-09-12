@@ -4,7 +4,7 @@
 [![crates.io shield](https://img.shields.io/crates/v/seed_auth_environment_variables)](https://crates.io/crates/seed_auth_environment_variables)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
-
+testing seed update
 ## Installation
 
 Add this to your `Cargo.toml`:
