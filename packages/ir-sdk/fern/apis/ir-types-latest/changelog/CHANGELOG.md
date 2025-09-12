@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: Add type reference to property paths
 
+## [v59.6.1] - 2025-09-11
+
+- Fix: Allow optional properties in Dynamic IR SDK
+
 ## [v59.6.0] - 2025-09-05
 
 - Feature: Add propertyAccess to named parameters in Dynamic IR
