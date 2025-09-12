@@ -651,7 +651,8 @@ jobs:
 
   go-fiber:
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -697,7 +698,8 @@ jobs:
 
   go-model:
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -743,7 +745,8 @@ jobs:
 
   go-sdk:
     needs: changes
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
     runs-on: Seed
     steps:
       - name: Checkout repo
