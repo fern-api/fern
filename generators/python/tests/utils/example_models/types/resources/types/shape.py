@@ -13,9 +13,7 @@ class Base(UncheckedBaseModel):
     id: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -27,9 +25,7 @@ class Shape_Circle(Base):
     radius: float
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -41,15 +37,11 @@ class Shape_Square(Base):
     length: float
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.allow
 
 
-Shape = typing_extensions.Annotated[
-    typing.Union[Shape_Circle, Shape_Square], UnionMetadata(discriminant="type")
-]
+Shape = typing_extensions.Annotated[typing.Union[Shape_Circle, Shape_Square], UnionMetadata(discriminant="type")]

@@ -20,88 +20,28 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      seed: ${{ steps.filter.outputs.seed }}
-      ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
-      openapi: ${{ steps.filter.outputs.openapi }}
-      python: ${{ steps.filter.outputs.python }}
-      postman: ${{ steps.filter.outputs.postman }}
-      java: ${{ steps.filter.outputs.java }}
-      typescript: ${{ steps.filter.outputs.typescript }}
-      go: ${{ steps.filter.outputs.go }}
-      csharp: ${{ steps.filter.outputs.csharp }}
-      php: ${{ steps.filter.outputs.php }}
-      swift: ${{ steps.filter.outputs.swift }}
-      rust: ${{ steps.filter.outputs.rust }}
+      seed: ${{ steps.get-generator-changes.outputs.seed }}
+      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
+      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
+      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
+      python: ${{ steps.get-generator-changes.outputs.python }}
+      postman: ${{ steps.get-generator-changes.outputs.postman }}
+      java: ${{ steps.get-generator-changes.outputs.java }}
+      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
+      go: ${{ steps.get-generator-changes.outputs.go }}
+      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
+      php: ${{ steps.get-generator-changes.outputs.php }}
+      swift: ${{ steps.get-generator-changes.outputs.swift }}
+      rust: ${{ steps.get-generator-changes.outputs.rust }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
-          filters: |
-            seed:
-              - '.github/actions/cached-seed/action.yaml'
-              - '.github/actions/install/action.yaml'
-              - '.github/workflows/seed.yml'
-              - 'packages/seed/**'
-              - 'packages/ir-sdk/fern/apis/**'
-              - 'packages/cli/generation/ir-generator/**'
-              - 'test-definitions/**'
-              - 'test-definitions-openapi/**'
-            ruby:
-              - 'generators/ruby/**'
-              - 'seed/ruby-sdk/**'
-              - 'seed/ruby-model/**'
-            ruby-v2:
-              - 'generators/ruby-v2/**'
-              - 'seed/ruby-sdk-v2/**'
-            openapi:
-              - 'generators/openapi/**'
-              - 'seed/openapi/**'
-            python:
-              - 'generators/python/**'
-              - 'seed/pydantic/**'
-              - 'seed/pydantic-v2/**'
-              - 'seed/python-sdk/**'
-              - 'seed/fastapi/**'
-            postman:
-              - 'generators/postman/**'
-              - 'seed/postman/**'
-            java:
-              - 'generators/java/**'
-              - 'seed/java-sdk/**'
-              - 'seed/java-model/**'
-              - 'seed/java-spring/**'
-            typescript:
-              - 'generators/typescript/**'
-              - 'seed/ts-sdk/**'
-              - 'seed/ts-express/**'
-            go:
-              - 'generators/go/**'
-              - 'seed/go-sdk/**'
-              - 'seed/go-model/**'
-              - 'seed/go-fiber/**'
-            csharp:
-              - 'generators/csharp/**'
-              - 'seed/csharp-sdk/**'
-              - 'seed/csharp-model/**'
-            php:
-              - 'generators/php/**'
-              - 'seed/php-sdk/**'
-              - 'seed/php-model/**'
-            swift:
-              - 'generators/swift/**'
-              - 'seed/swift-sdk/**'
-            rust:
-              - 'generators/rust/**'
-              - 'seed/rust-sdk/**'
-      - name: retry-on-failure
-        if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
-        env:
-          GH_REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ github.token }}
-          GH_DEBUG: api
-        run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
+          # Get sufficient history to check for changes
+          fetch-depth: 200
+      - name: Get generator changes
+        id: get-generator-changes
+        uses: ./.github/actions/get-generator-changes
 
   ruby-model:
     runs-on: Seed
@@ -389,9 +329,7 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
-          # TODO FER-6487: package.go is not a lockfile, but it is a generated file that is not deterministic
-          # Once that file is made deterministic, we can remove this exclude path
-          validation-exclude-paths: "seed/*/.mock/*,seed/go-sdk/reserved-keywords/package.go"
+          validation-exclude-paths: "seed/*/.mock/*"
 
   csharp-model:
     runs-on: Seed
