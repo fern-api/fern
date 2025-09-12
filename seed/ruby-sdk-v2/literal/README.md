@@ -17,7 +17,7 @@ require "seed"
 
 client = seed::Client.new();
 
-client.headers.send({
+client.headers.send_({
   endpointVersion:'02-12-2024',
   async:true,
   query:'query'

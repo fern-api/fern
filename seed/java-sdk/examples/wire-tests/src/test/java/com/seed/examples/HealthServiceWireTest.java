@@ -1,5 +1,6 @@
 package com.seed.examples;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -40,10 +41,18 @@ public class HealthServiceWireTest {
     public void testPing() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.health().service().ping();
+            .setBody("true"));
+        Boolean response = client.health().service().ping();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+        
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "true";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
 }
