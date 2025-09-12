@@ -29,7 +29,7 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
 
-    private hasInstalled = false;
+    private hasGeneratedLockfile = false;
     private hasFormatted = false;
     private hasBuilt = false;
 
@@ -63,12 +63,12 @@ export class PersistedTypescriptProject {
         return this.directory;
     }
 
-    public async installDependencies(logger: Logger): Promise<void> {
+    public async generateLockfile(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;
         }
 
-        if (this.hasInstalled) {
+        if (this.hasGeneratedLockfile) {
             return;
         }
 
@@ -77,22 +77,21 @@ export class PersistedTypescriptProject {
             logger
         });
 
-        await pm(["install"], {
-            env:
-                this.packageManager === "yarn"
-                    ? {
-                          // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-                      }
-                    : this.packageManager === "pnpm"
-                      ? {
-                            // allow modifying pnpm-lock.yaml, even when in CI
-                            PNPM_FROZEN_LOCKFILE: "false"
-                        }
-                      : undefined
-        });
+        await (this.packageManager === "yarn"
+            ? pm(["install", "--mode=update-lockfile", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // allow modifying pnpm-lock.yaml, even when in CI
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
 
-        this.hasInstalled = true;
+        this.hasGeneratedLockfile = true;
     }
 
     public async format(logger: Logger): Promise<void> {
@@ -103,8 +102,6 @@ export class PersistedTypescriptProject {
         if (this.hasFormatted) {
             return;
         }
-
-        await this.installDependencies(logger);
 
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
@@ -123,8 +120,6 @@ export class PersistedTypescriptProject {
         if (this.hasBuilt) {
             return;
         }
-
-        await this.format(logger);
 
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
@@ -203,7 +198,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.format(logger);
         await this.zipDirectoryContents(join(this.directory, this.srcDirectory), {
             logger,
             destinationPath,

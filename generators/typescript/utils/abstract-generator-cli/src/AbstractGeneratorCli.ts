@@ -108,6 +108,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
+            await Promise.all([typescriptProject.generateLockfile(logger), typescriptProject.format(logger)]);
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -126,7 +127,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.format(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
@@ -147,7 +147,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 },
                 downloadFiles: async () => {
                     if (this.shouldGenerateFullProject(ir)) {
-                        await typescriptProject.format(logger);
                         await typescriptProject.copyProjectTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
