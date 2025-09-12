@@ -91,6 +91,11 @@ const AsIsFileSpecs = {
         filenameWithoutExtension: "JSONValue",
         symbolNames: ["JSONValue"]
     },
+    Nullable: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "Nullable",
+        symbolNames: ["Nullable"]
+    },
     RequestOptions: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "RequestOptions",
