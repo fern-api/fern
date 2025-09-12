@@ -53,7 +53,7 @@ runs:
         commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         branch: update-${{ inputs.generator-name }}-seed
-        body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}"
+        body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }} with run ID: ${{ github.run_id }}"
         base: mallinson/test-auto-seed-update # just for testing
         delete-branch: true
         labels: |
@@ -62,21 +62,15 @@ runs:
 
     - name: Log PR Creation Failure
       if: steps.cpr.outputs.pull-request-operation != 'created'
-      env:
-        FORCE_COLOR: "2"
       shell: bash
-      # Print in yellow and reset
       run: |
-        echo -e "\033[33mPR was not created\033[0m"
+        echo "PR was not created, likely due to no diff for the generated seed output"
 
-    - name: Log PR Details
+    - name: Log PR Creation Details
       if: steps.cpr.outputs.pull-request-operation == 'created'
-      env:
-        FORCE_COLOR: "2"
       shell: bash
-      # Print in green and reset
       run: |
-        echo -e "\033[32mPR Created: ${{ steps.cpr.outputs.pull-request-url }}\033[0m"
+        echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
