@@ -21,9 +21,11 @@ export class EndpointSnippetsGenerator {
 
     private readonly context: SdkGeneratorContext;
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
+    private snippetsCacheInitialized: boolean = false;
 
     constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
+        this.snippetsCacheInitialized = false;
     }
 
     public async populateSnippetsCache(): Promise<void> {
