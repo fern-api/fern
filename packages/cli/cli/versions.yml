@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add missing reserved keywwords for Ruby language.
+        Add missing reserved keywords for Ruby language.
       type: fix
   irVersion: 59
   createdAt: "2025-09-11"
