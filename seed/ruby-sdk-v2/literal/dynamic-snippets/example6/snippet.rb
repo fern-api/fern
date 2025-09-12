@@ -2,7 +2,7 @@ require "seed"
 
 client = seed::Client.new(base_url: 'https://api.fern.com');
 
-client.query.send({
+client.query.send_({
   prompt:'You are a helpful assistant',
   optionalPrompt:'You are a helpful assistant',
   aliasPrompt:'You are a helpful assistant',

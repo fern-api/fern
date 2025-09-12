@@ -64,8 +64,8 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
+  aarch64-linux-musl
   ruby
-  x86_64-linux-musl
 
 DEPENDENCIES
   minitest (~> 5.16)

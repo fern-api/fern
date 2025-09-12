@@ -1,7 +1,6 @@
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
 import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
