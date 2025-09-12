@@ -1,3 +1,5 @@
 //! Generated models by Fern
 
-pub mod echo_request;
+pub mod types;
+
+pub use types::*;

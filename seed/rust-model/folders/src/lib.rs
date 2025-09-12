@@ -1,3 +1,5 @@
 //! Generated models by Fern
 
-pub mod foo;
+pub mod types;
+
+pub use types::*;
