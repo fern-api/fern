@@ -50,7 +50,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.csharp.Type.reference(this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName));
+        return this.csharp.Type.reference(
+            this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+        );
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -139,12 +141,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         arguments_: [
                             this.csharp.dictionary({
                                 keyType: this.csharp.Type.string(),
-                                valueType:  this.csharp.Type.string(),
+                                valueType: this.csharp.Type.string(),
                                 values: {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
                                         return {
-                                            key: this.csharp.codeblock(this.csharp.string_({ string: header.name.wireValue })),
+                                            key: this.csharp.codeblock(
+                                                this.csharp.string_({ string: header.name.wireValue })
+                                            ),
                                             value: this.stringify({
                                                 reference: header.valueType,
                                                 name: header.name.name

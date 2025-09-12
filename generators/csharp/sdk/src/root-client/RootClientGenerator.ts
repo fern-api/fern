@@ -176,7 +176,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         parameters.push(
             this.csharp.parameter({
                 name: CLIENT_OPTIONS_PARAMETER_NAME,
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.context.getClientOptionsClassReference())),
+                type: this.csharp.Type.optional(
+                    this.csharp.Type.reference(this.context.getClientOptionsClassReference())
+                ),
                 initializer: "null"
             })
         );

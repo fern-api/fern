@@ -55,7 +55,10 @@ export class ExampleGenerator {
             case "object":
                 if (Array.isArray(unknownExample)) {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value));
-                    return this.csharp.list({ entries: values, itemType: this.csharp.Type.optional(this.csharp.Type.object()) });
+                    return this.csharp.list({
+                        entries: values,
+                        itemType: this.csharp.Type.optional(this.csharp.Type.object())
+                    });
                 } else if (unknownExample != null && unknownExample instanceof Object) {
                     const keys = Object.keys(unknownExample).sort();
                     const entries = keys.map((key) => ({
@@ -151,7 +154,9 @@ export class ExampleGenerator {
     private getSnippetForContainer(c: ExampleContainer, parseDatetimes: boolean): ast.AstNode {
         return c._visit<ast.AstNode>({
             literal: (p) =>
-                this.csharp.codeblock((writer) => writer.writeNode(this.getSnippetForPrimitive(p.literal, parseDatetimes))),
+                this.csharp.codeblock((writer) =>
+                    writer.writeNode(this.getSnippetForPrimitive(p.literal, parseDatetimes))
+                ),
             list: (p) => {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })

@@ -1,4 +1,4 @@
-import {  ast } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -21,15 +21,15 @@ export function getEndpointReturnType({
 
     const streamResultType = {
         json: (jsonChunk: FernIr.JsonStreamChunk) =>
-          context.csharp.Type.reference(
-            context.csharp.classReference({
+            context.csharp.Type.reference(
+                context.csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
                     generics: [context.csharpTypeMapper.convert({ reference: jsonChunk.payload })]
                 })
             ),
         text: () =>
-          context.csharp.Type.reference(
+            context.csharp.Type.reference(
                 context.csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
@@ -59,7 +59,7 @@ export function getEndpointReturnType({
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
 
         fileDownload: () =>
-          context.csharp.Type.reference(
+            context.csharp.Type.reference(
                 context.csharp.classReference({
                     name: "Stream",
                     namespace: "System.IO",

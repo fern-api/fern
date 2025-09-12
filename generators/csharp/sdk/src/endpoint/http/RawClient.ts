@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import {  ast, Writer } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -347,7 +347,7 @@ export class RawClient {
         cancellationToken
     }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
         return this.csharp.invokeMethod({
-            on:  this.csharp.codeblock(clientReference),
+            on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
             arguments_: [request, options, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
@@ -381,7 +381,7 @@ export class RawClient {
                 assertNever(irMethod);
         }
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.context.csharp.System.Net.Http.HttpMethod);
+            writer.writeNode(this.csharp.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }

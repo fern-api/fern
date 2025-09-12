@@ -89,7 +89,10 @@ export class ClassReference extends AstNode {
             this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
 
         // if the first segment in a fqname is ambiguous, then we need to globally qualify the type
-        const shouldGlobal = this.global || this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) || writer.shouldUseFullyQualifiedNamespaces();
+        const shouldGlobal =
+            this.global ||
+            this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
+            writer.shouldUseFullyQualifiedNamespaces();
 
         // the fully qualified namespace of the type
         // const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
@@ -100,7 +103,7 @@ export class ClassReference extends AstNode {
         // const fqName = this.fullyQualifiedName;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const globalFqName = `${shouldGlobal? "global::" : ""}${this.fullyQualifiedName}`;
+        const globalFqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
 
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
@@ -262,7 +265,6 @@ export class ClassReference extends AstNode {
 
         const nameToDeconflict = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
 
-        
         // Check for direct namespace conflicts first
         if (this.hasNamespaceConflict(nameToDeconflict, currentNamespace)) {
             return true;

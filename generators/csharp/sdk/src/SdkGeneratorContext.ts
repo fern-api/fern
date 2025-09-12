@@ -31,7 +31,7 @@ import { IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME } from "./options/IdempotentR
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsInterfaceGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { ast } from '@fern-api/csharp-codegen';
+import { ast } from "@fern-api/csharp-codegen";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
@@ -65,7 +65,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
 
     public getAdditionalQueryParametersType(): ast.Type {
         return this.csharp.Type.list(
-          this.csharp.Type.reference(
+            this.csharp.Type.reference(
                 this.getKeyValuePairsClassReference({
                     key: this.csharp.Type.string(),
                     value: this.csharp.Type.string()

@@ -8,7 +8,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
-import { ast } from '@fern-api/csharp-codegen';
+import { ast } from "@fern-api/csharp-codegen";
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow

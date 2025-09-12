@@ -23,20 +23,20 @@ export class BaseOptionsGenerator {
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
-        this.BASE_URL_FIELD  = this.csharp.field({
-          access: ast.Access.Public,
-          name: BASE_URL_FIELD_NAME,
-          get: true,
-          init: true,
-          type: this.csharp.Type.optional(this.csharp.Type.string()),
-          summary: BASE_URL_SUMMARY
-      });
+        this.BASE_URL_FIELD = this.csharp.field({
+            access: ast.Access.Public,
+            name: BASE_URL_FIELD_NAME,
+            get: true,
+            init: true,
+            type: this.csharp.Type.optional(this.csharp.Type.string()),
+            summary: BASE_URL_SUMMARY
+        });
     }
     private get csharp() {
         return this.context.csharp;
     }
 
-    BASE_URL_FIELD: ast.Field
+    BASE_URL_FIELD: ast.Field;
 
     public getHttpClientField({ optional, includeInitializer }: OptionArgs): ast.Field {
         const type = this.csharp.Type.reference(this.csharp.System.Net.Http.HttpClient);
@@ -105,7 +105,7 @@ export class BaseOptionsGenerator {
     }): ast.Field {
         const type = this.csharp.Type.reference(
             this.csharp.System.Collections.Generic.IEnumerable(
-              this.csharp.Type.reference(
+                this.csharp.Type.reference(
                     this.context.getKeyValuePairsClassReference({
                         key: this.csharp.Type.string(),
                         value: this.csharp.Type.string().toOptionalIfNotAlready()
@@ -197,7 +197,7 @@ export class BaseOptionsGenerator {
 
     public getIdempotentRequestOptionFields(): ast.Field[] {
         return this.context.getIdempotencyHeaders().map((header) =>
-          this.csharp.field({
+            this.csharp.field({
                 access: ast.Access.Public,
                 name: header.name.name.pascalCase.safeName,
                 get: true,

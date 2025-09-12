@@ -32,7 +32,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     private validateCustomConfig(customConfig: ModelCustomConfigSchema): ModelCustomConfigSchema {
-      // todo: fix this
+        // todo: fix this
         // validateReadOnlyMemoryTypes(customConfig);
         return customConfig;
     }

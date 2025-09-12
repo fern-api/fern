@@ -226,7 +226,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.write(")");
                         }
                         writer.write(`${this.valuePropertyName}! : throw new `);
-                        writer.writeNode(this.context.csharp.System.Exception);
+                        writer.writeNode(this.csharp.System.Exception);
                         writer.write('("');
                         writer.writeNode(this.classReference);
                         writer.write(
@@ -259,7 +259,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     this.csharp.parameter({
                         name: "onUnknown_",
                         type: this.csharp.Type.func({
-                            typeParameters: [this.csharp.Type.string(), this.csharp.Type.object().toOptionalIfNotAlready()],
+                            typeParameters: [
+                                this.csharp.Type.string(),
+                                this.csharp.Type.object().toOptionalIfNotAlready()
+                            ],
                             returnType: tTypeParameter
                         })
                     })
@@ -299,7 +302,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     this.csharp.parameter({
                         name: "onUnknown_",
                         type: this.csharp.Type.action({
-                            typeParameters: [this.csharp.Type.string(), this.csharp.Type.object().toOptionalIfNotAlready()]
+                            typeParameters: [
+                                this.csharp.Type.string(),
+                                this.csharp.Type.object().toOptionalIfNotAlready()
+                            ]
                         })
                     })
                 ],
@@ -596,7 +602,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     }),
                     this.csharp.parameter({
                         name: "options",
-                        type: this.csharp.Type.reference(this.context.csharp.System.Text.Json.JsonSerializerOptions)
+                        type: this.csharp.Type.reference(this.csharp.System.Text.Json.JsonSerializerOptions)
                     })
                 ],
                 body: this.csharp.codeblock((writer) => {

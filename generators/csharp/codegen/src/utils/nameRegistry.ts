@@ -19,7 +19,6 @@ import { ClassReference } from "../ast/ClassReference";
 import { type CSharp } from "../csharp";
 import { builtIns } from "./knownTypes";
 
-
 /**
  * Represents a type entry in the type registry for serialization purposes.
  * This interface mirrors the ClassReference structure but is designed for JSON serialization.
@@ -299,23 +298,20 @@ export class NameRegistry {
             }
             // Track the type name and its namespace for ambiguity detection
             if (!classReference.enclosingType) {
-              // Implementation Note:
-              // if the classReference is actually a nested type, we're going to skip
-              // tracking it for ambiguity for the moment, as the ambiguity would only be if the type
-              // was rendered in the enclosing type, and I don't think that happens.
-              // regardless, if we wanted to make sure that worked, we'd have to know the scope where
-              // the node was being rendered
-              // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
-              if (this.typeNames.has(name)) {
-                  this.typeNames.get(name)?.add(namespace);
-              } else {
-                  this.typeNames.set(name, new Set([namespace]));
-              }
+                // Implementation Note:
+                // if the classReference is actually a nested type, we're going to skip
+                // tracking it for ambiguity for the moment, as the ambiguity would only be if the type
+                // was rendered in the enclosing type, and I don't think that happens.
+                // regardless, if we wanted to make sure that worked, we'd have to know the scope where
+                // the node was being rendered
+                // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
+                if (this.typeNames.has(name)) {
+                    this.typeNames.get(name)?.add(namespace);
+                } else {
+                    this.typeNames.set(name, new Set([namespace]));
+                }
             }
-            
         }
-        
-   
 
         return classReference;
     }

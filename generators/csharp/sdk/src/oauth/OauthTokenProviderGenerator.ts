@@ -170,7 +170,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             );
 
             writer.writeNodeStatement(
-              this.csharp.codeblock((writer) => {
+                this.csharp.codeblock((writer) => {
                     const requestType = this.tokenEndpoint.requestBody?._visit({
                         reference: (value) => {
                             return this.context.csharpTypeMapper.convert({ reference: value.requestBodyType });
@@ -193,13 +193,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     writer.write("var tokenResponse = ");
                     writer.writeNode(
-                      this.csharp.invokeMethod({
+                        this.csharp.invokeMethod({
                             async: true,
                             method: `${this.clientField.name}.${this.context.getEndpointMethodName(
                                 this.tokenEndpoint
                             )}`,
                             arguments_: [
-                              this.csharp.instantiateClass({
+                                this.csharp.instantiateClass({
                                     classReference: requestType.internalType.value,
                                     // TODO(dsinghvi): assumes only top level client id and client secret inputs
                                     arguments_: [
@@ -208,18 +208,14 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                                 this.scheme.configuration.tokenEndpoint.requestProperties.clientId
                                                     .property.name
                                             ),
-                                            assignment: this.csharp.codeblock(
-                                                this.CLIENT_ID_FIELD.name
-                                            )
+                                            assignment: this.csharp.codeblock(this.CLIENT_ID_FIELD.name)
                                         },
                                         {
                                             name: this.context.getNameForField(
                                                 this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
                                                     .property.name
                                             ),
-                                            assignment: this.csharp.codeblock(
-                                                this.CLIENT_SECRET_FIELD.name
-                                            )
+                                            assignment: this.csharp.codeblock(this.CLIENT_SECRET_FIELD.name)
                                         }
                                     ]
                                 })
@@ -238,9 +234,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
             if (expiresIn != null) {
                 writer.writeTextStatement(
-                    `${
-                        this.EXPIRES_AT_FIELD.name
-                    } = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
+                    `${this.EXPIRES_AT_FIELD.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
                         expiresIn.property,
                         expiresIn.propertyPath
                     )}).AddMinutes(-${this.BUFFER_IN_MINUTES_FIELD.name})`

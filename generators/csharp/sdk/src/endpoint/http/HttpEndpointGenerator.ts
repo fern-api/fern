@@ -633,7 +633,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     this.csharp.codeblock(
                         pagination.step ? `request => ${this.nullableDotGet("request", pagination.step)} ?? 0` : "null"
                     ),
-                    this.csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`),
+                    this.csharp.codeblock(
+                        `response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`
+                    ),
                     this.csharp.codeblock(
                         pagination.hasNextPage
                             ? `response => ${this.nullableDotGet("response", pagination.hasNextPage)}`
@@ -740,7 +742,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("}");
                     }),
                     this.csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.next)}`),
-                    this.csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`),
+                    this.csharp.codeblock(
+                        `response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`
+                    ),
                     this.csharp.codeblock(this.context.getCancellationTokenParameterName())
                 ]
             })
@@ -1026,13 +1030,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const name = this.getRequestOptionsParamNameForEndpoint({ endpoint });
         if (endpoint.idempotent) {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference())),
+                type: this.csharp.Type.optional(
+                    this.csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference())
+                ),
                 name,
                 initializer: "null"
             });
         } else {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.context.getRequestOptionsClassReference())),
+                type: this.csharp.Type.optional(
+                    this.csharp.Type.reference(this.context.getRequestOptionsClassReference())
+                ),
                 name,
                 initializer: "null"
             });

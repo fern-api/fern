@@ -1,7 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import {
-    ast
-} from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -157,35 +155,45 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                         cases: [
                             {
                                 label: this.csharp.codeblock((writer) => {
-                                    writer.writeNode(this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value));
+                                    writer.writeNode(
+                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                    );
                                     writer.write(".KindOneofCase.StringValue");
                                 }),
                                 value: this.csharp.codeblock("value.StringValue")
                             },
                             {
                                 label: this.csharp.codeblock((writer) => {
-                                    writer.writeNode(this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value));
+                                    writer.writeNode(
+                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                    );
                                     writer.write(".KindOneofCase.NumberValue");
                                 }),
                                 value: this.csharp.codeblock("value.NumberValue")
                             },
                             {
                                 label: this.csharp.codeblock((writer) => {
-                                    writer.writeNode(this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value));
+                                    writer.writeNode(
+                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                    );
                                     writer.write(".KindOneofCase.BoolValue");
                                 }),
                                 value: this.csharp.codeblock("value.BoolValue")
                             },
                             {
                                 label: this.csharp.codeblock((writer) => {
-                                    writer.writeNode(this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value));
+                                    writer.writeNode(
+                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                    );
                                     writer.write(".KindOneofCase.ListValue");
                                 }),
                                 value: this.csharp.codeblock("value.ListValue.Values.Select(FromProto).ToList()")
                             },
                             {
                                 label: this.csharp.codeblock((writer) => {
-                                    writer.writeNode(this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value));
+                                    writer.writeNode(
+                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                    );
                                     writer.write(".KindOneofCase.StructValue");
                                 }),
                                 value: this.csharp.invokeMethod({
@@ -234,11 +242,15 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                 body: this.newValue()
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.optional(this.csharp.Type.reference(this.classReference))),
+                parameterType: this.csharp.Type.array(
+                    this.csharp.Type.optional(this.csharp.Type.reference(this.classReference))
+                ),
                 body: this.newValue()
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.optional(this.csharp.Type.reference(this.classReference))),
+                parameterType: this.csharp.Type.listType(
+                    this.csharp.Type.optional(this.csharp.Type.reference(this.classReference))
+                ),
                 body: this.newValue()
             },
             {

@@ -21,7 +21,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
     protected doGenerate(): CSharpFile {
         const serializerAnnotation = this.csharp.annotation({
-            reference: this.context.csharp.System.Text.Json.Serialization.JsonConverter(),
+            reference: this.csharp.System.Text.Json.Serialization.JsonConverter(),
             argument: this.csharp.codeblock((writer) => {
                 writer.write("typeof(");
                 writer.writeNode(this.csharp.classReference(this.context.getEnumSerializerClassReference()));

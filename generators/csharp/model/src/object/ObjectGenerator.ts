@@ -81,7 +81,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     access: ast.Access.Private,
                     readonly: true,
                     type: this.csharp.Type.idictionary(
-                      this.csharp.Type.string(),
+                        this.csharp.Type.string(),
                         this.objectDeclaration.extraProperties
                             ? this.csharp.Type.object().toOptionalIfNotAlready()
                             : this.context.getJsonElementType(),
@@ -132,7 +132,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         }
     }
 
-  private addOnSerializing(class_: ast.Class): void {
+    private addOnSerializing(class_: ast.Class): void {
         if (this.context.generateNewAdditionalProperties()) {
             if (this.objectDeclaration.extraProperties) {
                 class_.addMethod(

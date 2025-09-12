@@ -1,9 +1,8 @@
-
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
-import { ast } from '@fern-api/csharp-codegen';
+import { ast } from "@fern-api/csharp-codegen";
 
 export interface QueryParameterCodeBlock {
     code: ast.CodeBlock;

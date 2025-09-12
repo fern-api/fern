@@ -29,7 +29,7 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
         });
         interface_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
         interface_.addMethod(
-          this.csharp.method({
+            this.csharp.method({
                 name: "GetIdempotencyHeaders",
                 access: ast.Access.Internal,
                 parameters: [],

@@ -34,7 +34,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
     protected doGenerate(): CSharpFile {
         const serializerAnnotation = this.csharp.annotation({
-            reference: this.context.csharp.System.Text.Json.Serialization.JsonConverter(),
+            reference: this.csharp.System.Text.Json.Serialization.JsonConverter(),
             argument: this.csharp.codeblock((writer) => {
                 writer.write("typeof(");
                 writer.writeNode(

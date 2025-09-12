@@ -30,7 +30,9 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.context.getGrpcRequestOptionsClassReference())),
+                type: this.csharp.Type.optional(
+                    this.csharp.Type.reference(this.context.getGrpcRequestOptionsClassReference())
+                ),
                 name: this.context.getRequestOptionsParameterName(),
                 initializer: "null"
             })
@@ -186,7 +188,8 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private invokeCallAndDecodeResponse({ return_ }: { return_: ast.Type | undefined }): ast.CodeBlock {
-        const decodeResponse = return_ != null ? this.getFromProtoMethodInvocation({ return_ }) : this.csharp.codeblock("");
+        const decodeResponse =
+            return_ != null ? this.getFromProtoMethodInvocation({ return_ }) : this.csharp.codeblock("");
         return this.csharp.codeblock((writer) => {
             writer.write("var ");
             writer.write(RESPONSE_VARIABLE_NAME);

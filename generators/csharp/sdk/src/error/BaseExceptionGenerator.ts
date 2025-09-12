@@ -13,8 +13,8 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
             parentClassReference: this.csharp.System.Exception,
             primaryConstructor: {
                 parameters: [
-                  this.csharp.parameter({ name: "message", type: this.csharp.Type.string() }),
-                  this.csharp.parameter({
+                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string() }),
+                    this.csharp.parameter({
                         name: "innerException",
                         type: this.csharp.Type.optional(this.csharp.Type.reference(this.csharp.System.Exception)),
                         initializer: "null"

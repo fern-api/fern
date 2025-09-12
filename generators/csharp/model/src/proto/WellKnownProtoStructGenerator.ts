@@ -152,15 +152,15 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             body: this.csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(
-                  this.csharp.instantiateClass({
+                    this.csharp.instantiateClass({
                         classReference: this.classReference,
                         arguments_: []
                     })
                 );
-                writer.controlFlow("foreach",this.csharp.codeblock("var kvp in value.Fields"));
+                writer.controlFlow("foreach", this.csharp.codeblock("var kvp in value.Fields"));
                 writer.write("result[kvp.Key] = ");
                 writer.writeNodeStatement(
-                  this.csharp.ternary({
+                    this.csharp.ternary({
                         condition: this.csharp.codeblock("kvp.Value != null"),
                         true_: this.csharp.invokeMethod({
                             on: this.protoValueClassReference,

@@ -50,7 +50,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                     writer.write("var deserializedObject = ");
                     writer.writeNodeStatement(
-                      this.csharp.invokeMethod({
+                        this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
                             generics: [this.csharp.Type.reference(this.classReference)],
@@ -73,7 +73,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                     writer.write("var actualElement = ");
                     writer.writeNodeStatement(
-                      this.csharp.invokeMethod({
+                        this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "SerializeToElement",
                             arguments_: [this.csharp.codeblock("actualObj")]
@@ -81,7 +81,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     );
                     writer.write("var expectedElement = ");
                     writer.writeNodeStatement(
-                      this.csharp.invokeMethod({
+                        this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
                             generics: [this.csharp.Type.reference(this.context.getJsonElementClassReference())],

@@ -24,12 +24,14 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         });
 
         class_.addField(
-          this.csharp.field({
+            this.csharp.field({
                 name: this.context.getCurrentVersionPropertyName(),
                 type: this.csharp.Type.string(),
                 access: ast.Access.Public,
                 const_: true,
-                initializer: this.csharp.codeblock(this.csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
+                initializer: this.csharp.codeblock(
+                    this.csharp.string_({ string: this.context.version ?? DEFAULT_VERSION })
+                )
             })
         );
 

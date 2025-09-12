@@ -187,7 +187,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             name: this.context.getGrpcChannelOptionsFieldName(),
             get: true,
             init: true,
-            type: this.csharp.Type.optional(this.csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
+            type: this.csharp.Type.optional(
+                this.csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())
+            ),
             summary: "The options used for gRPC client endpoints."
         });
     }
