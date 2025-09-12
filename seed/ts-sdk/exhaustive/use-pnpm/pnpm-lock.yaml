@@ -2727,16 +2727,16 @@ packages:
             }
         engines: { node: ">=8" }
 
-    tldts-core@7.0.13:
+    tldts-core@7.0.14:
         resolution:
             {
-                integrity: sha512-Td0LeWLgXJGsikI4mO82fRexgPCEyTcwWiXJERF/GBHX3Dm+HQq/wx4HnYowCbiwQ8d+ENLZc+ktbZw8H+0oEA==,
+                integrity: sha512-viZGNK6+NdluOJWwTO9olaugx0bkKhscIdriQQ+lNNhwitIKvb+SvhbYgnCz6j9p7dX3cJntt4agQAKMXLjJ5g==,
             }
 
-    tldts@7.0.13:
+    tldts@7.0.14:
         resolution:
             {
-                integrity: sha512-z/SgnxiICGb7Gli0z7ci9BZdjy1tQORUbdmzEUA7NbIJKWhdONn78Ji8gV0PAGfHPyEd+I+W2rMzhLjWkv2Olg==,
+                integrity: sha512-lMNHE4aSI3LlkMUMicTmAG3tkkitjOQGDTFboPJwAg2kJXKP1ryWEyqujktg5qhrFZOkk5YFzgkxg3jErE+i5w==,
             }
         hasBin: true
 
@@ -4921,11 +4921,11 @@ snapshots:
             glob: 7.2.3
             minimatch: 3.1.2
 
-    tldts-core@7.0.13: {}
+    tldts-core@7.0.14: {}
 
-    tldts@7.0.13:
+    tldts@7.0.14:
         dependencies:
-            tldts-core: 7.0.13
+            tldts-core: 7.0.14
 
     tmpl@1.0.5: {}
 
@@ -4942,7 +4942,7 @@ snapshots:
 
     tough-cookie@6.0.0:
         dependencies:
-            tldts: 7.0.13
+            tldts: 7.0.14
 
     tr46@3.0.0:
         dependencies:

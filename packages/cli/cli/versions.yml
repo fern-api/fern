@@ -5,6 +5,14 @@
       type: fix
   irVersion: 59
   createdAt: "2025-09-11"
+  version: 0.76.2
+
+- changelogEntry:
+    - summary: |
+        Handle OpenAPI parsing failures for security schemes gracefully.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-11"
   version: 0.76.1
 
 - changelogEntry:
