@@ -1,5 +1,6 @@
 package com.seed.examples;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -30,10 +31,23 @@ public class FileNotificationServiceWireTest {
     public void testGetException() throws Exception {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
-            .setBody("{}"));
-        client.file().notification().service().getException("notification-hsy129x");
+            .setBody("{\"type\":\"generic\",\"exceptionType\":\"Unavailable\",\"exceptionMessage\":\"This component is unavailable!\",\"exceptionStacktrace\":\"<logs>\"}"));
+        Exception response = client.file().notification().service().getException("notification-hsy129x");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+        
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = "{\n" +
+            "  \"type\": \"generic\",\n" +
+            "  \"exceptionType\": \"Unavailable\",\n" +
+            "  \"exceptionMessage\": \"This component is unavailable!\",\n" +
+            "  \"exceptionStacktrace\": \"<logs>\"\n" +
+            "}";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
     }
 }

@@ -1,0 +1,43 @@
+types:
+  Foo:
+    properties:
+      # Should not be aliased
+      id: string
+      bar: string
+      baz: string
+      qux: string
+
+      # Should be aliased
+      object_id: string
+      hash: string
+      eql: string
+      equal: string
+      method: string
+      send: string
+      respond_to: string
+      respond_to_missing: string
+      instance_of: string
+      kind_of: string
+      is_a: string
+      extend: string
+      singleton_class: string
+      instance_variables: string
+      instance_variable_get: string
+      instance_variable_set: string
+      instance_variable_defined: string
+      remove_instance_variable: string
+      public_methods: string
+      private_methods: string
+      protected_methods: string
+      singleton_methods: string
+
+service:
+  auth: false
+  base-path: /ruby-reserved-word-properties
+  endpoints:
+    get:
+      path: "/getFoo"
+      method: GET
+      response:
+        type: Foo
+        status-code: 201

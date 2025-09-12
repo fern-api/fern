@@ -61,6 +61,7 @@ allowedFailures:
   - multiple-request-bodies
   - nullable-optional
   - objects-with-imports
+  - ruby-reserved-word-properties
   - websocket-bearer-auth
   - websocket-inferred-auth
 features:
