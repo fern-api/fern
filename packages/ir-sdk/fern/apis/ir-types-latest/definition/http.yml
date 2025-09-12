@@ -523,7 +523,6 @@ types:
       - ruby
       - csharp
       - java
-      - php
 
   ExamplePathParameter:
     properties:
