@@ -67,7 +67,7 @@ export function generateIr({
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
+            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source, taskContext);
             if (convertedSecurityScheme == null) {
                 return [];
             }
