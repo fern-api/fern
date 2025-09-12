@@ -93,7 +93,8 @@ export class WireTestGenerator {
 
             const hasResponseBody = endpoint.response?.body != null;
             if (hasResponseBody) {
-                writer.writeLine(`var response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`);
+                const returnType = this.getEndpointReturnType(endpoint);
+                writer.writeLine(`${returnType} response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`);
             } else {
                 writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
             }
@@ -417,5 +418,35 @@ export class WireTestGenerator {
             success: true,
             data: {}
         });
+    }
+
+    /**
+     * Get the Java return type for an endpoint as a string.
+     * This resolves the actual type from the endpoint definition for type-safe tests.
+     */
+    private getEndpointReturnType(endpoint: HttpEndpoint): string {
+        try {
+            const javaType = this.context.getReturnTypeForEndpoint(endpoint);
+            
+            // Create a temporary writer to get the string representation
+            const simpleWriter = new java.Writer({
+                packageName: this.context.getCorePackageName(),
+                customConfig: this.context.customConfig
+            });
+            
+            javaType.write(simpleWriter);
+            
+            const typeName = simpleWriter.buffer.trim();
+            
+            // Handle void case
+            if (typeName === "Void") {
+                return "void";
+            }
+            
+            return typeName;
+        } catch (error) {
+            this.context.logger.warn(`Could not resolve return type for endpoint ${endpoint.id}, using Object`);
+            return "Object";
+        }
     }
 }

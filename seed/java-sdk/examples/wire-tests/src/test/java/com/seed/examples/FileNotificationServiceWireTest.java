@@ -32,7 +32,7 @@ public class FileNotificationServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"type\":\"generic\",\"exceptionType\":\"Unavailable\",\"exceptionMessage\":\"This component is unavailable!\",\"exceptionStacktrace\":\"<logs>\"}"));
-        var response = client.file().notification().service().getException("notification-hsy129x");
+        Exception response = client.file().notification().service().getException("notification-hsy129x");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

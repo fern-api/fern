@@ -42,7 +42,7 @@ public class HealthServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("true"));
-        var response = client.health().service().ping();
+        Boolean response = client.health().service().ping();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

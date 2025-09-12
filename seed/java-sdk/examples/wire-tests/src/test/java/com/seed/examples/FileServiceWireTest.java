@@ -32,7 +32,7 @@ public class FileServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(404)
             .setBody("\"A file with that name was not found!\""));
-        var response = client.file().service().getFile(
+        File response = client.file().service().getFile(
             "file.txt",
             GetFileRequest
                 .builder()

@@ -32,7 +32,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"id\":\"movie-c06a4ad7\",\"prequel\":\"movie-cv9b914f\",\"title\":\"The Boy and the Heron\",\"from\":\"Hayao Miyazaki\",\"rating\":8,\"type\":\"movie\",\"tag\":\"tag-wf9as23d\",\"metadata\":{\"actors\":[\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"],\"releaseDate\":\"2023-12-08\",\"ratings\":{\"rottenTomatoes\":97,\"imdb\":7.6}},\"revenue\":1000000}"));
-        var response = client.service().getMovie("movie-c06a4ad7");
+        Movie response = client.service().getMovie("movie-c06a4ad7");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -50,7 +50,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"movie-c06a4ad7\""));
-        var response = client.service().createMovie(
+        String response = client.service().createMovie(
             Movie
                 .builder()
                 .id("movie-c06a4ad7")
@@ -97,7 +97,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"type\":\"html\",\"extra\":{\"version\":\"0.0.1\",\"tenancy\":\"test\"},\"tags\":[\"development\",\"public\"],\"value\":\"<head>...</head>\"}"));
-        var response = client.service().getMetadata(
+        Metadata response = client.service().getMetadata(
             GetMetadataRequest
                 .builder()
                 .xApiVersion("0.0.1")
@@ -124,7 +124,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"response\":{\"key\":\"value\"},\"identifiers\":[{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"},{\"type\":\"primitive\",\"value\":\"value\",\"label\":\"label\"}]}"));
-        var response = client.service().createBigEntity(
+        Response response = client.service().createBigEntity(
             BigEntity
                 .builder()
                 .castMember(
