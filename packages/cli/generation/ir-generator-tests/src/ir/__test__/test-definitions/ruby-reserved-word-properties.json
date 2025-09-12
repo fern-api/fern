@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:Foo": {
+        "type_service:Foo": {
             "inline": null,
             "name": {
                 "name": {
@@ -54,12 +54,50 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 },
                 "displayName": null,
-                "typeId": "type_:Foo"
+                "typeId": "type_service:Foo"
             },
             "shape": {
                 "_type": "object",
@@ -1176,18 +1214,56 @@
     },
     "errors": {},
     "services": {
-        "service_": {
+        "service_service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/ruby-reserved-word-properties",
                 "parts": []
             },
             "headers": [],
@@ -1201,7 +1277,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_.get",
+                    "id": "endpoint_service.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -1233,7 +1309,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/getFoo",
+                        "head": "/ruby-reserved-word-properties/getFoo",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1270,12 +1346,50 @@
                                         }
                                     },
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:Foo",
+                                    "typeId": "type_service:Foo",
                                     "default": null,
                                     "inline": null
                                 },
@@ -1291,8 +1405,8 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "77327e22",
-                                "url": "/getFoo",
+                                "id": "32cd3927",
+                                "url": "/ruby-reserved-word-properties/getFoo",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1355,12 +1469,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1420,12 +1572,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1485,12 +1675,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1550,12 +1778,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1615,12 +1881,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1680,12 +1984,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1745,12 +2087,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1810,12 +2190,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1875,12 +2293,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1940,12 +2396,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2005,12 +2499,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2070,12 +2602,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2135,12 +2705,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2200,12 +2808,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2265,12 +2911,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2330,12 +3014,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2395,12 +3117,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2460,12 +3220,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2525,12 +3323,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2590,12 +3426,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2655,12 +3529,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2720,12 +3632,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2785,12 +3735,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2850,12 +3838,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2915,12 +3941,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2980,12 +4044,50 @@
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Foo"
+                                                                "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -3024,12 +4126,50 @@
                                                         }
                                                     },
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": {
+                                                            "originalName": "service",
+                                                            "camelCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SERVICE",
+                                                                "safeName": "SERVICE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Service",
+                                                                "safeName": "Service"
+                                                            }
+                                                        }
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:Foo"
+                                                    "typeId": "type_service:Foo"
                                                 }
                                             },
                                             "jsonExample": {
@@ -3112,8 +4252,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_": [
-                "type_:Foo"
+            "service_service": [
+                "type_service:Foo"
             ]
         },
         "sharedTypes": []
@@ -3126,7 +4266,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:Foo": {
+            "type_service:Foo": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -3149,9 +4289,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -3915,7 +5093,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_.get": {
+            "endpoint_service.get": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -3938,14 +5116,52 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/getFoo"
+                    "path": "/ruby-reserved-word-properties/getFoo"
                 },
                 "request": {
                     "type": "body",
@@ -3963,7 +5179,84 @@
         "generatorConfig": null
     },
     "audiences": null,
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_service": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
+            },
+            "service": "service_service",
+            "types": [
+                "type_service:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -3971,12 +5264,12 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
-        "types": [
-            "type_:Foo"
-        ],
+        "service": null,
+        "types": [],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_service"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
