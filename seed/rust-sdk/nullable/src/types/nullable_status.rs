@@ -3,14 +3,14 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum Status {
-        Active,
+    Active,
 
-        Archived {
-            value: Option<chrono::DateTime<chrono::Utc>>,
-        },
+    Archived {
+        value: Option<chrono::DateTime<chrono::Utc>>,
+    },
 
-        #[serde(rename = "soft-deleted")]
-        SoftDeleted {
-            value: Option<chrono::DateTime<chrono::Utc>>,
-        },
+    #[serde(rename = "soft-deleted")]
+    SoftDeleted {
+        value: Option<chrono::DateTime<chrono::Utc>>,
+    },
 }

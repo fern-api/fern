@@ -1,5 +1,5 @@
-use crate::submission_submission_id::SubmissionId;
 use crate::submission_lightweight_stackframe_information::LightweightStackframeInformation;
+use crate::submission_submission_id::SubmissionId;
 use crate::submission_traced_file::TracedFile;
 use serde::{Deserialize, Serialize};
 

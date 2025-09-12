@@ -1,31 +1,31 @@
 use crate::submission_initialize_problem_request::InitializeProblemRequest;
+use crate::submission_stop_request::StopRequest;
 use crate::submission_submit_request_v_2::SubmitRequestV2;
 use crate::submission_workspace_submit_request::WorkspaceSubmitRequest;
-use crate::submission_stop_request::StopRequest;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionRequest {
-        InitializeProblemRequest {
-            #[serde(flatten)]
-            data: InitializeProblemRequest,
-        },
+    InitializeProblemRequest {
+        #[serde(flatten)]
+        data: InitializeProblemRequest,
+    },
 
-        InitializeWorkspaceRequest,
+    InitializeWorkspaceRequest,
 
-        SubmitV2 {
-            #[serde(flatten)]
-            data: SubmitRequestV2,
-        },
+    SubmitV2 {
+        #[serde(flatten)]
+        data: SubmitRequestV2,
+    },
 
-        WorkspaceSubmit {
-            #[serde(flatten)]
-            data: WorkspaceSubmitRequest,
-        },
+    WorkspaceSubmit {
+        #[serde(flatten)]
+        data: WorkspaceSubmitRequest,
+    },
 
-        Stop {
-            #[serde(flatten)]
-            data: StopRequest,
-        },
+    Stop {
+        #[serde(flatten)]
+        data: StopRequest,
+    },
 }

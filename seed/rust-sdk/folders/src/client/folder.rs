@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct FolderClient {
     pub http_client: HttpClient,
@@ -13,14 +13,8 @@ impl FolderClient {
     }
 
     pub async fn foo(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::POST, "", None, None, options)
+            .await
     }
-
 }
-

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod endpoints;
 pub mod inlined_requests;
@@ -22,10 +22,9 @@ impl ExhaustiveClient {
             inlined_requests: InlinedRequestsClient::new(config.clone())?,
             no_auth: NoAuthClient::new(config.clone())?,
             no_req_body: NoReqBodyClient::new(config.clone())?,
-            req_with_headers: ReqWithHeadersClient::new(config.clone())?
+            req_with_headers: ReqWithHeadersClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use endpoints::EndpointsClient;

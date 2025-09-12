@@ -1,5 +1,5 @@
-use std::collections::{HashMap};
-use std::time::{Duration};
+use std::collections::HashMap;
+use std::time::Duration;
 
 #[derive(Debug, Clone)]
 pub struct ClientConfig {
@@ -15,16 +15,16 @@ pub struct ClientConfig {
 }
 impl Default for ClientConfig {
     fn default() -> Self {
-    Self {
-        base_url: String::new(),
-        api_key: None,
-        bearer_token: None,
-        username: None,
-        password: None,
-        timeout: Duration::from_secs(60),
-        max_retries: 3,
-        custom_headers: HashMap::new(),
-        user_agent: "Literal Rust SDK".to_string()
+        Self {
+            base_url: String::new(),
+            api_key: None,
+            bearer_token: None,
+            username: None,
+            password: None,
+            timeout: Duration::from_secs(60),
+            max_retries: 3,
+            custom_headers: HashMap::new(),
+            user_agent: "Literal Rust SDK".to_string(),
+        }
     }
-}
 }

@@ -1,63 +1,63 @@
-use crate::commons_debug_map_value::DebugMapValue;
 use crate::commons_binary_tree_node_and_tree_value::BinaryTreeNodeAndTreeValue;
-use crate::commons_singly_linked_list_node_and_list_value::SinglyLinkedListNodeAndListValue;
+use crate::commons_debug_map_value::DebugMapValue;
 use crate::commons_doubly_linked_list_node_and_list_value::DoublyLinkedListNodeAndListValue;
 use crate::commons_generic_value::GenericValue;
+use crate::commons_singly_linked_list_node_and_list_value::SinglyLinkedListNodeAndListValue;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum DebugVariableValue {
-        IntegerValue {
-            value: i32,
-        },
+    IntegerValue {
+        value: i32,
+    },
 
-        BooleanValue {
-            value: bool,
-        },
+    BooleanValue {
+        value: bool,
+    },
 
-        DoubleValue {
-            value: f64,
-        },
+    DoubleValue {
+        value: f64,
+    },
 
-        StringValue {
-            value: String,
-        },
+    StringValue {
+        value: String,
+    },
 
-        CharValue {
-            value: String,
-        },
+    CharValue {
+        value: String,
+    },
 
-        MapValue {
-            #[serde(flatten)]
-            data: DebugMapValue,
-        },
+    MapValue {
+        #[serde(flatten)]
+        data: DebugMapValue,
+    },
 
-        ListValue {
-            value: Vec<DebugVariableValue>,
-        },
+    ListValue {
+        value: Vec<DebugVariableValue>,
+    },
 
-        BinaryTreeNodeValue {
-            #[serde(flatten)]
-            data: BinaryTreeNodeAndTreeValue,
-        },
+    BinaryTreeNodeValue {
+        #[serde(flatten)]
+        data: BinaryTreeNodeAndTreeValue,
+    },
 
-        SinglyLinkedListNodeValue {
-            #[serde(flatten)]
-            data: SinglyLinkedListNodeAndListValue,
-        },
+    SinglyLinkedListNodeValue {
+        #[serde(flatten)]
+        data: SinglyLinkedListNodeAndListValue,
+    },
 
-        DoublyLinkedListNodeValue {
-            #[serde(flatten)]
-            data: DoublyLinkedListNodeAndListValue,
-        },
+    DoublyLinkedListNodeValue {
+        #[serde(flatten)]
+        data: DoublyLinkedListNodeAndListValue,
+    },
 
-        UndefinedValue,
+    UndefinedValue,
 
-        NullValue,
+    NullValue,
 
-        GenericValue {
-            #[serde(flatten)]
-            data: GenericValue,
-        },
+    GenericValue {
+        #[serde(flatten)]
+        data: GenericValue,
+    },
 }

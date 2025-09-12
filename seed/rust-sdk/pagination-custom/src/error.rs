@@ -1,4 +1,4 @@
-use thiserror::{Error};
+use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
@@ -18,12 +18,11 @@ pub enum ApiError {
 
 impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
-    match status_code {
-        _ => Self::Http {
-            status: status_code,
-            message: body.unwrap_or("Unknown error").to_string()
-        },
+        match status_code {
+            _ => Self::Http {
+                status: status_code,
+                message: body.unwrap_or("Unknown error").to_string(),
+            },
+        }
     }
 }
-}
-

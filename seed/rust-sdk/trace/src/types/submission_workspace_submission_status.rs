@@ -6,23 +6,23 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum WorkspaceSubmissionStatus {
-        Stopped,
+    Stopped,
 
-        Errored {
-            value: ErrorInfo,
-        },
+    Errored {
+        value: ErrorInfo,
+    },
 
-        Running {
-            value: RunningSubmissionState,
-        },
+    Running {
+        value: RunningSubmissionState,
+    },
 
-        Ran {
-            #[serde(flatten)]
-            data: WorkspaceRunDetails,
-        },
+    Ran {
+        #[serde(flatten)]
+        data: WorkspaceRunDetails,
+    },
 
-        Traced {
-            #[serde(flatten)]
-            data: WorkspaceRunDetails,
-        },
+    Traced {
+        #[serde(flatten)]
+        data: WorkspaceRunDetails,
+    },
 }

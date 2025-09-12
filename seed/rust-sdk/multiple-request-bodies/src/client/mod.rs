@@ -1,2 +1,1 @@
-use crate::{ClientConfig, ApiError};
-
+use crate::{ApiError, ClientConfig};

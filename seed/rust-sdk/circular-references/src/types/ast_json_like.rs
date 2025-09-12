@@ -1,19 +1,19 @@
 use crate::ast_json_like::JsonLike;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum JsonLike {
-        JsonLikeList(Vec<JsonLike>),
+    JsonLikeList(Vec<JsonLike>),
 
-        Map1(HashMap<String, JsonLike>),
+    Map1(HashMap<String, JsonLike>),
 
-        String(String),
+    String(String),
 
-        Integer(i32),
+    Integer(i32),
 
-        Boolean(bool),
+    Boolean(bool),
 }
 
 impl JsonLike {
@@ -37,75 +37,73 @@ impl JsonLike {
         matches!(self, Self::Boolean(_))
     }
 
-
     pub fn as_jsonlikelist(&self) -> Option<&Vec<JsonLike>> {
         match self {
-                    Self::JsonLikeList(value) => Some(value),
-                    _ => None,
-                }
+            Self::JsonLikeList(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_jsonlikelist(self) -> Option<Vec<JsonLike>> {
         match self {
-                    Self::JsonLikeList(value) => Some(value),
-                    _ => None,
-                }
+            Self::JsonLikeList(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_map1(&self) -> Option<&HashMap<String, JsonLike>> {
         match self {
-                    Self::Map1(value) => Some(value),
-                    _ => None,
-                }
+            Self::Map1(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_map1(self) -> Option<HashMap<String, JsonLike>> {
         match self {
-                    Self::Map1(value) => Some(value),
-                    _ => None,
-                }
+            Self::Map1(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_string(&self) -> Option<&String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_integer(&self) -> Option<&i32> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_integer(self) -> Option<i32> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_boolean(&self) -> Option<&bool> {
         match self {
-                    Self::Boolean(value) => Some(value),
-                    _ => None,
-                }
+            Self::Boolean(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_boolean(self) -> Option<bool> {
         match self {
-                    Self::Boolean(value) => Some(value),
-                    _ => None,
-                }
+            Self::Boolean(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

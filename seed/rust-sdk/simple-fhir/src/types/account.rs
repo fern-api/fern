@@ -1,6 +1,6 @@
+use crate::base_resource::BaseResource;
 use crate::patient::Patient;
 use crate::practitioner::Practitioner;
-use crate::base_resource::BaseResource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

@@ -1,7 +1,7 @@
 use crate::commons_node_id::NodeId;
 use crate::commons_singly_linked_list_node_value::SinglyLinkedListNodeValue;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SinglyLinkedListValue {

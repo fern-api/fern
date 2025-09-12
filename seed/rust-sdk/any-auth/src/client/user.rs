@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct UserClient {
     pub http_client: HttpClient,
@@ -13,14 +13,8 @@ impl UserClient {
     }
 
     pub async fn get(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "users",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::POST, "users", None, None, options)
+            .await
     }
-
 }
-

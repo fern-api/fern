@@ -5,29 +5,29 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum VariableType {
-        IntegerType,
+    IntegerType,
 
-        DoubleType,
+    DoubleType,
 
-        BooleanType,
+    BooleanType,
 
-        StringType,
+    StringType,
 
-        CharType,
+    CharType,
 
-        ListType {
-            #[serde(flatten)]
-            data: ListType,
-        },
+    ListType {
+        #[serde(flatten)]
+        data: ListType,
+    },
 
-        MapType {
-            #[serde(flatten)]
-            data: MapType,
-        },
+    MapType {
+        #[serde(flatten)]
+        data: MapType,
+    },
 
-        BinaryTreeType,
+    BinaryTreeType,
 
-        SinglyLinkedListType,
+    SinglyLinkedListType,
 
-        DoublyLinkedListType,
+    DoublyLinkedListType,
 }

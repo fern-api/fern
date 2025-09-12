@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct UserClient {
     pub http_client: HttpClient,
@@ -13,30 +13,30 @@ impl UserClient {
     }
 
     pub async fn head(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::HEAD,
-            "/users",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::HEAD, "/users", None, None, options)
+            .await
     }
 
-    pub async fn list(&self, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            "/users",
-            None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = limit {
-                query_params.push(("limit".to_string(), value.to_string()));
-            }
-            Some(query_params)
-        },
-            options,
-        ).await
+    pub async fn list(
+        &self,
+        limit: Option<i32>,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<User>, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "/users",
+                None,
+                {
+                    let mut query_params = Vec::new();
+                    if let Some(value) = limit {
+                        query_params.push(("limit".to_string(), value.to_string()));
+                    }
+                    Some(query_params)
+                },
+                options,
+            )
+            .await
     }
-
 }
-

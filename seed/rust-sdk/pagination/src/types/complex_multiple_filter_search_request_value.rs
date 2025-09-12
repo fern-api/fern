@@ -5,9 +5,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum MultipleFilterSearchRequestValue {
-        MultipleFilterSearchRequestList(Vec<MultipleFilterSearchRequest>),
+    MultipleFilterSearchRequestList(Vec<MultipleFilterSearchRequest>),
 
-        SingleFilterSearchRequestList(Vec<SingleFilterSearchRequest>),
+    SingleFilterSearchRequestList(Vec<SingleFilterSearchRequest>),
 }
 
 impl MultipleFilterSearchRequestValue {
@@ -19,33 +19,31 @@ impl MultipleFilterSearchRequestValue {
         matches!(self, Self::SingleFilterSearchRequestList(_))
     }
 
-
     pub fn as_multiplefiltersearchrequestlist(&self) -> Option<&Vec<MultipleFilterSearchRequest>> {
         match self {
-                    Self::MultipleFilterSearchRequestList(value) => Some(value),
-                    _ => None,
-                }
+            Self::MultipleFilterSearchRequestList(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_multiplefiltersearchrequestlist(self) -> Option<Vec<MultipleFilterSearchRequest>> {
         match self {
-                    Self::MultipleFilterSearchRequestList(value) => Some(value),
-                    _ => None,
-                }
+            Self::MultipleFilterSearchRequestList(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_singlefiltersearchrequestlist(&self) -> Option<&Vec<SingleFilterSearchRequest>> {
         match self {
-                    Self::SingleFilterSearchRequestList(value) => Some(value),
-                    _ => None,
-                }
+            Self::SingleFilterSearchRequestList(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_singlefiltersearchrequestlist(self) -> Option<Vec<SingleFilterSearchRequest>> {
         match self {
-                    Self::SingleFilterSearchRequestList(value) => Some(value),
-                    _ => None,
-                }
+            Self::SingleFilterSearchRequestList(value) => Some(value),
+            _ => None,
+        }
     }
-
 }
