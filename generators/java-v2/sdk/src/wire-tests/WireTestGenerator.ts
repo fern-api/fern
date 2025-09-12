@@ -430,11 +430,6 @@ export class WireTestGenerator {
         return `src/test/java/${packagePath}`;
     }
 
-    /**
-     * Generate a minimal valid mock response body for an endpoint.
-     * This creates a basic JSON structure that the SDK can deserialize.
-     * Used as a fallback when no example response data is available.
-     */
     private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
         const responseBody = endpoint.response?.body;
 
@@ -451,10 +446,6 @@ export class WireTestGenerator {
         });
     }
 
-    /**
-     * Get the Java return type for an endpoint as a string.
-     * This resolves the actual type from the endpoint definition for type-safe tests.
-     */
     private getEndpointReturnType(endpoint: HttpEndpoint): string {
         try {
             const javaType = this.context.getReturnTypeForEndpoint(endpoint);
