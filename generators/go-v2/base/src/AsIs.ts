@@ -5,5 +5,6 @@ export enum AsIsFiles {
     Stringer = "internal/stringer.go_",
     Time = "internal/time.go_",
     MainTest = "test/main_test.go_",
-    ErrorCodes = "internal/error_codes.go_"
+    ErrorCodes = "internal/error_codes.go_",
+    ErrorDecoder = "internal/error_decoder.go_"
 }
