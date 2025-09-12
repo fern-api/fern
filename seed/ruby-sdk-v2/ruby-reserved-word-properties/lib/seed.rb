@@ -27,7 +27,9 @@ require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
 
 # API Types
-require_relative "seed/types/foo"
+require_relative "seed/service/types/foo"
 
 # Client Types
+require_relative "seed/client"
+require_relative "seed/service/client"
 require_relative "../README.md"

@@ -17,7 +17,7 @@ require "seed"
 
 client = seed::Client.new();
 
-client.get();
+client.service.get();
 ```
 
 ## Environments
@@ -41,7 +41,7 @@ with the Ruby Core API, so you can access the error like so:
 ```ruby
 require "seed"
 
-response = client.Get(...)
+response = client.Service.Get(...)
 rescue => error
 if error.is_a?(Core::APIError)
     # Do something with the API error ...
@@ -59,7 +59,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.Get(
+response = client.Service.Get(
     ...,
     timeout: 30  # 30 second timeout
 )

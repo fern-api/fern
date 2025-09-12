@@ -33,7 +33,7 @@ types:
 
 service:
   auth: false
-  base-path: /
+  base-path: /ruby-reserved-word-properties
   endpoints:
     get:
       path: "/getFoo"
