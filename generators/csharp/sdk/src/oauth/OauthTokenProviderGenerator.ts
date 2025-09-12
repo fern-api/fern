@@ -23,43 +23,43 @@ export declare namespace OauthTokenProviderGenerator {
 }
 
 export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
     private scheme: OAuthScheme;
     private tokenEndpointHttpService: HttpService;
     private tokenEndpointReference: EndpointReference;
     private tokenEndpoint: HttpEndpoint;
-    private clientField: csharp.Field;
+    private clientField: ast.Field;
 
     private static readonly BUFFER_IN_MINUTES_FIELD = csharp.field({
-        access: csharp.Access.Private,
+        access: ast.Access.Private,
         const_: true,
         name: "BufferInMinutes",
-        type: csharp.Type.double(),
+        type: ast.Type.double(),
         initializer: csharp.codeblock("2")
     });
 
     private static readonly ACCESS_TOKEN_FIELD = csharp.field({
-        access: csharp.Access.Private,
+        access: ast.Access.Private,
         name: "_accessToken",
-        type: csharp.Type.optional(csharp.Type.string())
+        type: ast.Type.optional(ast.Type.string())
     });
 
     private static readonly EXPIRES_AT_FIELD = csharp.field({
-        access: csharp.Access.Private,
+        access: ast.Access.Private,
         name: "_expiresAt",
-        type: csharp.Type.optional(csharp.Type.dateTime())
+        type: ast.Type.optional(ast.Type.dateTime())
     });
 
     private static readonly CLIENT_ID_FIELD = csharp.field({
-        access: csharp.Access.Private,
+        access: ast.Access.Private,
         name: "_clientId",
-        type: csharp.Type.string()
+        type: ast.Type.string()
     });
 
     private static readonly CLIENT_SECRET_FIELD = csharp.field({
-        access: csharp.Access.Private,
+        access: ast.Access.Private,
         name: "_clientSecret",
-        type: csharp.Type.string()
+        type: ast.Type.string()
     });
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
@@ -74,9 +74,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         );
         this.tokenEndpoint = httpEndpoint;
         this.clientField = csharp.field({
-            access: csharp.Access.Private,
+            access: ast.Access.Private,
             name: "_client",
-            type: csharp.Type.reference(
+            type: ast.Type.reference(
                 this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
             )
         });
@@ -86,7 +86,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
-            access: csharp.Access.Public
+            access: ast.Access.Public
         });
 
         class_.addField(OauthTokenProviderGenerator.BUFFER_IN_MINUTES_FIELD);
@@ -104,15 +104,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod(this.getAccessTokenMethod());
 
         class_.addConstructor({
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "clientId",
-                    type: csharp.Type.string()
+                    type: ast.Type.string()
                 }),
                 csharp.parameter({
                     name: "clientSecret",
-                    type: csharp.Type.string()
+                    type: ast.Type.string()
                 }),
                 csharp.parameter({
                     name: "client",
@@ -142,18 +142,18 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
     public static readonly GET_ACCESS_TOKEN_ASYNC_METHOD_NAME = "GetAccessTokenAsync";
 
-    private getAccessTokenMethod(): csharp.Method {
+    private getAccessTokenMethod(): ast.Method {
         return csharp.method({
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             isAsync: true,
             name: OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME,
             parameters: [],
             body: this.getAccessTokenBody(),
-            return_: csharp.Type.string()
+            return_: ast.Type.string()
         });
     }
 
-    private getAccessTokenBody(): csharp.CodeBlock {
+    private getAccessTokenBody(): ast.CodeBlock {
         const expiresIn = this.getExpiresIn();
         const tokenEndpoint = this.scheme.configuration.tokenEndpoint;
 
@@ -176,7 +176,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                             return this.context.csharpTypeMapper.convert({ reference: value.requestBodyType });
                         },
                         inlinedRequestBody: (value) => {
-                            return csharp.Type.reference(
+                            return ast.Type.reference(
                                 this.context.getRequestWrapperReference(
                                     this.tokenEndpointReference.serviceId,
                                     value.name

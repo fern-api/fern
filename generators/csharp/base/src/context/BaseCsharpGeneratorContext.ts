@@ -1,20 +1,15 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import {
-    AbstractCsharpGeneratorContext as BaseAbstractCsharpGeneratorContext,
-    BaseCsharpCustomConfigSchema,
-} from "@fern-api/csharp-codegen";
+import { CsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    IntermediateRepresentation,
-} from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { CsharpProject } from "../project";
 
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 
-export abstract class AbstractCsharpGeneratorContext<
+export class BaseCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
-> extends BaseAbstractCsharpGeneratorContext<CustomConfig> {
+> extends CsharpGeneratorContext<CustomConfig> {
     public readonly project: CsharpProject;
 
     public constructor(
@@ -29,7 +24,7 @@ export abstract class AbstractCsharpGeneratorContext<
             name: this.namespace
         });
     }
-  
+
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
     }
@@ -37,6 +32,4 @@ export abstract class AbstractCsharpGeneratorContext<
     public getPublicCoreDirectory(): RelativeFilePath {
         return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
     }
-  
 }
-

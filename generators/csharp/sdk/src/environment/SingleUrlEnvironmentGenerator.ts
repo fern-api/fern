@@ -30,20 +30,20 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             annotations: [this.context.getSerializableAttribute()]
         });
 
         for (const environment of this.singleUrlEnvironments.environments) {
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     const_: true,
                     name:
                         (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    type: csharp.Type.string(),
+                    type: ast.Type.string(),
                     initializer: csharp.codeblock(csharp.string_({ string: environment.url }))
                 })
             );

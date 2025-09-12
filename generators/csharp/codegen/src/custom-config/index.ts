@@ -1,2 +1,2 @@
 export { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
-export { validateReadOnlyMemoryTypes } from "./validateReadOnlyMemoryTypes";
+// export { validateReadOnlyMemoryTypes } from "./validateReadOnlyMemoryTypes";

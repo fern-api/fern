@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp,System } from "@fern-api/csharp-codegen";
+import { csharp, ast, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CursorPagination,
@@ -49,8 +49,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         rawClientReference: string;
         rawClient: RawClient;
-    }): csharp.Method[] {
-        const methods: csharp.Method[] = [];
+    }): ast.Method[] {
+        const methods: ast.Method[] = [];
         if (this.hasPagination(endpoint)) {
             methods.push(
                 this.generatePagerMethod({
@@ -111,13 +111,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         rawClientReference: string;
         rawClient: RawClient;
-    }): csharp.Method {
+    }): ast.Method {
         const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(this.getRequestOptionsParameter({ endpoint }));
         parameters.push(
             csharp.parameter({
-                type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
+                type: ast.Type.reference(this.context.getCancellationTokenClassReference()),
                 name: this.context.getCancellationTokenParameterName(),
                 initializer: "default"
             })
@@ -143,7 +143,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         return csharp.method({
             name: this.getUnpagedEndpointMethodName(endpoint),
-            access: this.hasPagination(endpoint) ? csharp.Access.Private : csharp.Access.Public,
+            access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
             isAsync: true,
             isAsyncEnumerable,
             parameters,
@@ -164,7 +164,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private writeUnpagedMethodBody(
         endpointSignatureInfo: EndpointSignatureInfo,
-        writer: csharp.Writer,
+        writer: Writer,
         rawClient: RawClient,
         endpoint: HttpEndpoint,
         rawClientReference: string
@@ -209,7 +209,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
     }
 
-    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
@@ -221,7 +221,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return csharp.codeblock("_client.Options.BaseUrl");
     }
 
-    private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
+    private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
         return csharp.codeblock((writer) => {
             writer.writeLine("{");
             writer.indent();
@@ -257,7 +257,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeLine("catch (");
-                writer.writeNode(System.Text.Json.JsonException);
+                writer.writeNode(this.context.nameRegistry.System.Text.Json.JsonException);
                 writer.writeLine(")");
                 writer.writeLine("{");
                 writer.indent();
@@ -276,7 +276,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private writeErrorCase(error: ResponseError, writer: csharp.Writer) {
+    private writeErrorCase(error: ResponseError, writer: Writer) {
         const fullError = this.context.ir.errors[error.error.errorId];
         if (fullError == null) {
             throw new Error("Unexpected no error found for error id: " + error.error.errorId);
@@ -291,16 +291,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeNode(
             fullError.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
-                : csharp.Type.object()
+                : ast.Type.object()
         );
         writer.writeTextStatement(`>(${RESPONSE_BODY_VARIABLE_NAME}))`);
     }
 
-    private getEndpointSuccessResponseStatements({
-        endpoint
-    }: {
-        endpoint: HttpEndpoint;
-    }): csharp.CodeBlock | undefined {
+    private getEndpointSuccessResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return csharp.codeblock((writer) => {
                 writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
@@ -318,7 +314,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         const context = this.context;
 
-        function handleStreaming(writer: csharp.Writer) {
+        function handleStreaming(writer: Writer) {
             return (value: FernIr.StreamingResponse) => {
                 function readLineFromResponse() {
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
@@ -342,9 +338,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
 
                 function deserializeJsonChunk(
-                    payloadType: csharp.Type,
-                    jsonUtils: csharp.ClassReference,
-                    exceptionClass: csharp.ClassReference
+                    payloadType: ast.Type,
+                    jsonUtils: ast.ClassReference,
+                    exceptionClass: ast.ClassReference
                 ) {
                     writer.write("var chunk = (");
                     writer.writeNode(payloadType);
@@ -445,7 +441,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.dedent();
                     writer.writeLine("}");
                     writer.write("catch (");
-                    writer.writeNode(System.Text.Json.JsonException);
+                    writer.writeNode(this.context.nameRegistry.System.Text.Json.JsonException);
                     writer.writeLine(" e)");
                     writer.writeLine("{");
                     writer.indent();
@@ -486,7 +482,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         rawClientReference: string;
         rawClient: RawClient;
-    }): csharp.Method {
+    }): ast.Method {
         this.assertHasPagination(endpoint);
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
@@ -495,7 +491,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters.push(requestOptionsParam);
         parameters.push(
             csharp.parameter({
-                type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
+                type: ast.Type.reference(this.context.getCancellationTokenClassReference()),
                 name: this.context.getCancellationTokenParameterName(),
                 initializer: "default"
             })
@@ -553,7 +549,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             isAsync: true,
             parameters,
             summary: endpoint.docs,
@@ -576,11 +572,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: OffsetPagination;
-        requestParameter?: csharp.Parameter;
-        requestOptionsType: csharp.Type | csharp.TypeParameter;
-        unpagedEndpointResponseType: csharp.Type;
-        itemType: csharp.Type;
-        writer: csharp.Writer;
+        requestParameter?: ast.Parameter;
+        requestOptionsType: ast.Type | ast.TypeParameter;
+        unpagedEndpointResponseType: ast.Type;
+        itemType: ast.Type;
+        writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
     }) {
@@ -603,7 +599,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             ? this.context.csharpTypeMapper.convert({
                   reference: pagination.step?.property.valueType
               })
-            : csharp.Type.object();
+            : ast.Type.object();
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference({
             requestType: requestParameter.type,
             requestOptionsType,
@@ -654,9 +650,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         requestParameter,
         endpoint
     }: {
-        requestParameter: csharp.Parameter | undefined;
+        requestParameter: ast.Parameter | undefined;
         endpoint: HttpEndpoint;
-    }): csharp.CodeBlock {
+    }): ast.CodeBlock {
         const { pathParameters } = this.getAllPathParameters({
             endpoint,
             requestParameter
@@ -693,11 +689,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: CursorPagination;
-        requestParameter?: csharp.Parameter;
-        requestOptionsType: csharp.Type | csharp.TypeParameter;
-        unpagedEndpointResponseType: csharp.Type | csharp.TypeParameter;
-        itemType: csharp.Type | csharp.TypeParameter;
-        writer: csharp.Writer;
+        requestParameter?: ast.Parameter;
+        requestOptionsType: ast.Type | ast.TypeParameter;
+        unpagedEndpointResponseType: ast.Type | ast.TypeParameter;
+        itemType: ast.Type | ast.TypeParameter;
+        writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
     }) {
@@ -763,7 +759,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         rawClient: RawClient;
         rawClientReference: string;
-        writer: csharp.Writer;
+        writer: Writer;
     }): void {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
         const optionsParamName = this.getRequestOptionsParamNameForEndpoint({ endpoint });
@@ -852,7 +848,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
-    private initializeNestedObjects(writer: csharp.Writer, variableName: string, { propertyPath }: RequestProperty) {
+    private initializeNestedObjects(writer: Writer, variableName: string, { propertyPath }: RequestProperty) {
         if (!propertyPath || propertyPath.length === 0) {
             return;
         }
@@ -900,10 +896,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
-        requestOptions?: csharp.CodeBlock;
+        requestOptions?: ast.CodeBlock;
         getResult?: boolean;
         parseDatetimes: boolean;
-    }): csharp.MethodInvocation | undefined {
+    }): ast.MethodInvocation | undefined {
         const additionalEndParameters = requestOptions != null ? [requestOptions] : [];
         return this.hasPagination(endpoint)
             ? this.generateHttpPagerEndpointSnippet({
@@ -939,10 +935,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
-        additionalEndParameters?: csharp.CodeBlock[];
+        additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
         parseDatetimes: boolean;
-    }): csharp.MethodInvocation | undefined {
+    }): ast.MethodInvocation | undefined {
         return this.generatePagerEndpointSnippet({
             example,
             endpoint,
@@ -967,10 +963,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
-        additionalEndParameters?: csharp.CodeBlock[];
+        additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
         parseDatetimes: boolean;
-    }): csharp.MethodInvocation | undefined {
+    }): ast.MethodInvocation | undefined {
         return super.generateEndpointSnippet({
             example,
             endpoint,
@@ -995,9 +991,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         clientVariableName: string;
         serviceId: ServiceId;
         parseDatetimes: boolean;
-        additionalEndParameters?: csharp.CodeBlock[];
+        additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
-    }): csharp.MethodInvocation | undefined {
+    }): ast.MethodInvocation | undefined {
         const service = this.context.getHttpServiceOrThrow(serviceId);
         const serviceFilePath = service.name.fernFilepath;
         const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
@@ -1026,19 +1022,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getRequestOptionsParameter({ endpoint }: { endpoint: HttpEndpoint }): csharp.Parameter {
+    private getRequestOptionsParameter({ endpoint }: { endpoint: HttpEndpoint }): ast.Parameter {
         const name = this.getRequestOptionsParamNameForEndpoint({ endpoint });
         if (endpoint.idempotent) {
             return csharp.parameter({
-                type: csharp.Type.optional(
-                    csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference())
-                ),
+                type: ast.Type.optional(ast.Type.reference(this.context.getIdempotentRequestOptionsClassReference())),
                 name,
                 initializer: "null"
             });
         } else {
             return csharp.parameter({
-                type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
+                type: ast.Type.optional(ast.Type.reference(this.context.getRequestOptionsClassReference())),
                 name,
                 initializer: "null"
             });

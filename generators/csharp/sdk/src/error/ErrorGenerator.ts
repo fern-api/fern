@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
@@ -22,10 +22,10 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         const bodyType =
             this.errorDeclaration.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclaration.type })
-                : csharp.Type.object();
+                : ast.Type.object();
         const class_ = csharp.class_({
             ...this.classReference,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parentClassReference: this.context.getBaseApiExceptionClassReference(),
             primaryConstructor: {
                 parameters: [csharp.parameter({ name: "body", type: bodyType })],
@@ -43,7 +43,7 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                 csharp.field({
                     name: "Body",
                     type: bodyType,
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     get: true,
                     initializer: csharp.codeblock("body"),
                     summary: "The body of the response that triggered the exception.",

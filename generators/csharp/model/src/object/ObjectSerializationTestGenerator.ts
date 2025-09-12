@@ -11,7 +11,7 @@ import TestInput = TestClass.TestInput;
 
 export declare namespace TestClass {
     interface TestInput {
-        objectInstantiationSnippet: csharp.CodeBlock;
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
@@ -23,7 +23,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
 
     constructor(
         context: ModelGeneratorContext,
@@ -53,7 +53,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [csharp.Type.reference(this.classReference)],
+                            generics: [ast.Type.reference(this.classReference)],
                             arguments_: [csharp.codeblock("json")]
                         })
                     );
@@ -84,7 +84,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [csharp.Type.reference(this.context.getJsonElementClassReference())],
+                            generics: [ast.Type.reference(this.context.getJsonElementClassReference())],
                             arguments_: [csharp.codeblock("expectedJson")]
                         })
                     );

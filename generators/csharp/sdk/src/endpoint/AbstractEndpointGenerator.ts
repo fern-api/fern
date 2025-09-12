@@ -79,7 +79,7 @@ export abstract class AbstractEndpointGenerator {
             endpoint,
             requestParameter
         });
-        let returnType: csharp.Type | undefined;
+        let returnType: ast.Type | undefined;
         switch (endpointType) {
             case "unpaged":
                 returnType = getEndpointReturnType({ context: this.context, endpoint });
@@ -91,7 +91,7 @@ export abstract class AbstractEndpointGenerator {
                 assertNever(endpointType);
         }
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
+            baseParameters: [...pathParameters, requestParameter].filter((p): p is ast.Parameter => p != null),
             pathParameters,
             pathParameterReferences,
             request,
@@ -100,23 +100,23 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
+    protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
         if (endpoint.pagination?.type === "custom") {
-            return csharp.Type.reference(
+            return ast.Type.reference(
                 this.context.getCustomPagerClassReference({
                     itemType
                 })
             );
         }
-        return csharp.Type.reference(
+        return ast.Type.reference(
             this.context.getPagerClassReference({
                 itemType
             })
         );
     }
 
-    protected getPaginationItemType(endpoint: HttpEndpoint): csharp.Type {
+    protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
         this.assertHasPagination(endpoint);
         const listItemType = this.context.csharpTypeMapper.convert({
             reference: (() => {
@@ -147,9 +147,9 @@ export abstract class AbstractEndpointGenerator {
         requestParameter
     }: {
         endpoint: HttpEndpoint;
-        requestParameter: csharp.Parameter | undefined;
+        requestParameter: ast.Parameter | undefined;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
-        const pathParameters: csharp.Parameter[] = [];
+        const pathParameters: ast.Parameter[] = [];
         const pathParameterReferences: Record<string, string> = {};
         const includePathParametersInEndpointSignature = this.includePathParametersInEndpointSignature({ endpoint });
         for (const pathParam of endpoint.allPathParameters) {
@@ -202,9 +202,9 @@ export abstract class AbstractEndpointGenerator {
         clientVariableName: string;
         serviceId: ServiceId;
         parseDatetimes: boolean;
-        additionalEndParameters?: csharp.CodeBlock[];
+        additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
-    }): csharp.MethodInvocation | undefined {
+    }): ast.MethodInvocation | undefined {
         const service = this.context.ir.services[serviceId];
         if (service == null) {
             throw new Error(`Unexpected no service with id ${serviceId}`);
@@ -245,7 +245,7 @@ export abstract class AbstractEndpointGenerator {
         endpoint: HttpEndpoint,
         serviceId: ServiceId,
         parseDatetimes: boolean
-    ): csharp.CodeBlock | undefined {
+    ): ast.CodeBlock | undefined {
         switch (endpoint.sdkRequest?.shape.type) {
             case "wrapper":
                 return new WrappedRequestGenerator({
@@ -268,9 +268,9 @@ export abstract class AbstractEndpointGenerator {
         body,
         returnType
     }: {
-        body: csharp.CodeBlock;
-        returnType: csharp.Type | undefined;
-    }): csharp.CodeBlock {
+        body: ast.CodeBlock;
+        returnType: ast.Type | undefined;
+    }): ast.CodeBlock {
         if (!this.context.includeExceptionHandler()) {
             return body;
         }
@@ -298,7 +298,7 @@ export abstract class AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): csharp.CodeBlock[] {
+    }): ast.CodeBlock[] {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
             return [];
         }
@@ -315,10 +315,7 @@ export abstract class AbstractEndpointGenerator {
         );
     }
 
-    private getJustRequestBodySnippet(
-        exampleRequestBody: ExampleRequestBody,
-        parseDatetimes: boolean
-    ): csharp.CodeBlock {
+    private getJustRequestBodySnippet(exampleRequestBody: ExampleRequestBody, parseDatetimes: boolean): ast.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
             throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
@@ -345,7 +342,7 @@ export abstract class AbstractEndpointGenerator {
     }: {
         pathParameter: PathParameter;
         includePathParametersInEndpointSignature: boolean;
-        requestParameter?: csharp.Parameter;
+        requestParameter?: ast.Parameter;
     }): string {
         if (!includePathParametersInEndpointSignature && requestParameter != null) {
             return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;

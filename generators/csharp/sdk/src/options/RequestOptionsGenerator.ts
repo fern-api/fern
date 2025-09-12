@@ -21,7 +21,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         const class_ = csharp.class_({
             ...this.context.getRequestOptionsClassReference(),
             partial: true,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             interfaceReferences: [this.context.getRequestOptionsInterfaceReference()],
             annotations: [this.context.getSerializableAttribute()]
         });

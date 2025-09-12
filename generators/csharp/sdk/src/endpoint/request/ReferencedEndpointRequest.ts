@@ -24,7 +24,7 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         this.requestBodyShape = requestBodyShape;
     }
 
-    public getParameterType(): csharp.Type {
+    public getParameterType(): ast.Type {
         return this.context.csharpTypeMapper.convert({ reference: this.requestBodyShape });
     }
 

@@ -1,6 +1,7 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { type CSharp } from "../csharp";
 
 export declare namespace ReadOnlyMemory {
     interface Args {
@@ -13,8 +14,8 @@ export class ReadOnlyMemory extends AstNode {
     private itemType: Type;
     private entries: AstNode[];
 
-    constructor({ itemType, entries }: ReadOnlyMemory.Args) {
-        super();
+    constructor({ itemType, entries }: ReadOnlyMemory.Args, csharp: CSharp) {
+        super(csharp);
         this.itemType = itemType;
         this.entries = entries;
     }

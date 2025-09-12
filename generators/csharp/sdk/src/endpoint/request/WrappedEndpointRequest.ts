@@ -45,8 +45,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         this.wrapper = wrapper;
     }
 
-    public getParameterType(): csharp.Type {
-        return csharp.Type.reference(this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName));
+    public getParameterType(): ast.Type {
+        return ast.Type.reference(this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName));
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -68,8 +68,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.write(`var ${QUERY_PARAMETER_BAG_NAME} = `);
                 writer.writeNodeStatement(
                     csharp.dictionary({
-                        keyType: csharp.Type.string(),
-                        valueType: csharp.Type.object(),
+                        keyType: ast.Type.string(),
+                        valueType: ast.Type.object(),
                         values: undefined
                     })
                 );
@@ -134,8 +134,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         classReference: this.context.getHeadersClassReference(),
                         arguments_: [
                             csharp.dictionary({
-                                keyType: csharp.Type.string(),
-                                valueType: csharp.Type.string(),
+                                keyType: ast.Type.string(),
+                                valueType: ast.Type.string(),
                                 values: {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
@@ -191,7 +191,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         name: Name;
         parameterOverride?: string;
         allowOptionals?: boolean;
-    }): csharp.CodeBlock {
+    }): ast.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
         if (this.isString(reference)) {
             return csharp.codeblock(`${parameter}`);

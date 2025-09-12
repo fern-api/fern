@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, System } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -8,7 +8,7 @@ import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly classReference: csharp.ClassReference;
+    private readonly classReference: ast.ClassReference;
 
     constructor(
         context: ModelGeneratorContext,
@@ -21,7 +21,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
     protected doGenerate(): CSharpFile {
         const serializerAnnotation = csharp.annotation({
-            reference: System.Text.Json.Serialization.JsonConverter(),
+            reference: this.context.nameRegistry.System.Text.Json.Serialization.JsonConverter(),
             argument: csharp.codeblock((writer) => {
                 writer.write("typeof(");
                 writer.writeNode(csharp.classReference(this.context.getEnumSerializerClassReference()));
@@ -34,7 +34,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
         const enum_ = csharp.enum_({
             ...this.classReference,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             annotations: [serializerAnnotation]
         });
 

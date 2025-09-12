@@ -9,13 +9,13 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseApiExceptionClassReference(),
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parentClassReference: this.context.getBaseExceptionClassReference(),
             primaryConstructor: {
                 parameters: [
-                    csharp.parameter({ name: "message", type: csharp.Type.string() }),
-                    csharp.parameter({ name: "statusCode", type: csharp.Type.integer() }),
-                    csharp.parameter({ name: "body", type: csharp.Type.object() })
+                    csharp.parameter({ name: "message", type: ast.Type.string() }),
+                    csharp.parameter({ name: "statusCode", type: ast.Type.integer() }),
+                    csharp.parameter({ name: "body", type: ast.Type.object() })
                 ],
                 superClassArguments: [csharp.codeblock("message")]
             },
@@ -24,8 +24,8 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField(
             csharp.field({
                 name: "StatusCode",
-                type: csharp.Type.integer(),
-                access: csharp.Access.Public,
+                type: ast.Type.integer(),
+                access: ast.Access.Public,
                 get: true,
                 initializer: csharp.codeblock("statusCode"),
                 summary: "The error code of the response that triggered the exception."
@@ -34,8 +34,8 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField(
             csharp.field({
                 name: "Body",
-                type: csharp.Type.object(),
-                access: csharp.Access.Public,
+                type: ast.Type.object(),
+                access: ast.Access.Public,
                 get: true,
                 initializer: csharp.codeblock("body"),
                 summary: "The body of the response that triggered the exception."

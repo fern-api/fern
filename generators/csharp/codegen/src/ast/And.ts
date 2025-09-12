@@ -1,5 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { type CSharp } from "../csharp";
 
 export declare namespace And {
     interface Args {
@@ -11,8 +12,8 @@ export declare namespace And {
 export class And extends AstNode {
     private conditions: AstNode[];
 
-    constructor(args: And.Args) {
-        super();
+    constructor(args: And.Args, csharp: CSharp) {
+        super(csharp);
         this.conditions = args.conditions;
     }
 

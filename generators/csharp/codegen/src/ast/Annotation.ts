@@ -1,6 +1,7 @@
 import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { type CSharp } from "../csharp";
 
 export declare namespace Annotation {
     interface Args {
@@ -15,8 +16,8 @@ export class Annotation extends AstNode {
     private reference: ClassReference;
     private argument?: string | AstNode;
 
-    constructor(args: Annotation.Args) {
-        super();
+    constructor(args: Annotation.Args, csharp: CSharp) {
+        super(csharp);
         this.reference = args.reference;
         this.argument = args.argument;
     }

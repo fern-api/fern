@@ -1,2 +1,2 @@
-export { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
+export { BaseCsharpGeneratorContext } from "./BaseCsharpGeneratorContext";
 // export { CsharpTypeMapper } from "./CsharpTypeMapper";

@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -11,7 +11,7 @@ import TestInput = TestClass.TestInput;
 
 export declare namespace TestClass {
     interface TestInput {
-        objectInstantiationSnippet: csharp.CodeBlock;
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
@@ -23,7 +23,7 @@ export class UnionSerializationTestGenerator extends FileGenerator<
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
 
     constructor(
         context: ModelGeneratorContext,
@@ -53,7 +53,7 @@ export class UnionSerializationTestGenerator extends FileGenerator<
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [csharp.Type.reference(this.classReference)],
+                            generics: [ast.Type.reference(this.classReference)],
                             arguments_: [csharp.codeblock("json")]
                         })
                     );
@@ -84,7 +84,7 @@ export class UnionSerializationTestGenerator extends FileGenerator<
                         csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [csharp.Type.reference(this.context.getJsonElementClassReference())],
+                            generics: [ast.Type.reference(this.context.getJsonElementClassReference())],
                             arguments_: [csharp.codeblock("expectedJson")]
                         })
                     );

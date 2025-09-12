@@ -1,6 +1,6 @@
 import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { BaseCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
 import { csharp } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -38,7 +38,7 @@ const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
-export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomConfigSchema> {
     public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
@@ -63,19 +63,19 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
-    public getAdditionalQueryParametersType(): csharp.Type {
-        return csharp.Type.list(
-            csharp.Type.reference(
+    public getAdditionalQueryParametersType(): ast.Type {
+        return ast.Type.list(
+            ast.Type.reference(
                 this.getKeyValuePairsClassReference({
-                    key: csharp.Type.string(),
-                    value: csharp.Type.string()
+                    key: ast.Type.string(),
+                    value: ast.Type.string()
                 })
             )
         );
     }
 
-    public getAdditionalBodyPropertiesType(): csharp.Type {
-        return csharp.Type.optional(csharp.Type.object());
+    public getAdditionalBodyPropertiesType(): ast.Type {
+        return ast.Type.optional(ast.Type.object());
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
@@ -297,8 +297,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
-    public getRootClientAccess(): csharp.Access {
-        return this.customConfig["root-client-class-access"] ?? csharp.Access.Public;
+    public getRootClientAccess(): ast.Access {
+        return this.customConfig["root-client-class-access"] ?? ast.Access.Public;
     }
 
     public getCancellationTokenParameterName(): string {

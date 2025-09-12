@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE } from "@fern-api/csharp-codegen";
+import { csharp, ast, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -10,9 +10,9 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export declare namespace WellKnownProtoStructGenerator {
     interface Args {
         context: ModelGeneratorContext;
-        classReference: csharp.ClassReference;
+        classReference: ast.ClassReference;
         typeDeclaration: TypeDeclaration;
-        protoValueClassReference: csharp.ClassReference;
+        protoValueClassReference: ast.ClassReference;
     }
 }
 
@@ -21,9 +21,9 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
     private typeDeclaration: TypeDeclaration;
-    private protoValueClassReference: csharp.ClassReference;
+    private protoValueClassReference: ast.ClassReference;
 
     constructor({
         context,
@@ -41,11 +41,11 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         const class_ = csharp.class_({
             name: this.classReference.name,
             namespace: this.classReference.namespace,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             sealed: true,
-            parentClassReference: csharp.Type.map(
-                csharp.Type.string(),
-                csharp.Type.optional(csharp.Type.reference(this.protoValueClassReference))
+            parentClassReference: ast.Type.map(
+                ast.Type.string(),
+                ast.Type.optional(ast.Type.reference(this.protoValueClassReference))
             ),
             summary: this.typeDeclaration.docs,
             annotations: [this.context.getSerializableAttribute()]
@@ -68,23 +68,23 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         });
     }
 
-    private getDefaultConstructor(): csharp.Class.Constructor {
+    private getDefaultConstructor(): ast.Class.Constructor {
         return {
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parameters: []
         };
     }
 
-    private getKeyValuePairConstructor(): csharp.Class.Constructor {
+    private getKeyValuePairConstructor(): ast.Class.Constructor {
         return {
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "value",
-                    type: csharp.Type.list(
-                        csharp.Type.keyValuePair(
-                            csharp.Type.string(),
-                            csharp.Type.optional(csharp.Type.reference(this.protoValueClassReference))
+                    type: ast.Type.list(
+                        ast.Type.keyValuePair(
+                            ast.Type.string(),
+                            ast.Type.optional(ast.Type.reference(this.protoValueClassReference))
                         )
                     )
                 })
@@ -106,13 +106,13 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         };
     }
 
-    private getToProtoMethod(): csharp.Method {
+    private getToProtoMethod(): ast.Method {
         return csharp.method({
             name: "ToProto",
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             isAsync: false,
             parameters: [],
-            return_: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE),
+            return_: ast.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE),
             body: csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(
@@ -136,19 +136,19 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         });
     }
 
-    private getFromProtoMethod(): csharp.Method {
+    private getFromProtoMethod(): ast.Method {
         return csharp.method({
             name: "FromProto",
-            access: csharp.Access.Internal,
-            type: csharp.MethodType.STATIC,
+            access: ast.Access.Internal,
+            type: ast.MethodType.STATIC,
             isAsync: false,
             parameters: [
                 csharp.parameter({
                     name: "value",
-                    type: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE)
+                    type: ast.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE)
                 })
             ],
-            return_: csharp.Type.reference(this.classReference),
+            return_: ast.Type.reference(this.classReference),
             body: csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(

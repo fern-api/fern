@@ -25,7 +25,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         const class_ = csharp.class_({
             ...this.context.getClientOptionsClassReference(),
             partial: true,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             annotations: [this.context.getSerializableAttribute()]
         });
         const optionArgs: OptionArgs = {
@@ -59,9 +59,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             class_.addField(
                 csharp.field({
                     summary: "A handler that will handle exceptions thrown by the client.",
-                    access: csharp.Access.Internal,
+                    access: ast.Access.Internal,
                     name: EXCEPTION_HANDLER_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getExceptionHandlerClassReference()),
+                    type: ast.Type.reference(this.context.getExceptionHandlerClassReference()),
                     get: true,
                     set: true,
                     initializer: csharp.codeblock((writer) => {
@@ -95,7 +95,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         );
     }
 
-    private getBaseUrlField(): csharp.Field {
+    private getBaseUrlField(): ast.Field {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
         let defaultEnvironment: Name | undefined = undefined;
         if (defaultEnvironmentId != null) {
@@ -122,12 +122,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             const field = this.context.ir.environments.environments._visit({
                 singleBaseUrl: () => {
                     return csharp.field({
-                        access: csharp.Access.Public,
+                        access: ast.Access.Public,
                         name: BASE_URL_FIELD_NAME,
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
-                        type: csharp.Type.string(),
+                        type: ast.Type.string(),
                         summary: BASE_URL_SUMMARY,
                         initializer:
                             defaultEnvironment != null
@@ -140,12 +140,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 },
                 multipleBaseUrls: () => {
                     return csharp.field({
-                        access: csharp.Access.Public,
+                        access: ast.Access.Public,
                         name: "Environment",
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
-                        type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
+                        type: ast.Type.reference(this.context.getEnvironmentsClassReference()),
                         summary: "The Environment for the API.",
                         initializer:
                             defaultEnvironment != null
@@ -164,12 +164,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         }
 
         return csharp.field({
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             name: BASE_URL_FIELD_NAME,
             get: true,
             init: true,
             useRequired: defaultEnvironment != null,
-            type: csharp.Type.string(),
+            type: ast.Type.string(),
             summary: BASE_URL_SUMMARY,
             initializer:
                 defaultEnvironment != null
@@ -181,24 +181,24 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         });
     }
 
-    private getGrpcOptionsField(): csharp.Field {
+    private getGrpcOptionsField(): ast.Field {
         return csharp.field({
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             name: this.context.getGrpcChannelOptionsFieldName(),
             get: true,
             init: true,
-            type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
+            type: ast.Type.optional(ast.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
             summary: "The options used for gRPC client endpoints."
         });
     }
 
-    private getCloneMethod(class_: csharp.Class): csharp.Method {
+    private getCloneMethod(class_: csharp.Class): ast.Method {
         // TODO: add the GRPC options here eventually
         return csharp.method({
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             summary: "Clones this and returns a new instance",
             name: "Clone",
-            return_: csharp.Type.reference(this.context.getClientOptionsClassReference()),
+            return_: ast.Type.reference(this.context.getClientOptionsClassReference()),
             body: csharp.codeblock((writer) => {
                 writer.writeTextStatement(
                     `return new ClientOptions

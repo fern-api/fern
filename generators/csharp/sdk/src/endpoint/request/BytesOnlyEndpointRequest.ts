@@ -17,8 +17,8 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
         super(context, sdkRequest, endpoint);
     }
 
-    public getParameterType(): csharp.Type {
-        return csharp.Type.coreClass(
+    public getParameterType(): ast.Type {
+        return ast.Type.coreClass(
             csharp.coreClassReference({
                 name: "Stream"
             })

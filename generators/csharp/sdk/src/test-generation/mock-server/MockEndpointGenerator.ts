@@ -6,7 +6,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace TestClass {
     interface TestInput {
-        objectInstantiationSnippet: csharp.CodeBlock;
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
@@ -14,11 +14,11 @@ export declare namespace TestClass {
 export class MockEndpointGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
-    public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): csharp.CodeBlock {
+    public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
         return this.generateForExamples(endpoint, [example]);
     }
 
-    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): csharp.CodeBlock {
+    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
         return csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;

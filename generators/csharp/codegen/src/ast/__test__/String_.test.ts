@@ -1,9 +1,10 @@
 /* eslint-disable no-useless-escape */
 import { String_ } from "../String_";
-
+import { CSharp } from "../..";
+const csharp = new CSharp();
 describe("String_", () => {
     function getStringOutput(input: string): string {
-        const string_ = new String_({ string: input });
+        const string_ = new String_({ string: input }, csharp);
         return string_.toString({
             namespace: "",
             allNamespaceSegments: new Set<string>(),

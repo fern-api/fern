@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -18,13 +18,13 @@ import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
 export declare namespace TestClass {
     interface TestInput {
-        objectInstantiationSnippet: csharp.CodeBlock;
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
 
 export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private readonly classReference: csharp.ClassReference;
+    private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
 
@@ -295,7 +295,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         return !isNaN(date.getTime());
     }
 
-    getCsharpTypeFromResponse(exampleResponse: ExampleResponse): csharp.Type {
+    getCsharpTypeFromResponse(exampleResponse: ExampleResponse): ast.Type {
         switch (exampleResponse.type) {
             case "ok":
                 if (exampleResponse.value.type === "body") {

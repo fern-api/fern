@@ -14,8 +14,13 @@
  *
  */
 
+import { writeFileSync } from "node:fs";
 import { ClassReference } from "../ast/ClassReference";
-import { builtIns, NUnit, System } from "./builtIn";
+import { type CSharp } from "../csharp";
+
+import { builtIns } from "./knownTypes";
+import { stacktrace } from "./stacktrace";
+import { Type, TypeParameter } from "../ast";
 
 /**
  * Represents a type entry in the type registry for serialization purposes.
@@ -141,6 +146,7 @@ export class NameRegistry {
                 this.typeNames.set(name, new Set([namespace]));
             }
         }
+        /*
 
         // track all the types in the System.* namespace that we use
         this.trackType(System.Enum);
@@ -178,6 +184,7 @@ export class NameRegistry {
         this.trackType(System.Net.Http.HttpClient);
         this.trackType(NUnit.Framework.TestFixture);
         this.trackType(NUnit.Framework.Test);
+        */
     }
 
     /**
@@ -199,6 +206,13 @@ export class NameRegistry {
         return this.knownIdentifiers.has(identifier);
     }
 
+    public isKnownNamespace(namespace: string): boolean {
+        if (!namespace || typeof namespace !== "string") {
+            return false;
+        }
+        return this.namespaceRegistry.has(namespace);
+    }
+
     public isRegistered(typeName: string): boolean {
         return this.typeRegistry.has(typeName);
     }
@@ -218,6 +232,9 @@ export class NameRegistry {
      * ```
      */
     public isAmbiguousTypeName(name?: string): boolean {
+        // todo: currently there is a bug around when JSonConverter is used
+        // and there is a typename for a nested class called JSonConverter
+        //
         return name ? (this.typeNames.get(name)?.size ?? 0) > 1 : false;
     }
 
@@ -232,11 +249,7 @@ export class NameRegistry {
      *
      * @internal
      */
-    public fullyQualifiedNameOf(classReference: {
-        name: string;
-        namespace: string;
-        enclosingType?: ClassReference;
-    }): string {
+    public static fullyQualifiedNameOf(classReference: ClassReference.Identity): string {
         // Create a consistent string representation for registry keys
         return classReference.enclosingType
             ? `${classReference.namespace}.${classReference.enclosingType.name}.${classReference.name}`
@@ -256,9 +269,18 @@ export class NameRegistry {
      * nameRegistry.trackType(typeRef); // Registers the type and returns the same reference
      * ```
      */
-    public trackType(classReference: ClassReference): ClassReference {
-        const { name, namespace, enclosingType } = classReference;
-        const fullyQualifiedName = this.fullyQualifiedNameOf(classReference);
+    public trackType(classReference: ClassReference, originalFullyQualifiedName?: string): ClassReference {
+        const { name, namespace, enclosingType, fullyQualifiedName } = classReference;
+
+        // if we were given an original name for the class reference, then register the type
+        // as a su
+        if (
+            originalFullyQualifiedName &&
+            originalFullyQualifiedName !== fullyQualifiedName &&
+            !this.typeRegistry.has(originalFullyQualifiedName)
+        ) {
+            this.typeRegistry.set(originalFullyQualifiedName, classReference);
+        }
 
         if (!this.typeRegistry.has(fullyQualifiedName)) {
             // Register the type in the main registry
@@ -270,10 +292,19 @@ export class NameRegistry {
             }
 
             // Track the type name and its namespace for ambiguity detection
-            if (this.typeNames.has(name)) {
-                this.typeNames.get(name)?.add(namespace);
-            } else {
-                this.typeNames.set(name, new Set([namespace]));
+            if (!classReference.enclosingType) {
+                // Implementation Note:
+                // if the classReference is actually a nested type, we're going to skip
+                // tracking it for ambiguity for the moment, as the ambiguity would only be if the type
+                // was rendered in the enclosing type, and I don't think that happens.
+                // regardless, if we wanted to make sure that worked, we'd have to know the scope where
+                // the node was being rendered
+                // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
+                if (this.typeNames.has(name)) {
+                    this.typeNames.get(name)?.add(namespace);
+                } else {
+                    this.typeNames.set(name, new Set([namespace]));
+                }
             }
         }
 
@@ -312,34 +343,161 @@ export class NameRegistry {
         return result;
     }
 
+    public createClassReference(
+        classReferenceArgs: ClassReference.Args,
+        fullyQualifiedName: string,
+        csharp: CSharp
+    ): ClassReference {
+        // do we have a class reference already that matches
+        const classRef = this.typeRegistry.get(fullyQualifiedName);
+        if (classRef) {
+            // return the new instance of the class reference for the caller
+            return new ClassReference(
+                {
+                    name: classRef.name,
+                    namespace: classRef.namespace,
+                    enclosingType: classRef.enclosingType,
+                    fullyQualifiedName: classRef.fullyQualifiedName,
+
+                    namespaceAlias: classReferenceArgs.namespaceAlias,
+                    fullyQualified: classReferenceArgs.fullyQualified,
+                    generics: classReferenceArgs.generics,
+                    global: classReferenceArgs.global
+                },
+                csharp
+            );
+        }
+
+        // no, we've never seen this class reference before.
+        // check to see if we have to adjust it to avoid conflicts
+        let modified = false;
+        let { name, namespace, enclosingType } = classReferenceArgs;
+
+        // Resolve any namespace remappings first
+        const resolvedNamespace = this.resolveNamespace(namespace);
+        if (resolvedNamespace !== namespace) {
+            namespace = resolvedNamespace;
+            modified = true;
+        }
+
+        // Ensure no conflicts with existing types or namespaces
+        conflictResolution: while (true) {
+            const fullyQualifiedName = NameRegistry.fullyQualifiedNameOf({ name, namespace, enclosingType });
+            let fqNamespace = "";
+            const parts = namespace.split(".");
+
+            // Check each namespace segment for conflicts with existing types
+            for (let i = 0; i < parts.length; i++) {
+                fqNamespace = fqNamespace ? `${fqNamespace}.${parts[i]}` : `${parts[i]}`;
+
+                if (this.typeRegistry.has(fqNamespace)) {
+                    // Found a conflict with an existing type, modify the namespace segment
+                    parts[i] = `${parts[i]}_`;
+                    namespace = parts.join(".");
+                    modified = true;
+                    continue conflictResolution;
+                }
+            }
+
+            // Cache namespace modifications
+            if (modified) {
+                this.namespaceRegistry.set(classReferenceArgs.namespace, namespace);
+            }
+
+            // Check if the fully qualified name conflicts with an existing namespace
+            if (this.namespaceRegistry.has(fullyQualifiedName)) {
+                // The type name conflicts with an existing namespace, modify the type name
+                name = `${name}_`;
+                modified = true;
+                continue conflictResolution;
+            }
+
+            // Check if the type name conflicts with an existing type
+            if (this.typeRegistry.has(fullyQualifiedName)) {
+                // Note: Currently commented out, but this would handle type name conflicts
+                // name = `${name}_`;
+                // modified = true;
+                // continue conflictResolution;
+            }
+
+            // No conflicts found, we're good to go
+            break;
+        }
+
+        // If no modifications were made, register and return the original reference
+        if (!modified) {
+            // create the new class reference
+            this.trackType(new ClassReference({ ...classReferenceArgs, fullyQualifiedName }, csharp));
+        }
+
+        // Create and register the remapped ClassReference
+        // forward the 'original' type to the new remapped type
+        return this.trackType(
+            new ClassReference(
+                {
+                    name,
+                    namespace,
+                    enclosingType,
+                    namespaceAlias: classReferenceArgs.namespaceAlias,
+                    fullyQualified: classReferenceArgs.fullyQualified,
+                    generics: classReferenceArgs.generics,
+                    global: classReferenceArgs.global,
+                    fullyQualifiedName: NameRegistry.fullyQualifiedNameOf({ name, namespace, enclosingType })
+                },
+                csharp
+            ),
+            fullyQualifiedName
+        );
+    }
+
     /**
      * Resolves a ClassReference to its canonical version from the type registry.
      * If the type is not found in the registry, returns the original reference unchanged.
      *
-     * @param classReference - The ClassReference to resolve
+     * @param classReferenceArgs - The ClassReference to resolve
      * @returns The canonical ClassReference from the registry, or the original if not found
      *
      * @example
      * ```typescript
      * const original = new ClassReference({ name: "MyType", namespace: "MyNamespace" });
-     * const canonical = nameRegistry.resolveType(original); // Returns canonical version if registered
+     
      * ```
-     */
-    public resolveType(classReference: ClassReference): ClassReference {
-        const classRef = this.typeRegistry.get(this.fullyQualifiedNameOf(classReference));
+     * /
+    public resolveType(fullyQualifiedName: string, classReferenceArgs: ClassReference.Args): ClassReference {
+      
+      const classRef = this.typeRegistry.get(fullyQualifiedName);
+      if( !classRef) {
+        // if the type is not registered, then we should see if it's going to conflict with a namespace 
+        // and we should tell the developer that they should be actively resolving a conflict
+        const resolved =this.namespaceRegistry.get(fullyQualifiedName);
+        if( resolved) {
+            console.log(`Namespace CONFLICT: ${fullyQualifiedName} -> ${resolved} - ${stacktrace().map(each => `   ${each.fn} - ${each.path}:${each.position}`).join("\n")}`);
 
-        return classRef
-            ? new ClassReference({
+            // what types are in that namespace?
+            const types = [...this.typeRegistry.entries().filter(([fqName,cr]) => cr.namespace===resolved)];
+            console.log(`   TYPES: ${types.map(([fqName,cr]) => fqName ).join(", ")}`);
+        }
+
+        // if the classreference namespace conflicts with a type, then we should tell the developer that they should be actively resolving a conflict
+        const typeRef = this.typeRegistry.get(classReferenceArgs.namespace)
+        if( typeRef ) {
+            console.log(`Type CONFLICT: ${fullyQualifiedName} -> ${typeRef.namespace}.${typeRef.name} - ${stacktrace().map(each => `   ${each.fn} - ${each.path}:${each.position}`).join("\n")}`);
+        }
+        return new ClassReference({...classReferenceArgs, fullyQualifiedName});
+      }
+      // return the resolved class reference
+        return new ClassReference({
                   name: classRef.name,
                   namespace: classRef.namespace,
                   enclosingType: classRef.enclosingType,
-                  namespaceAlias: classReference.namespaceAlias,
-                  fullyQualified: classReference.fullyQualified,
-                  generics: classReference.generics,
-                  global: classReference.global
-              })
-            : classReference;
+                  namespaceAlias: classReferenceArgs.namespaceAlias,
+                  fullyQualified: classReferenceArgs.fullyQualified,
+                  generics: classReferenceArgs.generics,
+                  global: classReferenceArgs.global,
+                  fullyQualifiedName: classRef.fullyQualifiedName
+              });
     }
+    */
 
     /**
      * Resolves a namespace to its canonical version, checking for parent namespace remappings.
@@ -451,13 +609,13 @@ export class NameRegistry {
      * const typeRef = new ClassReference({ name: "String", namespace: "System" });
      * const canonical = nameRegistry.canonicalizeName(typeRef); // May return "String_" if "String" conflicts
      * ```
-     */
+     * / 
     public canonicalizeName(classReference: ClassReference): ClassReference {
-        const key = this.fullyQualifiedNameOf(classReference);
+        const key = NameRegistry.fullyQualifiedNameOf(classReference);
 
         // If the type is already registered, return the canonical version
         if (this.typeRegistry.has(key)) {
-            return this.resolveType(classReference);
+            return this.resolveType(key, classReference);
         }
 
         let modified = false;
@@ -472,7 +630,7 @@ export class NameRegistry {
 
         // Ensure no conflicts with existing types or namespaces
         conflictResolution: while (true) {
-            const fullyQualifiedName = this.fullyQualifiedNameOf({ name, namespace, enclosingType });
+            const fullyQualifiedName = NameRegistry.fullyQualifiedNameOf({ name, namespace, enclosingType });
             let fqNamespace = "";
             const parts = namespace.split(".");
 
@@ -516,8 +674,7 @@ export class NameRegistry {
 
         // If no modifications were made, register and return the original reference
         if (!modified) {
-            this.trackType(classReference);
-            return classReference;
+            return this.trackType(classReference);
         }
 
         // Create and register the remapped ClassReference
@@ -528,133 +685,282 @@ export class NameRegistry {
             namespaceAlias: classReference.namespaceAlias,
             fullyQualified: classReference.fullyQualified,
             generics: classReference.generics,
-            global: classReference.global
+            global: classReference.global,
+            fullyQualifiedName: NameRegistry.fullyQualifiedNameOf({ name, namespace, enclosingType })
         });
         // forward the 'original' type to the new remapped type
-        this.typeRegistry.set(key, remapped);
-        this.trackType(remapped);
+        this.trackType(remapped,key);
         return remapped;
     }
+*/
 
-    /**
-     * Serializes the current type registry state to a JSON-serializable object.
-     * This allows the canonicalization state to be saved and restored across sessions.
-     *
-     * @returns A TypeRegistryInfo object containing all registry data
-     *
-     * @example
-     * ```typescript
-     * const registryData = nameRegistry.saveTypeRegistry();
-     * // Save to file or database
-     * fs.writeFileSync('registry.json', JSON.stringify(registryData));
-     * ```
-     */
-    public saveTypeRegistry(): TypeRegistryInfo {
-        /**
-         * Converts a ClassReference to a TypeRegistryEntry for serialization.
-         * Recursively handles nested types.
-         */
-        const toEntry = (classReference: ClassReference): TypeRegistryEntry => {
-            return {
-                name: classReference.name,
-                namespace: classReference.namespace,
-                enclosingType: classReference.enclosingType ? toEntry(classReference.enclosingType) : undefined,
-                namespaceAlias: classReference.namespaceAlias,
-                fullyQualified: classReference.fullyQualified,
-                global: classReference.global
-            };
-        };
+    public log(): void {
+        const unmodified: string[] = [];
+        const modified: string[] = [];
 
-        // Convert the type registry to a serializable format
-        const types = {} as Record<string, TypeRegistryEntry>;
-        for (const [key, value] of this.typeRegistry.entries()) {
-            types[key] = toEntry(value);
-        }
-
-        // Convert the type names registry to a serializable format
-        const names = {} as Record<string, string[]>;
-        for (const [key, value] of this.typeNames.entries()) {
-            names[key] = Array.from(value);
-        }
-
-        return {
-            types,
-            namespaces: Object.fromEntries(this.namespaceRegistry.entries()),
-            names
-        };
-    }
-
-    /**
-     * Restores the type registry state from a previously saved TypeRegistryInfo object.
-     * This clears the current registry state and loads the provided data.
-     *
-     * @param data - The TypeRegistryInfo object containing the registry data to restore
-     *
-     * @example
-     * ```typescript
-     * const registryData = JSON.parse(fs.readFileSync('registry.json', 'utf8'));
-     * nameRegistry.loadTypeRegistry(registryData);
-     * ```
-     */
-    public loadTypeRegistry(data: TypeRegistryInfo): void {
-        if (!data || typeof data !== "object") {
-            throw new Error("Invalid registry data provided");
-        }
-
-        // Clear existing registry state
-        this.typeRegistry.clear();
-        this.namespaceRegistry.clear();
-        this.typeNames.clear();
-
-        /**
-         * Converts a TypeRegistryEntry back to a ClassReference.
-         * Recursively handles nested types.
-         */
-        const toClassReference = (entry: TypeRegistryEntry): ClassReference => {
-            if (!entry || typeof entry !== "object" || !entry.name || !entry.namespace) {
-                throw new Error("Invalid TypeRegistryEntry provided");
+        for (const [fqName, cr] of this.typeRegistry.entries()) {
+            const crName = NameRegistry.fullyQualifiedNameOf(cr);
+            if (crName === fqName) {
+                unmodified.push(fqName);
+            } else {
+                modified.push(fqName);
             }
+        }
+        let text = "==== UNMODIFIED ====";
+        for (const each of unmodified) {
+            text += `\n${each}`;
+        }
+        text += "\n==== MODIFIED ====";
+        for (const each of modified) {
+            text += `\n${each}`;
+        }
+        writeFileSync("/tmp/nameRegistry.log", text);
+    }
+    /*
+    readonly System = {
+        Enum: this.classReference({
+            name: "Enum",
+            namespace: "System"
+        }),
+        Exception: this.classReference({
+            name: "Exception",
+            namespace: "System"
+        }),
+        Serializable: this.classReference({
+            name: "Serializable",
+            namespace: "System"
+        }),
+        String: this.classReference({
+            name: "String",
+            namespace: "System"
+        }),
+        TimeSpan: this.classReference({
+            name: "TimeSpan",
+            namespace: "System"
+        }),
+        Runtime: {
+            Serialization: {
+                EnumMember: this.classReference({
+                    name: "EnumMember",
+                    namespace: "System.Runtime.Serialization"
+                })
+            } as const
+        } as const,
+        Collections: {
+            Generic: {
+                IAsyncEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
+                    return this.classReference({
+                        name: "IAsyncEnumerable",
+                        namespace: "System.Collections.Generic",
+                        generics: elementType ? [elementType] : undefined
+                    });
+                },
+                IEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
+                    return this.classReference({
+                        name: "IEnumerable",
+                        namespace: "System.Collections.Generic",
+                        generics: elementType ? [elementType] : undefined
+                    });
+                },
+                KeyValuePair: (
+                    keyType?: ClassReference | TypeParameter | Type,
+                    valueType?: ClassReference | TypeParameter | Type
+                ) => {
+                    return this.classReference({
+                        name: "KeyValuePair",
+                        namespace: "System.Collections.Generic",
+                        generics: keyType && valueType ? [keyType, valueType] : undefined
+                    });
+                },
+                List: (elementType?: ClassReference | TypeParameter | Type) => {
+                    return this.classReference({
+                        name: "List",
+                        namespace: "System.Collections.Generic",
+                        generics: elementType ? [elementType] : undefined
+                    });
+                },
+                HashSet: (elementType?: ClassReference | TypeParameter | Type) => {
+                    return this.classReference({
+                        name: "HashSet",
+                        namespace: "System.Collections.Generic",
+                        generics: elementType ? [elementType] : undefined
+                    });
+                },
+                Dictionary: (
+                    keyType?: ClassReference | TypeParameter | Type,
+                    valueType?: ClassReference | TypeParameter | Type
+                ) => {
+                    return this.classReference({
+                        name: "Dictionary",
+                        namespace: "System.Collections.Generic",
+                        generics: keyType && valueType ? [keyType, valueType] : undefined
+                    });
+                }
+            } as const,
+            Linq: {
+                Enumerable: this.classReference({
+                    name: "Enumerable",
+                    namespace: "System.Linq"
+                })
+            } as const
+        } as const,
+        Globalization: {
+            DateTimeStyles: this.classReference({
+                name: "DateTimeStyles",
+                namespace: "System.Globalization"
+            })
+        } as const,
+        Linq: {
+            Enumerable: this.classReference({
+                name: "Enumerable",
+                namespace: "System.Linq"
+            })
+        } as const,
+        Net: {
+            Http: {
+                HttpClient: this.classReference({
+                    name: "HttpClient",
+                    namespace: "System.Net.Http"
+                }),
+                HttpMethod: this.classReference({
+                    name: "HttpMethod",
+                    namespace: "System.Net.Http"
+                }),
+                HttpResponseHeaders: this.classReference({
+                    name: "HttpResponseHeaders",
+                    namespace: "System.Net.Http.Headers"
+                })
+            } as const
+        } as const,
+        IO: {
+            MemoryStream: this.classReference({
+                name: "MemoryStream",
+                namespace: "System.IO"
+            })
+        } as const,
+        Text: {
+            Encoding: this.classReference({
+                name: "Encoding",
+                namespace: "System.Text"
+            }),
+            Encoding_UTF8: this.classReference({
+                name: "UTF8",
+                namespace: "System.Text",
+                enclosingType: this.classReference({
+                    name: "Encoding",
+                    namespace: "System.Text"
+                })
+            }),
+            Json: {
+                JsonElement: this.classReference({
+                    name: "JsonElement",
+                    namespace: "System.Text.Json"
+                }),
+                JsonException: this.classReference({
+                    name: "JsonException",
+                    namespace: "System.Text.Json"
+                }),
+                Utf8JsonReader: this.classReference({
+                    name: "Utf8JsonReader",
+                    namespace: "System.Text.Json"
+                }),
+                JsonSerializerOptions: this.classReference({
+                    name: "JsonSerializerOptions",
+                    namespace: "System.Text.Json"
+                }),
+                Utf8JsonWriter: this.classReference({
+                    name: "Utf8JsonWriter",
+                    namespace: "System.Text.Json"
+                }),
+                Nodes: {
+                    JsonNode: this.classReference({
+                        name: "JsonNode",
+                        namespace: "System.Text.Json.Nodes"
+                    }),
+                    JsonObject: this.classReference({
+                        name: "JsonObject",
+                        namespace: "System.Text.Json.Nodes"
+                    })
+                } as const,
+                Serialization: {
+                    IJsonOnDeserialized: this.classReference({
+                        name: "IJsonOnDeserialized",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    IJsonOnSerializing: this.classReference({
+                        name: "IJsonOnSerializing",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    JsonOnDeserializedAttribute: this.classReference({
+                        name: "JsonOnDeserializedAttribute",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    JsonExtensionData: this.classReference({
+                        name: "JsonExtensionData",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    JsonConverter: (typeToConvert?: ClassReference | TypeParameter | Type) => {
+                        return this.classReference({
+                            name: "JsonConverter",
+                            namespace: "System.Text.Json.Serialization",
+                            generics: typeToConvert ? [typeToConvert] : undefined
+                        });
+                    },
+                    JsonIgnore: this.classReference({
+                        name: "JsonIgnore",
+                        namespace: "System.Text.Json.Serialization"
+                    }),
+                    JsonPropertyName: this.classReference({
+                        name: "JsonPropertyName",
+                        namespace: "System.Text.Json.Serialization"
+                    })
+                } as const
+            } as const
+        } as const,
+        Threading: {
+            CancellationToken: this.classReference({
+                name: "CancellationToken",
+                namespace: "System.Threading"
+            }),
+            Tasks: {
+                Task: (ofType?: ClassReference | TypeParameter | Type) => {
+                    return this.classReference({
+                        name: "Task",
+                        namespace: "System.Threading.Tasks",
+                        generics: ofType ? [ofType] : undefined
+                    });
+                }
+            } as const
+        } as const
+    } as const;
 
-            return new ClassReference({
-                name: entry.name,
-                namespace: entry.namespace,
-                enclosingType: entry.enclosingType ? toClassReference(entry.enclosingType) : undefined,
-                namespaceAlias: entry.namespaceAlias,
-                fullyQualified: entry.fullyQualified,
-                global: entry.global
+    readonly NUnit = {
+        Framework: {
+            TestFixture: this.classReference({
+                name: "TestFixture",
+                namespace: "NUnit.Framework"
+            }),
+            Test: this.classReference({
+                name: "Test",
+                namespace: "NUnit.Framework"
+            })
+        } as const
+    } as const;
+    readonly OneOf = {
+        OneOf: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
+            return this.classReference({
+                name: "OneOf",
+                namespace: "OneOf",
+                generics
             });
-        };
-
-        // Restore the type registry
-        if (data.types && typeof data.types === "object") {
-            for (const [key, value] of Object.entries(data.types)) {
-                if (key && value) {
-                    this.typeRegistry.set(key, toClassReference(value));
-                }
-            }
+        },
+        OneOfBase: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
+            return this.classReference({
+                name: "OneOfBase",
+                namespace: "OneOf",
+                generics
+            });
         }
-
-        // Restore the namespace registry
-        if (data.namespaces && typeof data.namespaces === "object") {
-            for (const [key, value] of Object.entries(data.namespaces)) {
-                if (key && typeof value === "string") {
-                    this.namespaceRegistry.set(key, value);
-                }
-            }
-        }
-
-        // Restore the type names registry
-        if (data.names && typeof data.names === "object") {
-            for (const [key, value] of Object.entries(data.names)) {
-                if (key && Array.isArray(value)) {
-                    this.typeNames.set(key, new Set(value.filter((ns) => typeof ns === "string")));
-                }
-            }
-        }
-    }
+    } as const;
+     */
 }
-
-/**
- * This provides a singleton instance of the NameRegistry class.
- */
-export const nameRegistry = new NameRegistry();

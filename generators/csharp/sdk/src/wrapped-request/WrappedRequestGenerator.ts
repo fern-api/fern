@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
@@ -27,7 +27,7 @@ export declare namespace WrappedRequestGenerator {
 
 /** Represents the request JSON object */
 export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
@@ -47,8 +47,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Public,
-            type: csharp.Class.ClassType.Record,
+            access: ast.Access.Public,
+            type: ast.Class.ClassType.Record,
             annotations: [this.context.getSerializableAttribute()]
         });
 
@@ -62,7 +62,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     csharp.field({
                         name: pathParameter.name.pascalCase.safeName,
                         type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
-                        access: csharp.Access.Public,
+                        access: ast.Access.Public,
                         get: true,
                         set: true,
                         summary: pathParameter.docs,
@@ -79,7 +79,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
-                ? csharp.Type.list(
+                ? ast.Type.list(
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
@@ -87,7 +87,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 csharp.field({
                     name: propertyName,
                     type,
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     get: true,
                     set: true,
                     summary: query.docs,
@@ -112,7 +112,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 csharp.field({
                     name: header.name.name.pascalCase.safeName,
                     type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     get: true,
                     set: true,
                     summary: header.docs,
@@ -133,7 +133,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     csharp.field({
                         name: this.wrapper.bodyKey.pascalCase.safeName,
                         type,
-                        access: csharp.Access.Public,
+                        access: ast.Access.Public,
                         get: true,
                         set: true,
                         summary: reference.docs,
@@ -223,8 +223,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }: {
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): csharp.CodeBlock {
-        const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
+    }): ast.CodeBlock {
+        const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
             for (const pathParameter of [
                 ...example.rootPathParameters,

@@ -2,7 +2,7 @@ export { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 export { AsIsFiles } from "./AsIs";
 export { AsyncFileGenerator } from "./AsyncFileGenerator";
 export { AbstractCsharpGeneratorCli } from "./cli/AbstractCsharpGeneratorCli";
-export { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+export { BaseCsharpGeneratorContext } from "./context/BaseCsharpGeneratorContext";
 export { convertExampleTypeReferenceToTypeReference } from "./context/convertExampleTypeReferenceToTypeReference";
 export { FileGenerator } from "./FileGenerator";
 export { findDotnetToolPath } from "./findDotNetToolPath";

@@ -1,5 +1,5 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema, saveGeneratorState } from "@fern-api/csharp-codegen";
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
@@ -8,7 +8,7 @@ import { template } from "lodash-es";
 import path from "path";
 
 import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContext";
 import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
@@ -22,7 +22,7 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
-export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
+export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
     private name: string;
     private sourceFiles: CSharpFile[] = [];
     private testFiles: CSharpFile[] = [];
@@ -39,7 +39,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         context,
         name
     }: {
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         name: string;
     }) {
         super(context);
@@ -243,11 +243,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
         // format the code cleanly using csharpier
         await this.csharpier(absolutePathToSrcDirectory);
-
-        // persist the state of the generator to allow subsequent tools to know what was generated
-        await saveGeneratorState(
-            join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".csharp-generator-state.json.user"))
-        );
     }
 
     private async createProject({
@@ -598,7 +593,7 @@ declare namespace CsProj {
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         protobufSourceFilePaths: RelativeFilePath[];
     }
 }
@@ -610,7 +605,7 @@ class CsProj {
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
-    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
     public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {

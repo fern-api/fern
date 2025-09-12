@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp, System } from "@fern-api/csharp-codegen";
+import { csharp, ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -16,29 +16,29 @@ export declare namespace RawClient {
         /** The reference to the client */
         clientReference: string;
         /** The instance of the request wrapper */
-        request: csharp.AstNode;
+        request: ast.AstNode;
     }
 
     export interface SendRequestArgsWithRequestWrapper {
         /** The reference to the client */
         clientReference: string;
         /** The instance of the request wrapper */
-        request: csharp.AstNode;
+        request: ast.AstNode;
     }
 
     export interface SendRequestWithHttpRequestArgs {
         /** The reference to the client */
         clientReference: string;
         /** Request options */
-        options: csharp.CodeBlock;
+        options: ast.CodeBlock;
         /** The instance of the request wrapper */
-        request: csharp.CodeBlock | csharp.ClassInstantiation;
+        request: ast.CodeBlock | ast.ClassInstantiation;
         /** Cancellation token */
-        cancellationToken: csharp.CodeBlock;
+        cancellationToken: ast.CodeBlock;
     }
 
     export interface CreateHttpRequestWrapperArgs {
-        baseUrl: csharp.CodeBlock;
+        baseUrl: ast.CodeBlock;
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
@@ -55,8 +55,8 @@ export declare namespace RawClient {
     }
 
     export interface CreateHttpRequestWrapperCodeBlock {
-        code?: csharp.CodeBlock;
-        requestReference: csharp.AstNode;
+        code?: ast.CodeBlock;
+        requestReference: ast.AstNode;
     }
 }
 
@@ -204,13 +204,13 @@ export class RawClient {
         propertyName: string;
         partName: string;
         contentType: string | undefined;
-        csharpType: csharp.Type;
+        csharpType: ast.Type;
         encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
     } {
         let propertyName: string;
         let partName: string;
         let contentType: string | undefined;
-        let csharpType: csharp.Type;
+        let csharpType: ast.Type;
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
@@ -245,7 +245,7 @@ export class RawClient {
         csharpType,
         encoding
     }: {
-        csharpType: csharp.Type;
+        csharpType: ast.Type;
         encoding?: FernIr.FileUploadBodyPropertyEncoding;
     }): string {
         csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
@@ -310,7 +310,7 @@ export class RawClient {
     /**
      * Creates an HTTP request using the RawClient.
      */
-    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): csharp.MethodInvocation {
+    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "CreateHttpRequest",
@@ -324,7 +324,7 @@ export class RawClient {
     public sendRequestWithRequestWrapper({
         clientReference,
         request
-    }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
+    }: RawClient.SendRequestArgsWithRequestWrapper): ast.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "SendRequestAsync",
@@ -341,7 +341,7 @@ export class RawClient {
         options,
         request,
         cancellationToken
-    }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
+    }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
             method: "SendRequestAsync",
@@ -350,7 +350,7 @@ export class RawClient {
         });
     }
 
-    private getCsharpHttpMethod(irMethod: HttpMethod): csharp.CodeBlock {
+    private getCsharpHttpMethod(irMethod: HttpMethod): ast.CodeBlock {
         let method: string;
         switch (irMethod) {
             case "POST":
@@ -377,7 +377,7 @@ export class RawClient {
                 assertNever(irMethod);
         }
         return csharp.codeblock((writer) => {
-            writer.writeNode(System.Net.Http.HttpMethod);
+            writer.writeNode(this.context.nameRegistry.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -387,7 +387,7 @@ export class RawClient {
         endpoint,
         pathParameterReferences
     }: {
-        writer: csharp.Writer;
+        writer: Writer;
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): void {
@@ -397,7 +397,7 @@ export class RawClient {
             return;
         }
         writer.write(`string.Format("${endpoint.fullPath.head}`);
-        const formatParams: csharp.AstNode[] = [];
+        const formatParams: ast.AstNode[] = [];
         let counter = 0;
         for (const part of endpoint.fullPath.parts) {
             writer.write(`{${counter++}}`);
@@ -419,7 +419,7 @@ export class RawClient {
         if (formatParams.length > 0) {
             writer.write(", ");
             for (let i = 0; i < formatParams.length; i++) {
-                writer.writeNode(formatParams[i] as csharp.AstNode);
+                writer.writeNode(formatParams[i] as ast.AstNode);
                 if (i < formatParams.length - 1) {
                     writer.write(", ");
                 }

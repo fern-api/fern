@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, GrpcClientInfo, nameRegistry } from "@fern-api/csharp-codegen";
+import { csharp, ast, GrpcClientInfo, nameRegistry } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
@@ -19,7 +19,7 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
     private service?: HttpService;
@@ -41,30 +41,30 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
-            access: csharp.Access.Public
+            access: ast.Access.Public
         });
 
         class_.addField(
             csharp.field({
-                access: csharp.Access.Private,
+                access: ast.Access.Private,
                 name: CLIENT_MEMBER_NAME,
-                type: csharp.Type.reference(this.context.getRawClientClassReference())
+                type: ast.Type.reference(this.context.getRawClientClassReference())
             })
         );
 
         if (this.grpcClientInfo != null) {
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Private,
+                    access: ast.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
+                    type: ast.Type.reference(this.context.getRawGrpcClientClassReference())
                 })
             );
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Private,
+                    access: ast.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
-                    type: csharp.Type.reference(this.grpcClientInfo.classReference)
+                    type: ast.Type.reference(this.grpcClientInfo.classReference)
                 })
             );
         }
@@ -77,10 +77,10 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: ast.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -101,7 +101,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
-    private generateEndpoints(): csharp.Method[] {
+    private generateEndpoints(): ast.Method[] {
         const service = this.service;
         if (!service) {
             throw new Error("Internal error; Service is not defined");
@@ -122,15 +122,15 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
-    private getConstructorMethod(): csharp.Class.Constructor {
-        const parameters: csharp.Parameter[] = [
+    private getConstructorMethod(): ast.Class.Constructor {
+        const parameters: ast.Parameter[] = [
             csharp.parameter({
                 name: "client",
-                type: csharp.Type.reference(this.context.getRawClientClassReference())
+                type: ast.Type.reference(this.context.getRawClientClassReference())
             })
         ];
         return {
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             parameters,
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");

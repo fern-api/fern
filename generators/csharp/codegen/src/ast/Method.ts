@@ -1,5 +1,4 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "..";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { type ClassReference } from "./ClassReference";
@@ -10,6 +9,7 @@ import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { TypeParameter } from "./TypeParameter";
 import { XmlDocBlock } from "./XmlDocBlock";
+import { type CSharp } from "../csharp";
 
 export enum MethodType {
     INSTANCE,
@@ -35,27 +35,30 @@ export class Method extends AstNode {
     private readonly annotations: Annotation[];
     private readonly interfaceReference?: ClassReference;
 
-    constructor({
-        name,
-        isAsync,
-        isAsyncEnumerable,
-        override,
-        access,
-        return_,
-        body,
-        noBody,
-        bodyType,
-        summary,
-        doc,
-        type,
-        classReference,
-        parameters,
-        typeParameters,
-        annotations,
-        codeExample,
-        interfaceReference
-    }: Method.Args) {
-        super();
+    constructor(
+        {
+            name,
+            isAsync,
+            isAsyncEnumerable,
+            override,
+            access,
+            return_,
+            body,
+            noBody,
+            bodyType,
+            summary,
+            doc,
+            type,
+            classReference,
+            parameters,
+            typeParameters,
+            annotations,
+            codeExample,
+            interfaceReference
+        }: Method.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
         this.name = name;
         this.isAsync = isAsync ?? false;
         this.isAsyncEnumerable = isAsyncEnumerable ?? false;
@@ -66,7 +69,7 @@ export class Method extends AstNode {
         this.body = body;
         this.bodyType = bodyType ?? Method.BodyType.Statement;
         this.summary = summary;
-        this.doc = XmlDocBlock.of(doc ?? { summary, codeExample });
+        this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary, codeExample });
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
@@ -101,14 +104,9 @@ export class Method extends AstNode {
         }
         if (this.return == null) {
             if (this.isAsync) {
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "Task",
-                        namespace: "System.Threading.Tasks",
-                        fullyQualified: true,
-                        global: true
-                    })
-                );
+                //   writer.writeNode(this.nameRegistry.System.Threading.Tasks.Task);
+                // TODO: UNHACK THIS
+                writer.write("System.Threading.Tasks.Task");
                 writer.write(" ");
             } else {
                 writer.write("void ");

@@ -25,7 +25,7 @@ export class RequestOptionsInterfaceGenerator extends FileGenerator<
     public doGenerate(): CSharpFile {
         const interace_ = csharp.interface_({
             ...this.context.getRequestOptionsInterfaceReference(),
-            access: csharp.Access.Internal
+            access: ast.Access.Internal
         });
         interace_.addFields(this.baseOptionsGenerator.getRequestOptionInterfaceFields());
         return new CSharpFile({

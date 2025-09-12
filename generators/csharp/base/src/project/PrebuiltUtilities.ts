@@ -1,5 +1,5 @@
 import { File } from "@fern-api/base-generator";
-import { csharp, System } from "@fern-api/csharp-codegen";
+import { CSharp, ast } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
@@ -8,7 +8,10 @@ export class PrebuiltUtilities {
     private namespace: string;
     private files: File[] = [];
 
-    constructor(parentNamespace: string) {
+    constructor(
+        parentNamespace: string,
+        private csharp: CSharp
+    ) {
         this.namespace = parentNamespace + "." + this.utilitiesDirectory;
     }
 
@@ -31,15 +34,15 @@ export class PrebuiltUtilities {
     }
 
     // TODO: write json serializers code to the main file
-    public enumConverterAnnotation(): csharp.Annotation {
-        return csharp.annotation({
-            reference: System.Text.Json.Serialization.JsonConverter(),
-            argument: csharp.annotation({
-                reference: csharp.classReference({
+    public enumConverterAnnotation(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.System.Text.Json.Serialization.JsonConverter(),
+            argument: this.csharp.annotation({
+                reference: this.csharp.classReference({
                     name: "typeof",
                     namespace: "System"
                 }),
-                argument: csharp.classReference({
+                argument: this.csharp.classReference({
                     name: "TolerantEnumConverter",
                     namespace: this.namespace
                 })
@@ -47,15 +50,15 @@ export class PrebuiltUtilities {
         });
     }
 
-    public stringEnumConverterAnnotation(): csharp.Annotation {
-        return csharp.annotation({
-            reference: System.Text.Json.Serialization.JsonConverter(),
-            argument: csharp.annotation({
-                reference: csharp.classReference({
+    public stringEnumConverterAnnotation(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.System.Text.Json.Serialization.JsonConverter(),
+            argument: this.csharp.annotation({
+                reference: this.csharp.classReference({
                     name: "typeof",
                     namespace: "System"
                 }),
-                argument: csharp.classReference({
+                argument: this.csharp.classReference({
                     name: "StringEnumConverter",
                     namespace: this.namespace
                 })
@@ -63,15 +66,15 @@ export class PrebuiltUtilities {
         });
     }
 
-    public oneOfConverterAnnotation(): csharp.Annotation {
-        return csharp.annotation({
-            reference: System.Text.Json.Serialization.JsonConverter(),
-            argument: csharp.annotation({
-                reference: csharp.classReference({
+    public oneOfConverterAnnotation(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.System.Text.Json.Serialization.JsonConverter(),
+            argument: this.csharp.annotation({
+                reference: this.csharp.classReference({
                     name: "typeof",
                     namespace: "System"
                 }),
-                argument: csharp.classReference({
+                argument: this.csharp.classReference({
                     name: "OneOfJsonConverter",
                     namespace: this.namespace
                 })
@@ -79,8 +82,8 @@ export class PrebuiltUtilities {
         });
     }
 
-    public stringEnumClassReference(): csharp.ClassReference {
-        return csharp.classReference({
+    public stringEnumClassReference(): ast.ClassReference {
+        return this.csharp.classReference({
             name: "StringEnum",
             namespace: this.namespace
         });

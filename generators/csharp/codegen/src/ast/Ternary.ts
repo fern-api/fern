@@ -2,6 +2,7 @@ import { Ternary as CommonTernary } from "@fern-api/browser-compatible-base-gene
 
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { type CSharp } from "../csharp";
 
 export declare namespace Ternary {
     type Args = CommonTernary.Args;
@@ -10,8 +11,8 @@ export declare namespace Ternary {
 export class Ternary extends AstNode {
     private args: Ternary.Args;
 
-    public constructor(args: Ternary.Args) {
-        super();
+    public constructor(args: Ternary.Args, csharp: CSharp) {
+        super(csharp);
         this.args = args;
     }
 

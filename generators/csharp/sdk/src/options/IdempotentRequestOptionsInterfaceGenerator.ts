@@ -24,17 +24,17 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
     public doGenerate(): CSharpFile {
         const interface_ = csharp.interface_({
             ...this.context.getIdempotentRequestOptionsInterfaceClassReference(),
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             interfaceReferences: [this.context.getRequestOptionsInterfaceReference()]
         });
         interface_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
         interface_.addMethod(
             csharp.method({
                 name: "GetIdempotencyHeaders",
-                access: csharp.Access.Internal,
+                access: ast.Access.Internal,
                 parameters: [],
-                return_: csharp.Type.reference(this.context.getHeadersClassReference()),
-                type: csharp.MethodType.INSTANCE,
+                return_: ast.Type.reference(this.context.getHeadersClassReference()),
+                type: ast.MethodType.INSTANCE,
                 noBody: true
             })
         );

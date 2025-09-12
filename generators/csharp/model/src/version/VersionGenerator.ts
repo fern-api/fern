@@ -8,7 +8,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 const DEFAULT_VERSION = "0.0.0";
 
 export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
 
     constructor(context: ModelGeneratorContext) {
         super(context);
@@ -19,15 +19,15 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addField(
             csharp.field({
                 name: this.context.getCurrentVersionPropertyName(),
-                type: csharp.Type.string(),
-                access: csharp.Access.Public,
+                type: ast.Type.string(),
+                access: ast.Access.Public,
                 const_: true,
                 initializer: csharp.codeblock(csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
             })

@@ -6,17 +6,17 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
 
 export interface QueryParameterCodeBlock {
-    code: csharp.CodeBlock;
+    code: ast.CodeBlock;
     queryParameterBagReference: string;
 }
 
 export interface HeaderParameterCodeBlock {
-    code: csharp.CodeBlock;
+    code: ast.CodeBlock;
     headerParameterBagReference: string;
 }
 
 export interface RequestBodyCodeBlock {
-    code?: csharp.CodeBlock;
+    code?: ast.CodeBlock;
     requestBodyReference: string;
 }
 
@@ -35,7 +35,7 @@ export abstract class EndpointRequest {
         return "requestBody";
     }
 
-    public abstract getParameterType(): csharp.Type;
+    public abstract getParameterType(): ast.Type;
 
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
 

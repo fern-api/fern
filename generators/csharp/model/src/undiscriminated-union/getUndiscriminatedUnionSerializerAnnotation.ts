@@ -1,5 +1,5 @@
-import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { csharp, System } from "@fern-api/csharp-codegen";
+import { BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -15,10 +15,10 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     isList
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>;
+    context: BaseCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
     isList: boolean;
-}): csharp.Annotation {
+}): ast.Annotation {
     if (isList) {
         return csharp.annotation({
             reference: System.Text.Json.Serialization.JsonConverter(),
@@ -49,9 +49,9 @@ function getOneOfSerializer({
     undiscriminatedUnionDeclaration
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>;
+    context: BaseCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): csharp.ClassReference {
+}): ast.ClassReference {
     const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
     return context.getOneOfSerializerClassReference(oneOf);
 }
@@ -61,9 +61,9 @@ function getOneOf({
     undiscriminatedUnionDeclaration
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>;
+    context: BaseCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): csharp.ClassReference {
+}): ast.ClassReference {
     return context.getOneOfClassReference(
         undiscriminatedUnionDeclaration.members.map((member) => {
             return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });

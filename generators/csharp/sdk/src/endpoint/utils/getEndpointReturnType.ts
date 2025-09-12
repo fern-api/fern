@@ -1,4 +1,4 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -11,17 +11,17 @@ export function getEndpointReturnType({
 }: {
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
-}): csharp.Type | undefined {
+}): ast.Type | undefined {
     if (endpoint.response?.body == null) {
         if (endpoint.method === FernIr.HttpMethod.Head) {
-            return csharp.Type.reference(context.getHttpResponseHeadersReference());
+            return ast.Type.reference(context.getHttpResponseHeadersReference());
         }
         return undefined;
     }
 
     const streamResultType = {
         json: (jsonChunk: FernIr.JsonStreamChunk) =>
-            csharp.Type.reference(
+            ast.Type.reference(
                 csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
@@ -29,18 +29,18 @@ export function getEndpointReturnType({
                 })
             ),
         text: () =>
-            csharp.Type.reference(
+            ast.Type.reference(
                 csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
-                    generics: [csharp.Type.string()]
+                    generics: [ast.Type.string()]
                 })
             ),
 
         sse: (sseChunk: FernIr.SseStreamChunk) => undefined,
         /*
             // todo: implement SSE - this is a placeholder for now
-            csharp.Type.reference(
+            ast.Type.reference(
                 csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
@@ -59,7 +59,7 @@ export function getEndpointReturnType({
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
 
         fileDownload: () =>
-            csharp.Type.reference(
+            ast.Type.reference(
                 csharp.classReference({
                     name: "Stream",
                     namespace: "System.IO",
@@ -67,7 +67,7 @@ export function getEndpointReturnType({
                 })
             ),
         json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
-        text: () => csharp.Type.string(),
+        text: () => ast.Type.string(),
         bytes: () => undefined,
         _other: () => undefined
     });

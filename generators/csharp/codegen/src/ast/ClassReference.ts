@@ -1,24 +1,32 @@
-import { csharp } from "..";
-import { nameRegistry } from "../utils/nameRegistry";
+import { ast } from "..";
 import { AstNode } from "./core/AstNode";
 import type { Writer } from "./core/Writer";
+import { type CSharp } from "../csharp";
 
 export declare namespace ClassReference {
-    interface Args {
+    interface Identity {
         /* The name of the C# class */
         name: string;
         /* The namespace of the C# class */
         namespace: string;
-        /* The namespace alias for C# class */
-        namespaceAlias?: string;
         /* The enclosing type of the C# class */
         enclosingType?: ClassReference;
+    }
+
+    interface Args extends Identity {
+        /* The namespace alias for C# class */
+        namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: (csharp.Type | csharp.TypeParameter | ClassReference)[];
+        generics?: (ast.Type | ast.TypeParameter | ClassReference)[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
         /* force global:: qualifier */
         global?: boolean;
+    }
+
+    interface CreationArgs extends Args {
+        /* the fully qualified name of the class reference */
+        fullyQualifiedName: string;
     }
 }
 
@@ -27,29 +35,35 @@ export class ClassReference extends AstNode {
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
     public readonly enclosingType: ClassReference | undefined;
-    public readonly generics: (csharp.Type | csharp.TypeParameter | ClassReference)[];
+    public readonly generics: (ast.Type | ast.TypeParameter | ClassReference)[];
     public readonly fullyQualified: boolean;
     public readonly global: boolean;
+    public readonly fullyQualifiedName: string;
     private readonly namespaceSegments: string[];
 
-    constructor({
-        name,
-        namespace,
-        namespaceAlias,
-        enclosingType,
-        generics,
-        fullyQualified,
-        global
-    }: ClassReference.Args) {
-        super();
+    constructor(
+        {
+            name,
+            namespace,
+            namespaceAlias,
+            enclosingType,
+            generics,
+            fullyQualified,
+            global,
+            fullyQualifiedName
+        }: ClassReference.CreationArgs,
+        csharp: CSharp
+    ) {
+        super(csharp);
         this.name = name;
-        this.namespace = namespace;
+        this.namespace = enclosingType?.namespace ?? namespace;
         this.namespaceAlias = namespaceAlias;
         this.enclosingType = enclosingType;
         this.generics = generics ?? [];
         this.fullyQualified = fullyQualified ?? false;
         this.global = global ?? false;
         this.namespaceSegments = namespace.split(".");
+        this.fullyQualifiedName = fullyQualifiedName;
     }
 
     public write(writer: Writer): void {
@@ -60,26 +74,34 @@ export class ClassReference extends AstNode {
         this.writeInternal(writer, true);
     }
 
+    public get scopedName() {
+        return this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
+    }
+
     private writeInternal(writer: Writer, isAttribute: boolean): void {
         // the name without any namespace qualifier, but with the enclosing type if it exists
-        const scopedName = this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
+        // const scopedName = this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
 
         // if the name (or the enclosing type name) is ambiguous
+        // const isAmbiguous = nameRegistry.isAmbiguousTypeName(scopedName) || nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
         const isAmbiguous =
-            nameRegistry.isAmbiguousTypeName(scopedName) || nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
+            this.csharp.nameRegistry.isAmbiguousTypeName(this.name) ||
+            this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
 
         // the fully qualified namespace of the type
-        const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
+        // const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
+        // const fqNamespace = this.enclosingType?.namespace ?? this.namespace;
 
         // the fully qualified name of the type (including the namespace and enclosing type if it exists)
-        const fqName = `${fqNamespace}.${scopedName}`;
+        // const fqName = `${fqNamespace}.${scopedName}`;
+        // const fqName = this.fullyQualifiedName;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const globalFqName = `${this.global || writer.shouldUseFullyQualifiedNamespaces() ? "global::" : ""}${fqName}`;
+        const globalFqName = `${this.global || writer.shouldUseFullyQualifiedNamespaces() ? "global::" : ""}${this.fullyQualifiedName}`;
 
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
-            writer.write(`${alias}.${scopedName}`);
+            writer.write(`${alias}.${this.scopedName}`);
         } else {
             if (this.fullyQualified || writer.shouldUseFullyQualifiedNamespaces()) {
                 // explicitly express namespaces
@@ -94,7 +116,7 @@ export class ClassReference extends AstNode {
                         namespaceToBeWrittenTo: writer.getNamespace(),
                         isAttribute
                     });
-                    writer.write(`${typeQualification}${scopedName}`);
+                    writer.write(`${typeQualification}${this.scopedName}`);
                 } else if (isAmbiguous && this.resolveNamespace() !== writer.getNamespace()) {
                     // If the class is ambiguous and not in this specific namespace
                     // we must to fully qualify the type
@@ -104,7 +126,7 @@ export class ClassReference extends AstNode {
                     // If the class is not ambiguous and is in this specific namespace,
                     // we can use the short name
                     writer.addReference(this);
-                    writer.write(scopedName);
+                    writer.write(this.scopedName);
                 }
             }
         }
@@ -289,8 +311,8 @@ export class ClassReference extends AstNode {
         const allNamespaceSegments = writer.getAllNamespaceSegments();
         return allNamespaceSegments.has(this.name);
     }
-    
+
     public resolveNamespace(): string {
-        return nameRegistry.resolveNamespace(this.namespace);
+        return this.csharp.nameRegistry.resolveNamespace(this.namespace);
     }
 }

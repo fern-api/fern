@@ -1,11 +1,12 @@
-import { csharp } from "../..";
+import { CSharp, ast } from "../..";
 
+const csharp = new CSharp();
 describe("class", () => {
     it("basic", async () => {
         const clazz = csharp.class_({
             name: "Car",
             namespace: "Automotive",
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             primaryConstructor: {
                 parameters: [
                     csharp.parameter({

@@ -1,6 +1,6 @@
-import { csharp, System } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { type CSharp } from "../csharp";
 
 type InternalPrimitiveInstantiation =
     | IntegerInstantiation
@@ -77,8 +77,11 @@ interface NullInstantiation {
 }
 
 export class PrimitiveInstantiation extends AstNode {
-    private constructor(public readonly internalType: InternalPrimitiveInstantiation) {
-        super();
+    public constructor(
+        public readonly internalType: InternalPrimitiveInstantiation,
+        csharp: CSharp
+    ) {
+        super(csharp);
     }
 
     public write(writer: Writer): void {
@@ -96,7 +99,7 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "string":
-                writer.writeNode(csharp.string_({ string: this.internalType.value }));
+                writer.writeNode(this.csharp.string_({ string: this.internalType.value }));
                 break;
             case "boolean":
                 writer.write(this.internalType.value.toString());
@@ -118,7 +121,7 @@ export class PrimitiveInstantiation extends AstNode {
             case "dateTime": {
                 if (this.internalType.parse) {
                     writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, `);
-                    writer.writeNode(System.Globalization.DateTimeStyles);
+                    writer.writeNode(this.csharp.System.Globalization.DateTimeStyles);
                     writer.write(".AdjustToUniversal)");
                 } else {
                     writer.write(this.constructDatetimeWithoutParse(this.internalType.value));
@@ -132,90 +135,6 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write("null");
                 break;
         }
-    }
-
-    public static string(value: string): PrimitiveInstantiation {
-        return new this({
-            type: "string",
-            value
-        });
-    }
-
-    public static boolean(value: boolean): PrimitiveInstantiation {
-        return new this({
-            type: "boolean",
-            value
-        });
-    }
-
-    public static integer(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "integer",
-            value
-        });
-    }
-
-    public static long(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "long",
-            value
-        });
-    }
-
-    public static uint(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "uint",
-            value
-        });
-    }
-
-    public static ulong(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "ulong",
-            value
-        });
-    }
-
-    public static float(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "float",
-            value
-        });
-    }
-
-    public static double(value: number): PrimitiveInstantiation {
-        return new this({
-            type: "double",
-            value
-        });
-    }
-
-    public static date(value: string): PrimitiveInstantiation {
-        return new this({
-            type: "date",
-            value
-        });
-    }
-
-    public static dateTime(value: Date, parse = true): PrimitiveInstantiation {
-        return new this({
-            type: "dateTime",
-            value,
-            parse
-        });
-    }
-
-    public static uuid(value: string): PrimitiveInstantiation {
-        return new this({
-            type: "uuid",
-            value
-        });
-    }
-
-    public static null(): PrimitiveInstantiation {
-        return new this({
-            type: "null"
-        });
     }
 
     /*

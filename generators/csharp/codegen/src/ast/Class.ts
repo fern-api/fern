@@ -1,5 +1,4 @@
-import { csharp } from "..";
-import { nameRegistry } from "../utils/nameRegistry";
+import { type CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -14,8 +13,6 @@ import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { XmlDocBlock } from "./XmlDocBlock";
-
-nameRegistry;
 
 export class Class extends AstNode {
     public static readonly ClassType = {
@@ -48,34 +45,34 @@ export class Class extends AstNode {
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
 
-    constructor({
-        name,
-        namespace,
-        access,
-        static_,
-        abstract_,
-        sealed,
-        partial,
-        readonly,
-        parentClassReference,
-        interfaceReferences,
-        enclosingType,
-        type,
-        summary,
-        doc,
-        annotations,
-        primaryConstructor
-    }: Class.Args) {
-        super();
-        // nameRegistry;
+    constructor(
+        {
+            name,
+            namespace,
+            access,
+            static_,
+            abstract_,
+            sealed,
+            partial,
+            readonly,
+            parentClassReference,
+            interfaceReferences,
+            enclosingType,
+            type,
+            summary,
+            doc,
+            annotations,
+            primaryConstructor
+        }: Class.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
         // ensure that we record this type so that we can find conflicts with other types.
-        this.reference = // nameRegistry.trackType(
-            csharp.classReference({
-                name: name,
-                namespace: namespace,
-                enclosingType: enclosingType
-            });
-        //);
+        this.reference = this.csharp.classReference({
+            name: name,
+            namespace: namespace,
+            enclosingType: enclosingType
+        });
 
         this.access = access;
         this.static_ = static_ ?? false;
@@ -85,7 +82,7 @@ export class Class extends AstNode {
         this.partial = partial ?? false;
         this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
-        this.doc = XmlDocBlock.of(doc ?? { summary });
+        this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary });
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
         this.annotations = annotations ?? [];
@@ -265,7 +262,7 @@ export class Class extends AstNode {
 
     private writeConstructors(writer: Writer): void {
         this.constructors.forEach((constructor) => {
-            writer.writeNode(XmlDocBlock.of(constructor.doc));
+            writer.writeNode(this.csharp.xmlDocBlockOf(constructor.doc));
             writer.write(`${constructor.access} ${this.name} (`);
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer);

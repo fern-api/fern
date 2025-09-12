@@ -1,14 +1,14 @@
 import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { Config } from "./Config";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { SNIPPET_NAMESPACE } from "./constants";
 
-const SNIPPET_NAMESPACE = "Usage";
 const SNIPPET_CLASS_NAME = "Example";
 const SNIPPET_METHOD_NAME = "Do";
 const CLIENT_VAR_NAME = "client";
@@ -22,6 +22,10 @@ export class EndpointSnippetGenerator {
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
+    }
+
+    private get csharp() {
+        return this.context.csharp;
     }
 
     public async generateSnippet({
@@ -70,8 +74,8 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
-    }): csharp.AstNode {
-        const body = csharp.codeblock((writer) => {
+    }): ast.AstNode {
+        const body = this.csharp.codeblock((writer) => {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.newLine();
             writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
@@ -87,17 +91,17 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private buildFullCodeBlock({ body, options }: { body: csharp.CodeBlock; options: Options }): csharp.AstNode {
+    private buildFullCodeBlock({ body, options }: { body: ast.CodeBlock; options: Options }): ast.AstNode {
         const config = this.getConfig(options);
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             name: config.fullStyleClassName ?? SNIPPET_CLASS_NAME,
             namespace: SNIPPET_NAMESPACE,
-            access: csharp.Access.Public
+            access: ast.Access.Public
         });
         class_.addMethod(
-            csharp.method({
+            this.csharp.method({
                 name: SNIPPET_METHOD_NAME,
-                access: csharp.Access.Public,
+                access: ast.Access.Public,
                 isAsync: true,
                 parameters: [],
                 body
@@ -112,8 +116,8 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.CodeBlock {
-        return csharp.codeblock((writer) => {
+    }): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
             writer.write(`var ${CLIENT_VAR_NAME} = `);
             writer.writeNode(this.getRootClientConstructorInvocation(this.getConstructorArgs({ endpoint, snippet })));
         });
@@ -125,13 +129,13 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.MethodInvocation {
+    }): ast.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
         const isAsyncEnumerable = endpoint.examples?.some(
             (example) => (example.requestBody as Record<string, unknown> | undefined)?.stream === true
         );
-        return csharp.invokeMethod({
-            on: csharp.codeblock(CLIENT_VAR_NAME),
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             async: true,
@@ -184,7 +188,7 @@ export class EndpointSnippetGenerator {
             ...headerArgs,
             {
                 name: "clientOptions",
-                assignment: csharp.instantiateClass({
+                assignment: this.csharp.instantiateClass({
                     classReference: this.context.getClientOptionsClassReference(),
                     arguments_: optionArgs.map((arg) => ({
                         name: arg.name,
@@ -204,7 +208,7 @@ export class EndpointSnippetGenerator {
         environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): NamedArgument[] {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
-        if (csharp.TypeLiteral.isNop(baseUrlArg)) {
+        if (this.csharp.TypeLiteral.isNop(baseUrlArg)) {
             return [];
         }
         return [
@@ -221,13 +225,13 @@ export class EndpointSnippetGenerator {
     }: {
         baseUrl: string | undefined;
         environment: FernIr.dynamic.EnvironmentValues | undefined;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "Cannot specify both baseUrl and environment options"
             });
-            return csharp.TypeLiteral.nop();
+            return this.csharp.TypeLiteral.nop();
         }
         if (baseUrl != null) {
             if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
@@ -235,9 +239,9 @@ export class EndpointSnippetGenerator {
                     severity: Severity.Critical,
                     message: "The C# SDK doesn't support a baseUrl when multiple URL environments are configured"
                 });
-                return csharp.TypeLiteral.nop();
+                return this.csharp.TypeLiteral.nop();
             }
-            return csharp.TypeLiteral.string(baseUrl);
+            return this.csharp.TypeLiteral.string(baseUrl);
         }
         if (environment != null) {
             if (this.context.isSingleEnvironmentID(environment)) {
@@ -247,16 +251,16 @@ export class EndpointSnippetGenerator {
                         severity: Severity.Warning,
                         message: `Environment ${JSON.stringify(environment)} was not found`
                     });
-                    return csharp.TypeLiteral.nop();
+                    return this.csharp.TypeLiteral.nop();
                 }
-                return csharp.TypeLiteral.reference(classReference);
+                return this.csharp.TypeLiteral.reference(classReference);
             }
             if (this.context.isMultiEnvironmentValues(environment)) {
                 if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
-                    return csharp.TypeLiteral.nop();
+                    return this.csharp.TypeLiteral.nop();
                 }
-                return csharp.TypeLiteral.reference(
-                    csharp.instantiateClass({
+                return this.csharp.TypeLiteral.reference(
+                    this.csharp.instantiateClass({
                         classReference: this.context.getEnvironmentClassReference(),
                         arguments_: Object.entries(environment).map(([key, value]) => ({
                             name: upperFirst(camelCase(key)),
@@ -270,7 +274,7 @@ export class EndpointSnippetGenerator {
                 );
             }
         }
-        return csharp.TypeLiteral.nop();
+        return this.csharp.TypeLiteral.nop();
     }
 
     private getConstructorAuthArgs({
@@ -320,11 +324,11 @@ export class EndpointSnippetGenerator {
         return [
             {
                 name: this.context.getParameterName(auth.username),
-                assignment: csharp.TypeLiteral.string(values.username)
+                assignment: this.csharp.TypeLiteral.string(values.username)
             },
             {
                 name: this.context.getParameterName(auth.password),
-                assignment: csharp.TypeLiteral.string(values.password)
+                assignment: this.csharp.TypeLiteral.string(values.password)
             }
         ];
     }
@@ -339,7 +343,7 @@ export class EndpointSnippetGenerator {
         return [
             {
                 name: this.context.getParameterName(auth.token),
-                assignment: csharp.TypeLiteral.string(values.token)
+                assignment: this.csharp.TypeLiteral.string(values.token)
             }
         ];
     }
@@ -372,11 +376,11 @@ export class EndpointSnippetGenerator {
         return [
             {
                 name: this.context.getParameterName(auth.clientId),
-                assignment: csharp.TypeLiteral.string(values.clientId)
+                assignment: this.csharp.TypeLiteral.string(values.clientId)
             },
             {
                 name: this.context.getParameterName(auth.clientSecret),
-                assignment: csharp.TypeLiteral.string(values.clientSecret)
+                assignment: this.csharp.TypeLiteral.string(values.clientSecret)
             }
         ];
     }
@@ -407,12 +411,12 @@ export class EndpointSnippetGenerator {
     }: {
         header: FernIr.dynamic.NamedParameter;
         value: unknown;
-    }): csharp.TypeLiteral | undefined {
+    }): ast.TypeLiteral | undefined {
         const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
             typeReference: header.typeReference,
             value
         });
-        if (csharp.TypeLiteral.isNop(typeLiteral)) {
+        if (this.csharp.TypeLiteral.isNop(typeLiteral)) {
             // Literal header values (e.g. "X-API-Version") should not be included in the
             // client constructor.
             return undefined;
@@ -426,7 +430,7 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.TypeLiteral[] {
+    }): ast.TypeLiteral[] {
         switch (endpoint.request.type) {
             case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
@@ -443,13 +447,13 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.TypeLiteral[] {
-        const args: csharp.TypeLiteral[] = [];
+    }): ast.TypeLiteral[] {
+        const args: ast.TypeLiteral[] = [];
 
         const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? true;
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: csharp.ConstructorField[] = [];
+        const pathParameterFields: ast.ConstructorField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
@@ -513,9 +517,9 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: csharp.ConstructorField[];
+        pathParameterFields: ast.ConstructorField[];
         filePropertyInfo: FilePropertyInfo;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
@@ -549,8 +553,8 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
-        return csharp.TypeLiteral.class_({
-            reference: csharp.classReference({
+        return this.csharp.TypeLiteral.class_({
+            reference: this.csharp.classReference({
                 name: this.context.getClassName(request.declaration.name),
                 namespace: this.context.getNamespace(request.declaration.fernFilepath)
             }),
@@ -566,7 +570,7 @@ export class EndpointSnippetGenerator {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
-    }): csharp.ConstructorField[] {
+    }): ast.ConstructorField[] {
         switch (body.type) {
             case "properties":
                 return this.getInlinedRequestBodyPropertyConstructorFields({ parameters: body.value, value });
@@ -585,8 +589,8 @@ export class EndpointSnippetGenerator {
     }: {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
-    }): csharp.ConstructorField[] {
-        const fields: csharp.ConstructorField[] = [];
+    }): ast.ConstructorField[] {
+        const fields: ast.ConstructorField[] = [];
 
         const bodyProperties = this.context.associateByWireValue({
             parameters,
@@ -606,7 +610,7 @@ export class EndpointSnippetGenerator {
         filePropertyInfo
     }: {
         filePropertyInfo: FilePropertyInfo;
-    }): csharp.ConstructorField[] {
+    }): ast.ConstructorField[] {
         return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
     }
 
@@ -616,7 +620,7 @@ export class EndpointSnippetGenerator {
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
-    }): csharp.ConstructorField {
+    }): ast.ConstructorField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
             value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
@@ -629,7 +633,7 @@ export class EndpointSnippetGenerator {
     }: {
         body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         switch (body.type) {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
@@ -646,8 +650,8 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.TypeLiteral[] {
-        const args: csharp.TypeLiteral[] = [];
+    }): ast.TypeLiteral[] {
+        const args: ast.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
@@ -673,7 +677,7 @@ export class EndpointSnippetGenerator {
     }: {
         body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         switch (body.type) {
             case "bytes": {
                 return this.getBytesBodyRequestArg({ value });
@@ -682,7 +686,7 @@ export class EndpointSnippetGenerator {
                 // if the body type is optional, but not provided, then we should use null
                 // (the generated body arg parameter is currently required)
                 if (body.value.type === "optional" && value == undefined) {
-                    return csharp.TypeLiteral.null();
+                    return this.csharp.TypeLiteral.null();
                 }
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
@@ -690,7 +694,7 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private getBytesBodyRequestArg({ value }: { value: unknown }): csharp.TypeLiteral {
+    private getBytesBodyRequestArg({ value }: { value: unknown }): ast.TypeLiteral {
         let str = this.context.getValueAsString({ value });
         if (str == null) {
             this.context.errors.add({
@@ -701,11 +705,11 @@ export class EndpointSnippetGenerator {
             // if there is no value, then let's just use a random string
             str = "[bytes]";
         }
-        return csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
+        return this.csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
     }
 
-    private getRootClientConstructorInvocation(arguments_: NamedArgument[]): csharp.ClassInstantiation {
-        return csharp.instantiateClass({
+    private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
+        return this.csharp.instantiateClass({
             classReference: this.context.getRootClientClassReference(),
             arguments_,
             forceUseConstructor: true,
@@ -719,8 +723,8 @@ export class EndpointSnippetGenerator {
     }: {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): csharp.ConstructorField[] {
-        const args: csharp.ConstructorField[] = [];
+    }): ast.ConstructorField[] {
+        const args: ast.ConstructorField[] = [];
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}

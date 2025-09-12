@@ -1,3 +1,4 @@
+/*
 import { VALID_READ_ONLY_MEMORY_TYPES } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
 
@@ -15,3 +16,4 @@ export function validateReadOnlyMemoryTypes(customConfig: BaseCsharpCustomConfig
         }
     }
 }
+*/

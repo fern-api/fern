@@ -1,5 +1,6 @@
-import { csharp } from "../..";
+import { CSharp, ast } from "../..";
 
+const csharp = new CSharp();
 describe("class reference", () => {
     it("generics", async () => {
         const clazz = csharp.classReference({

@@ -1,4 +1,4 @@
-import { csharp, GrpcClientInfo } from "@fern-api/csharp-codegen";
+import { ast, GrpcClientInfo } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
@@ -30,7 +30,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         rawGrpcClientReference: string;
         rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
-    }): csharp.Method[] {
+    }): ast.Method[] {
         if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
             return [
                 this.grpc.generate({

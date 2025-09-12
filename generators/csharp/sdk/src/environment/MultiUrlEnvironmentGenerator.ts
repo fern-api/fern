@@ -30,21 +30,21 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             annotations: [this.context.getSerializableAttribute()]
         });
 
         for (const environment of this.multiUrlEnvironments.environments) {
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     static_: true,
                     readonly: true,
                     name:
                         (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
+                    type: ast.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
                         writer.writeNode(
                             csharp.instantiateClass({
@@ -69,9 +69,9 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
             class_.addField(
                 csharp.field({
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     name: baseUrl.name.pascalCase.safeName,
-                    type: csharp.Type.string(),
+                    type: ast.Type.string(),
                     get: true,
                     init: true,
                     summary: `URL for the ${baseUrl.id} service`
@@ -89,7 +89,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         });
     }
 
-    public generateSnippet(baseUrlValues?: csharp.AstNode): csharp.ClassInstantiation {
+    public generateSnippet(baseUrlValues?: ast.AstNode): ast.ClassInstantiation {
         const arguments_ = this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
             const name = baseUrl.name.pascalCase.safeName;
             const value = baseUrlValues ?? `<${baseUrl.id} URL>`;
