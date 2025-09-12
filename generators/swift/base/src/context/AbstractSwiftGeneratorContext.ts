@@ -169,7 +169,7 @@ export abstract class AbstractSwiftGeneratorContext<
                             this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
                         ),
                     set: () => swift.Type.jsonValue(), // TODO(kafkas): Implement set type
-                    nullable: () => swift.Type.jsonValue(), // TODO(kafkas): Implement nullable types
+                    nullable: (ref) => swift.Type.nullable(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     _other: () => swift.Type.jsonValue()

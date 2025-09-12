@@ -189,7 +189,7 @@ export class StructGenerator {
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
-                                            target: swift.Type.required(p.type),
+                                            target: swift.Type.nonOptional(p.type),
                                             memberName: "self"
                                         })
                                     }),

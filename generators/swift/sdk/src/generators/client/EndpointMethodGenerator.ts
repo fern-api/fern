@@ -68,7 +68,7 @@ export class EndpointMethodGenerator {
 
         endpoint.headers.forEach((header) => {
             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
-            if (swiftType.unwrappedType !== "string") {
+            if (swiftType.nonOptionalType !== "string") {
                 return;
             }
             params.push(
@@ -198,7 +198,7 @@ export class EndpointMethodGenerator {
 
         const validHeaders = endpoint.headers.filter(
             (header) =>
-                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).unwrappedType === "string"
+                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).nonOptionalType === "string"
         );
 
         if (validHeaders.length > 0) {
@@ -239,7 +239,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value:
-                                                        swiftType.unwrappedType === "custom"
+                                                        swiftType.nonOptionalType === "custom"
                                                             ? swift.Expression.memberAccess({
                                                                   target: swift.Expression.reference("$0"),
                                                                   memberName: "rawValue"
@@ -258,7 +258,7 @@ export class EndpointMethodGenerator {
                                         arguments_: [
                                             swift.functionArgument({
                                                 value:
-                                                    swiftType.unwrappedType === "custom"
+                                                    swiftType.nonOptionalType === "custom"
                                                         ? swift.Expression.memberAccess({
                                                               target: swift.Expression.reference(
                                                                   queryParam.name.name.camelCase.unsafeName
