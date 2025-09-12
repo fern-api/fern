@@ -3,7 +3,7 @@
   createdAt: "2025-09-11"
   changelogEntry:
     - type: fix
-      summary: Fixed query parameter handling to support symbol keys in addition to string keys.
+      summary: Fix query parameter handling to support symbol keys in addition to string keys.
   irVersion: 58
 
 - version: 1.0.0-rc19
