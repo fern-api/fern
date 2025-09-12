@@ -8,7 +8,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
+import { TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -21,7 +21,6 @@ export declare namespace AbstractTypeReferenceConverter {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -99,7 +98,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected enableInlineTypes: boolean;
     protected allowExtraFields: boolean;
     protected omitUndefined: boolean;
-    protected generateReadWriteOnlyTypes: boolean;
 
     constructor({
         context,
@@ -108,8 +106,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
         useBigInt,
         enableInlineTypes,
         allowExtraFields,
-        omitUndefined,
-        generateReadWriteOnlyTypes
+        omitUndefined
     }: AbstractTypeReferenceConverter.Init) {
         this.context = context;
         this.treatUnknownAsAny = treatUnknownAsAny;
@@ -118,7 +115,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
         this.enableInlineTypes = enableInlineTypes;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
-        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     public convert(params: ConvertTypeReferenceParams): T {
@@ -214,42 +210,12 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return this.context.type.isNullable(typeReference);
     }
 
-    protected generateNonOptionalTypeReferenceNode({
-        typeNode,
-        requestTypeNode,
-        responseTypeNode
-    }: {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    }): TypeReferenceNode {
+    protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {
         return {
             isOptional: false,
             typeNode,
-            typeNodeWithoutUndefined: typeNode,
-            requestTypeNode: requestTypeNode,
-            requestTypeNodeWithoutUndefined: requestTypeNode,
-            responseTypeNode: responseTypeNode,
-            responseTypeNodeWithoutUndefined: responseTypeNode
+            typeNodeWithoutUndefined: typeNode
         };
-    }
-
-    protected addRequestToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(
-            ts.factory.createQualifiedName(
-                ts.factory.createIdentifier(getTextOfTsNode(typeNode)),
-                ts.factory.createIdentifier("Request")
-            )
-        );
-    }
-
-    protected addResponseToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(
-            ts.factory.createQualifiedName(
-                ts.factory.createIdentifier(getTextOfTsNode(typeNode)),
-                ts.factory.createIdentifier("Response")
-            )
-        );
     }
 }
 

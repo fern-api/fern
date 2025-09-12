@@ -4,8 +4,6 @@ import {
     ErrorDeclaration,
     ExampleEndpointCall,
     ExampleEndpointErrorResponse,
-    ExampleObjectType,
-    ExampleObjectTypeWithTypeId,
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
@@ -14,7 +12,6 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
-    ObjectPropertyAccess,
     Pagination
 } from "@fern-fern/ir-sdk/api";
 import {
@@ -50,7 +47,6 @@ export declare namespace JestTestGenerator {
         relativePackagePath: string;
         relativeTestPath: string;
         neverThrowErrors: boolean;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -66,7 +62,6 @@ export class JestTestGenerator {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly neverThrowErrors: boolean;
-    private readonly generateReadWriteOnlyTypes: boolean;
 
     constructor({
         ir,
@@ -79,8 +74,7 @@ export class JestTestGenerator {
         retainOriginalCasing,
         relativePackagePath,
         relativeTestPath,
-        neverThrowErrors,
-        generateReadWriteOnlyTypes
+        neverThrowErrors
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -93,7 +87,6 @@ export class JestTestGenerator {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.neverThrowErrors = neverThrowErrors;
-        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -477,11 +470,7 @@ export function mockAuth(server: MockServer) {
         request.request?._visit({
             inlinedRequestBody: (value) => {
                 value.properties.forEach((p) => {
-                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample({
-                        example: p.value,
-                        isForRequest: true,
-                        isForResponse: false
-                    }));
+                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample(p.value));
                 });
             },
             reference: (value) => {
@@ -537,14 +526,7 @@ export function mockAuth(server: MockServer) {
                     object: (value) => {
                         return Object.fromEntries(
                             value.properties.map((property) => {
-                                return [
-                                    property.name.name.camelCase.safeName,
-                                    createRawJsonExample({
-                                        example: property.value,
-                                        isForRequest: true,
-                                        isForResponse: false
-                                    })
-                                ];
+                                return [property.name.name.camelCase.safeName, createRawJsonExample(property.value)];
                             })
                         );
                     },
@@ -725,7 +707,7 @@ describe("${serviceName}", () => {
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
-        const expected = getExpectedResponse({
+        const expected = getExpected({
             response: example.response,
             context,
             neverThrowErrors: this.neverThrowErrors
@@ -942,20 +924,12 @@ describe("${serviceName}", () => {
                 return code`${literalOf(
                     Object.fromEntries(
                         value.properties.map((p) => {
-                            return [
-                                p.name.wireValue,
-                                this.createRawJsonExample({
-                                    example: p.value,
-                                    isForRequest: true,
-                                    isForResponse: false
-                                })
-                            ];
+                            return [p.name.wireValue, this.createRawJsonExample(p.value)];
                         })
                     )
                 )}`;
             },
-            reference: (value) =>
-                this.createRawJsonExample({ example: value, isForRequest: true, isForResponse: false }),
+            reference: (value) => this.createRawJsonExample(value),
             _other: () => code`${literalOf(request.jsonExample)}`
         });
         const rawCode = requestExample.toString().trim();
@@ -977,7 +951,7 @@ describe("${serviceName}", () => {
                         if (!value) {
                             return undefined;
                         }
-                        return createRawJsonExample({ example: value, isForRequest: false, isForResponse: true });
+                        return createRawJsonExample(value);
                     },
                     stream: () => {
                         throw new Error("Stream not supported in wire tests");
@@ -995,7 +969,7 @@ describe("${serviceName}", () => {
                     return undefined;
                 }
 
-                return createRawJsonExample({ example: value.body, isForRequest: false, isForResponse: true });
+                return createRawJsonExample(value.body);
             },
             _other: () => {
                 throw new Error("Unsupported response type");
@@ -1011,20 +985,8 @@ describe("${serviceName}", () => {
         return responseExample;
     }
 
-    createRawJsonExample({
-        example,
-        isForRequest,
-        isForResponse
-    }: {
-        example: ExampleTypeReference;
-        isForRequest: boolean;
-        isForResponse: boolean;
-    }): Code {
-        const { shape, jsonExample } = example;
+    createRawJsonExample({ shape, jsonExample }: ExampleTypeReference): Code {
         const createRawJsonExample = this.createRawJsonExample.bind(this);
-        const filterOutReadonlyProps = this.generateReadWriteOnlyTypes && isForRequest === true;
-        const filterOutWriteonlyProps = this.generateReadWriteOnlyTypes && isForResponse === true;
-
         return shape._visit<Code>({
             primitive: (value) => {
                 return value._visit<Code>({
@@ -1057,16 +1019,13 @@ describe("${serviceName}", () => {
             container: (value) => {
                 return value._visit({
                     list: (value) => {
-                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample({ example: item, isForRequest, isForResponse })))}`;
+                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample(item)))}`;
                     },
                     map: (value) => {
                         return code`${literalOf(
                             Object.fromEntries(
                                 value.map.map((item) => {
-                                    return [
-                                        item.key.jsonExample,
-                                        createRawJsonExample({ example: item.value, isForRequest, isForResponse })
-                                    ];
+                                    return [item.key.jsonExample, createRawJsonExample(item.value)];
                                 })
                             )
                         )}`;
@@ -1075,16 +1034,16 @@ describe("${serviceName}", () => {
                         if (!value.nullable) {
                             return code`null`;
                         }
-                        return createRawJsonExample({ example: value.nullable, isForRequest, isForResponse });
+                        return createRawJsonExample(value.nullable);
                     },
                     optional: (value) => {
                         if (!value.optional) {
                             return code`undefined`;
                         }
-                        return createRawJsonExample({ example: value.optional, isForRequest, isForResponse });
+                        return createRawJsonExample(value.optional);
                     },
                     set: (value) => {
-                        return code`${arrayOf(...value.set.map((v) => createRawJsonExample({ example: v, isForRequest, isForResponse })))}`;
+                        return code`${arrayOf(...value.set.map(createRawJsonExample))}`;
                     },
                     literal: (value) => {
                         return value.literal._visit({
@@ -1120,92 +1079,25 @@ describe("${serviceName}", () => {
             named: (value) => {
                 return value.shape._visit<Code>({
                     alias: (value) => {
-                        return createRawJsonExample({ example: value.value, isForRequest, isForResponse });
+                        return createRawJsonExample(value.value);
                     },
                     enum: (value) => {
                         return code`${literalOf(value.value.wireValue)}`;
                     },
                     object: (value) => {
                         return code`${literalOf(
-                            Object.fromEntries([
-                                ...getUnusedPropertiesFromJsonExample(jsonExample, value),
-                                ...value.properties
-                                    .filter((p) => {
-                                        if (typeof p.propertyAccess === "undefined") {
-                                            return true;
-                                        }
-                                        if (
-                                            filterOutReadonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.ReadOnly
-                                        ) {
-                                            return false;
-                                        }
-                                        if (
-                                            filterOutWriteonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.WriteOnly
-                                        ) {
-                                            return false;
-                                        }
-                                        return true;
-                                    })
-                                    .map((property) => {
-                                        return [
-                                            property.name.wireValue,
-                                            createRawJsonExample({
-                                                example: property.value,
-                                                isForRequest,
-                                                isForResponse
-                                            })
-                                        ];
-                                    })
-                            ])
+                            Object.fromEntries(
+                                value.properties.map((property) => {
+                                    return [property.name.wireValue, createRawJsonExample(property.value)];
+                                })
+                            )
                         )}`;
                     },
-                    union: (value) => {
-                        return value.singleUnionType.shape._visit({
-                            noProperties: () => code`${literalOf(jsonExample)}`,
-                            singleProperty: () => code`${literalOf(jsonExample)}`,
-                            samePropertiesAsObject: (memberValue) => {
-                                return code`${literalOf(
-                                    Object.fromEntries([
-                                        ...getUnusedPropertiesFromJsonExample(jsonExample, memberValue),
-                                        ...memberValue.object.properties
-                                            .filter((p) => {
-                                                if (typeof p.propertyAccess === "undefined") {
-                                                    return true;
-                                                }
-                                                if (
-                                                    filterOutReadonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.ReadOnly
-                                                ) {
-                                                    return false;
-                                                }
-                                                if (
-                                                    filterOutWriteonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.WriteOnly
-                                                ) {
-                                                    return false;
-                                                }
-                                                return true;
-                                            })
-                                            .map((property) => {
-                                                return [
-                                                    property.name.wireValue,
-                                                    createRawJsonExample({
-                                                        example: property.value,
-                                                        isForRequest,
-                                                        isForResponse
-                                                    })
-                                                ];
-                                            })
-                                    ])
-                                )}`;
-                            },
-                            _other: () => code`${literalOf(jsonExample)}`
-                        });
+                    union: () => {
+                        return code`${literalOf(jsonExample)}`;
                     },
                     undiscriminatedUnion: (value) => {
-                        return createRawJsonExample({ example: value.singleUnionType, isForRequest, isForResponse });
+                        return createRawJsonExample(value.singleUnionType);
                     },
                     _other: () => {
                         return code`${literalOf(jsonExample)}`;
@@ -1241,22 +1133,7 @@ function getExampleResponseStatusCode({
     });
 }
 
-/**
- * Properties that come from extends and base properties, which aren't included in the example shape, but are in the jsonExample
- */
-function getUnusedPropertiesFromJsonExample(
-    jsonExample: unknown,
-    shape: ExampleObjectType | ExampleObjectTypeWithTypeId
-): [string, unknown][] {
-    const properties = "object" in shape ? shape.object.properties : shape.properties;
-    const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
-    if (typeof jsonExample === "object" && jsonExample !== null) {
-        return Object.entries(jsonExample).filter(([key]) => !propertyKeys.has(key));
-    }
-    return [];
-}
-
-function getExpectedResponse({
+function getExpected({
     response,
     context,
     neverThrowErrors
@@ -1273,8 +1150,7 @@ function getExpectedResponse({
                         return code`undefined`;
                     }
                     const example = context.type.getGeneratedExample(value).build(context, {
-                        isForSnippet: true,
-                        isForResponse: true
+                        isForSnippet: true
                     });
                     return code`${getTextOfTsNode(example)}`;
                 },
@@ -1301,13 +1177,12 @@ function getExpectedResponse({
         error: (value) => {
             const errorReference = context.sdkError
                 .getReferenceToError(value.error)
-                .getTypeNode({ isForSnippet: true, isForResponse: true });
+                .getTypeNode({ isForSnippet: true });
 
             const body = value.body
                 ? getTextOfTsNode(
                       context.type.getGeneratedExample(value.body).build(context, {
-                          isForSnippet: true,
-                          isForResponse: true
+                          isForSnippet: true
                       })
                   )
                 : "";

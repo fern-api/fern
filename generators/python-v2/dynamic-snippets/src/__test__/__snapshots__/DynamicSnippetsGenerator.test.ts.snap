@@ -421,43 +421,6 @@ client.nullable.get_users(
 "
 `;
 
-exports[`snippets > read-write-only > 'Body properties' 1`] = `
-"from acme import Acme
-
-client = Acme(
-    base_url="https://api.example.com"
-)
-
-client.create_user(
-    password="password",
-    profile={
-        "name": "name",
-        "verification": {},
-        "ssn": "ssn"
-    }
-)
-"
-`;
-
-exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
-"from acme import Acme
-
-client = Acme(
-    base_url="https://api.example.com"
-)
-
-client.create_user(
-    id="id",
-    password="password",
-    profile={
-        "name": "name",
-        "verification": {},
-        "ssn": "ssn"
-    }
-)
-"
-`;
-
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
 "from acme import Acme
 from acme.environment import AcmeEnvironment

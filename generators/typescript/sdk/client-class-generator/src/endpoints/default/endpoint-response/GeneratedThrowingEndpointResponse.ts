@@ -145,7 +145,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference);
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
         // hasNextPage checks if next property is not null
         const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
@@ -230,7 +230,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         return {
             type: "cursor",
-            itemType: itemType.responseTypeNode ?? itemType.typeNode,
+            itemType,
             responseType: successReturnType,
             hasNextPage,
             getItems,
@@ -254,7 +254,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference);
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
         // initializeOffset uses the offset property if set
         const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
@@ -400,7 +400,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         return {
             type: offset.step != null ? "offset-step" : "offset",
             initializeOffset,
-            itemType: itemType.responseTypeNode ?? itemType.typeNode,
+            itemType,
             responseType: successReturnType,
             hasNextPage,
             getItems,

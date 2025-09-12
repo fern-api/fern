@@ -16,32 +16,21 @@ export declare namespace AbstractGeneratedType {
         retainOriginalCasing: boolean;
         /** Whether inline types should be inlined */
         enableInlineTypes: boolean;
-        generateReadWriteOnlyTypes: boolean;
-    }
-    export namespace getDocs {
-        export interface Args<Context> {
-            context: Context;
-            opts?: {
-                isForRequest?: boolean;
-                isForResponse?: boolean;
-            };
-        }
     }
 }
 
 const EXAMPLE_PREFIX = "    ";
 
 export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
-    protected readonly typeName: string;
-    protected readonly shape: Shape;
-    protected readonly examples: ExampleType[];
-    protected readonly fernFilepath: FernFilepath;
-    protected readonly getReferenceToSelf: (context: Context) => Reference;
-    protected readonly includeSerdeLayer: boolean;
-    protected readonly noOptionalProperties: boolean;
-    protected readonly retainOriginalCasing: boolean;
-    protected readonly enableInlineTypes: boolean;
-    protected readonly generateReadWriteOnlyTypes: boolean;
+    protected typeName: string;
+    protected shape: Shape;
+    protected examples: ExampleType[];
+    protected fernFilepath: FernFilepath;
+    protected getReferenceToSelf: (context: Context) => Reference;
+    protected includeSerdeLayer: boolean;
+    protected noOptionalProperties: boolean;
+    protected retainOriginalCasing: boolean;
+    protected enableInlineTypes: boolean;
 
     private docs: string | undefined;
 
@@ -55,8 +44,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         includeSerdeLayer,
         noOptionalProperties,
         retainOriginalCasing,
-        enableInlineTypes,
-        generateReadWriteOnlyTypes
+        enableInlineTypes
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -68,10 +56,9 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.noOptionalProperties = noOptionalProperties;
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
-        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
-    protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {
+    protected getDocs(context: Context): string | undefined {
         const groups: string[] = [];
         if (this.docs != null) {
             groups.push(this.docs);
@@ -80,12 +67,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
             const exampleStr =
                 "@example\n" +
                 getTextOfTsNode(
-                    this.buildExample(example.shape, context, {
-                        isForComment: true,
-                        isForTypeDeclarationComment: true,
-                        isForRequest: opts?.isForRequest,
-                        isForResponse: opts?.isForResponse
-                    })
+                    this.buildExample(example.shape, context, { isForComment: true, isForTypeDeclarationComment: true })
                 );
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }
@@ -102,11 +84,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     public abstract generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[];
-    public abstract generateForInlineUnion(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    };
+    public abstract generateForInlineUnion(context: Context): ts.TypeNode;
     public abstract generateModule(context: Context): ModuleDeclarationStructure | undefined;
     public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
 }

@@ -50,8 +50,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
                     noOptionalProperties: this.noOptionalProperties,
-                    enableInlineTypes: this.enableInlineTypes,
-                    generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+                    enableInlineTypes: this.enableInlineTypes
                 })
         );
 
@@ -59,11 +58,10 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
 
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
-            shape: this.shape,
             includeUtilsOnUnionMembers,
             includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
-            getDocs: (context: Context) => this.getDocs({ context }),
+            getDocs: (context: Context) => this.getDocs(context),
             discriminant: this.includeSerdeLayer
                 ? this.shape.discriminant.name.camelCase.unsafeName
                 : this.shape.discriminant.wireValue,
@@ -77,8 +75,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             inline: this.inline,
-            enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            enableInlineTypes: this.enableInlineTypes
         });
     }
 
@@ -88,11 +85,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         return this.generatedUnion.generateStatements(context);
     }
 
-    public generateForInlineUnion(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
         return this.generatedUnion.generateForInlineUnion(context);
     }
 

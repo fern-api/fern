@@ -1,5 +1,5 @@
 import { ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
@@ -9,20 +9,12 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
     getDiscriminantValueAsExpression: () => ts.Expression;
     getDiscriminantValueOrThrow(): string | number;
     getDiscriminantValueType(): ts.TypeNode;
-    getTypeName(): string;
-    needsRequestResponse(context: Context): { request: boolean; response: boolean };
+    getInterfaceName(): string;
     getInterfaceDeclaration(
         context: Context,
         generatedUnion: GeneratedUnionImpl<Context>
     ): ParsedSingleUnionType.InterfaceDeclaration;
-    generateForInlineUnion(
-        context: Context,
-        generatedUnion: GeneratedUnionImpl<Context>
-    ): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    };
+    generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode;
     getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction;
     getBuilderName(): string;
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];
@@ -38,18 +30,8 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
 export declare namespace ParsedSingleUnionType {
     export interface InterfaceDeclaration {
         name: string;
-        extends: {
-            typeNode: ts.TypeNode;
-            requestTypeNode: ts.TypeNode | undefined;
-            responseTypeNode: ts.TypeNode | undefined;
-        }[];
-        properties: {
-            property: PropertySignatureStructure;
-            requestProperty: PropertySignatureStructure | undefined;
-            responseProperty: PropertySignatureStructure | undefined;
-            isReadonly: boolean;
-            isWriteonly: boolean;
-        }[];
+        extends: ts.TypeNode[];
+        properties: OptionalKind<PropertySignatureStructure>[];
         module: ModuleDeclarationStructure | undefined;
     }
 }

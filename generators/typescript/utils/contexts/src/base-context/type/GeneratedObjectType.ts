@@ -11,13 +11,7 @@ export interface GeneratedObjectType<Context> extends BaseGeneratedType<Context>
         { forceCamelCase }?: { forceCamelCase?: boolean }
     ) => { wireKey: string; propertyKey: string; type: TypeReference }[];
     generateInterface(context: Context): InterfaceDeclarationStructure;
-    generateProperties(context: Context): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[];
+    generateProperties(context: Context): PropertySignatureStructure[];
     getPropertyKey: (args: { propertyWireKey: string }) => string;
     buildExampleProperties: (
         example: ExampleTypeShape,

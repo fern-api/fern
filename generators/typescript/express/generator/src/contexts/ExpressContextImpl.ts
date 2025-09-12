@@ -92,7 +92,6 @@ export declare namespace ExpressContextImpl {
         omitUndefined: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -157,8 +156,7 @@ export class ExpressContextImpl implements ExpressContext {
         omitUndefined,
         useBigInt,
         relativePackagePath,
-        relativeTestPath,
-        generateReadWriteOnlyTypes
+        relativeTestPath
     }: ExpressContextImpl.Init) {
         this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -191,8 +189,7 @@ export class ExpressContextImpl implements ExpressContext {
             enableInlineTypes,
             allowExtraFields,
             omitUndefined,
-            context: this,
-            generateReadWriteOnlyTypes
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -210,8 +207,7 @@ export class ExpressContextImpl implements ExpressContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
         this.jsonContext = new JsonContextImpl({
             importsManager,

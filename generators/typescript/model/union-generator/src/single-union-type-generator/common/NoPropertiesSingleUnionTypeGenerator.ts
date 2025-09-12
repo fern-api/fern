@@ -1,37 +1,17 @@
-import { ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
-export class NoPropertiesSingleUnionTypeGenerator<Context extends ModelContext>
-    implements SingleUnionTypeGenerator<Context>
-{
-    public generateForInlineUnion(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
-        return {
-            typeNode: ts.factory.createTypeLiteralNode([]),
-            requestTypeNode: undefined,
-            responseTypeNode: undefined
-        };
+export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode([]);
     }
 
-    public getExtendsForInterface(): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    }[] {
+    public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }
 
-    public getDiscriminantPropertiesForInterface(context: Context): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
         return [];
     }
 
@@ -39,13 +19,7 @@ export class NoPropertiesSingleUnionTypeGenerator<Context extends ModelContext>
         return undefined;
     }
 
-    public getNonDiscriminantPropertiesForInterface(): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
         return [];
     }
 
@@ -67,9 +41,5 @@ export class NoPropertiesSingleUnionTypeGenerator<Context extends ModelContext>
 
     public getBuilderArgsFromExistingValue(): ts.Expression[] {
         return [];
-    }
-
-    public needsRequestResponse(): { request: boolean; response: boolean } {
-        return { request: false, response: false };
     }
 }

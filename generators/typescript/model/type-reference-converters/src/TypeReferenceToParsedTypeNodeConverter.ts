@@ -12,12 +12,8 @@ export declare namespace TypeReferenceToParsedTypeNodeConverter {
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
     protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
-            const itemTypeNode = this.convert({ ...params, typeReference: itemType });
-            return this.generateNonOptionalTypeReferenceNode({
-                typeNode: ts.factory.createTypeReferenceNode("Set", [itemTypeNode.typeNode]),
-                requestTypeNode: itemTypeNode.requestTypeNode,
-                responseTypeNode: itemTypeNode.responseTypeNode
-            });
+            const itemTypeNode = this.convert({ ...params, typeReference: itemType }).typeNode;
+            return this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Set", [itemTypeNode]));
         } else {
             return this.list(itemType, params);
         }
@@ -25,11 +21,7 @@ export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenc
 
     protected override dateTime(): TypeReferenceNode {
         return this.includeSerdeLayer
-            ? this.generateNonOptionalTypeReferenceNode({
-                  typeNode: ts.factory.createTypeReferenceNode("Date"),
-                  requestTypeNode: undefined,
-                  responseTypeNode: undefined
-              })
+            ? this.generateNonOptionalTypeReferenceNode(ts.factory.createTypeReferenceNode("Date"))
             : this.string();
     }
 }
