@@ -1,4 +1,5 @@
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
+import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension";
@@ -13,7 +14,6 @@ import {
     HeaderSecuritySchemeNames,
     SecuritySchemeNames
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
-import { TaskContext } from "@fern-api/task-context";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
