@@ -5,7 +5,7 @@ export function getQueryParamCaseName(swiftType: swift.Type): string {
     switch (swiftType.type) {
         case "optional":
             return getQueryParamCaseName(swift.Type.nonOptional(swiftType));
-        case 'nullable':
+        case "nullable":
             return getQueryParamCaseName(swift.Type.nonNullable(swiftType));
         case "custom":
             // TODO(kafkas): We are currently assuming that this refers to a string enum.

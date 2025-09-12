@@ -232,7 +232,15 @@ export class EndpointMethodGenerator {
                                 return [
                                     key,
                                     swift.Expression.methodCallWithTrailingClosure({
-                                        target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                        target: swiftType.nonOptionalType === "nullable"
+                                            ? swift.Expression.memberAccess({
+                                                  target: swift.Expression.reference(
+                                                      queryParam.name.name.camelCase.unsafeName
+                                                  ),
+                                                  optionalChain: true,
+                                                  memberName: "wrappedValue"
+                                              })
+                                            : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
                                             methodName: getQueryParamCaseName(swiftType),
@@ -253,24 +261,42 @@ export class EndpointMethodGenerator {
                             } else {
                                 return [
                                     key,
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: getQueryParamCaseName(swiftType),
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value:
-                                                    swiftType.nonOptionalType === "custom"
-                                                        ? swift.Expression.memberAccess({
-                                                              target: swift.Expression.reference(
-                                                                  queryParam.name.name.camelCase.unsafeName
-                                                              ),
-                                                              memberName: "rawValue"
-                                                          })
-                                                        : swift.Expression.reference(
-                                                              queryParam.name.name.camelCase.unsafeName
-                                                          )
-                                            })
-                                        ]
-                                    })
+                                    swiftType.nonOptionalType === "nullable"
+                                        ? swift.Expression.methodCallWithTrailingClosure({
+                                              target: swift.Expression.memberAccess({
+                                                  target: swift.Expression.reference(
+                                                      queryParam.name.name.camelCase.unsafeName
+                                                  ),
+                                                  memberName: "wrappedValue"
+                                              }),
+                                              methodName: "map",
+                                              closureBody: swift.Expression.contextualMethodCall({
+                                                  methodName: getQueryParamCaseName(swiftType),
+                                                  arguments_: [
+                                                      swift.functionArgument({
+                                                          value: swift.Expression.reference("$0")
+                                                      })
+                                                  ]
+                                              })
+                                          })
+                                        : swift.Expression.contextualMethodCall({
+                                              methodName: getQueryParamCaseName(swiftType),
+                                              arguments_: [
+                                                  swift.functionArgument({
+                                                      value:
+                                                          swiftType.nonOptionalType === "custom"
+                                                              ? swift.Expression.memberAccess({
+                                                                    target: swift.Expression.reference(
+                                                                        queryParam.name.name.camelCase.unsafeName
+                                                                    ),
+                                                                    memberName: "rawValue"
+                                                                })
+                                                              : swift.Expression.reference(
+                                                                    queryParam.name.name.camelCase.unsafeName
+                                                                )
+                                                  })
+                                              ]
+                                          })
                                 ];
                             }
                         }),

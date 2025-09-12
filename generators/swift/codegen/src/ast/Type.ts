@@ -164,6 +164,10 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public get isNullable(): boolean {
+        return this.internalType.type === "nullable";
+    }
+
     public equals(that: Type): boolean {
         switch (this.internalType.type) {
             case "string":
@@ -482,11 +486,15 @@ export class Type extends AstNode {
     }
 
     public static nonOptional(valueType: Type): Type {
-        return valueType.internalType.type === "optional" ? Type.nonOptional(valueType.internalType.valueType) : valueType;
+        return valueType.internalType.type === "optional"
+            ? Type.nonOptional(valueType.internalType.valueType)
+            : valueType;
     }
 
     public static nonNullable(valueType: Type): Type {
-        return valueType.internalType.type === "nullable" ? Type.nonNullable(valueType.internalType.valueType) : valueType;
+        return valueType.internalType.type === "nullable"
+            ? Type.nonNullable(valueType.internalType.valueType)
+            : valueType;
     }
 
     public static custom(name: string): Type {
