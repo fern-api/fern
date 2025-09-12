@@ -48,11 +48,11 @@ extension Requests {
             self.active = try container.decodeIfPresent(Bool.self, forKey: .active)
             self.metadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .metadata)
             self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
-            self.email = try container.decodeIfPresent(Nullable<String>.self, forKey: .email)
-            self.nickname = try container.decodeIfPresent(Nullable<String>.self, forKey: .nickname)
-            self.bio = try container.decodeIfPresent(Nullable<String>.self, forKey: .bio)
-            self.profileImageUrl = try container.decodeIfPresent(Nullable<String>.self, forKey: .profileImageUrl)
-            self.settings = try container.decodeIfPresent(Nullable<[String: JSONValue]>.self, forKey: .settings)
+            self.email = try container.decodeNullableIfPresent(String.self, forKey: .email)
+            self.nickname = try container.decodeNullableIfPresent(String.self, forKey: .nickname)
+            self.bio = try container.decodeNullableIfPresent(String.self, forKey: .bio)
+            self.profileImageUrl = try container.decodeNullableIfPresent(String.self, forKey: .profileImageUrl)
+            self.settings = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .settings)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -64,11 +64,11 @@ extension Requests {
             try container.encodeIfPresent(self.active, forKey: .active)
             try container.encodeIfPresent(self.metadata, forKey: .metadata)
             try container.encodeIfPresent(self.tags, forKey: .tags)
-            try container.encodeIfPresent(self.email, forKey: .email)
-            try container.encodeIfPresent(self.nickname, forKey: .nickname)
-            try container.encodeIfPresent(self.bio, forKey: .bio)
-            try container.encodeIfPresent(self.profileImageUrl, forKey: .profileImageUrl)
-            try container.encodeIfPresent(self.settings, forKey: .settings)
+            try container.encodeNullableIfPresent(self.email, forKey: .email)
+            try container.encodeNullableIfPresent(self.nickname, forKey: .nickname)
+            try container.encodeNullableIfPresent(self.bio, forKey: .bio)
+            try container.encodeNullableIfPresent(self.profileImageUrl, forKey: .profileImageUrl)
+            try container.encodeNullableIfPresent(self.settings, forKey: .settings)
         }
 
         /// Keys for encoding/decoding struct properties.

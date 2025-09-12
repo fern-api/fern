@@ -38,7 +38,7 @@ public struct Address: Codable, Hashable, Sendable {
         self.city = try container.decode(Nullable<String>.self, forKey: .city)
         self.state = try container.decodeIfPresent(String.self, forKey: .state)
         self.zipCode = try container.decode(String.self, forKey: .zipCode)
-        self.country = try container.decodeIfPresent(Nullable<String>.self, forKey: .country)
+        self.country = try container.decodeNullableIfPresent(String.self, forKey: .country)
         self.buildingId = try container.decode(NullableUserId.self, forKey: .buildingId)
         self.tenantId = try container.decode(OptionalUserId.self, forKey: .tenantId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -51,7 +51,7 @@ public struct Address: Codable, Hashable, Sendable {
         try container.encode(self.city, forKey: .city)
         try container.encodeIfPresent(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
-        try container.encodeIfPresent(self.country, forKey: .country)
+        try container.encodeNullableIfPresent(self.country, forKey: .country)
         try container.encode(self.buildingId, forKey: .buildingId)
         try container.encode(self.tenantId, forKey: .tenantId)
     }

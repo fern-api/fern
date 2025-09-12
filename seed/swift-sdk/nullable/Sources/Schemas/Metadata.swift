@@ -33,7 +33,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decode(Date.self, forKey: .updatedAt)
         self.avatar = try container.decode(Nullable<String>.self, forKey: .avatar)
-        self.activated = try container.decodeIfPresent(Nullable<Bool>.self, forKey: .activated)
+        self.activated = try container.decodeNullableIfPresent(Bool.self, forKey: .activated)
         self.status = try container.decode(Status.self, forKey: .status)
         self.values = try container.decodeIfPresent([String: Nullable<String>?].self, forKey: .values)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -45,7 +45,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.updatedAt, forKey: .updatedAt)
         try container.encode(self.avatar, forKey: .avatar)
-        try container.encodeIfPresent(self.activated, forKey: .activated)
+        try container.encodeNullableIfPresent(self.activated, forKey: .activated)
         try container.encode(self.status, forKey: .status)
         try container.encodeIfPresent(self.values, forKey: .values)
     }

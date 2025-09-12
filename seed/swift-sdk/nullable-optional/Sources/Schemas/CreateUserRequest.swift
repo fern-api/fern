@@ -27,7 +27,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         self.username = try container.decode(String.self, forKey: .username)
         self.email = try container.decode(Nullable<String>.self, forKey: .email)
         self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
-        self.address = try container.decodeIfPresent(Nullable<Address>.self, forKey: .address)
+        self.address = try container.decodeNullableIfPresent(Address.self, forKey: .address)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -37,7 +37,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         try container.encode(self.username, forKey: .username)
         try container.encode(self.email, forKey: .email)
         try container.encodeIfPresent(self.phone, forKey: .phone)
-        try container.encodeIfPresent(self.address, forKey: .address)
+        try container.encodeNullableIfPresent(self.address, forKey: .address)
     }
 
     /// Keys for encoding/decoding struct properties.

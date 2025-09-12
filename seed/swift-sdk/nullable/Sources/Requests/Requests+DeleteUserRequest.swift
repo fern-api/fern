@@ -17,14 +17,14 @@ extension Requests {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.username = try container.decodeIfPresent(Nullable<String>.self, forKey: .username)
+            self.username = try container.decodeNullableIfPresent(String.self, forKey: .username)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encodeIfPresent(self.username, forKey: .username)
+            try container.encodeNullableIfPresent(self.username, forKey: .username)
         }
 
         /// Keys for encoding/decoding struct properties.

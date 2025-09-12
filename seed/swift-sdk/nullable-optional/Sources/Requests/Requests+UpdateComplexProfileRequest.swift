@@ -28,22 +28,22 @@ extension Requests {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.nullableRole = try container.decodeIfPresent(Nullable<UserRole>.self, forKey: .nullableRole)
-            self.nullableStatus = try container.decodeIfPresent(Nullable<UserStatus>.self, forKey: .nullableStatus)
-            self.nullableNotification = try container.decodeIfPresent(Nullable<NotificationMethod>.self, forKey: .nullableNotification)
-            self.nullableSearchResult = try container.decodeIfPresent(Nullable<SearchResult>.self, forKey: .nullableSearchResult)
-            self.nullableArray = try container.decodeIfPresent(Nullable<[String]>.self, forKey: .nullableArray)
+            self.nullableRole = try container.decodeNullableIfPresent(UserRole.self, forKey: .nullableRole)
+            self.nullableStatus = try container.decodeNullableIfPresent(UserStatus.self, forKey: .nullableStatus)
+            self.nullableNotification = try container.decodeNullableIfPresent(NotificationMethod.self, forKey: .nullableNotification)
+            self.nullableSearchResult = try container.decodeNullableIfPresent(SearchResult.self, forKey: .nullableSearchResult)
+            self.nullableArray = try container.decodeNullableIfPresent([String].self, forKey: .nullableArray)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encodeIfPresent(self.nullableRole, forKey: .nullableRole)
-            try container.encodeIfPresent(self.nullableStatus, forKey: .nullableStatus)
-            try container.encodeIfPresent(self.nullableNotification, forKey: .nullableNotification)
-            try container.encodeIfPresent(self.nullableSearchResult, forKey: .nullableSearchResult)
-            try container.encodeIfPresent(self.nullableArray, forKey: .nullableArray)
+            try container.encodeNullableIfPresent(self.nullableRole, forKey: .nullableRole)
+            try container.encodeNullableIfPresent(self.nullableStatus, forKey: .nullableStatus)
+            try container.encodeNullableIfPresent(self.nullableNotification, forKey: .nullableNotification)
+            try container.encodeNullableIfPresent(self.nullableSearchResult, forKey: .nullableSearchResult)
+            try container.encodeNullableIfPresent(self.nullableArray, forKey: .nullableArray)
         }
 
         /// Keys for encoding/decoding struct properties.

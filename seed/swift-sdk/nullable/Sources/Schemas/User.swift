@@ -39,11 +39,11 @@ public struct User: Codable, Hashable, Sendable {
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(UserId.self, forKey: .id)
         self.tags = try container.decode(Nullable<[String]>.self, forKey: .tags)
-        self.metadata = try container.decodeIfPresent(Nullable<Metadata>.self, forKey: .metadata)
+        self.metadata = try container.decodeNullableIfPresent(Metadata.self, forKey: .metadata)
         self.email = try container.decode(Email.self, forKey: .email)
         self.favoriteNumber = try container.decode(WeirdNumber.self, forKey: .favoriteNumber)
-        self.numbers = try container.decodeIfPresent(Nullable<[Int]>.self, forKey: .numbers)
-        self.strings = try container.decodeIfPresent(Nullable<[String: JSONValue]>.self, forKey: .strings)
+        self.numbers = try container.decodeNullableIfPresent([Int].self, forKey: .numbers)
+        self.strings = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .strings)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -53,11 +53,11 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.tags, forKey: .tags)
-        try container.encodeIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeNullableIfPresent(self.metadata, forKey: .metadata)
         try container.encode(self.email, forKey: .email)
         try container.encode(self.favoriteNumber, forKey: .favoriteNumber)
-        try container.encodeIfPresent(self.numbers, forKey: .numbers)
-        try container.encodeIfPresent(self.strings, forKey: .strings)
+        try container.encodeNullableIfPresent(self.numbers, forKey: .numbers)
+        try container.encodeNullableIfPresent(self.strings, forKey: .strings)
     }
 
     /// Keys for encoding/decoding struct properties.

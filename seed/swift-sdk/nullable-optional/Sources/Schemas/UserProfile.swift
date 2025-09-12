@@ -83,8 +83,8 @@ public struct UserProfile: Codable, Hashable, Sendable {
         self.optionalObject = try container.decodeIfPresent(Address.self, forKey: .optionalObject)
         self.optionalList = try container.decodeIfPresent([String].self, forKey: .optionalList)
         self.optionalMap = try container.decodeIfPresent([String: String].self, forKey: .optionalMap)
-        self.optionalNullableString = try container.decodeIfPresent(Nullable<String>.self, forKey: .optionalNullableString)
-        self.optionalNullableObject = try container.decodeIfPresent(Nullable<Address>.self, forKey: .optionalNullableObject)
+        self.optionalNullableString = try container.decodeNullableIfPresent(String.self, forKey: .optionalNullableString)
+        self.optionalNullableObject = try container.decodeNullableIfPresent(Address.self, forKey: .optionalNullableObject)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -107,8 +107,8 @@ public struct UserProfile: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.optionalObject, forKey: .optionalObject)
         try container.encodeIfPresent(self.optionalList, forKey: .optionalList)
         try container.encodeIfPresent(self.optionalMap, forKey: .optionalMap)
-        try container.encodeIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
-        try container.encodeIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
+        try container.encodeNullableIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
+        try container.encodeNullableIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -26,9 +26,9 @@ public struct UpdateUserRequest: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.username = try container.decodeIfPresent(String.self, forKey: .username)
-        self.email = try container.decodeIfPresent(Nullable<String>.self, forKey: .email)
+        self.email = try container.decodeNullableIfPresent(String.self, forKey: .email)
         self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
-        self.address = try container.decodeIfPresent(Nullable<Address>.self, forKey: .address)
+        self.address = try container.decodeNullableIfPresent(Address.self, forKey: .address)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -36,9 +36,9 @@ public struct UpdateUserRequest: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.username, forKey: .username)
-        try container.encodeIfPresent(self.email, forKey: .email)
+        try container.encodeNullableIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.phone, forKey: .phone)
-        try container.encodeIfPresent(self.address, forKey: .address)
+        try container.encodeNullableIfPresent(self.address, forKey: .address)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -24,7 +24,7 @@ extension Requests {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.tags = try container.decode(Nullable<[String]>.self, forKey: .tags)
             self.categories = try container.decodeIfPresent([String].self, forKey: .categories)
-            self.labels = try container.decodeIfPresent(Nullable<[String]>.self, forKey: .labels)
+            self.labels = try container.decodeNullableIfPresent([String].self, forKey: .labels)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -33,7 +33,7 @@ extension Requests {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.tags, forKey: .tags)
             try container.encodeIfPresent(self.categories, forKey: .categories)
-            try container.encodeIfPresent(self.labels, forKey: .labels)
+            try container.encodeNullableIfPresent(self.labels, forKey: .labels)
         }
 
         /// Keys for encoding/decoding struct properties.
