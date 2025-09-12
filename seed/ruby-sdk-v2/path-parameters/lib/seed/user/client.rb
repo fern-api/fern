@@ -53,7 +53,7 @@ module Seed
 
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
-        _query_param_names = ["limit"]
+        _query_param_names = ["limit"] + %i[limit]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
