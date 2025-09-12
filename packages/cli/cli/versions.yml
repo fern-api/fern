@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add missing reserved keywwords for Ruby language.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.76.1
+
+- changelogEntry:
+    - summary: |
         Add Maven publishTarget support for Java generators with local filesystem output.
       type: feat
   irVersion: 59
