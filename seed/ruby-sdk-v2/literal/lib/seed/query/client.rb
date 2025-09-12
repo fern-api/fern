@@ -9,7 +9,7 @@ module Seed
       end
 
       # @return [Seed::Types::SendResponse]
-      def send(request_options: {}, **params)
+      def send_(request_options: {}, **params)
         _query_param_names = %w[prompt optional_prompt alias_prompt alias_optional_prompt query stream
                                 optional_stream alias_stream alias_optional_stream]
         _query = params.slice(*_query_param_names)

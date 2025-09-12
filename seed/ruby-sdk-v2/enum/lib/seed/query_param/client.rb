@@ -9,7 +9,7 @@ module Seed
       end
 
       # @return [untyped]
-      def send(request_options: {}, **params)
+      def send_(request_options: {}, **params)
         _query_param_names = %w[operand maybeOperand operandOrColor maybeOperandOrColor]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
