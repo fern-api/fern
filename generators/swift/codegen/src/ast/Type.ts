@@ -168,6 +168,18 @@ export class Type extends AstNode {
         return this.internalType.type === "nullable";
     }
 
+    public get isOptionalNullable(): boolean {
+        return this.isOptional && this.nonOptional().isNullable;
+    }
+
+    public nonOptional(): Type {
+        return Type.nonOptional(this);
+    }
+
+    public nonNullable(): Type {
+        return Type.nonNullable(this);
+    }
+
     public equals(that: Type): boolean {
         switch (this.internalType.type) {
             case "string":

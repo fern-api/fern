@@ -232,15 +232,16 @@ export class EndpointMethodGenerator {
                                 return [
                                     key,
                                     swift.Expression.methodCallWithTrailingClosure({
-                                        target: swiftType.nonOptionalType === "nullable"
-                                            ? swift.Expression.memberAccess({
-                                                  target: swift.Expression.reference(
-                                                      queryParam.name.name.camelCase.unsafeName
-                                                  ),
-                                                  optionalChain: true,
-                                                  memberName: "wrappedValue"
-                                              })
-                                            : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                        target:
+                                            swiftType.nonOptionalType === "nullable"
+                                                ? swift.Expression.memberAccess({
+                                                      target: swift.Expression.reference(
+                                                          queryParam.name.name.camelCase.unsafeName
+                                                      ),
+                                                      optionalChain: true,
+                                                      memberName: "wrappedValue"
+                                                  })
+                                                : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
                                             methodName: getQueryParamCaseName(swiftType),

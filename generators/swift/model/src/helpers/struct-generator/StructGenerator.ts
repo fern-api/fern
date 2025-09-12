@@ -185,11 +185,17 @@ export class StructGenerator {
                         swift.Expression.try(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("container"),
-                                methodName: p.type.isOptional ? "decodeIfPresent" : "decode",
+                                methodName: p.type.isOptional
+                                    ? p.type.isOptionalNullable
+                                        ? "decodeNullableIfPresent"
+                                        : "decodeIfPresent"
+                                    : "decode",
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
-                                            target: swift.Type.nonOptional(p.type),
+                                            target: p.type.isOptionalNullable
+                                                ? p.type.nonOptional().nonNullable()
+                                                : p.type.nonOptional(),
                                             memberName: "self"
                                         })
                                     }),
@@ -300,7 +306,11 @@ export class StructGenerator {
                     swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("container"),
-                            methodName: p.type.isOptional ? "encodeIfPresent" : "encode",
+                            methodName: p.type.isOptional
+                                ? p.type.isOptionalNullable
+                                    ? "encodeNullableIfPresent"
+                                    : "encodeIfPresent"
+                                : "encode",
                             arguments_: [
                                 swift.functionArgument({
                                     value: swift.Expression.memberAccess({
