@@ -33,6 +33,7 @@ async fn main() {
         api_key: Some("<token>".to_string())
     };
     let client = SimpleApiClient::new(config).expect("Failed to build client");
+    client.user_get("id").await;
 }
 ```
 

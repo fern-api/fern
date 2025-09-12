@@ -25,7 +25,7 @@ cargo add seed_idempotency_headers
 Instantiate and use the client with the following:
 
 ```rust
-use seed_idempotency_headers::{ClientConfig, IdempotencyHeadersClient};
+use seed_idempotency_headers::{ClientConfig, IdempotencyHeadersClient, CreatePaymentRequest};
 
 #[tokio::main]
 async fn main() {
@@ -33,6 +33,7 @@ async fn main() {
         api_key: Some("<token>".to_string())
     };
     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    client.payment_create(CreatePaymentRequest { amount: 1, currency: "USD" }).await;
 }
 ```
 

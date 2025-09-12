@@ -39,6 +39,13 @@ export class DynamicTypeInstantiationMapper {
                 return this.convertLiteral({ literal: args.typeReference.value, value: args.value });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
+            case "named":
+                return this.convertNamed({ typeReference: args.typeReference, value: args.value });
+            case "optional":
+            case "nullable":
+                return this.convertOptional({ typeReference: args.typeReference, value: args.value });
+            case "list":
+                return this.convertList({ typeReference: args.typeReference, value: args.value });
             default:
                 return rust.Expression.raw('todo!("Unhandled type reference")');
         }
@@ -102,9 +109,61 @@ export class DynamicTypeInstantiationMapper {
 
         if (typeof value === "object") {
             // Use serde_json for complex objects
-            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(JSON.stringify(value))})`);
+            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
         }
 
         return rust.Expression.stringLiteral("");
+    }
+
+    private convertNamed({
+        typeReference,
+        value
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): rust.Expression {
+        // For now, use JSON for named types - this removes the todo!() error
+        // TODO: Implement proper struct instantiation in the future
+        if (typeof value === "object" && value != null) {
+            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
+        }
+
+        return rust.Expression.stringLiteral(String(value));
+    }
+
+    private convertOptional({
+        typeReference,
+        value
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): rust.Expression {
+        if (value == null) {
+            return rust.Expression.none();
+        }
+        // For optional/nullable, use the inner type's value structure
+        const innerTypeRef =
+            (typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable).value ||
+            ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        const innerValue = this.convert({ typeReference: innerTypeRef, value });
+        return rust.Expression.functionCall("Some", [innerValue]);
+    }
+
+    private convertList({
+        typeReference,
+        value
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): rust.Expression {
+        if (!Array.isArray(value)) {
+            return rust.Expression.vec([]);
+        }
+        // For lists, use the inner type's value structure
+        const innerTypeRef =
+            (typeReference as FernIr.dynamic.TypeReference.List).value ||
+            ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        const elements = value.map((item) => this.convert({ typeReference: innerTypeRef, value: item }));
+        return rust.Expression.vec(elements);
     }
 }

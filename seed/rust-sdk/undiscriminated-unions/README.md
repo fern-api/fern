@@ -31,6 +31,7 @@ use seed_undiscriminated_unions::{ClientConfig, UndiscriminatedUnionsClient};
 async fn main() {
     let config = ClientConfig {};
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client.union__get("string").await;
 }
 ```
 

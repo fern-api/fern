@@ -33,6 +33,7 @@ async fn main() {
         api_key: Some("<token>".to_string())
     };
     let client = SingleUrlEnvironmentDefaultClient::new(config).expect("Failed to build client");
+    client.dummy_get_dummy().await;
 }
 ```
 
