@@ -1,4 +1,5 @@
 //! Generated models by Fern
 
-pub mod organization;
-pub mod user;
+pub mod types;
+
+pub use types::*;
