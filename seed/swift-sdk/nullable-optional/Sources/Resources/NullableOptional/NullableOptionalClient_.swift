@@ -56,7 +56,7 @@ public final class NullableOptionalClient_: Sendable {
                 "limit": limit.map { .int($0) }, 
                 "offset": offset.map { .int($0) }, 
                 "includeDeleted": includeDeleted.map { .bool($0) }, 
-                "sortBy": sortBy.map { .string($0) }
+                "sortBy": sortBy?.wrappedValue.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self
@@ -72,9 +72,9 @@ public final class NullableOptionalClient_: Sendable {
             path: "/api/users/search",
             queryParams: [
                 "query": .string(query), 
-                "department": .string(department), 
+                "department": department.wrappedValue.map { .string($0) }, 
                 "role": role.map { .string($0) }, 
-                "isActive": isActive.map { .bool($0) }
+                "isActive": isActive?.wrappedValue.map { .bool($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self
@@ -140,9 +140,9 @@ public final class NullableOptionalClient_: Sendable {
             method: .get,
             path: "/api/users/filter",
             queryParams: [
-                "role": .string(role), 
+                "role": role.wrappedValue.map { .string($0) }, 
                 "status": status.map { .string($0.rawValue) }, 
-                "secondaryRole": secondaryRole.map { .string($0) }
+                "secondaryRole": secondaryRole?.wrappedValue.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self

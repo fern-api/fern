@@ -15,8 +15,8 @@ public final class NullableClient_: Sendable {
                 "usernames": usernames.map { .string($0) }, 
                 "avatar": avatar.map { .string($0) }, 
                 "activated": activated.map { .bool($0) }, 
-                "tags": tags.map { .string($0) }, 
-                "extra": extra.map { .bool($0) }
+                "tags": tags?.wrappedValue.map { .string($0) }, 
+                "extra": extra?.wrappedValue.map { .bool($0) }
             ],
             requestOptions: requestOptions,
             responseType: [User].self
