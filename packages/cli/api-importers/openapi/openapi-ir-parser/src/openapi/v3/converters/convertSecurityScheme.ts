@@ -13,21 +13,25 @@ import {
     HeaderSecuritySchemeNames,
     SecuritySchemeNames
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
+import { TaskContext } from "@fern-api/task-context";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
-    source: Source
+    source: Source,
+    taskContext: TaskContext
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
         throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
     }
-    return convertSecuritySchemeHelper(securityScheme, source);
+    return convertSecuritySchemeHelper(securityScheme, source, taskContext);
 }
 
 function convertSecuritySchemeHelper(
     securityScheme: OpenAPIV3.SecuritySchemeObject,
-    source: Source
+    source: Source,
+    taskContext: TaskContext
 ): SecurityScheme | undefined {
+    try {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         const headerNames = getExtension<HeaderSecuritySchemeNames>(
@@ -70,7 +74,10 @@ function convertSecuritySchemeHelper(
     } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.oauth({
             scopesEnum: getScopes(securityScheme, source)
-        });
+            });
+        }
+    } catch (error) {
+        taskContext.logger.debug(`Error converting security scheme: ${(error as Error)?.message}`);
     }
     return undefined;
 }

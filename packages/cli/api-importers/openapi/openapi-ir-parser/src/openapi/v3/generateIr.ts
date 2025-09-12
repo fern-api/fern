@@ -71,7 +71,7 @@ export function generateIr({
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme, source)];
+            return [key, convertSecurityScheme(securityScheme, source, taskContext)];
         })
     );
     const authHeaders = new Set(
