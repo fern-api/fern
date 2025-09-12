@@ -47,7 +47,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: ruby.codeblock((writer) => {
-                writer.writeLine(`${QUERY_PARAM_NAMES_VN} = ${toExplicitArray(this.getQueryParameterNames())}`);
+                writer.writeLine(
+                    `${QUERY_PARAM_NAMES_VN} = ` +
+                        `${toExplicitArray(this.getQueryParameterNames())} +` +
+                        `${toRubySymbolArray(this.getQueryParameterNames())}`
+                );
                 writer.writeLine(`${QUERY_PARAMETER_BAG_NAME} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
@@ -103,4 +107,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
 function toExplicitArray(s: string[]): string {
     return `["${s.join('", "')}"]`;
+}
+
+function toRubySymbolArray(s: string[]): string {
+    if (s.some((s) => s.includes(" "))) {
+        throw new Error("Symbol array cannot contain spaces");
+    }
+    return `%i[${s.join(" ")}]`;
 }
