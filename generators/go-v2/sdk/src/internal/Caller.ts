@@ -168,12 +168,10 @@ export class Caller {
                 value: go.TypeInstantiation.reference(args.response)
             });
         }
-        if (args.errorCodes != null) {
-            arguments_.push({
-                name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
-            });
-        }
+        arguments_.push({
+            name: "ErrorDecoder",
+            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([]))
+        });
         return go.TypeInstantiation.structPointer({
             typeReference: this.getCallParamsTypeReference(),
             fields: arguments_
