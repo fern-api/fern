@@ -28,8 +28,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
     }) {
-        // biome-ignore lint/suspicious/noExplicitAny: allow
-        super({ ir: ir as any, config, options });
+        super({ ir: ir, config, options });
         this.ir = ir;
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseSwiftCustomConfigSchema) : undefined;

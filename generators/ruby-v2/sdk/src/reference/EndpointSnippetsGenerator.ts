@@ -37,8 +37,7 @@ export class EndpointSnippetsGenerator {
 
         const convertedIr = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            ir: convertedIr as any,
+            ir: convertedIr,
             config: this.context.config
         });
 

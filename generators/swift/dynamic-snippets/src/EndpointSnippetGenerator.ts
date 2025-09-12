@@ -189,8 +189,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        // biome-ignore lint/suspicious/noExplicitAny: allow
-                        message: this.context.newAuthMismatchError({ auth: auth as any, values }).message
+                        message: this.context.newAuthMismatchError({ auth: auth, values }).message
                     });
                     return args;
                 }
@@ -335,8 +334,7 @@ export class EndpointSnippetGenerator {
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
         const pathParameters = this.context.associateByWireValue({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            parameters: namedParameters as any,
+            parameters: namedParameters,
             values: snippet.pathParameters ?? {},
             ignoreMissingParameters: true
         });
@@ -358,16 +356,14 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): FilePropertyInfo {
-        // biome-ignore lint/suspicious/noExplicitAny: allow
-        if (request.body == null || !this.context.isFileUploadRequestBody(request.body as any)) {
+        if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
             return {
                 fileFields: [],
                 bodyPropertyFields: []
             };
         }
         return this.context.filePropertyMapper.getFilePropertyInfo({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            body: request.body as any,
+            body: request.body,
             value: snippet.requestBody
         });
     }
@@ -385,8 +381,7 @@ export class EndpointSnippetGenerator {
     }): swift.Expression {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            parameters: (request.queryParameters ?? []) as any,
+            parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) =>
@@ -399,8 +394,7 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         const headers = this.context.associateByWireValue({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            parameters: (request.headers ?? []) as any,
+            parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) =>
@@ -460,8 +454,7 @@ export class EndpointSnippetGenerator {
         value: unknown;
     }): swift.FunctionArgument[] {
         const bodyProperties = this.context.associateByWireValue({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            parameters: parameters as any,
+            parameters: parameters,
             values: this.context.getRecord(value) ?? {}
         });
         return bodyProperties.map((parameter) =>

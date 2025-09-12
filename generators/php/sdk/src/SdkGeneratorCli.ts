@@ -168,8 +168,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // biome-ignore lint/suspicious/noExplicitAny: allow
-            ir: convertIr(dynamicIr) as any,
+            ir: convertIr(dynamicIr),
             config: context.config
         });
 
