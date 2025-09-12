@@ -4,7 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { mkdir, readFile, unlink, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
@@ -46,6 +46,9 @@ export class DynamicSnippetsCsharpTestGenerator {
         requests: dynamic.EndpointSnippetRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
+
+        // generate the names for everything up front.
+        this.dynamicSnippetsGenerator.context.precalculate(requests);
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
         for (const [idx, request] of requests.entries()) {
             try {
@@ -79,18 +82,6 @@ export class DynamicSnippetsCsharpTestGenerator {
             join(absolutePathToOutputDir, RelativeFilePath.of("SeedApi.DynamicSnippets.csproj")),
             PROJECT_FILE_CONTENT
         );
-
-        // In the event that there is generator state present from the codegen step
-        // we can restore it so that the dynamic snippets generator can generate appropriate code.
-        try {
-            const generatorStatePath = join(outputDir, RelativeFilePath.of(".csharp-generator-state.json.user"));
-            const generatorState = JSON.parse((await readFile(generatorStatePath)).toString());
-            this.dynamicSnippetsGenerator.initializeGeneratorState(generatorState);
-            // remove the generator state from the directory, since it is no longer needed
-            unlink(generatorStatePath);
-        } catch (error) {
-            this.context.logger.debug("No generator state found - continuing.");
-        }
 
         return absolutePathToOutputDir;
     }
