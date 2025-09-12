@@ -3,12 +3,12 @@ import Foundation
 extension Requests {
     public struct DeleteUserRequest: Codable, Hashable, Sendable {
         /// The user to delete.
-        public let username: JSONValue?
+        public let username: Nullable<String>?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            username: JSONValue? = nil,
+            username: Nullable<String>? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.username = username
@@ -17,7 +17,7 @@ extension Requests {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.username = try container.decodeIfPresent(JSONValue.self, forKey: .username)
+            self.username = try container.decodeIfPresent(Nullable<String>.self, forKey: .username)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

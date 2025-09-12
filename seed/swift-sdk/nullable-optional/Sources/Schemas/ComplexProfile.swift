@@ -3,46 +3,46 @@ import Foundation
 /// Test object with nullable enums, unions, and arrays
 public struct ComplexProfile: Codable, Hashable, Sendable {
     public let id: String
-    public let nullableRole: JSONValue
+    public let nullableRole: Nullable<UserRole>
     public let optionalRole: UserRole?
-    public let optionalNullableRole: JSONValue?
-    public let nullableStatus: JSONValue
+    public let optionalNullableRole: Nullable<UserRole>?
+    public let nullableStatus: Nullable<UserStatus>
     public let optionalStatus: UserStatus?
-    public let optionalNullableStatus: JSONValue?
-    public let nullableNotification: JSONValue
+    public let optionalNullableStatus: Nullable<UserStatus>?
+    public let nullableNotification: Nullable<NotificationMethod>
     public let optionalNotification: NotificationMethod?
-    public let optionalNullableNotification: JSONValue?
-    public let nullableSearchResult: JSONValue
+    public let optionalNullableNotification: Nullable<NotificationMethod>?
+    public let nullableSearchResult: Nullable<SearchResult>
     public let optionalSearchResult: SearchResult?
-    public let nullableArray: JSONValue
+    public let nullableArray: Nullable<[String]>
     public let optionalArray: [String]?
-    public let optionalNullableArray: JSONValue?
-    public let nullableListOfNullables: JSONValue
-    public let nullableMapOfNullables: JSONValue
-    public let nullableListOfUnions: JSONValue
+    public let optionalNullableArray: Nullable<[String]>?
+    public let nullableListOfNullables: Nullable<[Nullable<String>]>
+    public let nullableMapOfNullables: Nullable<[String: Nullable<Address>]>
+    public let nullableListOfUnions: Nullable<[NotificationMethod]>
     public let optionalMapOfEnums: [String: UserRole]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
-        nullableRole: JSONValue,
+        nullableRole: Nullable<UserRole>,
         optionalRole: UserRole? = nil,
-        optionalNullableRole: JSONValue? = nil,
-        nullableStatus: JSONValue,
+        optionalNullableRole: Nullable<UserRole>? = nil,
+        nullableStatus: Nullable<UserStatus>,
         optionalStatus: UserStatus? = nil,
-        optionalNullableStatus: JSONValue? = nil,
-        nullableNotification: JSONValue,
+        optionalNullableStatus: Nullable<UserStatus>? = nil,
+        nullableNotification: Nullable<NotificationMethod>,
         optionalNotification: NotificationMethod? = nil,
-        optionalNullableNotification: JSONValue? = nil,
-        nullableSearchResult: JSONValue,
+        optionalNullableNotification: Nullable<NotificationMethod>? = nil,
+        nullableSearchResult: Nullable<SearchResult>,
         optionalSearchResult: SearchResult? = nil,
-        nullableArray: JSONValue,
+        nullableArray: Nullable<[String]>,
         optionalArray: [String]? = nil,
-        optionalNullableArray: JSONValue? = nil,
-        nullableListOfNullables: JSONValue,
-        nullableMapOfNullables: JSONValue,
-        nullableListOfUnions: JSONValue,
+        optionalNullableArray: Nullable<[String]>? = nil,
+        nullableListOfNullables: Nullable<[Nullable<String>]>,
+        nullableMapOfNullables: Nullable<[String: Nullable<Address>]>,
+        nullableListOfUnions: Nullable<[NotificationMethod]>,
         optionalMapOfEnums: [String: UserRole]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -71,23 +71,23 @@ public struct ComplexProfile: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
-        self.nullableRole = try container.decode(JSONValue.self, forKey: .nullableRole)
+        self.nullableRole = try container.decode(Nullable<UserRole>.self, forKey: .nullableRole)
         self.optionalRole = try container.decodeIfPresent(UserRole.self, forKey: .optionalRole)
-        self.optionalNullableRole = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableRole)
-        self.nullableStatus = try container.decode(JSONValue.self, forKey: .nullableStatus)
+        self.optionalNullableRole = try container.decodeIfPresent(Nullable<UserRole>.self, forKey: .optionalNullableRole)
+        self.nullableStatus = try container.decode(Nullable<UserStatus>.self, forKey: .nullableStatus)
         self.optionalStatus = try container.decodeIfPresent(UserStatus.self, forKey: .optionalStatus)
-        self.optionalNullableStatus = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableStatus)
-        self.nullableNotification = try container.decode(JSONValue.self, forKey: .nullableNotification)
+        self.optionalNullableStatus = try container.decodeIfPresent(Nullable<UserStatus>.self, forKey: .optionalNullableStatus)
+        self.nullableNotification = try container.decode(Nullable<NotificationMethod>.self, forKey: .nullableNotification)
         self.optionalNotification = try container.decodeIfPresent(NotificationMethod.self, forKey: .optionalNotification)
-        self.optionalNullableNotification = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableNotification)
-        self.nullableSearchResult = try container.decode(JSONValue.self, forKey: .nullableSearchResult)
+        self.optionalNullableNotification = try container.decodeIfPresent(Nullable<NotificationMethod>.self, forKey: .optionalNullableNotification)
+        self.nullableSearchResult = try container.decode(Nullable<SearchResult>.self, forKey: .nullableSearchResult)
         self.optionalSearchResult = try container.decodeIfPresent(SearchResult.self, forKey: .optionalSearchResult)
-        self.nullableArray = try container.decode(JSONValue.self, forKey: .nullableArray)
+        self.nullableArray = try container.decode(Nullable<[String]>.self, forKey: .nullableArray)
         self.optionalArray = try container.decodeIfPresent([String].self, forKey: .optionalArray)
-        self.optionalNullableArray = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableArray)
-        self.nullableListOfNullables = try container.decode(JSONValue.self, forKey: .nullableListOfNullables)
-        self.nullableMapOfNullables = try container.decode(JSONValue.self, forKey: .nullableMapOfNullables)
-        self.nullableListOfUnions = try container.decode(JSONValue.self, forKey: .nullableListOfUnions)
+        self.optionalNullableArray = try container.decodeIfPresent(Nullable<[String]>.self, forKey: .optionalNullableArray)
+        self.nullableListOfNullables = try container.decode(Nullable<[Nullable<String>]>.self, forKey: .nullableListOfNullables)
+        self.nullableMapOfNullables = try container.decode(Nullable<[String: Nullable<Address>]>.self, forKey: .nullableMapOfNullables)
+        self.nullableListOfUnions = try container.decode(Nullable<[NotificationMethod]>.self, forKey: .nullableListOfUnions)
         self.optionalMapOfEnums = try container.decodeIfPresent([String: UserRole].self, forKey: .optionalMapOfEnums)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

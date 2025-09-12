@@ -3,32 +3,32 @@ import Foundation
 /// Request body for testing deserialization of null values
 public struct DeserializationTestRequest: Codable, Hashable, Sendable {
     public let requiredString: String
-    public let nullableString: JSONValue
+    public let nullableString: Nullable<String>
     public let optionalString: String?
-    public let optionalNullableString: JSONValue?
-    public let nullableEnum: JSONValue
+    public let optionalNullableString: Nullable<String>?
+    public let nullableEnum: Nullable<UserRole>
     public let optionalEnum: UserStatus?
-    public let nullableUnion: JSONValue
+    public let nullableUnion: Nullable<NotificationMethod>
     public let optionalUnion: SearchResult?
-    public let nullableList: JSONValue
-    public let nullableMap: JSONValue
-    public let nullableObject: JSONValue
+    public let nullableList: Nullable<[String]>
+    public let nullableMap: Nullable<[String: Int]>
+    public let nullableObject: Nullable<Address>
     public let optionalObject: Organization?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         requiredString: String,
-        nullableString: JSONValue,
+        nullableString: Nullable<String>,
         optionalString: String? = nil,
-        optionalNullableString: JSONValue? = nil,
-        nullableEnum: JSONValue,
+        optionalNullableString: Nullable<String>? = nil,
+        nullableEnum: Nullable<UserRole>,
         optionalEnum: UserStatus? = nil,
-        nullableUnion: JSONValue,
+        nullableUnion: Nullable<NotificationMethod>,
         optionalUnion: SearchResult? = nil,
-        nullableList: JSONValue,
-        nullableMap: JSONValue,
-        nullableObject: JSONValue,
+        nullableList: Nullable<[String]>,
+        nullableMap: Nullable<[String: Int]>,
+        nullableObject: Nullable<Address>,
         optionalObject: Organization? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -50,16 +50,16 @@ public struct DeserializationTestRequest: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.requiredString = try container.decode(String.self, forKey: .requiredString)
-        self.nullableString = try container.decode(JSONValue.self, forKey: .nullableString)
+        self.nullableString = try container.decode(Nullable<String>.self, forKey: .nullableString)
         self.optionalString = try container.decodeIfPresent(String.self, forKey: .optionalString)
-        self.optionalNullableString = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableString)
-        self.nullableEnum = try container.decode(JSONValue.self, forKey: .nullableEnum)
+        self.optionalNullableString = try container.decodeIfPresent(Nullable<String>.self, forKey: .optionalNullableString)
+        self.nullableEnum = try container.decode(Nullable<UserRole>.self, forKey: .nullableEnum)
         self.optionalEnum = try container.decodeIfPresent(UserStatus.self, forKey: .optionalEnum)
-        self.nullableUnion = try container.decode(JSONValue.self, forKey: .nullableUnion)
+        self.nullableUnion = try container.decode(Nullable<NotificationMethod>.self, forKey: .nullableUnion)
         self.optionalUnion = try container.decodeIfPresent(SearchResult.self, forKey: .optionalUnion)
-        self.nullableList = try container.decode(JSONValue.self, forKey: .nullableList)
-        self.nullableMap = try container.decode(JSONValue.self, forKey: .nullableMap)
-        self.nullableObject = try container.decode(JSONValue.self, forKey: .nullableObject)
+        self.nullableList = try container.decode(Nullable<[String]>.self, forKey: .nullableList)
+        self.nullableMap = try container.decode(Nullable<[String: Int]>.self, forKey: .nullableMap)
+        self.nullableObject = try container.decode(Nullable<Address>.self, forKey: .nullableObject)
         self.optionalObject = try container.decodeIfPresent(Organization.self, forKey: .optionalObject)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

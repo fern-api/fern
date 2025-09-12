@@ -2,16 +2,16 @@ import Foundation
 
 extension Requests {
     public struct UpdateTagsRequest: Codable, Hashable, Sendable {
-        public let tags: JSONValue
+        public let tags: Nullable<[String]>
         public let categories: [String]?
-        public let labels: JSONValue?
+        public let labels: Nullable<[String]>?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            tags: JSONValue,
+            tags: Nullable<[String]>,
             categories: [String]? = nil,
-            labels: JSONValue? = nil,
+            labels: Nullable<[String]>? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.tags = tags
@@ -22,9 +22,9 @@ extension Requests {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.tags = try container.decode(JSONValue.self, forKey: .tags)
+            self.tags = try container.decode(Nullable<[String]>.self, forKey: .tags)
             self.categories = try container.decodeIfPresent([String].self, forKey: .categories)
-            self.labels = try container.decodeIfPresent(JSONValue.self, forKey: .labels)
+            self.labels = try container.decodeIfPresent(Nullable<[String]>.self, forKey: .labels)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
