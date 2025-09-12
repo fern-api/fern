@@ -6,18 +6,15 @@ imports:
   commons: commons.yml
 types:
   EnvironmentVariable: string
-
   ApiAuth:
     extends: commons.WithDocs
     properties:
       requirement: AuthSchemesRequirement
       schemes: list<AuthScheme>
-
   AuthSchemesRequirement:
     enum:
       - ALL
       - ANY
-
   AuthScheme:
     discriminant:
       value: _type
@@ -81,11 +78,9 @@ types:
       We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
     properties:
       configuration: OAuthConfiguration
-
   OAuthConfiguration:
     union:
       clientCredentials: OAuthClientCredentials
-
   OAuthClientCredentials:
     properties:
       clientIdEnvVar: optional<EnvironmentVariable>
@@ -95,19 +90,16 @@ types:
       scopes: optional<list<string>>
       tokenEndpoint: OAuthTokenEndpoint
       refreshEndpoint: optional<OAuthRefreshEndpoint>
-
   OAuthTokenEndpoint:
     properties:
       endpointReference: commons.EndpointReference
       requestProperties: OAuthAccessTokenRequestProperties
       responseProperties: OAuthAccessTokenResponseProperties
-
   OAuthRefreshEndpoint:
     properties:
       endpointReference: commons.EndpointReference
       requestProperties: OAuthRefreshTokenRequestProperties
       responseProperties: OAuthAccessTokenResponseProperties
-
   OAuthAccessTokenRequestProperties:
     docs: The properties required to retrieve an OAuth token.
     properties:
@@ -115,14 +107,12 @@ types:
       clientSecret: http.RequestProperty
       scopes: optional<http.RequestProperty>
       customProperties: optional<list<http.RequestProperty>>
-
   OAuthAccessTokenResponseProperties:
     docs: The properties to map to the corresponding OAuth token primitive.
     properties:
       accessToken: http.ResponseProperty
       expiresIn: optional<http.ResponseProperty>
       refreshToken: optional<http.ResponseProperty>
-
   OAuthRefreshTokenRequestProperties:
     docs: The properties required to retrieve an OAuth refresh token.
     properties:
@@ -139,7 +129,6 @@ types:
       passwordEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the password.
-
   HeaderAuthScheme:
     extends: commons.WithDocs
     properties:

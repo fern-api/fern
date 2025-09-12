@@ -62,7 +62,6 @@ import { V56_TO_V55_MIGRATION } from "./migrations/v56-to-v55/migrateFromV56ToV5
 import { V57_TO_V56_MIGRATION } from "./migrations/v57-to-v56/migrateFromV57ToV56";
 import { V58_TO_V57_MIGRATION } from "./migrations/v58-to-v57/migrateFromV58ToV57";
 import { V59_TO_V58_MIGRATION } from "./migrations/v59-to-v58/migrateFromV59ToV58";
-import { V60_TO_V59_MIGRATION } from "./migrations/v60-to-v59/migrateFromV60ToV59";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -304,7 +303,6 @@ const IntermediateRepresentationMigrator = {
 
 export const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
-    .withMigration(V60_TO_V59_MIGRATION)
     .withMigration(V59_TO_V58_MIGRATION)
     .withMigration(V58_TO_V57_MIGRATION)
     .withMigration(V57_TO_V56_MIGRATION)

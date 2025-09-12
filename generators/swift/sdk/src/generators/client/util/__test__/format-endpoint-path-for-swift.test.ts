@@ -27,8 +27,7 @@ describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefin
             Object.entries(ir.services).map(([serviceName, service]) => {
                 return [
                     serviceName,
-                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                    service.endpoints.map((endpoint) => formatEndpointPathForSwift(endpoint as any))
+                    service.endpoints.map((endpoint) => formatEndpointPathForSwift(endpoint))
                 ] as const;
             })
         );
