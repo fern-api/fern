@@ -40,7 +40,12 @@ public class FileNotificationServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\"type\":\"generic\",\"exceptionType\":\"Unavailable\",\"exceptionMessage\":\"This component is unavailable!\",\"exceptionStacktrace\":\"<logs>\"}";
+        String expectedResponseBody = "{\n" +
+            "  \"type\": \"generic\",\n" +
+            "  \"exceptionType\": \"Unavailable\",\n" +
+            "  \"exceptionMessage\": \"This component is unavailable!\",\n" +
+            "  \"exceptionStacktrace\": \"<logs>\"\n" +
+            "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");

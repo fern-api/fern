@@ -64,6 +64,11 @@ export class WireTestDataExtractor {
             return undefined;
         }
 
+        if ("jsonExample" in request && request.jsonExample !== undefined) {
+            return request.jsonExample;
+        }
+
+        // Fallback for inlined request bodies that may not have a direct jsonExample
         return request._visit({
             inlinedRequestBody: (value) => {
                 const result: Record<string, unknown> = {};
@@ -76,7 +81,7 @@ export class WireTestDataExtractor {
                 return this.createRawJsonExample(value);
             },
             _other: () => {
-                return request.jsonExample;
+                return undefined;
             }
         });
     }
@@ -160,80 +165,8 @@ export class WireTestDataExtractor {
     }
 
     private createRawJsonExample(typeRef: ExampleTypeReference): unknown {
-        const { shape, jsonExample } = typeRef;
-
-        return shape._visit({
-            primitive: (value) => {
-                return value._visit({
-                    integer: (v) => v,
-                    double: (v) => v,
-                    string: (v) => v.original,
-                    boolean: (v) => v,
-                    long: (v) => v,
-                    uint: (v) => v,
-                    uint64: (v) => v,
-                    float: (v) => v,
-                    base64: (v) => v,
-                    bigInteger: (v) => v,
-                    datetime: (v) => v.raw,
-                    date: (v) => v,
-                    uuid: (v) => v,
-                    _other: () => jsonExample
-                });
-            },
-            container: (value) => {
-                return value._visit({
-                    list: (v) => v.list.map((item) => this.createRawJsonExample(item)),
-                    map: (v) => {
-                        const result: Record<string, unknown> = {};
-                        v.map.forEach((item) => {
-                            result[item.key.jsonExample as string] = this.createRawJsonExample(item.value);
-                        });
-                        return result;
-                    },
-                    nullable: (v) => (v.nullable ? this.createRawJsonExample(v.nullable) : null),
-                    optional: (v) => (v.optional ? this.createRawJsonExample(v.optional) : undefined),
-                    set: (v) => v.set.map((item) => this.createRawJsonExample(item)),
-                    literal: (v) => {
-                        return v.literal._visit({
-                            integer: (val) => val,
-                            long: (val) => val,
-                            uint: (val) => val,
-                            uint64: (val) => val,
-                            float: (val) => val,
-                            double: (val) => val,
-                            boolean: (val) => val,
-                            string: (val) => val.original,
-                            date: (val) => val,
-                            datetime: (val) => val.raw,
-                            uuid: (val) => val,
-                            base64: (val) => val,
-                            bigInteger: (val) => val,
-                            _other: () => jsonExample
-                        });
-                    },
-                    _other: () => jsonExample
-                });
-            },
-            named: (value) => {
-                return value.shape._visit({
-                    alias: (v) => this.createRawJsonExample(v.value),
-                    enum: (v) => v.value.wireValue,
-                    object: (v) => {
-                        const result: Record<string, unknown> = {};
-                        v.properties.forEach((property) => {
-                            result[property.name.wireValue] = this.createRawJsonExample(property.value);
-                        });
-                        return result;
-                    },
-                    union: () => jsonExample,
-                    undiscriminatedUnion: (v) => this.createRawJsonExample(v.singleUnionType),
-                    _other: () => jsonExample
-                });
-            },
-            unknown: () => jsonExample,
-            _other: () => jsonExample
-        });
+        // Simply use jsonExample directly for all types
+        return typeRef.jsonExample;
     }
 }
 

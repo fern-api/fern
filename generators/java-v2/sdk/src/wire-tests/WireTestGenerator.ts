@@ -94,7 +94,9 @@ export class WireTestGenerator {
             const hasResponseBody = endpoint.response?.body != null;
             if (hasResponseBody) {
                 const returnType = this.getEndpointReturnType(endpoint);
-                writer.writeLine(`${returnType} response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`);
+                writer.writeLine(
+                    `${returnType} response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`
+                );
             } else {
                 writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
             }
@@ -104,12 +106,26 @@ export class WireTestGenerator {
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
 
             if (expectedRequestJson !== undefined && expectedRequestJson !== null) {
-                writer.writeLine("");
                 writer.writeLine("// Validate request body");
                 writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
-                writer.writeLine(
-                    `String expectedRequestBody = ${JSON.stringify(JSON.stringify(expectedRequestJson))};`
-                );
+
+                // Format JSON for readability using string concatenation (Java 8+ compatible)
+                const formattedJson = JSON.stringify(expectedRequestJson, null, 2);
+                const lines = formattedJson.split("\n");
+                if (lines.length === 1) {
+                    // Single line JSON - no need for concatenation
+                    writer.writeLine(`String expectedRequestBody = ${JSON.stringify(formattedJson)};`);
+                } else {
+                    // Multi-line JSON - format with concatenation
+                    writer.writeLine(
+                        'String expectedRequestBody = "' + (lines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
+                    );
+                    for (let i = 1; i < lines.length - 1; i++) {
+                        writer.writeLine('    "' + (lines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+                    }
+                    writer.writeLine('    "' + (lines[lines.length - 1] ?? "").replace(/"/g, '\\"') + '";');
+                }
+
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
                 writer.writeLine(
@@ -122,9 +138,24 @@ export class WireTestGenerator {
                 writer.writeLine("// Validate response body");
                 writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
 
-                // Serialize the actual response and compare with expected
                 writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
-                writer.writeLine(`String expectedResponseBody = ${JSON.stringify(mockResponseBody)};`);
+
+                const formattedResponseJson = JSON.stringify(expectedResponseJson, null, 2);
+                const responseLines = formattedResponseJson.split("\n");
+                if (responseLines.length === 1) {
+                    writer.writeLine(`String expectedResponseBody = ${JSON.stringify(formattedResponseJson)};`);
+                } else {
+                    writer.writeLine(
+                        'String expectedResponseBody = "' + (responseLines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
+                    );
+                    for (let i = 1; i < responseLines.length - 1; i++) {
+                        writer.writeLine('    "' + (responseLines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+                    }
+                    writer.writeLine(
+                        '    "' + (responseLines[responseLines.length - 1] ?? "").replace(/"/g, '\\"') + '";'
+                    );
+                }
+
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
                 writer.writeLine(
@@ -427,22 +458,22 @@ export class WireTestGenerator {
     private getEndpointReturnType(endpoint: HttpEndpoint): string {
         try {
             const javaType = this.context.getReturnTypeForEndpoint(endpoint);
-            
+
             // Create a temporary writer to get the string representation
             const simpleWriter = new java.Writer({
                 packageName: this.context.getCorePackageName(),
                 customConfig: this.context.customConfig
             });
-            
+
             javaType.write(simpleWriter);
-            
+
             const typeName = simpleWriter.buffer.trim();
-            
+
             // Handle void case
             if (typeName === "Void") {
                 return "void";
             }
-            
+
             return typeName;
         } catch (error) {
             this.context.logger.warn(`Could not resolve return type for endpoint ${endpoint.id}, using Object`);
