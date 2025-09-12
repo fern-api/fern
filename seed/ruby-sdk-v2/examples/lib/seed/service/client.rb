@@ -40,7 +40,10 @@ module Seed
 
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
-        _query_param_names = ["shallow", "tag"]
+        _query_param_names = [
+          ["shallow", "tag"],
+          %i[shallow tag]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

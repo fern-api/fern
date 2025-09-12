@@ -10,8 +10,12 @@ module Seed
 
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
-        _query_param_names = %w[limit id date deadline bytes user userList optionalDeadline
-                                keyValue optionalString nestedUser optionalUser excludeUser filter]
+        _query_param_names = [
+          %w[limit id date deadline bytes user userList optionalDeadline keyValue
+             optionalString nestedUser optionalUser excludeUser filter],
+          %i[limit id date deadline bytes user userList optionalDeadline keyValue optionalString nestedUser
+             optionalUser excludeUser filter]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
