@@ -1,0 +1,78 @@
+openapi: 3.0.1
+info:
+  title: Java Nullable Named Request Types API
+  version: 1.0.0
+paths:
+  /postWithNullableNamedRequestBodyType/{id}:
+    post:
+      operationId: postWithNullableNamedRequestBodyType
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NullableObject"
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseBody"
+
+  /postWithNonNullableNamedRequestBodyType/{id}:
+    post:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: postWithNonNullableNamedRequestBodyType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NonNullableObject"
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseBody"
+
+components:
+  schemas:
+    NullableObject:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+    NonNullableObject:
+      type: object
+      nullable: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+    ResponseBody:
+      type: object
+      properties:
+        success:
+          type: boolean
