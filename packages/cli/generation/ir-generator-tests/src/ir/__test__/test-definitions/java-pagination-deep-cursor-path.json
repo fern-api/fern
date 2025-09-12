@@ -3015,60 +3015,285 @@
                         "page": {
                             "propertyPath": [
                                 {
-                                    "originalName": "b",
-                                    "camelCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
+                                    "name": {
+                                        "originalName": "b",
+                                        "camelCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
+                                    "type": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "optional",
+                                            "optional": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "B",
+                                                    "camelCase": {
+                                                        "unsafeName": "b",
+                                                        "safeName": "b"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "b",
+                                                        "safeName": "b"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "B",
+                                                        "safeName": "B"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "B",
+                                                        "safeName": "B"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "deep-cursor-path",
+                                                            "camelCase": {
+                                                                "unsafeName": "deepCursorPath",
+                                                                "safeName": "deepCursorPath"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "deep_cursor_path",
+                                                                "safeName": "deep_cursor_path"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DEEP_CURSOR_PATH",
+                                                                "safeName": "DEEP_CURSOR_PATH"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "DeepCursorPath",
+                                                                "safeName": "DeepCursorPath"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "deep-cursor-path",
+                                                        "camelCase": {
+                                                            "unsafeName": "deepCursorPath",
+                                                            "safeName": "deepCursorPath"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "deep_cursor_path",
+                                                            "safeName": "deep_cursor_path"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DEEP_CURSOR_PATH",
+                                                            "safeName": "DEEP_CURSOR_PATH"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "DeepCursorPath",
+                                                            "safeName": "DeepCursorPath"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_deep-cursor-path:B",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 },
                                 {
-                                    "originalName": "c",
-                                    "camelCase": {
-                                        "unsafeName": "c",
-                                        "safeName": "c"
+                                    "name": {
+                                        "originalName": "c",
+                                        "camelCase": {
+                                            "unsafeName": "c",
+                                            "safeName": "c"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "c",
+                                            "safeName": "c"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "C",
+                                            "safeName": "C"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "C",
+                                            "safeName": "C"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "c",
-                                        "safeName": "c"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "C",
-                                        "safeName": "C"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "C",
-                                        "safeName": "C"
+                                    "type": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "C",
+                                            "camelCase": {
+                                                "unsafeName": "c",
+                                                "safeName": "c"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "c",
+                                                "safeName": "c"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "C",
+                                                "safeName": "C"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "C",
+                                                "safeName": "C"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "deep-cursor-path",
+                                                    "camelCase": {
+                                                        "unsafeName": "deepCursorPath",
+                                                        "safeName": "deepCursorPath"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "deep_cursor_path",
+                                                        "safeName": "deep_cursor_path"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DEEP_CURSOR_PATH",
+                                                        "safeName": "DEEP_CURSOR_PATH"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "DeepCursorPath",
+                                                        "safeName": "DeepCursorPath"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "deep-cursor-path",
+                                                "camelCase": {
+                                                    "unsafeName": "deepCursorPath",
+                                                    "safeName": "deepCursorPath"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "deep_cursor_path",
+                                                    "safeName": "deep_cursor_path"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "DEEP_CURSOR_PATH",
+                                                    "safeName": "DEEP_CURSOR_PATH"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "DeepCursorPath",
+                                                    "safeName": "DeepCursorPath"
+                                                }
+                                            }
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_deep-cursor-path:C",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 },
                                 {
-                                    "originalName": "d",
-                                    "camelCase": {
-                                        "unsafeName": "d",
-                                        "safeName": "d"
+                                    "name": {
+                                        "originalName": "d",
+                                        "camelCase": {
+                                            "unsafeName": "d",
+                                            "safeName": "d"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "d",
+                                            "safeName": "d"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "D",
+                                            "safeName": "D"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "D",
+                                            "safeName": "D"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "d",
-                                        "safeName": "d"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "D",
-                                        "safeName": "D"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "D",
-                                        "safeName": "D"
+                                    "type": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "optional",
+                                            "optional": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "D",
+                                                    "camelCase": {
+                                                        "unsafeName": "d",
+                                                        "safeName": "d"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "d",
+                                                        "safeName": "d"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "D",
+                                                        "safeName": "D"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "D",
+                                                        "safeName": "D"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "deep-cursor-path",
+                                                            "camelCase": {
+                                                                "unsafeName": "deepCursorPath",
+                                                                "safeName": "deepCursorPath"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "deep_cursor_path",
+                                                                "safeName": "deep_cursor_path"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DEEP_CURSOR_PATH",
+                                                                "safeName": "DEEP_CURSOR_PATH"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "DeepCursorPath",
+                                                                "safeName": "DeepCursorPath"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "deep-cursor-path",
+                                                        "camelCase": {
+                                                            "unsafeName": "deepCursorPath",
+                                                            "safeName": "deepCursorPath"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "deep_cursor_path",
+                                                            "safeName": "deep_cursor_path"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DEEP_CURSOR_PATH",
+                                                            "safeName": "DEEP_CURSOR_PATH"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "DeepCursorPath",
+                                                            "safeName": "DeepCursorPath"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_deep-cursor-path:D",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             ],
@@ -4413,22 +4638,93 @@
                         "page": {
                             "propertyPath": [
                                 {
-                                    "originalName": "indirection",
-                                    "camelCase": {
-                                        "unsafeName": "indirection",
-                                        "safeName": "indirection"
+                                    "name": {
+                                        "originalName": "indirection",
+                                        "camelCase": {
+                                            "unsafeName": "indirection",
+                                            "safeName": "indirection"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "indirection",
+                                            "safeName": "indirection"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "INDIRECTION",
+                                            "safeName": "INDIRECTION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Indirection",
+                                            "safeName": "Indirection"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "indirection",
-                                        "safeName": "indirection"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "INDIRECTION",
-                                        "safeName": "INDIRECTION"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Indirection",
-                                        "safeName": "Indirection"
+                                    "type": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "IndirectionRequired",
+                                            "camelCase": {
+                                                "unsafeName": "indirectionRequired",
+                                                "safeName": "indirectionRequired"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "indirection_required",
+                                                "safeName": "indirection_required"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "INDIRECTION_REQUIRED",
+                                                "safeName": "INDIRECTION_REQUIRED"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "IndirectionRequired",
+                                                "safeName": "IndirectionRequired"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "deep-cursor-path",
+                                                    "camelCase": {
+                                                        "unsafeName": "deepCursorPath",
+                                                        "safeName": "deepCursorPath"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "deep_cursor_path",
+                                                        "safeName": "deep_cursor_path"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DEEP_CURSOR_PATH",
+                                                        "safeName": "DEEP_CURSOR_PATH"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "DeepCursorPath",
+                                                        "safeName": "DeepCursorPath"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "deep-cursor-path",
+                                                "camelCase": {
+                                                    "unsafeName": "deepCursorPath",
+                                                    "safeName": "deepCursorPath"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "deep_cursor_path",
+                                                    "safeName": "deep_cursor_path"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "DEEP_CURSOR_PATH",
+                                                    "safeName": "DEEP_CURSOR_PATH"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "DeepCursorPath",
+                                                    "safeName": "DeepCursorPath"
+                                                }
+                                            }
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_deep-cursor-path:IndirectionRequired",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             ],
@@ -5511,60 +5807,285 @@
                         "page": {
                             "propertyPath": [
                                 {
-                                    "originalName": "b",
-                                    "camelCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
+                                    "name": {
+                                        "originalName": "b",
+                                        "camelCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
+                                    "type": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "optional",
+                                            "optional": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "InlineB",
+                                                    "camelCase": {
+                                                        "unsafeName": "inlineB",
+                                                        "safeName": "inlineB"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "inline_b",
+                                                        "safeName": "inline_b"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "INLINE_B",
+                                                        "safeName": "INLINE_B"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "InlineB",
+                                                        "safeName": "InlineB"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "deep-cursor-path",
+                                                            "camelCase": {
+                                                                "unsafeName": "deepCursorPath",
+                                                                "safeName": "deepCursorPath"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "deep_cursor_path",
+                                                                "safeName": "deep_cursor_path"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DEEP_CURSOR_PATH",
+                                                                "safeName": "DEEP_CURSOR_PATH"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "DeepCursorPath",
+                                                                "safeName": "DeepCursorPath"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "deep-cursor-path",
+                                                        "camelCase": {
+                                                            "unsafeName": "deepCursorPath",
+                                                            "safeName": "deepCursorPath"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "deep_cursor_path",
+                                                            "safeName": "deep_cursor_path"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DEEP_CURSOR_PATH",
+                                                            "safeName": "DEEP_CURSOR_PATH"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "DeepCursorPath",
+                                                            "safeName": "DeepCursorPath"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_deep-cursor-path:InlineB",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 },
                                 {
-                                    "originalName": "c",
-                                    "camelCase": {
-                                        "unsafeName": "c",
-                                        "safeName": "c"
+                                    "name": {
+                                        "originalName": "c",
+                                        "camelCase": {
+                                            "unsafeName": "c",
+                                            "safeName": "c"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "c",
+                                            "safeName": "c"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "C",
+                                            "safeName": "C"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "C",
+                                            "safeName": "C"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "c",
-                                        "safeName": "c"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "C",
-                                        "safeName": "C"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "C",
-                                        "safeName": "C"
+                                    "type": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "InlineC",
+                                            "camelCase": {
+                                                "unsafeName": "inlineC",
+                                                "safeName": "inlineC"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "inline_c",
+                                                "safeName": "inline_c"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "INLINE_C",
+                                                "safeName": "INLINE_C"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "InlineC",
+                                                "safeName": "InlineC"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "deep-cursor-path",
+                                                    "camelCase": {
+                                                        "unsafeName": "deepCursorPath",
+                                                        "safeName": "deepCursorPath"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "deep_cursor_path",
+                                                        "safeName": "deep_cursor_path"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DEEP_CURSOR_PATH",
+                                                        "safeName": "DEEP_CURSOR_PATH"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "DeepCursorPath",
+                                                        "safeName": "DeepCursorPath"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "deep-cursor-path",
+                                                "camelCase": {
+                                                    "unsafeName": "deepCursorPath",
+                                                    "safeName": "deepCursorPath"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "deep_cursor_path",
+                                                    "safeName": "deep_cursor_path"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "DEEP_CURSOR_PATH",
+                                                    "safeName": "DEEP_CURSOR_PATH"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "DeepCursorPath",
+                                                    "safeName": "DeepCursorPath"
+                                                }
+                                            }
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_deep-cursor-path:InlineC",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 },
                                 {
-                                    "originalName": "b",
-                                    "camelCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
+                                    "name": {
+                                        "originalName": "b",
+                                        "camelCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "b",
+                                            "safeName": "b"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "B",
+                                            "safeName": "B"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "b",
-                                        "safeName": "b"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "B",
-                                        "safeName": "B"
+                                    "type": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "optional",
+                                            "optional": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "InlineD",
+                                                    "camelCase": {
+                                                        "unsafeName": "inlineD",
+                                                        "safeName": "inlineD"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "inline_d",
+                                                        "safeName": "inline_d"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "INLINE_D",
+                                                        "safeName": "INLINE_D"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "InlineD",
+                                                        "safeName": "InlineD"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "deep-cursor-path",
+                                                            "camelCase": {
+                                                                "unsafeName": "deepCursorPath",
+                                                                "safeName": "deepCursorPath"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "deep_cursor_path",
+                                                                "safeName": "deep_cursor_path"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DEEP_CURSOR_PATH",
+                                                                "safeName": "DEEP_CURSOR_PATH"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "DeepCursorPath",
+                                                                "safeName": "DeepCursorPath"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "deep-cursor-path",
+                                                        "camelCase": {
+                                                            "unsafeName": "deepCursorPath",
+                                                            "safeName": "deepCursorPath"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "deep_cursor_path",
+                                                            "safeName": "deep_cursor_path"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DEEP_CURSOR_PATH",
+                                                            "safeName": "DEEP_CURSOR_PATH"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "DeepCursorPath",
+                                                            "safeName": "DeepCursorPath"
+                                                        }
+                                                    }
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_deep-cursor-path:InlineD",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             ],
