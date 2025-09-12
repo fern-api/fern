@@ -54,6 +54,7 @@ runs:
         title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
         branch: update-${{ inputs.generator-name }}-seed
         body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        base: mallinson/test-ruby-seed-updates
         delete-branch: true
         labels: |
           seed

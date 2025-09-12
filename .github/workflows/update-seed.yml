@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/test-ruby-seed-updates
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
