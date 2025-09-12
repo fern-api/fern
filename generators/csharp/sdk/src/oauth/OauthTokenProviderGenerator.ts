@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
@@ -30,36 +30,36 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     private tokenEndpoint: HttpEndpoint;
     private clientField: ast.Field;
 
-    private static readonly BUFFER_IN_MINUTES_FIELD = csharp.field({
+    private readonly BUFFER_IN_MINUTES_FIELD = this.csharp.field({
         access: ast.Access.Private,
         const_: true,
         name: "BufferInMinutes",
-        type: ast.Type.double(),
-        initializer: csharp.codeblock("2")
+        type: this.csharp.Type.double(),
+        initializer: this.csharp.codeblock("2")
     });
 
-    private static readonly ACCESS_TOKEN_FIELD = csharp.field({
+    private readonly ACCESS_TOKEN_FIELD = this.csharp.field({
         access: ast.Access.Private,
         name: "_accessToken",
-        type: ast.Type.optional(ast.Type.string())
+        type: this.csharp.Type.optional(this.csharp.Type.string())
     });
 
-    private static readonly EXPIRES_AT_FIELD = csharp.field({
+    private readonly EXPIRES_AT_FIELD = this.csharp.field({
         access: ast.Access.Private,
         name: "_expiresAt",
-        type: ast.Type.optional(ast.Type.dateTime())
+        type: this.csharp.Type.optional(this.csharp.Type.dateTime())
     });
 
-    private static readonly CLIENT_ID_FIELD = csharp.field({
+    private readonly CLIENT_ID_FIELD = this.csharp.field({
         access: ast.Access.Private,
         name: "_clientId",
-        type: ast.Type.string()
+        type: this.csharp.Type.string()
     });
 
-    private static readonly CLIENT_SECRET_FIELD = csharp.field({
+    private readonly CLIENT_SECRET_FIELD = this.csharp.field({
         access: ast.Access.Private,
         name: "_clientSecret",
-        type: ast.Type.string()
+        type: this.csharp.Type.string()
     });
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
@@ -73,31 +73,31 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             this.tokenEndpointReference.endpointId
         );
         this.tokenEndpoint = httpEndpoint;
-        this.clientField = csharp.field({
+        this.clientField = this.csharp.field({
             access: ast.Access.Private,
             name: "_client",
-            type: ast.Type.reference(
+            type: this.csharp.Type.reference(
                 this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
             )
         });
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.classReference,
             partial: true,
             access: ast.Access.Public
         });
 
-        class_.addField(OauthTokenProviderGenerator.BUFFER_IN_MINUTES_FIELD);
-        class_.addField(OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD);
+        class_.addField(this.BUFFER_IN_MINUTES_FIELD);
+        class_.addField(this.ACCESS_TOKEN_FIELD);
 
         if (this.getExpiresIn() != null) {
-            class_.addField(OauthTokenProviderGenerator.EXPIRES_AT_FIELD);
+            class_.addField(this.EXPIRES_AT_FIELD);
         }
 
-        class_.addField(OauthTokenProviderGenerator.CLIENT_ID_FIELD);
-        class_.addField(OauthTokenProviderGenerator.CLIENT_SECRET_FIELD);
+        class_.addField(this.CLIENT_ID_FIELD);
+        class_.addField(this.CLIENT_SECRET_FIELD);
 
         class_.addField(this.clientField);
 
@@ -106,22 +106,22 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addConstructor({
             access: ast.Access.Public,
             parameters: [
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "clientId",
-                    type: ast.Type.string()
+                    type: this.csharp.Type.string()
                 }),
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "clientSecret",
-                    type: ast.Type.string()
+                    type: this.csharp.Type.string()
                 }),
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "client",
                     type: this.clientField.type
                 })
             ],
-            body: csharp.codeblock((writer) => {
-                writer.writeTextStatement(`${OauthTokenProviderGenerator.CLIENT_ID_FIELD.name} = clientId`);
-                writer.writeTextStatement(`${OauthTokenProviderGenerator.CLIENT_SECRET_FIELD.name} = clientSecret`);
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement(`${this.CLIENT_ID_FIELD.name} = clientId`);
+                writer.writeTextStatement(`${this.CLIENT_SECRET_FIELD.name} = clientSecret`);
                 writer.writeTextStatement(`${this.clientField.name} = client`);
             })
         });
@@ -143,13 +143,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     public static readonly GET_ACCESS_TOKEN_ASYNC_METHOD_NAME = "GetAccessTokenAsync";
 
     private getAccessTokenMethod(): ast.Method {
-        return csharp.method({
+        return this.csharp.method({
             access: ast.Access.Public,
             isAsync: true,
             name: OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME,
             parameters: [],
             body: this.getAccessTokenBody(),
-            return_: ast.Type.string()
+            return_: this.csharp.Type.string()
         });
     }
 
@@ -157,26 +157,26 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         const expiresIn = this.getExpiresIn();
         const tokenEndpoint = this.scheme.configuration.tokenEndpoint;
 
-        return csharp.codeblock((writer) => {
+        return this.csharp.codeblock((writer) => {
             writer.controlFlow(
                 "if",
-                csharp.codeblock((writer) => {
-                    writer.write(`${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name} == null`);
+                this.csharp.codeblock((writer) => {
+                    writer.write(`${this.ACCESS_TOKEN_FIELD.name} == null`);
                     // check expiresIn if present in the IR
                     if (expiresIn != null) {
-                        writer.write(`|| DateTime.UtcNow >= ${OauthTokenProviderGenerator.EXPIRES_AT_FIELD.name}`);
+                        writer.write(`|| DateTime.UtcNow >= ${this.EXPIRES_AT_FIELD.name}`);
                     }
                 })
             );
 
             writer.writeNodeStatement(
-                csharp.codeblock((writer) => {
+              this.csharp.codeblock((writer) => {
                     const requestType = this.tokenEndpoint.requestBody?._visit({
                         reference: (value) => {
                             return this.context.csharpTypeMapper.convert({ reference: value.requestBodyType });
                         },
                         inlinedRequestBody: (value) => {
-                            return ast.Type.reference(
+                            return this.csharp.Type.reference(
                                 this.context.getRequestWrapperReference(
                                     this.tokenEndpointReference.serviceId,
                                     value.name
@@ -193,13 +193,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     writer.write("var tokenResponse = ");
                     writer.writeNode(
-                        csharp.invokeMethod({
+                      this.csharp.invokeMethod({
                             async: true,
                             method: `${this.clientField.name}.${this.context.getEndpointMethodName(
                                 this.tokenEndpoint
                             )}`,
                             arguments_: [
-                                csharp.instantiateClass({
+                              this.csharp.instantiateClass({
                                     classReference: requestType.internalType.value,
                                     // TODO(dsinghvi): assumes only top level client id and client secret inputs
                                     arguments_: [
@@ -208,8 +208,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                                 this.scheme.configuration.tokenEndpoint.requestProperties.clientId
                                                     .property.name
                                             ),
-                                            assignment: csharp.codeblock(
-                                                OauthTokenProviderGenerator.CLIENT_ID_FIELD.name
+                                            assignment: this.csharp.codeblock(
+                                                this.CLIENT_ID_FIELD.name
                                             )
                                         },
                                         {
@@ -217,8 +217,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                                                 this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret
                                                     .property.name
                                             ),
-                                            assignment: csharp.codeblock(
-                                                OauthTokenProviderGenerator.CLIENT_SECRET_FIELD.name
+                                            assignment: this.csharp.codeblock(
+                                                this.CLIENT_SECRET_FIELD.name
                                             )
                                         }
                                     ]
@@ -230,7 +230,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             );
 
             writer.writeTextStatement(
-                `${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name} = tokenResponse.${this.dotAccess(
+                `${this.ACCESS_TOKEN_FIELD.name} = tokenResponse.${this.dotAccess(
                     tokenEndpoint.responseProperties.accessToken.property,
                     tokenEndpoint.responseProperties.accessToken.propertyPath
                 )}`
@@ -239,17 +239,17 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             if (expiresIn != null) {
                 writer.writeTextStatement(
                     `${
-                        OauthTokenProviderGenerator.EXPIRES_AT_FIELD.name
+                        this.EXPIRES_AT_FIELD.name
                     } = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
                         expiresIn.property,
                         expiresIn.propertyPath
-                    )}).AddMinutes(-${OauthTokenProviderGenerator.BUFFER_IN_MINUTES_FIELD.name})`
+                    )}).AddMinutes(-${this.BUFFER_IN_MINUTES_FIELD.name})`
                 );
             }
 
             writer.endControlFlow();
 
-            writer.writeTextStatement(`return $"Bearer {${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name}}"`);
+            writer.writeTextStatement(`return $"Bearer {${this.ACCESS_TOKEN_FIELD.name}}"`);
         });
     }
 

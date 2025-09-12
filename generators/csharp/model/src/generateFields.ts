@@ -1,4 +1,4 @@
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -39,7 +39,7 @@ export function generateField({
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
     }
 
-    return csharp.field({
+    return context.csharp.field({
         name: getPropertyName({ className, objectProperty: property.name, context }),
         type: fieldType,
         access: ast.Access.Public,
@@ -63,7 +63,7 @@ export function generateFieldForFileProperty({
 }): ast.Field {
     const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
 
-    return csharp.field({
+    return context.csharp.field({
         name: getPropertyName({ className, objectProperty: property.key, context }),
         type: fieldType,
         access: ast.Access.Public,

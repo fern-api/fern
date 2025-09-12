@@ -1,7 +1,7 @@
 import { ast } from "..";
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import type { Writer } from "./core/Writer";
-import { type CSharp } from "../csharp";
 
 export declare namespace ClassReference {
     interface Identity {
@@ -88,6 +88,9 @@ export class ClassReference extends AstNode {
             this.csharp.nameRegistry.isAmbiguousTypeName(this.name) ||
             this.csharp.nameRegistry.isAmbiguousTypeName(this.enclosingType?.name);
 
+        // if the first segment in a fqname is ambiguous, then we need to globally qualify the type
+        const shouldGlobal = this.global || this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) || writer.shouldUseFullyQualifiedNamespaces();
+
         // the fully qualified namespace of the type
         // const fqNamespace = this.enclosingType?.resolveNamespace() ?? this.resolveNamespace();
         // const fqNamespace = this.enclosingType?.namespace ?? this.namespace;
@@ -97,13 +100,13 @@ export class ClassReference extends AstNode {
         // const fqName = this.fullyQualifiedName;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const globalFqName = `${this.global || writer.shouldUseFullyQualifiedNamespaces() ? "global::" : ""}${this.fullyQualifiedName}`;
+        const globalFqName = `${shouldGlobal? "global::" : ""}${this.fullyQualifiedName}`;
 
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
             writer.write(`${alias}.${this.scopedName}`);
         } else {
-            if (this.fullyQualified || writer.shouldUseFullyQualifiedNamespaces()) {
+            if (this.fullyQualified) {
                 // explicitly express namespaces
                 writer.addReference(this);
                 writer.write(globalFqName);
@@ -259,6 +262,7 @@ export class ClassReference extends AstNode {
 
         const nameToDeconflict = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
 
+        
         // Check for direct namespace conflicts first
         if (this.hasNamespaceConflict(nameToDeconflict, currentNamespace)) {
             return true;

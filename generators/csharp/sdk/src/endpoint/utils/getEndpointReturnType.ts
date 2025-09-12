@@ -1,4 +1,4 @@
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import {  ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -14,26 +14,26 @@ export function getEndpointReturnType({
 }): ast.Type | undefined {
     if (endpoint.response?.body == null) {
         if (endpoint.method === FernIr.HttpMethod.Head) {
-            return ast.Type.reference(context.getHttpResponseHeadersReference());
+            return context.csharp.Type.reference(context.getHttpResponseHeadersReference());
         }
         return undefined;
     }
 
     const streamResultType = {
         json: (jsonChunk: FernIr.JsonStreamChunk) =>
-            ast.Type.reference(
-                csharp.classReference({
+          context.csharp.Type.reference(
+            context.csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
                     generics: [context.csharpTypeMapper.convert({ reference: jsonChunk.payload })]
                 })
             ),
         text: () =>
-            ast.Type.reference(
-                csharp.classReference({
+          context.csharp.Type.reference(
+                context.csharp.classReference({
                     name: "IAsyncEnumerable",
                     namespace: "System.Collections.Generic",
-                    generics: [ast.Type.string()]
+                    generics: [context.csharp.Type.string()]
                 })
             ),
 
@@ -59,15 +59,15 @@ export function getEndpointReturnType({
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
 
         fileDownload: () =>
-            ast.Type.reference(
-                csharp.classReference({
+          context.csharp.Type.reference(
+                context.csharp.classReference({
                     name: "Stream",
                     namespace: "System.IO",
                     fullyQualified: true
                 })
             ),
         json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
-        text: () => ast.Type.string(),
+        text: () => context.csharp.Type.string(),
         bytes: () => undefined,
         _other: () => undefined
     });

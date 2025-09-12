@@ -11,6 +11,10 @@ export abstract class FileGenerator<
 > {
     constructor(protected readonly context: Context) {}
 
+    protected get csharp() {
+        return this.context.csharp;
+    }
+
     public generate(): GeneratedFile {
         if (this.shouldGenerate()) {
             this.context.logger.debug(`Generating ${this.getFilepath()}`);

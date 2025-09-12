@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { type CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { type ClassReference } from "./ClassReference";
@@ -9,7 +10,6 @@ import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { TypeParameter } from "./TypeParameter";
 import { XmlDocBlock } from "./XmlDocBlock";
-import { type CSharp } from "../csharp";
 
 export enum MethodType {
     INSTANCE,
@@ -104,9 +104,7 @@ export class Method extends AstNode {
         }
         if (this.return == null) {
             if (this.isAsync) {
-                //   writer.writeNode(this.nameRegistry.System.Threading.Tasks.Task);
-                // TODO: UNHACK THIS
-                writer.write("System.Threading.Tasks.Task");
+                writer.writeNode(this.csharp.System.Threading.Tasks.Task());
                 writer.write(" ");
             } else {
                 writer.write("void ");

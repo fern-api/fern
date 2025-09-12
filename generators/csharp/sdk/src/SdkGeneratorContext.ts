@@ -1,7 +1,6 @@
 import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { BaseCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -32,6 +31,7 @@ import { IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME } from "./options/IdempotentR
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsInterfaceGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { ast } from '@fern-api/csharp-codegen';
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
@@ -64,18 +64,18 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
     }
 
     public getAdditionalQueryParametersType(): ast.Type {
-        return ast.Type.list(
-            ast.Type.reference(
+        return this.csharp.Type.list(
+          this.csharp.Type.reference(
                 this.getKeyValuePairsClassReference({
-                    key: ast.Type.string(),
-                    value: ast.Type.string()
+                    key: this.csharp.Type.string(),
+                    value: this.csharp.Type.string()
                 })
             )
         );
     }
 
     public getAdditionalBodyPropertiesType(): ast.Type {
-        return ast.Type.optional(ast.Type.object());
+        return this.csharp.Type.optional(this.csharp.Type.object());
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {

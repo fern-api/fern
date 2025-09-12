@@ -1,5 +1,3 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -10,6 +8,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
+import { ast } from '@fern-api/csharp-codegen';
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow
@@ -17,9 +16,13 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
         super(context, sdkRequest, endpoint);
     }
 
+    private get csharp() {
+        return this.context.csharp;
+    }
+
     public getParameterType(): ast.Type {
-        return ast.Type.coreClass(
-            csharp.coreClassReference({
+        return this.csharp.Type.coreClass(
+            this.csharp.coreClassReference({
                 name: "Stream"
             })
         );

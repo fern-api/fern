@@ -1,5 +1,4 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 
 import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -9,6 +8,7 @@ import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenera
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { ast } from '@fern-api/csharp-codegen';
 
 type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 
@@ -19,6 +19,10 @@ export abstract class AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
+    }
+
+    protected get csharp() {
+        return this.context.csharp;
     }
 
     public getEndpointSignatureInfo({
@@ -73,7 +77,7 @@ export abstract class AbstractEndpointGenerator {
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         const requestParameter =
             request != null
-                ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
+                ? this.csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
                 : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
             endpoint,
@@ -103,13 +107,13 @@ export abstract class AbstractEndpointGenerator {
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
         if (endpoint.pagination?.type === "custom") {
-            return ast.Type.reference(
+            return this.csharp.Type.reference(
                 this.context.getCustomPagerClassReference({
                     itemType
                 })
             );
         }
-        return ast.Type.reference(
+        return this.csharp.Type.reference(
             this.context.getPagerClassReference({
                 itemType
             })
@@ -160,7 +164,7 @@ export abstract class AbstractEndpointGenerator {
             });
             if (includePathParametersInEndpointSignature) {
                 pathParameters.push(
-                    csharp.parameter({
+                    this.csharp.parameter({
                         docs: pathParam.docs,
                         name: parameterName,
                         type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
@@ -220,7 +224,7 @@ export abstract class AbstractEndpointGenerator {
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
-        const on = csharp.codeblock((writer) => {
+        const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
                 writer.write(`.${path.pascalCase.safeName}`);
@@ -230,7 +234,7 @@ export abstract class AbstractEndpointGenerator {
             args.push(endParameter);
         }
         getEndpointReturnType({ context: this.context, endpoint });
-        return csharp.invokeMethod({
+        return this.csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
@@ -274,7 +278,7 @@ export abstract class AbstractEndpointGenerator {
         if (!this.context.includeExceptionHandler()) {
             return body;
         }
-        return csharp.codeblock((writer) => {
+        return this.csharp.codeblock((writer) => {
             if (this.context.includeExceptionHandler()) {
                 if (returnType != null) {
                     writer.write("return ");

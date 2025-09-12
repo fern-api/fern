@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
@@ -16,7 +16,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.classReference,
             partial: false,
             access: ast.Access.Internal,
@@ -24,12 +24,12 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         });
 
         class_.addField(
-            csharp.field({
+          this.csharp.field({
                 name: this.context.getCurrentVersionPropertyName(),
-                type: ast.Type.string(),
+                type: this.csharp.Type.string(),
                 access: ast.Access.Public,
                 const_: true,
-                initializer: csharp.codeblock(csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
+                initializer: this.csharp.codeblock(this.csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
             })
         );
 

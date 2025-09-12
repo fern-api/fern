@@ -1,4 +1,4 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
@@ -18,8 +18,12 @@ export class MockEndpointGenerator {
         return this.generateForExamples(endpoint, [example]);
     }
 
+    private get csharp() {
+        return this.context.csharp;
+    }
+
     public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
-        return csharp.codeblock((writer) => {
+        return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
                 let responseSupported = false;

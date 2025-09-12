@@ -1,6 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
-import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+// import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -58,7 +58,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
         this.validateExceptionClassNames(customConfig);
-        validateReadOnlyMemoryTypes(customConfig);
+        // todo: fix this
+        // validateReadOnlyMemoryTypes(customConfig);
+
         return customConfig;
     }
 

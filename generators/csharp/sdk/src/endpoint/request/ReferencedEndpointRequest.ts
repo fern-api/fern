@@ -1,5 +1,3 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
 import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -10,6 +8,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
+import { ast } from '@fern-api/csharp-codegen';
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference;

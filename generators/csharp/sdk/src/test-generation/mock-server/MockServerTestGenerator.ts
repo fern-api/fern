@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -36,7 +36,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     ) {
         super(context);
 
-        this.classReference = csharp.classReference({
+        this.classReference = this.csharp.classReference({
             name: this.endpoint.name.pascalCase.safeName + "Test",
             namespace: this.getTestNamespace()
         });
@@ -65,7 +65,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     protected doGenerate(): CSharpFile {
-        const testClass = csharp.testClass({
+        const testClass = this.csharp.testClass({
             name: this.getTestClassName(),
             namespace: this.getTestNamespace(),
             parentClassReference: this.context.getBaseMockServerTestClassReference()
@@ -95,7 +95,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             if (isSupportedResponse) {
                 isAsyncTest = true;
             }
-            const methodBody = csharp.codeblock((writer) => {
+            const methodBody = this.csharp.codeblock((writer) => {
                 writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
 
                 writer.newLine();
@@ -143,11 +143,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.writeNodeStatement(endpointSnippet);
                         if (responseBodyType === "json") {
                             const responseType = this.getCsharpTypeFromResponse(example.response);
-                            const deserializeResponseNode = csharp.invokeMethod({
+                            const deserializeResponseNode = this.csharp.invokeMethod({
                                 on: this.context.getJsonUtilsClassReference(),
                                 method: "Deserialize",
                                 generics: [responseType],
-                                arguments_: [csharp.codeblock("mockResponse")]
+                                arguments_: [this.csharp.codeblock("mockResponse")]
                             });
                             switch (responseType.unwrapIfOptional().internalType.type) {
                                 case "object":

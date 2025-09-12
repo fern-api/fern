@@ -1,10 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { type CSharp } from "../csharp";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { AstNode, Writer } from "./core";
 import { Type } from "./Type";
-import { type CSharp } from "../csharp";
 
 type InternalTypeLiteral =
     | Boolean_
@@ -255,9 +254,7 @@ export class TypeLiteral extends AstNode {
 
     private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
         writer.write(`DateTime.Parse("${value}", null, `);
-        // writer.writeNode(this.nameRegistry.System.Globalization.DateTimeStyles);
-        // TODO: UNHACK THIS
-        writer.write("System.Globalization.DateTimeStyles");
+        writer.writeNode(this.csharp.System.Globalization.DateTimeStyles);
         writer.write(".AdjustToUniversal)");
     }
 

@@ -2,10 +2,12 @@ import {
     And,
     Annotation,
     AnonymousFunction,
+    AstNode,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    ConstructorField,
     CoreClassReference,
     Dictionary,
     Enum,
@@ -23,10 +25,8 @@ import {
     Ternary,
     TestClass,
     Type,
-    TypeParameter,
     TypeLiteral,
-    ConstructorField,
-    AstNode
+    TypeParameter
 } from "./ast";
 import { PrimitiveInstantiation } from "./ast/InstantiatedPrimitive";
 import { ReadOnlyMemory } from "./ast/ReadOnlymemory";

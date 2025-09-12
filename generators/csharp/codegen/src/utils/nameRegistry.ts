@@ -17,10 +17,8 @@
 import { writeFileSync } from "node:fs";
 import { ClassReference } from "../ast/ClassReference";
 import { type CSharp } from "../csharp";
-
 import { builtIns } from "./knownTypes";
-import { stacktrace } from "./stacktrace";
-import { Type, TypeParameter } from "../ast";
+
 
 /**
  * Represents a type entry in the type registry for serialization purposes.
@@ -145,7 +143,16 @@ export class NameRegistry {
             for (const name of names) {
                 this.typeNames.set(name, new Set([namespace]));
             }
+
+            // and the first word of the namespace itself
+            const firstWord = namespace.split(".")[0];
+            if (firstWord) {
+                this.typeNames.set(firstWord, new Set([namespace]));
+            }
         }
+        this.typeNames.set("System", new Set(["System"]));
+        this.typeNames.set("NUnit", new Set(["NUnit"]));
+        this.typeNames.set("OneOf", new Set(["OneOf"]));
         /*
 
         // track all the types in the System.* namespace that we use
@@ -290,23 +297,25 @@ export class NameRegistry {
             for (const ns of this.allNamespacesOf(namespace)) {
                 this.namespaceRegistry.set(ns, ns);
             }
-
             // Track the type name and its namespace for ambiguity detection
             if (!classReference.enclosingType) {
-                // Implementation Note:
-                // if the classReference is actually a nested type, we're going to skip
-                // tracking it for ambiguity for the moment, as the ambiguity would only be if the type
-                // was rendered in the enclosing type, and I don't think that happens.
-                // regardless, if we wanted to make sure that worked, we'd have to know the scope where
-                // the node was being rendered
-                // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
-                if (this.typeNames.has(name)) {
-                    this.typeNames.get(name)?.add(namespace);
-                } else {
-                    this.typeNames.set(name, new Set([namespace]));
-                }
+              // Implementation Note:
+              // if the classReference is actually a nested type, we're going to skip
+              // tracking it for ambiguity for the moment, as the ambiguity would only be if the type
+              // was rendered in the enclosing type, and I don't think that happens.
+              // regardless, if we wanted to make sure that worked, we'd have to know the scope where
+              // the node was being rendered
+              // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
+              if (this.typeNames.has(name)) {
+                  this.typeNames.get(name)?.add(namespace);
+              } else {
+                  this.typeNames.set(name, new Set([namespace]));
+              }
             }
+            
         }
+        
+   
 
         return classReference;
     }

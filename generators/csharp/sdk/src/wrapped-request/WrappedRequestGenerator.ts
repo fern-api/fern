@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import {  ast } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
@@ -44,7 +44,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     protected doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.classReference,
             partial: false,
             access: ast.Access.Public,
@@ -59,7 +59,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
             for (const pathParameter of this.endpoint.allPathParameters) {
                 class_.addField(
-                    csharp.field({
+                    this.csharp.field({
                         name: pathParameter.name.pascalCase.safeName,
                         type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
                         access: ast.Access.Public,
@@ -79,12 +79,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
-                ? ast.Type.list(
+                ? this.csharp.Type.list(
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             class_.addField(
-                csharp.field({
+                this.csharp.field({
                     name: propertyName,
                     type,
                     access: ast.Access.Public,
@@ -109,7 +109,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         }
         for (const header of [...service.headers, ...this.endpoint.headers]) {
             class_.addField(
-                csharp.field({
+                this.csharp.field({
                     name: header.name.name.pascalCase.safeName,
                     type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
                     access: ast.Access.Public,
@@ -130,7 +130,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
                 const useRequired = !type.isOptional();
                 class_.addField(
-                    csharp.field({
+                    this.csharp.field({
                         name: this.wrapper.bodyKey.pascalCase.safeName,
                         type,
                         access: ast.Access.Public,
@@ -192,7 +192,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (isProtoRequest) {
             const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
             if (protobufService != null) {
-                const protobufClassReference = csharp.classReference({
+                const protobufClassReference = this.csharp.classReference({
                     name: this.classReference.name,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
                     namespaceAlias: "Proto"
@@ -249,9 +249,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
             const value = isSingleQueryParameter
                 ? singleValueSnippet
-                : csharp.codeblock((writer) =>
+                : this.csharp.codeblock((writer) =>
                       writer.writeNode(
-                          csharp.list({
+                          this.csharp.list({
                               entries: [singleValueSnippet]
                           })
                       )
@@ -301,11 +301,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 assignment: value
             };
         });
-        const instantiateClass = csharp.instantiateClass({
+        const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args
         });
-        return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {

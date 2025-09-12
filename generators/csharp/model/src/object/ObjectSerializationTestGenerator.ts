@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -35,7 +35,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
     }
 
     protected doGenerate(): CSharpFile {
-        const testClass = csharp.testClass({
+        const testClass = this.csharp.testClass({
             name: this.getTestClassName(),
             namespace: this.context.getTestNamespace()
         });
@@ -43,18 +43,18 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
                 name: `TestDeserialization${testNumber}`,
-                body: csharp.codeblock((writer) => {
+                body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var json = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
                     writer.write("var expectedObject  = ");
                     writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                     writer.write("var deserializedObject = ");
                     writer.writeNodeStatement(
-                        csharp.invokeMethod({
+                      this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [ast.Type.reference(this.classReference)],
-                            arguments_: [csharp.codeblock("json")]
+                            generics: [this.csharp.Type.reference(this.classReference)],
+                            arguments_: [this.csharp.codeblock("json")]
                         })
                     );
                     writer.writeTextStatement(
@@ -66,26 +66,26 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
 
             testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
-                body: csharp.codeblock((writer) => {
+                body: this.csharp.codeblock((writer) => {
                     writer.writeLine("var expectedJson = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
                     writer.write("var actualObj  = ");
                     writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                     writer.write("var actualElement = ");
                     writer.writeNodeStatement(
-                        csharp.invokeMethod({
+                      this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "SerializeToElement",
-                            arguments_: [csharp.codeblock("actualObj")]
+                            arguments_: [this.csharp.codeblock("actualObj")]
                         })
                     );
                     writer.write("var expectedElement = ");
                     writer.writeNodeStatement(
-                        csharp.invokeMethod({
+                      this.csharp.invokeMethod({
                             on: this.context.getJsonUtilsClassReference(),
                             method: "Deserialize",
-                            generics: [ast.Type.reference(this.context.getJsonElementClassReference())],
-                            arguments_: [csharp.codeblock("expectedJson")]
+                            generics: [this.csharp.Type.reference(this.context.getJsonElementClassReference())],
+                            arguments_: [this.csharp.codeblock("expectedJson")]
                         })
                     );
                     writer.writeTextStatement(

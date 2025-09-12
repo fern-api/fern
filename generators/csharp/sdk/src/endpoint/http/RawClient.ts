@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp, ast, Writer } from "@fern-api/csharp-codegen";
+import {  ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -70,6 +70,10 @@ export class RawClient {
         this.context = context;
     }
 
+    private get csharp() {
+        return this.context.csharp;
+    }
+
     /**
      * Create an HTTP request wrapper.
      */
@@ -94,7 +98,7 @@ export class RawClient {
             },
             {
                 name: "Path",
-                assignment: csharp.codeblock(
+                assignment: this.csharp.codeblock(
                     (writer) =>
                         `${this.writePathString({
                             writer,
@@ -107,45 +111,45 @@ export class RawClient {
         if (bodyReference != null) {
             args.push({
                 name: "Body",
-                assignment: csharp.codeblock(bodyReference)
+                assignment: this.csharp.codeblock(bodyReference)
             });
         }
         if (queryBagReference != null) {
             args.push({
                 name: "Query",
-                assignment: csharp.codeblock(queryBagReference)
+                assignment: this.csharp.codeblock(queryBagReference)
             });
         }
         if (headerBagReference != null) {
             args.push({
                 name: "Headers",
-                assignment: csharp.codeblock(headerBagReference)
+                assignment: this.csharp.codeblock(headerBagReference)
             });
         }
         const requestContentType = getContentTypeFromRequestBody(endpoint);
         if (requestContentType) {
             args.push({
                 name: "ContentType",
-                assignment: csharp.codeblock(`"${requestContentType}"`)
+                assignment: this.csharp.codeblock(`"${requestContentType}"`)
             });
         }
         if (endpoint.idempotent) {
             args.push({
                 name: "Options",
-                assignment: csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
             });
         } else {
             args.push({
                 name: "Options",
-                assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.context.getRequestOptionsParameterName())
             });
         }
         switch (requestType) {
             case "bytes":
                 return {
-                    requestReference: csharp.instantiateClass({
+                    requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: csharp.classReference({
+                        classReference: this.csharp.classReference({
                             name: "StreamRequest",
                             namespace: this.context.getCoreNamespace()
                         })
@@ -157,12 +161,12 @@ export class RawClient {
                 }
                 const requestBody = endpoint.requestBody;
                 const varName = "multipartFormRequest_";
-                const createMultipartFormRequest = csharp.codeblock((writer) => {
+                const createMultipartFormRequest = this.csharp.codeblock((writer) => {
                     writer.write(`var ${varName} = `);
                     writer.writeNode(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             arguments_: args,
-                            classReference: csharp.classReference({
+                            classReference: this.csharp.classReference({
                                 name: "MultipartFormRequest",
                                 namespace: this.context.getCoreNamespace()
                             })
@@ -186,13 +190,13 @@ export class RawClient {
                 });
                 return {
                     code: createMultipartFormRequest,
-                    requestReference: csharp.codeblock(varName)
+                    requestReference: this.csharp.codeblock(varName)
                 };
             }
             case "json":
             default:
                 return {
-                    requestReference: csharp.instantiateClass({
+                    requestReference: this.csharp.instantiateClass({
                         arguments_: args,
                         classReference: this.context.getJsonRequestClassReference()
                     })
@@ -311,8 +315,8 @@ export class RawClient {
      * Creates an HTTP request using the RawClient.
      */
     public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(clientReference),
             method: "CreateHttpRequest",
             arguments_: [request]
         });
@@ -325,10 +329,10 @@ export class RawClient {
         clientReference,
         request
     }: RawClient.SendRequestArgsWithRequestWrapper): ast.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }
@@ -342,10 +346,10 @@ export class RawClient {
         request,
         cancellationToken
     }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+        return this.csharp.invokeMethod({
+            on:  this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, options, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, options, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }
@@ -360,8 +364,8 @@ export class RawClient {
                 method = "Delete";
                 break;
             case "PATCH":
-                return csharp.codeblock((writer) => {
-                    writer.writeNode(csharp.coreClassReference({ name: "HttpMethodExtensions" }));
+                return this.csharp.codeblock((writer) => {
+                    writer.writeNode(this.csharp.coreClassReference({ name: "HttpMethodExtensions" }));
                     writer.write(".Patch");
                 });
             case "GET":
@@ -376,8 +380,8 @@ export class RawClient {
             default:
                 assertNever(irMethod);
         }
-        return csharp.codeblock((writer) => {
-            writer.writeNode(this.context.nameRegistry.System.Net.Http.HttpMethod);
+        return this.csharp.codeblock((writer) => {
+            writer.writeNode(this.context.csharp.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -408,7 +412,7 @@ export class RawClient {
                 );
             }
             formatParams.push(
-                csharp.codeblock((writer) => {
+                this.csharp.codeblock((writer) => {
                     writer.writeNode(this.context.getValueConvertReference());
                     writer.write(`.ToPathParameterString(${reference})`);
                 })

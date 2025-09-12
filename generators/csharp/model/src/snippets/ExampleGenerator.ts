@@ -1,4 +1,4 @@
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import {
     ExampleContainer,
@@ -21,6 +21,10 @@ export class ExampleGenerator {
         this.context = context;
     }
 
+    private get csharp() {
+        return this.context.csharp;
+    }
+
     public getSnippetForTypeReference({
         exampleTypeReference,
         parseDatetimes
@@ -37,30 +41,30 @@ export class ExampleGenerator {
                 throw new Error("Unknown example type reference: " + exampleTypeReference.shape.type);
             }
         });
-        return csharp.codeblock((writer) => writer.writeNode(astNode));
+        return this.csharp.codeblock((writer) => writer.writeNode(astNode));
     }
 
     private getSnippetForUnknown(unknownExample: unknown): ast.AstNode {
         switch (typeof unknownExample) {
             case "boolean":
-                return ast.InstantiatedPrimitive.boolean(unknownExample);
+                return this.csharp.InstantiatedPrimitive.boolean(unknownExample);
             case "string":
-                return ast.InstantiatedPrimitive.string(unknownExample);
+                return this.csharp.InstantiatedPrimitive.string(unknownExample);
             case "number":
-                return ast.InstantiatedPrimitive.double(unknownExample);
+                return this.csharp.InstantiatedPrimitive.double(unknownExample);
             case "object":
                 if (Array.isArray(unknownExample)) {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value));
-                    return csharp.list({ entries: values, itemType: ast.Type.optional(ast.Type.object()) });
+                    return this.csharp.list({ entries: values, itemType: this.csharp.Type.optional(this.csharp.Type.object()) });
                 } else if (unknownExample != null && unknownExample instanceof Object) {
                     const keys = Object.keys(unknownExample).sort();
                     const entries = keys.map((key) => ({
-                        key: ast.InstantiatedPrimitive.string(key),
+                        key: this.csharp.InstantiatedPrimitive.string(key),
                         value: this.getSnippetForUnknown((unknownExample as Record<string, unknown>)[key])
                     }));
-                    return csharp.dictionary({
-                        keyType: ast.Type.object(),
-                        valueType: ast.Type.optional(ast.Type.object()),
+                    return this.csharp.dictionary({
+                        keyType: this.csharp.Type.object(),
+                        valueType: this.csharp.Type.optional(this.csharp.Type.object()),
                         values: {
                             type: "entries",
                             entries
@@ -69,7 +73,7 @@ export class ExampleGenerator {
                 }
                 break;
         }
-        return ast.InstantiatedPrimitive.null();
+        return this.csharp.InstantiatedPrimitive.null();
     }
 
     private getSnippetForNamed(exampleNamedType: ExampleNamedType, parseDatetimes: boolean): ast.AstNode {
@@ -77,7 +81,7 @@ export class ExampleGenerator {
             alias: (exampleAliasType) =>
                 this.getSnippetForTypeReference({ exampleTypeReference: exampleAliasType.value, parseDatetimes }),
             enum: (exampleEnumType) =>
-                csharp.enumInstantiation({
+                this.csharp.enumInstantiation({
                     reference: this.context.csharpTypeMapper.convertToClassReference(exampleNamedType.typeName),
                     value: exampleEnumType.value.name.pascalCase.safeName
                 }),
@@ -137,7 +141,7 @@ export class ExampleGenerator {
             samePropertiesAsObject: (p) => this.getSnippetForTypeId(p.typeId, p.object, parseDatetimes),
             singleProperty: (p) => this.getSnippetForTypeReference({ exampleTypeReference: p, parseDatetimes }),
             // todo: figure out what to put here
-            noProperties: () => csharp.codeblock('"no-properties-union"'),
+            noProperties: () => this.csharp.codeblock('"no-properties-union"'),
             _other: (value) => {
                 throw new Error("Unknown example type reference: " + value.type);
             }
@@ -147,13 +151,13 @@ export class ExampleGenerator {
     private getSnippetForContainer(c: ExampleContainer, parseDatetimes: boolean): ast.AstNode {
         return c._visit<ast.AstNode>({
             literal: (p) =>
-                csharp.codeblock((writer) => writer.writeNode(this.getSnippetForPrimitive(p.literal, parseDatetimes))),
+                this.csharp.codeblock((writer) => writer.writeNode(this.getSnippetForPrimitive(p.literal, parseDatetimes))),
             list: (p) => {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })
                 );
                 if (this.context.isReadOnlyMemoryType(p.itemType)) {
-                    return csharp.readOnlyMemory({
+                    return this.csharp.readOnlyMemory({
                         itemType: this.context.csharpTypeMapper.convert({
                             reference: p.itemType,
                             unboxOptionals: true
@@ -161,7 +165,7 @@ export class ExampleGenerator {
                         entries
                     });
                 } else {
-                    return csharp.list({
+                    return this.csharp.list({
                         itemType: this.context.csharpTypeMapper.convert({
                             reference: p.itemType,
                             unboxOptionals: true
@@ -174,7 +178,7 @@ export class ExampleGenerator {
                 const entries = p.set.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })
                 );
-                return csharp.set({
+                return this.csharp.set({
                     itemType: this.context.csharpTypeMapper.convert({
                         reference: p.itemType,
                         unboxOptionals: true
@@ -184,14 +188,14 @@ export class ExampleGenerator {
             },
             optional: (p) =>
                 p.optional == null
-                    ? ast.InstantiatedPrimitive.null()
+                    ? this.csharp.InstantiatedPrimitive.null()
                     : this.getSnippetForTypeReference({
                           exampleTypeReference: p.optional,
                           parseDatetimes
                       }),
             nullable: (p) =>
                 p.nullable == null
-                    ? ast.InstantiatedPrimitive.null()
+                    ? this.csharp.InstantiatedPrimitive.null()
                     : this.getSnippetForTypeReference({
                           exampleTypeReference: p.nullable,
                           parseDatetimes
@@ -209,7 +213,7 @@ export class ExampleGenerator {
                         })
                     };
                 });
-                return csharp.dictionary({
+                return this.csharp.dictionary({
                     keyType: this.context.csharpTypeMapper.convert({ reference: p.keyType }),
                     valueType: this.context.csharpTypeMapper.convert({ reference: p.valueType }),
                     values: {
@@ -226,23 +230,23 @@ export class ExampleGenerator {
 
     private getSnippetForPrimitive(examplePrimitive: ExamplePrimitive, parseDatetimes: boolean): ast.AstNode {
         const instantiatedPrimitive = examplePrimitive._visit<ast.InstantiatedPrimitive>({
-            integer: (p) => ast.InstantiatedPrimitive.integer(p),
-            long: (p) => ast.InstantiatedPrimitive.long(p),
-            uint: (p) => ast.InstantiatedPrimitive.uint(p),
-            uint64: (p) => ast.InstantiatedPrimitive.ulong(p),
-            float: (p) => ast.InstantiatedPrimitive.float(p),
-            double: (p) => ast.InstantiatedPrimitive.double(p),
-            boolean: (p) => ast.InstantiatedPrimitive.boolean(p),
-            string: (p) => ast.InstantiatedPrimitive.string(p.original),
-            datetime: (example) => ast.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
-            date: (dateString) => ast.InstantiatedPrimitive.date(dateString),
-            uuid: (p) => ast.InstantiatedPrimitive.uuid(p),
-            base64: (p) => ast.InstantiatedPrimitive.string(p),
-            bigInteger: (p) => ast.InstantiatedPrimitive.string(p),
+            integer: (p) => this.csharp.InstantiatedPrimitive.integer(p),
+            long: (p) => this.csharp.InstantiatedPrimitive.long(p),
+            uint: (p) => this.csharp.InstantiatedPrimitive.uint(p),
+            uint64: (p) => this.csharp.InstantiatedPrimitive.ulong(p),
+            float: (p) => this.csharp.InstantiatedPrimitive.float(p),
+            double: (p) => this.csharp.InstantiatedPrimitive.double(p),
+            boolean: (p) => this.csharp.InstantiatedPrimitive.boolean(p),
+            string: (p) => this.csharp.InstantiatedPrimitive.string(p.original),
+            datetime: (example) => this.csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
+            date: (dateString) => this.csharp.InstantiatedPrimitive.date(dateString),
+            uuid: (p) => this.csharp.InstantiatedPrimitive.uuid(p),
+            base64: (p) => this.csharp.InstantiatedPrimitive.string(p),
+            bigInteger: (p) => this.csharp.InstantiatedPrimitive.string(p),
             _other: (value) => {
                 throw new Error("Unknown example type reference: " + value.type);
             }
         });
-        return csharp.codeblock((writer) => writer.writeNode(instantiatedPrimitive));
+        return this.csharp.codeblock((writer) => writer.writeNode(instantiatedPrimitive));
     }
 }

@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, ast } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { EnumTypeDeclaration, NameAndWireValue, TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -33,21 +33,21 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
     }
 
     protected doGenerate(): CSharpFile {
-        const serializerAnnotation = csharp.annotation({
-            reference: this.context.nameRegistry.System.Text.Json.Serialization.JsonConverter(),
-            argument: csharp.codeblock((writer) => {
+        const serializerAnnotation = this.csharp.annotation({
+            reference: this.context.csharp.System.Text.Json.Serialization.JsonConverter(),
+            argument: this.csharp.codeblock((writer) => {
                 writer.write("typeof(");
                 writer.writeNode(
-                    csharp.classReference(this.context.getStringEnumSerializerClassReference(this.classReference))
+                    this.csharp.classReference(this.context.getStringEnumSerializerClassReference(this.classReference))
                 );
                 writer.write(")");
             })
         });
 
-        const stringEnum = csharp.class_({
+        const stringEnum = this.csharp.class_({
             ...this.classReference,
             interfaceReferences: [
-                csharp.classReference({
+                this.csharp.classReference({
                     name: "IStringEnum",
                     namespace: this.context.getCoreNamespace()
                 })
@@ -61,28 +61,28 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addConstructor({
             access: ast.Access.Public,
             parameters: [
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "value",
-                    type: ast.Type.string(),
+                    type: this.csharp.Type.string(),
                     docs: "The string value of the enum."
                 })
             ],
-            body: csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer) => {
                 writer.writeTextStatement(`${this.valuePropertyName} = value`);
             })
         });
 
         stringEnum.addField(
-            csharp.field({
+            this.csharp.field({
                 name: this.valuePropertyName,
-                type: ast.Type.string(),
+                type: this.csharp.Type.string(),
                 access: ast.Access.Public,
                 get: ast.Access.Public,
                 summary: "The string value of the enum."
             })
         );
 
-        const valuesClass = csharp.class_({
+        const valuesClass = this.csharp.class_({
             access: ast.Access.Public,
             name: "Values",
             type: ast.Class.ClassType.Class,
@@ -99,25 +99,25 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 objectProperty: member.name
             });
             valuesClass.addField(
-                csharp.field({
+                this.csharp.field({
                     name: fieldName,
-                    type: ast.Type.string(),
+                    type: this.csharp.Type.string(),
                     access: ast.Access.Public,
                     summary: member.docs,
                     const_: true,
-                    initializer: csharp.codeblock(csharp.string_({ string: member.name.wireValue }))
+                    initializer: this.csharp.codeblock(this.csharp.string_({ string: member.name.wireValue }))
                 })
             );
             stringEnum.addField(
-                csharp.field({
+                this.csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: member.name }),
-                    type: ast.Type.reference(this.classReference),
+                    type: this.csharp.Type.reference(this.classReference),
                     access: ast.Access.Public,
                     summary: member.docs,
                     useRequired: false,
                     static_: true,
                     readonly: true,
-                    initializer: csharp.codeblock(`new(Values.${fieldName})`)
+                    initializer: this.csharp.codeblock(`new(Values.${fieldName})`)
                 })
             );
         });
@@ -125,26 +125,26 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addNestedClass(valuesClass);
 
         stringEnum.addMethod(
-            csharp.method({
+            this.csharp.method({
                 access: ast.Access.Public,
                 name: this.customMethodName,
                 parameters: [
-                    csharp.parameter({
+                    this.csharp.parameter({
                         name: "value",
-                        type: ast.Type.string(),
+                        type: this.csharp.Type.string(),
                         docs: "Custom enum value"
                     })
                 ],
                 summary: "Create a string enum with the given value.",
-                return_: ast.Type.reference(this.classReference),
+                return_: this.csharp.Type.reference(this.classReference),
                 type: ast.MethodType.STATIC,
-                classReference: csharp.classReference(this.classReference),
-                body: csharp.codeblock((writer) => {
+                classReference: this.csharp.classReference(this.classReference),
+                body: this.csharp.codeblock((writer) => {
                     writer.write("return ");
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: this.classReference,
-                            arguments_: [csharp.codeblock("value")]
+                            arguments_: [this.csharp.codeblock("value")]
                         })
                     );
                 })
@@ -152,32 +152,32 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         );
 
         stringEnum.addMethod(
-            csharp.method({
+            this.csharp.method({
                 access: ast.Access.Public,
                 name: "ToString",
-                return_: ast.Type.string(),
+                return_: this.csharp.Type.string(),
                 parameters: [],
                 override: true,
                 summary: "Returns the string value of the enum.",
                 type: ast.MethodType.INSTANCE,
-                body: csharp.codeblock((writer) => {
+                body: this.csharp.codeblock((writer) => {
                     writer.writeTextStatement(`return ${this.valuePropertyName}`);
                 })
             })
         );
 
         stringEnum.addMethod(
-            csharp.method({
+            this.csharp.method({
                 access: ast.Access.Public,
                 name: "Equals",
                 parameters: [
-                    csharp.parameter({
+                    this.csharp.parameter({
                         name: "other",
-                        type: ast.Type.optional(ast.Type.string())
+                        type: this.csharp.Type.optional(this.csharp.Type.string())
                     })
                 ],
-                return_: ast.Type.boolean(),
-                body: csharp.codeblock((writer) => {
+                return_: this.csharp.Type.boolean(),
+                body: this.csharp.codeblock((writer) => {
                     writer.writeTextStatement(`return ${this.valuePropertyName}.Equals(other)`);
                 })
             })
@@ -186,11 +186,11 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addOperator({
             type: "==",
             parameters: [
-                csharp.parameter({ name: "value1", type: ast.Type.reference(this.classReference) }),
-                csharp.parameter({ name: "value2", type: ast.Type.string() })
+                this.csharp.parameter({ name: "value1", type: this.csharp.Type.reference(this.classReference) }),
+                this.csharp.parameter({ name: "value2", type: this.csharp.Type.string() })
             ],
-            return: ast.Type.boolean(),
-            body: csharp.codeblock((writer) => {
+            return: this.csharp.Type.boolean(),
+            body: this.csharp.codeblock((writer) => {
                 writer.write(`value1.${this.valuePropertyName}.Equals(value2)`);
             }),
             useExpressionBody: true
@@ -199,11 +199,11 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addOperator({
             type: "!=",
             parameters: [
-                csharp.parameter({ name: "value1", type: ast.Type.reference(this.classReference) }),
-                csharp.parameter({ name: "value2", type: ast.Type.string() })
+                this.csharp.parameter({ name: "value1", type: this.csharp.Type.reference(this.classReference) }),
+                this.csharp.parameter({ name: "value2", type: this.csharp.Type.string() })
             ],
-            return: ast.Type.boolean(),
-            body: csharp.codeblock((writer) => {
+            return: this.csharp.Type.boolean(),
+            body: this.csharp.codeblock((writer) => {
                 writer.write(`!value1.${this.valuePropertyName}.Equals(value2)`);
             }),
             useExpressionBody: true
@@ -211,21 +211,21 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
         stringEnum.addOperator({
             type: "explicit",
-            to: ast.Type.string(),
-            parameter: csharp.parameter({
+            to: this.csharp.Type.string(),
+            parameter: this.csharp.parameter({
                 name: "value",
-                type: ast.Type.reference(this.classReference)
+                type: this.csharp.Type.reference(this.classReference)
             }),
-            body: csharp.codeblock(`value.${this.valuePropertyName}`),
+            body: this.csharp.codeblock(`value.${this.valuePropertyName}`),
             useExpressionBody: true
         });
         stringEnum.addOperator({
             type: "explicit",
-            parameter: csharp.parameter({
+            parameter: this.csharp.parameter({
                 name: "value",
-                type: ast.Type.string()
+                type: this.csharp.Type.string()
             }),
-            body: csharp.codeblock("new(value)"),
+            body: this.csharp.codeblock("new(value)"),
             useExpressionBody: true
         });
 
@@ -233,14 +233,14 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             // if we've renamed the value property, we need to implement the IStringEnum interface explicitly
 
             stringEnum.addField(
-                csharp.field({
+                this.csharp.field({
                     name: "IStringEnum.Value",
-                    type: ast.Type.string(),
+                    type: this.csharp.Type.string(),
                     get: ast.Access.Public,
                     summary: "The string value of the enum.",
                     init: false,
                     set: false,
-                    initializer: csharp.codeblock(`${this.valuePropertyName}`)
+                    initializer: this.csharp.codeblock(`${this.valuePropertyName}`)
                 })
             );
         }
