@@ -286,6 +286,39 @@ client.nullable.get_users({
 "
 `;
 
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"require "acme"
+
+client = acme::Client.new(base_url: 'https://api.example.com');
+
+client.create_user({
+  password:'password',
+  profile:{
+    name:'name',
+    verification:{},
+    ssn:'ssn'
+  }
+});
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"require "acme"
+
+client = acme::Client.new(base_url: 'https://api.example.com');
+
+client.create_user({
+  id:'id',
+  password:'password',
+  profile:{
+    name:'name',
+    verification:{},
+    ssn:'ssn'
+  }
+});
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "require "acme"
 

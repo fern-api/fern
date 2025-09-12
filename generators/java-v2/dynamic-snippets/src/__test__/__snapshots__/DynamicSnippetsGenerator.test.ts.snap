@@ -614,6 +614,75 @@ client.nullable().getUsers(
 "
 `;
 
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
+        )
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .id("id")
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
+        )
+        .build()
+);
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "package com.example.usage;
 
