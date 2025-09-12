@@ -1,7 +1,7 @@
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace UnknownErrorSingleUnionTypeGenerator {
     export interface Init {
@@ -19,40 +19,22 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         this.discriminant = discriminant;
     }
 
-    public generateForInlineUnion(context: SdkContext): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
-        return {
-            typeNode: ts.factory.createTypeLiteralNode([
-                ts.factory.createPropertySignature(
-                    undefined,
-                    UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
-                    undefined,
-                    context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
-                )
-            ]),
-            requestTypeNode: undefined,
-            responseTypeNode: undefined
-        };
+    public generateForInlineUnion(context: SdkContext): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode([
+            ts.factory.createPropertySignature(
+                undefined,
+                UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
+                undefined,
+                context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
+            )
+        ]);
     }
 
-    public getExtendsForInterface(): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    }[] {
+    public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }
 
-    public getDiscriminantPropertiesForInterface(): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
         return [];
     }
 
@@ -60,24 +42,11 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return undefined;
     }
 
-    public getNonDiscriminantPropertiesForInterface(context: SdkContext): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
-                property: {
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey(UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME),
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
-                },
-                requestProperty: undefined,
-                responseProperty: undefined,
-                isReadonly: false,
-                isWriteonly: false
+                name: getPropertyKey(UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
             }
         ];
     }
@@ -122,11 +91,5 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 ts.factory.createIdentifier(UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
             )
         ];
-    }
-    public needsRequestResponse(): { request: boolean; response: boolean } {
-        return {
-            request: false,
-            response: false
-        };
     }
 }

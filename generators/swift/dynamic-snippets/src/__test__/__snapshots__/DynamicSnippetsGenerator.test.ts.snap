@@ -465,53 +465,6 @@ try await main()
 "
 `;
 
-exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient(baseURL: "https://api.example.com")
-
-    try await client.createUser(request: User(
-        password: "password",
-        profile: UserProfile(
-            name: "name",
-            verification: UserProfileVerification(
-
-            ),
-            ssn: "ssn"
-        )
-    ))
-}
-
-try await main()
-"
-`;
-
-exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient(baseURL: "https://api.example.com")
-
-    try await client.createUser(request: User(
-        id: "id",
-        password: "password",
-        profile: UserProfile(
-            name: "name",
-            verification: UserProfileVerification(
-
-            ),
-            ssn: "ssn"
-        )
-    ))
-}
-
-try await main()
-"
-`;
-
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "import Foundation
 import Acme

@@ -1,8 +1,8 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ObjectPropertyAccess } from "@fern-api/dynamic-ir-sdk/api";
 import { ts } from "@fern-api/typescript-ast";
+
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 const UNION_VALUE_KEY = "value";
@@ -12,17 +12,11 @@ export declare namespace DynamicTypeLiteralMapper {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: ConvertedAs;
-        convertOpts?: ConvertOpts;
     }
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
     type ConvertedAs = "key";
-
-    export type ConvertOpts = {
-        isForRequest?: boolean;
-        isForResponse?: boolean;
-    };
 }
 
 export class DynamicTypeLiteralMapper {
@@ -33,7 +27,6 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): ts.TypeLiteral {
-        const convertOpts = args.convertOpts;
         // eslint-disable-next-line eqeqeq
         if (args.value === null) {
             if (this.context.isNullable(args.typeReference)) {
@@ -50,43 +43,28 @@ export class DynamicTypeLiteralMapper {
         }
         switch (args.typeReference.type) {
             case "list":
-                return this.convertList({ list: args.typeReference.value, value: args.value, convertOpts });
+                return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal":
-                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value, convertOpts });
+                return this.convertLiteral({ literalType: args.typeReference.value, value: args.value });
             case "map":
-                return this.convertMap({ map: args.typeReference, value: args.value, convertOpts });
+                return this.convertMap({ map: args.typeReference, value: args.value });
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
                     return ts.TypeLiteral.nop();
                 }
-                return this.convertNamed({ named, value: args.value, as: args.as, convertOpts });
+                return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "optional":
-                return this.convert({
-                    typeReference: args.typeReference.value,
-                    value: args.value,
-                    as: args.as,
-                    convertOpts
-                });
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "nullable":
-                return this.convert({
-                    typeReference: args.typeReference.value,
-                    value: args.value,
-                    as: args.as,
-                    convertOpts
-                });
+                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
-                return this.convertPrimitive({
-                    primitive: args.typeReference.value,
-                    value: args.value,
-                    as: args.as,
-                    convertOpts
-                });
+                return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                return this.convertSet({ set: args.typeReference.value, value: args.value, convertOpts });
+                return this.convertSet({ set: args.typeReference.value, value: args.value });
             case "unknown":
-                return this.convertUnknown({ value: args.value, convertOpts });
+                return this.convertUnknown({ value: args.value });
             default:
                 assertNever(args.typeReference);
         }
@@ -98,7 +76,6 @@ export class DynamicTypeLiteralMapper {
     }: {
         literalType: FernIr.dynamic.LiteralType;
         value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral {
         switch (literalType.type) {
             case "boolean": {
@@ -120,15 +97,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertList({
-        list,
-        value,
-        convertOpts
-    }: {
-        list: FernIr.dynamic.TypeReference;
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): ts.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -140,7 +109,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: list, value: v, convertOpts });
+                    return this.convert({ typeReference: list, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -148,15 +117,7 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertSet({
-        set,
-        value,
-        convertOpts
-    }: {
-        set: FernIr.dynamic.TypeReference;
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): ts.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -168,7 +129,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v, convertOpts });
+                    return this.convert({ typeReference: set, value: v });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -176,15 +137,7 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertMap({
-        map,
-        value,
-        convertOpts
-    }: {
-        map: FernIr.dynamic.MapType;
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): ts.TypeLiteral {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -197,8 +150,8 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key);
                 try {
                     return {
-                        key: this.convert({ typeReference: map.key, value: key, as: "key", convertOpts }),
-                        value: this.convert({ typeReference: map.value, value, convertOpts })
+                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
+                        value: this.convert({ typeReference: map.value, value })
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -210,13 +163,11 @@ export class DynamicTypeLiteralMapper {
     private convertNamed({
         named,
         value,
-        as,
-        convertOpts
+        as
     }: {
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral {
         switch (named.type) {
             case "alias": {
@@ -233,27 +184,24 @@ export class DynamicTypeLiteralMapper {
                                 })
                             );
                             writer.write("(");
-                            writer.writeNode(
-                                this.convert({ typeReference: named.typeReference, value, as, convertOpts })
-                            );
+                            writer.writeNode(this.convert({ typeReference: named.typeReference, value, as }));
                             writer.write(")");
                         })
                     );
                 }
-                return this.convert({ typeReference: named.typeReference, value, as, convertOpts });
+                return this.convert({ typeReference: named.typeReference, value, as });
             }
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
-                    value,
-                    convertOpts
+                    value
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value, convertOpts });
+                return this.convertEnum({ enum_: named, value });
             case "object":
-                return this.convertObject({ object_: named, value, convertOpts });
+                return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, convertOpts });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
         }
@@ -261,12 +209,10 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnion({
         discriminatedUnion,
-        value,
-        convertOpts
+        value
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
             discriminatedUnion,
@@ -278,8 +224,7 @@ export class DynamicTypeLiteralMapper {
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionProperties = this.convertDiscriminatedUnionProperties({
             discriminatedUnionTypeInstance,
-            unionVariant,
-            convertOpts
+            unionVariant
         });
         if (unionProperties == null) {
             return ts.TypeLiteral.nop();
@@ -300,8 +245,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: this.convertDiscriminatedUnionUtilsArgs({
                                 discriminatedUnionTypeInstance,
                                 unionVariant,
-                                unionProperties,
-                                convertOpts
+                                unionProperties
                             })
                         })
                     );
@@ -319,12 +263,10 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnionProperties({
         discriminatedUnionTypeInstance,
-        unionVariant,
-        convertOpts
+        unionVariant
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.ObjectField[] | undefined {
         const baseFields = this.getBaseFields({
             discriminatedUnionTypeInstance,
@@ -338,11 +280,7 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return undefined;
                 }
-                const converted = this.convertNamed({
-                    named,
-                    value: discriminatedUnionTypeInstance.value,
-                    convertOpts
-                });
+                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
                 if (!converted.isObject()) {
                     this.context.errors.add({
                         severity: Severity.Critical,
@@ -364,8 +302,7 @@ export class DynamicTypeLiteralMapper {
                                 name: UNION_VALUE_KEY,
                                 value: this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: discriminatedUnionTypeInstance.value,
-                                    convertOpts
+                                    value: discriminatedUnionTypeInstance.value
                                 })
                             }
                         ];
@@ -376,8 +313,7 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue],
-                                convertOpts
+                                value: record[unionVariant.discriminantValue.wireValue]
                             })
                         }
                     ];
@@ -395,13 +331,11 @@ export class DynamicTypeLiteralMapper {
     private convertDiscriminatedUnionUtilsArgs({
         discriminatedUnionTypeInstance,
         unionVariant,
-        unionProperties,
-        convertOpts
+        unionProperties
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
         unionProperties: ts.ObjectField[];
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.AstNode[] {
         if (unionVariant.type === "singleProperty") {
             const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
@@ -410,8 +344,7 @@ export class DynamicTypeLiteralMapper {
                 return [
                     this.convert({
                         typeReference: unionVariant.typeReference,
-                        value: discriminatedUnionTypeInstance.value,
-                        convertOpts
+                        value: discriminatedUnionTypeInstance.value
                     })
                 ];
             }
@@ -421,12 +354,10 @@ export class DynamicTypeLiteralMapper {
 
     private getBaseFields({
         discriminatedUnionTypeInstance,
-        singleDiscriminatedUnionType,
-        convertOpts
+        singleDiscriminatedUnionType
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.ObjectField[] {
         const properties = this.context.associateByWireValue({
             parameters: singleDiscriminatedUnionType.properties ?? [],
@@ -441,7 +372,7 @@ export class DynamicTypeLiteralMapper {
             try {
                 return {
                     name: this.context.getPropertyName(property.name.name),
-                    value: this.convert({ ...property, convertOpts })
+                    value: this.convert(property)
                 };
             } finally {
                 this.context.errors.unscope();
@@ -449,17 +380,9 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertObject({
-        object_,
-        value,
-        convertOpts
-    }: {
-        object_: FernIr.dynamic.ObjectType;
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): ts.TypeLiteral {
         const properties = this.context.associateByWireValue({
-            parameters: this.filterReadWriteProperties(object_.properties, convertOpts),
+            parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
         return ts.TypeLiteral.object({
@@ -468,7 +391,7 @@ export class DynamicTypeLiteralMapper {
                 try {
                     return {
                         name: this.context.getPropertyName(property.name.name),
-                        value: this.convert({ ...property, convertOpts })
+                        value: this.convert(property)
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -477,33 +400,7 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private filterReadWriteProperties(
-        properties: FernIr.dynamic.NamedParameter[],
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts
-    ): FernIr.dynamic.NamedParameter[] {
-        if (this.context.customConfig?.experimentalGenerateReadWriteOnlyTypes !== true) {
-            return properties;
-        }
-        if (typeof convertOpts === "undefined") {
-            return properties;
-        }
-        if (convertOpts.isForRequest) {
-            properties = properties.filter((prop) => prop.propertyAccess !== ObjectPropertyAccess.ReadOnly);
-        }
-        if (convertOpts.isForResponse) {
-            properties = properties.filter((prop) => prop.propertyAccess !== ObjectPropertyAccess.WriteOnly);
-        }
-        return properties;
-    }
-
-    private convertEnum({
-        enum_,
-        value
-    }: {
-        enum_: FernIr.dynamic.EnumType;
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): ts.TypeLiteral {
         const enumValue = this.getEnumValue({ enum_, value });
         if (enumValue == null) {
             return ts.TypeLiteral.nop();
@@ -532,17 +429,14 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
-        value,
-        convertOpts
+        value
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
-            value,
-            convertOpts
+            value
         });
         if (result == null) {
             return ts.TypeLiteral.nop();
@@ -552,16 +446,14 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
-        value,
-        convertOpts
+        value
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value, convertOpts });
+                return this.convert({ typeReference, value });
             } catch (e) {
                 continue;
             }
@@ -573,26 +465,18 @@ export class DynamicTypeLiteralMapper {
         return undefined;
     }
 
-    private convertUnknown({
-        value,
-        convertOpts
-    }: {
-        value: unknown;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
-    }): ts.TypeLiteral {
+    private convertUnknown({ value }: { value: unknown }): ts.TypeLiteral {
         return ts.TypeLiteral.unknown(value);
     }
 
     private convertPrimitive({
         primitive,
         value,
-        as,
-        convertOpts
+        as
     }: {
         primitive: FernIr.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
-        convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral {
         switch (primitive) {
             case "INTEGER":

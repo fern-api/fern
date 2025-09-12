@@ -667,69 +667,6 @@ func do() {
 "
 `;
 
-exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	client.CreateUser(
-		context.TODO(),
-		&acme.User{
-			Password: "password",
-			Profile: &acme.UserProfile{
-				Name:         "name",
-				Verification: &acme.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
-	)
-}
-"
-`;
-
-exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	client.CreateUser(
-		context.TODO(),
-		&acme.User{
-			ID:       "id",
-			Password: "password",
-			Profile: &acme.UserProfile{
-				Name:         "name",
-				Verification: &acme.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
-	)
-}
-"
-`;
-
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "package example
 
@@ -1488,69 +1425,6 @@ func do() {
 				),
 			},
 			Tags: []*string{},
-		},
-	)
-}
-"
-`;
-
-exports[`snippets (exportedClientName) > read-write-only > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	client.CreateUser(
-		context.TODO(),
-		&acme.User{
-			Password: "password",
-			Profile: &acme.UserProfile{
-				Name:         "name",
-				Verification: &acme.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
-	)
-}
-"
-`;
-
-exports[`snippets (exportedClientName) > read-write-only > 'Readonly value in request' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	client.CreateUser(
-		context.TODO(),
-		&acme.User{
-			ID:       "id",
-			Password: "password",
-			Profile: &acme.UserProfile{
-				Name:         "name",
-				Verification: &acme.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
 		},
 	)
 }

@@ -2,7 +2,6 @@ import {
     DeclaredTypeName,
     ExampleTypeReference,
     ResolvedTypeReference,
-    Type,
     TypeDeclaration,
     TypeId,
     TypeReference
@@ -38,8 +37,4 @@ export interface TypeContext {
     isOptional: (typeReference: TypeReference) => boolean;
     isLiteral: (typeReference: TypeReference) => boolean;
     hasDefaultValue: (typeReference: TypeReference) => boolean;
-    needsRequestResponseTypeVariant: (typeReference: TypeReference) => { request: boolean; response: boolean };
-    needsRequestResponseTypeVariantById: (typeId: TypeId) => { request: boolean; response: boolean };
-    needsRequestResponseTypeVariantByType(type: Type): { request: boolean; response: boolean };
-    typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference;
 }

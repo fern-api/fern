@@ -56,4 +56,3 @@ allowedFailures:
   - reserved-keywords
   - trace
   - request-parameters
-  - property-access

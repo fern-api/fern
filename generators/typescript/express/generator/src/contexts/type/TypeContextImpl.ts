@@ -1,4 +1,3 @@
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
@@ -16,6 +15,7 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
+
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
@@ -35,7 +35,6 @@ export declare namespace TypeContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -68,8 +67,7 @@ export class TypeContextImpl implements TypeContext {
         enableInlineTypes,
         allowExtraFields,
         omitUndefined,
-        context,
-        generateReadWriteOnlyTypes
+        context
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -91,8 +89,7 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             context,
@@ -101,8 +98,7 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
     }
 
@@ -131,24 +127,9 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public generateForInlineUnion(typeName: DeclaredTypeName): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
+    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
         const generatedType = this.getGeneratedType(typeName);
         return generatedType.generateForInlineUnion(this.context);
-    }
-
-    public typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference {
-        return TypeReference.named({
-            default: undefined,
-            displayName: typeName.displayName,
-            fernFilepath: typeName.fernFilepath,
-            inline: undefined,
-            name: typeName.name,
-            typeId: typeName.typeId
-        });
     }
 
     public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
@@ -308,26 +289,5 @@ export class TypeContextImpl implements TypeContext {
             default:
                 return false;
         }
-    }
-
-    public needsRequestResponseTypeVariant(): { request: boolean; response: boolean } {
-        return {
-            request: false,
-            response: false
-        };
-    }
-
-    public needsRequestResponseTypeVariantById(): { request: boolean; response: boolean } {
-        return {
-            request: false,
-            response: false
-        };
-    }
-
-    public needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean } {
-        return {
-            request: false,
-            response: false
-        };
     }
 }

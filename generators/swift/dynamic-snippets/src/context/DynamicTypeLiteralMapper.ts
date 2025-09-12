@@ -155,7 +155,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): swift.Expression {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
-            discriminatedUnion: discriminatedUnion,
+            discriminatedUnion,
             value
         });
         if (discriminatedUnionTypeInstance == null) {

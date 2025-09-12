@@ -10,6 +10,4 @@ export interface GetReferenceOpts {
     isForTypeDeclarationComment?: boolean;
     isForComment?: boolean;
     isForSnippet?: boolean;
-    isForRequest?: boolean;
-    isForResponse?: boolean;
 }

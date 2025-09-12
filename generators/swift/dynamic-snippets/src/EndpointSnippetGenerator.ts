@@ -21,7 +21,7 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
-        options?: Options;
+        options: Options;
     }): Promise<string> {
         return this.buildCodeBlock({ endpoint, snippetRequest: request, options });
     }
@@ -33,7 +33,7 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
-        options?: Options;
+        options: Options;
     }): string {
         return this.buildCodeBlock({ endpoint, snippetRequest: request, options });
     }
@@ -45,7 +45,7 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippetRequest: FernIr.dynamic.EndpointSnippetRequest;
-        options?: Options;
+        options: Options;
     }) {
         const fileComponents: swift.FileComponent[] = [
             this.generateImportFoundationStatement(),
@@ -189,7 +189,7 @@ export class EndpointSnippetGenerator {
                 if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth: auth, values }).message
+                        message: this.context.newAuthMismatchError({ auth, values }).message
                     });
                     return args;
                 }
@@ -454,7 +454,7 @@ export class EndpointSnippetGenerator {
         value: unknown;
     }): swift.FunctionArgument[] {
         const bodyProperties = this.context.associateByWireValue({
-            parameters: parameters,
+            parameters,
             values: this.context.getRecord(value) ?? {}
         });
         return bodyProperties.map((parameter) =>

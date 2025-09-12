@@ -1,7 +1,7 @@
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {
@@ -23,49 +23,25 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
         this.enableInlineTypes = enableInlineTypes;
     }
 
-    public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
-        return context.type.needsRequestResponseTypeVariantById(this.extended.typeId);
-    }
-
-    public generateForInlineUnion(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
             return type.generateForInlineUnion(context);
         }
-        const reference = context.type.getReferenceToType(context.type.typeNameToTypeReference(this.extended));
-        return {
-            typeNode: reference.typeNode,
-            requestTypeNode: reference.requestTypeNode,
-            responseTypeNode: reference.responseTypeNode
-        };
+        return context.type.getReferenceToNamedType(this.extended).getTypeNode();
     }
 
-    public getExtendsForInterface(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    }[] {
+    public getExtendsForInterface(context: Context): ts.TypeNode[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             // inline types don't inherit the properties from the interface, but have the properties directly on the parent interface
             return [];
         }
-
-        return [context.type.getReferenceToType(context.type.typeNameToTypeReference(this.extended))];
+        return [context.type.getReferenceToNamedType(this.extended).getTypeNode()];
     }
 
-    public getDiscriminantPropertiesForInterface(context: Context): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
         const typeDeclaration = context.type.getTypeDeclaration(this.extended);
         if (this.enableInlineTypes && typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name);
@@ -88,13 +64,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
         return type.generateModule(context);
     }
 
-    public getNonDiscriminantPropertiesForInterface(): {
-        property: PropertySignatureStructure;
-        requestProperty: PropertySignatureStructure | undefined;
-        responseProperty: PropertySignatureStructure | undefined;
-        isReadonly: boolean;
-        isWriteonly: boolean;
-    }[] {
+    public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
         return [];
     }
 
