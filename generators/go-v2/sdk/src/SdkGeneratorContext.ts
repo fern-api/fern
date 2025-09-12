@@ -56,7 +56,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getInternalAsIsFiles(): string[] {
-        return [AsIsFiles.ErrorCodes];
+        return [AsIsFiles.ErrorDecoder];
     }
 
     public getTestAsIsFiles(): string[] {
