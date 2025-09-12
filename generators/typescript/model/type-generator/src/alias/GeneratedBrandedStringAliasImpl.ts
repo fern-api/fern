@@ -33,9 +33,17 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
         return [this.generateTypeAliasStructure(context), this.generateBuilderFunction(context)];
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         const type = writerToString(this.generateTypeAliasStructure(context).type);
-        return ts.factory.createTypeReferenceNode(type);
+        return {
+            typeNode: ts.factory.createTypeReferenceNode(type),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        };
     }
 
     public generateModule(): ModuleDeclarationStructure | undefined {
@@ -75,7 +83,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
             ),
             isExported: true
         };
-        maybeAddDocsStructure(typeAlias, this.getDocs(context));
+        maybeAddDocsStructure(typeAlias, this.getDocs({ context }));
         return typeAlias;
     }
 

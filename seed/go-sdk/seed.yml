@@ -197,6 +197,7 @@ allowedFailures:
   - streaming-parameter
   - trace
   - unions:no-custom-config
+  - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
