@@ -127,7 +127,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Id"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -155,7 +156,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -186,7 +188,8 @@
                             "type": "named",
                             "value": "type_user:User"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -284,7 +287,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -382,7 +386,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Id"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -410,7 +415,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -438,7 +444,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "INTEGER"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -575,7 +582,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Id"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -603,7 +611,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -778,7 +787,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Id"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -805,7 +815,8 @@
                     },
                     "typeReference": {
                         "type": "unknown"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1066,7 +1077,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],
@@ -1326,7 +1338,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],
@@ -1659,7 +1672,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Id"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],

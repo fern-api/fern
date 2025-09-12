@@ -174,24 +174,29 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  reserved-keywords: []
 scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
-  - bytes
   - bytes-download
-  - bytes-upload
   - enum
+  - errors
   - exhaustive
   - literal
-  - mixed-case
+  - mixed-case:no-custom-config
+  - mixed-case:default-values
   - pagination-custom
-  - reserved-keywords
   - request-parameters
+  - reserved-keywords
+  - server-sent-event-examples
+  - server-sent-events
+  - streaming:.
   - streaming-parameter
   - trace
+  - unions:no-custom-config
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination

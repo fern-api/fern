@@ -7,7 +7,7 @@ import { SeedErrorPropertyClient } from "../../src/Client";
 import * as SeedErrorProperty from "../../src/api/index";
 
 describe("PropertyBasedError", () => {
-    test("ThrowError (34d92e75)", async () => {
+    test("ThrowError (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
 
@@ -24,7 +24,7 @@ describe("PropertyBasedError", () => {
         expect(response).toEqual("string");
     });
 
-    test("ThrowError (3382c84f)", async () => {
+    test("ThrowError (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
 

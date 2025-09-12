@@ -81002,7 +81002,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "additionalProperties": false,

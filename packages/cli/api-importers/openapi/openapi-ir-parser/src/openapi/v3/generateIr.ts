@@ -66,13 +66,15 @@ export function generateIr({
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
-        Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
-            if (convertedSecurityScheme == null) {
-                return [];
-            }
-            return [key, convertSecurityScheme(securityScheme, source)];
-        })
+        Object.entries(openApi.components?.securitySchemes ?? {})
+            .map(([key, securityScheme]) => {
+                const convertedSecurityScheme = convertSecurityScheme(securityScheme, source, taskContext);
+                if (convertedSecurityScheme == null) {
+                    return null;
+                }
+                return [key, convertedSecurityScheme];
+            })
+            .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
     const authHeaders = new Set(
         ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
@@ -368,7 +370,9 @@ export function generateIr({
                 return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
             })
         ),
-        servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        servers: (openApi.servers ?? []).map((server) =>
+            convertServer(server, { groupMultiApiEnvironments: options.groupMultiApiEnvironments })
+        ),
         websocketServers: [],
         tags: {
             tagsById: Object.fromEntries(

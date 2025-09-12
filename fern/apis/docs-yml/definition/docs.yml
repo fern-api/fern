@@ -13,6 +13,8 @@ types:
       - go
       - ruby
       - csharp
+      - php
+      - swift
       - nodets
       - nodejs
       - dotnet
@@ -267,6 +269,21 @@ types:
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
 
+  Availability:
+    enum:
+      - name: Stable
+        value: stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - name: Deprecated
+        value: deprecated
+      - name: Beta
+        value: beta
+
   VersionAvailability:
     enum:
       - deprecated # TODO: should we support `legacy`?
@@ -424,6 +441,18 @@ types:
         docs: |
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
+
+      hide-nav-links:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter.
+
+      hide-feedback:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
   SearchbarPlacement:
     enum:
@@ -584,6 +613,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       noindex: optional<boolean>
+      availability: optional<Availability>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -609,6 +639,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -636,6 +667,7 @@ types:
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       skip-slug: optional<boolean>
       alphabetized:
         type: optional<boolean>
@@ -755,6 +787,8 @@ types:
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
       csharp: optional<SnippetLanguageConfiguration>
+      php: optional<SnippetLanguageConfiguration>
+      swift: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:

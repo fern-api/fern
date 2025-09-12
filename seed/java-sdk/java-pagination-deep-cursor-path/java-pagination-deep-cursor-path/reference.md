@@ -80,9 +80,7 @@ client.deepCursorPath().doThingRequired(
             IndirectionRequired
                 .builder()
                 .results(
-                    new ArrayList<String>(
-                        Arrays.asList("results", "results")
-                    )
+                    Arrays.asList("results", "results")
                 )
                 .startingAfter("starting_after")
                 .build()

@@ -26,34 +26,26 @@ client.user().getUsername(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )
         .userList(
-            new ArrayList<User>(
-                Arrays.asList(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build(),
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build()
-                )
+            Arrays.asList(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build(),
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build()
             )
         )
         .keyValue(
@@ -70,33 +62,25 @@ client.user().getUsername(
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
                 .build()
         )
         .excludeUser(
-            new ArrayList<User>(
-                Arrays.asList(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build()
-                )
+            Arrays.asList(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build()
             )
         )
         .filter(
-            new ArrayList<String>(
-                Arrays.asList("filter")
-            )
+            Arrays.asList("filter")
         )
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .optionalString("optionalString")
@@ -105,9 +89,7 @@ client.user().getUsername(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )

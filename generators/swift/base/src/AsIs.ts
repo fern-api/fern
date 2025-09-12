@@ -60,6 +60,11 @@ const AsIsFileSpecs = {
     },
 
     // Core
+    CalendarDate: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "CalendarDate",
+        symbolNames: ["CalendarDate"]
+    },
     StringPlusUrlEncoding: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "String+URLEncoding"

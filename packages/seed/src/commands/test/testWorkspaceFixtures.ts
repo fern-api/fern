@@ -78,10 +78,12 @@ export async function testGenerator({
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
         );
         if (unexpectedFixtures.length > 0) {
-            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
+            CONSOLE_LOGGER.info(
+                `❌ THERE WERE UNEXPECTED TEST CASE FAILURES: Of the ${failedFixtures.length} failed fixtures, ${unexpectedFixtures.length} were unexpected failures, including: ${unexpectedFixtures.join(", ")}.`
+            );
             return false;
         } else {
-            CONSOLE_LOGGER.info("All failures were expected.");
+            CONSOLE_LOGGER.info("✅ All failed fixtures were expected failures.");
         }
     }
     return true;

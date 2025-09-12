@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "balance",
+    "currency",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

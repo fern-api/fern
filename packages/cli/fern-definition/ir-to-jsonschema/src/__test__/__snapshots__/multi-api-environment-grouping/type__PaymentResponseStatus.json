@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "accepted",
+    "rejected"
+  ],
+  "definitions": {}
+}

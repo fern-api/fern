@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"math/big"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -105,7 +106,7 @@ func (r *Retrier) run(
 	if r.shouldRetry(response) {
 		defer response.Body.Close()
 
-		delay, err := r.retryDelay(retryAttempt)
+		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {
 			return nil, err
 		}
@@ -117,7 +118,7 @@ func (r *Retrier) run(
 			request,
 			errorDecoder,
 			maxRetryAttempts,
-			retryAttempt+1,
+			retryAttempt + 1,
 			decodeError(response, errorDecoder),
 		)
 	}
@@ -133,17 +134,66 @@ func (r *Retrier) shouldRetry(response *http.Response) bool {
 		response.StatusCode >= http.StatusInternalServerError
 }
 
-// retryDelay calculates the delay time in milliseconds based on the retry attempt.
-func (r *Retrier) retryDelay(retryAttempt uint) (time.Duration, error) {
-	// Apply exponential backoff.
-	delay := minRetryDelay + minRetryDelay*time.Duration(retryAttempt*retryAttempt)
+// retryDelay calculates the delay time based on response headers,
+// falling back to exponential backoff if no headers are present.
+func (r *Retrier) retryDelay(response *http.Response, retryAttempt uint) (time.Duration, error) {
+	// Check for Retry-After header first (RFC 7231)
+	if retryAfter := response.Header.Get("Retry-After"); retryAfter != "" {
+		// Parse as number of seconds...
+		if seconds, err := strconv.Atoi(retryAfter); err == nil {
+			delay := time.Duration(seconds) * time.Second
+			if delay > maxRetryDelay {
+				delay = maxRetryDelay
+			}
+			return r.addJitter(delay)
+		}
 
-	// Do not allow the number to exceed maxRetryDelay.
+		// ...or as an HTTP date; both are valid
+		if retryTime, err := time.Parse(time.RFC1123, retryAfter); err == nil {
+			delay := time.Until(retryTime)
+			if delay < 0 {
+				delay = 0
+			}
+			if delay > maxRetryDelay {
+				delay = maxRetryDelay
+			}
+			return r.addJitter(delay)
+		}
+	}
+
+	// Then check for industry-standard X-RateLimit-Reset header
+	if rateLimitReset := response.Header.Get("X-RateLimit-Reset"); rateLimitReset != "" {
+		if resetTimestamp, err := strconv.ParseInt(rateLimitReset, 10, 64); err == nil {
+			// Assume Unix timestamp in seconds
+			resetTime := time.Unix(resetTimestamp, 0)
+			delay := time.Until(resetTime)
+			if delay > 0 {
+				if delay > maxRetryDelay {
+					delay = maxRetryDelay
+				}
+				return r.addJitter(delay)
+			}
+		}
+	}
+
+	// Fall back to exponential backoff
+	return r.exponentialBackoffDelay(retryAttempt)
+}
+
+// exponentialBackoffDelay calculates the delay time in milliseconds based on the retry attempt.
+func (r *Retrier) exponentialBackoffDelay(retryAttempt uint) (time.Duration, error) {
+	// Apply exponential backoff.
+	delay := minRetryDelay + minRetryDelay * time.Duration(retryAttempt * retryAttempt)
 	if delay > maxRetryDelay {
 		delay = maxRetryDelay
 	}
 
-	// Apply some jitter by randomizing the value in the range of 75%-100%.
+	return r.addJitter(delay)
+}
+
+// addJitter applies jitter to the given delay by randomizing the value
+// in the range of 75%-100%.
+func (r *Retrier) addJitter(delay time.Duration) (time.Duration, error) {
 	max := big.NewInt(int64(delay / 4))
 	jitter, err := rand.Int(rand.Reader, max)
 	if err != nil {
@@ -151,8 +201,6 @@ func (r *Retrier) retryDelay(retryAttempt uint) (time.Duration, error) {
 	}
 
 	delay -= time.Duration(jitter.Int64())
-
-	// Never sleep less than the base sleep seconds.
 	if delay < minRetryDelay {
 		delay = minRetryDelay
 	}

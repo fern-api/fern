@@ -21,6 +21,8 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         contentAlignment: core.serialization.property("content-alignment", ContentAlignment.optional()),
         headerPosition: core.serialization.property("header-position", HeaderPosition.optional()),
         disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
+        hideNavLinks: core.serialization.property("hide-nav-links", core.serialization.boolean().optional()),
+        hideFeedback: core.serialization.property("hide-feedback", core.serialization.boolean().optional()),
     });
 
 export declare namespace LayoutConfig {
@@ -34,5 +36,7 @@ export declare namespace LayoutConfig {
         "content-alignment"?: ContentAlignment.Raw | null;
         "header-position"?: HeaderPosition.Raw | null;
         "disable-header"?: boolean | null;
+        "hide-nav-links"?: boolean | null;
+        "hide-feedback"?: boolean | null;
     }
 }

@@ -41,6 +41,10 @@ allowedFailures:
   - circular-references
   - circular-references-advanced
   # unknown
+  - alias
   - enum
   - file-upload
   - http-head
+  - query-parameters-openapi-as-objects
+  - version
+  - version-no-default

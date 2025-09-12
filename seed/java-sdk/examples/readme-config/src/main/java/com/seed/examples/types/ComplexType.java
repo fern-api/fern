@@ -3,24 +3,90 @@
  */
 package com.seed.examples.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ComplexType {
-    OBJECT("object"),
+public final class ComplexType {
+    public static final ComplexType UNION = new ComplexType(Value.UNION, "union");
 
-    UNION("union"),
+    public static final ComplexType UNKNOWN = new ComplexType(Value.UNKNOWN, "unknown");
 
-    UNKNOWN("unknown");
+    public static final ComplexType OBJECT = new ComplexType(Value.OBJECT, "object");
 
-    private final String value;
+    private final Value value;
 
-    ComplexType(String value) {
+    private final String string;
+
+    ComplexType(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof ComplexType && this.string.equals(((ComplexType) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case UNION:
+                return visitor.visitUnion();
+            case UNKNOWN:
+                return visitor.visitUnknown();
+            case OBJECT:
+                return visitor.visitObject();
+            case _UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ComplexType valueOf(String value) {
+        switch (value) {
+            case "union":
+                return UNION;
+            case "unknown":
+                return UNKNOWN;
+            case "object":
+                return OBJECT;
+            default:
+                return new ComplexType(Value._UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        OBJECT,
+
+        UNION,
+
+        UNKNOWN,
+
+        _UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitObject();
+
+        T visitUnion();
+
+        T visitUnknown();
+
+        T visitUnknown(String unknownType);
     }
 }

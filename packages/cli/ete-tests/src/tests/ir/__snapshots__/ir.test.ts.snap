@@ -1308,7 +1308,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_commons:AppId"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1336,7 +1337,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -1505,7 +1507,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_commons:AppId"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -2324,7 +2327,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "type": "file",
@@ -2399,7 +2403,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "INTEGER"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -12548,7 +12553,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                     "value": "type_nested:Product"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -12648,7 +12654,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "value": {
                                 "type": "unknown"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -13999,7 +14006,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_:RootString"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -14027,7 +14035,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_package:PackageString"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -16932,7 +16941,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17030,7 +17040,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -17128,7 +17139,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -17156,7 +17168,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_service:Movie"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -19107,7 +19120,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -19204,7 +19218,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         "typeReference": {
                             "type": "unknown"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -19240,7 +19255,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "endpoints": {
@@ -19358,7 +19374,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                 "typeReference": {
                     "type": "primitive",
                     "value": "STRING"
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "environments": null,
@@ -23077,7 +23094,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -23246,7 +23264,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -23277,7 +23296,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "type": "primitive",
                                 "value": "DOUBLE"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -23313,7 +23333,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "endpoints": {
@@ -23431,7 +23452,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                 "typeReference": {
                     "type": "primitive",
                     "value": "STRING"
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "environments": null,
@@ -38004,7 +38026,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -38102,7 +38125,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -38294,7 +38318,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -38322,7 +38347,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_director:Age"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -38852,7 +38878,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_imdb:MovieId"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -38880,7 +38907,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -38908,7 +38936,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -39006,7 +39035,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -39037,7 +39067,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "type": "primitive",
                                 "value": "DOUBLE"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -39135,7 +39166,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "named",
                             "value": "type_director:Director"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -39503,7 +39535,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         },
                         "typeReference": {
                             "type": "unknown"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -39601,7 +39634,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -39632,7 +39666,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "type": "primitive",
                                 "value": "DOUBLE"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -39663,7 +39698,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "type": "named",
                                 "value": "type_imdb:RecursiveType"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -39699,7 +39735,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "type": "primitive",
                         "value": "STRING"
                     }
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "endpoints": {
@@ -40038,7 +40075,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "queryParameters": [
@@ -40071,7 +40109,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],
@@ -40185,7 +40224,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -40223,7 +40263,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "typeReference": {
                     "type": "primitive",
                     "value": "STRING"
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "environments": null,
@@ -41315,7 +41356,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "BOOLEAN"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -42678,7 +42720,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_commons:StringAlias"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -42716,7 +42759,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                 "typeReference": {
                     "type": "named",
                     "value": "type_commons:StringAlias"
-                }
+                },
+                "propertyAccess": null
             }
         ],
         "environments": null,

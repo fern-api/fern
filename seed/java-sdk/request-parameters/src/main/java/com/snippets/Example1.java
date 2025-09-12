@@ -3,7 +3,6 @@ package com.snippets;
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.resources.user.requests.CreateUsernameReferencedRequest;
 import com.seed.requestParameters.resources.user.types.CreateUsernameBody;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example1 {
@@ -17,9 +16,7 @@ public class Example1 {
             CreateUsernameReferencedRequest
                 .builder()
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .body(
                     CreateUsernameBody

@@ -11,4 +11,5 @@ export interface PageConfiguration extends FernDocsConfig.WithPermissions, FernD
     icon?: string;
     hidden?: boolean;
     noindex?: boolean;
+    availability?: FernDocsConfig.Availability;
 }

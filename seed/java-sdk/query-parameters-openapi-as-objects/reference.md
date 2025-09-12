@@ -25,20 +25,20 @@ client.search(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )
                 .build()
         )
         .userList(
-            new ArrayList<Optional<User>>(
-                Arrays.asList(
+            Arrays.asList(
+                Optional.of(
                     User
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -47,13 +47,13 @@ client.search(
             )
         )
         .excludeUser(
-            new ArrayList<Optional<User>>(
-                Arrays.asList(
+            Arrays.asList(
+                Optional.of(
                     User
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -62,9 +62,7 @@ client.search(
             )
         )
         .filter(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("filter")
-            )
+            Arrays.asList(Optional.of("filter"))
         )
         .neighborRequired(
             SearchRequestNeighborRequired.ofUser(
@@ -72,7 +70,7 @@ client.search(
                     .builder()
                     .name("name")
                     .tags(
-                        new ArrayList<String>(
+                        Optional.of(
                             Arrays.asList("tags", "tags")
                         )
                     )
@@ -95,7 +93,7 @@ client.search(
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -108,7 +106,7 @@ client.search(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )
@@ -120,7 +118,7 @@ client.search(
                     .builder()
                     .name("name")
                     .tags(
-                        new ArrayList<String>(
+                        Optional.of(
                             Arrays.asList("tags", "tags")
                         )
                     )

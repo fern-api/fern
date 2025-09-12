@@ -3,26 +3,101 @@
  */
 package com.seed.exhaustive.resources.types.enum_.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum WeatherReport {
-    SUNNY("SUNNY"),
+public final class WeatherReport {
+    public static final WeatherReport SUNNY = new WeatherReport(Value.SUNNY, "SUNNY");
 
-    CLOUDY("CLOUDY"),
+    public static final WeatherReport RAINING = new WeatherReport(Value.RAINING, "RAINING");
 
-    RAINING("RAINING"),
+    public static final WeatherReport SNOWING = new WeatherReport(Value.SNOWING, "SNOWING");
 
-    SNOWING("SNOWING");
+    public static final WeatherReport CLOUDY = new WeatherReport(Value.CLOUDY, "CLOUDY");
 
-    private final String value;
+    private final Value value;
 
-    WeatherReport(String value) {
+    private final String string;
+
+    WeatherReport(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof WeatherReport && this.string.equals(((WeatherReport) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case SUNNY:
+                return visitor.visitSunny();
+            case RAINING:
+                return visitor.visitRaining();
+            case SNOWING:
+                return visitor.visitSnowing();
+            case CLOUDY:
+                return visitor.visitCloudy();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static WeatherReport valueOf(String value) {
+        switch (value) {
+            case "SUNNY":
+                return SUNNY;
+            case "RAINING":
+                return RAINING;
+            case "SNOWING":
+                return SNOWING;
+            case "CLOUDY":
+                return CLOUDY;
+            default:
+                return new WeatherReport(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        SUNNY,
+
+        CLOUDY,
+
+        RAINING,
+
+        SNOWING,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitSunny();
+
+        T visitCloudy();
+
+        T visitRaining();
+
+        T visitSnowing();
+
+        T visitUnknown(String unknownType);
     }
 }

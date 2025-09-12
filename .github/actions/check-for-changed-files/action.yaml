@@ -1,0 +1,41 @@
+name: Check for Changed Files
+description: Run checks to look for file changes for input paths.
+
+inputs:
+  fetch_depth:
+    description: The depth to fetch the repository, helps to speed up process to have sufficient history
+    required: false
+    default: "30"
+  files:
+    description: File paths to check for changes (e.g., generators/java-sdk/**, .github/actions/cached-seed/action.yaml)
+    required: true
+
+outputs:
+  any_changed:
+    description: "Whether any files changed"
+    value: ${{ steps.check-for-changes.outputs.any_changed }}
+  all_changed_files:
+    description: "All changed files as JSON"
+    value: ${{ steps.check-for-changes.outputs.all_changed_files }}
+  only_changed:
+    description: "Only changed files"
+    value: ${{ steps.check-for-changes.outputs.only_changed }}
+  added_files:
+    description: "Added files"
+    value: ${{ steps.check-for-changes.outputs.added_files }}
+  modified_files:
+    description: "Modified files"
+    value: ${{ steps.check-for-changes.outputs.modified_files }}
+  deleted_files:
+    description: "Deleted files"
+    value: ${{ steps.check-for-changes.outputs.deleted_files }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check for changes
+      id: check-for-changes
+      uses: tj-actions/changed-files@v46
+      with:
+        fetch_depth: ${{ inputs.fetch_depth }}
+        files: ${{ inputs.files }}

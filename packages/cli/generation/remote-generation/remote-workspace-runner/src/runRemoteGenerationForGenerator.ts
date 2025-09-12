@@ -97,7 +97,9 @@ export async function runRemoteGenerationForGenerator({
             javaSdk: undefined,
             rubySdk: undefined,
             goSdk: undefined,
-            csharpSdk: undefined
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined
         },
         context: interactiveTaskContext
     });

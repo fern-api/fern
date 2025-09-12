@@ -1,3 +1,60 @@
+- version: 3.2.0
+  changelogEntry:
+    - summary: |
+        Add comprehensive request and response body validation to wire tests for Java SDKs.
+        Wire tests now validate that SDKs correctly serialize request bodies and deserialize
+        response bodies, catching regressions in JSON handling.
+      type: feat
+  createdAt: "2025-09-11"
+  irVersion: 59
+
+- version: 3.1.0
+  changelogEntry:
+    - summary: |
+        Support Maven publishTarget from IR for local filesystem SDK generation.
+      type: feat
+  createdAt: "2025-09-11"
+  irVersion: 59
+
+- version: 3.0.1
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in generated SDK snippets for collections with optional types and unknown size arrays.
+        Generated documentation (README.md and reference.md) now shows cleaner, more idiomatic Java code examples
+        using `Arrays.asList()` directly instead of unnecessary `ArrayList` wrapping.
+      type: fix
+  createdAt: "2025-09-10"
+  irVersion: 59
+
+- version: 3.0.0
+  changelogEntry:
+    - summary: |
+        The SDK generator now defaults to forward-compatible enums, providing resilience against new enum variants 
+        added on the backend. This is a breaking change that affects the structure of generated enum types.
+
+        To revert to the previous behavior with traditional Java enums, add the following configuration to your 
+        `generators.yml` file:
+        ```yaml
+        generators:
+          - name: fernapi/fern-java-sdk
+            config:
+              enable-forward-compatible-enums: false
+        ```
+      type: break
+    - summary: |
+        Forward-compatible enums are now enabled by default. Generated SDKs will no longer throw errors when 
+        encountering unknown enum variants, instead handling them gracefully with an UNKNOWN value. This is 
+        particularly important for:
+        - Mobile applications that cannot be easily updated
+        - Maintaining backward compatibility when backend adds new enum values
+        - Arrays of enum values where new variants previously caused client failures
+
+        With forward-compatible enums, the generated code changes from traditional Java enums to class-based 
+        enums that support unknown values through a visitor pattern.
+      type: feat
+  createdAt: "2025-09-09"
+  irVersion: 59
+
 - version: 2.43.3
   changelogEntry:
     - summary: |

@@ -27,6 +27,8 @@ export function getQueryParamCaseName(swiftType: swift.Type): string {
             return "double";
         case "date":
             return "date";
+        case "calendar-date":
+            return "calendarDate";
         case "array":
             // TODO(kafkas): We are assuming string array for now.
             // Revise this to support more complex query param types.
