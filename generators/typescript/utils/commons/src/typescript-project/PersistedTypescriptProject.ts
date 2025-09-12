@@ -120,7 +120,7 @@ export class PersistedTypescriptProject {
         if (this.hasBuilt) {
             return;
         }
-        
+
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
