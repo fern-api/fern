@@ -13,7 +13,7 @@ module Seed
         #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)
-          _query_param_names = ["limit"] + %i[limit]
+          _query_param_names = ["limit"]
           _query = params.slice(*_query_param_names)
           params.except(*_query_param_names)
 

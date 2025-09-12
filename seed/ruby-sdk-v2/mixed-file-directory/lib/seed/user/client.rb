@@ -12,7 +12,7 @@ module Seed
       #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)
-        _query_param_names = ["limit"] + %i[limit]
+        _query_param_names = ["limit"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

@@ -39,7 +39,7 @@ module Seed
 
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
-        _query_param_names = ["limit"] +%i[limit]
+        _query_param_names = ["limit"]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

@@ -46,7 +46,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
-          _query_param_names = ["query", "number"] +%i[query number]
+          _query_param_names = ["query", "number"]
           _query = params.slice(*_query_param_names)
           params = params.except(*_query_param_names)
 
@@ -68,7 +68,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
-          _query_param_names = ["query", "number"] +%i[query number]
+          _query_param_names = ["query", "number"]
           _query = params.slice(*_query_param_names)
           params = params.except(*_query_param_names)
 
@@ -90,7 +90,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_path_and_query(request_options: {}, **params)
-          _query_param_names = ["query"] +%i[query]
+          _query_param_names = ["query"]
           _query = params.slice(*_query_param_names)
           params = params.except(*_query_param_names)
 
@@ -112,7 +112,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_inline_path_and_query(request_options: {}, **params)
-          _query_param_names = ["query"] +%i[query]
+          _query_param_names = ["query"]
           _query = params.slice(*_query_param_names)
           params = params.except(*_query_param_names)
 
