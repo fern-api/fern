@@ -10,7 +10,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
-import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
+import { FernPostman } from "@fern-fern/postman-sdk";
 import { writeFile } from "fs/promises";
 import { startCase } from "lodash";
 import path from "path";
@@ -63,7 +63,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     ir.apiDisplayName ??
                     startCase(ir.apiName.originalName)
             });
-            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
+            const rawCollectionDefinition = FernPostman.PostmanCollectionSchema.Raw.jsonOrThrow(_collectionDefinition);
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Converted ir to postman collection");
 
@@ -163,7 +163,7 @@ async function publishCollection({
     collection
 }: {
     publishConfig: PublishConfigSchema;
-    collection: PostmanParsing.PostmanCollectionSchema.Raw;
+    collection: FernPostman.PostmanCollectionSchema.Raw;
 }) {
     // biome-ignore lint/suspicious/noConsole: allow console
     console.log("Publishing postman collection...");

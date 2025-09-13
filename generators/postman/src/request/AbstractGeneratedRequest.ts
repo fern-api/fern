@@ -7,14 +7,7 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import {
-    PostmanHeader,
-    PostmanMethod,
-    PostmanRawRequestBodyLanguage,
-    PostmanRequest,
-    PostmanRequestBodyMode,
-    PostmanUrlVariable
-} from "@fern-fern/postman-sdk/api";
+import { FernPostman } from "@fern-fern/postman-sdk";
 
 import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
 import { GeneratedRequest } from "./GeneratedRequest";
@@ -22,7 +15,7 @@ import { GeneratedRequest } from "./GeneratedRequest";
 export declare namespace AbstractGeneratedRequest {
     export interface Init {
         ir: IntermediateRepresentation;
-        authHeaders: PostmanHeader[];
+        authHeaders: FernPostman.PostmanHeader[];
         httpService: HttpService;
         httpEndpoint: HttpEndpoint;
         allTypes: TypeDeclaration[];
@@ -31,7 +24,7 @@ export declare namespace AbstractGeneratedRequest {
 
 export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     protected ir: IntermediateRepresentation;
-    protected authHeaders: PostmanHeader[];
+    protected authHeaders: FernPostman.PostmanHeader[];
     protected httpService: HttpService;
     protected httpEndpoint: HttpEndpoint;
     protected allTypes: TypeDeclaration[];
@@ -44,7 +37,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         this.allTypes = allTypes;
     }
 
-    public get(): PostmanRequest {
+    public get(): FernPostman.PostmanRequest {
         const hostArr = [getReferenceToVariable(ORIGIN_VARIABLE_NAME)];
         const pathArr = [
             ...(this.ir.basePath != null ? this.getPathArray(this.ir.basePath) : []),
@@ -76,18 +69,18 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
                 requestBody == null
                     ? undefined
                     : {
-                          mode: PostmanRequestBodyMode.Raw,
+                          mode: FernPostman.PostmanRequestBodyMode.Raw,
                           raw: JSON.stringify(requestBody, undefined, 4),
                           options: {
                               raw: {
-                                  language: PostmanRawRequestBodyLanguage.Json
+                                  language: FernPostman.PostmanRawRequestBodyLanguage.Json
                               }
                           }
                       }
         };
     }
 
-    protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): PostmanHeader {
+    protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): FernPostman.PostmanHeader {
         const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
             key: header.name.wireValue,
@@ -97,13 +90,13 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         };
     }
 
-    private convertHttpMethod(httpMethod: HttpMethod): PostmanMethod {
-        return HttpMethod._visit<PostmanMethod>(httpMethod, {
-            get: () => PostmanMethod.Get,
-            post: () => PostmanMethod.Post,
-            put: () => PostmanMethod.Put,
-            patch: () => PostmanMethod.Patch,
-            delete: () => PostmanMethod.Delete,
+    private convertHttpMethod(httpMethod: HttpMethod): FernPostman.PostmanMethod {
+        return HttpMethod._visit<FernPostman.PostmanMethod>(httpMethod, {
+            get: () => FernPostman.PostmanMethod.Get,
+            post: () => FernPostman.PostmanMethod.Post,
+            put: () => FernPostman.PostmanMethod.Put,
+            patch: () => FernPostman.PostmanMethod.Patch,
+            delete: () => FernPostman.PostmanMethod.Delete,
             _other: () => {
                 throw new Error("Unexpected httpMethod: " + httpMethod);
             }
@@ -126,8 +119,8 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         return path.split("/").filter((val) => val.length > 0 && val !== "/");
     }
 
-    protected abstract getQueryParams(): PostmanUrlVariable[];
-    protected abstract getPathParams(): PostmanUrlVariable[];
-    protected abstract getHeaders(): PostmanHeader[];
+    protected abstract getQueryParams(): FernPostman.PostmanUrlVariable[];
+    protected abstract getPathParams(): FernPostman.PostmanUrlVariable[];
+    protected abstract getHeaders(): FernPostman.PostmanHeader[];
     protected abstract getRequestBody(): unknown;
 }
