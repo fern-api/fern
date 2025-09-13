@@ -33,6 +33,7 @@ func (f *fileWriter) WriteType(
 		unionVersion:                 f.unionVersion,
 		alwaysSendRequiredProperties: f.alwaysSendRequiredProperties,
 		includeRawJSON:               includeRawJSON,
+		gettersPassByValue:           f.gettersPassByValue,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -48,6 +49,7 @@ type typeVisitor struct {
 	unionVersion                 UnionVersion
 	includeRawJSON               bool
 	alwaysSendRequiredProperties bool
+	gettersPassByValue           bool
 }
 
 // Compile-time assertion.
@@ -1105,20 +1107,94 @@ func (t *typeVisitor) visitObjectProperties(
 // typeField represent a single type field. This is used to generate getter methods for objects,
 // unions, and undiscriminated unions.
 type typeField struct {
-	Name      string
-	GoType    string
-	ZeroValue string
+	Name            string
+	GoType          string
+	ZeroValue       string
+	Optional        bool
+	NeedsDereference bool
 }
 
 func (t *typeVisitor) writeGetterMethod(receiver string, field *typeField) {
 	getterName := fmt.Sprintf("%s%s", "Get", field.Name)
-	t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return ", field.ZeroValue)
-	t.writer.P("}")
-	t.writer.P("return ", receiver, ".", field.Name)
+
+	if field.Optional && t.gettersPassByValue {
+		// For optional fields, GoType is already the correct return type (unwrapped if needed)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil || ", receiver, ".", field.Name, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		if field.NeedsDereference {
+			t.writer.P("return *", receiver, ".", field.Name)
+		} else {
+			t.writer.P("return ", receiver, ".", field.Name)
+		}
+	} else {
+		// For non-optional fields, return the value as-is
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		t.writer.P("return ", receiver, ".", field.Name)
+	}
 	t.writer.P("}")
 	t.writer.P()
+}
+
+// isOptionalOrNullableType checks if a type reference is optional or nullable
+func isOptionalOrNullableType(typeReference *ir.TypeReference) bool {
+	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// processTypeFieldForOptional handles the common logic for processing optional/nullable type fields
+// Returns the Go type, zero value, whether the field needs dereferencing, and whether the field is optional
+func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
+	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false)
+	isOptional = isOptionalOrNullableType(typeReference)
+
+	if isOptional && gettersPassByValue {
+		// Get the unwrapped type to check if it needs dereferencing
+		underlyingGoType := strings.TrimPrefix(originalGoType, "*")
+		needsDereference = strings.HasPrefix(originalGoType, "*")
+
+		// For optional fields that need dereferencing, return the unwrapped type
+		if needsDereference {
+			underlyingType := unwrapOptionalAndOrNullable(typeReference)
+			zeroValue = zeroValueForDereferencedType(underlyingType, types)
+			return underlyingGoType, zeroValue, needsDereference, isOptional
+		}
+	}
+
+	zeroValue = zeroValueForTypeReference(typeReference, types)
+	return originalGoType, zeroValue, needsDereference, isOptional
+}
+
+// unwrapOptionalAndOrNullable returns the type with one level of optional or nullable unwrapped.
+// Also handles the special case of optional<nullable<T>>.
+func unwrapOptionalAndOrNullable(typeReference *ir.TypeReference) *ir.TypeReference {
+	container := getOptionalOrNullableContainer(typeReference)
+	if container != nil {
+		// Check if this is optional<nullable<T>> pattern and unwrap both levels
+        if typeReference.Container != nil && typeReference.Container.Optional != nil {
+            innerContainer := getOptionalOrNullableContainer(typeReference.Container.Optional)
+            if innerContainer != nil {
+                return innerContainer
+            }
+        }
+		return container
+	}
+	return typeReference
+}
+
+// zeroValueForDereferencedType returns the zero value for the given type, handling
+// the special case of objects and unions that can take a default struct initialization.
+func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias == nil && typeDeclaration.Shape.Enum == nil {
+			return fmt.Sprintf("%s{}", typeDeclaration.Name.Name.PascalCase.UnsafeName)
+		}
+	}
+	return zeroValueForTypeReference(typeReference, types)
 }
 
 // getTypeFieldsForObject retrieves the type fields for the given object.
@@ -1132,10 +1208,13 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:            property.Name.Name.PascalCase.UnsafeName,
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return fields
@@ -1147,9 +1226,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:      union.Discriminant.Name.PascalCase.UnsafeName,
-			GoType:    "string",
-			ZeroValue: `""`,
+			Name:            union.Discriminant.Name.PascalCase.UnsafeName,
+			GoType:          "string",
+			ZeroValue:       `""`,
+			Optional:        false,
+			NeedsDereference: false,
 		},
 	)
 	for _, extend := range union.Extends {
@@ -1160,10 +1241,13 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:            property.Name.Name.PascalCase.UnsafeName,
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	for _, property := range union.Types {
@@ -1178,9 +1262,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
 	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 	return &typeField{
-		Name:      singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
-		GoType:    singleUnionProperty.goType,
-		ZeroValue: singleUnionProperty.zeroValue,
+		Name:            singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		GoType:          singleUnionProperty.goType,
+		ZeroValue:       singleUnionProperty.zeroValue,
+		Optional:        false, // Single union types are typically not optional
+		NeedsDereference: false,
 	}
 }
 
@@ -1190,10 +1276,13 @@ func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion 
 		if isLiteralType(member.Type, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		typeFields = append(typeFields, &typeField{
-			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
-			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
+			Name:            typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return typeFields
@@ -1457,7 +1546,6 @@ func typeReferenceToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &typeReferenceVisitor{
 		baseImportPath:   baseImportPath,
@@ -1465,7 +1553,6 @@ func typeReferenceToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -1479,7 +1566,6 @@ func containerTypeToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &containerTypeVisitor{
 		baseImportPath:   baseImportPath,
@@ -1487,7 +1573,6 @@ func containerTypeToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = containerType.Accept(visitor)
 	return visitor.value
@@ -1510,7 +1595,6 @@ func singleUnionTypePropertiesToGoType(
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
-	
 ) *singleUnionProperty {
 	visitor := &singleUnionTypePropertiesVisitor{
 		baseImportPath: baseImportPath,
@@ -1536,7 +1620,6 @@ func singleUnionTypePropertiesToInitializer(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
-	
 	baseImportPath string,
 	importPath string,
 	discriminantName string,
@@ -1549,7 +1632,6 @@ func singleUnionTypePropertiesToInitializer(
 		importPath:       importPath,
 		scope:            scope,
 		types:            types,
-		
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value

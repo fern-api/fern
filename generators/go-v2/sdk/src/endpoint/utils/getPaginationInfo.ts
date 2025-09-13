@@ -456,7 +456,7 @@ function getResponsePropertySetter({
         writer.writeNode(
             getResponsePropertyReference({
                 results: responseProperty,
-                withGetter: true
+				withGetter: context.customConfig.gettersPassByValue !== true
             })
         );
         writer.newLine();
