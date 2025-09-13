@@ -89,7 +89,7 @@ public partial class System
 
     /// <example><code>
     /// await client.CreateTaskAsync(
-    ///     new Task
+    ///     new SeedCsharpSystemCollision.Task
     ///     {
     ///         Name = "name",
     ///         User = new User
@@ -148,7 +148,7 @@ public partial class System
 
     /// <example><code>
     /// await client.EmptyResponseAsync(
-    ///     new Task
+    ///     new SeedCsharpSystemCollision.Task
     ///     {
     ///         Name = "name",
     ///         User = new User

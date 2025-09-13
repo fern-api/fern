@@ -23,7 +23,7 @@ public class Example45
                 NestedObject = new ObjectWithOptionalField{
                     String = "string",
                     Integer = 1,
-                    Long = 1000000l,
+                    Long = 1000000L,
                     Double = 1.1,
                     Bool = true,
                     Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),

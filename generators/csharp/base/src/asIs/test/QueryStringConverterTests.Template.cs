@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core;
+namespace <%= testNamespace%>.Core;
 
 [TestFixture]
 public class QueryStringConverterTests
@@ -97,7 +97,7 @@ public class QueryStringConverterTests
     [Test]
     public void ToQueryStringCollection_OnString_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(
+        var exception = Assert.Throws<global::System.Exception>(
             () => QueryStringConverter.ToForm("invalid")
         );
         Assert.That(
@@ -111,7 +111,7 @@ public class QueryStringConverterTests
     [Test]
     public void ToQueryStringCollection_OnArray_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(
+        var exception = Assert.Throws<global::System.Exception>(
             () => QueryStringConverter.ToForm(Array.Empty<object>())
         );
         Assert.That(

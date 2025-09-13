@@ -190,6 +190,6 @@ public record UnionWithLiteral
 
         public override string ToString() => Value;
 
-        public static implicit operator Fern(string value) => new(value);
+        public static implicit operator UnionWithLiteral.Fern(string value) => new(value);
     }
 }

@@ -2,7 +2,7 @@ using global::System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test.Core.Json;
+namespace SeedExamples.Test_.Core.Json;
 
 [TestFixture]
 public class JsonAccessAttributeTests

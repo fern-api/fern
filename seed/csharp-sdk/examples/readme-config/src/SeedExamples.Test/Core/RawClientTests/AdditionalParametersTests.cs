@@ -6,7 +6,7 @@ using SystemTask = global::System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 
-namespace SeedExamples.Test.Core.RawClientTests;
+namespace SeedExamples.Test_.Core.RawClientTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]

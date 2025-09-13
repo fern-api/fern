@@ -432,7 +432,8 @@ public record SubmissionResponse
 
         public override string ToString() => Value;
 
-        public static implicit operator ProblemInitialized(string value) => new(value);
+        public static implicit operator SubmissionResponse.ProblemInitialized(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -461,7 +462,9 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ServerErrored(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator SubmissionResponse.ServerErrored(
+            SeedTrace.ExceptionInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -479,8 +482,9 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CodeExecutionUpdate(SeedTrace.CodeExecutionUpdate value) =>
-            new(value);
+        public static implicit operator SubmissionResponse.CodeExecutionUpdate(
+            SeedTrace.CodeExecutionUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -498,7 +502,8 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Terminated(SeedTrace.TerminatedResponse value) =>
-            new(value);
+        public static implicit operator SubmissionResponse.Terminated(
+            SeedTrace.TerminatedResponse value
+        ) => new(value);
     }
 }

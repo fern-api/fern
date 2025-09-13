@@ -19,14 +19,14 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        var expectedObject = new Type
+        var expectedObject = new SeedValidation.Type
         {
             Decimal = 1.1,
             Even = 2,
             Name = "rules",
             Shape = Shape.Square,
         };
-        var deserializedObject = JsonUtils.Deserialize<Type>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedValidation.Type>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -41,7 +41,7 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        var actualObj = new Type
+        var actualObj = new SeedValidation.Type
         {
             Decimal = 1.1,
             Even = 2,

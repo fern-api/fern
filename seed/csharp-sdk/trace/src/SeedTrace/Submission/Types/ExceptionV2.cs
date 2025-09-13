@@ -64,14 +64,14 @@ public record ExceptionV2
     public SeedTrace.ExceptionInfo AsGeneric() =>
         IsGeneric
             ? (SeedTrace.ExceptionInfo)Value!
-            : throw new Exception("ExceptionV2.Type is not 'generic'");
+            : throw new System.Exception("ExceptionV2.Type is not 'generic'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
     public object AsTimeout() =>
-        IsTimeout ? Value! : throw new Exception("ExceptionV2.Type is not 'timeout'");
+        IsTimeout ? Value! : throw new System.Exception("ExceptionV2.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedTrace.ExceptionInfo, T> onGeneric,
@@ -215,7 +215,8 @@ public record ExceptionV2
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator ExceptionV2.Generic(SeedTrace.ExceptionInfo value) =>
+            new(value);
     }
 
     /// <summary>

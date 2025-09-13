@@ -1,3 +1,4 @@
+import { trackType } from "../utils/canonicalization";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -65,6 +66,16 @@ export class Class extends AstNode {
         primaryConstructor
     }: Class.Args) {
         super();
+
+        // ensure that we record this type so that we can find conflicts with other types.
+        this.reference = trackType(
+            new ClassReference({
+                name: name,
+                namespace: namespace,
+                enclosingType: enclosingType
+            })
+        );
+
         this.name = name;
         this.namespace = namespace;
         this.access = access;
@@ -80,11 +91,6 @@ export class Class extends AstNode {
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
         this.annotations = annotations ?? [];
-        this.reference = new ClassReference({
-            name: this.name,
-            namespace: this.namespace,
-            enclosingType: this.enclosingType
-        });
         this.primaryConstructor = primaryConstructor;
     }
 

@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(AssertCorrectnessCheck.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(typeof(AssertCorrectnessCheck.JsonConverter))]
 [Serializable]
 public record AssertCorrectnessCheck
 {
@@ -64,7 +64,7 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.DeepEqualityCorrectnessCheck AsDeepEquality() =>
         IsDeepEquality
             ? (SeedTrace.V2.V3.DeepEqualityCorrectnessCheck)Value!
-            : throw new Exception("AssertCorrectnessCheck.Type is not 'deepEquality'");
+            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'deepEquality'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult)Value!
-            : throw new Exception("AssertCorrectnessCheck.Type is not 'custom'");
+            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck, T> onDeepEquality,
@@ -147,7 +147,8 @@ public record AssertCorrectnessCheck
         new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<AssertCorrectnessCheck>
+    internal sealed class JsonConverter
+        : System.Text.Json.Serialization.JsonConverter<AssertCorrectnessCheck>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(AssertCorrectnessCheck).IsAssignableFrom(typeToConvert);
@@ -232,7 +233,7 @@ public record AssertCorrectnessCheck
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DeepEquality(
+        public static implicit operator AssertCorrectnessCheck.DeepEquality(
             SeedTrace.V2.V3.DeepEqualityCorrectnessCheck value
         ) => new(value);
     }
@@ -252,7 +253,7 @@ public record AssertCorrectnessCheck
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(
+        public static implicit operator AssertCorrectnessCheck.Custom(
             SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult value
         ) => new(value);
     }

@@ -120,14 +120,16 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'running'");
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped ? Value! : throw new Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
+        IsStopped
+            ? Value!
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -136,7 +138,7 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'errored'");
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GradedTestCaseUpdate"/> if <see cref="Type"/> is 'gradedTestCase', otherwise throws an exception.
@@ -145,7 +147,7 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.GradedTestCaseUpdate AsGradedTestCase() =>
         IsGradedTestCase
             ? (SeedTrace.GradedTestCaseUpdate)Value!
-            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'gradedTestCase'");
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'gradedTestCase'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RecordedTestCaseUpdate"/> if <see cref="Type"/> is 'recordedTestCase', otherwise throws an exception.
@@ -154,7 +156,7 @@ public record TestSubmissionUpdateInfo
     public SeedTrace.RecordedTestCaseUpdate AsRecordedTestCase() =>
         IsRecordedTestCase
             ? (SeedTrace.RecordedTestCaseUpdate)Value!
-            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'recordedTestCase'");
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'recordedTestCase'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -163,7 +165,7 @@ public record TestSubmissionUpdateInfo
     public object AsFinished() =>
         IsFinished
             ? Value!
-            : throw new Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
+            : throw new System.Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
 
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
@@ -425,8 +427,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -455,7 +458,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator TestSubmissionUpdateInfo.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -473,8 +478,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedTestCase(SeedTrace.GradedTestCaseUpdate value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.GradedTestCase(
+            SeedTrace.GradedTestCaseUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -492,8 +498,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator RecordedTestCase(SeedTrace.RecordedTestCaseUpdate value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.RecordedTestCase(
+            SeedTrace.RecordedTestCaseUpdate value
+        ) => new(value);
     }
 
     /// <summary>

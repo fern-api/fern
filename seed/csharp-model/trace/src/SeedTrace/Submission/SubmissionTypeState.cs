@@ -64,7 +64,7 @@ public record SubmissionTypeState
     public SeedTrace.TestSubmissionState AsTest() =>
         IsTest
             ? (SeedTrace.TestSubmissionState)Value!
-            : throw new Exception("SubmissionTypeState.Type is not 'test'");
+            : throw new System.Exception("SubmissionTypeState.Type is not 'test'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionState"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record SubmissionTypeState
     public SeedTrace.WorkspaceSubmissionState AsWorkspace() =>
         IsWorkspace
             ? (SeedTrace.WorkspaceSubmissionState)Value!
-            : throw new Exception("SubmissionTypeState.Type is not 'workspace'");
+            : throw new System.Exception("SubmissionTypeState.Type is not 'workspace'");
 
     public T Match<T>(
         Func<SeedTrace.TestSubmissionState, T> onTest,
@@ -226,7 +226,9 @@ public record SubmissionTypeState
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Test(SeedTrace.TestSubmissionState value) => new(value);
+        public static implicit operator SubmissionTypeState.Test(
+            SeedTrace.TestSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -244,7 +246,8 @@ public record SubmissionTypeState
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Workspace(SeedTrace.WorkspaceSubmissionState value) =>
-            new(value);
+        public static implicit operator SubmissionTypeState.Workspace(
+            SeedTrace.WorkspaceSubmissionState value
+        ) => new(value);
     }
 }

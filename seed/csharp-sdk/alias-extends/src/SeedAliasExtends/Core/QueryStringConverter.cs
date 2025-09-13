@@ -66,7 +66,7 @@ internal static class QueryStringConverter
             case JsonValueKind.False:
             case JsonValueKind.Null:
             default:
-                throw new Exception(
+                throw new global::System.Exception(
                     $"Only objects can be converted to query string collections. Given type is {json.ValueKind}."
                 );
         }

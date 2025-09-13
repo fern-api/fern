@@ -134,7 +134,7 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'running'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'ran', otherwise throws an exception.
@@ -143,7 +143,7 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.WorkspaceRunDetails AsRan() =>
         IsRan
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
@@ -152,7 +152,7 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsStopped() =>
         IsStopped
             ? Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'stopped'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -161,7 +161,7 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsTraced() =>
         IsTraced
             ? Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'traced'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'traced'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceTracedUpdate"/> if <see cref="Type"/> is 'tracedV2', otherwise throws an exception.
@@ -170,7 +170,7 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.WorkspaceTracedUpdate AsTracedV2() =>
         IsTracedV2
             ? (SeedTrace.WorkspaceTracedUpdate)Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'tracedV2'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'tracedV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -179,7 +179,7 @@ public record WorkspaceSubmissionUpdateInfo
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'errored'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
@@ -188,7 +188,7 @@ public record WorkspaceSubmissionUpdateInfo
     public object AsFinished() =>
         IsFinished
             ? Value!
-            : throw new Exception("WorkspaceSubmissionUpdateInfo.Type is not 'finished'");
+            : throw new System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'finished'");
 
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
@@ -472,8 +472,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -491,7 +492,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Ran(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Ran(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 
     /// <summary>
@@ -531,8 +534,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator TracedV2(SeedTrace.WorkspaceTracedUpdate value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.TracedV2(
+            SeedTrace.WorkspaceTracedUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -550,7 +554,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>

@@ -19,7 +19,7 @@ public class Example2
             new TestSubmissionUpdate{
                 UpdateTime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 UpdateInfo = new TestSubmissionUpdateInfo(
-
+                    new TestSubmissionUpdateInfo.Running()
                 )
             }
         );

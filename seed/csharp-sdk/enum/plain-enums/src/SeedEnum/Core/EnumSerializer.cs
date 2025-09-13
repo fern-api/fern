@@ -27,7 +27,7 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
             var stringValue =
                 attr?.Value
                 ?? value.ToString()
-                ?? throw new Exception("Unexpected null enum toString value");
+                ?? throw new global::System.Exception("Unexpected null enum toString value");
 
             _enumToString.Add(enumValue, stringValue);
             _stringToEnum.Add(stringValue, enumValue);
@@ -42,7 +42,7 @@ internal class EnumSerializer<TEnum> : JsonConverter<TEnum>
     {
         var stringValue =
             reader.GetString()
-            ?? throw new Exception("The JSON value could not be read as a string.");
+            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
         return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 

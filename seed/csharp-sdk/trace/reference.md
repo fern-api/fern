@@ -1356,11 +1356,15 @@ await client.Problem.CreateProblemAsync(
                 Language.Java,
                 new ProblemFiles
                 {
-                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-                    ReadOnlyFiles = new List<FileInfo>()
+                    SolutionFile = new SeedTrace.FileInfo
                     {
-                        new FileInfo { Filename = "filename", Contents = "contents" },
-                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        Filename = "filename",
+                        Contents = "contents",
+                    },
+                    ReadOnlyFiles = new List<SeedTrace.FileInfo>()
+                    {
+                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },
@@ -1483,11 +1487,15 @@ await client.Problem.UpdateProblemAsync(
                 Language.Java,
                 new ProblemFiles
                 {
-                    SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-                    ReadOnlyFiles = new List<FileInfo>()
+                    SolutionFile = new SeedTrace.FileInfo
                     {
-                        new FileInfo { Filename = "filename", Contents = "contents" },
-                        new FileInfo { Filename = "filename", Contents = "contents" },
+                        Filename = "filename",
+                        Contents = "contents",
+                    },
+                    ReadOnlyFiles = new List<SeedTrace.FileInfo>()
+                    {
+                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+                        new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
                     },
                 }
             },

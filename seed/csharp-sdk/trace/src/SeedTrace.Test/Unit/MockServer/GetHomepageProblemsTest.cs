@@ -2,7 +2,7 @@ using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Unit.MockServer;
+namespace SeedTrace.Test_.Unit.MockServer;
 
 [TestFixture]
 public class GetHomepageProblemsTest : BaseMockServerTest

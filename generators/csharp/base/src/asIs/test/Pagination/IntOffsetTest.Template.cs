@@ -2,7 +2,7 @@ using NUnit.Framework;
 using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core.Pagination;
+namespace <%= testNamespace%>.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
 public class IntOffsetTest

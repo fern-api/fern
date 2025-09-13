@@ -3,7 +3,7 @@ using global::System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Core.Json;
+namespace SeedTrace.Test_.Core.Json;
 
 [TestFixture]
 public class AdditionalPropertiesTests

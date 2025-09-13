@@ -241,6 +241,6 @@ public record ContainerValue
 
         public override string ToString() => Value?.ToString();
 
-        public static implicit operator Optional(FieldValue? value) => new(value);
+        public static implicit operator ContainerValue.Optional(FieldValue? value) => new(value);
     }
 }

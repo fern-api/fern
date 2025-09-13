@@ -179,7 +179,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "long": {
-                writer.write(`${this.internalType.value}l`);
+                writer.write(`${this.internalType.value}L`);
                 break;
             }
             case "uint": {

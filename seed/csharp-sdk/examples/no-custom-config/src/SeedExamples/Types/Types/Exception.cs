@@ -8,7 +8,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(Exception.JsonConverter))]
+[System.Text.Json.Serialization.JsonConverter(typeof(Exception.JsonConverter))]
 [Serializable]
 public record Exception
 {
@@ -64,14 +64,14 @@ public record Exception
     public SeedExamples.ExceptionInfo AsGeneric() =>
         IsGeneric
             ? (SeedExamples.ExceptionInfo)Value!
-            : throw new Exception("Exception.Type is not 'generic'");
+            : throw new System.Exception("Exception.Type is not 'generic'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
     public object AsTimeout() =>
-        IsTimeout ? Value! : throw new Exception("Exception.Type is not 'timeout'");
+        IsTimeout ? Value! : throw new System.Exception("Exception.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedExamples.ExceptionInfo, T> onGeneric,
@@ -140,7 +140,7 @@ public record Exception
     public static implicit operator Exception(Exception.Generic value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<Exception>
+    internal sealed class JsonConverter : System.Text.Json.Serialization.JsonConverter<Exception>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Exception).IsAssignableFrom(typeToConvert);
@@ -215,7 +215,8 @@ public record Exception
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedExamples.ExceptionInfo value) => new(value);
+        public static implicit operator Exception.Generic(SeedExamples.ExceptionInfo value) =>
+            new(value);
     }
 
     /// <summary>

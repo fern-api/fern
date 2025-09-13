@@ -94,7 +94,7 @@ public class AdditionalHeadersTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries.Count, Is.EqualTo(1));
             var headers =
-                _server.LogEntries[0].RequestMessage.Headers ?? throw new Exception(
+                _server.LogEntries[0].RequestMessage.Headers ?? throw new global::System.Exception(
                     "Headers are null"
                 );
 

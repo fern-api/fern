@@ -3,7 +3,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
+[System.Text.Json.Serialization.JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
 [Serializable]
 public readonly record struct MigrationStatus : IStringEnum
 {

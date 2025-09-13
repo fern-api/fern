@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SeedTrace;
 
-namespace SeedTrace.Test.Unit.MockServer;
+namespace SeedTrace.Test_.Unit.MockServer;
 
 [TestFixture]
 public class StoreTracedWorkspaceV2Test : BaseMockServerTest

@@ -329,7 +329,7 @@ public record DiscriminatedLiteral
 
         public override string ToString() => Value;
 
-        public static implicit operator CustomName(string value) => new(value);
+        public static implicit operator DiscriminatedLiteral.CustomName(string value) => new(value);
     }
 
     /// <summary>
@@ -347,7 +347,8 @@ public record DiscriminatedLiteral
 
         public override string ToString() => Value;
 
-        public static implicit operator DefaultName(string value) => new(value);
+        public static implicit operator DiscriminatedLiteral.DefaultName(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -365,7 +366,7 @@ public record DiscriminatedLiteral
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator George(bool value) => new(value);
+        public static implicit operator DiscriminatedLiteral.George(bool value) => new(value);
     }
 
     /// <summary>
@@ -383,6 +384,7 @@ public record DiscriminatedLiteral
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator LiteralGeorge(bool value) => new(value);
+        public static implicit operator DiscriminatedLiteral.LiteralGeorge(bool value) =>
+            new(value);
     }
 }

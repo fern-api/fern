@@ -63,7 +63,7 @@ await client.CreateUserAsync(
 
 ```csharp
 await client.CreateTaskAsync(
-    new Task
+    new SeedCsharpSystemCollision.Task
     {
         Name = "name",
         User = new User
@@ -117,7 +117,7 @@ await client.CreateTaskAsync(
 
 ```csharp
 await client.EmptyResponseAsync(
-    new Task
+    new SeedCsharpSystemCollision.Task
     {
         Name = "name",
         User = new User

@@ -376,7 +376,7 @@ public record SubmissionRequest
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator InitializeProblemRequest(
+        public static implicit operator SubmissionRequest.InitializeProblemRequest(
             SeedTrace.InitializeProblemRequest value
         ) => new(value);
     }
@@ -407,7 +407,9 @@ public record SubmissionRequest
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SubmitV2(SeedTrace.SubmitRequestV2 value) => new(value);
+        public static implicit operator SubmissionRequest.SubmitV2(
+            SeedTrace.SubmitRequestV2 value
+        ) => new(value);
     }
 
     /// <summary>
@@ -425,8 +427,9 @@ public record SubmissionRequest
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator WorkspaceSubmit(SeedTrace.WorkspaceSubmitRequest value) =>
-            new(value);
+        public static implicit operator SubmissionRequest.WorkspaceSubmit(
+            SeedTrace.WorkspaceSubmitRequest value
+        ) => new(value);
     }
 
     /// <summary>
@@ -444,6 +447,7 @@ public record SubmissionRequest
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Stop(SeedTrace.StopRequest value) => new(value);
+        public static implicit operator SubmissionRequest.Stop(SeedTrace.StopRequest value) =>
+            new(value);
     }
 }

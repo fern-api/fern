@@ -674,7 +674,7 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BuildingExecutor(
+        public static implicit operator CodeExecutionUpdate.BuildingExecutor(
             SeedTrace.BuildingExecutorResponse value
         ) => new(value);
     }
@@ -694,7 +694,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningResponse value) => new(value);
+        public static implicit operator CodeExecutionUpdate.Running(
+            SeedTrace.RunningResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -712,7 +714,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErroredResponse value) => new(value);
+        public static implicit operator CodeExecutionUpdate.Errored(
+            SeedTrace.ErroredResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -730,7 +734,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Stopped(SeedTrace.StoppedResponse value) => new(value);
+        public static implicit operator CodeExecutionUpdate.Stopped(
+            SeedTrace.StoppedResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -748,7 +754,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Graded(SeedTrace.GradedResponse value) => new(value);
+        public static implicit operator CodeExecutionUpdate.Graded(
+            SeedTrace.GradedResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -766,7 +774,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedV2(SeedTrace.GradedResponseV2 value) => new(value);
+        public static implicit operator CodeExecutionUpdate.GradedV2(
+            SeedTrace.GradedResponseV2 value
+        ) => new(value);
     }
 
     /// <summary>
@@ -784,8 +794,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator WorkspaceRan(SeedTrace.WorkspaceRanResponse value) =>
-            new(value);
+        public static implicit operator CodeExecutionUpdate.WorkspaceRan(
+            SeedTrace.WorkspaceRanResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -803,8 +814,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Recording(SeedTrace.RecordingResponseNotification value) =>
-            new(value);
+        public static implicit operator CodeExecutionUpdate.Recording(
+            SeedTrace.RecordingResponseNotification value
+        ) => new(value);
     }
 
     /// <summary>
@@ -822,8 +834,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Recorded(SeedTrace.RecordedResponseNotification value) =>
-            new(value);
+        public static implicit operator CodeExecutionUpdate.Recorded(
+            SeedTrace.RecordedResponseNotification value
+        ) => new(value);
     }
 
     /// <summary>
@@ -841,8 +854,9 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator InvalidRequest(SeedTrace.InvalidRequestResponse value) =>
-            new(value);
+        public static implicit operator CodeExecutionUpdate.InvalidRequest(
+            SeedTrace.InvalidRequestResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -860,6 +874,8 @@ public record CodeExecutionUpdate
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Finished(SeedTrace.FinishedResponse value) => new(value);
+        public static implicit operator CodeExecutionUpdate.Finished(
+            SeedTrace.FinishedResponse value
+        ) => new(value);
     }
 }

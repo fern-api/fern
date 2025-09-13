@@ -14,7 +14,7 @@ public record Response : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("foo")]
-    public Foo? Foo { get; set; }
+    public SeedCrossPackageTypeNames.FolderB.Foo? Foo { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

@@ -167,6 +167,7 @@ public record UnionWithSingleElement
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithSingleElement.Foo(SeedUnions.Foo value) =>
+            new(value);
     }
 }

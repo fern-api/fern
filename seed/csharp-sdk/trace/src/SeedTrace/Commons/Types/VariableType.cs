@@ -625,7 +625,8 @@ public record VariableType
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ListType(SeedTrace.ListType value) => new(value);
+        public static implicit operator VariableType.ListType(SeedTrace.ListType value) =>
+            new(value);
     }
 
     /// <summary>
@@ -643,7 +644,7 @@ public record VariableType
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator MapType(SeedTrace.MapType value) => new(value);
+        public static implicit operator VariableType.MapType(SeedTrace.MapType value) => new(value);
     }
 
     /// <summary>

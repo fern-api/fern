@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class TestTest
@@ -17,8 +17,8 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new Test.And(true));
-        var deserializedObject = JsonUtils.Deserialize<SeedExamples.Test>(json);
+        var expectedObject = new Test(new Test.And(true));
+        var deserializedObject = JsonUtils.Deserialize<Test>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -31,7 +31,7 @@ public class TestTest
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new Test.And(true));
+        var actualObj = new Test(new Test.And(true));
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
@@ -46,8 +46,8 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new Test.Or(true));
-        var deserializedObject = JsonUtils.Deserialize<SeedExamples.Test>(json);
+        var expectedObject = new Test(new Test.Or(true));
+        var deserializedObject = JsonUtils.Deserialize<Test>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -60,7 +60,7 @@ public class TestTest
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new Test.Or(true));
+        var actualObj = new Test(new Test.Or(true));
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
