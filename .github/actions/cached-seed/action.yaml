@@ -82,7 +82,7 @@ runs:
       run: |
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
-          --parallel 16 \
+          --parallel 32 \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
