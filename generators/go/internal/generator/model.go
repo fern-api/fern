@@ -1159,7 +1159,7 @@ func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[ir.T
 		// For optional fields that need dereferencing, return the unwrapped type
 		if needsDereference {
 			underlyingType := unwrapOptionalAndOrNullable(typeReference)
-			zeroValue = zeroValueForDereferencedType(underlyingType, types)
+			zeroValue = zeroValueForDereferencedType(underlyingType, types, scope, baseImportPath, importPath)
 			return underlyingGoType, zeroValue, needsDereference, isOptional
 		}
 	}
@@ -1187,11 +1187,17 @@ func unwrapOptionalAndOrNullable(typeReference *ir.TypeReference) *ir.TypeRefere
 
 // zeroValueForDereferencedType returns the zero value for the given type, handling
 // the special case of objects and unions that can take a default struct initialization.
-func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string) string {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		if typeDeclaration.Shape.Alias == nil && typeDeclaration.Shape.Enum == nil {
-			return fmt.Sprintf("%s{}", typeDeclaration.Name.Name.PascalCase.UnsafeName)
+			name := typeDeclaration.Name.Name.PascalCase.UnsafeName
+			// Check if we need to qualify the name with package prefix
+			if typeImportPath := fernFilepathToImportPath(baseImportPath, typeDeclaration.Name.FernFilepath); typeImportPath != importPath {
+				packageName := scope.AddImport(typeImportPath)
+				name = packageName + "." + name
+			}
+			return fmt.Sprintf("%s{}", name)
 		}
 	}
 	return zeroValueForTypeReference(typeReference, types)
