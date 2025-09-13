@@ -61,6 +61,7 @@ type Config struct {
 	InlinePathParameters         bool
 	InlineFileProperties         bool
 	UseReaderForBytesRequest     bool
+	GettersPassByValue           bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -213,6 +214,7 @@ func newConfig(configFilename string) (*Config, error) {
 		IncludeLegacyClientOptions:   *customConfig.IncludeLegacyClientOptions,
 		EnableExplicitNull:           *customConfig.EnableExplicitNull,
 		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
+		GettersPassByValue:           *customConfig.GettersPassByValue,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -274,6 +276,7 @@ type customConfig struct {
 	IncludeLegacyClientOptions   *bool         `json:"includeLegacyClientOptions,omitempty"`
 	AlwaysSendRequiredProperties *bool         `json:"alwaysSendRequiredProperties,omitempty"`
 	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
+	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -426,6 +429,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.UseReaderForBytesRequest == nil {
 		customConfig.UseReaderForBytesRequest = gospec.Ptr(true)
+	}
+	if customConfig.GettersPassByValue == nil {
+		customConfig.GettersPassByValue = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"
