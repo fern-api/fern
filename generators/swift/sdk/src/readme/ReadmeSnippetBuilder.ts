@@ -48,6 +48,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
         return snippets;
     }
 
@@ -123,6 +124,43 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                                                         ],
                                                         multiline: true
                                                     })
+                                                })
+                                            ],
+                                            multiline: true
+                                        })
+                                    })
+                                ]
+                            })
+                        )
+                    )
+                )
+            ]);
+        });
+    }
+
+    private buildTimeoutsSnippets(): string[] {
+        return this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).map((endpointId) => {
+            const endpoint = this.endpointsById[endpointId];
+            if (endpoint == null) {
+                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            }
+            return SwiftFile.getRawContents([
+                swift.Statement.expressionStatement(
+                    swift.Expression.try(
+                        swift.Expression.await(
+                            swift.Expression.methodCall({
+                                target: swift.Expression.reference("client"),
+                                methodName: this.getMethodName(endpoint),
+                                arguments_: [
+                                    swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                                    swift.functionArgument({
+                                        label: "requestOptions",
+                                        value: swift.Expression.contextualMethodCall({
+                                            methodName: "init",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "timeout",
+                                                    value: swift.Expression.numberLiteral(30)
                                                 })
                                             ],
                                             multiline: true
