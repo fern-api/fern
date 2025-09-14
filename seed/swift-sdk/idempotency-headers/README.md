@@ -56,6 +56,20 @@ let request = Requests.CreatePaymentRequest(
 )
 ```
 
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
+```swift
+try await client.payment.create(..., requestOptions: .init(
+    additionalHeaders: [
+        "X-Custom-Header": "custom value"
+    ]
+))
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
