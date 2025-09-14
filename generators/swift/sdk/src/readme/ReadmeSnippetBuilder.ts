@@ -9,7 +9,10 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
-    private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_NETWORKING_CLIENT";
+    private static readonly ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "ADDITIONAL_QUERY_STRING_PARAMETERS";
+    private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "CUSTOM_NETWORKING_CLIENT";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<string, HttpEndpoint>;
@@ -49,6 +52,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
+            this.buildAdditionalQueryStringParametersSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_NETWORKING_CLIENT_FEATURE_ID] = this.buildCustomNetworkingClientSnippets();
         return snippets;
@@ -140,6 +145,57 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
     }
 
+    private buildAdditionalQueryStringParametersSnippets(): string[] {
+        return this.getEndpointIdsForFeature(ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID).map(
+            (endpointId) => {
+                const endpoint = this.endpointsById[endpointId];
+                if (endpoint == null) {
+                    throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                }
+                return SwiftFile.getRawContents([
+                    swift.Statement.expressionStatement(
+                        swift.Expression.try(
+                            swift.Expression.await(
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("client"),
+                                    methodName: this.getMethodName(endpoint),
+                                    arguments_: [
+                                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                                        swift.functionArgument({
+                                            label: "requestOptions",
+                                            value: swift.Expression.contextualMethodCall({
+                                                methodName: "init",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        label: "additionalQueryParameters",
+                                                        value: swift.Expression.dictionaryLiteral({
+                                                            entries: [
+                                                                [
+                                                                    swift.Expression.stringLiteral(
+                                                                        "custom_query_param_key"
+                                                                    ),
+                                                                    swift.Expression.stringLiteral(
+                                                                        "custom_query_param_value"
+                                                                    )
+                                                                ]
+                                                            ],
+                                                            multiline: true
+                                                        })
+                                                    })
+                                                ],
+                                                multiline: true
+                                            })
+                                        })
+                                    ]
+                                })
+                            )
+                        )
+                    )
+                ]);
+            }
+        );
+    }
+
     private buildTimeoutsSnippets(): string[] {
         return this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).map((endpointId) => {
             const endpoint = this.endpointsById[endpointId];
@@ -181,15 +237,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const moduleName = this.context.project.symbolRegistry.getModuleSymbolOrThrow();
         const rootClientName = this.context.project.symbolRegistry.getRootClientSymbolOrThrow();
         const content = SwiftFile.getRawContents([
-            swift.Statement.import('Foundation'),
+            swift.Statement.import("Foundation"),
             swift.Statement.import(moduleName),
             swift.LineBreak.single(),
             swift.Statement.constantDeclaration({
-                unsafeName: 'client',
-                value: swift.Expression.structInitialization({ unsafeName: rootClientName, arguments_: [
-                    swift.functionArgument({ value: swift.Expression.rawValue('...') }),
-                    swift.functionArgument({ label: 'urlSession', value: swift.Expression.rawValue('// Provide your implementation here') })
-                ], multiline: true })
+                unsafeName: "client",
+                value: swift.Expression.structInitialization({
+                    unsafeName: rootClientName,
+                    arguments_: [
+                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        swift.functionArgument({
+                            label: "urlSession",
+                            value: swift.Expression.rawValue("// Provide your implementation here")
+                        })
+                    ],
+                    multiline: true
+                })
             })
         ]);
         return [content];

@@ -12,6 +12,11 @@ features:
     description: |
       If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
+  - id: ADDITIONAL_QUERY_STRING_PARAMETERS
+    advanced: true
+    description: |
+      If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
   - id: TIMEOUTS
     advanced: true
     description: |
