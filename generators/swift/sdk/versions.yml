@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.0
+  createdAt: "2025-09-12"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Introduced Nullable container type and related extensions to support explicit nulls.
+  irVersion: 59
+
 - version: 0.12.4
   createdAt: "2025-09-09"
   changelogEntry:
