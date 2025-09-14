@@ -48,6 +48,18 @@ private func main() async throws {
 try await main()
 ```
 
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Api
+
+let request = Requests.UploadDocumentRequest(
+    ...
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
