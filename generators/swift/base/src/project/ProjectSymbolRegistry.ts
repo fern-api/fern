@@ -66,6 +66,10 @@ export class ProjectSymbolRegistry {
         return symbolName;
     }
 
+    public getAllRequestTypeSymbols() {
+        return this.requestsRegistry.getAllSymbols();
+    }
+
     /**
      * Retrieves the registered sub-client symbol name for a given subpackage.
      *
