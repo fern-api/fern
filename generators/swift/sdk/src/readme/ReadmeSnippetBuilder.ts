@@ -1,13 +1,16 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { SwiftFile } from "@fern-api/swift-base";
+import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
+    private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
+
     private readonly context: SdkGeneratorContext;
-    private readonly snippetsById: Record<string, FernGeneratorExec.Endpoint>;
+    private readonly endpointSnippetsById: Record<string, FernGeneratorExec.Endpoint>;
 
     public constructor({
         context,
@@ -18,7 +21,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.snippetsById = Object.fromEntries(
+        this.endpointSnippetsById = Object.fromEntries(
             endpointSnippets.map((snippet) => [snippet.id.identifierOverride, snippet])
         );
     }
@@ -30,6 +33,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
         return snippets;
     }
 
@@ -52,8 +56,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
+    private buildRequestTypesSnippets(): string[] {
+        const moduleName = this.context.project.symbolRegistry.getModuleSymbolOrThrow();
+        const requestContainerName = this.context.project.symbolRegistry.getRequestsContainerSymbolOrThrow();
+        const [firstRequestTypeSymbol] = this.context.project.symbolRegistry.getAllRequestTypeSymbols();
+        if (firstRequestTypeSymbol == null) {
+            return [];
+        }
+        const content = SwiftFile.getRawContents([
+            swift.Statement.import(moduleName),
+            swift.LineBreak.single(),
+            swift.Statement.constantDeclaration({
+                unsafeName: "request",
+                value: swift.Expression.structInitialization({
+                    unsafeName: requestContainerName + "." + firstRequestTypeSymbol.name,
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.rawValue("...")
+                        })
+                    ],
+                    multiline: true
+                })
+            })
+        ]);
+        return [content];
+    }
+
     private getUsageSnippetForEndpoint(endpointId: string) {
-        return this.snippetsById[endpointId]?.snippet;
+        return this.endpointSnippetsById[endpointId]?.snippet;
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
