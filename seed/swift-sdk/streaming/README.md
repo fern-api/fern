@@ -70,6 +70,42 @@ try await client.dummy.generateStream(..., requestOptions: .init(
 ))
 ```
 
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
+```swift
+try await client.dummy.generateStream(..., requestOptions: .init(
+    additionalQueryParameters: [
+        "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Timeouts
+
+The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+```swift
+try await client.dummy.generateStream(..., requestOptions: .init(
+    timeout: 30
+))
+```
+
+### Custom Networking Client
+
+The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.
+
+```swift
+import Foundation
+import Streaming
+
+let client = StreamingClient(
+    ...,
+    urlSession: // Provide your implementation here
+)
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
