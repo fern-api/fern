@@ -7,6 +7,11 @@ features:
     description: |
       The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: |
+      If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
   - id: TIMEOUTS
     advanced: true
     description: |
