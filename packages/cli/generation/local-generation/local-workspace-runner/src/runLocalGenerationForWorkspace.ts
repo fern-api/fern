@@ -320,5 +320,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     apiName: undefined,
     disabledFeatures: undefined,
     whiteLabel: undefined,
+    customSections: undefined,
     features: undefined
 };

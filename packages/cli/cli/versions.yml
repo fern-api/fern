@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add customSections property to ReadmeConfig.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.77.0
+
+- changelogEntry:
     - summary: |
         Add missing reserved keywords for Ruby language.
       type: fix
