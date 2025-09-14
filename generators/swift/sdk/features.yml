@@ -16,3 +16,8 @@ features:
     advanced: true
     description: |
       The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+  - id: CUSTOM_NETWORKING_CLIENT
+    advanced: true
+    description: |
+      The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.

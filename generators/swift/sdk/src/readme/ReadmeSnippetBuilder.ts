@@ -9,6 +9,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_NETWORKING_CLIENT";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<string, HttpEndpoint>;
@@ -49,6 +50,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
+        snippets[ReadmeSnippetBuilder.CUSTOM_NETWORKING_CLIENT_FEATURE_ID] = this.buildCustomNetworkingClientSnippets();
         return snippets;
     }
 
@@ -173,6 +175,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 )
             ]);
         });
+    }
+
+    private buildCustomNetworkingClientSnippets(): string[] {
+        const moduleName = this.context.project.symbolRegistry.getModuleSymbolOrThrow();
+        const rootClientName = this.context.project.symbolRegistry.getRootClientSymbolOrThrow();
+        const content = SwiftFile.getRawContents([
+            swift.Statement.import('Foundation'),
+            swift.Statement.import(moduleName),
+            swift.LineBreak.single(),
+            swift.Statement.constantDeclaration({
+                unsafeName: 'client',
+                value: swift.Expression.structInitialization({ unsafeName: rootClientName, arguments_: [
+                    swift.functionArgument({ value: swift.Expression.rawValue('...') }),
+                    swift.functionArgument({ label: 'urlSession', value: swift.Expression.rawValue('// Provide your implementation here') })
+                ], multiline: true })
+            })
+        ]);
+        return [content];
     }
 
     private getMethodName(endpoint: HttpEndpoint): string {
