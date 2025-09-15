@@ -60,16 +60,12 @@ runs:
         cache-disabled: ${{ inputs.cache-disabled }}
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
-    - name: Stage Seed Changes
-      if: inputs.create-artifacts == 'true'
-      shell: bash
-      run: |
-        git add seed/${{ inputs.generator-name }}/*
-
     - name: Check for changes
+      if: inputs.create-artifacts == 'true'
       id: check-changes
       shell: bash
       run: |
+        git add seed/${{ inputs.generator-name }}/*
         if git --no-pager diff --staged --exit-code; then
           echo "No changes detected for seed."
           echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
