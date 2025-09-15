@@ -5,4 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.custom_auth.get_with_custom_auth();
+client.custom_auth.post_with_custom_auth();
