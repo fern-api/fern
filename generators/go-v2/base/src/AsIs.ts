@@ -4,5 +4,6 @@ export enum AsIsFiles {
     ExtraPropertiesTest = "internal/extra_properties_test.go_",
     Stringer = "internal/stringer.go_",
     Time = "internal/time.go_",
-    ErrorDecoder = "internal/error_decoder.go_"
+    ErrorDecoder = "internal/error_decoder.go_",
+    ErrorDecoderTest = "internal/error_decoder_test.go_"
 }
