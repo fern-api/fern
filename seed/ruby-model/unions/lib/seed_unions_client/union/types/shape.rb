@@ -13,6 +13,8 @@ module SeedUnionsClient
       attr_reader :discriminant
       # @return [String]
       attr_reader :id
+      # @return [String]
+      attr_reader :name
 
       private_class_method :new
       alias kind_of? is_a?
@@ -20,11 +22,13 @@ module SeedUnionsClient
       # @param member [Object]
       # @param discriminant [String]
       # @param id [String]
+      # @param name [String]
       # @return [SeedUnionsClient::Union::Shape]
-      def initialize(member:, discriminant:, id:)
+      def initialize(member:, discriminant:, id:, name:)
         @member = member
         @discriminant = discriminant
         @id = id
+        @name = name
       end
 
       # Deserialize a JSON object to an instance of Shape
