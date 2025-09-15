@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Submission
@@ -14,14 +15,14 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
-          path: "/sessions/create-session/#{"
+          path: "/sessions/create-session/#{params[:language]}"
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Submission::Types::ExecutionSessionResponse.load(_response.body)
-        else
-          raise _response.body
         end
+
+        raise _response.body
       end
 
       # Returns execution server URL for session. Returns empty if session isn't registered.
@@ -31,14 +32,12 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
-          path: "/sessions/#{"
+          path: "/sessions/#{params[:sessionId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Stops execution session.
@@ -48,18 +47,16 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "DELETE",
-          path: "/sessions/stop/#{"
+          path: "/sessions/stop/#{params[:sessionId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
-      def get_execution_sessions_state(request_options: {}, **params)
+      def get_execution_sessions_state(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
@@ -68,11 +65,10 @@ module Seed
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Submission::Types::GetExecutionSessionStateResponse.load(_response.body)
-        else
-          raise _response.body
         end
-      end
 
+        raise _response.body
+      end
     end
   end
 end
