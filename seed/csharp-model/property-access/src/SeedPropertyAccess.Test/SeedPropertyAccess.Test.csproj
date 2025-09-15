@@ -27,10 +27,10 @@
     <PackageReference Include="WireMock.Net" Version="1.7.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SeedCsharpAccess\SeedCsharpAccess.csproj" />
+    <ProjectReference Include="..\SeedPropertyAccess\SeedPropertyAccess.csproj" />
   </ItemGroup>
   <Import
-    Project="SeedCsharpAccess.Test.Custom.props"
-    Condition="Exists('SeedCsharpAccess.Test.Custom.props')"
+    Project="SeedPropertyAccess.Test.Custom.props"
+    Condition="Exists('SeedPropertyAccess.Test.Custom.props')"
   />
 </Project>

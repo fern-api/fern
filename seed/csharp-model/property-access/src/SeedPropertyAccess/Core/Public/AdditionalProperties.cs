@@ -2,9 +2,9 @@ using global::System.Collections;
 using global::System.Collections.ObjectModel;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
-using SeedCsharpAccess.Core;
+using SeedPropertyAccess.Core;
 
-namespace SeedCsharpAccess;
+namespace SeedPropertyAccess;
 
 public record ReadOnlyAdditionalProperties : ReadOnlyAdditionalProperties<JsonElement>
 {

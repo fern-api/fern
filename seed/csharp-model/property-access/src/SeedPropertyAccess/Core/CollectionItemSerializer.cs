@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 /// <summary>
 /// Json collection converter.

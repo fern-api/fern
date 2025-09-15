@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 internal class OneOfSerializer : JsonConverter<IOneOf>
 {
