@@ -83,7 +83,8 @@ jobs:
 
   ruby-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -106,7 +107,9 @@ jobs:
 
   ruby-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -129,7 +132,8 @@ jobs:
 
   ruby-sdk-v2-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -152,7 +156,8 @@ jobs:
 
   pydantic-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -175,7 +180,8 @@ jobs:
 
   python-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -198,7 +204,8 @@ jobs:
 
   fastapi-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -221,7 +228,8 @@ jobs:
 
   openapi-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -244,7 +252,8 @@ jobs:
 
   postman-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -267,7 +276,8 @@ jobs:
 
   java-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -290,7 +300,8 @@ jobs:
 
   java-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -313,7 +324,8 @@ jobs:
 
   java-spring-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -336,7 +348,8 @@ jobs:
 
   typescript-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -359,7 +372,8 @@ jobs:
 
   typescript-express-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -382,7 +396,8 @@ jobs:
 
   go-fiber-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -405,7 +420,8 @@ jobs:
 
   go-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -428,7 +444,8 @@ jobs:
 
   go-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -451,7 +468,8 @@ jobs:
 
   csharp-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -474,7 +492,8 @@ jobs:
 
   csharp-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -520,7 +539,8 @@ jobs:
 
   php-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -543,7 +563,8 @@ jobs:
 
   swift-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -566,7 +587,8 @@ jobs:
 
   rust-model-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -589,7 +611,8 @@ jobs:
 
   rust-sdk-seed-update:
     needs: [changes, setup]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: false
+    # if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
