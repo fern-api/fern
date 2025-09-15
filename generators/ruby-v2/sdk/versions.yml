@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc21
+  createdAt: "2025-09-15"
+  changelogEntry:
+    - type: fix
+      summary: Fix missing path parameter references.
+  irVersion: 58
+
 - version: 1.0.0-rc20
   createdAt: "2025-09-11"
   changelogEntry:
