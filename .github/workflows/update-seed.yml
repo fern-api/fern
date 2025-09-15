@@ -636,8 +636,12 @@ jobs:
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
+  # Use always() to ensure this runs even if stages are skipped. Add check back to
+  # make sure it doesn't 
   commit-seed-changes:
-    if: ${{ needs.setup.outputs.create-artifacts == 'true' }}
+    if: | 
+      always() && ${{ needs.setup.outputs.create-artifacts == 'true' }} &&
+      !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     needs:
       [changes, setup, ruby-model-seed-update, ruby-sdk-seed-update, ruby-sdk-v2-seed-update,
       pydantic-model-seed-update, python-sdk-seed-update, fastapi-seed-update, openapi-seed-update, 
