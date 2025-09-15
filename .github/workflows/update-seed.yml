@@ -19,6 +19,8 @@ on:
       - main
   workflow_dispatch:
 
+# CHRISM - look at concurrency setup and replicate here
+
 permissions:
   pull-requests: write
   contents: write
@@ -30,16 +32,10 @@ jobs:
   setup:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
-    # Note: Keep these in sync with env in .github/actions/auto-update-seed/action.yaml
-    env:
-      APPLY_BY_COMMIT_OPTION: 'Commit'
-      APPLY_BY_PR_OPTION: 'PR'
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
       create-artifacts: ${{ steps.set-update-options.outputs.create-artifacts }}
       create-pr: ${{ steps.set-update-options.outputs.create-pr }}
-      commit-option-name: ${{ env.APPLY_BY_COMMIT_OPTION }}
-      pr-option-name: ${{ env.APPLY_BY_PR_OPTION }}
     steps:
        # Apply by commit for PR to main, apply by PR for push to main or workflow_dispatch
       - name: Set update options
@@ -643,14 +639,28 @@ jobs:
         with:
           path: ./artifacts
 
+      - name: Get number of patches
+        shell: bash
+        id: get-number-of-patches
+        run: |
+          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
+          echo "Number of patches downloaded: $file_count"
+          if [ "$INTEGER_VALUE" -gt 5 ]; then
+            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
+          fi
+
       #CHRISM - test on failure (no changes)
       - name: Apply patches
         shell: bash
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
         run: |
           git apply artifacts/*.patch 
 
       - name: Add and Commit Changes
         uses: EndBug/add-and-commit@v9
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
         with:
           add: "seed/*"
           push: true
