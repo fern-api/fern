@@ -122,7 +122,7 @@ export class EndpointSnippetGenerator {
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.func({
-                    name: "Test" + this.context.getMethodName(endpoint.declaration.name) + "WithWireMock",
+                    name: "Test" + this.context.getTestMethodName(endpoint) + "WithWireMock",
                     parameters: [
                         go.parameter({
                             name: "t",

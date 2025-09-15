@@ -44,6 +44,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.unsafeName;
     }
 
+    public getTestMethodName(endpoint: FernIr.dynamic.Endpoint): string {
+        return (
+            endpoint.declaration.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("") +
+            endpoint.declaration.name.pascalCase.unsafeName
+        );
+    }
+
     public getTypeName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
     }

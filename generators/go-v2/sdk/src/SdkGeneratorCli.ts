@@ -203,7 +203,9 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             if (endpointExample == null) {
                 continue;
             }
-            const wiremockTestFilename = endpoint.declaration.name.snakeCase.safeName + "_test.go";
+            const servicePath =
+                endpoint.declaration.fernFilepath.allParts.map((name) => name.snakeCase.safeName).join("_") || "root";
+            const wiremockTestFilename = servicePath + "_" + endpoint.declaration.name.snakeCase.safeName + "_test.go";
             const wiremockTestContent = dynamicSnippetsGenerator.generateSync(
                 convertDynamicEndpointSnippetRequest(endpointExample),
                 { config: { outputWiremockTests: true } }
