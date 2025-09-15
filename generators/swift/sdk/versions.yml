@@ -13,7 +13,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Introduced Nullable container type and related extensions to support explicit nulls.
+        Introduced `Nullable` container type and related extensions to support explicit nulls.
   irVersion: 59
 
 - version: 0.12.4
