@@ -315,7 +315,10 @@ export function parseAsyncAPIV3({
                 }
             }
 
-            const groupName = getExtension<string | string[] | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME);
+            const groupName = getExtension<string | string[] | undefined>(
+                channel,
+                FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
+            );
 
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -336,7 +339,7 @@ export function parseAsyncAPIV3({
                     }))
                 },
                 groupName: context.resolveGroupName(
-                    typeof groupName === "string" ? [groupName] : groupName ?? [channelPath]
+                    typeof groupName === "string" ? [groupName] : (groupName ?? [channelPath])
                 ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
