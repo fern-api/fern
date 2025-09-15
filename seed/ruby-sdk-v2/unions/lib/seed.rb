@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,8 +24,6 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
 require_relative "seed/bigunion/types/normal_sweet"
 require_relative "seed/bigunion/types/thankful_factor"
 require_relative "seed/bigunion/types/jumbo_end"
@@ -78,9 +75,6 @@ require_relative "seed/union/types/get_shape_request"
 require_relative "seed/union/types/circle"
 require_relative "seed/union/types/square"
 require_relative "seed/union/types/shape"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/bigunion/client"
 require_relative "seed/union/client"
-require_relative "../README.md"
