@@ -13,6 +13,10 @@ on:
       - "test-definitions-openapi/**"
       - "generators/**"
       - "seed/**"
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -23,6 +27,17 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      application-method: ${{ inputs.application-method }}
+    steps:
+      - name: Set application method
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "application-method=Commit" >> $GITHUB_OUTPUT
+      - name: Set application method
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "application-method=PR" >> $GITHUB_OUTPUT
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
@@ -40,6 +55,8 @@ jobs:
       php: ${{ steps.get-generator-changes.outputs.php }}
       swift: ${{ steps.get-generator-changes.outputs.swift }}
       rust: ${{ steps.get-generator-changes.outputs.rust }}
+      apply-changes-by-commit: ${{ steps.set-seed-application-method.outputs.apply-changes-by-commit }}
+      apply-changes-by-PR: ${{ steps.set-seed-application-method.outputs.apply-changes-by-PR }}
     steps:
       - if: github.event_name != 'workflow_dispatch'
         name: Checkout repo
@@ -47,11 +64,22 @@ jobs:
         with:
           # Get sufficient history to check for changes
           fetch-depth: 200
-
       - if: github.event_name != 'workflow_dispatch'
         name: Get generator changes
         id: get-generator-changes
         uses: ./.github/actions/get-generator-changes
+
+       # Apply by commit for PR to main, apply by PR for push to main or workflow_dispatch
+      - name: Set seed application method
+        id: set-seed-application-method
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "apply-changes-by-commit=true" >> $GITHUB_OUTPUT
+            echo "apply-changes-by-PR=false" >> $GITHUB_OUTPUT
+          else
+            echo "apply-changes-by-commit=false" >> $GITHUB_OUTPUT
+            echo "apply-changes-by-PR=true" >> $GITHUB_OUTPUT
+          fi
 
   ruby-model-seed-update:
     needs: changes
@@ -70,6 +98,8 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -90,6 +120,8 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -110,6 +142,8 @@ jobs:
           generator-path: generators/ruby-v2
           language-name: ruby
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -130,6 +164,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -150,6 +186,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -170,6 +208,8 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -190,6 +230,8 @@ jobs:
           generator-path: generators/openapi
           language-name: openapi
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -210,6 +252,8 @@ jobs:
           generator-path: generators/postman
           language-name: postman
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -230,6 +274,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -250,6 +296,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -270,6 +318,8 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -290,6 +340,8 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -310,6 +362,8 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -330,6 +384,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -350,6 +406,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -370,6 +428,8 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -390,6 +450,8 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -410,6 +472,8 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -430,6 +494,8 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -450,6 +516,8 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -470,6 +538,8 @@ jobs:
           generator-path: generators/swift
           language-name: swift
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -490,6 +560,8 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
@@ -510,5 +582,52 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
+          apply-changes-by-commit: ${{ needs.changes.outputs.apply-changes-by-commit }}
+          apply-changes-by-PR: ${{ needs.changes.outputs.apply-changes-by-PR }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
+
+  commit-seed-changes:
+    if: ${{ needs.changes.outputs.apply-changes-by-commit == 'true' }}
+    needs:
+      [changes, ruby-model-seed-update, ruby-sdk-seed-update, ruby-sdk-v2-seed-update,
+      pydantic-model-seed-update, python-sdk-seed-update, fastapi-seed-update, openapi-seed-update, 
+      postman-seed-update, java-sdk-seed-update, java-model-seed-update, java-spring-seed-update,
+      typescript-sdk-seed-update, typescript-express-seed-update, go-fiber-seed-update, 
+      go-model-seed-update, go-sdk-seed-update, csharp-model-seed-update, csharp-sdk-seed-update, 
+      php-model-seed-update, php-sdk-seed-update, swift-sdk-seed-update, rust-model-seed-update, 
+      rust-sdk-seed-update
+      ]
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Create artifacts downloads directory
+        shell: bash
+        run: |
+          mkdir artifacts
+
+      #CHRISM - test on failure (no changes)
+      - name: Download patches
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+
+      #CHRISM - test on failure (no changes)
+      - name: Apply patches
+        shell: bash
+        run: |
+          git apply artifacts/*.patch 
+
+      - name: Add and Commit Changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "seed/*"
+          push: true
+          message: "Automated update of seed files"
+
+
+  #CHRISM - kick off seed snapshot tests

@@ -25,6 +25,12 @@ inputs:
     description: "Whether to skip caching and always regenerate"
     required: false
     default: "true"
+  create-artifacts:
+    description: "Whether or not to create artifacts for the seed changes"
+    required: true
+  create-pr:
+    description: "Whether or not to create a PR with changes"
+    required: true
   secret-fern-github-pat:
     description: "GitHub Access Token for Fern"
     required: true
@@ -45,7 +51,26 @@ runs:
         skip-scripts: ${{ inputs.skip-scripts }}
         cache-disabled: ${{ inputs.cache-disabled }}
 
+    # Upload artifacts to be applied and committed by caller when all of seed is up to date
+    - name: Make Patch for Seed Artifacts
+      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-artifacts == 'true'
+      shell: bash
+      run: |
+        git add seed/${{ inputs.generator-name }}/*
+        git diff --staged > seed-${{ inputs.generator-name }}.patch
+
+    - name: Upload Seed Artifacts
+      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-artifacts == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: seed-${{ inputs.generator-name }}.patch
+        path: seed-${{ inputs.generator-name }}.patch
+        if-no-files-found: error
+        retention-days: 7
+
+    # Create PR, approve and set to merge all at generator level
     - name: Create Pull Request
+      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-pr == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
@@ -60,19 +85,19 @@ runs:
           language/${{ inputs.language-name }}
 
     - name: Log PR Creation Failure
-      if: steps.cpr.outputs.pull-request-operation != 'created'
+      if: steps.cpr.outputs.pull-request-operation != 'created' && inputs.create-pr  == 'true'
       shell: bash
       run: |
         echo "PR was not created, likely due to no diff for the generated seed output"
 
     - name: Log PR Creation Details
-      if: steps.cpr.outputs.pull-request-operation == 'created'
+      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
       shell: bash
       run: |
         echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
     - name: Enable Pull Request Automerge
-      if: steps.cpr.outputs.pull-request-operation == 'created'
+      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
       uses: peter-evans/enable-pull-request-automerge@v3
       with:
         token: ${{ inputs.secret-fern-github-pat }}
@@ -80,7 +105,7 @@ runs:
         merge-method: squash
 
     - name: Approve PR
-      if: steps.cpr.outputs.pull-request-operation == 'created'
+      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
       uses: ./.github/actions/auto-approve
       with:
         approver-gh-token: ${{ inputs.secret-pr-bot-gh-pat }}

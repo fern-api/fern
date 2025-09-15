@@ -1,13 +1,14 @@
 name: Seed Snapshot Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
+  # Note: only want this to run when the Update Seed workflow runs so all
+  # settings to start are in that workflow (except the manual trigger which
+  # is also allowed here). This will kick off so long as the Update Seed workflow
+  # passes or is skipped, it will not run if the Update Seed workflow never starts.
+# CHRISM - note, have to make sure this runs after merge to PR branch
+  workflow_run:
+    workflows: [Update Seed]
+    types: [completed]
   workflow_call:
   workflow_dispatch:
 
