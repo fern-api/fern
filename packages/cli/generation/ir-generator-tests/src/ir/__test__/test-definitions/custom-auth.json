@@ -663,7 +663,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "727740af",
+                                "id": "c7d7b6ea",
                                 "name": null,
                                 "url": "/custom-auth",
                                 "rootPathParameters": [],
@@ -1247,7 +1247,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "5fe5db06",
+                                "id": "8ae9427b",
                                 "name": null,
                                 "url": "/custom-auth",
                                 "rootPathParameters": [],

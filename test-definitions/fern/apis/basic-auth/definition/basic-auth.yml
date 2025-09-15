@@ -19,9 +19,7 @@ service:
         # body:
         #   success: boolean
       examples:
-        - headers:
-            Authorization: "Basic YWRtaW46c2VjcmV0"
-          response:
+        - response:
             body: true
       errors:
         - errors.UnauthorizedRequest
@@ -36,9 +34,7 @@ service:
         body: unknown
       response: boolean
       examples:
-        - headers:
-            Authorization: "Basic YWRtaW46c2VjcmV0"
-          request:
+        - request:
             key: "value"
           response:
             body: true

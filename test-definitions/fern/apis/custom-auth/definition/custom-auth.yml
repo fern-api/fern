@@ -14,9 +14,7 @@ service:
       method: GET
       response: boolean
       examples:
-        - headers:
-            X-API-KEY: "live_sk_1234567890abcdef"
-          response:
+        - response:
             body: true
       errors:
         - errors.UnauthorizedRequest
@@ -31,9 +29,7 @@ service:
         body: unknown
       response: boolean
       examples:
-        - headers:
-            X-API-KEY: "live_sk_1234567890abcdef"
-          request:
+        - request:
             key: "value"
           response:
             body: true
