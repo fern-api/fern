@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Payment
@@ -13,14 +14,12 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/payment",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [untyped]
@@ -28,16 +27,13 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "DELETE",
-          path: "/payment/#{"
+          path: "/payment/#{params[:paymentId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Support for PHP dynamic SDK snippets in the docs.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.2
+
+- changelogEntry:
     - summary: \'upgrades available\' only display on actual upgrade needed
       type: fix
   irVersion: 59

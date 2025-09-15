@@ -14,14 +14,11 @@ export function getDynamicGeneratorConfig({
     generatorInvocation: generatorsYml.GeneratorInvocation;
 }): dynamic.GeneratorConfig | undefined {
     const outputConfig = getDynamicGeneratorOutputConfig(generatorInvocation);
-    if (outputConfig == null) {
-        return undefined;
-    }
     return {
         apiName,
         organization,
         customConfig: generatorInvocation.config,
-        outputConfig
+        outputConfig: outputConfig ?? dynamic.GeneratorOutputConfig.local()
     };
 }
 

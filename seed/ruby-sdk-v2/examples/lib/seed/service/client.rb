@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Service
@@ -12,14 +13,12 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
-          path: "/movie/#{"
+          path: "/movie/#{params[:movieId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Types::Types::Movie.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Types::Types::Movie.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [String]
@@ -28,37 +27,33 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/movie",
-          body: Seed::Types::Types::Movie.new(params).to_h,
+          body: Seed::Types::Types::Movie.new(params).to_h
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Types::Types::MovieId.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Types::Types::MovieId.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
         _query_param_names = [
-          ["shallow", "tag"],
+          %w[shallow tag],
           %i[shallow tag]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
           path: "/metadata",
-          query: _query,
+          query: _query
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Types::Types::Metadata.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Types::Types::Metadata.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [Seed::Types::Types::Response]
@@ -67,14 +62,12 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/big-entity",
-          body: Seed::Types::Types::BigEntity.new(params).to_h,
+          body: Seed::Types::Types::BigEntity.new(params).to_h
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Types::Types::Response.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Types::Types::Response.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [untyped]
@@ -83,16 +76,13 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/refresh-token",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

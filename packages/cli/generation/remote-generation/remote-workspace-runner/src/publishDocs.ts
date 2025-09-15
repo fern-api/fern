@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, generatorsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
@@ -428,11 +428,41 @@ async function generateLanguageSpecificDynamicIRs({
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
-                const packageName = generatorsYml.getPackageName({ generatorInvocation });
+                let dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: workspace.workspaceName ?? "",
+                    organization,
+                    generatorInvocation
+                });
+                let packageName = "";
+
+                if (dynamicGeneratorConfig?.outputConfig.type === "publish") {
+                    switch (dynamicGeneratorConfig.outputConfig.value.type) {
+                        case "npm":
+                        case "nuget":
+                        case "pypi":
+                        case "rubygems":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
+                            break;
+                        case "maven":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
+                            break;
+                        case "go":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
+                    }
+                }
+
+                // construct a generatorConfig for php since it is not parsed by getDynamicGeneratorConfig
+                if (generatorInvocation.language === "php") {
+                    packageName = (generatorInvocation.config as { packageName?: string })["packageName"] ?? "";
+                }
+
+                if (!generatorInvocation.language) {
+                    continue;
+                }
 
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
-                    packageName &&
                     generatorInvocation.language &&
                     snippetConfiguration[generatorInvocation.language] === packageName
                 ) {
@@ -453,19 +483,16 @@ async function generateLanguageSpecificDynamicIRs({
                         packageName: packageName,
                         version: undefined,
                         context,
-                        sourceResolver: new SourceResolverImpl(context, workspace)
+                        sourceResolver: new SourceResolverImpl(context, workspace),
+                        dynamicGeneratorConfig
                     });
 
-                    const dynamicIR = await convertIrToDynamicSnippetsIr({
+                    const dynamicIR = convertIrToDynamicSnippetsIr({
                         ir: irForDynamicSnippets,
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
                         generationLanguage: generatorInvocation.language,
-                        generatorConfig: getDynamicGeneratorConfig({
-                            apiName: workspace.workspaceName ?? "",
-                            organization,
-                            generatorInvocation
-                        })
+                        generatorConfig: dynamicGeneratorConfig
                     });
 
                     // include metadata along with the dynamic IR

@@ -938,7 +938,9 @@ function convertSnippetsConfiguration({
         go: rawConfig.go,
         java: rawConfig.java,
         ruby: rawConfig.ruby,
-        csharp: rawConfig.csharp
+        csharp: rawConfig.csharp,
+        php: rawConfig.php,
+        swift: rawConfig.swift
     };
 }
 
