@@ -59,8 +59,60 @@ func (g *GetShapeRequest) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+type WithName struct {
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (w *WithName) GetName() string {
+	if w == nil {
+		return ""
+	}
+	return w.Name
+}
+
+func (w *WithName) GetExtraProperties() map[string]any {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithName) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler WithName
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithName(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithName) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
 type Shape struct {
 	Type   string
+	Name   string
 	Id     string
 	Circle Circle
 	Square Square
