@@ -1,10 +1,4 @@
-- version: 3.2.1
-  changelogEntry:
-    - summary: |
-        Changed Optional.of() to Optional.ofNullable() to handle null values gracefully, allowing users to reset to default version.
-      type: fix
-  createdAt: "2025-09-15"
-  irVersion: 59
+
 
 - version: 3.2.0
   changelogEntry:
