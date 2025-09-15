@@ -501,10 +501,14 @@ class ModuleFile {
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
         coreFiles.forEach((filename) => {
+            const outputFilename = this.project.getAsIsOutputFilename(filename);
+            if (!outputFilename.endsWith(".rb")) {
+                return;
+            }
             const absoluteFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.project.getAsIsOutputDirectory(),
-                RelativeFilePath.of(this.project.getAsIsOutputFilename(filename).replaceAll(".rb", ""))
+                RelativeFilePath.of(outputFilename.replaceAll(".rb", ""))
             );
             contents += `require_relative "${relative(this.filePath, absoluteFilePath)}"\n`;
             visitedPaths.add(absoluteFilePath.toString());
@@ -512,6 +516,9 @@ class ModuleFile {
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
+            if (!filePath.endsWith(".rb")) {
+                return;
+            }
             if (!visitedPaths.has(filePath.toString())) {
                 contents += `require_relative "${relative(this.filePath, filePath)}"\n`;
                 visitedPaths.add(filePath.toString());
@@ -530,13 +537,18 @@ class ModuleFile {
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
 
         sorted.forEach((typeDeclaration) => {
+            const typeFileName = this.context.getFileNameForTypeId(typeDeclaration.name.typeId);
+            if (!typeFileName.endsWith(".rb")) {
+                return;
+            }
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
                 RelativeFilePath.of(
-                    this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", "")
+                    typeFileName.replaceAll(".rb", "")
                 )
             );
+            const importPath = typeFilePath.replaceAll(".rb", "")
             contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
             visitedPaths.add(typeFilePath);
         });
@@ -544,7 +556,7 @@ class ModuleFile {
         contents += "\n";
         contents += `# Client Types\n`;
         rubyFilePaths.forEach((filePath) => {
-            if (!visitedPaths.has(filePath.toString())) {
+            if (!visitedPaths.has(filePath.toString()) && filePath.endsWith(".rb")) {
                 contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
                 visitedPaths.add(filePath.toString());
             }
