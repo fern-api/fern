@@ -645,7 +645,7 @@ jobs:
         run: |
           file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
           echo "Number of patches downloaded: $file_count"
-          if [ "$INTEGER_VALUE" -gt 5 ]; then
+          if [ "$file_count" -gt 0 ]; then
             echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
           else
             echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
