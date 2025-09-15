@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { dynamic, HttpEndpoint, AuthScheme } from "@fern-fern/ir-sdk/api";
+import { AuthScheme, dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -524,7 +524,8 @@ export class WireTestGenerator {
                 const headerScheme = scheme as AuthScheme.Header;
                 const headerName = headerScheme.name.wireValue;
                 const headerMethodName = headerScheme.name.name.camelCase?.unsafeName || "apiKey";
-                const rawHeaderValue = this.extractAuthValueFromExamples("header", headerName, scheme) || "test-api-key";
+                const rawHeaderValue =
+                    this.extractAuthValueFromExamples("header", headerName, scheme) || "test-api-key";
                 const headerValue = this.sanitizeAuthValue(rawHeaderValue);
 
                 const prefix = headerScheme.prefix || "";
@@ -536,7 +537,8 @@ export class WireTestGenerator {
             case "oauth": {
                 const oauthScheme = scheme as AuthScheme.Oauth;
                 const rawClientId = this.extractAuthValueFromExamples("oauth", "clientId", scheme) || "test-client-id";
-                const rawClientSecret = this.extractAuthValueFromExamples("oauth", "clientSecret", scheme) || "test-client-secret";
+                const rawClientSecret =
+                    this.extractAuthValueFromExamples("oauth", "clientSecret", scheme) || "test-client-secret";
                 const clientId = this.sanitizeAuthValue(rawClientId);
                 const clientSecret = this.sanitizeAuthValue(rawClientSecret);
                 return `.clientId("${clientId}")\n            .clientSecret("${clientSecret}")`;
@@ -552,7 +554,9 @@ export class WireTestGenerator {
                     return `.token("test-token")`;
                 }
 
-                this.context.logger.warn(`Unsupported auth scheme type: ${(scheme as { type: string }).type} - skipping auth configuration for wire test`);
+                this.context.logger.warn(
+                    `Unsupported auth scheme type: ${(scheme as { type: string }).type} - skipping auth configuration for wire test`
+                );
                 return undefined;
             }
         }
@@ -580,8 +584,10 @@ export class WireTestGenerator {
                     }
 
                     if (authType === "bearer" && scheme.type === "bearer") {
-                        const authHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
-                            .find(h => h.name.wireValue === "Authorization");
+                        const authHeader = [
+                            ...(exampleCall.serviceHeaders || []),
+                            ...(exampleCall.endpointHeaders || [])
+                        ].find((h) => h.name.wireValue === "Authorization");
                         if (authHeader && authHeader.value?.jsonExample) {
                             const value = String(authHeader.value.jsonExample);
                             const bearerMatch = value.match(/^Bearer\s+(.+)$/i);
@@ -593,21 +599,25 @@ export class WireTestGenerator {
                     }
 
                     if (authType === "basic") {
-                        const authHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
-                            .find(h => h.name.wireValue === "Authorization");
+                        const authHeader = [
+                            ...(exampleCall.serviceHeaders || []),
+                            ...(exampleCall.endpointHeaders || [])
+                        ].find((h) => h.name.wireValue === "Authorization");
                         if (authHeader && authHeader.value?.jsonExample) {
                             const value = String(authHeader.value.jsonExample);
                             const basicMatch = value.match(/^Basic\s+(.+)$/i);
                             if (basicMatch && basicMatch[1]) {
                                 try {
-                                    const decoded = Buffer.from(basicMatch[1], 'base64').toString('utf-8');
-                                    const [username, password] = decoded.split(':', 2);
+                                    const decoded = Buffer.from(basicMatch[1], "base64").toString("utf-8");
+                                    const [username, password] = decoded.split(":", 2);
                                     if (username && password) {
                                         return field === "username" ? username : password;
                                     }
                                     return field === "username" ? "example-user" : "example-pass";
                                 } catch (error) {
-                                    this.context.logger.warn(`Failed to decode basic auth for scheme ${scheme.type} in endpoint ${endpoint.name.originalName}: ${error}. Using fallback values.`);
+                                    this.context.logger.warn(
+                                        `Failed to decode basic auth for scheme ${scheme.type} in endpoint ${endpoint.name.originalName}: ${error}. Using fallback values.`
+                                    );
                                     return field === "username" ? "example-user" : "example-pass";
                                 }
                             }
@@ -615,11 +625,16 @@ export class WireTestGenerator {
                     }
 
                     if (authType === "header" && scheme.type === "header") {
-                        const headerScheme = scheme as { header?: { name?: { wireValue?: string } }; name?: { wireValue?: string } };
+                        const headerScheme = scheme as {
+                            header?: { name?: { wireValue?: string } };
+                            name?: { wireValue?: string };
+                        };
                         const headerName = headerScheme.header?.name?.wireValue || headerScheme.name?.wireValue;
                         if (headerName) {
-                            const customHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
-                                .find(h => h.name.wireValue === headerName);
+                            const customHeader = [
+                                ...(exampleCall.serviceHeaders || []),
+                                ...(exampleCall.endpointHeaders || [])
+                            ].find((h) => h.name.wireValue === headerName);
                             if (customHeader && customHeader.value?.jsonExample) {
                                 return String(customHeader.value.jsonExample);
                             }
@@ -628,7 +643,9 @@ export class WireTestGenerator {
 
                     if (authType === "oauth") {
                         if (exampleCall.request?.type === "inlinedRequestBody") {
-                            const request = exampleCall.request as { body?: { type?: string; value?: { jsonExample?: unknown } } };
+                            const request = exampleCall.request as {
+                                body?: { type?: string; value?: { jsonExample?: unknown } };
+                            };
                             const body = request.body;
                             if (body?.type === "json" && body.value?.jsonExample) {
                                 const jsonBody = body.value.jsonExample as Record<string, unknown>;
@@ -666,14 +683,13 @@ export class WireTestGenerator {
             return undefined;
         }
 
-        const endpoint = service.endpoints.find(e => e.id === endpointId);
+        const endpoint = service.endpoints.find((e) => e.id === endpointId);
         if (!endpoint) {
             return undefined;
         }
 
-        const successfulExamples = endpoint.userSpecifiedExamples?.filter(
-            ex => ex.example && ex.example.response.type === "ok"
-        ) || [];
+        const successfulExamples =
+            endpoint.userSpecifiedExamples?.filter((ex) => ex.example && ex.example.response.type === "ok") || [];
 
         if (successfulExamples.length === 0) {
             return undefined;
@@ -695,7 +711,7 @@ export class WireTestGenerator {
             }
         }
 
-        for (const queryParam of (example.queryParameters || [])) {
+        for (const queryParam of example.queryParameters || []) {
             const methodName = queryParam.name.name.camelCase?.unsafeName || queryParam.name.name.camelCase?.safeName;
             if (methodName) {
                 const rawValue = queryParam.value?.jsonExample ? String(queryParam.value.jsonExample) : "test";
@@ -707,16 +723,15 @@ export class WireTestGenerator {
         return authParams.length > 0 ? authParams.join("\n            ") : undefined;
     }
 
-        /**
+    /**
      * Sanitizes auth values to prevent breaking Java string literals
      */
-        private sanitizeAuthValue(value: string): string {
-            return value
-                .replace(/\\/g, '\\\\')
-                .replace(/"/g, '\\"')
-                .replace(/\n/g, '\\n')
-                .replace(/\r/g, '\\r')
-                .replace(/\t/g, '\\t');
-        }
-    
+    private sanitizeAuthValue(value: string): string {
+        return value
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/\n/g, "\\n")
+            .replace(/\r/g, "\\r")
+            .replace(/\t/g, "\\t");
+    }
 }
