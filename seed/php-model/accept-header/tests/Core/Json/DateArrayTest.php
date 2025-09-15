@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Types\ArrayType;
-
+// FOrce an update for CI
 class DateArray extends JsonSerializableType
 {
     /**
