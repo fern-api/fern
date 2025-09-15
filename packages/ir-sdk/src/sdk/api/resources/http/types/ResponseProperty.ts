@@ -13,6 +13,6 @@ export interface ResponseProperty {
      * Otherwise, the property is defined on the nested object identified
      * by the path.
      */
-    propertyPath: FernIr.Name[] | undefined;
+    propertyPath: FernIr.PropertyPathItem[] | undefined;
     property: FernIr.ObjectProperty;
 }

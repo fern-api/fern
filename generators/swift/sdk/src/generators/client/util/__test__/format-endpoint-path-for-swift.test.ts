@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-v59-sdk/api";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift";
 
 const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
@@ -13,9 +13,9 @@ const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: 
 
 async function getIRForTestDefinition(testDefinitionName: string): Promise<IntermediateRepresentation> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
-    return await createSampleIr(absolutePathToWorkspace, {
+    return (await createSampleIr(absolutePathToWorkspace, {
         version: "v59" // make sure to upgrade this when the IR version is upgraded
-    });
+    })) as IntermediateRepresentation;
 }
 
 describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefinitionName) => {
@@ -27,7 +27,8 @@ describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefin
             Object.entries(ir.services).map(([serviceName, service]) => {
                 return [
                     serviceName,
-                    service.endpoints.map((endpoint) => formatEndpointPathForSwift(endpoint))
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                    service.endpoints.map((endpoint) => formatEndpointPathForSwift(endpoint as any))
                 ] as const;
             })
         );
