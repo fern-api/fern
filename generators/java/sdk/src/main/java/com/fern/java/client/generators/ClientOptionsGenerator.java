@@ -718,9 +718,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 } else {
                     fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
                     fromMethod.addStatement(
-                            "builder.$L = clientOptions.$L",
-                            apiVersionField.name,
-                            apiVersionField.name);
+                            "builder.$L = clientOptions.$L", apiVersionField.name, apiVersionField.name);
                     fromMethod.endControlFlow();
                 }
             }
