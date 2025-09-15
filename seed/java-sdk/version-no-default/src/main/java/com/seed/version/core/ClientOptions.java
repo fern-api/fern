@@ -200,7 +200,7 @@ public final class ClientOptions {
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
             if (clientOptions.version != null) {
-                builder.version = Optional.of(clientOptions.version);
+                builder.version = clientOptions.version;
             }
             return builder;
         }
