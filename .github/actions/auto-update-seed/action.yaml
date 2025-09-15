@@ -71,10 +71,11 @@ runs:
       shell: bash
       run: |
         if git --no-pager diff --staged --exit-code; then
-          echo "No changes detected."
+          echo "No changes detected for seed."
           echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
         else
-          echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
+          echo "Changes detected for seed."
+          echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
         fi
 
     # Make patch file for seed changes
