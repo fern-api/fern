@@ -41,6 +41,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Validate update options
+      shell: bash
+      run: |
+        if [[ "${{ inputs.create-artifacts }}" == "${{ inputs.create-pr }}" ]]; then
+          echo "Invalid seed update settings. One and only one update method must be enabled."
+          exit 1
+        fi
+
     - name: Run seed
       uses: ./.github/actions/cached-seed
       with:
