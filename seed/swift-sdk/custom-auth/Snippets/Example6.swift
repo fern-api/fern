@@ -7,7 +7,9 @@ private func main() async throws {
         customAuthScheme: "<value>"
     )
 
-    try await client.customAuth.getWithCustomAuth()
+    try await client.customAuth.postWithCustomAuth(request: .object([
+        "key": .string("value")
+    ]))
 }
 
 try await main()
