@@ -1,4 +1,4 @@
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 internal static class Constants
 {

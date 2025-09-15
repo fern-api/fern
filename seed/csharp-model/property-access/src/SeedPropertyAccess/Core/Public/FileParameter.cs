@@ -1,4 +1,4 @@
-namespace SeedCsharpAccess;
+namespace SeedPropertyAccess;
 
 /// <summary>
 /// File parameter for uploading files.

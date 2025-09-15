@@ -15,7 +15,7 @@ using global::System.Text.Json.Serialization;
 // ReSharper disable SuggestVarOrType_SimpleTypes
 // ReSharper disable SuggestVarOrType_BuiltInTypes
 
-namespace SeedCsharpAccess.Core
+namespace SeedPropertyAccess.Core
 {
     /// <summary>
     /// Custom converter for handling the <see cref="DateOnly"/> data type with the <see href="https://docs.microsoft.com/dotnet/api/system.text.json">System.Text.Json</see> library.

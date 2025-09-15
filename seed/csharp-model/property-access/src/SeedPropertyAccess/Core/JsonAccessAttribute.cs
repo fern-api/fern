@@ -1,4 +1,4 @@
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 internal class JsonAccessAttribute(JsonAccessType accessType) : Attribute
