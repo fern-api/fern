@@ -1,3 +1,10 @@
+- version: 3.2.2
+  changelogEntry:
+    - summary: Fix nullable request bodies with Optional fields
+      type: fix
+  createdAt: "2025-09-15"
+  irVersion: 59
+
 - version: 3.2.1
   changelogEntry:
     - summary: |
