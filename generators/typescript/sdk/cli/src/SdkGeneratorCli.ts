@@ -74,7 +74,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "yarn",
-            generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
             flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
             exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false
         };
@@ -88,12 +87,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         if (parsed?.noSerdeLayer === false && parsed?.enableInlineTypes === true) {
             logger.error("Incompatible configuration: noSerdeLayer cannot be false while enableInlineTypes is true.");
         }
-        if (parsed?.noSerdeLayer === false && parsed?.experimentalGenerateReadWriteOnlyTypes === true) {
-            logger.error(
-                "Incompatible configuration: noSerdeLayer cannot be false while experimentalGenerateReadWriteOnlyTypes is true."
-            );
-        }
-
         return config;
     }
 
@@ -185,7 +178,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
-                generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes,
                 flattenRequestParameters: customConfig.flattenRequestParameters ?? false,
                 exportAllRequestsAtRoot: customConfig.exportAllRequestsAtRoot ?? false
             }

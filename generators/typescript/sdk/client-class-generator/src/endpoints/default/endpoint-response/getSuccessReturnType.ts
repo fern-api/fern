@@ -35,10 +35,8 @@ export function getSuccessReturnType(
                 fileResponseType: opts.fileResponseType
             });
         }
-        case "json": {
-            const returnType = context.type.getReferenceToType(response.value.responseBodyType);
-            return returnType.responseTypeNode ?? returnType.typeNode;
-        }
+        case "json":
+            return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
         case "text":
             return context.type.getReferenceToType(
                 TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
@@ -55,9 +53,7 @@ export function getSuccessReturnType(
                     throw new Error(`Encountered unknown data event type ${type}`);
                 }
             });
-            return context.coreUtilities.stream.Stream._getReferenceToType(
-                dataEventType.responseTypeNode ?? dataEventType.typeNode
-            );
+            return context.coreUtilities.stream.Stream._getReferenceToType(dataEventType.typeNode);
         }
         default:
             assertNever(response);

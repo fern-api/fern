@@ -35,17 +35,8 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
         return statements;
     }
 
-    public generateForInlineUnion(context: Context): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
-        const typeReference = context.type.getReferenceToType(this.shape);
-        return {
-            typeNode: typeReference.typeNode,
-            requestTypeNode: typeReference.requestTypeNode,
-            responseTypeNode: typeReference.responseTypeNode
-        };
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return context.type.getReferenceToType(this.shape).typeNode;
     }
 
     private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {
@@ -55,7 +46,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
             type: getTextOfTsNode(context.type.getReferenceToInlineAliasType(this.shape, this.typeName).typeNode),
             isExported: true
         };
-        maybeAddDocsStructure(typeAlias, this.getDocs({ context }));
+        maybeAddDocsStructure(typeAlias, this.getDocs(context));
         return typeAlias;
     }
 

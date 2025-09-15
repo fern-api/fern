@@ -37,7 +37,6 @@ export declare namespace TypeSchemaContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -72,8 +71,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         useBigInt,
         enableInlineTypes,
         allowExtraFields,
-        omitUndefined,
-        generateReadWriteOnlyTypes
+        omitUndefined
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
@@ -88,8 +86,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
@@ -100,8 +97,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;
@@ -177,11 +173,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
-    private generateForInlineUnion(typeName: DeclaredTypeName): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
+    private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
         throw new Error("Inline unions are not supported in Express Schemas");
     }
 

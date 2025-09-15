@@ -70,6 +70,9 @@ fixtures:
     - outputFolder: package-path
       customConfig:
         packagePath: pleaseinhere
+    - outputFolder: getters-pass-by-value
+      customConfig:
+        gettersPassByValue: true
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -197,7 +200,6 @@ allowedFailures:
   - streaming-parameter
   - trace
   - unions:no-custom-config
-  - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination

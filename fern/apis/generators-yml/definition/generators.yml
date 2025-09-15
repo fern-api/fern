@@ -93,6 +93,15 @@ types:
       features:
         type: optional<map<string, list<ReadmeEndpointSchema>>>
         docs: "Specifies a list of endpoints associated with the feature"
+      customSections:
+        docs: "Supply custom sections as markdown to be included in the readme"
+        type: optional<list<ReadmeCustomSectionSchema>>
+
+  ReadmeCustomSectionSchema:
+    properties:
+      title: string
+      language: Language
+      content: string
 
   ReadmeEndpointSchema:
     discriminated: false
@@ -387,3 +396,15 @@ types:
   ProtobufSpecSchema:
     properties:
       proto: ProtobufDefinitionSchema
+
+  Language:
+    enum:
+      - java
+      - python
+      - go
+      - ruby
+      - csharp
+      - typescript
+      - php
+      - rust
+      - swift

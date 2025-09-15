@@ -13,7 +13,6 @@ export declare namespace EndpointErrorUnionGenerator {
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
-        generateReadWriteOnlyTypes: boolean;
     }
 
     export namespace generateEndpointErrorUnion {
@@ -25,13 +24,12 @@ export declare namespace EndpointErrorUnionGenerator {
 }
 
 export class EndpointErrorUnionGenerator {
-    private readonly intermediateRepresentation: IntermediateRepresentation;
-    private readonly errorResolver: ErrorResolver;
-    private readonly includeSerdeLayer: boolean;
-    private readonly retainOriginalCasing: boolean;
-    private readonly noOptionalProperties: boolean;
-    private readonly enableInlineTypes: boolean;
-    private readonly generateReadWriteOnlyTypes: boolean;
+    private intermediateRepresentation: IntermediateRepresentation;
+    private errorResolver: ErrorResolver;
+    private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
+    private noOptionalProperties: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -39,8 +37,7 @@ export class EndpointErrorUnionGenerator {
         includeSerdeLayer,
         retainOriginalCasing,
         noOptionalProperties,
-        enableInlineTypes,
-        generateReadWriteOnlyTypes
+        enableInlineTypes
     }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -48,7 +45,6 @@ export class EndpointErrorUnionGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.noOptionalProperties = noOptionalProperties;
         this.enableInlineTypes = enableInlineTypes;
-        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     public generateEndpointErrorUnion({
@@ -63,8 +59,7 @@ export class EndpointErrorUnionGenerator {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
-            enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            enableInlineTypes: this.enableInlineTypes
         });
     }
 }

@@ -492,51 +492,6 @@ await client.Nullable.GetUsersAsync(
 "
 `;
 
-exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"using Acme;
-
-var client = new AcmeClient(
-    clientOptions: new ClientOptions{
-        BaseUrl = "https://api.example.com"
-    }
-);
-
-await client.CreateUserAsync(
-    new User{
-        Password = "password",
-        Profile = new UserProfile{
-            Name = "name",
-            Verification = new UserProfileVerification(),
-            Ssn = "ssn"
-        }
-    }
-);
-"
-`;
-
-exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"using Acme;
-
-var client = new AcmeClient(
-    clientOptions: new ClientOptions{
-        BaseUrl = "https://api.example.com"
-    }
-);
-
-await client.CreateUserAsync(
-    new User{
-        ID = "id",
-        Password = "password",
-        Profile = new UserProfile{
-            Name = "name",
-            Verification = new UserProfileVerification(),
-            Ssn = "ssn"
-        }
-    }
-);
-"
-`;
-
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "using Acme;
 

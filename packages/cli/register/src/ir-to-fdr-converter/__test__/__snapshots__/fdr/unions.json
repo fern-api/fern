@@ -2348,24 +2348,6 @@
         ]
       }
     },
-    "type_union:WithName": {
-      "name": "WithName",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "name",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
     "type_union:Shape": {
       "name": "Shape",
       "shape": {
@@ -2953,7 +2935,6 @@
       "websockets": [],
       "types": [
         "type_union:GetShapeRequest",
-        "type_union:WithName",
         "type_union:Shape",
         "type_union:Circle",
         "type_union:Square"

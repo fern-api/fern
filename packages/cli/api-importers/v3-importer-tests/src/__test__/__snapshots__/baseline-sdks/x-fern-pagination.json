@@ -921,57 +921,22 @@
             "hasNextPage": {
               "propertyPath": [
                 {
-                  "name": {
-                    "originalName": "meta",
-                    "camelCase": {
-                      "unsafeName": "meta",
-                      "safeName": "meta"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "meta",
-                      "safeName": "meta"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "META",
-                      "safeName": "META"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Meta",
-                      "safeName": "Meta"
-                    }
+                  "originalName": "meta",
+                  "camelCase": {
+                    "unsafeName": "meta",
+                    "safeName": "meta"
                   },
-                  "type": {
-                    "container": {
-                      "optional": {
-                        "name": {
-                          "originalName": "Meta",
-                          "camelCase": {
-                            "unsafeName": "meta",
-                            "safeName": "meta"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "meta",
-                            "safeName": "meta"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "META",
-                            "safeName": "META"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Meta",
-                            "safeName": "Meta"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Meta",
-                        "type": "named"
-                      },
-                      "type": "optional"
-                    },
-                    "type": "container"
+                  "snakeCase": {
+                    "unsafeName": "meta",
+                    "safeName": "meta"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "META",
+                    "safeName": "META"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Meta",
+                    "safeName": "Meta"
                   }
                 }
               ],

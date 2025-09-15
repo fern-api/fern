@@ -28,7 +28,7 @@ export namespace Shape {
         type: "square";
     }
 
-    export interface _Base extends SeedUnions.WithName {
+    export interface _Base {
         id: string;
     }
 }

@@ -1,11 +1,8 @@
-import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
     ResolvedTypeReference,
     TypeDeclaration,
-    TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
@@ -18,6 +15,7 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
+
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
@@ -40,7 +38,6 @@ export declare namespace TypeContextImpl {
         omitUndefined: boolean;
         useDefaultRequestParameterValues: boolean;
         context: BaseContext;
-        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -79,8 +76,7 @@ export class TypeContextImpl implements TypeContext {
         allowExtraFields,
         omitUndefined,
         useDefaultRequestParameterValues,
-        context,
-        generateReadWriteOnlyTypes
+        context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -105,8 +101,7 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             context,
@@ -115,8 +110,7 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
+            omitUndefined
         });
     }
 
@@ -180,11 +174,7 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
-    public generateForInlineUnion(typeName: DeclaredTypeName): {
-        typeNode: ts.TypeNode;
-        requestTypeNode: ts.TypeNode | undefined;
-        responseTypeNode: ts.TypeNode | undefined;
-    } {
+    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
         const generatedType = this.getGeneratedType(typeName);
         return generatedType.generateForInlineUnion(this.context);
     }
@@ -329,142 +319,5 @@ export class TypeContextImpl implements TypeContext {
             default:
                 return false;
         }
-    }
-
-    public needsRequestResponseTypeVariant(typeReference: TypeReference): { request: boolean; response: boolean } {
-        switch (typeReference.type) {
-            case "named": {
-                return this.needsRequestResponseTypeVariantById(typeReference.typeId);
-            }
-            case "container": {
-                if (typeReference.container.type === "optional") {
-                    return this.needsRequestResponseTypeVariant(typeReference.container.optional);
-                }
-                if (typeReference.container.type === "nullable") {
-                    return this.needsRequestResponseTypeVariant(typeReference.container.nullable);
-                }
-                if (typeReference.container.type === "list") {
-                    return this.needsRequestResponseTypeVariant(typeReference.container.list);
-                }
-                if (typeReference.container.type === "map") {
-                    const keyResult = this.needsRequestResponseTypeVariant(typeReference.container.keyType);
-                    const valueResult = this.needsRequestResponseTypeVariant(typeReference.container.valueType);
-                    return {
-                        request: keyResult.request || valueResult.request,
-                        response: keyResult.response || valueResult.response
-                    };
-                }
-                return { request: false, response: false };
-            }
-            case "primitive":
-                return { request: false, response: false };
-            case "unknown":
-                return { request: false, response: false };
-            default:
-                assertNever(typeReference);
-        }
-    }
-
-    public needsRequestResponseTypeVariantById(typeId: TypeId): { request: boolean; response: boolean } {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeId);
-        return this.needsRequestResponseTypeVariantByType(typeDeclaration.shape);
-    }
-
-    public needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean } {
-        switch (type.type) {
-            case "object": {
-                let request = false;
-                let response = false;
-                // Check properties
-                for (const prop of type.properties) {
-                    if (prop.propertyAccess === "READ_ONLY") {
-                        request = true;
-                    }
-                    if (prop.propertyAccess === "WRITE_ONLY") {
-                        response = true;
-                    }
-                    const result = this.needsRequestResponseTypeVariant(prop.valueType);
-                    request = request || result.request;
-                    response = response || result.response;
-                    if (request && response) {
-                        // no need to continue checking
-                        break;
-                    }
-                }
-                // Check extends
-                if (type.extends != null) {
-                    for (const extTypeName of type.extends) {
-                        const extTypeRef = { type: "named", typeId: extTypeName.typeId } as TypeReference;
-                        const result = this.needsRequestResponseTypeVariant(extTypeRef);
-                        request = request || result.request;
-                        response = response || result.response;
-                        if (request && response) {
-                            // no need to continue checking
-                            break;
-                        }
-                    }
-                }
-                return { request, response };
-            }
-            case "union": {
-                let request = false;
-                let response = false;
-                for (const member of type.types) {
-                    switch (member.shape.propertiesType) {
-                        case "noProperties":
-                            break;
-                        case "singleProperty": {
-                            const result = this.needsRequestResponseTypeVariant(member.shape.type);
-                            request = request || result.request;
-                            response = response || result.response;
-                            break;
-                        }
-                        case "samePropertiesAsObject": {
-                            const result = this.needsRequestResponseTypeVariantById(member.shape.typeId);
-                            request = request || result.request;
-                            response = response || result.response;
-                            break;
-                        }
-                    }
-                    if (request && response) {
-                        // no need to continue checking
-                        break;
-                    }
-                }
-                return { request, response };
-            }
-            case "undiscriminatedUnion": {
-                let request = false;
-                let response = false;
-                for (const member of type.members) {
-                    const result = this.needsRequestResponseTypeVariant(member.type);
-                    request = request || result.request;
-                    response = response || result.response;
-                    if (request && response) {
-                        // no need to continue checking
-                        break;
-                    }
-                }
-                return { request, response };
-            }
-            case "enum":
-                return { request: false, response: false };
-            case "alias": {
-                return this.needsRequestResponseTypeVariant(type.aliasOf);
-            }
-            default:
-                assertNever(type);
-        }
-    }
-
-    public typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference {
-        return TypeReference.named({
-            default: undefined,
-            displayName: typeName.displayName,
-            fernFilepath: typeName.fernFilepath,
-            inline: undefined,
-            name: typeName.name,
-            typeId: typeName.typeId
-        });
     }
 }

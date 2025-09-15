@@ -123,6 +123,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         path,
                         identifierOverride: endpointId
                     },
+                    // Snippets are marked as 'typescript' for compatibility with FernGeneratorExec, which will be deprecated.
                     snippet: FernGeneratorExec.EndpointSnippet.typescript({
                         client: generatedSnippet.snippet
                     })

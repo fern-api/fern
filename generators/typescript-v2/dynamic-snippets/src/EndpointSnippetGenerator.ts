@@ -438,13 +438,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({
-                    typeReference: body.value,
-                    value,
-                    convertOpts: {
-                        isForRequest: true
-                    }
-                });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -560,10 +554,7 @@ export class EndpointSnippetGenerator {
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
             name: this.context.getPropertyName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert({
-                ...queryParameter,
-                convertOpts: { isForRequest: true }
-            })
+            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
         }));
         this.context.errors.unscope();
 
@@ -574,7 +565,7 @@ export class EndpointSnippetGenerator {
         });
         const headerFields = headers.map((header) => ({
             name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert({ ...header, convertOpts: { isForRequest: true } })
+            value: this.context.dynamicTypeLiteralMapper.convert(header)
         }));
         this.context.errors.unscope();
 
@@ -650,11 +641,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({
-                    typeReference: body.value,
-                    value,
-                    convertOpts: { isForRequest: true }
-                });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -676,10 +663,7 @@ export class EndpointSnippetGenerator {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert({
-                    ...parameter,
-                    convertOpts: { isForRequest: true }
-                })
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
             });
         }
 
@@ -706,10 +690,7 @@ export class EndpointSnippetGenerator {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert({
-                    ...parameter,
-                    convertOpts: { isForRequest: true }
-                })
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
             });
         }
 

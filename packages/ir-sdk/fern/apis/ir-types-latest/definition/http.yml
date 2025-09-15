@@ -421,11 +421,6 @@ types:
       query: QueryParameter
       body: types.ObjectProperty
 
-  PropertyPathItem:
-    properties:
-      name: commons.Name
-      type: types.TypeReference
-
   RequestProperty:
     docs: |
       A property associated with an endpoint's request.
@@ -435,7 +430,7 @@ types:
           If empty, the property is defined at the top-level.
           Otherwise, the property is defined on the nested object identified
           by the path.
-        type: optional<list<PropertyPathItem>>
+        type: optional<list<commons.Name>>
       property: RequestPropertyValue
 
   ResponseProperty:
@@ -447,7 +442,7 @@ types:
           If empty, the property is defined at the top-level.
           Otherwise, the property is defined on the nested object identified
           by the path.
-        type: optional<list<PropertyPathItem>>
+        type: optional<list<commons.Name>>
       property: types.ObjectProperty
 
   # examples
@@ -524,6 +519,8 @@ types:
       - csharp
       - java
       - php
+      - rust
+      - swift
 
   ExamplePathParameter:
     properties:

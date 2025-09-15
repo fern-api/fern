@@ -37,15 +37,7 @@ import {
     RequestWrapperNonBodyPropertyWithData,
     SdkContext
 } from "@fern-typescript/contexts";
-import {
-    InterfaceDeclarationStructure,
-    ModuleDeclarationKind,
-    ModuleDeclarationStructure,
-    StatementStructures,
-    StructureKind,
-    ts,
-    WriterFunction
-} from "ts-morph";
+import { InterfaceDeclarationStructure, ModuleDeclarationStructure, StructureKind, ts } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -174,7 +166,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody == null) {
             return;
         }
-        const iModule = this.generateModule({ requestBody, context });
+        const iModule = this.generateModule(requestBody, context);
         if (iModule) {
             context.sourceFile.addModule(iModule);
         }
@@ -326,8 +318,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             .map((example) => {
                 const generatedExample = this.generateExample(example);
                 const exampleStr =
-                    "@example\n" +
-                    getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
+                    "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
                 return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             })
             .join("\n\n");
@@ -359,51 +350,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName);
     }
 
-    private generateModule({
-        requestBody,
-        context
-    }: {
-        requestBody: HttpRequestBody;
-        context: SdkContext;
-    }): ModuleDeclarationStructure | undefined {
+    private generateModule(requestBody: HttpRequestBody, context: SdkContext): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
             return undefined;
-        }
-
-        const inlineTypeStatements = this.generateInlineTypes({
-            requestBody,
-            context
-        });
-
-        if (inlineTypeStatements.length === 0) {
-            return undefined;
-        }
-
-        const module: ModuleDeclarationStructure = {
-            kind: StructureKind.Module,
-            name: this.wrapperName,
-            isExported: true,
-            hasDeclareKeyword: false,
-            declarationKind: ModuleDeclarationKind.Namespace,
-            statements: [...inlineTypeStatements]
-        };
-        return module;
-    }
-
-    private generateInlineTypes({
-        requestBody,
-        context
-    }: {
-        requestBody: HttpRequestBody;
-        context: SdkContext;
-    }): (string | WriterFunction | StatementStructures)[] {
-        if (!this.enableInlineTypes) {
-            return [];
         }
 
         return requestBody._visit({
             inlinedRequestBody: (inlinedRequestBody: FernIr.InlinedRequestBody) => {
                 return generateInlinePropertiesModule({
+                    parentTypeName: this.wrapperName,
                     properties: inlinedRequestBody.properties.map((prop) => ({
                         propertyName: prop.name.name.pascalCase.safeName,
                         typeReference: prop.valueType
@@ -413,9 +368,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
                 });
             },
-            reference: () => [],
+            reference: () => undefined,
             fileUpload: (fileUploadBody: FernIr.FileUploadRequest) => {
                 return generateInlinePropertiesModule({
+                    parentTypeName: this.wrapperName,
                     properties: fileUploadBody.properties
                         .filter((prop) => prop.type === "bodyProperty")
                         .map((prop) => ({
@@ -427,8 +383,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
                 });
             },
-            bytes: () => [],
-            _other: () => []
+            bytes: () => undefined,
+            _other: () => undefined
         });
     }
 
@@ -931,11 +887,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             return {
                 typeNode: unionType.typeNode,
                 typeNodeWithoutUndefined: unionType.typeNodeWithoutUndefined,
-                isOptional: unionType.isOptional,
-                requestTypeNode: unionType.requestTypeNode,
-                requestTypeNodeWithoutUndefined: unionType.requestTypeNodeWithoutUndefined,
-                responseTypeNode: unionType.responseTypeNode,
-                responseTypeNodeWithoutUndefined: unionType.responseTypeNodeWithoutUndefined
+                isOptional: unionType.isOptional
             };
         }
         return context.type.getReferenceToType(property.valueType);

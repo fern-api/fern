@@ -3725,6 +3725,18 @@
         "apiReferenceLink": "https://www.docs.fernapi.com",
         "bannerLink": "https://www.fernapi.com",
         "introduction": null,
+        "customSections": [
+            {
+                "title": "Custom Section",
+                "language": "typescript",
+                "content": "This is a custom section piped through the readme config in generators.yml"
+            },
+            {
+                "title": "Custom Section Multiline",
+                "language": "typescript",
+                "content": "This is a custom section with a multiline content.\nIt is piped through the readme config in generators.yml.\n"
+            }
+        ],
         "whiteLabel": false,
         "defaultEndpoint": "endpoint_imdb.createMovie",
         "features": {

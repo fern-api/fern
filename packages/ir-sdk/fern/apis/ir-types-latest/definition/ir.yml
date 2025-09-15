@@ -92,6 +92,16 @@ types:
           If specified, configures the list of endpoints to associate
           with each feature.
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+      customSections:
+        docs: "Supply custom sections as markdown to be included in the readme"
+        type: optional<list<ReadmeCustomSection>>
+
+  ReadmeCustomSection:
+    properties:
+      title: string
+      language: http.SupportedSdkLanguage
+      content: string
+
   SourceConfig:
     properties:
       sources:
