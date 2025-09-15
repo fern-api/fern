@@ -655,16 +655,21 @@ jobs:
       ]
     runs-on: Seed
     steps:
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: |
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo $branch
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ steps.extract_branch.outputs.branch }}
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
       - name: Create artifacts downloads directory
         shell: bash
         run: |
-          echo "${{ github.ref_name }}"
           mkdir artifacts
 
       #CHRISM - test on failure (no changes)
