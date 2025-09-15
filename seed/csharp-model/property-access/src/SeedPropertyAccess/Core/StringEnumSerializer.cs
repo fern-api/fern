@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 internal class StringEnumSerializer<T> : JsonConverter<T>
     where T : IStringEnum

@@ -1,4 +1,4 @@
-namespace SeedCsharpAccess;
+namespace SeedPropertyAccess;
 
 [Serializable]
 internal class Version

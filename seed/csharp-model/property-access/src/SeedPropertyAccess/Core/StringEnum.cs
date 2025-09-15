@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 public interface IStringEnum : IEquatable<string>
 {

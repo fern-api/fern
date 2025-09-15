@@ -66,4 +66,4 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
           dotnet pack src -c Release
-          dotnet nuget push src/SeedCsharpAccess/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+          dotnet nuget push src/SeedPropertyAccess/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"

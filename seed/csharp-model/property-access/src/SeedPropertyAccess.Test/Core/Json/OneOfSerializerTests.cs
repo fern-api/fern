@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using NUnit.Framework;
 using OneOf;
-using SeedCsharpAccess.Core;
+using SeedPropertyAccess.Core;
 
-namespace SeedCsharpAccess.Test.Core.Json;
+namespace SeedPropertyAccess.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

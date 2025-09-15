@@ -4,7 +4,7 @@ using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
 using global::System.Text.Json.Serialization.Metadata;
 
-namespace SeedCsharpAccess.Core;
+namespace SeedPropertyAccess.Core;
 
 internal static partial class JsonOptions
 {
