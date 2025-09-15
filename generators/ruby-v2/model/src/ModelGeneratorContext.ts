@@ -46,7 +46,7 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors
-            // AsIsFiles.ApiError,
+            AsIsFiles.ApiError,
 
             // Internal
 

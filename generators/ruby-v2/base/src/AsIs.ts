@@ -1,5 +1,5 @@
 export const AsIsFiles = {
-    // ApiError: "errors/api_error.Template.rb",
+    ApiError: "errors/api_error.Template.rb",
 
     // Internal files
 
@@ -70,5 +70,5 @@ const asIsTopoValue = {
     [AsIsFiles.TypesEnum]: 17,
     [AsIsFiles.TypesHash]: 18,
     [AsIsFiles.TypesUnknown]: 19,
-    // [AsIsFiles.ApiError]: 20,
+    [AsIsFiles.ApiError]: 20,
 };
