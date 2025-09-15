@@ -544,11 +544,9 @@ class ModuleFile {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-                RelativeFilePath.of(
-                    typeFileName.replaceAll(".rb", "")
-                )
+                RelativeFilePath.of(typeFileName.replaceAll(".rb", ""))
             );
-            const importPath = typeFilePath.replaceAll(".rb", "")
+            const importPath = typeFilePath.replaceAll(".rb", "");
             contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
             visitedPaths.add(typeFilePath);
         });
