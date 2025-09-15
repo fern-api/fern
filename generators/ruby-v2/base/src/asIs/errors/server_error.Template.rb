@@ -2,7 +2,10 @@
 
 module <%= gem_namespace %>
   module Errors
-    class ApiError < StandardError
+    class ServerError < ResponseError
+    end
+
+    class ServiceUnavailableError < ApiError
     end
   end
 end

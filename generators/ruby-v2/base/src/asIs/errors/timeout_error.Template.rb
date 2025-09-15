@@ -2,7 +2,7 @@
 
 module <%= gem_namespace %>
   module Errors
-    class ApiError < StandardError
+    class TimeoutError < ApiError
     end
   end
 end

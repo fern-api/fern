@@ -1,5 +1,11 @@
 export const AsIsFiles = {
+    // Public-facing error classes
     ApiError: "errors/api_error.Template.rb",
+    ClientError: "errors/client_error.Template.rb",
+    RedirectError: "errors/redirect_error.Template.rb",
+    ResponseError: "errors/response_error.Template.rb",
+    ServerError: "errors/server_error.Template.rb",
+    TimeoutError: "errors/timeout_error.Template.rb",
 
     // Internal files
 
@@ -71,4 +77,9 @@ const asIsTopoValue = {
     [AsIsFiles.TypesHash]: 18,
     [AsIsFiles.TypesUnknown]: 19,
     [AsIsFiles.ApiError]: 20,
+    [AsIsFiles.ClientError]: 21,
+    [AsIsFiles.RedirectError]: 22,
+    [AsIsFiles.ResponseError]: 23,
+    [AsIsFiles.ServerError]: 24,
+    [AsIsFiles.TimeoutError]: 25,
 };
