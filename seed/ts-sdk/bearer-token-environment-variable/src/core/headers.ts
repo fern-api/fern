@@ -2,12 +2,22 @@ import * as core from "./index.js";
 
 export function mergeHeaders(
     ...headersArray: (
-        | Record<string, string | core.Supplier<string | null | undefined> | null | undefined>
+        | Record<
+              string,
+              | string
+              | core.Supplier<string | null | undefined>
+              | core.TokenSupplier<string | null | undefined>
+              | null
+              | undefined
+          >
         | null
         | undefined
     )[]
-): Record<string, string | core.Supplier<string | null | undefined>> {
-    const result: Record<string, string | core.Supplier<string | null | undefined>> = {};
+): Record<string, string | core.Supplier<string | null | undefined> | core.TokenSupplier<string | null | undefined>> {
+    const result: Record<
+        string,
+        string | core.Supplier<string | null | undefined> | core.TokenSupplier<string | null | undefined>
+    > = {};
 
     for (const [key, value] of headersArray
         .filter((headers) => headers != null)
@@ -24,12 +34,22 @@ export function mergeHeaders(
 
 export function mergeOnlyDefinedHeaders(
     ...headersArray: (
-        | Record<string, string | core.Supplier<string | null | undefined> | null | undefined>
+        | Record<
+              string,
+              | string
+              | core.Supplier<string | null | undefined>
+              | core.TokenSupplier<string | null | undefined>
+              | null
+              | undefined
+          >
         | null
         | undefined
     )[]
-): Record<string, string | core.Supplier<string | null | undefined>> {
-    const result: Record<string, string | core.Supplier<string | null | undefined>> = {};
+): Record<string, string | core.Supplier<string | null | undefined> | core.TokenSupplier<string | null | undefined>> {
+    const result: Record<
+        string,
+        string | core.Supplier<string | null | undefined> | core.TokenSupplier<string | null | undefined>
+    > = {};
 
     for (const [key, value] of headersArray
         .filter((headers) => headers != null)

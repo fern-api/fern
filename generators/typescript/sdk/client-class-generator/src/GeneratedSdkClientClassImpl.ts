@@ -113,6 +113,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
     public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
+    public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
+    public static readonly AUTH_HEADER_HELPER_METHOD_METADATA_ARG = "endpointMetadata";
 
     private readonly isRoot: boolean;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -1003,7 +1005,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
                 statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode),
-                returnType: getTextOfTsNode(returnType)
+                returnType: getTextOfTsNode(returnType),
+                parameters: [
+                    {
+                        name: GeneratedSdkClientClassImpl.AUTH_HEADER_HELPER_METHOD_METADATA_ARG,
+                        type: getTextOfTsNode(context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType())
+                    }
+                ]
             });
         }
 
@@ -1104,7 +1112,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME
                     ),
                     undefined,
-                    []
+                    [this.getReferenceToMetadataForTokenSupplier()]
                 )
             );
         } else {
@@ -1553,7 +1561,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: getPropertyKey(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
                 type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.TokenSupplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
                             this.bearerAuthScheme.tokenEnvVar == null
                             ? context.coreUtilities.auth.BearerToken._getReferenceToType()
@@ -1571,7 +1579,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
                 type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.TokenSupplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
                             ? context.coreUtilities.auth.BearerToken._getReferenceToType()
                             : ts.factory.createUnionTypeNode([
@@ -1634,7 +1642,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: getPropertyKey(this.getOptionKeyForAuthHeader(header)),
                 type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.TokenSupplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
                             ? referenceToHeaderType.typeNode
                             : ts.factory.createUnionTypeNode([
@@ -1865,8 +1873,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
                                 undefined,
                                 undefined,
-                                context.coreUtilities.fetcher.Supplier.get(
-                                    this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
+                                context.coreUtilities.fetcher.TokenSupplier.get(
+                                    this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
+                                    this.getReferenceToMetadataArg()
                                 )
                             )
                         ],
@@ -1916,10 +1925,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     undefined,
                                     ts.factory.createBinaryExpression(
                                         ts.factory.createParenthesizedExpression(
-                                            context.coreUtilities.fetcher.Supplier.get(
+                                            context.coreUtilities.fetcher.TokenSupplier.get(
                                                 this.getReferenceToOption(
                                                     this.getBearerAuthOptionKey(this.bearerAuthScheme)
-                                                )
+                                                ),
+                                                this.getReferenceToMetadataArg()
                                             )
                                         ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
@@ -2004,8 +2014,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ts.factory.createReturnStatement(
                         ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                             ts.factory.createTemplateSpan(
-                                context.coreUtilities.fetcher.Supplier.get(
-                                    this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme))
+                                context.coreUtilities.fetcher.TokenSupplier.get(
+                                    this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
+                                    this.getReferenceToMetadataArg()
                                 ),
                                 ts.factory.createTemplateTail("", "")
                             )
@@ -2023,8 +2034,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
                                     undefined,
                                     undefined,
-                                    context.coreUtilities.fetcher.Supplier.get(
-                                        this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme))
+                                    context.coreUtilities.fetcher.TokenSupplier.get(
+                                        this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
+                                        this.getReferenceToMetadataArg()
                                     )
                                 )
                             ],
@@ -2270,6 +2282,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         return statements;
+    }
+
+    public getReferenceToMetadataArg(): ts.Expression {
+        return ts.factory.createIdentifier(GeneratedSdkClientClassImpl.AUTH_HEADER_HELPER_METHOD_METADATA_ARG);
+    }
+
+    public getReferenceToMetadataForTokenSupplier(): ts.Expression {
+        return ts.factory.createIdentifier(GeneratedSdkClientClassImpl.METADATA_FOR_TOKEN_SUPPLIER_VAR);
     }
 
     private getCustomAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {

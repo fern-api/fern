@@ -13,6 +13,7 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
+import { generatedEndpointMetadata } from "../utils/generateEndpointMetadata";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -298,6 +299,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public getStatements(context: SdkContext): ts.Statement[] {
         const listFnName = "list";
         const body = [
+            ...generatedEndpointMetadata(),
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
         ];
@@ -469,7 +471,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 )
             }),
 
-            withCredentials: this.includeCredentialsOnCrossOriginRequests
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            endpointMetadata: this.generatedSdkClientClass.getReferenceToMetadataForTokenSupplier()
         };
 
         if (this.endpoint.response?.body?.type === "text") {

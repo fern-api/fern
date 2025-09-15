@@ -13,6 +13,7 @@ import {
     getRequestOptionsParameter,
     getTimeoutExpression
 } from "./utils/requestOptionsParameter";
+import { generatedEndpointMetadata } from "./utils/generateEndpointMetadata";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
@@ -193,6 +194,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getStatements(context: SdkContext): ts.Statement[] {
         return [
+            ...generatedEndpointMetadata(),
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
             ...this.response.getReturnResponseStatements(context)
@@ -245,7 +247,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 )
             }),
             responseType: "sse",
-            withCredentials: this.includeCredentialsOnCrossOriginRequests
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            endpointMetadata: this.generatedSdkClientClass.getReferenceToMetadataForTokenSupplier()
         };
 
         return [

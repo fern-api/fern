@@ -24,6 +24,7 @@ export interface Fetcher {
                 responseType: "responseType";
                 duplex: "duplex";
                 timeoutMs: "timeoutMs";
+                endpointMetadata: "endpointMetadata";
             };
         };
         Error: {
@@ -94,6 +95,15 @@ export interface Fetcher {
         get: (supplier: ts.Expression) => ts.Expression;
     };
 
+    readonly TokenSupplier: {
+        _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
+        get: (supplier: ts.Expression, metadata: ts.Expression) => ts.Expression;
+    };
+
+    readonly EndpointMetadata: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
+
     readonly getHeader: {
         _invoke: (args: { referenceToResponseHeaders: ts.Expression; header: string }) => ts.Expression;
     };
@@ -136,6 +146,7 @@ export declare namespace Fetcher {
         requestType?: "json" | "file" | "bytes" | "other";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
+        endpointMetadata?: ts.Expression;
     }
 }
 
@@ -205,7 +216,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 responseType: "responseType",
                 abortSignal: "abortSignal",
                 duplex: "duplex",
-                timeoutInSeconds: "timeoutInSeconds"
+                timeoutInSeconds: "timeoutInSeconds",
+                endpointMetadata: "endpointMetadata"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -308,6 +320,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.abortSignal, args.abortSignal)
                 );
             }
+            if (args.endpointMetadata != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.endpointMetadata,
+                        args.endpointMetadata
+                    )
+                );
+            }
 
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(referenceToFetcher, cast != null ? [cast] : [], [
@@ -401,6 +421,32 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 )
             );
         })
+    };
+
+    public TokenSupplier = {
+        _getReferenceToType: this.withExportedName("TokenSupplier", (TokenSupplier) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(TokenSupplier.getEntityName(), [suppliedType]);
+        }),
+
+        get: this.withExportedName(
+            "TokenSupplier",
+            (TokenSupplier) => (tokenSupplier: ts.Expression, metadata: ts.Expression) => {
+                return ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(TokenSupplier.getExpression(), "get"),
+                        undefined,
+                        [tokenSupplier, metadata]
+                    )
+                );
+            }
+        )
+    };
+
+    public EndpointMetadata = {
+        _getReferenceToType: this.withExportedName(
+            "EndpointMetadata",
+            (EndpointMetadata) => () => EndpointMetadata.getTypeNode()
+        )
     };
 
     public Websocket = {

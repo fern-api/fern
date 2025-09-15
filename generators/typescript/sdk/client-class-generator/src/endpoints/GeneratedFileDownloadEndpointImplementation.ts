@@ -14,6 +14,7 @@ import {
     getRequestOptionsParameter,
     getTimeoutExpression
 } from "./utils/requestOptionsParameter";
+import { generatedEndpointMetadata } from "./utils/generateEndpointMetadata";
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
     export interface Init {
@@ -154,6 +155,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
 
     public getStatements(context: SdkContext): ts.Statement[] {
         return [
+            ...generatedEndpointMetadata(),
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
             ...this.response.getReturnResponseStatements(context)
@@ -216,7 +218,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                     default:
                         assertNever(this.fileResponseType);
                 }
-            })()
+            })(),
+            endpointMetadata: this.generatedSdkClientClass.getReferenceToMetadataForTokenSupplier()
         };
 
         return [

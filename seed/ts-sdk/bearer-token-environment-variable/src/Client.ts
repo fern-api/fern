@@ -11,7 +11,7 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        apiKey?: core.Supplier<core.BearerToken | undefined>;
+        apiKey?: core.TokenSupplier<core.BearerToken | undefined>;
         /** Override the X-API-Version header */
         version?: "1.0.0";
         /** Additional headers to include in requests. */

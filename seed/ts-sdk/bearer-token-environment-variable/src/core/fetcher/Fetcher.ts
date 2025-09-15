@@ -1,6 +1,7 @@
 import { toJson } from "../json.js";
 import { APIResponse } from "./APIResponse.js";
 import { createRequestUrl } from "./createRequestUrl.js";
+import { EndpointMetadata } from "./EndpointMetadata.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
@@ -9,6 +10,7 @@ import { makeRequest } from "./makeRequest.js";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 import { requestWithRetries } from "./requestWithRetries.js";
 import { Supplier } from "./Supplier.js";
+import { TokenSupplier } from "./TokenSupplier.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -17,7 +19,10 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+        headers?: Record<
+            string,
+            string | Supplier<string | null | undefined> | TokenSupplier<string | null | undefined> | null | undefined
+        >;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -27,6 +32,7 @@ export declare namespace Fetcher {
         requestType?: "json" | "file" | "bytes";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
+        endpointMetadata?: EndpointMetadata;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
