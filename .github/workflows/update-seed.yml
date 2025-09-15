@@ -83,8 +83,8 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
@@ -323,8 +323,8 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-fiber
           generator-path: generators/go
@@ -362,6 +362,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -441,6 +442,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
