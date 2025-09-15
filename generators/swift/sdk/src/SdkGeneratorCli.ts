@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
@@ -76,7 +76,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
-        await this.generateReadme(context);
+        await Promise.all([this.generateReadme(context), this.generateReference(context)]);
     }
 
     private generatePackageSwiftFile(context: SdkGeneratorContext): void {
@@ -96,6 +96,17 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+        }
+    }
+
+    private async generateReference(context: SdkGeneratorContext): Promise<void> {
+        try {
+            const builder = new ReferenceConfigBuilder();
+            // TODO(kafkas): Implement endpoints
+            const content = await context.generatorAgent.generateReference(builder);
+            context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
+        } catch (e) {
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
     }
 
