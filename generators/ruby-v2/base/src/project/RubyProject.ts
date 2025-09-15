@@ -162,11 +162,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private filePathFromRubyFile(file: File): AbsoluteFilePath {
-        return join(
-            this.absolutePathToOutputDirectory,
-            file.directory,
-            RelativeFilePath.of(file.filename)
-        );
+        return join(this.absolutePathToOutputDirectory, file.directory, RelativeFilePath.of(file.filename));
     }
 }
 
@@ -525,9 +521,7 @@ class ModuleFile {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-                RelativeFilePath.of(
-                    this.context.getFileNameForTypeId(typeDeclaration.name.typeId)
-                )
+                RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
             relativeImportPaths.add(relative(this.filePath, typeFilePath));
         });
@@ -536,10 +530,12 @@ class ModuleFile {
             relativeImportPaths.add(relative(this.filePath, filePath));
         });
 
-        const contents = this.baseContents + Array.from(relativeImportPaths)
-            .filter((importPath) => importPath.endsWith(".rb"))
-            .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
-            .join("\n");
+        const contents =
+            this.baseContents +
+            Array.from(relativeImportPaths)
+                .filter((importPath) => importPath.endsWith(".rb"))
+                .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+                .join("\n");
         return dedent`${contents}`;
     }
 
