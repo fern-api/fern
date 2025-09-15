@@ -456,11 +456,6 @@ async function generateLanguageSpecificDynamicIRs({
                 // construct a generatorConfig for php since it is not parsed by getDynamicGeneratorConfig
                 if (generatorInvocation.language === "php") {
                     packageName = (generatorInvocation.config as { packageName?: string })["packageName"] ?? "";
-                    dynamicGeneratorConfig = {
-                        apiName: workspace.workspaceName,
-                        organization: organization,
-                        customConfig: generatorInvocation.config
-                    } as dynamic.GeneratorConfig;
                 }
 
                 if (!generatorInvocation.language) {
@@ -493,7 +488,7 @@ async function generateLanguageSpecificDynamicIRs({
                         dynamicGeneratorConfig
                     });
 
-                    const dynamicIR = await convertIrToDynamicSnippetsIr({
+                    const dynamicIR = convertIrToDynamicSnippetsIr({
                         ir: irForDynamicSnippets,
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
