@@ -1,4 +1,3 @@
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import {
     ProtobufFile,
     ProtobufService,
@@ -8,20 +7,26 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { ast } from "../";
+import { CsharpGeneratorContext } from "../context/CsharpGeneratorContext";
 import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
-import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType";
 
 export class ProtobufResolver {
-    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private csharpTypeMapper: CsharpTypeMapper;
 
     public constructor(
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         csharpTypeMapper: CsharpTypeMapper
     ) {
         this.context = context;
         this.csharpTypeMapper = csharpTypeMapper;
+    }
+
+    private get csharp() {
+        return this.context.csharp;
     }
 
     public resolveWellKnownProtobufType(
@@ -38,7 +43,7 @@ export class ProtobufResolver {
         return undefined;
     }
 
-    public getProtobufClassReferenceOrThrow(typeId: TypeId): csharp.ClassReference {
+    public getProtobufClassReferenceOrThrow(typeId: TypeId): ast.ClassReference {
         const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId);
         switch (protobufType.type) {
             case "wellKnown": {
@@ -57,7 +62,7 @@ export class ProtobufResolver {
                         .filter((segment) => !rootNamespace.split(".").includes(segment))
                         .join("_")
                 );
-                return csharp.classReference({
+                return this.csharp.classReference({
                     name: protobufType.name.originalName,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
                     namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase() + aliasSuffix.slice(1)}`

@@ -281,7 +281,7 @@ public record ProblemDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator ProblemDescriptionBoard.Html(string value) => new(value);
     }
 
     /// <summary>
@@ -299,7 +299,9 @@ public record ProblemDescriptionBoard
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Variable(SeedTrace.VariableValue value) => new(value);
+        public static implicit operator ProblemDescriptionBoard.Variable(
+            SeedTrace.VariableValue value
+        ) => new(value);
     }
 
     /// <summary>
@@ -317,6 +319,7 @@ public record ProblemDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator TestCaseId(string value) => new(value);
+        public static implicit operator ProblemDescriptionBoard.TestCaseId(string value) =>
+            new(value);
     }
 }

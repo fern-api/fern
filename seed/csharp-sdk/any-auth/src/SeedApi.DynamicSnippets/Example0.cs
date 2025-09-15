@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedAnyAuth;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedAnyAuthClient(
             token: "<token>",
             clientOptions: new ClientOptions{

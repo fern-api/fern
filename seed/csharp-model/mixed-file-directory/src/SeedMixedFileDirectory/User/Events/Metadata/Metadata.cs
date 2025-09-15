@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory.User.Events;
+namespace SeedMixedFileDirectory.User_.Events;
 
 [Serializable]
 public record Metadata : IJsonOnDeserialized

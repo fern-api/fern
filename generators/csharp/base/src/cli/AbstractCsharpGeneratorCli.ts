@@ -5,11 +5,11 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContext";
 
 export abstract class AbstractCsharpGeneratorCli<
     CustomConfig extends BaseCsharpCustomConfigSchema,
-    CsharpGeneratorContext extends AbstractCsharpGeneratorContext<CustomConfig>
+    CsharpGeneratorContext extends BaseCsharpGeneratorContext<CustomConfig>
 > extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, CsharpGeneratorContext> {
     /**
      * Parses the IR for the Csharp generators

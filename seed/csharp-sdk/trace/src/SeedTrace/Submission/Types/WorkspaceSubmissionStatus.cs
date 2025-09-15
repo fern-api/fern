@@ -391,7 +391,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -409,8 +411,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -428,7 +431,9 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Ran(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Ran(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 
     /// <summary>
@@ -446,6 +451,8 @@ public record WorkspaceSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Traced(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionStatus.Traced(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 }

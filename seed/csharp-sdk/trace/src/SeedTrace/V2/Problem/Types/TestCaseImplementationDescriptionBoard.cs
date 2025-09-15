@@ -232,7 +232,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.Html(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -250,6 +251,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator ParamId(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.ParamId(
+            string value
+        ) => new(value);
     }
 }

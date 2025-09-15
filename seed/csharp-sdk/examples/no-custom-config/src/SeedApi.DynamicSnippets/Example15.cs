@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedExamples;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example15
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -34,7 +34,7 @@ public class Example15
                         ["imdb"] = 7.6,
                     },
                 },
-                Revenue = 1000000l
+                Revenue = 1000000L
             }
         );
     }

@@ -1,6 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
 import { ProtobufService } from "@fern-fern/ir-sdk/api";
+import { type ClassReference } from "../ast/ClassReference";
 
 /**
  * Information relevant to a particular gRPC client instance instantiated from a gRPC
@@ -8,6 +7,6 @@ import { ProtobufService } from "@fern-fern/ir-sdk/api";
  */
 export interface GrpcClientInfo {
     privatePropertyName: string;
-    classReference: csharp.ClassReference;
+    classReference: ClassReference;
     protobufService: ProtobufService;
 }

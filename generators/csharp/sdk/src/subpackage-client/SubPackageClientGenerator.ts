@@ -1,10 +1,8 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast, GrpcClientInfo } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -21,7 +19,7 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
     private service?: HttpService;
@@ -40,33 +38,33 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.classReference,
             partial: true,
-            access: csharp.Access.Public
+            access: ast.Access.Public
         });
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Private,
+            this.csharp.field({
+                access: ast.Access.Private,
                 name: CLIENT_MEMBER_NAME,
-                type: csharp.Type.reference(this.context.getRawClientClassReference())
+                type: this.csharp.Type.reference(this.context.getRawClientClassReference())
             })
         );
 
         if (this.grpcClientInfo != null) {
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                this.csharp.field({
+                    access: ast.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
+                    type: this.csharp.Type.reference(this.context.getRawGrpcClientClassReference())
                 })
             );
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                this.csharp.field({
+                    access: ast.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
-                    type: csharp.Type.reference(this.grpcClientInfo.classReference)
+                    type: this.csharp.Type.reference(this.grpcClientInfo.classReference)
                 })
             );
         }
@@ -78,11 +76,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             }
 
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Public,
+                this.csharp.field({
+                    access: ast.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -96,14 +94,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allNamespaceSegments: this.csharp.nameRegistry.allNamespacesOf(this.classReference.namespace),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });
     }
 
-    private generateEndpoints(): csharp.Method[] {
+    private generateEndpoints(): ast.Method[] {
         const service = this.service;
         if (!service) {
             throw new Error("Internal error; Service is not defined");
@@ -124,17 +122,17 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
-    private getConstructorMethod(): csharp.Class.Constructor {
-        const parameters: csharp.Parameter[] = [
-            csharp.parameter({
+    private getConstructorMethod(): ast.Class.Constructor {
+        const parameters: ast.Parameter[] = [
+            this.csharp.parameter({
                 name: "client",
-                type: csharp.Type.reference(this.context.getRawClientClassReference())
+                type: this.csharp.Type.reference(this.context.getRawClientClassReference())
             })
         ];
         return {
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             parameters,
-            body: csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
 
                 if (this.grpcClientInfo != null) {
@@ -142,14 +140,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     writer.write(this.grpcClientInfo.privatePropertyName);
                     writer.write(" = ");
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: this.grpcClientInfo.classReference,
-                            arguments_: [csharp.codeblock("_grpc.Channel")]
+                            arguments_: [this.csharp.codeblock("_grpc.Channel")]
                         })
                     );
                 }
 
-                const arguments_ = [csharp.codeblock("_client")];
+                const arguments_ = [this.csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     // skip subpackages that have no endpoints (recursively)
                     if (!this.context.subPackageHasEndpoints(subpackage)) {
@@ -157,7 +155,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
                             arguments_
                         })

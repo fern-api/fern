@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
@@ -8,8 +8,8 @@ namespace SeedOauthClientCredentials.Test.Unit.MockServer;
 [TestFixture]
 public class RefreshTokenTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -62,8 +62,8 @@ public class RefreshTokenTest : BaseMockServerTest
         );
     }
 
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string requestJson = """
             {

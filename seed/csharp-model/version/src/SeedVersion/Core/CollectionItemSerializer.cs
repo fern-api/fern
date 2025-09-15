@@ -42,7 +42,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
             {
                 var item = (TDatatype)(
                     JsonSerializer.Deserialize(ref reader, typeof(TDatatype), jsonSerializerOptions)
-                    ?? throw new Exception(
+                    ?? throw new global::System.Exception(
                         $"Failed to deserialize collection item of type {typeof(TDatatype)}"
                     )
                 );

@@ -4,8 +4,8 @@ import {
     hasNamedArgument,
     isNamedArgument
 } from "@fern-api/browser-compatible-base-generator";
-
-import { ClassReference } from "./ClassReference";
+import { type CSharp } from "../csharp";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -38,8 +38,11 @@ export class ClassInstantiation extends AstNode {
     public readonly multiline: boolean;
 
     /* eslint-disable deprecation/deprecation */
-    constructor({ classReference, arguments_, forceUseConstructor, properties, multiline }: ClassInstantiation.Args) {
-        super();
+    constructor(
+        { classReference, arguments_, forceUseConstructor, properties, multiline }: ClassInstantiation.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
         this.classReference = classReference;
         this.arguments_ = arguments_;
         this.forceUseConstructor = forceUseConstructor ?? false;

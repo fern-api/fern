@@ -230,7 +230,7 @@ public record TestCaseFunction
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator WithActualResult(
+        public static implicit operator TestCaseFunction.WithActualResult(
             SeedTrace.V2.V3.TestCaseWithActualResultImplementation value
         ) => new(value);
     }
@@ -250,7 +250,8 @@ public record TestCaseFunction
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(SeedTrace.V2.V3.VoidFunctionDefinition value) =>
-            new(value);
+        public static implicit operator TestCaseFunction.Custom(
+            SeedTrace.V2.V3.VoidFunctionDefinition value
+        ) => new(value);
     }
 }

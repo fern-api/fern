@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCustomAuth.Core;
 
@@ -7,8 +7,8 @@ namespace SeedCustomAuth.Test.Unit.MockServer;
 [TestFixture]
 public class GetWithCustomAuthTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
     {
         const string mockResponse = """
             true
@@ -27,8 +27,8 @@ public class GetWithCustomAuthTest : BaseMockServerTest
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string mockResponse = """
             true

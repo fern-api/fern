@@ -8,7 +8,7 @@ namespace SeedValidation.Test;
 [TestFixture]
 public class TypeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -19,18 +19,18 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        var expectedObject = new Type
+        var expectedObject = new SeedValidation.Type
         {
             Decimal = 1.1,
             Even = 2,
             Name = "rules",
             Shape = Shape.Square,
         };
-        var deserializedObject = JsonUtils.Deserialize<Type>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedValidation.Type>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -41,7 +41,7 @@ public class TypeTest
               "shape": "SQUARE"
             }
             """;
-        var actualObj = new Type
+        var actualObj = new SeedValidation.Type
         {
             Decimal = 1.1,
             Even = 2,
