@@ -97,4 +97,11 @@ export class SymbolRegistry {
     public isSymbolIdRegistered(symbolId: SymbolId) {
         return this.symbolMap.has(symbolId);
     }
+
+    /**
+     * Returns all registered symbols with their IDs and names.
+     */
+    public getAllSymbols() {
+        return Array.from(this.symbolMap.entries()).map(([id, name]) => ({ id, name }));
+    }
 }

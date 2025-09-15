@@ -1,3 +1,21 @@
+- version: 3.2.1
+  changelogEntry:
+    - summary: |
+        Changed Optional.of() to Optional.ofNullable() to handle null values gracefully, allowing users to reset to default version.
+      type: fix
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 3.2.0
+  changelogEntry:
+    - summary: |
+        Add comprehensive request and response body validation to wire tests for Java SDKs.
+        Wire tests now validate that SDKs correctly serialize request bodies and deserialize
+        response bodies, catching regressions in JSON handling.
+      type: feat
+  createdAt: "2025-09-11"
+  irVersion: 59
+
 - version: 3.1.0
   changelogEntry:
     - summary: |

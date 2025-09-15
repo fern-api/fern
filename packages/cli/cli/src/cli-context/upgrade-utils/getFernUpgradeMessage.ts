@@ -24,7 +24,7 @@ export async function getFernUpgradeMessage({
     cliEnvironment: CliEnvironment;
     upgradeInfo: FernUpgradeInfo;
 }): Promise<string | undefined> {
-    if (!hasUpgrade(upgradeInfo)) {
+    if (!hasUpgrade(upgradeInfo) || cliEnvironment.packageVersion == upgradeInfo.cliUpgradeInfo?.latestVersion) {
         return;
     }
 

@@ -64,7 +64,10 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
-        _query_param_names = ["limit", "offset", "includeDeleted", "sortBy"]
+        _query_param_names = [
+          ["limit", "offset", "includeDeleted", "sortBy"],
+          %i[limit offset includeDeleted sortBy]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -86,7 +89,10 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
-        _query_param_names = ["query", "department", "role", "isActive"]
+        _query_param_names = [
+          ["query", "department", "role", "isActive"],
+          %i[query department role isActive]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -181,7 +187,10 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
-        _query_param_names = ["role", "status", "secondaryRole"]
+        _query_param_names = [
+          ["role", "status", "secondaryRole"],
+          %i[role status secondaryRole]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

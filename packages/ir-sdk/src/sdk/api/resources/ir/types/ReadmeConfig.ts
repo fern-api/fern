@@ -27,4 +27,6 @@ export interface ReadmeConfig {
      * with each feature.
      */
     features: Record<FernIr.FeatureId, FernIr.EndpointId[]> | undefined;
+    /** Supply custom sections as markdown to be included in the readme */
+    customSections: FernIr.ReadmeCustomSection[] | undefined;
 }
