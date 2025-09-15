@@ -165,7 +165,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         return join(
             this.absolutePathToOutputDirectory,
             file.directory,
-            RelativeFilePath.of(file.filename.replaceAll(".rb", ""))
+            RelativeFilePath.of(file.filename)
         );
     }
 }
@@ -489,44 +489,29 @@ class ModuleFile {
         return join(
             this.project.absolutePathToOutputDirectory,
             this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-            RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", ""))
+            RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
         );
     }
 
     public toString(): string {
-        let contents = this.baseContents;
-        const visitedPaths = new Set<string>();
+        const relativeImportPaths: Set<RelativeFilePath> = new Set();
 
-        contents += `# Internal Types\n`;
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
         coreFiles.forEach((filename) => {
-            const outputFilename = this.project.getAsIsOutputFilename(filename);
-            if (!outputFilename.endsWith(".rb")) {
-                return;
-            }
             const absoluteFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.project.getAsIsOutputDirectory(),
-                RelativeFilePath.of(outputFilename.replaceAll(".rb", ""))
+                RelativeFilePath.of(this.project.getAsIsOutputFilename(filename))
             );
-            contents += `require_relative "${relative(this.filePath, absoluteFilePath)}"\n`;
-            visitedPaths.add(absoluteFilePath.toString());
+            relativeImportPaths.add(relative(this.filePath, absoluteFilePath));
         });
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
-            if (!filePath.endsWith(".rb")) {
-                return;
-            }
-            if (!visitedPaths.has(filePath.toString())) {
-                contents += `require_relative "${relative(this.filePath, filePath)}"\n`;
-                visitedPaths.add(filePath.toString());
-            }
+            relativeImportPaths.add(relative(this.filePath, filePath));
         });
 
-        contents += "\n";
-        contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
         const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
         const filteredTypeDeclarations = typeDeclarations.filter((typeDeclaration) => {
@@ -537,28 +522,24 @@ class ModuleFile {
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
 
         sorted.forEach((typeDeclaration) => {
-            const typeFileName = this.context.getFileNameForTypeId(typeDeclaration.name.typeId);
-            if (!typeFileName.endsWith(".rb")) {
-                return;
-            }
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-                RelativeFilePath.of(typeFileName.replaceAll(".rb", ""))
+                RelativeFilePath.of(
+                    this.context.getFileNameForTypeId(typeDeclaration.name.typeId)
+                )
             );
-            const importPath = typeFilePath.replaceAll(".rb", "");
-            contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
-            visitedPaths.add(typeFilePath);
+            relativeImportPaths.add(relative(this.filePath, typeFilePath));
         });
 
-        contents += "\n";
-        contents += `# Client Types\n`;
         rubyFilePaths.forEach((filePath) => {
-            if (!visitedPaths.has(filePath.toString()) && filePath.endsWith(".rb")) {
-                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
-                visitedPaths.add(filePath.toString());
-            }
+            relativeImportPaths.add(relative(this.filePath, filePath));
         });
+
+        const contents = this.baseContents + Array.from(relativeImportPaths)
+            .filter((importPath) => importPath.endsWith(".rb"))
+            .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+            .join("\n");
         return dedent`${contents}`;
     }
 
