@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled. 
-        This prevents compilation errors in the TypeScript SDK. 
+        This prevents compilation errors in the TypeScript SDK.
       type: fix
   createdAt: "2025-09-08"
   irVersion: 59
