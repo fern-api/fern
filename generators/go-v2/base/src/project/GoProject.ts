@@ -1,6 +1,6 @@
 import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
@@ -12,14 +12,12 @@ import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
 import { GoFile } from "./GoFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
-const INTERNAL_DIRECTORY = "internal";
 
 /**
  * In memory representation of a Go project.
  */
 export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGoCustomConfigSchema>> {
     private goFiles: Record<string, GoFile> = {};
-    private internalFiles: File[] = [];
 
     public constructor({ context }: { context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema> }) {
         super(context);
@@ -65,6 +63,15 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             ? path.join(this.absolutePathToOutputDirectory, this.context.customConfig.packagePath)
             : this.absolutePathToOutputDirectory;
 
+        console.log(
+            "goFiles",
+            JSON.stringify(
+                files.map((file) => file.getFullyQualifiedName()),
+                null,
+                2
+            )
+        );
+
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
         if (files.length > 0) {
             await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
@@ -75,18 +82,34 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         return this.absolutePathToOutputDirectory;
     }
 
-    private async writeInternalFiles(): Promise<AbsoluteFilePath> {
+    private async writeInternalFiles(): Promise<void> {
         for (const filename of this.context.getInternalAsIsFiles()) {
-            this.internalFiles.push(
-                await this.createAsIsFile({
-                    filename
-                })
-            );
+            const file = await this.createAsIsFile({
+                filename
+            });
+
+            // Parse the directory path and filename from the full path
+            const dirname = path.dirname(filename);
+            const basename = path.basename(filename);
+            const goFilename = basename.replace(".go_", ".go");
+
+            // Create a GoFile from the raw file content
+            const goFile = new GoFile({
+                node: [], // Empty node since this is raw content
+                directory: RelativeFilePath.of(dirname),
+                filename: goFilename,
+                packageName: "internal", // Default package name for internal files
+                rootImportPath: this.getRootImportPath(),
+                importPath: this.getImportPath(dirname),
+                customConfig: this.context.customConfig
+            });
+
+            // Override the content with the raw file content
+            const originalToFile = goFile.toFile.bind(goFile);
+            goFile.toFile = () => new File(goFilename, RelativeFilePath.of(dirname), file.fileContents);
+
+            this.addGoFiles(goFile);
         }
-        return await this.createGoDirectory({
-            absolutePathToDirectory: join(this.absolutePathToOutputDirectory),
-            files: this.internalFiles
-        });
     }
 
     public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
@@ -100,17 +123,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    private async createGoDirectory({
-        absolutePathToDirectory,
-        files
-    }: {
-        absolutePathToDirectory: AbsoluteFilePath;
-        files: File[];
-    }): Promise<AbsoluteFilePath> {
-        await this.mkdir(absolutePathToDirectory);
-        await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
-        return absolutePathToDirectory;
-    }
+	private async createGoDirectory({
+		absolutePathToDirectory,
+		files
+	}: {
+		absolutePathToDirectory: AbsoluteFilePath;
+		files: File[];
+	}): Promise<AbsoluteFilePath> {
+		await this.mkdir(absolutePathToDirectory);
+		await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
+		return absolutePathToDirectory;
+	}
 
     private async createAsIsFile({ filename }: { filename: string }): Promise<File> {
         const contents = (await readFile(this.getAsIsFilepath(filename))).toString();
@@ -119,6 +142,16 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     private getAsIsFilepath(filename: string): string {
         return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
+    }
+
+    private getRootImportPath(): string {
+        const moduleConfig = this.getModuleConfig({ config: this.context.config });
+        return moduleConfig.path;
+    }
+
+    private getImportPath(dirname: string): string {
+        const rootImportPath = this.getRootImportPath();
+        return dirname ? `${rootImportPath}/${dirname}` : rootImportPath;
     }
 
     private async runGoModTidy(): Promise<void> {
