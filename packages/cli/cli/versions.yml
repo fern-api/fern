@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Support nested folders with x-fern-sdk-group-name in AsyncAPI parsing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.3
+
+- changelogEntry:
     - summary: Support for PHP dynamic SDK snippets in the docs.
       type: fix
   irVersion: 59
