@@ -39,7 +39,7 @@
     "@fern-fern/ir-sdk": "59.0.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vitest": "^2.1.9"
   }
 }
