@@ -3,10 +3,9 @@ import { resolve } from "node:path";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../../../ModelCustomConfig";
 import { ModelGeneratorContext } from "../../../ModelGeneratorContext";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));
@@ -17,7 +16,12 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
         type: "local",
         _visit: (visitor) => visitor.local()
     });
-    return new ModelGeneratorContext(ir as IntermediateRepresentation, generatorConfig, customConfig, notificationService);
+    return new ModelGeneratorContext(
+        ir as IntermediateRepresentation,
+        generatorConfig,
+        customConfig,
+        notificationService
+    );
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {
