@@ -1,37 +1,41 @@
 export const AsIsFiles = {
-    ModelField: "types/model/field.Template.rb",
-    Model: "types/model.Template.rb",
-    Array: "types/array.Template.rb",
+    ApiError: "errors/api_error.Template.rb",
+
+    // Internal files
+
+    ModelField: "internal/types/model/field.Template.rb",
+    Model: "internal/types/model.Template.rb",
+    Array: "internal/types/array.Template.rb",
 
     // Errors
-    ErrorsConstraint: "errors/constraint_error.Template.rb",
-    ErrorsType: "errors/type_error.Template.rb",
+    ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
+    ErrorsType: "internal/errors/type_error.Template.rb",
 
     // HTTP
-    HttpBaseRequest: "http/base_request.Template.rb",
-    HttpRawClient: "http/raw_client.Template.rb",
+    HttpBaseRequest: "internal/http/base_request.Template.rb",
+    HttpRawClient: "internal/http/raw_client.Template.rb",
 
     // JSON
-    JsonRequest: "json/request.Template.rb",
-    JsonSerializable: "json/serializable.Template.rb",
+    JsonRequest: "internal/json/request.Template.rb",
+    JsonSerializable: "internal/json/serializable.Template.rb",
 
     // Multipart
-    MultipartEncoder: "multipart/multipart_encoder.Template.rb",
-    MultipartFormDataPart: "multipart/multipart_form_data_part.Template.rb",
-    MultipartFormData: "multipart/multipart_form_data.Template.rb",
-    MultipartRequest: "multipart/multipart_request.Template.rb",
+    MultipartEncoder: "internal/multipart/multipart_encoder.Template.rb",
+    MultipartFormDataPart: "internal/multipart/multipart_form_data_part.Template.rb",
+    MultipartFormData: "internal/multipart/multipart_form_data.Template.rb",
+    MultipartRequest: "internal/multipart/multipart_request.Template.rb",
 
     // Types
-    TypesModelField: "types/model/field.Template.rb",
-    TypesArray: "types/array.Template.rb",
-    TypesBoolean: "types/boolean.Template.rb",
-    TypesEnum: "types/enum.Template.rb",
-    TypesHash: "types/hash.Template.rb",
-    TypesModel: "types/model.Template.rb",
-    TypesType: "types/type.Template.rb",
-    TypesUnion: "types/union.Template.rb",
-    TypesUnknown: "types/unknown.Template.rb",
-    TypesUtils: "types/utils.Template.rb"
+    TypesModelField: "internal/types/model/field.Template.rb",
+    TypesArray: "internal/types/array.Template.rb",
+    TypesBoolean: "internal/types/boolean.Template.rb",
+    TypesEnum: "internal/types/enum.Template.rb",
+    TypesHash: "internal/types/hash.Template.rb",
+    TypesModel: "internal/types/model.Template.rb",
+    TypesType: "internal/types/type.Template.rb",
+    TypesUnion: "internal/types/union.Template.rb",
+    TypesUnknown: "internal/types/unknown.Template.rb",
+    TypesUtils: "internal/types/utils.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -65,5 +69,6 @@ const asIsTopoValue = {
     [AsIsFiles.TypesBoolean]: 16,
     [AsIsFiles.TypesEnum]: 17,
     [AsIsFiles.TypesHash]: 18,
-    [AsIsFiles.TypesUnknown]: 19
+    [AsIsFiles.TypesUnknown]: 19,
+    [AsIsFiles.ApiError]: 20,
 };
