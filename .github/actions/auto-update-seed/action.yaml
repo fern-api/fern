@@ -74,26 +74,35 @@ runs:
         diff_code=$?
         echo "Git diff exit code: $diff_code"
 
-        case $diff_code in
-          0)
-            echo "No changes detected in seed/${{ inputs.generator-name }}"
-            echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
-            ;;
-          1)
-            echo "Changes detected in seed/${{ inputs.generator-name }}"
-            echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
-            ;;
-          2)
-            echo "Error occurred while checking seed/${{ inputs.generator-name }}"
-            exit 1
-            ;;
-          *)
-            echo "Unexpected exit code: $diff_code"
-            exit 1
-            ;;
-        esac
+        if [ $diff_code -eq 0 ]; then
+          echo "No changes detected in seed/${{ inputs.generator-name }}"
+          echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
+        elif [ $diff_code -eq 1 ]; then
+          echo "Changes detected in seed/${{ inputs.generator-name }}"
+          echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
+        else
+          echo "Error occurred while checking seed/${{ inputs.generator-name }}"
+          exit 1
+        fi
 
-        echo "Step completed successfully with exit code: ${{ diff_code }}"
+        # case $diff_code in
+        #   0)
+        #     echo "No changes detected in seed/${{ inputs.generator-name }}"
+        #     echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
+        #     ;;
+        #   1)
+        #     echo "Changes detected in seed/${{ inputs.generator-name }}"
+        #     echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
+        #     ;;
+        #   2)
+        #     echo "Error occurred while checking seed/${{ inputs.generator-name }}"
+        #     exit 1
+        #     ;;
+        #   *)
+        #     echo "Unexpected exit code: $diff_code"
+        #     exit 1
+        #     ;;
+        # esac
 
     # Make patch file for seed changes
     - name: Make Patch for Seed Artifacts
