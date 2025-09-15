@@ -14,11 +14,7 @@ public class Example2
             }
         );
 
-        await client.BasicAuth.PostWithBasicAuthAsync(
-            new Dictionary<string, object>() {
-                ["key"] = "value",
-            }
-        );
+        await client.BasicAuth.GetWithBasicAuthAsync();
     }
 
 }

@@ -6,5 +6,6 @@ from .circle import Circle
 from .get_shape_request import GetShapeRequest
 from .shape import Shape
 from .square import Square
+from .with_name import WithName
 
-__all__ = ["Circle", "GetShapeRequest", "Shape", "Square"]
+__all__ = ["Circle", "GetShapeRequest", "Shape", "Square", "WithName"]

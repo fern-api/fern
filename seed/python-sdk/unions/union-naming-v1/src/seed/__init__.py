@@ -119,7 +119,7 @@ if typing.TYPE_CHECKING:
         VibrantExcitementBigUnion,
     )
     from .client import AsyncSeedUnions, SeedUnions
-    from .union import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape
+    from .union import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape, WithName
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActiveDiamond": ".bigunion",
@@ -237,6 +237,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValueUnionWithTime": ".types",
     "VibrantExcitement": ".bigunion",
     "VibrantExcitementBigUnion": ".bigunion",
+    "WithName": ".union",
     "__version__": ".version",
     "bigunion": ".",
     "types": ".",
@@ -379,6 +380,7 @@ __all__ = [
     "ValueUnionWithTime",
     "VibrantExcitement",
     "VibrantExcitementBigUnion",
+    "WithName",
     "__version__",
     "bigunion",
     "types",

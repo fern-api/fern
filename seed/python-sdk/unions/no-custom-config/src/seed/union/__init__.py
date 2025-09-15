@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square
+    from .types import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
 _dynamic_imports: typing.Dict[str, str] = {
     "Circle": ".types",
     "GetShapeRequest": ".types",
@@ -14,6 +14,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Shape_Circle": ".types",
     "Shape_Square": ".types",
     "Square": ".types",
+    "WithName": ".types",
 }
 
 
@@ -36,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Circle", "GetShapeRequest", "Shape", "Shape_Circle", "Shape_Square", "Square"]
+__all__ = ["Circle", "GetShapeRequest", "Shape", "Shape_Circle", "Shape_Square", "Square", "WithName"]

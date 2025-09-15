@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPropertyAccess, UserProfile, UserProfileVerification\n\nclient = SeedPropertyAccess(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create_user(\n    id=\"id\",\n    email=\"email\",\n    password=\"password\",\n    profile=UserProfile(\n        name=\"name\",\n        verification=UserProfileVerification(\n            verified=\"verified\",\n        ),\n        ssn=\"ssn\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPropertyAccess, UserProfile, UserProfileVerification\n\nclient = AsyncSeedPropertyAccess(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create_user(\n        id=\"id\",\n        email=\"email\",\n        password=\"password\",\n        profile=UserProfile(\n            name=\"name\",\n            verification=UserProfileVerification(\n                verified=\"verified\",\n            ),\n            ssn=\"ssn\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

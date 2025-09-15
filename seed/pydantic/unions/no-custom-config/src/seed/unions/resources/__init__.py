@@ -114,7 +114,7 @@ from .types import (
     Union_Bar,
     Union_Foo,
 )
-from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square
+from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
 
 __all__ = [
     "ActiveDiamond",
@@ -230,6 +230,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "bigunion",
     "types",
     "union",
