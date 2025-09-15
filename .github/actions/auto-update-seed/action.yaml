@@ -70,10 +70,12 @@ runs:
       id: check-changes
       shell: bash
       run: |
+        echo "Checking for staged changes in seed/${{ inputs.generator-name }}"
         git --no-pager diff --staged --exit-code -- seed/${{ inputs.generator-name }}
-        exit_code=$?
+        diff_code=$?
+        echo "Git diff exit code: $diff_code"
 
-        case $exit_code in
+        case $diff_code in
           0)
             echo "No changes detected in seed/${{ inputs.generator-name }}"
             echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
@@ -87,10 +89,12 @@ runs:
             exit 1
             ;;
           *)
-            echo "Unexpected exit code: $exit_code"
+            echo "Unexpected exit code: $diff_code"
             exit 1
             ;;
         esac
+
+        echo "Step completed successfully with exit code: $diff_code"
 
     # Make patch file for seed changes
     - name: Make Patch for Seed Artifacts
