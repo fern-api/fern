@@ -46,9 +46,12 @@ export class WireTestGenerator {
             writer.writeLine(`client = ${clientClassName}.builder()`);
             writer.indent();
             writer.writeLine('.url(server.url("/").toString())');
-            if (hasAuth) {
-                writer.writeLine('.token("test-token")');
+
+            const authConfig = this.getAuthClientBuilderCalls();
+            if (authConfig) {
+                writer.writeLine(authConfig);
             }
+
             writer.writeLine(".build();");
             writer.dedent();
             writer.dedent();
@@ -460,7 +463,6 @@ export class WireTestGenerator {
 
             const typeName = simpleWriter.buffer.trim();
 
-            // Handle void case
             if (typeName === "Void") {
                 return "void";
             }
@@ -469,6 +471,109 @@ export class WireTestGenerator {
         } catch (error) {
             this.context.logger.warn(`Could not resolve return type for endpoint ${endpoint.id}, using Object`);
             return "Object";
+        }
+    }
+
+    /**
+     * Generates authentication configuration for the client builder based on auth schemes
+     * Similar to TypeScript's getAuthClientOptions() but returns Java builder method calls
+     */
+    private getAuthClientBuilderCalls(): string | undefined {
+        if (!this.context.ir.auth?.schemes || this.context.ir.auth.schemes.length === 0) {
+            return undefined;
+        }
+
+        const authCalls: string[] = [];
+
+        for (const scheme of this.context.ir.auth.schemes) {
+            const authCall = this.getAuthCallForScheme(scheme);
+            if (authCall) {
+                authCalls.push(authCall);
+            }
+        }
+
+        return authCalls.length > 0 ? authCalls.join("\n            ") : undefined;
+    }
+
+    private getAuthCallForScheme(scheme: any): string | undefined {
+        // Handle different auth scheme types based on the IR structure
+        switch (scheme.type) {
+            case "bearer":
+                // Bearer token authentication
+                const methodName = scheme.token?.camelCase?.unsafeName || "token";
+                const tokenValue = this.getAuthTestValue("bearer", "token");
+                return `.${methodName}("${tokenValue}")`;
+
+            case "basic":
+                // Basic authentication with username and password
+                const username = this.getAuthTestValue("basic", "username");
+                const password = this.getAuthTestValue("basic", "password");
+                // Check if the SDK uses a credentials method or separate username/password methods
+                if (scheme.username && scheme.password) {
+                    const usernameMethod = scheme.username.camelCase?.unsafeName || "username";
+                    const passwordMethod = scheme.password.camelCase?.unsafeName || "password";
+                    return `.${usernameMethod}("${username}")\n            .${passwordMethod}("${password}")`;
+                } else {
+                    // Use the credentials pattern from dynamic snippets
+                    return `.credentials("${username}", "${password}")`;
+                }
+
+            case "header":
+                // Custom header authentication
+                if (scheme.header || scheme.name) {
+                    const headerName = scheme.header?.name?.wireValue || scheme.name?.wireValue || "X-API-Key";
+                    const headerMethodName = scheme.header?.name?.name?.camelCase?.unsafeName ||
+                                           scheme.name?.name?.camelCase?.unsafeName ||
+                                           "apiKey";
+                    const headerValue = this.getAuthTestValue("header", headerName);
+
+                    // Check if prefix is defined (e.g., "Bearer ", "ApiKey ")
+                    const prefix = scheme.header?.prefix || scheme.prefix || "";
+                    const fullValue = prefix ? `${prefix}${headerValue}` : headerValue;
+
+                    return `.${headerMethodName}("${fullValue}")`;
+                }
+                break;
+
+            case "oauth":
+                // OAuth client credentials flow
+                const clientIdMethod = scheme.clientId?.camelCase?.unsafeName || "clientId";
+                const clientSecretMethod = scheme.clientSecret?.camelCase?.unsafeName || "clientSecret";
+                const clientId = this.getAuthTestValue("oauth", "clientId");
+                const clientSecret = this.getAuthTestValue("oauth", "clientSecret");
+                return `.${clientIdMethod}("${clientId}")\n            .${clientSecretMethod}("${clientSecret}")`;
+
+            case "inferred":
+                // Inferred auth scheme - look for token endpoint and extract auth pattern
+                this.context.logger.debug("Inferred auth scheme detected - using default test token");
+                // For inferred auth, we'll use a simple token pattern as fallback
+                return `.token("test-token")`;
+
+            default:
+                this.context.logger.warn(`Unsupported auth scheme type: ${scheme.type}`);
+                return undefined;
+        }
+        return undefined;
+    }
+
+    /**
+     * Gets a test value for authentication based on the auth type and field
+     * In the future, this could extract from actual IR examples
+     */
+    private getAuthTestValue(authType: string, field: string): string {
+        // For wire tests, we use predictable test values
+        // These match TypeScript's approach of using "test" for most values
+        switch (authType) {
+            case "bearer":
+                return "test-token";
+            case "basic":
+                return field === "username" ? "test-user" : "test-password";
+            case "header":
+                return "test-api-key";
+            case "oauth":
+                return field === "clientId" ? "test-client-id" : "test-client-secret";
+            default:
+                return "test";
         }
     }
 }
