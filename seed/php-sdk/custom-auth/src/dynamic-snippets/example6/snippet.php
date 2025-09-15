@@ -5,8 +5,13 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
+    customAuthScheme: '<value>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->nestedNoAuth->api->getSomething();
+$client->customAuth->postWithCustomAuth(
+    [
+        'key' => "value",
+    ],
+);
