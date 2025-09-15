@@ -1,3 +1,11 @@
+- version: 3.4.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
 - version: 3.3.0
   changelogEntry:
     - summary: |
