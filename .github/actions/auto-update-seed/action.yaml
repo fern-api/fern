@@ -70,8 +70,7 @@ runs:
       id: check-changes
       shell: bash
       run: |
-        echo "Checking for staged changes in seed/${{ inputs.generator-name }}"
-        git --no-pager diff --staged --exit-code -- seed/${{ inputs.generator-name }}
+        git --no-pager diff --staged --quiet -- seed/${{ inputs.generator-name }}
         diff_code=$?
         echo "Git diff exit code: $diff_code"
 
@@ -94,7 +93,7 @@ runs:
             ;;
         esac
 
-        echo "Step completed successfully with exit code: $diff_code"
+        echo "Step completed successfully with exit code: ${{ diff_code }}"
 
     # Make patch file for seed changes
     - name: Make Patch for Seed Artifacts
