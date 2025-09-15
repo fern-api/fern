@@ -4,7 +4,6 @@ import (
     client "github.com/oauth-client-credentials/fern/client"
     option "github.com/oauth-client-credentials/fern/option"
     context "context"
-    fern "github.com/oauth-client-credentials/fern"
 )
 
 func do() {
@@ -14,14 +13,7 @@ func do() {
         ),
         nil,
     )
-    client.Auth.GetTokenWithClientCredentials(
+    client.Simple.GetSomething(
         context.TODO(),
-        &fern.GetTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
     )
 }
