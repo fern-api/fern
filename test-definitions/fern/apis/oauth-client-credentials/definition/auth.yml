@@ -24,6 +24,18 @@ service:
             grant_type: literal<"client_credentials">
             scope: optional<string>
       response: TokenResponse
+      examples:
+        - request:
+            client_id: "my_oauth_app_123"
+            client_secret: "sk_live_abcdef123456789"
+            audience: "https://api.example.com"
+            grant_type: "client_credentials"
+            scope: "read:users"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 1
+              refresh_token: "refresh_token"
 
     refreshToken:
       path: /token
@@ -39,3 +51,16 @@ service:
             grant_type: literal<"refresh_token">
             scope: optional<string>
       response: TokenResponse
+      examples:
+        - request:
+            client_id: "my_oauth_app_123"
+            client_secret: "sk_live_abcdef123456789"
+            refresh_token: "refresh_token"
+            audience: "https://api.example.com"
+            grant_type: "refresh_token"
+            scope: "read:users"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 1
+              refresh_token: "refresh_token"
