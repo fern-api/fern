@@ -931,14 +931,16 @@ function convertSnippetsConfiguration({
     rawConfig
 }: {
     rawConfig: docsYml.RawSchemas.SnippetsConfiguration;
-}): docsYml.DocsNavigationItem.SnippetsConfiguration {
+}): docsYml.DocsNavigationItem.SnippetsConfiguration {    
     return {
         python: rawConfig.python,
         typescript: rawConfig.typescript,
         go: rawConfig.go,
         java: rawConfig.java,
         ruby: rawConfig.ruby,
-        csharp: rawConfig.csharp
+        csharp: rawConfig.csharp,
+        php: rawConfig.php,
+        swift: rawConfig.swift
     };
 }
 

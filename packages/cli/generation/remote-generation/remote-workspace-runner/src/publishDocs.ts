@@ -24,6 +24,7 @@ import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
+import { dynamic } from "@fern-api/ir-sdk";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -428,11 +429,41 @@ async function generateLanguageSpecificDynamicIRs({
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
-                const packageName = generatorsYml.getPackageName({ generatorInvocation });
+                let dynamicGeneratorConfig = getDynamicGeneratorConfig({ apiName: workspace.workspaceName ?? "", organization, generatorInvocation });
+                let packageName = "";
+                                
+                if (dynamicGeneratorConfig?.outputConfig.type === "publish") {
+                    switch (dynamicGeneratorConfig.outputConfig.value.type) {
+                        case "npm": 
+                        case "nuget":
+                        case "pypi":
+                        case "rubygems":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
+                            break;
+                        case "maven": 
+                            packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
+                            break;
+                        case "go": 
+                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
+                    }   
+                }
+                                
+                if (generatorInvocation.language === "php") {
+                    packageName = (generatorInvocation.config as { packageName?: string })["packageName"] ?? "";
+                    dynamicGeneratorConfig = {
+                        apiName: workspace.workspaceName,
+                        organization: organization,
+                        customConfig: generatorInvocation.config
+                     } as dynamic.GeneratorConfig;
+                }
 
+                if (!generatorInvocation.language) {
+                    continue;
+                }
+                
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
-                    packageName &&
                     generatorInvocation.language &&
                     snippetConfiguration[generatorInvocation.language] === packageName
                 ) {
@@ -453,7 +484,8 @@ async function generateLanguageSpecificDynamicIRs({
                         packageName: packageName,
                         version: undefined,
                         context,
-                        sourceResolver: new SourceResolverImpl(context, workspace)
+                        sourceResolver: new SourceResolverImpl(context, workspace),
+                        dynamicGeneratorConfig
                     });
 
                     const dynamicIR = await convertIrToDynamicSnippetsIr({
@@ -461,13 +493,9 @@ async function generateLanguageSpecificDynamicIRs({
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
                         generationLanguage: generatorInvocation.language,
-                        generatorConfig: getDynamicGeneratorConfig({
-                            apiName: workspace.workspaceName ?? "",
-                            organization,
-                            generatorInvocation
-                        })
+                        generatorConfig: dynamicGeneratorConfig
                     });
-
+                    
                     // include metadata along with the dynamic IR
                     if (dynamicIR) {
                         languageSpecificIRs[generatorInvocation.language] = {
