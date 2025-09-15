@@ -637,11 +637,12 @@ jobs:
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   # Use always() to ensure this runs even if stages are skipped. Add check back to
-  # make sure it doesn't 
+  # make sure it doesn't run for failures or cancellations
+  # always() && ${{ needs.setup.outputs.create-artifacts == 'true' }} &&
+      # !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
   commit-seed-changes:
     if: | 
-      always() && ${{ needs.setup.outputs.create-artifacts == 'true' }} &&
-      !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      always()
     needs:
       [changes, setup, ruby-model-seed-update, ruby-sdk-seed-update, ruby-sdk-v2-seed-update,
       pydantic-model-seed-update, python-sdk-seed-update, fastapi-seed-update, openapi-seed-update, 
