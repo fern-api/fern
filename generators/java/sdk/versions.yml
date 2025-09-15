@@ -1,6 +1,8 @@
 - version: 3.2.2
   changelogEntry:
-    - summary: Fix nullable request bodies with Optional fields
+    - summary: |
+        Fix nullable request bodies with Optional fields to correctly generate .isPresent() checks
+        on the Optional field itself, rather than on the entire request object.
       type: fix
   createdAt: "2025-09-15"
   irVersion: 59
