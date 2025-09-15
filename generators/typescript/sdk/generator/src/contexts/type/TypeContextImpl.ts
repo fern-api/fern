@@ -60,6 +60,8 @@ export class TypeContextImpl implements TypeContext {
     private npmPackage: NpmPackage | undefined;
     private context: BaseContext;
     private useDefaultRequestParameterValues: boolean;
+    private requestResponseVariantCache: Map<TypeId, { request: boolean; response: boolean }> = new Map();
+    private requestResponseVariantInProgress: Set<TypeId> = new Set();
 
     constructor({
         npmPackage,
@@ -366,8 +368,20 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public needsRequestResponseTypeVariantById(typeId: TypeId): { request: boolean; response: boolean } {
+        // Check cache first
+        if (this.requestResponseVariantCache.has(typeId)) {
+            return this.requestResponseVariantCache.get(typeId) as { request: boolean; response: boolean };
+        }
+        // Prevent infinite recursion: if already visiting, return default
+        if (this.requestResponseVariantInProgress.has(typeId)) {
+            return { request: false, response: false };
+        }
+        this.requestResponseVariantInProgress.add(typeId);
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeId);
-        return this.needsRequestResponseTypeVariantByType(typeDeclaration.shape);
+        const result = this.needsRequestResponseTypeVariantByType(typeDeclaration.shape);
+        this.requestResponseVariantCache.set(typeId, result);
+        this.requestResponseVariantInProgress.delete(typeId);
+        return result;
     }
 
     public needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean } {

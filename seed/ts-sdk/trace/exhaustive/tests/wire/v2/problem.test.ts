@@ -164,7 +164,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -201,7 +201,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -323,7 +323,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -360,7 +360,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
