@@ -184,6 +184,10 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  java-nullable-named-request-types:
+    - outputFolder: custom-config
+      customConfig:
+        respect-nullable-schemas: true
   enum:
     - customConfig:
         enable-forward-compatible-enums: true
