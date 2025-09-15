@@ -11,7 +11,7 @@ export declare namespace RawClient {
         /** reference to a variable that is the body */
         bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
-        pathParameterReferences?: Record<string, string>;
+        pathParameterReferences: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
         /** the query parameters to pass to the endpoint */
@@ -51,7 +51,7 @@ export class RawClient {
                     );
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
-                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
@@ -75,7 +75,7 @@ export class RawClient {
                     writer.indent();
                     writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
                     writer.write(`path: `);
-                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
@@ -100,7 +100,7 @@ export class RawClient {
             );
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
-            this.writePathString({ writer, endpoint, pathParameterReferences: {} });
+            this.writePathString({ writer, endpoint, pathParameterReferences });
             writer.newLine();
             writer.dedent();
             writer.write(`)`);

@@ -184,6 +184,10 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  java-nullable-named-request-types:
+    - outputFolder: custom-config
+      customConfig:
+        respect-nullable-schemas: true
   enum:
     - customConfig:
         enable-forward-compatible-enums: true
@@ -202,6 +206,18 @@ fixtures:
         client-class-name: BaseClient
         enable-extensible-builders: true
       outputFolder: extensible-builders
+  basic-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: basic-auth
+  oauth-client-credentials:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: oauth-client-credentials
+  custom-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: custom-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true

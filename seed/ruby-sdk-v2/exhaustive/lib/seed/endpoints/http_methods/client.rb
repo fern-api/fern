@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Endpoints
@@ -13,14 +14,12 @@ module Seed
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "GET",
-            path: "/http-methods/#{"
+            path: "/http-methods/#{params[:id]}"
           )
           _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return 
-          else
-            raise _response.body
-          end
+          return if _response.code >= "200" && _response.code < "300"
+
+          raise _response.body
         end
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -29,14 +28,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "POST",
             path: "/http-methods",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
             return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
-          else
-            raise _response.body
           end
+
+          raise _response.body
         end
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -45,14 +44,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PUT",
             path: "/http-methods/#{params[:id]}",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
             return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
-          else
-            raise _response.body
           end
+
+          raise _response.body
         end
 
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -61,14 +60,14 @@ module Seed
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "PATCH",
             path: "/http-methods/#{params[:id]}",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
+            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h
           )
           _response = @client.send(_request)
           if _response.code >= "200" && _response.code < "300"
             return Seed::Types::Object_::Types::ObjectWithOptionalField.load(_response.body)
-          else
-            raise _response.body
           end
+
+          raise _response.body
         end
 
         # @return [bool]
@@ -76,16 +75,13 @@ module Seed
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
             method: "DELETE",
-            path: "/http-methods/#{"
+            path: "/http-methods/#{params[:id]}"
           )
           _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return 
-          else
-            raise _response.body
-          end
-        end
+          return if _response.code >= "200" && _response.code < "300"
 
+          raise _response.body
+        end
       end
     end
   end

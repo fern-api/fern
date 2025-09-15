@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,8 +24,6 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
 require_relative "seed/endpoints/put/types/error_category"
 require_relative "seed/endpoints/put/types/error_code"
 require_relative "seed/endpoints/put/types/error"
@@ -43,8 +40,6 @@ require_relative "seed/types/object/types/double_optional"
 require_relative "seed/types/union/types/dog"
 require_relative "seed/types/union/types/cat"
 require_relative "seed/types/union/types/animal"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/endpoints/client"
 require_relative "seed/endpoints/container/client"
@@ -70,4 +65,3 @@ require_relative "seed/no_auth/client"
 require_relative "seed/no_req_body/client"
 require_relative "seed/req_with_headers/client"
 require_relative "seed/req_with_headers/types/req_with_headers"
-require_relative "../README.md"

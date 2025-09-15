@@ -60,18 +60,26 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             )
         };
 
-        maybeAddDocsStructure(type, this.getDocs(context));
+        maybeAddDocsStructure(type, this.getDocs({ context }));
         return type;
     }
 
-    public generateForInlineUnion(context: Context): ts.TypeNode {
-        return ts.factory.createParenthesizedType(
-            ts.factory.createUnionTypeNode(
-                this.shape.values.map((value) =>
-                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+    public generateForInlineUnion(context: Context): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
+        return {
+            typeNode: ts.factory.createParenthesizedType(
+                ts.factory.createUnionTypeNode(
+                    this.shape.values.map((value) =>
+                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                    )
                 )
-            )
-        );
+            ),
+            requestTypeNode: undefined,
+            responseTypeNode: undefined
+        };
     }
 
     public generateStatements(

@@ -137,6 +137,7 @@ export declare namespace SdkContextImpl {
         relativeTestPath: string;
         formDataSupport: "Node16" | "Node18";
         useDefaultRequestParameterValues: boolean;
+        generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         exportAllRequestsAtRoot: boolean;
     }
@@ -253,6 +254,7 @@ export class SdkContextImpl implements SdkContext {
         relativeTestPath,
         formDataSupport,
         useDefaultRequestParameterValues,
+        generateReadWriteOnlyTypes,
         flattenRequestParameters,
         exportAllRequestsAtRoot
     }: SdkContextImpl.Init) {
@@ -326,7 +328,8 @@ export class SdkContextImpl implements SdkContext {
             allowExtraFields,
             omitUndefined,
             useDefaultRequestParameterValues,
-            context: this
+            context: this,
+            generateReadWriteOnlyTypes
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -344,7 +347,8 @@ export class SdkContextImpl implements SdkContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined
+            omitUndefined,
+            generateReadWriteOnlyTypes
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,

@@ -22,8 +22,11 @@ import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 
 public class HttpRequestBodyIsWrappedInOptional {
 
@@ -64,11 +67,11 @@ public class HttpRequestBodyIsWrappedInOptional {
     }
 
     private static class TypeReferenceIsWrappedInOptional
-            implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
+            implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
 
         @Override
         public Boolean visitContainer(ContainerType container) {
-            return container.isOptional();
+            return container.visit(this);
         }
 
         @Override
@@ -88,6 +91,36 @@ public class HttpRequestBodyIsWrappedInOptional {
 
         @Override
         public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitList(TypeReference list) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitMap(MapType map) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitOptional(TypeReference optional) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitSet(TypeReference set) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitNullable(TypeReference nullable) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitLiteral(Literal literal) {
             return false;
         }
     }
