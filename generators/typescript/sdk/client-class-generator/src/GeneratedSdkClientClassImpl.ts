@@ -986,7 +986,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
             const returnsMaybeAuth =
-                !this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme != null;
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme != null || this.oauthAuthScheme != null;
             const returnType = returnsMaybeAuth
                 ? ts.factory.createTypeReferenceNode("Promise", [
                       ts.factory.createUnionTypeNode([
