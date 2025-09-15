@@ -14,7 +14,7 @@ public class Example4
             }
         );
 
-        await client.Simple.GetSomethingAsync();
+        await client.NestedNoAuth.Api.GetSomethingAsync();
     }
 
 }
