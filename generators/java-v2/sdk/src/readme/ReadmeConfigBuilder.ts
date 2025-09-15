@@ -1,9 +1,8 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
-import { FernIr } from "@fern-fern/ir-sdk";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -87,7 +86,9 @@ export class ReadmeConfigBuilder {
     }
 }
 
-function toGeneratorCliCustomSections(customSections: FernIr.ReadmeCustomSection[] | undefined): FernGeneratorCli.CustomSection[] | undefined {
+function toGeneratorCliCustomSections(
+    customSections: FernIr.ReadmeCustomSection[] | undefined
+): FernGeneratorCli.CustomSection[] | undefined {
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of customSections ?? []) {
         const language = section.language.toUpperCase();
