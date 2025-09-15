@@ -931,7 +931,7 @@ function convertSnippetsConfiguration({
     rawConfig
 }: {
     rawConfig: docsYml.RawSchemas.SnippetsConfiguration;
-}): docsYml.DocsNavigationItem.SnippetsConfiguration {    
+}): docsYml.DocsNavigationItem.SnippetsConfiguration {
     return {
         python: rawConfig.python,
         typescript: rawConfig.typescript,

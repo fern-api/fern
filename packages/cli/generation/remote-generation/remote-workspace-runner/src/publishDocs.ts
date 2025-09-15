@@ -429,39 +429,43 @@ async function generateLanguageSpecificDynamicIRs({
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
-                let dynamicGeneratorConfig = getDynamicGeneratorConfig({ apiName: workspace.workspaceName ?? "", organization, generatorInvocation });
+                let dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: workspace.workspaceName ?? "",
+                    organization,
+                    generatorInvocation
+                });
                 let packageName = "";
-                                
+
                 if (dynamicGeneratorConfig?.outputConfig.type === "publish") {
                     switch (dynamicGeneratorConfig.outputConfig.value.type) {
-                        case "npm": 
+                        case "npm":
                         case "nuget":
                         case "pypi":
                         case "rubygems":
                             packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
-                        case "maven": 
+                        case "maven":
                             packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
                             break;
-                        case "go": 
+                        case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
                             break;
-                    }   
+                    }
                 }
-                                
+
                 if (generatorInvocation.language === "php") {
                     packageName = (generatorInvocation.config as { packageName?: string })["packageName"] ?? "";
                     dynamicGeneratorConfig = {
                         apiName: workspace.workspaceName,
                         organization: organization,
                         customConfig: generatorInvocation.config
-                     } as dynamic.GeneratorConfig;
+                    } as dynamic.GeneratorConfig;
                 }
 
                 if (!generatorInvocation.language) {
                     continue;
                 }
-                
+
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
                     generatorInvocation.language &&
@@ -495,7 +499,7 @@ async function generateLanguageSpecificDynamicIRs({
                         generationLanguage: generatorInvocation.language,
                         generatorConfig: dynamicGeneratorConfig
                     });
-                    
+
                     // include metadata along with the dynamic IR
                     if (dynamicIR) {
                         languageSpecificIRs[generatorInvocation.language] = {
