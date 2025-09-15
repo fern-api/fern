@@ -24,7 +24,10 @@ module Seed
 
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)
-        _query_param_names = ["page_limit", "beforeDate"]
+        _query_param_names = [
+          ["page_limit", "beforeDate"],
+          %i[page_limit beforeDate]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

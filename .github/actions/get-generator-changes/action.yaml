@@ -167,4 +167,5 @@ runs:
       with:
         files: |
           generators/rust/**
+          seed/rust-model/**
           seed/rust-sdk/**

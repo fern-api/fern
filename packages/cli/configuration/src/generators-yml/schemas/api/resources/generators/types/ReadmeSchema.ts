@@ -14,4 +14,6 @@ export interface ReadmeSchema {
     defaultEndpoint?: FernDefinition.ReadmeEndpointSchema;
     /** Specifies a list of endpoints associated with the feature */
     features?: Record<string, FernDefinition.ReadmeEndpointSchema[]>;
+    /** Supply custom sections as markdown to be included in the readme */
+    customSections?: FernDefinition.ReadmeCustomSectionSchema[];
 }

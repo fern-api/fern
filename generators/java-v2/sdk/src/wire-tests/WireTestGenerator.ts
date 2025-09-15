@@ -7,6 +7,7 @@ import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { WireTestDataExtractor, WireTestExample } from "./WireTestDataExtractor";
 
 export class WireTestGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -20,6 +21,7 @@ export class WireTestGenerator {
             // Add imports
             writer.addImport("org.junit.jupiter.api.Assertions");
             writer.addImport("com.fasterxml.jackson.databind.ObjectMapper");
+            writer.addImport("com.fasterxml.jackson.databind.JsonNode");
             writer.addImport("okhttp3.mockwebserver.MockResponse");
             writer.addImport("okhttp3.mockwebserver.MockWebServer");
             writer.addImport("okhttp3.mockwebserver.RecordedRequest");
@@ -62,7 +64,11 @@ export class WireTestGenerator {
         };
     }
 
-    private createTestMethod(endpoint: HttpEndpoint, snippet: string): (writer: Writer) => void {
+    private createTestMethod(
+        endpoint: HttpEndpoint,
+        snippet: string,
+        testExample: WireTestExample
+    ): (writer: Writer) => void {
         return (writer) => {
             const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
             const methodCall = this.extractMethodCall(snippet);
@@ -71,17 +77,99 @@ export class WireTestGenerator {
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);
             writer.indent();
 
+            const expectedRequestJson = testExample.request.body;
+            const expectedResponseJson = testExample.response.body;
+            const responseStatusCode = testExample.response.statusCode;
+
+            const mockResponseBody = expectedResponseJson
+                ? JSON.stringify(expectedResponseJson)
+                : this.generateMockResponseForEndpoint(endpoint);
+
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
-            writer.writeLine(".setResponseCode(200)");
-            writer.writeLine('.setBody("{}"));');
+            writer.writeLine(`.setResponseCode(${responseStatusCode})`);
+            writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
             writer.dedent();
 
-            writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
+            const hasResponseBody = endpoint.response?.body != null;
+            if (hasResponseBody) {
+                const returnType = this.getEndpointReturnType(endpoint);
+                writer.writeLine(
+                    `${returnType} response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`
+                );
+            } else {
+                writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
+            }
 
             writer.writeLine("RecordedRequest request = server.takeRequest();");
             writer.writeLine("Assertions.assertNotNull(request);");
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
+
+            if (expectedRequestJson !== undefined && expectedRequestJson !== null) {
+                writer.writeLine("// Validate request body");
+                writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
+
+                // Format JSON for readability using string concatenation (Java 8+ compatible)
+                const formattedJson = JSON.stringify(expectedRequestJson, null, 2);
+                const lines = formattedJson.split("\n");
+                if (lines.length === 1) {
+                    // Single line JSON - no need for concatenation
+                    writer.writeLine(`String expectedRequestBody = ${JSON.stringify(formattedJson)};`);
+                } else {
+                    // Multi-line JSON - format with concatenation
+                    writer.writeLine(
+                        'String expectedRequestBody = "' + (lines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
+                    );
+                    for (let i = 1; i < lines.length - 1; i++) {
+                        writer.writeLine('    "' + (lines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+                    }
+                    writer.writeLine('    "' + (lines[lines.length - 1] ?? "").replace(/"/g, '\\"') + '";');
+                }
+
+                writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
+                writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
+                writer.writeLine(
+                    'Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");'
+                );
+            }
+
+            if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
+                writer.writeLine("");
+                writer.writeLine("// Validate response body");
+                writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
+
+                writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
+
+                const formattedResponseJson = JSON.stringify(expectedResponseJson, null, 2);
+                const responseLines = formattedResponseJson.split("\n");
+                if (responseLines.length === 1) {
+                    writer.writeLine(`String expectedResponseBody = ${JSON.stringify(formattedResponseJson)};`);
+                } else {
+                    writer.writeLine(
+                        'String expectedResponseBody = "' + (responseLines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
+                    );
+                    for (let i = 1; i < responseLines.length - 1; i++) {
+                        writer.writeLine('    "' + (responseLines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+                    }
+                    writer.writeLine(
+                        '    "' + (responseLines[responseLines.length - 1] ?? "").replace(/"/g, '\\"') + '";'
+                    );
+                }
+
+                writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
+                writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
+                writer.writeLine(
+                    'Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");'
+                );
+            } else if (hasResponseBody) {
+                writer.writeLine("");
+                writer.writeLine("// Validate response deserialization");
+                writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');
+                writer.writeLine("// Verify the response can be serialized back to JSON");
+                writer.writeLine("String responseJson = objectMapper.writeValueAsString(response);");
+                writer.writeLine("Assertions.assertNotNull(responseJson);");
+                writer.writeLine("Assertions.assertFalse(responseJson.isEmpty());");
+            }
 
             writer.dedent();
             writer.writeLine("}");
@@ -157,18 +245,35 @@ export class WireTestGenerator {
         const className = `${this.toClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
 
-        const endpointSnippets = new Map<string, string>();
+        const testDataExtractor = new WireTestDataExtractor(this.context);
+
+        const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
+
         for (const endpoint of endpoints) {
+            const testExamples = testDataExtractor.getTestExamples(endpoint);
+            if (testExamples.length === 0) {
+                continue;
+            }
+
+            // Generate snippet using dynamic snippets (only for code generation)
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = dynamicEndpoint.examples[0];
-                if (firstExample) {
+                const firstDynamicExample = dynamicEndpoint.examples[0];
+                if (firstDynamicExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(firstExample, dynamicSnippetsGenerator);
-                        endpointSnippets.set(endpoint.id, snippet);
+                        const snippet = await this.generateSnippetForExample(
+                            firstDynamicExample,
+                            dynamicSnippetsGenerator
+                        );
+                        const firstTestExample = testExamples[0];
+                        if (firstTestExample) {
+                            endpointTests.set(endpoint.id, {
+                                snippet,
+                                testExample: firstTestExample
+                            });
+                        }
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        // Skip this endpoint if snippet generation fails
                         continue;
                     }
                 }
@@ -178,14 +283,12 @@ export class WireTestGenerator {
         const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
 
         const testClass = java.codeblock((writer) => {
-            // Write test class boilerplate (imports, fields, setup/teardown)
             this.createTestClassBoilerplate(className, clientClassName, hasAuth)(writer);
 
-            // Add test methods for each endpoint that has a successfully generated snippet
             for (const endpoint of endpoints) {
-                const snippet = endpointSnippets.get(endpoint.id);
-                if (snippet) {
-                    this.createTestMethod(endpoint, snippet)(writer);
+                const testData = endpointTests.get(endpoint.id);
+                if (testData) {
+                    this.createTestMethod(endpoint, testData.snippet, testData.testExample)(writer);
                 }
             }
 
@@ -214,7 +317,6 @@ export class WireTestGenerator {
     private extractMethodCall(fullSnippet: string): string {
         const lines = fullSnippet.split("\n");
 
-        // Find the line where client is instantiated and where the client call starts
         let clientInstantiationIndex = -1;
         let clientCallStartIndex = -1;
 
@@ -224,7 +326,6 @@ export class WireTestGenerator {
                 continue;
             }
 
-            // Look for client instantiation (contains "client =" or specific client class name)
             if (line.includes("client =") || line.includes("Client client =")) {
                 clientInstantiationIndex = i;
             }
@@ -241,7 +342,6 @@ export class WireTestGenerator {
             return "// TODO: Add client call";
         }
 
-        // Extract the complete method call
         const methodCallLines: string[] = [];
         let braceDepth = 0;
         let parenDepth = 0;
@@ -256,7 +356,6 @@ export class WireTestGenerator {
             if (line !== undefined) {
                 methodCallLines.push(line);
 
-                // Track brace and parenthesis depth
                 for (const char of line) {
                     if (char === "{") {
                         braceDepth++;
@@ -269,7 +368,6 @@ export class WireTestGenerator {
                     }
                 }
 
-                // Check for statement termination
                 if (line.includes(";") && braceDepth === 0 && parenDepth === 0) {
                     foundSemicolon = true;
                     break;
@@ -282,7 +380,6 @@ export class WireTestGenerator {
             return "// TODO: Add client call";
         }
 
-        // Clean up the extracted lines - remove common indentation
         const nonEmptyLines = methodCallLines.filter((line) => line && line.trim().length > 0);
         if (nonEmptyLines.length === 0) {
             return "// TODO: Add client call";
@@ -331,5 +428,47 @@ export class WireTestGenerator {
     private getTestFilePath(): string {
         const packagePath = this.context.getRootPackageName().replace(/\./g, "/");
         return `src/test/java/${packagePath}`;
+    }
+
+    private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
+        const responseBody = endpoint.response?.body;
+
+        if (!responseBody || responseBody.type !== "json") {
+            return "{}";
+        }
+
+        return JSON.stringify({
+            id: "test-id",
+            name: "test-name",
+            value: "test-value",
+            success: true,
+            data: {}
+        });
+    }
+
+    private getEndpointReturnType(endpoint: HttpEndpoint): string {
+        try {
+            const javaType = this.context.getReturnTypeForEndpoint(endpoint);
+
+            // Create a temporary writer to get the string representation
+            const simpleWriter = new java.Writer({
+                packageName: this.context.getCorePackageName(),
+                customConfig: this.context.customConfig
+            });
+
+            javaType.write(simpleWriter);
+
+            const typeName = simpleWriter.buffer.trim();
+
+            // Handle void case
+            if (typeName === "Void") {
+                return "void";
+            }
+
+            return typeName;
+        } catch (error) {
+            this.context.logger.warn(`Could not resolve return type for endpoint ${endpoint.id}, using Object`);
+            return "Object";
+        }
     }
 }

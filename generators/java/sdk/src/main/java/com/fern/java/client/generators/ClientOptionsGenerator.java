@@ -586,7 +586,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .addParameter(
                         clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(), apiVersionField.name)
-                .addStatement("this.$L = $T.of($L)", apiVersionField.name, Optional.class, apiVersionField.name)
+                .addStatement("this.$L = $T.ofNullable($L)", apiVersionField.name, Optional.class, apiVersionField.name)
                 .addStatement("return this")
                 .build();
     }
@@ -692,14 +692,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     clientGeneratorContext.getIr().getApiVersion().get();
             if (apiVersionScheme.getHeader().isPresent()) {
                 HeaderApiVersionScheme header = apiVersionScheme.getHeader().get();
-                fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
-                fromMethod.addStatement(
-                        "builder.$L = $T.of(clientOptions.$L)",
-                        apiVersionField.name,
-                        Optional.class,
-                        apiVersionField.name);
-                fromMethod.endControlFlow();
                 if (header.getValue().getDefault().isPresent()) {
+                    // When there's a default, the field is Optional<ApiVersion> if not just ApiVersion
+                    fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
+                    fromMethod.addStatement(
+                            "builder.$L = $T.ofNullable(clientOptions.$L)",
+                            apiVersionField.name,
+                            Optional.class,
+                            apiVersionField.name);
+                    fromMethod.endControlFlow();
                     fromMethod.beginControlFlow("else");
                     fromMethod.addStatement(
                             "builder.$L = $T.of($T.$L)",
@@ -713,6 +714,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                     .getName()
                                     .getScreamingSnakeCase()
                                     .getSafeName());
+                    fromMethod.endControlFlow();
+                } else {
+                    fromMethod.beginControlFlow("if (clientOptions.$L != null)", apiVersionField.name);
+                    fromMethod.addStatement(
+                            "builder.$L = clientOptions.$L", apiVersionField.name, apiVersionField.name);
                     fromMethod.endControlFlow();
                 }
             }

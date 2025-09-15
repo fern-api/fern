@@ -70,6 +70,9 @@ fixtures:
     - outputFolder: package-path
       customConfig:
         packagePath: pleaseinhere
+    - outputFolder: getters-pass-by-value
+      customConfig:
+        gettersPassByValue: true
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -174,6 +177,7 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  reserved-keywords: []
 scripts:
   - docker: golang:1.18-alpine
     commands:
