@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExtends.Core;
 
 namespace SeedExtends;
@@ -41,7 +41,7 @@ public partial class SeedExtendsClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
+    public async Task ExtendedInlineRequestBodyAsync(
         Inlined request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -132,7 +132,7 @@ public partial class ParamsClient
     /// <example><code>
     /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "query", Number = 1 });
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetWithQueryAsync(
+    public async Task GetWithQueryAsync(
         GetWithQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -181,7 +181,7 @@ public partial class ParamsClient
     ///     new GetWithMultipleQuery { Query = ["query"], Number = [1] }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetWithAllowMultipleQueryAsync(
+    public async Task GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -231,7 +231,7 @@ public partial class ParamsClient
     ///     new GetWithPathAndQuery { Query = "query" }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetWithPathAndQueryAsync(
+    public async Task GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
         RequestOptions? options = null,
@@ -283,7 +283,7 @@ public partial class ParamsClient
     ///     new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetWithInlinePathAndQueryAsync(
+    public async Task GetWithInlinePathAndQueryAsync(
         GetWithInlinePathAndQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

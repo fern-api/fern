@@ -5,7 +5,7 @@ namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 [TestFixture]
 public class DeleteTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

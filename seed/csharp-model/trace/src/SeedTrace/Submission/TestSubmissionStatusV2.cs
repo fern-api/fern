@@ -1,7 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
-using SeedTrace.V2;
 
 namespace SeedTrace;
 
@@ -23,7 +22,7 @@ public record TestSubmissionStatusV2 : IJsonOnDeserialized
     public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("problemInfo")]
-    public required ProblemInfoV2 ProblemInfo { get; set; }
+    public required SeedTrace.V2.ProblemInfoV2 ProblemInfo { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

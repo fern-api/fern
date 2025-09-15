@@ -1,6 +1,7 @@
+import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { AsIsFiles, BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
+import { ast } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -12,10 +13,8 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
-    Name,
     NameAndWireValue,
     OAuthScheme,
-    ProtobufService,
     SdkRequestWrapper,
     ServiceId,
     Subpackage,
@@ -23,23 +22,11 @@ import {
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
-
 import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
-import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
-import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
-import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
-import {
-    IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-    IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
-} from "./options/IdempotentRequestOptionsInterfaceGenerator";
-import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
-import {
-    REQUEST_OPTIONS_INTERFACE_NAME,
-    REQUEST_OPTIONS_PARAMETER_NAME
-} from "./options/RequestOptionsInterfaceGenerator";
+import { IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME } from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import { REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsInterfaceGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -48,7 +35,7 @@ const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
-export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomConfigSchema> {
     public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
@@ -73,40 +60,23 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
-    public getAdditionalQueryParametersType(): csharp.Type {
-        return csharp.Type.list(
-            csharp.Type.reference(
+    public getAdditionalQueryParametersType(): ast.Type {
+        return this.csharp.Type.list(
+            this.csharp.Type.reference(
                 this.getKeyValuePairsClassReference({
-                    key: csharp.Type.string(),
-                    value: csharp.Type.string()
+                    key: this.csharp.Type.string(),
+                    value: this.csharp.Type.string()
                 })
             )
         );
     }
 
-    public getAdditionalBodyPropertiesType(): csharp.Type {
-        return csharp.Type.optional(csharp.Type.object());
-    }
-
-    /**
-     * Returns the service with the given id
-     * @param serviceId
-     * @returns
-     */
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
-        const service = this.ir.services[serviceId];
-        if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`);
-        }
-        return service;
+    public getAdditionalBodyPropertiesType(): ast.Type {
+        return this.csharp.Type.optional(this.csharp.Type.object());
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
-        const subpackage = this.ir.subpackages[subpackageId];
-        if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
-        }
-        return subpackage;
+        return this.ir.subpackages[subpackageId] || fail(`Subpackage with id ${subpackageId} not found`);
     }
 
     /**
@@ -136,6 +106,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
+    // todo: why is this different from the ModelGeneratorContext?
     public getNamespaceForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
@@ -310,11 +281,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return exampleEndpointCall;
     }
 
-    public getNamespaceForServiceId(serviceId: ServiceId): string {
-        const service = this.getHttpServiceOrThrow(serviceId);
-        return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
-    }
-
     public getDirectoryForSubpackage(subpackage: Subpackage): string {
         return this.getDirectoryForFernFilepath(subpackage.fernFilepath);
     }
@@ -328,270 +294,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
-    public getJsonExceptionClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Text.Json",
-            name: "JsonException"
-        });
-    }
-
-    public getHttpResponseHeadersReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: "System.Net.Http.Headers",
-            name: "HttpResponseHeaders"
-        });
-    }
-
-    public getExceptionHandlerClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "ExceptionHandler",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getExceptionInterceptorClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "IExceptionInterceptor",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
-        return csharp.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}Client`,
-            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
-        });
-    }
-
-    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
-        return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
-    }
-
-    public getSubpackageForServiceIdOrThrow(serviceId: ServiceId): Subpackage {
-        const subpackage = this.getSubpackageForServiceId(serviceId);
-        if (subpackage == null) {
-            throw new Error(`No example found for subpackage with serviceId ${serviceId}`);
-        }
-        return subpackage;
-    }
-
-    public getSubpackageClassReferenceForServiceIdOrThrow(serviceId: ServiceId): csharp.ClassReference {
-        const subpackage = this.getSubpackageForServiceIdOrThrow(serviceId);
-        return this.getSubpackageClassReference(subpackage);
-    }
-
-    private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
-    }
-
-    public getRootClientClassName(): string {
-        return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
-    }
-
-    public getRootClientAccess(): csharp.Access {
-        return this.customConfig["root-client-class-access"] ?? csharp.Access.Public;
-    }
-
-    public getRootClientClassNameForSnippets(): string {
-        if (this.customConfig["exported-client-class-name"] != null) {
-            return this.customConfig["exported-client-class-name"];
-        }
-        return this.getRootClientClassName();
-    }
-
-    public getRootClientClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getRootClientClassName(),
-            namespace: this.getNamespace()
-        });
-    }
-
-    public getRootClientClassReferenceForSnippets(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getRootClientClassNameForSnippets(),
-            namespace: this.getNamespace()
-        });
-    }
-
-    public getBaseExceptionClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.customConfig["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getBaseApiExceptionClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.customConfig["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getExceptionClassReference(declaredErrorName: DeclaredErrorName): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getPascalCaseSafeName(declaredErrorName.name),
-            namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
-        });
-    }
-
-    public getHeadersClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getHeadersClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getHeadersClassName(): string {
-        return "Headers";
-    }
-
-    public getRawClientClassName(): string {
-        return "RawClient";
-    }
-
-    public getRawClientClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getRawClientClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getRawGrpcClientClassName(): string {
-        return "RawGrpcClient";
-    }
-
-    public getRawGrpcClientClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getRawGrpcClientClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getExtensionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "Extensions",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getGrpcRequestOptionsName(): string {
-        return "GrpcRequestOptions";
-    }
-
-    public getGrpcCreateCallOptionsMethodName(): string {
-        return "CreateCallOptions";
-    }
-
-    public getGrpcRequestOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getGrpcRequestOptionsName(),
-            namespace: this.getNamespace()
-        });
-    }
-
-    public getGrpcChannelOptionsFieldName(): string {
-        return "GrpcOptions";
-    }
-
-    public getGrpcChannelOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "GrpcChannelOptions",
-            namespace: "Grpc.Net.Client"
-        });
-    }
-
-    public getCancellationTokenClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "CancellationToken",
-            namespace: "System.Threading"
-        });
+    public getRootClientAccess(): ast.Access {
+        return this.customConfig["root-client-class-access"] ?? ast.Access.Public;
     }
 
     public getCancellationTokenParameterName(): string {
         return CANCELLATION_TOKEN_PARAMETER_NAME;
-    }
-
-    public getGrpcClientInfoForServiceId(serviceId: ServiceId): GrpcClientInfo | undefined {
-        const protobufService = this.protobufResolver.getProtobufServiceForServiceId(serviceId);
-        if (protobufService == null) {
-            return undefined;
-        }
-        const serviceName = this.getGrpcClientServiceName(protobufService);
-        return {
-            privatePropertyName: this.getGrpcClientPrivatePropertyName(protobufService),
-            classReference: csharp.classReference({
-                name: `${serviceName}.${serviceName}Client`,
-                namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
-            }),
-            protobufService
-        };
-    }
-
-    private getClientPrefix(): string {
-        return (
-            this.customConfig["exported-client-class-name"] ??
-            this.customConfig["client-class-name"] ??
-            this.getComputedClientName()
-        );
-    }
-
-    private getEnvironmentClassName(): string {
-        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
-    }
-
-    public getEnvironmentsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: this.getEnvironmentClassName(),
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getNamespaceForPublicCoreClasses(): string {
-        return (this.customConfig["root-namespace-for-core-classes"] ?? true)
-            ? this.getNamespace()
-            : this.getCoreNamespace();
-    }
-
-    public getBaseMockServerTestClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "BaseMockServerTest",
-            namespace: this.getMockServerTestNamespace()
-        });
-    }
-
-    public getClientOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsInterfaceReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getIdempotentRequestOptionsClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getIdempotentRequestOptionsInterfaceClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
     }
 
     public getRequestOptionsParameterName(): string {
@@ -600,15 +308,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getIdempotentRequestOptionsParameterName(): string {
         return IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME;
-    }
-
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
-        const service = this.getHttpServiceOrThrow(serviceId);
-        RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
-        return csharp.classReference({
-            name: requestName.pascalCase.safeName,
-            namespace: this.getNamespaceForServiceId(serviceId)
-        });
     }
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
@@ -623,13 +322,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
-    public getOauthTokenProviderClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "OAuthTokenProvider"
-        });
-    }
-
     public getOauth(): OAuthScheme | undefined {
         if (
             this.ir.auth.schemes[0] != null &&
@@ -639,56 +331,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
-    }
-
-    public getPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "Pager",
-            generics: [itemType]
-        });
-    }
-
-    public getOffsetPagerClassReference({
-        requestType,
-        requestOptionsType,
-        responseType,
-        offsetType,
-        stepType,
-        itemType
-    }: {
-        requestType: csharp.Type | csharp.TypeParameter;
-        requestOptionsType: csharp.Type | csharp.TypeParameter;
-        responseType: csharp.Type | csharp.TypeParameter;
-        offsetType: csharp.Type | csharp.TypeParameter;
-        stepType: csharp.Type | csharp.TypeParameter;
-        itemType: csharp.Type | csharp.TypeParameter;
-    }): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "OffsetPager",
-            generics: [requestType, requestOptionsType, responseType, offsetType, stepType, itemType]
-        });
-    }
-
-    public getCursorPagerClassReference({
-        requestType,
-        requestOptionsType,
-        responseType,
-        cursorType,
-        itemType
-    }: {
-        requestType: csharp.Type | csharp.TypeParameter;
-        requestOptionsType: csharp.Type | csharp.TypeParameter;
-        responseType: csharp.Type | csharp.TypeParameter;
-        cursorType: csharp.Type | csharp.TypeParameter;
-        itemType: csharp.Type | csharp.TypeParameter;
-    }): csharp.ClassReference {
-        return csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "CursorPager",
-            generics: [requestType, requestOptionsType, responseType, cursorType, itemType]
-        });
     }
 
     public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
@@ -705,14 +347,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
-    }
-
-    private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
-        return `_${protobufService.name.camelCase.safeName}`;
-    }
-
-    private getGrpcClientServiceName(protobufService: ProtobufService): string {
-        return protobufService.name.originalName;
     }
 
     /**

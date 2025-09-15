@@ -5,7 +5,7 @@ using SeedExamples.Core;
 namespace SeedExamples;
 
 [Serializable]
-public record File : IJsonOnDeserialized
+public record File_ : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =

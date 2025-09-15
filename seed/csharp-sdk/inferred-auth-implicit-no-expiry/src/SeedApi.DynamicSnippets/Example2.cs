@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedInferredAuthImplicitNoExpiry;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example2
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedInferredAuthImplicitNoExpiryClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

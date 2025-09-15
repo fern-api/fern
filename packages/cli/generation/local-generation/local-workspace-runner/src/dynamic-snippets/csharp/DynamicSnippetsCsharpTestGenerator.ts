@@ -46,6 +46,9 @@ export class DynamicSnippetsCsharpTestGenerator {
         requests: dynamic.EndpointSnippetRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
+
+        // generate the names for everything up front.
+        this.dynamicSnippetsGenerator.context.precalculate(requests);
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
         for (const [idx, request] of requests.entries()) {
             try {
@@ -79,6 +82,7 @@ export class DynamicSnippetsCsharpTestGenerator {
             join(absolutePathToOutputDir, RelativeFilePath.of("SeedApi.DynamicSnippets.csproj")),
             PROJECT_FILE_CONTENT
         );
+
         return absolutePathToOutputDir;
     }
 

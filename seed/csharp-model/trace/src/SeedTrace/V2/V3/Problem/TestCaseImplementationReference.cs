@@ -231,7 +231,8 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value;
 
-        public static implicit operator TemplateId(string value) => new(value);
+        public static implicit operator TestCaseImplementationReference.TemplateId(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -249,7 +250,7 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Implementation(
+        public static implicit operator TestCaseImplementationReference.Implementation(
             SeedTrace.V2.V3.TestCaseImplementation value
         ) => new(value);
     }

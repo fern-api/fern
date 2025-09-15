@@ -11,7 +11,7 @@ public class BaseMockServerTest
 {
     protected static WireMockServer Server { get; set; } = null!;
 
-    protected static System Client { get; set; } = null!;
+    protected static SeedCsharpSystemCollision.System Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = new();
 
@@ -24,7 +24,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new System(
+        Client = new SeedCsharpSystemCollision.System(
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -1,7 +1,7 @@
+import { type CSharp } from "../csharp";
 import { Access } from "./Access";
-import { Annotation } from "./Annotation";
 import { Class } from "./Class";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -28,16 +28,23 @@ export declare namespace TestClass {
 }
 
 export class TestClass extends AstNode {
-    public readonly name: string;
-    public readonly namespace: string;
+    public get name() {
+        return this.reference.name;
+    }
+    public get namespace() {
+        return this.reference.namespace;
+    }
+    public readonly reference: ClassReference;
     public readonly parentClassReference: ClassReference | undefined;
 
     private testMethods: TestClass.TestMethod[] = [];
 
-    constructor({ name, namespace, parentClassReference }: TestClass.Args) {
-        super();
-        this.name = name;
-        this.namespace = namespace;
+    constructor({ name, namespace, parentClassReference }: TestClass.Args, csharp: CSharp) {
+        super(csharp);
+        this.reference = this.csharp.classReference({
+            name: name,
+            namespace: namespace
+        });
         this.parentClassReference = parentClassReference;
     }
 
@@ -46,31 +53,29 @@ export class TestClass extends AstNode {
     }
 
     public getClass(): Class {
-        const _class = new Class({
-            access: Access.Public,
-            name: this.name,
-            namespace: this.namespace,
-            annotations: [
-                new Annotation({
-                    reference: new ClassReference({ name: "TestFixture", namespace: "NUnit.Framework" })
-                })
-            ],
-            parentClassReference: this.parentClassReference
-        });
+        const _class = new Class(
+            {
+                access: Access.Public,
+                name: this.name,
+                namespace: this.namespace,
+                annotations: [this.csharp.annotation({ reference: this.csharp.NUnit.Framework.TestFixture })],
+                parentClassReference: this.parentClassReference
+            },
+            this.csharp
+        );
         for (const testMethod of this.testMethods) {
             _class.addMethod(
-                new Method({
-                    access: Access.Public,
-                    isAsync: testMethod.isAsync,
-                    name: testMethod.name,
-                    parameters: [],
-                    body: testMethod.body,
-                    annotations: [
-                        new Annotation({
-                            reference: new ClassReference({ name: "Test", namespace: "NUnit.Framework" })
-                        })
-                    ]
-                })
+                new Method(
+                    {
+                        access: Access.Public,
+                        isAsync: testMethod.isAsync,
+                        name: testMethod.name,
+                        parameters: [],
+                        body: testMethod.body,
+                        annotations: [this.csharp.annotation({ reference: this.csharp.NUnit.Framework.Test })]
+                    },
+                    this.csharp
+                )
             );
         }
         return _class;

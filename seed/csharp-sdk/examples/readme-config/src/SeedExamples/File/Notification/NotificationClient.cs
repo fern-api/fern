@@ -1,6 +1,6 @@
 using SeedExamples.Core;
 
-namespace SeedExamples.File.Notification;
+namespace SeedExamples.File_.Notification;
 
 public partial class NotificationClient
 {

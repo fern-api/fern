@@ -1,3 +1,4 @@
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -13,8 +14,8 @@ export class List extends AstNode {
     private itemType: Type | undefined;
     private entries: AstNode[];
 
-    constructor({ itemType, entries }: List.Args) {
-        super();
+    constructor({ itemType, entries }: List.Args, csharp: CSharp) {
+        super(csharp);
         this.itemType = itemType;
         this.entries = entries;
     }

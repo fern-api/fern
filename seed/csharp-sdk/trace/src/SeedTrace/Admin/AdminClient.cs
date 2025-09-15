@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -20,7 +20,7 @@ public partial class AdminClient
     ///     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task UpdateTestSubmissionStatusAsync(
+    public async Task UpdateTestSubmissionStatusAsync(
         string submissionId,
         TestSubmissionStatus request,
         RequestOptions? options = null,
@@ -69,7 +69,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SendTestSubmissionUpdateAsync(
+    public async Task SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
         RequestOptions? options = null,
@@ -112,7 +112,7 @@ public partial class AdminClient
     ///     new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task UpdateWorkspaceSubmissionStatusAsync(
+    public async Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         WorkspaceSubmissionStatus request,
         RequestOptions? options = null,
@@ -161,7 +161,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SendWorkspaceSubmissionUpdateAsync(
+    public async Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
         RequestOptions? options = null,
@@ -312,7 +312,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedTestCaseAsync(
+    public async Task StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
@@ -442,7 +442,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedTestCaseV2Async(
+    public async Task StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
@@ -600,7 +600,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceAsync(
+    public async Task StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
         RequestOptions? options = null,
@@ -727,7 +727,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceV2Async(
+    public async Task StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
         RequestOptions? options = null,

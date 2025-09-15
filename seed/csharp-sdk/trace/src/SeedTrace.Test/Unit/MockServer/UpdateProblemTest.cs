@@ -1,15 +1,15 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Unit.MockServer;
+namespace SeedTrace.Test_.Unit.MockServer;
 
 [TestFixture]
 public class UpdateProblemTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -145,15 +145,23 @@ public class UpdateProblemTest : BaseMockServerTest
                         Language.Java,
                         new ProblemFiles
                         {
-                            SolutionFile = new FileInfo
+                            SolutionFile = new SeedTrace.FileInfo
                             {
                                 Filename = "filename",
                                 Contents = "contents",
                             },
-                            ReadOnlyFiles = new List<FileInfo>()
+                            ReadOnlyFiles = new List<SeedTrace.FileInfo>()
                             {
-                                new FileInfo { Filename = "filename", Contents = "contents" },
-                                new FileInfo { Filename = "filename", Contents = "contents" },
+                                new SeedTrace.FileInfo
+                                {
+                                    Filename = "filename",
+                                    Contents = "contents",
+                                },
+                                new SeedTrace.FileInfo
+                                {
+                                    Filename = "filename",
+                                    Contents = "contents",
+                                },
                             },
                         }
                     },

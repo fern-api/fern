@@ -309,7 +309,9 @@ public record UserOrAdminDiscriminated
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator User(SeedPropertyAccess.User value) => new(value);
+        public static implicit operator UserOrAdminDiscriminated.User(
+            SeedPropertyAccess.User value
+        ) => new(value);
     }
 
     /// <summary>
@@ -327,7 +329,9 @@ public record UserOrAdminDiscriminated
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Admin(SeedPropertyAccess.Admin value) => new(value);
+        public static implicit operator UserOrAdminDiscriminated.Admin(
+            SeedPropertyAccess.Admin value
+        ) => new(value);
     }
 
     /// <summary>

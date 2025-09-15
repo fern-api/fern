@@ -1,7 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
+import { ast } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
 import {
@@ -17,9 +15,13 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
         super(context, sdkRequest, endpoint);
     }
 
-    public getParameterType(): csharp.Type {
-        return csharp.Type.coreClass(
-            csharp.coreClassReference({
+    private get csharp() {
+        return this.context.csharp;
+    }
+
+    public getParameterType(): ast.Type {
+        return this.csharp.Type.coreClass(
+            this.csharp.coreClassReference({
                 name: "Stream"
             })
         );

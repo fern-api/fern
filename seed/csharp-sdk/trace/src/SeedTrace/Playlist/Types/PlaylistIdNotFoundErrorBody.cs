@@ -171,6 +171,7 @@ public record PlaylistIdNotFoundErrorBody
 
         public override string ToString() => Value;
 
-        public static implicit operator PlaylistId(string value) => new(value);
+        public static implicit operator PlaylistIdNotFoundErrorBody.PlaylistId(string value) =>
+            new(value);
     }
 }

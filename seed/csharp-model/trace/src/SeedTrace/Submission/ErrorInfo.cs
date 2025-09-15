@@ -268,7 +268,8 @@ public record ErrorInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CompileError(SeedTrace.CompileError value) => new(value);
+        public static implicit operator ErrorInfo.CompileError(SeedTrace.CompileError value) =>
+            new(value);
     }
 
     /// <summary>
@@ -286,7 +287,8 @@ public record ErrorInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator RuntimeError(SeedTrace.RuntimeError value) => new(value);
+        public static implicit operator ErrorInfo.RuntimeError(SeedTrace.RuntimeError value) =>
+            new(value);
     }
 
     /// <summary>
@@ -304,6 +306,7 @@ public record ErrorInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator InternalError(SeedTrace.InternalError value) => new(value);
+        public static implicit operator ErrorInfo.InternalError(SeedTrace.InternalError value) =>
+            new(value);
     }
 }

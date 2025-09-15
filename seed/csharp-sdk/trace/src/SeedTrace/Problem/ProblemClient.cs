@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -37,11 +37,15 @@ public partial class ProblemClient
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
+    ///                     SolutionFile = new SeedTrace.FileInfo
     ///                     {
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         Filename = "filename",
+    ///                         Contents = "contents",
+    ///                     },
+    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
+    ///                     {
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
@@ -158,11 +162,15 @@ public partial class ProblemClient
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
+    ///                     SolutionFile = new SeedTrace.FileInfo
     ///                     {
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         Filename = "filename",
+    ///                         Contents = "contents",
+    ///                     },
+    ///                     ReadOnlyFiles = new List&lt;SeedTrace.FileInfo&gt;()
+    ///                     {
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new SeedTrace.FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
@@ -266,7 +274,7 @@ public partial class ProblemClient
     /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeleteProblemAsync(
+    public async Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
