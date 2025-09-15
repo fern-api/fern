@@ -16,11 +16,11 @@
 client.auth().getTokenWithClientCredentials(
     GetTokenRequest
         .builder()
-        .clientId("client_id")
-        .clientSecret("client_secret")
+        .clientId("my_oauth_app_123")
+        .clientSecret("sk_live_abcdef123456789")
         .audience("https://api.example.com")
         .grantType("client_credentials")
-        .scope("scope")
+        .scope("read:users")
         .build()
 );
 ```
@@ -97,12 +97,12 @@ client.auth().getTokenWithClientCredentials(
 client.auth().refreshToken(
     RefreshTokenRequest
         .builder()
-        .clientId("client_id")
-        .clientSecret("client_secret")
+        .clientId("my_oauth_app_123")
+        .clientSecret("sk_live_abcdef123456789")
         .refreshToken("refresh_token")
         .audience("https://api.example.com")
         .grantType("refresh_token")
-        .scope("scope")
+        .scope("read:users")
         .build()
 );
 ```

@@ -13,6 +13,11 @@ service:
       path: /custom-auth
       method: GET
       response: boolean
+      examples:
+        - headers:
+            X-API-KEY: "live_sk_1234567890abcdef"
+          response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
 
@@ -25,6 +30,13 @@ service:
         name: PostWithCustomAuth
         body: unknown
       response: boolean
+      examples:
+        - headers:
+            X-API-KEY: "live_sk_1234567890abcdef"
+          request:
+            key: "value"
+          response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
         - errors.BadRequest

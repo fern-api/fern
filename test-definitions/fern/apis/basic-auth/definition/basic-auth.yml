@@ -18,6 +18,11 @@ service:
         #   WWW-Authenticate: optional<string> # Specifies which auth scheme to use if CustomAuthScheme was not applied
         # body:
         #   success: boolean
+      examples:
+        - headers:
+            Authorization: "Basic YWRtaW46c2VjcmV0"
+          response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
 
@@ -30,6 +35,13 @@ service:
         name: PostWithBasicAuth
         body: unknown
       response: boolean
+      examples:
+        - headers:
+            Authorization: "Basic YWRtaW46c2VjcmV0"
+          request:
+            key: "value"
+          response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
         - errors.BadRequest

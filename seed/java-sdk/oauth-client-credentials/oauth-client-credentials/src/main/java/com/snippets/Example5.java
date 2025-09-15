@@ -2,7 +2,7 @@ package com.snippets;
 
 import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 
-public class Example4 {
+public class Example5 {
     public static void main(String[] args) {
         SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
             .builder()
@@ -11,6 +11,6 @@ public class Example4 {
             .url("https://api.fern.com")
             .build();
 
-        client.nestedNoAuth().api().getSomething();
+        client.nested().api().getSomething();
     }
 }

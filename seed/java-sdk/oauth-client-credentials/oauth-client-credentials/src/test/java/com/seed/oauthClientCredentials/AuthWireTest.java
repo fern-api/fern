@@ -36,11 +36,11 @@ public class AuthWireTest {
         TokenResponse response = client.auth().getTokenWithClientCredentials(
             GetTokenRequest
                 .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
+                .clientId("my_oauth_app_123")
+                .clientSecret("sk_live_abcdef123456789")
                 .audience("https://api.example.com")
                 .grantType("client_credentials")
-                .scope("scope")
+                .scope("read:users")
                 .build()
         );
         RecordedRequest request = server.takeRequest();
@@ -49,11 +49,11 @@ public class AuthWireTest {
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"client_id\",\n" +
-            "  \"client_secret\": \"client_secret\",\n" +
+            "  \"client_id\": \"my_oauth_app_123\",\n" +
+            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
             "  \"audience\": \"https://api.example.com\",\n" +
             "  \"grant_type\": \"client_credentials\",\n" +
-            "  \"scope\": \"scope\"\n" +
+            "  \"scope\": \"read:users\"\n" +
             "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
@@ -79,12 +79,12 @@ public class AuthWireTest {
         TokenResponse response = client.auth().refreshToken(
             RefreshTokenRequest
                 .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
+                .clientId("my_oauth_app_123")
+                .clientSecret("sk_live_abcdef123456789")
                 .refreshToken("refresh_token")
                 .audience("https://api.example.com")
                 .grantType("refresh_token")
-                .scope("scope")
+                .scope("read:users")
                 .build()
         );
         RecordedRequest request = server.takeRequest();
@@ -93,12 +93,12 @@ public class AuthWireTest {
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"client_id\",\n" +
-            "  \"client_secret\": \"client_secret\",\n" +
+            "  \"client_id\": \"my_oauth_app_123\",\n" +
+            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
             "  \"refresh_token\": \"refresh_token\",\n" +
             "  \"audience\": \"https://api.example.com\",\n" +
             "  \"grant_type\": \"refresh_token\",\n" +
-            "  \"scope\": \"scope\"\n" +
+            "  \"scope\": \"read:users\"\n" +
             "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
