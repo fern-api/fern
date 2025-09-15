@@ -60,15 +60,16 @@ runs:
         cache-disabled: ${{ inputs.cache-disabled }}
 
     # Upload artifacts to be applied and committed by caller when all of seed is up to date
+    # CHRISM - what if diff is empty? Work okay?
     - name: Make Patch for Seed Artifacts
-      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-artifacts == 'true'
+      if: inputs.create-artifacts == 'true'
       shell: bash
       run: |
         git add seed/${{ inputs.generator-name }}/*
         git diff --staged > seed-${{ inputs.generator-name }}.patch
 
     - name: Upload Seed Artifacts
-      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-artifacts == 'true'
+      if: inputs.create-artifacts == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: seed-${{ inputs.generator-name }}.patch
@@ -78,7 +79,7 @@ runs:
 
     # Create PR, approve and set to merge all at generator level
     - name: Create Pull Request
-      if: steps.seed.outputs.seed-generated == 'true' && inputs.create-pr == 'true'
+      if: inputs.create-pr == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
