@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Problem
@@ -15,14 +16,14 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/problem-crud/create",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Problem::Types::CreateProblemResponse.load(_response.body)
-        else
-          raise _response.body
         end
+
+        raise _response.body
       end
 
       # Updates a problem
@@ -33,14 +34,14 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/problem-crud/update/#{params[:problemId]}",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Problem::Types::UpdateProblemResponse.load(_response.body)
-        else
-          raise _response.body
         end
+
+        raise _response.body
       end
 
       # Soft deletes a problem
@@ -50,14 +51,12 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "DELETE",
-          path: "/problem-crud/delete/#{"
+          path: "/problem-crud/delete/#{params[:problemId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Returns default starter files for problem
@@ -68,16 +67,15 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
         if _response.code >= "200" && _response.code < "300"
           return Seed::Problem::Types::GetDefaultStarterFilesResponse.load(_response.body)
-        else
-          raise _response.body
         end
-      end
 
+        raise _response.body
+      end
     end
   end
 end
