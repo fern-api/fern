@@ -539,8 +539,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newApiErrorFile(g.coordinator))
 		files = append(files, newCallerFile(g.coordinator, g.config.FullImportPath))
 		files = append(files, newCallerTestFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newErrorDecoderFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newErrorDecoderTestFile(g.coordinator, g.config.FullImportPath))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -725,6 +723,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
+	for _, file := range files {
+		fmt.Printf("v1 output file %s\n", file.Path)
+	}
 	return files, nil
 }
 
@@ -1191,23 +1192,23 @@ func newCallerTestFile(coordinator *coordinator.Client, baseImportPath string) *
 	)
 }
 
-func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/error_decoder.go",
-		[]byte(content),
-	)
-}
+// func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
+// 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
+// 	return NewFile(
+// 		coordinator,
+// 		"internal/error_decoder.go",
+// 		[]byte(content),
+// 	)
+// }
 
-func newErrorDecoderTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(errorDecoderTestFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/error_decoder_test.go",
-		[]byte(content),
-	)
-}
+// func newErrorDecoderTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+// 	content := replaceCoreImportPath(errorDecoderTestFile, baseImportPath)
+// 	return NewFile(
+// 		coordinator,
+// 		"internal/error_decoder_test.go",
+// 		[]byte(content),
+// 	)
+// }
 
 func newHttpCoreFile(coordinator *coordinator.Client) *File {
 	return NewFile(

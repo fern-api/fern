@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fern-api/fern-go/internal/generator/sdk/core"
 	"github.com/stretchr/testify/assert"
 )
 
