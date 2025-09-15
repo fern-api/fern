@@ -315,6 +315,8 @@ export function parseAsyncAPIV3({
                 }
             }
 
+            const groupName = getExtension<string | string[] | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME);
+
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -333,9 +335,9 @@ export function parseAsyncAPIV3({
                         schema: convertSchemaWithExampleToSchema(param.schema)
                     }))
                 },
-                groupName: context.resolveGroupName([
-                    getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ]),
+                groupName: context.resolveGroupName(
+                    typeof groupName === "string" ? [groupName] : groupName ?? [channelPath]
+                ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 servers: (
