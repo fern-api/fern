@@ -17,7 +17,7 @@ public class BaseMockServerTest
 
     private void MockOAuthEndpoint()
     {
-        const string requestJson = """
+        const string requestJson_0 = """
             {
               "client_id": "CLIENT_ID",
               "client_secret": "CLIENT_SECRET",
@@ -27,7 +27,7 @@ public class BaseMockServerTest
             }
             """;
 
-        const string mockResponse = """
+        const string mockResponse_0 = """
             {
               "access_token": "access_token",
               "expires_in": 1,
@@ -41,13 +41,45 @@ public class BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
+                    .WithBodyAsJson(requestJson_0)
             )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
                     .WithStatusCode(200)
-                    .WithBody(mockResponse)
+                    .WithBody(mockResponse_0)
+            );
+        const string requestJson_1 = """
+            {
+              "client_id": "CLIENT_ID",
+              "client_secret": "CLIENT_SECRET",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials",
+              "scope": "read:users"
+            }
+            """;
+
+        const string mockResponse_1 = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/token")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson_1)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse_1)
             );
     }
 

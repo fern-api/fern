@@ -14,7 +14,16 @@ public class Example3
             }
         );
 
-        await client.Nested.Api.GetSomethingAsync();
+        await client.Auth.RefreshTokenAsync(
+            new RefreshTokenRequest{
+                ClientId = "client_id",
+                ClientSecret = "client_secret",
+                RefreshToken = "refresh_token",
+                Audience = "https://api.example.com",
+                GrantType = "refresh_token",
+                Scope = "scope"
+            }
+        );
     }
 
 }

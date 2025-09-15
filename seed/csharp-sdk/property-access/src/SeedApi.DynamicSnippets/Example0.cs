@@ -1,12 +1,12 @@
 using global::System.Threading.Tasks;
-using SeedCsharpAccess;
+using SeedPropertyAccess;
 
 namespace Usage;
 
 public class Example0
 {
     public async global::System.Threading.Tasks.Task Do() {
-        var client = new SeedCsharpAccessClient(
+        var client = new SeedPropertyAccessClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
             }
@@ -15,9 +15,15 @@ public class Example0
         await client.CreateUserAsync(
             new User{
                 Id = "id",
-                Name = "name",
                 Email = "email",
-                Password = "password"
+                Password = "password",
+                Profile = new UserProfile{
+                    Name = "name",
+                    Verification = new UserProfileVerification{
+                        Verified = "verified"
+                    },
+                    Ssn = "ssn"
+                }
             }
         );
     }
