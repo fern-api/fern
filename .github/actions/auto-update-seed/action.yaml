@@ -59,17 +59,49 @@ runs:
         skip-scripts: ${{ inputs.skip-scripts }}
         cache-disabled: ${{ inputs.cache-disabled }}
 
-    # Upload artifacts to be applied and committed by caller when all of seed is up to date
-    # CHRISM - what if diff is empty? Work okay?
-    - name: Make Patch for Seed Artifacts
+    # Add changes first to simplify git diff checks, no changes will NOT error here
+    - name: Stage Seed Changes
       if: inputs.create-artifacts == 'true'
       shell: bash
       run: |
         git add seed/${{ inputs.generator-name }}/*
+
+    - name: Check for changes
+      id: check-changes
+      shell: bash
+      run: |
+        git --no-pager diff --staged --exit-code -- seed/${{ inputs.generator-name }}
+        exit_code=$?
+
+        case $exit_code in
+          0)
+            echo "No changes detected in seed/${{ inputs.generator-name }}"
+            echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
+            ;;
+          1)
+            echo "Changes detected in seed/${{ inputs.generator-name }}"
+            echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
+            ;;
+          2)
+            echo "Error occurred while checking seed/${{ inputs.generator-name }}"
+            exit 1
+            ;;
+          *)
+            echo "Unexpected exit code: $exit_code"
+            exit 1
+            ;;
+        esac
+
+    # Make patch file for seed changes
+    - name: Make Patch for Seed Artifacts
+      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
+      shell: bash
+      run: |
         git diff --staged > seed-${{ inputs.generator-name }}.patch
 
+    # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
-      if: inputs.create-artifacts == 'true'
+      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: seed-${{ inputs.generator-name }}.patch
@@ -79,7 +111,7 @@ runs:
 
     # Create PR, approve and set to merge all at generator level
     - name: Create Pull Request
-      if: inputs.create-pr == 'true'
+      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-pr == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
