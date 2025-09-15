@@ -17,6 +17,7 @@ export class File {
         const filepath = `${join(directoryPrefix, this.directory)}/${this.filename}`;
         await mkdir(path.dirname(filepath), { recursive: true });
         const content = typeof this.fileContents === "string" ? this.fileContents : new Uint8Array(this.fileContents);
+        console.log("writing file", filepath, content);
         await writeFile(filepath, content);
     }
 }

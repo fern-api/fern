@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/fern-api/fern-go/internal/generator/sdk/core"
 )
 
 // ErrorDecoder decodes *http.Response errors and returns a

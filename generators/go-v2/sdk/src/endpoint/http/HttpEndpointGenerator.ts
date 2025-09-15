@@ -118,8 +118,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         streamingResponse: StreamingResponse;
     }): go.CodeBlock {
-        // const errorDecoder = this.buildErrorDecoder({ endpoint });
-        const errorDecoder = undefined;
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
         const streamPayload = this.context.getStreamPayload(streamingResponse);
         const streamerVariable = go.codeblock("streamer");
         return go.codeblock((writer) => {
@@ -128,7 +127,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: false
                 })
             );
@@ -168,8 +167,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         pagination: Pagination;
     }): go.CodeBlock {
-        // const errorDecoder = this.buildErrorDecoder({ endpoint });
-        const errorDecoder = undefined;
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
         const paginationInfo = getPaginationInfo({
             context: this.context,
             pagination,
@@ -184,7 +182,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: false,
                     encodeQuery: false
                 })
@@ -292,15 +290,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
     }): go.CodeBlock {
-        // const errorDecoder = this.buildErrorDecoder({ endpoint });
-        const errorDecoder = undefined;
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
         return go.codeblock((writer) => {
             writer.writeNode(
                 this.prepareRequestCall({
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: true
                 })
             );
