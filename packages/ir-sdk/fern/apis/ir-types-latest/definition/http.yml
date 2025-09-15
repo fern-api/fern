@@ -519,6 +519,8 @@ types:
       - csharp
       - java
       - php
+      - rust
+      - swift
 
   ExamplePathParameter:
     properties:

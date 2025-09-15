@@ -1,0 +1,2 @@
+# Ignore the ruby Gemfile.lock files generated within seed
+seed/**/Gemfile.lock

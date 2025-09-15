@@ -11,7 +11,9 @@ export type SupportedSdkLanguage =
     | "ruby"
     | "csharp"
     | "java"
-    | "php";
+    | "php"
+    | "rust"
+    | "swift";
 export const SupportedSdkLanguage = {
     Curl: "curl",
     Python: "python",
@@ -22,6 +24,8 @@ export const SupportedSdkLanguage = {
     Csharp: "csharp",
     Java: "java",
     Php: "php",
+    Rust: "rust",
+    Swift: "swift",
     _visit: <R>(value: SupportedSdkLanguage, visitor: SupportedSdkLanguage.Visitor<R>) => {
         switch (value) {
             case SupportedSdkLanguage.Curl:
@@ -42,6 +46,10 @@ export const SupportedSdkLanguage = {
                 return visitor.java();
             case SupportedSdkLanguage.Php:
                 return visitor.php();
+            case SupportedSdkLanguage.Rust:
+                return visitor.rust();
+            case SupportedSdkLanguage.Swift:
+                return visitor.swift();
             default:
                 return visitor._other();
         }
@@ -59,6 +67,8 @@ export namespace SupportedSdkLanguage {
         csharp: () => R;
         java: () => R;
         php: () => R;
+        rust: () => R;
+        swift: () => R;
         _other: () => R;
     }
 }
