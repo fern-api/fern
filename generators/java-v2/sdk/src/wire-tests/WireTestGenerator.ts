@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, AuthScheme } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -495,81 +495,73 @@ export class WireTestGenerator {
         return authCalls.length > 0 ? authCalls.join("\n            ") : undefined;
     }
 
-    private getAuthCallForScheme(scheme: any): string | undefined {
-        // Handle different auth scheme types based on the IR structure
+    private getAuthCallForScheme(scheme: AuthScheme): string | undefined {
         switch (scheme.type) {
             case "bearer": {
-                // Bearer token authentication
-                const methodName = scheme.token?.camelCase?.unsafeName || "token";
-                const tokenValue = this.extractAuthValueFromExamples("bearer", "token", scheme) || "test-token";
+                const bearerScheme = scheme as AuthScheme.Bearer;
+                const methodName = bearerScheme.token.camelCase?.unsafeName || "token";
+                const rawTokenValue = this.extractAuthValueFromExamples("bearer", "token", scheme) || "test-token";
+                const tokenValue = this.sanitizeAuthValue(rawTokenValue);
                 return `.${methodName}("${tokenValue}")`;
             }
 
             case "basic": {
-                // Basic authentication with username and password
-                const username = this.extractAuthValueFromExamples("basic", "username", scheme) || "test-user";
-                const password = this.extractAuthValueFromExamples("basic", "password", scheme) || "test-password";
-                // Check if the SDK uses a credentials method or separate username/password methods
-                if (scheme.username && scheme.password) {
-                    const usernameMethod = scheme.username.camelCase?.unsafeName || "username";
-                    const passwordMethod = scheme.password.camelCase?.unsafeName || "password";
+                const basicScheme = scheme as AuthScheme.Basic;
+                const rawUsername = this.extractAuthValueFromExamples("basic", "username", scheme) || "test-user";
+                const rawPassword = this.extractAuthValueFromExamples("basic", "password", scheme) || "test-password";
+                const username = this.sanitizeAuthValue(rawUsername);
+                const password = this.sanitizeAuthValue(rawPassword);
+                if (basicScheme.username && basicScheme.password) {
+                    const usernameMethod = basicScheme.username.camelCase?.unsafeName || "username";
+                    const passwordMethod = basicScheme.password.camelCase?.unsafeName || "password";
                     return `.${usernameMethod}("${username}")\n            .${passwordMethod}("${password}")`;
                 } else {
-                    // Use the credentials pattern from dynamic snippets
                     return `.credentials("${username}", "${password}")`;
                 }
             }
 
             case "header": {
-                // Custom header authentication
-                if (scheme.header || scheme.name) {
-                    const headerName = scheme.header?.name?.wireValue || scheme.name?.wireValue || "X-API-Key";
-                    const headerMethodName = scheme.header?.name?.name?.camelCase?.unsafeName ||
-                                           scheme.name?.name?.camelCase?.unsafeName ||
-                                           "apiKey";
-                    const headerValue = this.extractAuthValueFromExamples("header", headerName, scheme) || "test-api-key";
+                const headerScheme = scheme as AuthScheme.Header;
+                const headerName = headerScheme.name.wireValue;
+                const headerMethodName = headerScheme.name.name.camelCase?.unsafeName || "apiKey";
+                const rawHeaderValue = this.extractAuthValueFromExamples("header", headerName, scheme) || "test-api-key";
+                const headerValue = this.sanitizeAuthValue(rawHeaderValue);
 
-                    // Check if prefix is defined (e.g., "Bearer ", "ApiKey ")
-                    const prefix = scheme.header?.prefix || scheme.prefix || "";
-                    const fullValue = prefix ? `${prefix}${headerValue}` : headerValue;
+                const prefix = headerScheme.prefix || "";
+                const fullValue = prefix ? `${prefix}${headerValue}` : headerValue;
 
-                    return `.${headerMethodName}("${fullValue}")`;
-                }
-                break;
+                return `.${headerMethodName}("${fullValue}")`;
             }
 
             case "oauth": {
-                // OAuth client credentials flow
-                const clientIdMethod = scheme.clientId?.camelCase?.unsafeName || "clientId";
-                const clientSecretMethod = scheme.clientSecret?.camelCase?.unsafeName || "clientSecret";
-                const clientId = this.extractAuthValueFromExamples("oauth", "clientId", scheme) || "test-client-id";
-                const clientSecret = this.extractAuthValueFromExamples("oauth", "clientSecret", scheme) || "test-client-secret";
-                return `.${clientIdMethod}("${clientId}")\n            .${clientSecretMethod}("${clientSecret}")`;
+                const oauthScheme = scheme as AuthScheme.Oauth;
+                const rawClientId = this.extractAuthValueFromExamples("oauth", "clientId", scheme) || "test-client-id";
+                const rawClientSecret = this.extractAuthValueFromExamples("oauth", "clientSecret", scheme) || "test-client-secret";
+                const clientId = this.sanitizeAuthValue(rawClientId);
+                const clientSecret = this.sanitizeAuthValue(rawClientSecret);
+                return `.clientId("${clientId}")\n            .clientSecret("${clientSecret}")`;
             }
 
-            case "inferred": {
-                // Inferred auth scheme - extract from token endpoint examples
-                const inferredValue = this.extractInferredAuthFromExamples(scheme);
-                if (inferredValue) {
-                    return inferredValue;
+            default: {
+                if ((scheme as { type: string }).type === "inferred") {
+                    const inferredValue = this.extractInferredAuthFromExamples(scheme);
+                    if (inferredValue) {
+                        return inferredValue;
+                    }
+                    this.context.logger.debug("Inferred auth scheme detected - using default test token");
+                    return `.token("test-token")`;
                 }
-                // Fallback to default test token
-                this.context.logger.debug("Inferred auth scheme detected - using default test token");
-                return `.token("test-token")`;
-            }
 
-            default:
-                this.context.logger.warn(`Unsupported auth scheme type: ${scheme.type}`);
+                this.context.logger.warn(`Unsupported auth scheme type: ${(scheme as { type: string }).type} - skipping auth configuration for wire test`);
                 return undefined;
+            }
         }
-        return undefined;
     }
 
     /**
      * Extracts authentication values from IR examples for more realistic test data
      */
-    private extractAuthValueFromExamples(authType: string, field: string, scheme: any): string | undefined {
-        // Try to find examples in the IR that contain auth values
+    private extractAuthValueFromExamples(authType: string, field: string, scheme: AuthScheme): string | undefined {
         if (!this.context.ir.services) {
             return undefined;
         }
@@ -577,7 +569,6 @@ export class WireTestGenerator {
         // Look through all endpoints for examples
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
-                // Check if endpoint has examples
                 if (!endpoint.userSpecifiedExamples || endpoint.userSpecifiedExamples.length === 0) {
                     continue;
                 }
@@ -588,14 +579,11 @@ export class WireTestGenerator {
                         continue;
                     }
 
-                    // Look for auth values in headers based on auth type
-                    if (authType === "bearer" && scheme.token) {
-                        // Look for Authorization header with Bearer token
+                    if (authType === "bearer" && scheme.type === "bearer") {
                         const authHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
                             .find(h => h.name.wireValue === "Authorization");
                         if (authHeader && authHeader.value?.jsonExample) {
                             const value = String(authHeader.value.jsonExample);
-                            // Extract token from "Bearer <token>" format
                             const bearerMatch = value.match(/^Bearer\s+(.+)$/i);
                             if (bearerMatch) {
                                 return bearerMatch[1];
@@ -605,40 +593,42 @@ export class WireTestGenerator {
                     }
 
                     if (authType === "basic") {
-                        // Look for Authorization header with Basic auth
                         const authHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
                             .find(h => h.name.wireValue === "Authorization");
                         if (authHeader && authHeader.value?.jsonExample) {
                             const value = String(authHeader.value.jsonExample);
-                            // Try to decode Basic auth
                             const basicMatch = value.match(/^Basic\s+(.+)$/i);
-                            if (basicMatch) {
+                            if (basicMatch && basicMatch[1]) {
                                 try {
-                                    // Note: In a real implementation, we'd decode the base64
-                                    // For now, return test values
+                                    const decoded = Buffer.from(basicMatch[1], 'base64').toString('utf-8');
+                                    const [username, password] = decoded.split(':', 2);
+                                    if (username && password) {
+                                        return field === "username" ? username : password;
+                                    }
                                     return field === "username" ? "example-user" : "example-pass";
-                                } catch {
-                                    // Ignore decode errors
+                                } catch (error) {
+                                    this.context.logger.warn(`Failed to decode basic auth for scheme ${scheme.type} in endpoint ${endpoint.name.originalName}: ${error}. Using fallback values.`);
+                                    return field === "username" ? "example-user" : "example-pass";
                                 }
                             }
                         }
                     }
 
-                    if (authType === "header" && scheme.header) {
-                        // Look for custom header
-                        const headerName = scheme.header.name?.wireValue || scheme.name?.wireValue;
-                        const customHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
-                            .find(h => h.name.wireValue === headerName);
-                        if (customHeader && customHeader.value?.jsonExample) {
-                            return String(customHeader.value.jsonExample);
+                    if (authType === "header" && scheme.type === "header") {
+                        const headerScheme = scheme as { header?: { name?: { wireValue?: string } }; name?: { wireValue?: string } };
+                        const headerName = headerScheme.header?.name?.wireValue || headerScheme.name?.wireValue;
+                        if (headerName) {
+                            const customHeader = [...(exampleCall.serviceHeaders || []), ...(exampleCall.endpointHeaders || [])]
+                                .find(h => h.name.wireValue === headerName);
+                            if (customHeader && customHeader.value?.jsonExample) {
+                                return String(customHeader.value.jsonExample);
+                            }
                         }
                     }
 
                     if (authType === "oauth") {
-                        // OAuth typically uses form data or JSON body
-                        // For client credentials, look in request body
                         if (exampleCall.request?.type === "inlinedRequestBody") {
-                            const request = exampleCall.request as any;
+                            const request = exampleCall.request as { body?: { type?: string; value?: { jsonExample?: unknown } } };
                             const body = request.body;
                             if (body?.type === "json" && body.value?.jsonExample) {
                                 const jsonBody = body.value.jsonExample as Record<string, unknown>;
@@ -658,27 +648,29 @@ export class WireTestGenerator {
         return undefined;
     }
 
-    /**
-     * Extracts inferred auth values from token endpoint examples
-     * Similar to TypeScript's implementation but for Java
-     */
-    private extractInferredAuthFromExamples(scheme: any): string | undefined {
-        if (!scheme.tokenEndpoint) {
+    private extractInferredAuthFromExamples(scheme: AuthScheme): string | undefined {
+        if (scheme.type !== "inferred") {
             return undefined;
         }
 
-        // Find the token endpoint
-        const service = this.context.ir.services[scheme.tokenEndpoint.endpoint.serviceId];
-        if (!service) {
+        // Type guard to safely access inferred scheme properties
+        const inferredScheme = scheme as { tokenEndpoint?: { endpoint?: { serviceId?: string; endpointId?: string } } };
+        if (!inferredScheme.tokenEndpoint?.endpoint?.serviceId) {
             return undefined;
         }
 
-        const endpoint = service.endpoints.find(e => e.id === scheme.tokenEndpoint.endpoint.endpointId);
+        const serviceId = inferredScheme.tokenEndpoint.endpoint.serviceId;
+        const endpointId = inferredScheme.tokenEndpoint.endpoint.endpointId;
+        const service = this.context.ir.services[serviceId];
+        if (!service || !endpointId) {
+            return undefined;
+        }
+
+        const endpoint = service.endpoints.find(e => e.id === endpointId);
         if (!endpoint) {
             return undefined;
         }
 
-        // Get successful examples
         const successfulExamples = endpoint.userSpecifiedExamples?.filter(
             ex => ex.example && ex.example.response.type === "ok"
         ) || [];
@@ -692,27 +684,39 @@ export class WireTestGenerator {
             return undefined;
         }
 
-        // Extract auth parameters from the example
         const authParams: string[] = [];
 
-        // Extract headers
         for (const header of [...(example.serviceHeaders || []), ...(example.endpointHeaders || [])]) {
             const methodName = header.name.name.camelCase?.unsafeName || header.name.name.camelCase?.safeName;
             if (methodName) {
-                const value = header.value?.jsonExample ? String(header.value.jsonExample) : "test";
+                const rawValue = header.value?.jsonExample ? String(header.value.jsonExample) : "test";
+                const value = this.sanitizeAuthValue(rawValue);
                 authParams.push(`.${methodName}("${value}")`);
             }
         }
 
-        // Extract query parameters
         for (const queryParam of (example.queryParameters || [])) {
             const methodName = queryParam.name.name.camelCase?.unsafeName || queryParam.name.name.camelCase?.safeName;
             if (methodName) {
-                const value = queryParam.value?.jsonExample ? String(queryParam.value.jsonExample) : "test";
+                const rawValue = queryParam.value?.jsonExample ? String(queryParam.value.jsonExample) : "test";
+                const value = this.sanitizeAuthValue(rawValue);
                 authParams.push(`.${methodName}("${value}")`);
             }
         }
 
         return authParams.length > 0 ? authParams.join("\n            ") : undefined;
     }
+
+        /**
+     * Sanitizes auth values to prevent breaking Java string literals
+     */
+        private sanitizeAuthValue(value: string): string {
+            return value
+                .replace(/\\/g, '\\\\')
+                .replace(/"/g, '\\"')
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '\\r')
+                .replace(/\t/g, '\\t');
+        }
+    
 }
