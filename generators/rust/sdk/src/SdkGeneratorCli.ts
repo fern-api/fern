@@ -75,7 +75,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Generate dynamic-snippets directory with individual .rs files
         await this.generateDynamicSnippetFiles(context);
         context.logger.info("=== dynamic-snippets COMPLETE ===");
-        
+
         context.logger.info("=== RUNNING rustfmt ===");
         await formatRustCode({
             outputDir: context.project.absolutePathToOutputDirectory,
@@ -445,16 +445,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                     const snippetResponse = await dynamicSnippetsGenerator.generate(snippetRequest);
 
                     if (snippetResponse.snippet) {
-                        // Create directory for this example
-                        const exampleDir = join(
-                            context.config.output.path,
-                            "dynamic-snippets",
-                            `example${exampleIndex}`
-                        );
-                        await mkdir(exampleDir, { recursive: true });
+                        // Create dynamic-snippets directory if it doesn't exist
+                        const dynamicSnippetsDir = join(context.config.output.path, "dynamic-snippets");
+                        await mkdir(dynamicSnippetsDir, { recursive: true });
 
-                        // Write the Rust snippet file
-                        const snippetPath = join(exampleDir, "snippet.rs");
+                        // Write the Rust snippet file directly
+                        const snippetPath = join(dynamicSnippetsDir, `example${exampleIndex}.rs`);
                         await writeFile(snippetPath, snippetResponse.snippet);
 
                         context.logger.info(`Generated dynamic snippet: ${snippetPath}`);
