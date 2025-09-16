@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module User
@@ -13,16 +14,14 @@ module Seed
       # @return [untyped]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "users/#{"
+          path: "users/#{params[:userId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Create a new user.
@@ -31,19 +30,16 @@ module Seed
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "users",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::User::Types::User.load(_response.body)
-        else
-          raise _response.body
-        end
-      end
+        return Seed::User::Types::User.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

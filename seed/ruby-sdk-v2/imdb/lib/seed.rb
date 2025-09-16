@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -30,8 +29,5 @@ require_relative "seed/errors/api_error"
 # API Types
 require_relative "seed/imdb/types/movie"
 require_relative "seed/imdb/types/create_movie_request"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/imdb/client"
-require_relative "../README.md"

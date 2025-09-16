@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module PathParam
@@ -10,18 +11,15 @@ module Seed
       # @return [untyped]
       def send_(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
-          path: "path/#{/#{"
+          path: "path/#{params[:operand]}/#{params[:operandOrColor]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

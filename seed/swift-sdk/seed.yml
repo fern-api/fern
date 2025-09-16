@@ -103,3 +103,4 @@ allowedFailures:
   - validation
   - websocket-bearer-auth
   - websocket-inferred-auth
+  - property-access

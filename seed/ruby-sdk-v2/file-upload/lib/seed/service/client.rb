@@ -336,7 +336,7 @@ module Seed
       # @return [untyped]
       def simple(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/snippet"
         )

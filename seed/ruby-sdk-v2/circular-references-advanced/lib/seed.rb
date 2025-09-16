@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,8 +24,6 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
 require_relative "seed/types/root_type"
 require_relative "seed/a/types/a"
 require_relative "seed/types/importing_a"
@@ -43,5 +40,3 @@ require_relative "seed/ast/types/object_value"
 require_relative "seed/ast/types/field_value"
 require_relative "seed/ast/types/container_value"
 require_relative "seed/ast/types/object_field_value"
-
-# Client Types

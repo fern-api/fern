@@ -5,7 +5,7 @@ using NUnit.Framework;
 using SeedTrace.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
 
-namespace SeedTrace.Test.Core.RawClientTests;
+namespace SeedTrace.Test_.Core.RawClientTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
@@ -1052,7 +1052,7 @@ public class MultipartFormTests
                 .Headers.ContentType?.Parameters.Single(p =>
                     p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
                 )
-                .Value?.Trim('"') ?? throw new Exception("Boundary not found");
+                .Value?.Trim('"') ?? throw new global::System.Exception("Boundary not found");
     }
 
     private static MultipartFormRequest CreateMultipartFormRequest()

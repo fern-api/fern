@@ -5,7 +5,7 @@ namespace SeedMultiLineDocs.Test.Unit.MockServer;
 [TestFixture]
 public class GetUserTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

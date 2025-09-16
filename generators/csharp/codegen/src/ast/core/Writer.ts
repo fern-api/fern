@@ -1,6 +1,6 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import { ClassReference } from "..";
+import { type ClassReference } from "../ClassReference";
 
 type Alias = string;
 type Namespace = string;
@@ -92,6 +92,10 @@ export class Writer extends AbstractWriter {
         return alias;
     }
 
+    public getReferencedNamespaces(): string[] {
+        return Object.keys(this.references);
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }
@@ -149,24 +153,20 @@ ${this.buffer}`;
      *******************************/
 
     private stringifyImports(): string {
-        const referenceKeys = Object.keys(this.references);
-        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
-        if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
-            return "";
-        }
-
-        let result = referenceKeys
-            // Filter out the current namespace.
-            .filter((ns) => !this.isCurrentNamespace(ns))
-            .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
-            .map((ref) => `using ${this.references[ref]?.some((each) => each?.global) ? "global::" : ""}${ref};`)
+        let result = Object.entries(this.references)
+            .filter(([ns]) => !this.isCurrentNamespace(ns)) // Filter out the current namespace.
+            .filter(([ns]) => !isNamespaceImplicit(ns)) // System is implicitly imported
+            .map(
+                ([, refs]) =>
+                    `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${(refs[0] as ClassReference).resolveNamespace()};`
+            )
             .join("\n");
 
         if (result.length > 0) {
             result += "\n";
         }
 
-        for (const [alias, namespace] of namespaceAliasEntries) {
+        for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
             result += `using ${alias} = ${namespace};\n`;
         }
 

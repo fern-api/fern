@@ -39,7 +39,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf.OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ await client.CreateTypeAsync(BasicType.Primitive);
 <dl>
 <dd>
 
-**request:** `OneOf<BasicType, ComplexType>` 
+**request:** `OneOf.OneOf<BasicType, ComplexType>` 
     
 </dd>
 </dl>
@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, File.GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, SeedExamples.File_.GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `File.GetFileRequest` 
+**request:** `SeedExamples.File_.GetFileRequest` 
     
 </dd>
 </dl>
@@ -470,16 +470,16 @@ await client.Service.CreateBigEntityAsync(
             Revenue = 1000000,
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-        Metadata = new Metadata(new Metadata.Html("metadata")),
-        CommonMetadata = new Metadata
+        Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
+        CommonMetadata = new SeedExamples.Commons.Metadata
         {
             Id = "id",
             Data = new Dictionary<string, string>() { { "data", "data" } },
             JsonString = "jsonString",
         },
         EventInfo = new EventInfo(
-            new EventInfo.Metadata(
-                new Metadata
+            new SeedExamples.Commons.EventInfo.Metadata(
+                new SeedExamples.Commons.Metadata
                 {
                     Id = "id",
                     Data = new Dictionary<string, string>() { { "data", "data" } },
@@ -489,8 +489,8 @@ await client.Service.CreateBigEntityAsync(
         ),
         Data = new Data(new Data.String("data")),
         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-        Exception = new Exception(
-            new Exception.Generic(
+        Exception = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
                 new ExceptionInfo
                 {
                     ExceptionType = "exceptionType",
@@ -499,7 +499,7 @@ await client.Service.CreateBigEntityAsync(
                 }
             )
         ),
-        Test = new Test(new Test.And(true)),
+        Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
         Node = new Node
         {
             Name = "name",
@@ -594,7 +594,7 @@ await client.Service.CreateBigEntityAsync(
                 },
             },
         },
-        Directory = new Directory
+        Directory = new SeedExamples.Directory
         {
             Name = "name",
             Files = new List<SeedExamples.File>()
@@ -602,9 +602,9 @@ await client.Service.CreateBigEntityAsync(
                 new SeedExamples.File { Name = "name", Contents = "contents" },
                 new SeedExamples.File { Name = "name", Contents = "contents" },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedExamples.Directory>()
             {
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "name",
                     Files = new List<SeedExamples.File>()
@@ -612,23 +612,23 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
-                    Directories = new List<Directory>()
+                    Directories = new List<SeedExamples.Directory>()
                     {
-                        new Directory
+                        new SeedExamples.Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<Directory>() { },
+                            Directories = new List<SeedExamples.Directory>() { },
                         },
-                        new Directory
+                        new SeedExamples.Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<Directory>() { },
+                            Directories = new List<SeedExamples.Directory>() { },
                         },
                     },
                 },
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "name",
                     Files = new List<SeedExamples.File>()
@@ -636,19 +636,19 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                         new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
-                    Directories = new List<Directory>()
+                    Directories = new List<SeedExamples.Directory>()
                     {
-                        new Directory
+                        new SeedExamples.Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<Directory>() { },
+                            Directories = new List<SeedExamples.Directory>() { },
                         },
-                        new Directory
+                        new SeedExamples.Directory
                         {
                             Name = "name",
                             Files = new List<SeedExamples.File>() { },
-                            Directories = new List<Directory>() { },
+                            Directories = new List<SeedExamples.Directory>() { },
                         },
                     },
                 },

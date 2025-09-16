@@ -2,7 +2,7 @@ using System.Text.Json;
 using NUnit.Framework;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class FileTest

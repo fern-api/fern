@@ -1,6 +1,6 @@
 import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ExampleEndpointCall, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
@@ -22,72 +22,72 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.context.getBaseMockServerTestClassReference(),
             partial: false,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             annotations: [
-                csharp.annotation({
-                    reference: csharp.classReference({ name: "SetUpFixture", namespace: "NUnit.Framework" })
+                this.csharp.annotation({
+                    reference: this.csharp.classReference({ name: "SetUpFixture", namespace: "NUnit.Framework" })
                 })
             ]
         });
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Protected,
+            this.csharp.field({
+                access: ast.Access.Protected,
                 name: "Server",
                 static_: true,
-                type: csharp.Type.reference(
-                    csharp.classReference({
+                type: this.csharp.Type.reference(
+                    this.csharp.classReference({
                         name: "WireMockServer",
                         namespace: "WireMock.Server"
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("null!"),
+                initializer: this.csharp.codeblock("null!"),
                 set: true
             })
         );
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Protected,
+            this.csharp.field({
+                access: ast.Access.Protected,
                 name: "Client",
                 static_: true,
-                type: csharp.Type.reference(
-                    csharp.classReference({
+                type: this.csharp.Type.reference(
+                    this.csharp.classReference({
                         name: this.context.getRootClientClassName(),
                         namespace: this.context.getNamespace()
                     })
                 ),
                 get: true,
-                initializer: csharp.codeblock("null!"),
+                initializer: this.csharp.codeblock("null!"),
                 set: true
             })
         );
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Protected,
+            this.csharp.field({
+                access: ast.Access.Protected,
                 name: "RequestOptions",
                 static_: true,
-                type: csharp.Type.reference(this.context.getRequestOptionsClassReference()),
+                type: this.csharp.Type.reference(this.context.getRequestOptionsClassReference()),
                 get: true,
-                initializer: csharp.codeblock("new()"),
+                initializer: this.csharp.codeblock("new()"),
                 set: true
             })
         );
 
         if (this.context.hasIdempotencyHeaders()) {
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Protected,
+                this.csharp.field({
+                    access: ast.Access.Protected,
                     name: "IdempotentRequestOptions",
                     static_: true,
-                    type: csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
+                    type: this.csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
                     get: true,
-                    initializer: csharp.codeblock("new()"),
+                    initializer: this.csharp.codeblock("new()"),
                     set: true
                 })
             );
@@ -96,21 +96,21 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         const oauth = this.context.getOauth();
 
         class_.addMethod(
-            csharp.method({
+            this.csharp.method({
                 name: "GlobalSetup",
-                access: csharp.Access.Public,
-                body: csharp.codeblock((writer) => {
+                access: ast.Access.Public,
+                body: this.csharp.codeblock((writer) => {
                     writer.writeLine("// Start the WireMock server");
                     writer.write("Server = WireMockServer.Start(new ");
                     writer.writeNode(
-                        csharp.classReference({
+                        this.csharp.classReference({
                             name: "WireMockServerSettings",
                             namespace: "WireMock.Settings"
                         })
                     );
                     writer.write(" { Logger = new ");
                     writer.writeNode(
-                        csharp.classReference({
+                        this.csharp.classReference({
                             name: "WireMockConsoleLogger",
                             namespace: "WireMock.Logging"
                         })
@@ -123,13 +123,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     writer.writeNodeStatement(
                         this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                             includeEnvVarArguments: true,
-                            clientOptionsArgument: csharp.instantiateClass({
+                            clientOptionsArgument: this.csharp.instantiateClass({
                                 classReference: this.context.getClientOptionsClassReference(),
                                 arguments_: [
                                     this.context.ir.environments?.environments._visit<NamedArgument>({
                                         singleBaseUrl: () => ({
                                             name: "BaseUrl",
-                                            assignment: csharp.codeblock("Server.Urls[0]")
+                                            assignment: this.csharp.codeblock("Server.Urls[0]")
                                         }),
                                         multipleBaseUrls: (value) => {
                                             const environments = new MultiUrlEnvironmentGenerator({
@@ -139,15 +139,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                                             return {
                                                 name: "Environment",
                                                 assignment: environments.generateSnippet(
-                                                    csharp.codeblock("Server.Urls[0]")
+                                                    this.csharp.codeblock("Server.Urls[0]")
                                                 )
                                             };
                                         },
                                         _other: () => {
                                             throw new Error("Internal error; Unexpected environment type");
                                         }
-                                    }) ?? { name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") },
-                                    { name: "MaxRetries", assignment: csharp.codeblock("0") }
+                                    }) ?? { name: "BaseUrl", assignment: this.csharp.codeblock("Server.Urls[0]") },
+                                    { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
                                 ]
                             })
                         })
@@ -155,7 +155,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     if (oauth) {
                         writer.writeNodeStatement(
-                            csharp.invokeMethod({
+                            this.csharp.invokeMethod({
                                 method: MOCK_OAUTH_METHOD_NAME,
                                 arguments_: []
                             })
@@ -165,8 +165,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 isAsync: false,
                 parameters: [],
                 annotations: [
-                    csharp.annotation({
-                        reference: csharp.classReference({ name: "OneTimeSetUp", namespace: "NUnit.Framework" })
+                    this.csharp.annotation({
+                        reference: this.csharp.classReference({ name: "OneTimeSetUp", namespace: "NUnit.Framework" })
                     })
                 ]
             })
@@ -177,18 +177,18 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         }
 
         class_.addMethod(
-            csharp.method({
+            this.csharp.method({
                 name: "GlobalTeardown",
-                access: csharp.Access.Public,
-                body: csharp.codeblock((writer) => {
+                access: ast.Access.Public,
+                body: this.csharp.codeblock((writer) => {
                     writer.writeLine("Server.Stop();");
                     writer.writeLine("Server.Dispose();");
                 }),
                 isAsync: false,
                 parameters: [],
                 annotations: [
-                    csharp.annotation({
-                        reference: csharp.classReference({ name: "OneTimeTearDown", namespace: "NUnit.Framework" })
+                    this.csharp.annotation({
+                        reference: this.csharp.classReference({ name: "OneTimeTearDown", namespace: "NUnit.Framework" })
                     })
                 ]
             })
@@ -204,13 +204,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         });
     }
 
-    protected generateMockAuthMethod(scheme: OAuthScheme): csharp.Method {
+    protected generateMockAuthMethod(scheme: OAuthScheme): ast.Method {
         const shouldScope = !!scheme.configuration.refreshEndpoint;
-        return csharp.method({
-            access: csharp.Access.Private,
+        return this.csharp.method({
+            access: ast.Access.Private,
             name: MOCK_OAUTH_METHOD_NAME,
             parameters: [],
-            body: csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer) => {
                 if (shouldScope) {
                     writer.writeLine("{");
                     writer.indent();

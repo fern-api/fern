@@ -28,9 +28,9 @@ const client = new SeedOauthClientCredentialsClient({
     clientSecret: "YOUR_CLIENT_SECRET",
 });
 await client.auth.getTokenWithClientCredentials({
-    clientId: "client_id",
-    clientSecret: "client_secret",
-    scope: "scope",
+    clientId: "my_oauth_app_123",
+    clientSecret: "sk_live_abcdef123456789",
+    scope: "read:users",
 });
 ```
 

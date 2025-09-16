@@ -11,7 +11,7 @@ export declare namespace RawClient {
         /** reference to a variable that is the body */
         bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
-        pathParameterReferences?: Record<string, string>;
+        pathParameterReferences: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
         /** the query parameters to pass to the endpoint */
@@ -30,6 +30,15 @@ export class RawClient {
         this.context = context;
     }
 
+    private writeBaseUrlDeclaration(writer: ruby.Writer): void {
+        // Write base URL declaration, including default environment if specified
+        writer.write("base_url: request_options[:base_url]");
+        if (this.context.ir.environments?.defaultEnvironment != null) {
+            writer.write(" || ");
+            writer.writeNode(this.context.getDefaultEnvironmentClassReference());
+        }
+    }
+
     public sendRequest({
         baseUrl,
         endpoint,
@@ -46,12 +55,11 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(
-                        `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-                    );
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
-                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
@@ -75,7 +83,7 @@ export class RawClient {
                     writer.indent();
                     writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
                     writer.write(`path: `);
-                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
@@ -95,12 +103,11 @@ export class RawClient {
                 `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
             );
             writer.indent();
-            writer.writeLine(
-                `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-            );
+            this.writeBaseUrlDeclaration(writer);
+            writer.writeLine(",");
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
-            this.writePathString({ writer, endpoint, pathParameterReferences: {} });
+            this.writePathString({ writer, endpoint, pathParameterReferences });
             writer.newLine();
             writer.dedent();
             writer.write(`)`);

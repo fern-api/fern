@@ -235,7 +235,7 @@ public record Shape
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Circle(SeedUnions.Circle value) => new(value);
+        public static implicit operator Shape.Circle(SeedUnions.Circle value) => new(value);
     }
 
     /// <summary>
@@ -253,6 +253,6 @@ public record Shape
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Square(SeedUnions.Square value) => new(value);
+        public static implicit operator Shape.Square(SeedUnions.Square value) => new(value);
     }
 }

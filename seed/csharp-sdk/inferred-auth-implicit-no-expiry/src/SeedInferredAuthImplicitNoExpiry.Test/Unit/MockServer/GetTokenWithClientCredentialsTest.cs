@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedInferredAuthImplicitNoExpiry;
 using SeedInferredAuthImplicitNoExpiry.Core;
@@ -8,8 +8,8 @@ namespace SeedInferredAuthImplicitNoExpiry.Test.Unit.MockServer;
 [TestFixture]
 public class GetTokenWithClientCredentialsTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

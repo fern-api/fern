@@ -12,7 +12,7 @@ module Seed
         # @return [String]
         def with_mixed_case(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/urls/MixedCase"
           )
@@ -25,7 +25,7 @@ module Seed
         # @return [String]
         def no_ending_slash(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/urls/no-ending-slash"
           )
@@ -38,7 +38,7 @@ module Seed
         # @return [String]
         def with_ending_slash(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/urls/with-ending-slash/"
           )
@@ -51,7 +51,7 @@ module Seed
         # @return [String]
         def with_underscores(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/urls/with_underscores"
           )

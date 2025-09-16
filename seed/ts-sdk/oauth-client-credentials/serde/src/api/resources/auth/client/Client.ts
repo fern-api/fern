@@ -45,9 +45,9 @@ export class Auth {
      *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
-     *         clientId: "client_id",
-     *         clientSecret: "client_secret",
-     *         scope: "scope"
+     *         clientId: "my_oauth_app_123",
+     *         clientSecret: "sk_live_abcdef123456789",
+     *         scope: "read:users"
      *     })
      */
     public getTokenWithClientCredentials(
@@ -133,10 +133,10 @@ export class Auth {
      *
      * @example
      *     await client.auth.refreshToken({
-     *         clientId: "client_id",
-     *         clientSecret: "client_secret",
+     *         clientId: "my_oauth_app_123",
+     *         clientSecret: "sk_live_abcdef123456789",
      *         refreshToken: "refresh_token",
-     *         scope: "scope"
+     *         scope: "read:users"
      *     })
      */
     public refreshToken(

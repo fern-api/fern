@@ -1,4 +1,4 @@
-import { CodeBlock, Parameter } from "../csharp";
+import { CodeBlock, Parameter } from "../ast";
 import { Writer } from "./core/Writer";
 
 export declare namespace AnonymousFunction {

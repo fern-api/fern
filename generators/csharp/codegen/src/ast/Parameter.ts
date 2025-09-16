@@ -1,3 +1,4 @@
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -26,8 +27,8 @@ export class Parameter extends AstNode {
     private readonly ref: boolean;
     private readonly out: boolean;
 
-    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args) {
-        super();
+    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, csharp: CSharp) {
+        super(csharp);
         this.name = name;
         this.type = type;
         this.docs = docs;

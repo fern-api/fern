@@ -21,7 +21,7 @@ module Seed
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/users/events/",
             query: _query

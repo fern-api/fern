@@ -1,7 +1,6 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCrossPackageTypeNames.Core;
-using SeedCrossPackageTypeNames.FolderD;
 using SeedCrossPackageTypeNames.Test.Unit.MockServer;
 
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderD;
@@ -9,8 +8,8 @@ namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderD;
 [TestFixture]
 public class GetDirectThreadTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -34,7 +33,10 @@ public class GetDirectThreadTest : BaseMockServerTest
         var response = await Client.FolderD.Service.GetDirectThreadAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Response>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedCrossPackageTypeNames.FolderD.Response>(mockResponse)
+                )
+                .UsingDefaults()
         );
     }
 }

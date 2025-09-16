@@ -13,7 +13,7 @@ module Seed
       # @return [bool]
       def get_with_custom_auth(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "custom-auth"
         )
@@ -28,7 +28,7 @@ module Seed
       # @return [bool]
       def post_with_custom_auth(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "custom-auth",
           body: params

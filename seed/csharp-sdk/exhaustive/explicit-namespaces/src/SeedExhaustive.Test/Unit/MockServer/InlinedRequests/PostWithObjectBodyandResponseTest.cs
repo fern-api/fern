@@ -1,5 +1,5 @@
 using System.Globalization;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.InlinedRequests;
@@ -11,8 +11,8 @@ namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 [TestFixture]
 public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

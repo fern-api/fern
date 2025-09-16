@@ -1,5 +1,10 @@
-export * as dependencies from "./ast/dependencies";
-export * as csharp from "./csharp";
-export { convertReadOnlyPrimitiveTypes, VALID_READ_ONLY_MEMORY_TYPES } from "./csharp";
-export { BaseCsharpCustomConfigSchema, validateReadOnlyMemoryTypes } from "./custom-config";
+export * as ast from "./ast";
+export { convertReadOnlyPrimitiveTypes } from "./ast";
+export { Writer } from "./ast/core/Writer";
+export { CsharpGeneratorContext } from "./context/CsharpGeneratorContext";
+export { CSharp } from "./csharp";
+export { BaseCsharpCustomConfigSchema } from "./custom-config";
+export { type GrpcClientInfo } from "./grpc/GrpcClientInfo";
+export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString";
+export { NameRegistry } from "./utils/nameRegistry";

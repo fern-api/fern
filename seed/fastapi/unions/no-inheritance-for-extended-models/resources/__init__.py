@@ -54,7 +54,7 @@ from .types import (
     UnionWithTime,
     UnionWithoutKey,
 )
-from .union import Circle, GetShapeRequest, Shape, Square
+from .union import Circle, GetShapeRequest, Shape, Square, WithName
 
 __all__ = [
     "ActiveDiamond",
@@ -108,6 +108,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "bigunion",
     "types",
     "union",

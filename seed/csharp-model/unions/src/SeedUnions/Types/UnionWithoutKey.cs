@@ -216,7 +216,7 @@ public record UnionWithoutKey
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithoutKey.Foo(SeedUnions.Foo value) => new(value);
     }
 
     /// <summary>
@@ -234,6 +234,6 @@ public record UnionWithoutKey
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Bar(SeedUnions.Bar value) => new(value);
+        public static implicit operator UnionWithoutKey.Bar(SeedUnions.Bar value) => new(value);
     }
 }

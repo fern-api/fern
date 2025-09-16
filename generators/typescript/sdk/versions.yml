@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled. 
+        This prevents compilation errors in the TypeScript SDK.
+      type: fix
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Generate `Request` and `Response` types variations for types that have readonly and/or writeonly properties.
+        For example, a type `User` will have a `User.Request` type that omits readonly properties and a `User.Response` type that omits writeonly properties.
+
+        Set `experimentalGenerateReadWriteOnlyTypes` to `true` in the `config` of your generator configuration to enable this feature.
+        ```ts
+        import { User, FooClient } from "foo";
+
+        const client = new FooClient(...);
+        const createUser: User.Request = {
+          name: "Jon",
+          // id: "123", // Error: id is read-only and thus omitted
+        };
+        const createdUser: User.Response = await client.createUser(createUser);
+        // createdUser.id is available here
+        ```
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
 - version: 2.10.4
   changelogEntry:
     - summary: Use cached `prettier` to format project instead of yarn/pnpm installing all dependencies during generation.

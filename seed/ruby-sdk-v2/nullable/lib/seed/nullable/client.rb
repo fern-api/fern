@@ -18,7 +18,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
           query: _query
@@ -32,7 +32,7 @@ module Seed
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/users",
           body: params
@@ -46,7 +46,7 @@ module Seed
       # @return [bool]
       def delete_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "DELETE",
           path: "/users",
           body: params

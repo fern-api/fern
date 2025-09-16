@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedOauthClientCredentialsDefault;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedOauthClientCredentialsDefaultClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",

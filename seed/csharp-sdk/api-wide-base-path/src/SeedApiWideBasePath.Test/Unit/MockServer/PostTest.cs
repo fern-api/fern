@@ -5,7 +5,7 @@ namespace SeedApiWideBasePath.Test.Unit.MockServer;
 [TestFixture]
 public class PostTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

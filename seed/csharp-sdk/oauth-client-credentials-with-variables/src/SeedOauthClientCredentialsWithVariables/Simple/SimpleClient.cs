@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedOauthClientCredentialsWithVariables.Core;
 
 namespace SeedOauthClientCredentialsWithVariables;
@@ -17,7 +17,7 @@ public partial class SimpleClient
     /// <example><code>
     /// await client.Simple.GetSomethingAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetSomethingAsync(
+    public async Task GetSomethingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

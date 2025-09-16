@@ -6,7 +6,7 @@ namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 [TestFixture]
 public class EmptyResponseTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -35,7 +35,7 @@ public class EmptyResponseTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.EmptyResponseAsync(
-                new Task
+                new SeedCsharpSystemCollision.Task
                 {
                     Name = "name",
                     User = new User

@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using OneOf;
 using SeedUndiscriminatedUnions;
@@ -9,8 +9,8 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 [TestFixture]
 public class GetMetadataTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
     {
         const string mockResponse = """
             {
@@ -37,8 +37,8 @@ public class GetMetadataTest : BaseMockServerTest
         );
     }
 
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string mockResponse = """
             {

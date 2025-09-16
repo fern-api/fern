@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedEnum.Core;
 
 namespace SeedEnum;
@@ -19,7 +19,7 @@ public partial class InlinedRequestClient
     ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SendAsync(
+    public async Task SendAsync(
         SendEnumInlinedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

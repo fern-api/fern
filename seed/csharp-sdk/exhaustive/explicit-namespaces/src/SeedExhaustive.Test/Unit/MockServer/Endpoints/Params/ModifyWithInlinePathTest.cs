@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Params;
@@ -9,8 +9,8 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 [TestFixture]
 public class ModifyWithInlinePathTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string requestJson = """
             "string"

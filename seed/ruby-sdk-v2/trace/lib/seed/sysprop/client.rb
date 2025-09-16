@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Sysprop
@@ -10,33 +11,28 @@ module Seed
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "PUT",
-          path: "/sysprop/num-warm-instances/#{/#{"
+          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:numWarmInstances]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
-      def get_num_warm_instances(request_options: {}, **params)
+      def get_num_warm_instances(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "GET",
           path: "/sysprop/num-warm-instances"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

@@ -5,18 +5,18 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { Name } from "../../commons/types/Name";
+import { PropertyPathItem } from "./PropertyPathItem";
 import { RequestPropertyValue } from "./RequestPropertyValue";
 
 export const RequestProperty: core.serialization.ObjectSchema<serializers.RequestProperty.Raw, FernIr.RequestProperty> =
     core.serialization.objectWithoutOptionalProperties({
-        propertyPath: core.serialization.list(Name).optional(),
+        propertyPath: core.serialization.list(PropertyPathItem).optional(),
         property: RequestPropertyValue,
     });
 
 export declare namespace RequestProperty {
     export interface Raw {
-        propertyPath?: Name.Raw[] | null;
+        propertyPath?: PropertyPathItem.Raw[] | null;
         property: RequestPropertyValue.Raw;
     }
 }

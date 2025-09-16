@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -25,7 +25,7 @@ module Seed
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -39,7 +39,7 @@ module Seed
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -53,7 +53,7 @@ module Seed
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -67,7 +67,7 @@ module Seed
       # @return [Seed::Service::Types::Response | nil]
       def get_optional_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -81,7 +81,7 @@ module Seed
       # @return [Seed::Service::Types::WithDocs | nil]
       def get_optional_movie_docs(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
@@ -97,7 +97,7 @@ module Seed
       # @return [Seed::Types::StringResponse | nil]
       def get_optional_movie_name(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
           body: params
