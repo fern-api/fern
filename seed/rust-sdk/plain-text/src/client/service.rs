@@ -1,5 +1,5 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,14 +12,8 @@ impl ServiceClient {
     }
 
     pub async fn get_text(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "text",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::POST, "text", None, None, options)
+            .await
     }
-
 }
-

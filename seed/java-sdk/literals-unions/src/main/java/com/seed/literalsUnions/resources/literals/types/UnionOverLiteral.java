@@ -35,7 +35,7 @@ public final class UnionOverLiteral {
         if (this.type == 0) {
             return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit2((String) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -64,14 +64,14 @@ public final class UnionOverLiteral {
         return new UnionOverLiteral(value, 0);
     }
 
-    public static UnionOverLiteral of(String value) {
+    public static UnionOverLiteral of2(String value) {
         return new UnionOverLiteral(value, 1);
     }
 
     public interface Visitor<T> {
         T visit(String value);
 
-        T visit(String value);
+        T visit2(String value);
     }
 
     static final class Deserializer extends StdDeserializer<UnionOverLiteral> {
@@ -87,7 +87,7 @@ public final class UnionOverLiteral {
             } catch (RuntimeException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
+                return of2(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

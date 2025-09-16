@@ -1693,6 +1693,366 @@ func (u *UnionWithPrimitive) validate() error {
 	return nil
 }
 
+type UnionWithSameNumberTypes struct {
+	Type        string
+	PositiveInt int
+	NegativeInt int
+	AnyNumber   float64
+}
+
+func NewUnionWithSameNumberTypesFromPositiveInt(value int) *UnionWithSameNumberTypes {
+	return &UnionWithSameNumberTypes{Type: "positiveInt", PositiveInt: value}
+}
+
+func NewUnionWithSameNumberTypesFromNegativeInt(value int) *UnionWithSameNumberTypes {
+	return &UnionWithSameNumberTypes{Type: "negativeInt", NegativeInt: value}
+}
+
+func NewUnionWithSameNumberTypesFromAnyNumber(value float64) *UnionWithSameNumberTypes {
+	return &UnionWithSameNumberTypes{Type: "anyNumber", AnyNumber: value}
+}
+
+func (u *UnionWithSameNumberTypes) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithSameNumberTypes) GetPositiveInt() int {
+	if u == nil {
+		return 0
+	}
+	return u.PositiveInt
+}
+
+func (u *UnionWithSameNumberTypes) GetNegativeInt() int {
+	if u == nil {
+		return 0
+	}
+	return u.NegativeInt
+}
+
+func (u *UnionWithSameNumberTypes) GetAnyNumber() float64 {
+	if u == nil {
+		return 0
+	}
+	return u.AnyNumber
+}
+
+func (u *UnionWithSameNumberTypes) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "positiveInt":
+		var valueUnmarshaler struct {
+			PositiveInt int `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.PositiveInt = valueUnmarshaler.PositiveInt
+	case "negativeInt":
+		var valueUnmarshaler struct {
+			NegativeInt int `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.NegativeInt = valueUnmarshaler.NegativeInt
+	case "anyNumber":
+		var valueUnmarshaler struct {
+			AnyNumber float64 `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.AnyNumber = valueUnmarshaler.AnyNumber
+	}
+	return nil
+}
+
+func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "positiveInt":
+		var marshaler = struct {
+			Type        string `json:"type"`
+			PositiveInt int    `json:"value"`
+		}{
+			Type:        "positiveInt",
+			PositiveInt: u.PositiveInt,
+		}
+		return json.Marshal(marshaler)
+	case "negativeInt":
+		var marshaler = struct {
+			Type        string `json:"type"`
+			NegativeInt int    `json:"value"`
+		}{
+			Type:        "negativeInt",
+			NegativeInt: u.NegativeInt,
+		}
+		return json.Marshal(marshaler)
+	case "anyNumber":
+		var marshaler = struct {
+			Type      string  `json:"type"`
+			AnyNumber float64 `json:"value"`
+		}{
+			Type:      "anyNumber",
+			AnyNumber: u.AnyNumber,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionWithSameNumberTypesVisitor interface {
+	VisitPositiveInt(int) error
+	VisitNegativeInt(int) error
+	VisitAnyNumber(float64) error
+}
+
+func (u *UnionWithSameNumberTypes) Accept(visitor UnionWithSameNumberTypesVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "positiveInt":
+		return visitor.VisitPositiveInt(u.PositiveInt)
+	case "negativeInt":
+		return visitor.VisitNegativeInt(u.NegativeInt)
+	case "anyNumber":
+		return visitor.VisitAnyNumber(u.AnyNumber)
+	}
+}
+
+func (u *UnionWithSameNumberTypes) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.PositiveInt != 0 {
+		fields = append(fields, "positiveInt")
+	}
+	if u.NegativeInt != 0 {
+		fields = append(fields, "negativeInt")
+	}
+	if u.AnyNumber != 0 {
+		fields = append(fields, "anyNumber")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithSameStringTypes struct {
+	Type          string
+	CustomFormat  string
+	RegularString string
+	PatternString string
+}
+
+func NewUnionWithSameStringTypesFromCustomFormat(value string) *UnionWithSameStringTypes {
+	return &UnionWithSameStringTypes{Type: "customFormat", CustomFormat: value}
+}
+
+func NewUnionWithSameStringTypesFromRegularString(value string) *UnionWithSameStringTypes {
+	return &UnionWithSameStringTypes{Type: "regularString", RegularString: value}
+}
+
+func NewUnionWithSameStringTypesFromPatternString(value string) *UnionWithSameStringTypes {
+	return &UnionWithSameStringTypes{Type: "patternString", PatternString: value}
+}
+
+func (u *UnionWithSameStringTypes) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithSameStringTypes) GetCustomFormat() string {
+	if u == nil {
+		return ""
+	}
+	return u.CustomFormat
+}
+
+func (u *UnionWithSameStringTypes) GetRegularString() string {
+	if u == nil {
+		return ""
+	}
+	return u.RegularString
+}
+
+func (u *UnionWithSameStringTypes) GetPatternString() string {
+	if u == nil {
+		return ""
+	}
+	return u.PatternString
+}
+
+func (u *UnionWithSameStringTypes) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "customFormat":
+		var valueUnmarshaler struct {
+			CustomFormat string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.CustomFormat = valueUnmarshaler.CustomFormat
+	case "regularString":
+		var valueUnmarshaler struct {
+			RegularString string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.RegularString = valueUnmarshaler.RegularString
+	case "patternString":
+		var valueUnmarshaler struct {
+			PatternString string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.PatternString = valueUnmarshaler.PatternString
+	}
+	return nil
+}
+
+func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "customFormat":
+		var marshaler = struct {
+			Type         string `json:"type"`
+			CustomFormat string `json:"value"`
+		}{
+			Type:         "customFormat",
+			CustomFormat: u.CustomFormat,
+		}
+		return json.Marshal(marshaler)
+	case "regularString":
+		var marshaler = struct {
+			Type          string `json:"type"`
+			RegularString string `json:"value"`
+		}{
+			Type:          "regularString",
+			RegularString: u.RegularString,
+		}
+		return json.Marshal(marshaler)
+	case "patternString":
+		var marshaler = struct {
+			Type          string `json:"type"`
+			PatternString string `json:"value"`
+		}{
+			Type:          "patternString",
+			PatternString: u.PatternString,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionWithSameStringTypesVisitor interface {
+	VisitCustomFormat(string) error
+	VisitRegularString(string) error
+	VisitPatternString(string) error
+}
+
+func (u *UnionWithSameStringTypes) Accept(visitor UnionWithSameStringTypesVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "customFormat":
+		return visitor.VisitCustomFormat(u.CustomFormat)
+	case "regularString":
+		return visitor.VisitRegularString(u.RegularString)
+	case "patternString":
+		return visitor.VisitPatternString(u.PatternString)
+	}
+}
+
+func (u *UnionWithSameStringTypes) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.CustomFormat != "" {
+		fields = append(fields, "customFormat")
+	}
+	if u.RegularString != "" {
+		fields = append(fields, "regularString")
+	}
+	if u.PatternString != "" {
+		fields = append(fields, "patternString")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
 type UnionWithSingleElement struct {
 	Type string
 	Foo  *Foo

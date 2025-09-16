@@ -1,23 +1,23 @@
 use crate::nullable_optional_email_notification::EmailNotification;
-use crate::nullable_optional_sms_notification::SmsNotification;
 use crate::nullable_optional_push_notification::PushNotification;
+use crate::nullable_optional_sms_notification::SmsNotification;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum NotificationMethod {
-        Email {
-            #[serde(flatten)]
-            data: EmailNotification,
-        },
+    Email {
+        #[serde(flatten)]
+        data: EmailNotification,
+    },
 
-        Sms {
-            #[serde(flatten)]
-            data: SmsNotification,
-        },
+    Sms {
+        #[serde(flatten)]
+        data: SmsNotification,
+    },
 
-        Push {
-            #[serde(flatten)]
-            data: PushNotification,
-        },
+    Push {
+        #[serde(flatten)]
+        data: PushNotification,
+    },
 }

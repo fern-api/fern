@@ -16,6 +16,8 @@ from .resources import (
     Request,
     TypeWithOptionalUnion,
     UnionWithDuplicateTypes,
+    UnionWithIdenticalPrimitives,
+    UnionWithIdenticalStrings,
     union,
 )
 
@@ -33,5 +35,7 @@ __all__ = [
     "Request",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
+    "UnionWithIdenticalPrimitives",
+    "UnionWithIdenticalStrings",
     "union",
 ]

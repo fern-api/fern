@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod optional;
 pub use optional::OptionalClient;
