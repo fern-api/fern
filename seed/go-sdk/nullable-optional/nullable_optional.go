@@ -6,36 +6,183 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/nullable-optional/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	filterByRoleRequestFieldRole          = big.NewInt(1 << 0)
+	filterByRoleRequestFieldStatus        = big.NewInt(1 << 1)
+	filterByRoleRequestFieldSecondaryRole = big.NewInt(1 << 2)
 )
 
 type FilterByRoleRequest struct {
 	Role          *UserRole   `json:"-" url:"role,omitempty"`
 	Status        *UserStatus `json:"-" url:"status,omitempty"`
 	SecondaryRole *UserRole   `json:"-" url:"secondaryRole,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (f *FilterByRoleRequest) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+func (f *FilterByRoleRequest) SetRole(role *UserRole) {
+	f.Role = role
+	f.require(filterByRoleRequestFieldRole)
+}
+
+func (f *FilterByRoleRequest) SetStatus(status *UserStatus) {
+	f.Status = status
+	f.require(filterByRoleRequestFieldStatus)
+}
+
+func (f *FilterByRoleRequest) SetSecondaryRole(secondaryRole *UserRole) {
+	f.SecondaryRole = secondaryRole
+	f.require(filterByRoleRequestFieldSecondaryRole)
+}
+
+var (
+	searchRequestFieldQuery        = big.NewInt(1 << 0)
+	searchRequestFieldFilters      = big.NewInt(1 << 1)
+	searchRequestFieldIncludeTypes = big.NewInt(1 << 2)
+)
 
 type SearchRequest struct {
 	Query        string             `json:"query" url:"-"`
 	Filters      map[string]*string `json:"filters,omitempty" url:"-"`
 	IncludeTypes []string           `json:"includeTypes,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SearchRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(searchRequestFieldQuery)
+}
+
+func (s *SearchRequest) SetFilters(filters map[string]*string) {
+	s.Filters = filters
+	s.require(searchRequestFieldFilters)
+}
+
+func (s *SearchRequest) SetIncludeTypes(includeTypes []string) {
+	s.IncludeTypes = includeTypes
+	s.require(searchRequestFieldIncludeTypes)
+}
+
+var (
+	listUsersRequestFieldLimit          = big.NewInt(1 << 0)
+	listUsersRequestFieldOffset         = big.NewInt(1 << 1)
+	listUsersRequestFieldIncludeDeleted = big.NewInt(1 << 2)
+	listUsersRequestFieldSortBy         = big.NewInt(1 << 3)
+)
 
 type ListUsersRequest struct {
 	Limit          *int    `json:"-" url:"limit,omitempty"`
 	Offset         *int    `json:"-" url:"offset,omitempty"`
 	IncludeDeleted *bool   `json:"-" url:"includeDeleted,omitempty"`
 	SortBy         *string `json:"-" url:"sortBy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListUsersRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listUsersRequestFieldLimit)
+}
+
+func (l *ListUsersRequest) SetOffset(offset *int) {
+	l.Offset = offset
+	l.require(listUsersRequestFieldOffset)
+}
+
+func (l *ListUsersRequest) SetIncludeDeleted(includeDeleted *bool) {
+	l.IncludeDeleted = includeDeleted
+	l.require(listUsersRequestFieldIncludeDeleted)
+}
+
+func (l *ListUsersRequest) SetSortBy(sortBy *string) {
+	l.SortBy = sortBy
+	l.require(listUsersRequestFieldSortBy)
+}
+
+var (
+	searchUsersRequestFieldQuery      = big.NewInt(1 << 0)
+	searchUsersRequestFieldDepartment = big.NewInt(1 << 1)
+	searchUsersRequestFieldRole       = big.NewInt(1 << 2)
+	searchUsersRequestFieldIsActive   = big.NewInt(1 << 3)
+)
 
 type SearchUsersRequest struct {
 	Query      string  `json:"-" url:"query"`
 	Department *string `json:"-" url:"department,omitempty"`
 	Role       *string `json:"-" url:"role,omitempty"`
 	IsActive   *bool   `json:"-" url:"isActive,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SearchUsersRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchUsersRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(searchUsersRequestFieldQuery)
+}
+
+func (s *SearchUsersRequest) SetDepartment(department *string) {
+	s.Department = department
+	s.require(searchUsersRequestFieldDepartment)
+}
+
+func (s *SearchUsersRequest) SetRole(role *string) {
+	s.Role = role
+	s.require(searchUsersRequestFieldRole)
+}
+
+func (s *SearchUsersRequest) SetIsActive(isActive *bool) {
+	s.IsActive = isActive
+	s.require(searchUsersRequestFieldIsActive)
 }
 
 // Nested object for testing
+var (
+	addressFieldStreet     = big.NewInt(1 << 0)
+	addressFieldCity       = big.NewInt(1 << 1)
+	addressFieldState      = big.NewInt(1 << 2)
+	addressFieldZipCode    = big.NewInt(1 << 3)
+	addressFieldCountry    = big.NewInt(1 << 4)
+	addressFieldBuildingId = big.NewInt(1 << 5)
+	addressFieldTenantId   = big.NewInt(1 << 6)
+)
+
 type Address struct {
 	Street     string         `json:"street" url:"street"`
 	City       *string        `json:"city,omitempty" url:"city,omitempty"`
@@ -44,6 +191,9 @@ type Address struct {
 	Country    *string        `json:"country,omitempty" url:"country,omitempty"`
 	BuildingId NullableUserId `json:"buildingId,omitempty" url:"buildingId,omitempty"`
 	TenantId   OptionalUserId `json:"tenantId,omitempty" url:"tenantId,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -102,6 +252,48 @@ func (a *Address) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Address) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+func (a *Address) SetStreet(street string) {
+	a.Street = street
+	a.require(addressFieldStreet)
+}
+
+func (a *Address) SetCity(city *string) {
+	a.City = city
+	a.require(addressFieldCity)
+}
+
+func (a *Address) SetState(state *string) {
+	a.State = state
+	a.require(addressFieldState)
+}
+
+func (a *Address) SetZipCode(zipCode string) {
+	a.ZipCode = zipCode
+	a.require(addressFieldZipCode)
+}
+
+func (a *Address) SetCountry(country *string) {
+	a.Country = country
+	a.require(addressFieldCountry)
+}
+
+func (a *Address) SetBuildingId(buildingId NullableUserId) {
+	a.BuildingId = buildingId
+	a.require(addressFieldBuildingId)
+}
+
+func (a *Address) SetTenantId(tenantId OptionalUserId) {
+	a.TenantId = tenantId
+	a.require(addressFieldTenantId)
+}
+
 func (a *Address) UnmarshalJSON(data []byte) error {
 	type unmarshaler Address
 	var value unmarshaler
@@ -118,6 +310,17 @@ func (a *Address) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (a *Address) MarshalJSON() ([]byte, error) {
+	type embed Address
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (a *Address) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -131,6 +334,28 @@ func (a *Address) String() string {
 }
 
 // Test object with nullable enums, unions, and arrays
+var (
+	complexProfileFieldId                           = big.NewInt(1 << 0)
+	complexProfileFieldNullableRole                 = big.NewInt(1 << 1)
+	complexProfileFieldOptionalRole                 = big.NewInt(1 << 2)
+	complexProfileFieldOptionalNullableRole         = big.NewInt(1 << 3)
+	complexProfileFieldNullableStatus               = big.NewInt(1 << 4)
+	complexProfileFieldOptionalStatus               = big.NewInt(1 << 5)
+	complexProfileFieldOptionalNullableStatus       = big.NewInt(1 << 6)
+	complexProfileFieldNullableNotification         = big.NewInt(1 << 7)
+	complexProfileFieldOptionalNotification         = big.NewInt(1 << 8)
+	complexProfileFieldOptionalNullableNotification = big.NewInt(1 << 9)
+	complexProfileFieldNullableSearchResult         = big.NewInt(1 << 10)
+	complexProfileFieldOptionalSearchResult         = big.NewInt(1 << 11)
+	complexProfileFieldNullableArray                = big.NewInt(1 << 12)
+	complexProfileFieldOptionalArray                = big.NewInt(1 << 13)
+	complexProfileFieldOptionalNullableArray        = big.NewInt(1 << 14)
+	complexProfileFieldNullableListOfNullables      = big.NewInt(1 << 15)
+	complexProfileFieldNullableMapOfNullables       = big.NewInt(1 << 16)
+	complexProfileFieldNullableListOfUnions         = big.NewInt(1 << 17)
+	complexProfileFieldOptionalMapOfEnums           = big.NewInt(1 << 18)
+)
+
 type ComplexProfile struct {
 	Id                           string                `json:"id" url:"id"`
 	NullableRole                 *UserRole             `json:"nullableRole,omitempty" url:"nullableRole,omitempty"`
@@ -151,6 +376,9 @@ type ComplexProfile struct {
 	NullableMapOfNullables       map[string]*Address   `json:"nullableMapOfNullables,omitempty" url:"nullableMapOfNullables,omitempty"`
 	NullableListOfUnions         []*NotificationMethod `json:"nullableListOfUnions,omitempty" url:"nullableListOfUnions,omitempty"`
 	OptionalMapOfEnums           map[string]UserRole   `json:"optionalMapOfEnums,omitempty" url:"optionalMapOfEnums,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -293,6 +521,108 @@ func (c *ComplexProfile) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *ComplexProfile) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *ComplexProfile) SetId(id string) {
+	c.Id = id
+	c.require(complexProfileFieldId)
+}
+
+func (c *ComplexProfile) SetNullableRole(nullableRole *UserRole) {
+	c.NullableRole = nullableRole
+	c.require(complexProfileFieldNullableRole)
+}
+
+func (c *ComplexProfile) SetOptionalRole(optionalRole *UserRole) {
+	c.OptionalRole = optionalRole
+	c.require(complexProfileFieldOptionalRole)
+}
+
+func (c *ComplexProfile) SetOptionalNullableRole(optionalNullableRole *UserRole) {
+	c.OptionalNullableRole = optionalNullableRole
+	c.require(complexProfileFieldOptionalNullableRole)
+}
+
+func (c *ComplexProfile) SetNullableStatus(nullableStatus *UserStatus) {
+	c.NullableStatus = nullableStatus
+	c.require(complexProfileFieldNullableStatus)
+}
+
+func (c *ComplexProfile) SetOptionalStatus(optionalStatus *UserStatus) {
+	c.OptionalStatus = optionalStatus
+	c.require(complexProfileFieldOptionalStatus)
+}
+
+func (c *ComplexProfile) SetOptionalNullableStatus(optionalNullableStatus *UserStatus) {
+	c.OptionalNullableStatus = optionalNullableStatus
+	c.require(complexProfileFieldOptionalNullableStatus)
+}
+
+func (c *ComplexProfile) SetNullableNotification(nullableNotification *NotificationMethod) {
+	c.NullableNotification = nullableNotification
+	c.require(complexProfileFieldNullableNotification)
+}
+
+func (c *ComplexProfile) SetOptionalNotification(optionalNotification *NotificationMethod) {
+	c.OptionalNotification = optionalNotification
+	c.require(complexProfileFieldOptionalNotification)
+}
+
+func (c *ComplexProfile) SetOptionalNullableNotification(optionalNullableNotification *NotificationMethod) {
+	c.OptionalNullableNotification = optionalNullableNotification
+	c.require(complexProfileFieldOptionalNullableNotification)
+}
+
+func (c *ComplexProfile) SetNullableSearchResult(nullableSearchResult *SearchResult) {
+	c.NullableSearchResult = nullableSearchResult
+	c.require(complexProfileFieldNullableSearchResult)
+}
+
+func (c *ComplexProfile) SetOptionalSearchResult(optionalSearchResult *SearchResult) {
+	c.OptionalSearchResult = optionalSearchResult
+	c.require(complexProfileFieldOptionalSearchResult)
+}
+
+func (c *ComplexProfile) SetNullableArray(nullableArray []string) {
+	c.NullableArray = nullableArray
+	c.require(complexProfileFieldNullableArray)
+}
+
+func (c *ComplexProfile) SetOptionalArray(optionalArray []string) {
+	c.OptionalArray = optionalArray
+	c.require(complexProfileFieldOptionalArray)
+}
+
+func (c *ComplexProfile) SetOptionalNullableArray(optionalNullableArray []string) {
+	c.OptionalNullableArray = optionalNullableArray
+	c.require(complexProfileFieldOptionalNullableArray)
+}
+
+func (c *ComplexProfile) SetNullableListOfNullables(nullableListOfNullables []*string) {
+	c.NullableListOfNullables = nullableListOfNullables
+	c.require(complexProfileFieldNullableListOfNullables)
+}
+
+func (c *ComplexProfile) SetNullableMapOfNullables(nullableMapOfNullables map[string]*Address) {
+	c.NullableMapOfNullables = nullableMapOfNullables
+	c.require(complexProfileFieldNullableMapOfNullables)
+}
+
+func (c *ComplexProfile) SetNullableListOfUnions(nullableListOfUnions []*NotificationMethod) {
+	c.NullableListOfUnions = nullableListOfUnions
+	c.require(complexProfileFieldNullableListOfUnions)
+}
+
+func (c *ComplexProfile) SetOptionalMapOfEnums(optionalMapOfEnums map[string]UserRole) {
+	c.OptionalMapOfEnums = optionalMapOfEnums
+	c.require(complexProfileFieldOptionalMapOfEnums)
+}
+
 func (c *ComplexProfile) UnmarshalJSON(data []byte) error {
 	type unmarshaler ComplexProfile
 	var value unmarshaler
@@ -309,6 +639,17 @@ func (c *ComplexProfile) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *ComplexProfile) MarshalJSON() ([]byte, error) {
+	type embed ComplexProfile
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *ComplexProfile) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -321,11 +662,21 @@ func (c *ComplexProfile) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createUserRequestFieldUsername = big.NewInt(1 << 0)
+	createUserRequestFieldEmail    = big.NewInt(1 << 1)
+	createUserRequestFieldPhone    = big.NewInt(1 << 2)
+	createUserRequestFieldAddress  = big.NewInt(1 << 3)
+)
+
 type CreateUserRequest struct {
 	Username string   `json:"username" url:"username"`
 	Email    *string  `json:"email,omitempty" url:"email,omitempty"`
 	Phone    *string  `json:"phone,omitempty" url:"phone,omitempty"`
 	Address  *Address `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -363,6 +714,33 @@ func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CreateUserRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CreateUserRequest) SetUsername(username string) {
+	c.Username = username
+	c.require(createUserRequestFieldUsername)
+}
+
+func (c *CreateUserRequest) SetEmail(email *string) {
+	c.Email = email
+	c.require(createUserRequestFieldEmail)
+}
+
+func (c *CreateUserRequest) SetPhone(phone *string) {
+	c.Phone = phone
+	c.require(createUserRequestFieldPhone)
+}
+
+func (c *CreateUserRequest) SetAddress(address *Address) {
+	c.Address = address
+	c.require(createUserRequestFieldAddress)
+}
+
 func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateUserRequest
 	var value unmarshaler
@@ -379,6 +757,17 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateUserRequest) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -392,6 +781,21 @@ func (c *CreateUserRequest) String() string {
 }
 
 // Request body for testing deserialization of null values
+var (
+	deserializationTestRequestFieldRequiredString         = big.NewInt(1 << 0)
+	deserializationTestRequestFieldNullableString         = big.NewInt(1 << 1)
+	deserializationTestRequestFieldOptionalString         = big.NewInt(1 << 2)
+	deserializationTestRequestFieldOptionalNullableString = big.NewInt(1 << 3)
+	deserializationTestRequestFieldNullableEnum           = big.NewInt(1 << 4)
+	deserializationTestRequestFieldOptionalEnum           = big.NewInt(1 << 5)
+	deserializationTestRequestFieldNullableUnion          = big.NewInt(1 << 6)
+	deserializationTestRequestFieldOptionalUnion          = big.NewInt(1 << 7)
+	deserializationTestRequestFieldNullableList           = big.NewInt(1 << 8)
+	deserializationTestRequestFieldNullableMap            = big.NewInt(1 << 9)
+	deserializationTestRequestFieldNullableObject         = big.NewInt(1 << 10)
+	deserializationTestRequestFieldOptionalObject         = big.NewInt(1 << 11)
+)
+
 type DeserializationTestRequest struct {
 	RequiredString         string              `json:"requiredString" url:"requiredString"`
 	NullableString         *string             `json:"nullableString,omitempty" url:"nullableString,omitempty"`
@@ -405,6 +809,9 @@ type DeserializationTestRequest struct {
 	NullableMap            map[string]int      `json:"nullableMap,omitempty" url:"nullableMap,omitempty"`
 	NullableObject         *Address            `json:"nullableObject,omitempty" url:"nullableObject,omitempty"`
 	OptionalObject         *Organization       `json:"optionalObject,omitempty" url:"optionalObject,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -498,6 +905,73 @@ func (d *DeserializationTestRequest) GetExtraProperties() map[string]interface{}
 	return d.extraProperties
 }
 
+func (d *DeserializationTestRequest) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *DeserializationTestRequest) SetRequiredString(requiredString string) {
+	d.RequiredString = requiredString
+	d.require(deserializationTestRequestFieldRequiredString)
+}
+
+func (d *DeserializationTestRequest) SetNullableString(nullableString *string) {
+	d.NullableString = nullableString
+	d.require(deserializationTestRequestFieldNullableString)
+}
+
+func (d *DeserializationTestRequest) SetOptionalString(optionalString *string) {
+	d.OptionalString = optionalString
+	d.require(deserializationTestRequestFieldOptionalString)
+}
+
+func (d *DeserializationTestRequest) SetOptionalNullableString(optionalNullableString *string) {
+	d.OptionalNullableString = optionalNullableString
+	d.require(deserializationTestRequestFieldOptionalNullableString)
+}
+
+func (d *DeserializationTestRequest) SetNullableEnum(nullableEnum *UserRole) {
+	d.NullableEnum = nullableEnum
+	d.require(deserializationTestRequestFieldNullableEnum)
+}
+
+func (d *DeserializationTestRequest) SetOptionalEnum(optionalEnum *UserStatus) {
+	d.OptionalEnum = optionalEnum
+	d.require(deserializationTestRequestFieldOptionalEnum)
+}
+
+func (d *DeserializationTestRequest) SetNullableUnion(nullableUnion *NotificationMethod) {
+	d.NullableUnion = nullableUnion
+	d.require(deserializationTestRequestFieldNullableUnion)
+}
+
+func (d *DeserializationTestRequest) SetOptionalUnion(optionalUnion *SearchResult) {
+	d.OptionalUnion = optionalUnion
+	d.require(deserializationTestRequestFieldOptionalUnion)
+}
+
+func (d *DeserializationTestRequest) SetNullableList(nullableList []string) {
+	d.NullableList = nullableList
+	d.require(deserializationTestRequestFieldNullableList)
+}
+
+func (d *DeserializationTestRequest) SetNullableMap(nullableMap map[string]int) {
+	d.NullableMap = nullableMap
+	d.require(deserializationTestRequestFieldNullableMap)
+}
+
+func (d *DeserializationTestRequest) SetNullableObject(nullableObject *Address) {
+	d.NullableObject = nullableObject
+	d.require(deserializationTestRequestFieldNullableObject)
+}
+
+func (d *DeserializationTestRequest) SetOptionalObject(optionalObject *Organization) {
+	d.OptionalObject = optionalObject
+	d.require(deserializationTestRequestFieldOptionalObject)
+}
+
 func (d *DeserializationTestRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler DeserializationTestRequest
 	var value unmarshaler
@@ -514,6 +988,17 @@ func (d *DeserializationTestRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *DeserializationTestRequest) MarshalJSON() ([]byte, error) {
+	type embed DeserializationTestRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *DeserializationTestRequest) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -527,11 +1012,21 @@ func (d *DeserializationTestRequest) String() string {
 }
 
 // Response for deserialization test
+var (
+	deserializationTestResponseFieldEcho               = big.NewInt(1 << 0)
+	deserializationTestResponseFieldProcessedAt        = big.NewInt(1 << 1)
+	deserializationTestResponseFieldNullCount          = big.NewInt(1 << 2)
+	deserializationTestResponseFieldPresentFieldsCount = big.NewInt(1 << 3)
+)
+
 type DeserializationTestResponse struct {
 	Echo               *DeserializationTestRequest `json:"echo" url:"echo"`
 	ProcessedAt        time.Time                   `json:"processedAt" url:"processedAt"`
 	NullCount          int                         `json:"nullCount" url:"nullCount"`
 	PresentFieldsCount int                         `json:"presentFieldsCount" url:"presentFieldsCount"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -569,6 +1064,33 @@ func (d *DeserializationTestResponse) GetExtraProperties() map[string]interface{
 	return d.extraProperties
 }
 
+func (d *DeserializationTestResponse) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *DeserializationTestResponse) SetEcho(echo *DeserializationTestRequest) {
+	d.Echo = echo
+	d.require(deserializationTestResponseFieldEcho)
+}
+
+func (d *DeserializationTestResponse) SetProcessedAt(processedAt time.Time) {
+	d.ProcessedAt = processedAt
+	d.require(deserializationTestResponseFieldProcessedAt)
+}
+
+func (d *DeserializationTestResponse) SetNullCount(nullCount int) {
+	d.NullCount = nullCount
+	d.require(deserializationTestResponseFieldNullCount)
+}
+
+func (d *DeserializationTestResponse) SetPresentFieldsCount(presentFieldsCount int) {
+	d.PresentFieldsCount = presentFieldsCount
+	d.require(deserializationTestResponseFieldPresentFieldsCount)
+}
+
 func (d *DeserializationTestResponse) UnmarshalJSON(data []byte) error {
 	type embed DeserializationTestResponse
 	var unmarshaler = struct {
@@ -600,7 +1122,8 @@ func (d *DeserializationTestResponse) MarshalJSON() ([]byte, error) {
 		embed:       embed(*d),
 		ProcessedAt: internal.NewDateTime(d.ProcessedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DeserializationTestResponse) String() string {
@@ -615,12 +1138,23 @@ func (d *DeserializationTestResponse) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	documentFieldId      = big.NewInt(1 << 0)
+	documentFieldTitle   = big.NewInt(1 << 1)
+	documentFieldContent = big.NewInt(1 << 2)
+	documentFieldAuthor  = big.NewInt(1 << 3)
+	documentFieldTags    = big.NewInt(1 << 4)
+)
+
 type Document struct {
 	Id      string   `json:"id" url:"id"`
 	Title   string   `json:"title" url:"title"`
 	Content string   `json:"content" url:"content"`
 	Author  *string  `json:"author,omitempty" url:"author,omitempty"`
 	Tags    []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -665,6 +1199,38 @@ func (d *Document) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Document) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *Document) SetId(id string) {
+	d.Id = id
+	d.require(documentFieldId)
+}
+
+func (d *Document) SetTitle(title string) {
+	d.Title = title
+	d.require(documentFieldTitle)
+}
+
+func (d *Document) SetContent(content string) {
+	d.Content = content
+	d.require(documentFieldContent)
+}
+
+func (d *Document) SetAuthor(author *string) {
+	d.Author = author
+	d.require(documentFieldAuthor)
+}
+
+func (d *Document) SetTags(tags []string) {
+	d.Tags = tags
+	d.require(documentFieldTags)
+}
+
 func (d *Document) UnmarshalJSON(data []byte) error {
 	type unmarshaler Document
 	var value unmarshaler
@@ -681,6 +1247,17 @@ func (d *Document) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *Document) MarshalJSON() ([]byte, error) {
+	type embed Document
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *Document) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -693,10 +1270,19 @@ func (d *Document) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	emailNotificationFieldEmailAddress = big.NewInt(1 << 0)
+	emailNotificationFieldSubject      = big.NewInt(1 << 1)
+	emailNotificationFieldHtmlContent  = big.NewInt(1 << 2)
+)
+
 type EmailNotification struct {
 	EmailAddress string  `json:"emailAddress" url:"emailAddress"`
 	Subject      string  `json:"subject" url:"subject"`
 	HtmlContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -727,6 +1313,28 @@ func (e *EmailNotification) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *EmailNotification) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *EmailNotification) SetEmailAddress(emailAddress string) {
+	e.EmailAddress = emailAddress
+	e.require(emailNotificationFieldEmailAddress)
+}
+
+func (e *EmailNotification) SetSubject(subject string) {
+	e.Subject = subject
+	e.require(emailNotificationFieldSubject)
+}
+
+func (e *EmailNotification) SetHtmlContent(htmlContent *string) {
+	e.HtmlContent = htmlContent
+	e.require(emailNotificationFieldHtmlContent)
+}
+
 func (e *EmailNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler EmailNotification
 	var value unmarshaler
@@ -741,6 +1349,17 @@ func (e *EmailNotification) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *EmailNotification) MarshalJSON() ([]byte, error) {
+	type embed EmailNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EmailNotification) String() string {
@@ -903,11 +1522,21 @@ type NullableUserId = *string
 // An alias for an optional user ID
 type OptionalUserId = *string
 
+var (
+	organizationFieldId            = big.NewInt(1 << 0)
+	organizationFieldName          = big.NewInt(1 << 1)
+	organizationFieldDomain        = big.NewInt(1 << 2)
+	organizationFieldEmployeeCount = big.NewInt(1 << 3)
+)
+
 type Organization struct {
 	Id            string  `json:"id" url:"id"`
 	Name          string  `json:"name" url:"name"`
 	Domain        *string `json:"domain,omitempty" url:"domain,omitempty"`
 	EmployeeCount *int    `json:"employeeCount,omitempty" url:"employeeCount,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -945,6 +1574,33 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *Organization) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+func (o *Organization) SetId(id string) {
+	o.Id = id
+	o.require(organizationFieldId)
+}
+
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
+func (o *Organization) SetDomain(domain *string) {
+	o.Domain = domain
+	o.require(organizationFieldDomain)
+}
+
+func (o *Organization) SetEmployeeCount(employeeCount *int) {
+	o.EmployeeCount = employeeCount
+	o.require(organizationFieldEmployeeCount)
+}
+
 func (o *Organization) UnmarshalJSON(data []byte) error {
 	type unmarshaler Organization
 	var value unmarshaler
@@ -961,6 +1617,17 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *Organization) MarshalJSON() ([]byte, error) {
+	type embed Organization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (o *Organization) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -973,11 +1640,21 @@ func (o *Organization) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+var (
+	pushNotificationFieldDeviceToken = big.NewInt(1 << 0)
+	pushNotificationFieldTitle       = big.NewInt(1 << 1)
+	pushNotificationFieldBody        = big.NewInt(1 << 2)
+	pushNotificationFieldBadge       = big.NewInt(1 << 3)
+)
+
 type PushNotification struct {
 	DeviceToken string `json:"deviceToken" url:"deviceToken"`
 	Title       string `json:"title" url:"title"`
 	Body        string `json:"body" url:"body"`
 	Badge       *int   `json:"badge,omitempty" url:"badge,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1015,6 +1692,33 @@ func (p *PushNotification) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *PushNotification) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PushNotification) SetDeviceToken(deviceToken string) {
+	p.DeviceToken = deviceToken
+	p.require(pushNotificationFieldDeviceToken)
+}
+
+func (p *PushNotification) SetTitle(title string) {
+	p.Title = title
+	p.require(pushNotificationFieldTitle)
+}
+
+func (p *PushNotification) SetBody(body string) {
+	p.Body = body
+	p.require(pushNotificationFieldBody)
+}
+
+func (p *PushNotification) SetBadge(badge *int) {
+	p.Badge = badge
+	p.require(pushNotificationFieldBadge)
+}
+
 func (p *PushNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler PushNotification
 	var value unmarshaler
@@ -1029,6 +1733,17 @@ func (p *PushNotification) UnmarshalJSON(data []byte) error {
 	p.extraProperties = extraProperties
 	p.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (p *PushNotification) MarshalJSON() ([]byte, error) {
+	type embed PushNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *PushNotification) String() string {
@@ -1185,10 +1900,19 @@ func (s *SearchResult) validate() error {
 	return nil
 }
 
+var (
+	smsNotificationFieldPhoneNumber = big.NewInt(1 << 0)
+	smsNotificationFieldMessage     = big.NewInt(1 << 1)
+	smsNotificationFieldShortCode   = big.NewInt(1 << 2)
+)
+
 type SmsNotification struct {
 	PhoneNumber string  `json:"phoneNumber" url:"phoneNumber"`
 	Message     string  `json:"message" url:"message"`
 	ShortCode   *string `json:"shortCode,omitempty" url:"shortCode,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1219,6 +1943,28 @@ func (s *SmsNotification) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SmsNotification) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SmsNotification) SetPhoneNumber(phoneNumber string) {
+	s.PhoneNumber = phoneNumber
+	s.require(smsNotificationFieldPhoneNumber)
+}
+
+func (s *SmsNotification) SetMessage(message string) {
+	s.Message = message
+	s.require(smsNotificationFieldMessage)
+}
+
+func (s *SmsNotification) SetShortCode(shortCode *string) {
+	s.ShortCode = shortCode
+	s.require(smsNotificationFieldShortCode)
+}
+
 func (s *SmsNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler SmsNotification
 	var value unmarshaler
@@ -1235,6 +1981,17 @@ func (s *SmsNotification) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SmsNotification) MarshalJSON() ([]byte, error) {
+	type embed SmsNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SmsNotification) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -1248,11 +2005,21 @@ func (s *SmsNotification) String() string {
 }
 
 // For testing PATCH operations
+var (
+	updateUserRequestFieldUsername = big.NewInt(1 << 0)
+	updateUserRequestFieldEmail    = big.NewInt(1 << 1)
+	updateUserRequestFieldPhone    = big.NewInt(1 << 2)
+	updateUserRequestFieldAddress  = big.NewInt(1 << 3)
+)
+
 type UpdateUserRequest struct {
 	Username *string  `json:"username,omitempty" url:"username,omitempty"`
 	Email    *string  `json:"email,omitempty" url:"email,omitempty"`
 	Phone    *string  `json:"phone,omitempty" url:"phone,omitempty"`
 	Address  *Address `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1290,6 +2057,33 @@ func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UpdateUserRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UpdateUserRequest) SetUsername(username *string) {
+	u.Username = username
+	u.require(updateUserRequestFieldUsername)
+}
+
+func (u *UpdateUserRequest) SetEmail(email *string) {
+	u.Email = email
+	u.require(updateUserRequestFieldEmail)
+}
+
+func (u *UpdateUserRequest) SetPhone(phone *string) {
+	u.Phone = phone
+	u.require(updateUserRequestFieldPhone)
+}
+
+func (u *UpdateUserRequest) SetAddress(address *Address) {
+	u.Address = address
+	u.require(updateUserRequestFieldAddress)
+}
+
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateUserRequest
 	var value unmarshaler
@@ -1306,6 +2100,17 @@ func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateUserRequest) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -1319,6 +2124,27 @@ func (u *UpdateUserRequest) String() string {
 }
 
 // Test object with nullable and optional fields
+var (
+	userProfileFieldId                     = big.NewInt(1 << 0)
+	userProfileFieldUsername               = big.NewInt(1 << 1)
+	userProfileFieldNullableString         = big.NewInt(1 << 2)
+	userProfileFieldNullableInteger        = big.NewInt(1 << 3)
+	userProfileFieldNullableBoolean        = big.NewInt(1 << 4)
+	userProfileFieldNullableDate           = big.NewInt(1 << 5)
+	userProfileFieldNullableObject         = big.NewInt(1 << 6)
+	userProfileFieldNullableList           = big.NewInt(1 << 7)
+	userProfileFieldNullableMap            = big.NewInt(1 << 8)
+	userProfileFieldOptionalString         = big.NewInt(1 << 9)
+	userProfileFieldOptionalInteger        = big.NewInt(1 << 10)
+	userProfileFieldOptionalBoolean        = big.NewInt(1 << 11)
+	userProfileFieldOptionalDate           = big.NewInt(1 << 12)
+	userProfileFieldOptionalObject         = big.NewInt(1 << 13)
+	userProfileFieldOptionalList           = big.NewInt(1 << 14)
+	userProfileFieldOptionalMap            = big.NewInt(1 << 15)
+	userProfileFieldOptionalNullableString = big.NewInt(1 << 16)
+	userProfileFieldOptionalNullableObject = big.NewInt(1 << 17)
+)
+
 type UserProfile struct {
 	Id                     string            `json:"id" url:"id"`
 	Username               string            `json:"username" url:"username"`
@@ -1338,6 +2164,9 @@ type UserProfile struct {
 	OptionalMap            map[string]string `json:"optionalMap,omitempty" url:"optionalMap,omitempty"`
 	OptionalNullableString *string           `json:"optionalNullableString,omitempty" url:"optionalNullableString,omitempty"`
 	OptionalNullableObject *Address          `json:"optionalNullableObject,omitempty" url:"optionalNullableObject,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1473,6 +2302,103 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserProfile) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UserProfile) SetId(id string) {
+	u.Id = id
+	u.require(userProfileFieldId)
+}
+
+func (u *UserProfile) SetUsername(username string) {
+	u.Username = username
+	u.require(userProfileFieldUsername)
+}
+
+func (u *UserProfile) SetNullableString(nullableString *string) {
+	u.NullableString = nullableString
+	u.require(userProfileFieldNullableString)
+}
+
+func (u *UserProfile) SetNullableInteger(nullableInteger *int) {
+	u.NullableInteger = nullableInteger
+	u.require(userProfileFieldNullableInteger)
+}
+
+func (u *UserProfile) SetNullableBoolean(nullableBoolean *bool) {
+	u.NullableBoolean = nullableBoolean
+	u.require(userProfileFieldNullableBoolean)
+}
+
+func (u *UserProfile) SetNullableDate(nullableDate *time.Time) {
+	u.NullableDate = nullableDate
+	u.require(userProfileFieldNullableDate)
+}
+
+func (u *UserProfile) SetNullableObject(nullableObject *Address) {
+	u.NullableObject = nullableObject
+	u.require(userProfileFieldNullableObject)
+}
+
+func (u *UserProfile) SetNullableList(nullableList []string) {
+	u.NullableList = nullableList
+	u.require(userProfileFieldNullableList)
+}
+
+func (u *UserProfile) SetNullableMap(nullableMap map[string]string) {
+	u.NullableMap = nullableMap
+	u.require(userProfileFieldNullableMap)
+}
+
+func (u *UserProfile) SetOptionalString(optionalString *string) {
+	u.OptionalString = optionalString
+	u.require(userProfileFieldOptionalString)
+}
+
+func (u *UserProfile) SetOptionalInteger(optionalInteger *int) {
+	u.OptionalInteger = optionalInteger
+	u.require(userProfileFieldOptionalInteger)
+}
+
+func (u *UserProfile) SetOptionalBoolean(optionalBoolean *bool) {
+	u.OptionalBoolean = optionalBoolean
+	u.require(userProfileFieldOptionalBoolean)
+}
+
+func (u *UserProfile) SetOptionalDate(optionalDate *time.Time) {
+	u.OptionalDate = optionalDate
+	u.require(userProfileFieldOptionalDate)
+}
+
+func (u *UserProfile) SetOptionalObject(optionalObject *Address) {
+	u.OptionalObject = optionalObject
+	u.require(userProfileFieldOptionalObject)
+}
+
+func (u *UserProfile) SetOptionalList(optionalList []string) {
+	u.OptionalList = optionalList
+	u.require(userProfileFieldOptionalList)
+}
+
+func (u *UserProfile) SetOptionalMap(optionalMap map[string]string) {
+	u.OptionalMap = optionalMap
+	u.require(userProfileFieldOptionalMap)
+}
+
+func (u *UserProfile) SetOptionalNullableString(optionalNullableString *string) {
+	u.OptionalNullableString = optionalNullableString
+	u.require(userProfileFieldOptionalNullableString)
+}
+
+func (u *UserProfile) SetOptionalNullableObject(optionalNullableObject *Address) {
+	u.OptionalNullableObject = optionalNullableObject
+	u.require(userProfileFieldOptionalNullableObject)
+}
+
 func (u *UserProfile) UnmarshalJSON(data []byte) error {
 	type embed UserProfile
 	var unmarshaler = struct {
@@ -1508,7 +2434,8 @@ func (u *UserProfile) MarshalJSON() ([]byte, error) {
 		NullableDate: internal.NewOptionalDateTime(u.NullableDate),
 		OptionalDate: internal.NewOptionalDateTime(u.OptionalDate),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserProfile) String() string {
@@ -1523,6 +2450,16 @@ func (u *UserProfile) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userResponseFieldId        = big.NewInt(1 << 0)
+	userResponseFieldUsername  = big.NewInt(1 << 1)
+	userResponseFieldEmail     = big.NewInt(1 << 2)
+	userResponseFieldPhone     = big.NewInt(1 << 3)
+	userResponseFieldCreatedAt = big.NewInt(1 << 4)
+	userResponseFieldUpdatedAt = big.NewInt(1 << 5)
+	userResponseFieldAddress   = big.NewInt(1 << 6)
+)
+
 type UserResponse struct {
 	Id        string     `json:"id" url:"id"`
 	Username  string     `json:"username" url:"username"`
@@ -1531,6 +2468,9 @@ type UserResponse struct {
 	CreatedAt time.Time  `json:"createdAt" url:"createdAt"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty" url:"updatedAt,omitempty"`
 	Address   *Address   `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1589,6 +2529,48 @@ func (u *UserResponse) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserResponse) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UserResponse) SetId(id string) {
+	u.Id = id
+	u.require(userResponseFieldId)
+}
+
+func (u *UserResponse) SetUsername(username string) {
+	u.Username = username
+	u.require(userResponseFieldUsername)
+}
+
+func (u *UserResponse) SetEmail(email *string) {
+	u.Email = email
+	u.require(userResponseFieldEmail)
+}
+
+func (u *UserResponse) SetPhone(phone *string) {
+	u.Phone = phone
+	u.require(userResponseFieldPhone)
+}
+
+func (u *UserResponse) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userResponseFieldCreatedAt)
+}
+
+func (u *UserResponse) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userResponseFieldUpdatedAt)
+}
+
+func (u *UserResponse) SetAddress(address *Address) {
+	u.Address = address
+	u.require(userResponseFieldAddress)
+}
+
 func (u *UserResponse) UnmarshalJSON(data []byte) error {
 	type embed UserResponse
 	var unmarshaler = struct {
@@ -1624,7 +2606,8 @@ func (u *UserResponse) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(u.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserResponse) String() string {
@@ -1697,16 +2680,90 @@ func (u UserStatus) Ptr() *UserStatus {
 	return &u
 }
 
+var (
+	updateComplexProfileRequestFieldNullableRole         = big.NewInt(1 << 0)
+	updateComplexProfileRequestFieldNullableStatus       = big.NewInt(1 << 1)
+	updateComplexProfileRequestFieldNullableNotification = big.NewInt(1 << 2)
+	updateComplexProfileRequestFieldNullableSearchResult = big.NewInt(1 << 3)
+	updateComplexProfileRequestFieldNullableArray        = big.NewInt(1 << 4)
+)
+
 type UpdateComplexProfileRequest struct {
 	NullableRole         *UserRole           `json:"nullableRole,omitempty" url:"-"`
 	NullableStatus       *UserStatus         `json:"nullableStatus,omitempty" url:"-"`
 	NullableNotification *NotificationMethod `json:"nullableNotification,omitempty" url:"-"`
 	NullableSearchResult *SearchResult       `json:"nullableSearchResult,omitempty" url:"-"`
 	NullableArray        []string            `json:"nullableArray,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (u *UpdateComplexProfileRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UpdateComplexProfileRequest) SetNullableRole(nullableRole *UserRole) {
+	u.NullableRole = nullableRole
+	u.require(updateComplexProfileRequestFieldNullableRole)
+}
+
+func (u *UpdateComplexProfileRequest) SetNullableStatus(nullableStatus *UserStatus) {
+	u.NullableStatus = nullableStatus
+	u.require(updateComplexProfileRequestFieldNullableStatus)
+}
+
+func (u *UpdateComplexProfileRequest) SetNullableNotification(nullableNotification *NotificationMethod) {
+	u.NullableNotification = nullableNotification
+	u.require(updateComplexProfileRequestFieldNullableNotification)
+}
+
+func (u *UpdateComplexProfileRequest) SetNullableSearchResult(nullableSearchResult *SearchResult) {
+	u.NullableSearchResult = nullableSearchResult
+	u.require(updateComplexProfileRequestFieldNullableSearchResult)
+}
+
+func (u *UpdateComplexProfileRequest) SetNullableArray(nullableArray []string) {
+	u.NullableArray = nullableArray
+	u.require(updateComplexProfileRequestFieldNullableArray)
+}
+
+var (
+	updateTagsRequestFieldTags       = big.NewInt(1 << 0)
+	updateTagsRequestFieldCategories = big.NewInt(1 << 1)
+	updateTagsRequestFieldLabels     = big.NewInt(1 << 2)
+)
 
 type UpdateTagsRequest struct {
 	Tags       []string `json:"tags,omitempty" url:"-"`
 	Categories []string `json:"categories,omitempty" url:"-"`
 	Labels     []string `json:"labels,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateTagsRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UpdateTagsRequest) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(updateTagsRequestFieldTags)
+}
+
+func (u *UpdateTagsRequest) SetCategories(categories []string) {
+	u.Categories = categories
+	u.require(updateTagsRequestFieldCategories)
+}
+
+func (u *UpdateTagsRequest) SetLabels(labels []string) {
+	u.Labels = labels
+	u.require(updateTagsRequestFieldLabels)
 }

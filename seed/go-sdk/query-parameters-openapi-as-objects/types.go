@@ -6,7 +6,27 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/query-parameters-openapi-as-objects/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	searchRequestFieldLimit            = big.NewInt(1 << 0)
+	searchRequestFieldId               = big.NewInt(1 << 1)
+	searchRequestFieldDate             = big.NewInt(1 << 2)
+	searchRequestFieldDeadline         = big.NewInt(1 << 3)
+	searchRequestFieldBytes            = big.NewInt(1 << 4)
+	searchRequestFieldUser             = big.NewInt(1 << 5)
+	searchRequestFieldUserList         = big.NewInt(1 << 6)
+	searchRequestFieldOptionalDeadline = big.NewInt(1 << 7)
+	searchRequestFieldKeyValue         = big.NewInt(1 << 8)
+	searchRequestFieldOptionalString   = big.NewInt(1 << 9)
+	searchRequestFieldNestedUser       = big.NewInt(1 << 10)
+	searchRequestFieldOptionalUser     = big.NewInt(1 << 11)
+	searchRequestFieldExcludeUser      = big.NewInt(1 << 12)
+	searchRequestFieldFilter           = big.NewInt(1 << 13)
+	searchRequestFieldNeighbor         = big.NewInt(1 << 14)
+	searchRequestFieldNeighborRequired = big.NewInt(1 << 15)
 )
 
 type SearchRequest struct {
@@ -26,11 +46,109 @@ type SearchRequest struct {
 	Filter           []*string                      `json:"-" url:"filter,omitempty"`
 	Neighbor         *SearchRequestNeighbor         `json:"-" url:"neighbor,omitempty"`
 	NeighborRequired *SearchRequestNeighborRequired `json:"-" url:"neighborRequired"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SearchRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchRequest) SetLimit(limit int) {
+	s.Limit = limit
+	s.require(searchRequestFieldLimit)
+}
+
+func (s *SearchRequest) SetId(id string) {
+	s.Id = id
+	s.require(searchRequestFieldId)
+}
+
+func (s *SearchRequest) SetDate(date string) {
+	s.Date = date
+	s.require(searchRequestFieldDate)
+}
+
+func (s *SearchRequest) SetDeadline(deadline time.Time) {
+	s.Deadline = deadline
+	s.require(searchRequestFieldDeadline)
+}
+
+func (s *SearchRequest) SetBytes(bytes string) {
+	s.Bytes = bytes
+	s.require(searchRequestFieldBytes)
+}
+
+func (s *SearchRequest) SetUser(user *User) {
+	s.User = user
+	s.require(searchRequestFieldUser)
+}
+
+func (s *SearchRequest) SetUserList(userList []*User) {
+	s.UserList = userList
+	s.require(searchRequestFieldUserList)
+}
+
+func (s *SearchRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
+	s.OptionalDeadline = optionalDeadline
+	s.require(searchRequestFieldOptionalDeadline)
+}
+
+func (s *SearchRequest) SetKeyValue(keyValue map[string]*string) {
+	s.KeyValue = keyValue
+	s.require(searchRequestFieldKeyValue)
+}
+
+func (s *SearchRequest) SetOptionalString(optionalString *string) {
+	s.OptionalString = optionalString
+	s.require(searchRequestFieldOptionalString)
+}
+
+func (s *SearchRequest) SetNestedUser(nestedUser *NestedUser) {
+	s.NestedUser = nestedUser
+	s.require(searchRequestFieldNestedUser)
+}
+
+func (s *SearchRequest) SetOptionalUser(optionalUser *User) {
+	s.OptionalUser = optionalUser
+	s.require(searchRequestFieldOptionalUser)
+}
+
+func (s *SearchRequest) SetExcludeUser(excludeUser []*User) {
+	s.ExcludeUser = excludeUser
+	s.require(searchRequestFieldExcludeUser)
+}
+
+func (s *SearchRequest) SetFilter(filter []*string) {
+	s.Filter = filter
+	s.require(searchRequestFieldFilter)
+}
+
+func (s *SearchRequest) SetNeighbor(neighbor *SearchRequestNeighbor) {
+	s.Neighbor = neighbor
+	s.require(searchRequestFieldNeighbor)
+}
+
+func (s *SearchRequest) SetNeighborRequired(neighborRequired *SearchRequestNeighborRequired) {
+	s.NeighborRequired = neighborRequired
+	s.require(searchRequestFieldNeighborRequired)
+}
+
+var (
+	nestedUserFieldName = big.NewInt(1 << 0)
+	nestedUserFieldUser = big.NewInt(1 << 1)
+)
 
 type NestedUser struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	User *User   `json:"user,omitempty" url:"user,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -54,6 +172,23 @@ func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NestedUser) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *NestedUser) SetName(name *string) {
+	n.Name = name
+	n.require(nestedUserFieldName)
+}
+
+func (n *NestedUser) SetUser(user *User) {
+	n.User = user
+	n.require(nestedUserFieldUser)
+}
+
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedUser
 	var value unmarshaler
@@ -68,6 +203,17 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	n.extraProperties = extraProperties
 	n.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (n *NestedUser) MarshalJSON() ([]byte, error) {
+	type embed NestedUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (n *NestedUser) String() string {
@@ -290,8 +436,15 @@ func (s *SearchRequestNeighborRequired) Accept(visitor SearchRequestNeighborRequ
 	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+var (
+	searchResponseFieldResults = big.NewInt(1 << 0)
+)
+
 type SearchResponse struct {
 	Results []string `json:"results,omitempty" url:"results,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -306,6 +459,18 @@ func (s *SearchResponse) GetResults() []string {
 
 func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
+}
+
+func (s *SearchResponse) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchResponse) SetResults(results []string) {
+	s.Results = results
+	s.require(searchResponseFieldResults)
 }
 
 func (s *SearchResponse) UnmarshalJSON(data []byte) error {
@@ -324,6 +489,17 @@ func (s *SearchResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SearchResponse) MarshalJSON() ([]byte, error) {
+	type embed SearchResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SearchResponse) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -336,9 +512,17 @@ func (s *SearchResponse) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldTags = big.NewInt(1 << 1)
+)
+
 type User struct {
 	Name *string  `json:"name,omitempty" url:"name,omitempty"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -362,6 +546,23 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *User) SetName(name *string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -376,6 +577,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

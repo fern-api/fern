@@ -2,11 +2,54 @@
 
 package contenttypes
 
+import (
+	big "math/big"
+)
+
+var (
+	namedMixedPatchRequestFieldAppId        = big.NewInt(1 << 0)
+	namedMixedPatchRequestFieldInstructions = big.NewInt(1 << 1)
+	namedMixedPatchRequestFieldActive       = big.NewInt(1 << 2)
+)
+
 type NamedMixedPatchRequest struct {
 	AppId        *string `json:"appId,omitempty" url:"-"`
 	Instructions *string `json:"instructions,omitempty" url:"-"`
 	Active       *bool   `json:"active,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (n *NamedMixedPatchRequest) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *NamedMixedPatchRequest) SetAppId(appId *string) {
+	n.AppId = appId
+	n.require(namedMixedPatchRequestFieldAppId)
+}
+
+func (n *NamedMixedPatchRequest) SetInstructions(instructions *string) {
+	n.Instructions = instructions
+	n.require(namedMixedPatchRequestFieldInstructions)
+}
+
+func (n *NamedMixedPatchRequest) SetActive(active *bool) {
+	n.Active = active
+	n.require(namedMixedPatchRequestFieldActive)
+}
+
+var (
+	optionalMergePatchRequestFieldRequiredField   = big.NewInt(1 << 0)
+	optionalMergePatchRequestFieldOptionalString  = big.NewInt(1 << 1)
+	optionalMergePatchRequestFieldOptionalInteger = big.NewInt(1 << 2)
+	optionalMergePatchRequestFieldOptionalBoolean = big.NewInt(1 << 3)
+	optionalMergePatchRequestFieldNullableString  = big.NewInt(1 << 4)
+)
 
 type OptionalMergePatchRequest struct {
 	RequiredField   string  `json:"requiredField" url:"-"`
@@ -14,12 +57,85 @@ type OptionalMergePatchRequest struct {
 	OptionalInteger *int    `json:"optionalInteger,omitempty" url:"-"`
 	OptionalBoolean *bool   `json:"optionalBoolean,omitempty" url:"-"`
 	NullableString  *string `json:"nullableString,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (o *OptionalMergePatchRequest) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+func (o *OptionalMergePatchRequest) SetRequiredField(requiredField string) {
+	o.RequiredField = requiredField
+	o.require(optionalMergePatchRequestFieldRequiredField)
+}
+
+func (o *OptionalMergePatchRequest) SetOptionalString(optionalString *string) {
+	o.OptionalString = optionalString
+	o.require(optionalMergePatchRequestFieldOptionalString)
+}
+
+func (o *OptionalMergePatchRequest) SetOptionalInteger(optionalInteger *int) {
+	o.OptionalInteger = optionalInteger
+	o.require(optionalMergePatchRequestFieldOptionalInteger)
+}
+
+func (o *OptionalMergePatchRequest) SetOptionalBoolean(optionalBoolean *bool) {
+	o.OptionalBoolean = optionalBoolean
+	o.require(optionalMergePatchRequestFieldOptionalBoolean)
+}
+
+func (o *OptionalMergePatchRequest) SetNullableString(nullableString *string) {
+	o.NullableString = nullableString
+	o.require(optionalMergePatchRequestFieldNullableString)
+}
+
+var (
+	patchProxyRequestFieldApplication = big.NewInt(1 << 0)
+	patchProxyRequestFieldRequireAuth = big.NewInt(1 << 1)
+)
 
 type PatchProxyRequest struct {
 	Application *string `json:"application,omitempty" url:"-"`
 	RequireAuth *bool   `json:"require_auth,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (p *PatchProxyRequest) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PatchProxyRequest) SetApplication(application *string) {
+	p.Application = application
+	p.require(patchProxyRequestFieldApplication)
+}
+
+func (p *PatchProxyRequest) SetRequireAuth(requireAuth *bool) {
+	p.RequireAuth = requireAuth
+	p.require(patchProxyRequestFieldRequireAuth)
+}
+
+var (
+	patchComplexRequestFieldName            = big.NewInt(1 << 0)
+	patchComplexRequestFieldAge             = big.NewInt(1 << 1)
+	patchComplexRequestFieldActive          = big.NewInt(1 << 2)
+	patchComplexRequestFieldMetadata        = big.NewInt(1 << 3)
+	patchComplexRequestFieldTags            = big.NewInt(1 << 4)
+	patchComplexRequestFieldEmail           = big.NewInt(1 << 5)
+	patchComplexRequestFieldNickname        = big.NewInt(1 << 6)
+	patchComplexRequestFieldBio             = big.NewInt(1 << 7)
+	patchComplexRequestFieldProfileImageUrl = big.NewInt(1 << 8)
+	patchComplexRequestFieldSettings        = big.NewInt(1 << 9)
+)
 
 type PatchComplexRequest struct {
 	Name            *string                `json:"name,omitempty" url:"-"`
@@ -32,9 +148,94 @@ type PatchComplexRequest struct {
 	Bio             *string                `json:"bio,omitempty" url:"-"`
 	ProfileImageUrl *string                `json:"profileImageUrl,omitempty" url:"-"`
 	Settings        map[string]interface{} `json:"settings,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (p *PatchComplexRequest) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PatchComplexRequest) SetName(name *string) {
+	p.Name = name
+	p.require(patchComplexRequestFieldName)
+}
+
+func (p *PatchComplexRequest) SetAge(age *int) {
+	p.Age = age
+	p.require(patchComplexRequestFieldAge)
+}
+
+func (p *PatchComplexRequest) SetActive(active *bool) {
+	p.Active = active
+	p.require(patchComplexRequestFieldActive)
+}
+
+func (p *PatchComplexRequest) SetMetadata(metadata map[string]interface{}) {
+	p.Metadata = metadata
+	p.require(patchComplexRequestFieldMetadata)
+}
+
+func (p *PatchComplexRequest) SetTags(tags []string) {
+	p.Tags = tags
+	p.require(patchComplexRequestFieldTags)
+}
+
+func (p *PatchComplexRequest) SetEmail(email *string) {
+	p.Email = email
+	p.require(patchComplexRequestFieldEmail)
+}
+
+func (p *PatchComplexRequest) SetNickname(nickname *string) {
+	p.Nickname = nickname
+	p.require(patchComplexRequestFieldNickname)
+}
+
+func (p *PatchComplexRequest) SetBio(bio *string) {
+	p.Bio = bio
+	p.require(patchComplexRequestFieldBio)
+}
+
+func (p *PatchComplexRequest) SetProfileImageUrl(profileImageUrl *string) {
+	p.ProfileImageUrl = profileImageUrl
+	p.require(patchComplexRequestFieldProfileImageUrl)
+}
+
+func (p *PatchComplexRequest) SetSettings(settings map[string]interface{}) {
+	p.Settings = settings
+	p.require(patchComplexRequestFieldSettings)
+}
+
+var (
+	regularPatchRequestFieldField1 = big.NewInt(1 << 0)
+	regularPatchRequestFieldField2 = big.NewInt(1 << 1)
+)
 
 type RegularPatchRequest struct {
 	Field1 *string `json:"field1,omitempty" url:"-"`
 	Field2 *int    `json:"field2,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *RegularPatchRequest) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *RegularPatchRequest) SetField1(field1 *string) {
+	r.Field1 = field1
+	r.require(regularPatchRequestFieldField1)
+}
+
+func (r *RegularPatchRequest) SetField2(field2 *int) {
+	r.Field2 = field2
+	r.require(regularPatchRequestFieldField2)
 }

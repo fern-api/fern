@@ -4,10 +4,42 @@ package exhaustive
 
 import (
 	types "github.com/exhaustive/fern/types"
+	big "math/big"
+)
+
+var (
+	postWithObjectBodyFieldString       = big.NewInt(1 << 0)
+	postWithObjectBodyFieldInteger      = big.NewInt(1 << 1)
+	postWithObjectBodyFieldNestedObject = big.NewInt(1 << 2)
 )
 
 type PostWithObjectBody struct {
 	String       string                         `json:"string" url:"-"`
 	Integer      int                            `json:"integer" url:"-"`
 	NestedObject *types.ObjectWithOptionalField `json:"NestedObject,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PostWithObjectBody) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PostWithObjectBody) SetString(string_ string) {
+	p.String = string_
+	p.require(postWithObjectBodyFieldString)
+}
+
+func (p *PostWithObjectBody) SetInteger(integer int) {
+	p.Integer = integer
+	p.require(postWithObjectBodyFieldInteger)
+}
+
+func (p *PostWithObjectBody) SetNestedObject(nestedObject *types.ObjectWithOptionalField) {
+	p.NestedObject = nestedObject
+	p.require(postWithObjectBodyFieldNestedObject)
 }

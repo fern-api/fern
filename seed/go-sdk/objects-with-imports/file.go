@@ -6,12 +6,22 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/objects-with-imports/fern/internal"
+	big "math/big"
+)
+
+var (
+	fileFieldName     = big.NewInt(1 << 0)
+	fileFieldContents = big.NewInt(1 << 1)
+	fileFieldInfo     = big.NewInt(1 << 2)
 )
 
 type File struct {
 	Name     string   `json:"name" url:"name"`
 	Contents string   `json:"contents" url:"contents"`
 	Info     FileInfo `json:"info" url:"info"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -42,6 +52,28 @@ func (f *File) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *File) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+func (f *File) SetName(name string) {
+	f.Name = name
+	f.require(fileFieldName)
+}
+
+func (f *File) SetContents(contents string) {
+	f.Contents = contents
+	f.require(fileFieldContents)
+}
+
+func (f *File) SetInfo(info FileInfo) {
+	f.Info = info
+	f.require(fileFieldInfo)
+}
+
 func (f *File) UnmarshalJSON(data []byte) error {
 	type unmarshaler File
 	var value unmarshaler
@@ -56,6 +88,17 @@ func (f *File) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *File) MarshalJSON() ([]byte, error) {
+	type embed File
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *File) String() string {

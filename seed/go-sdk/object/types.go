@@ -7,12 +7,21 @@ import (
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	internal "github.com/object/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	nameFieldId    = big.NewInt(1 << 0)
+	nameFieldValue = big.NewInt(1 << 1)
 )
 
 type Name struct {
 	Id    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -36,6 +45,23 @@ func (n *Name) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *Name) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *Name) SetId(id string) {
+	n.Id = id
+	n.require(nameFieldId)
+}
+
+func (n *Name) SetValue(value string) {
+	n.Value = value
+	n.require(nameFieldValue)
+}
+
 func (n *Name) UnmarshalJSON(data []byte) error {
 	type unmarshaler Name
 	var value unmarshaler
@@ -52,6 +78,17 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *Name) MarshalJSON() ([]byte, error) {
+	type embed Name
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *Name) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -65,6 +102,33 @@ func (n *Name) String() string {
 }
 
 // Exercises all of the built-in types.
+var (
+	typeFieldOne         = big.NewInt(1 << 0)
+	typeFieldTwo         = big.NewInt(1 << 1)
+	typeFieldThree       = big.NewInt(1 << 2)
+	typeFieldFour        = big.NewInt(1 << 3)
+	typeFieldFive        = big.NewInt(1 << 4)
+	typeFieldSix         = big.NewInt(1 << 5)
+	typeFieldSeven       = big.NewInt(1 << 6)
+	typeFieldEight       = big.NewInt(1 << 7)
+	typeFieldNine        = big.NewInt(1 << 8)
+	typeFieldTen         = big.NewInt(1 << 9)
+	typeFieldEleven      = big.NewInt(1 << 10)
+	typeFieldTwelve      = big.NewInt(1 << 11)
+	typeFieldThirteen    = big.NewInt(1 << 12)
+	typeFieldFourteen    = big.NewInt(1 << 13)
+	typeFieldFifteen     = big.NewInt(1 << 14)
+	typeFieldSixteen     = big.NewInt(1 << 15)
+	typeFieldSeventeen   = big.NewInt(1 << 16)
+	typeFieldNineteen    = big.NewInt(1 << 17)
+	typeFieldTwenty      = big.NewInt(1 << 18)
+	typeFieldTwentyone   = big.NewInt(1 << 19)
+	typeFieldTwentytwo   = big.NewInt(1 << 20)
+	typeFieldTwentythree = big.NewInt(1 << 21)
+	typeFieldTwentyfour  = big.NewInt(1 << 22)
+	typeFieldTwentyfive  = big.NewInt(1 << 23)
+)
+
 type Type struct {
 	One         int              `json:"one" url:"one"`
 	Two         float64          `json:"two" url:"two"`
@@ -90,7 +154,10 @@ type Type struct {
 	Twentythree string           `json:"twentythree" url:"twentythree"`
 	Twentyfour  *time.Time       `json:"twentyfour,omitempty" url:"twentyfour,omitempty"`
 	Twentyfive  *time.Time       `json:"twentyfive,omitempty" url:"twentyfive,omitempty" format:"date"`
-	eighteen    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	eighteen       string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -272,6 +339,133 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Type) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *Type) SetOne(one int) {
+	t.One = one
+	t.require(typeFieldOne)
+}
+
+func (t *Type) SetTwo(two float64) {
+	t.Two = two
+	t.require(typeFieldTwo)
+}
+
+func (t *Type) SetThree(three string) {
+	t.Three = three
+	t.require(typeFieldThree)
+}
+
+func (t *Type) SetFour(four bool) {
+	t.Four = four
+	t.require(typeFieldFour)
+}
+
+func (t *Type) SetFive(five int64) {
+	t.Five = five
+	t.require(typeFieldFive)
+}
+
+func (t *Type) SetSix(six time.Time) {
+	t.Six = six
+	t.require(typeFieldSix)
+}
+
+func (t *Type) SetSeven(seven time.Time) {
+	t.Seven = seven
+	t.require(typeFieldSeven)
+}
+
+func (t *Type) SetEight(eight uuid.UUID) {
+	t.Eight = eight
+	t.require(typeFieldEight)
+}
+
+func (t *Type) SetNine(nine []byte) {
+	t.Nine = nine
+	t.require(typeFieldNine)
+}
+
+func (t *Type) SetTen(ten []int) {
+	t.Ten = ten
+	t.require(typeFieldTen)
+}
+
+func (t *Type) SetEleven(eleven []float64) {
+	t.Eleven = eleven
+	t.require(typeFieldEleven)
+}
+
+func (t *Type) SetTwelve(twelve map[string]bool) {
+	t.Twelve = twelve
+	t.require(typeFieldTwelve)
+}
+
+func (t *Type) SetThirteen(thirteen *int64) {
+	t.Thirteen = thirteen
+	t.require(typeFieldThirteen)
+}
+
+func (t *Type) SetFourteen(fourteen interface{}) {
+	t.Fourteen = fourteen
+	t.require(typeFieldFourteen)
+}
+
+func (t *Type) SetFifteen(fifteen [][]int) {
+	t.Fifteen = fifteen
+	t.require(typeFieldFifteen)
+}
+
+func (t *Type) SetSixteen(sixteen []map[string]int) {
+	t.Sixteen = sixteen
+	t.require(typeFieldSixteen)
+}
+
+func (t *Type) SetSeventeen(seventeen []*uuid.UUID) {
+	t.Seventeen = seventeen
+	t.require(typeFieldSeventeen)
+}
+
+func (t *Type) SetNineteen(nineteen *Name) {
+	t.Nineteen = nineteen
+	t.require(typeFieldNineteen)
+}
+
+func (t *Type) SetTwenty(twenty int) {
+	t.Twenty = twenty
+	t.require(typeFieldTwenty)
+}
+
+func (t *Type) SetTwentyone(twentyone int64) {
+	t.Twentyone = twentyone
+	t.require(typeFieldTwentyone)
+}
+
+func (t *Type) SetTwentytwo(twentytwo float64) {
+	t.Twentytwo = twentytwo
+	t.require(typeFieldTwentytwo)
+}
+
+func (t *Type) SetTwentythree(twentythree string) {
+	t.Twentythree = twentythree
+	t.require(typeFieldTwentythree)
+}
+
+func (t *Type) SetTwentyfour(twentyfour *time.Time) {
+	t.Twentyfour = twentyfour
+	t.require(typeFieldTwentyfour)
+}
+
+func (t *Type) SetTwentyfive(twentyfive *time.Time) {
+	t.Twentyfive = twentyfive
+	t.require(typeFieldTwentyfive)
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
@@ -322,7 +516,8 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 		Twentyfive: internal.NewOptionalDate(t.Twentyfive),
 		Eighteen:   "eighteen",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Type) String() string {

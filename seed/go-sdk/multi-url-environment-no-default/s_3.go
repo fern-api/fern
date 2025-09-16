@@ -2,6 +2,29 @@
 
 package multiurlenvironmentnodefault
 
+import (
+	big "math/big"
+)
+
+var (
+	getPresignedUrlRequestFieldS3Key = big.NewInt(1 << 0)
+)
+
 type GetPresignedUrlRequest struct {
 	S3Key string `json:"s3Key" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetPresignedUrlRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetPresignedUrlRequest) SetS3Key(s3Key string) {
+	g.S3Key = s3Key
+	g.require(getPresignedUrlRequestFieldS3Key)
 }

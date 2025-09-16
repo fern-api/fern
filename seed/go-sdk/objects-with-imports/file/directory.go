@@ -7,12 +7,22 @@ import (
 	fmt "fmt"
 	fern "github.com/objects-with-imports/fern"
 	internal "github.com/objects-with-imports/fern/internal"
+	big "math/big"
+)
+
+var (
+	directoryFieldName        = big.NewInt(1 << 0)
+	directoryFieldFiles       = big.NewInt(1 << 1)
+	directoryFieldDirectories = big.NewInt(1 << 2)
 )
 
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*fern.File `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -43,6 +53,28 @@ func (d *Directory) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Directory) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *Directory) SetName(name string) {
+	d.Name = name
+	d.require(directoryFieldName)
+}
+
+func (d *Directory) SetFiles(files []*fern.File) {
+	d.Files = files
+	d.require(directoryFieldFiles)
+}
+
+func (d *Directory) SetDirectories(directories []*Directory) {
+	d.Directories = directories
+	d.require(directoryFieldDirectories)
+}
+
 func (d *Directory) UnmarshalJSON(data []byte) error {
 	type unmarshaler Directory
 	var value unmarshaler
@@ -57,6 +89,17 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 	d.extraProperties = extraProperties
 	d.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (d *Directory) MarshalJSON() ([]byte, error) {
+	type embed Directory
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *Directory) String() string {

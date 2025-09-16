@@ -6,15 +6,43 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/path-parameters/fern/internal"
+	big "math/big"
+)
+
+var (
+	searchUsersRequestFieldLimit = big.NewInt(1 << 0)
 )
 
 type SearchUsersRequest struct {
 	Limit *int `json:"-" url:"limit,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SearchUsersRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchUsersRequest) SetLimit(limit *int) {
+	s.Limit = limit
+	s.require(searchUsersRequestFieldLimit)
+}
+
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldTags = big.NewInt(1 << 1)
+)
 
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -38,6 +66,23 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -54,6 +99,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *User) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -68,6 +124,16 @@ func (u *User) String() string {
 
 type UpdateUserRequest struct {
 	Body *User `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateUserRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {

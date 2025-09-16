@@ -6,16 +6,55 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/cross-package-type-names/fern/internal"
+	big "math/big"
+)
+
+var (
+	findRequestFieldOptionalString  = big.NewInt(1 << 0)
+	findRequestFieldPublicProperty  = big.NewInt(1 << 1)
+	findRequestFieldPrivateProperty = big.NewInt(1 << 2)
 )
 
 type FindRequest struct {
 	OptionalString  OptionalString `json:"-" url:"optionalString,omitempty"`
 	PublicProperty  *string        `json:"publicProperty,omitempty" url:"-"`
 	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (f *FindRequest) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+func (f *FindRequest) SetOptionalString(optionalString OptionalString) {
+	f.OptionalString = optionalString
+	f.require(findRequestFieldOptionalString)
+}
+
+func (f *FindRequest) SetPublicProperty(publicProperty *string) {
+	f.PublicProperty = publicProperty
+	f.require(findRequestFieldPublicProperty)
+}
+
+func (f *FindRequest) SetPrivateProperty(privateProperty *int) {
+	f.PrivateProperty = privateProperty
+	f.require(findRequestFieldPrivateProperty)
+}
+
+var (
+	importingTypeFieldImported = big.NewInt(1 << 0)
+)
 
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -32,6 +71,18 @@ func (i *ImportingType) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
 
+func (i *ImportingType) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+func (i *ImportingType) SetImported(imported Imported) {
+	i.Imported = imported
+	i.require(importingTypeFieldImported)
+}
+
 func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	type unmarshaler ImportingType
 	var value unmarshaler
@@ -46,6 +97,17 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	i.extraProperties = extraProperties
 	i.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (i *ImportingType) MarshalJSON() ([]byte, error) {
+	type embed ImportingType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (i *ImportingType) String() string {

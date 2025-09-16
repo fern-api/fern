@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/errors/fern/internal"
+	big "math/big"
+)
+
+var (
+	errorBodyFieldMessage = big.NewInt(1 << 0)
+	errorBodyFieldCode    = big.NewInt(1 << 1)
 )
 
 type ErrorBody struct {
 	Message string `json:"message" url:"message"`
 	Code    int    `json:"code" url:"code"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -34,6 +43,23 @@ func (e *ErrorBody) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *ErrorBody) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *ErrorBody) SetMessage(message string) {
+	e.Message = message
+	e.require(errorBodyFieldMessage)
+}
+
+func (e *ErrorBody) SetCode(code int) {
+	e.Code = code
+	e.require(errorBodyFieldCode)
+}
+
 func (e *ErrorBody) UnmarshalJSON(data []byte) error {
 	type unmarshaler ErrorBody
 	var value unmarshaler
@@ -48,6 +74,17 @@ func (e *ErrorBody) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *ErrorBody) MarshalJSON() ([]byte, error) {
+	type embed ErrorBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *ErrorBody) String() string {

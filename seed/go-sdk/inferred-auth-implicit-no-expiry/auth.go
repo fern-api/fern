@@ -6,6 +6,14 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/inferred-auth-implicit-no-expiry/fern/internal"
+	big "math/big"
+)
+
+var (
+	getTokenRequestFieldXApiKey      = big.NewInt(1 << 0)
+	getTokenRequestFieldClientId     = big.NewInt(1 << 1)
+	getTokenRequestFieldClientSecret = big.NewInt(1 << 2)
+	getTokenRequestFieldScope        = big.NewInt(1 << 3)
 )
 
 type GetTokenRequest struct {
@@ -15,6 +23,9 @@ type GetTokenRequest struct {
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (g *GetTokenRequest) Audience() string {
@@ -23,6 +34,33 @@ func (g *GetTokenRequest) Audience() string {
 
 func (g *GetTokenRequest) GrantType() string {
 	return g.grantType
+}
+
+func (g *GetTokenRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetTokenRequest) SetXApiKey(xApiKey string) {
+	g.XApiKey = xApiKey
+	g.require(getTokenRequestFieldXApiKey)
+}
+
+func (g *GetTokenRequest) SetClientId(clientId string) {
+	g.ClientId = clientId
+	g.require(getTokenRequestFieldClientId)
+}
+
+func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
+	g.ClientSecret = clientSecret
+	g.require(getTokenRequestFieldClientSecret)
+}
+
+func (g *GetTokenRequest) SetScope(scope *string) {
+	g.Scope = scope
+	g.require(getTokenRequestFieldScope)
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
@@ -48,8 +86,17 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 		Audience:  "https://api.example.com",
 		GrantType: "client_credentials",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
+
+var (
+	refreshTokenRequestFieldXApiKey      = big.NewInt(1 << 0)
+	refreshTokenRequestFieldClientId     = big.NewInt(1 << 1)
+	refreshTokenRequestFieldClientSecret = big.NewInt(1 << 2)
+	refreshTokenRequestFieldRefreshToken = big.NewInt(1 << 3)
+	refreshTokenRequestFieldScope        = big.NewInt(1 << 4)
+)
 
 type RefreshTokenRequest struct {
 	XApiKey      string  `json:"-" url:"-"`
@@ -59,6 +106,9 @@ type RefreshTokenRequest struct {
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (r *RefreshTokenRequest) Audience() string {
@@ -67,6 +117,38 @@ func (r *RefreshTokenRequest) Audience() string {
 
 func (r *RefreshTokenRequest) GrantType() string {
 	return r.grantType
+}
+
+func (r *RefreshTokenRequest) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *RefreshTokenRequest) SetXApiKey(xApiKey string) {
+	r.XApiKey = xApiKey
+	r.require(refreshTokenRequestFieldXApiKey)
+}
+
+func (r *RefreshTokenRequest) SetClientId(clientId string) {
+	r.ClientId = clientId
+	r.require(refreshTokenRequestFieldClientId)
+}
+
+func (r *RefreshTokenRequest) SetClientSecret(clientSecret string) {
+	r.ClientSecret = clientSecret
+	r.require(refreshTokenRequestFieldClientSecret)
+}
+
+func (r *RefreshTokenRequest) SetRefreshToken(refreshToken string) {
+	r.RefreshToken = refreshToken
+	r.require(refreshTokenRequestFieldRefreshToken)
+}
+
+func (r *RefreshTokenRequest) SetScope(scope *string) {
+	r.Scope = scope
+	r.require(refreshTokenRequestFieldScope)
 }
 
 func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
@@ -92,13 +174,22 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 		Audience:  "https://api.example.com",
 		GrantType: "refresh_token",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 // An OAuth token response.
+var (
+	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
+	tokenResponseFieldRefreshToken = big.NewInt(1 << 1)
+)
+
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -122,6 +213,23 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TokenResponse) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *TokenResponse) SetAccessToken(accessToken string) {
+	t.AccessToken = accessToken
+	t.require(tokenResponseFieldAccessToken)
+}
+
+func (t *TokenResponse) SetRefreshToken(refreshToken *string) {
+	t.RefreshToken = refreshToken
+	t.require(tokenResponseFieldRefreshToken)
+}
+
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler TokenResponse
 	var value unmarshaler
@@ -136,6 +244,17 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *TokenResponse) MarshalJSON() ([]byte, error) {
+	type embed TokenResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TokenResponse) String() string {

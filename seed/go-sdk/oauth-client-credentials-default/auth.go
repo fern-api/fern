@@ -6,16 +6,42 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/oauth-client-credentials-default/fern/internal"
+	big "math/big"
+)
+
+var (
+	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
 type GetTokenRequest struct {
 	ClientId     string `json:"client_id" url:"-"`
 	ClientSecret string `json:"client_secret" url:"-"`
 	grantType    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (g *GetTokenRequest) GrantType() string {
 	return g.grantType
+}
+
+func (g *GetTokenRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetTokenRequest) SetClientId(clientId string) {
+	g.ClientId = clientId
+	g.require(getTokenRequestFieldClientId)
+}
+
+func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
+	g.ClientSecret = clientSecret
+	g.require(getTokenRequestFieldClientSecret)
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
@@ -38,13 +64,22 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 		embed:     embed(*g),
 		GrantType: "client_credentials",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 // An OAuth token response.
+var (
+	tokenResponseFieldAccessToken = big.NewInt(1 << 0)
+	tokenResponseFieldExpiresIn   = big.NewInt(1 << 1)
+)
+
 type TokenResponse struct {
 	AccessToken string `json:"access_token" url:"access_token"`
 	ExpiresIn   int    `json:"expires_in" url:"expires_in"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -68,6 +103,23 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TokenResponse) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *TokenResponse) SetAccessToken(accessToken string) {
+	t.AccessToken = accessToken
+	t.require(tokenResponseFieldAccessToken)
+}
+
+func (t *TokenResponse) SetExpiresIn(expiresIn int) {
+	t.ExpiresIn = expiresIn
+	t.require(tokenResponseFieldExpiresIn)
+}
+
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler TokenResponse
 	var value unmarshaler
@@ -82,6 +134,17 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *TokenResponse) MarshalJSON() ([]byte, error) {
+	type embed TokenResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TokenResponse) String() string {

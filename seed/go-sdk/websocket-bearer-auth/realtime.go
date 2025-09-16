@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/websocket-bearer-auth/fern/internal"
+	big "math/big"
+)
+
+var (
+	receiveEventFieldAlpha = big.NewInt(1 << 0)
+	receiveEventFieldBeta  = big.NewInt(1 << 1)
 )
 
 type ReceiveEvent struct {
 	Alpha string `json:"alpha" url:"alpha"`
 	Beta  int    `json:"beta" url:"beta"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -34,6 +43,23 @@ func (r *ReceiveEvent) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *ReceiveEvent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *ReceiveEvent) SetAlpha(alpha string) {
+	r.Alpha = alpha
+	r.require(receiveEventFieldAlpha)
+}
+
+func (r *ReceiveEvent) SetBeta(beta int) {
+	r.Beta = beta
+	r.require(receiveEventFieldBeta)
+}
+
 func (r *ReceiveEvent) UnmarshalJSON(data []byte) error {
 	type unmarshaler ReceiveEvent
 	var value unmarshaler
@@ -50,6 +76,17 @@ func (r *ReceiveEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ReceiveEvent) MarshalJSON() ([]byte, error) {
+	type embed ReceiveEvent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ReceiveEvent) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -62,10 +99,19 @@ func (r *ReceiveEvent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	receiveEvent2FieldGamma   = big.NewInt(1 << 0)
+	receiveEvent2FieldDelta   = big.NewInt(1 << 1)
+	receiveEvent2FieldEpsilon = big.NewInt(1 << 2)
+)
+
 type ReceiveEvent2 struct {
 	Gamma   string `json:"gamma" url:"gamma"`
 	Delta   int    `json:"delta" url:"delta"`
 	Epsilon bool   `json:"epsilon" url:"epsilon"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -96,6 +142,28 @@ func (r *ReceiveEvent2) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *ReceiveEvent2) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *ReceiveEvent2) SetGamma(gamma string) {
+	r.Gamma = gamma
+	r.require(receiveEvent2FieldGamma)
+}
+
+func (r *ReceiveEvent2) SetDelta(delta int) {
+	r.Delta = delta
+	r.require(receiveEvent2FieldDelta)
+}
+
+func (r *ReceiveEvent2) SetEpsilon(epsilon bool) {
+	r.Epsilon = epsilon
+	r.require(receiveEvent2FieldEpsilon)
+}
+
 func (r *ReceiveEvent2) UnmarshalJSON(data []byte) error {
 	type unmarshaler ReceiveEvent2
 	var value unmarshaler
@@ -112,6 +180,17 @@ func (r *ReceiveEvent2) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ReceiveEvent2) MarshalJSON() ([]byte, error) {
+	type embed ReceiveEvent2
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ReceiveEvent2) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -124,8 +203,15 @@ func (r *ReceiveEvent2) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	receiveEvent3FieldReceiveText3 = big.NewInt(1 << 0)
+)
+
 type ReceiveEvent3 struct {
 	ReceiveText3 string `json:"receiveText3" url:"receiveText3"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -140,6 +226,18 @@ func (r *ReceiveEvent3) GetReceiveText3() string {
 
 func (r *ReceiveEvent3) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ReceiveEvent3) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *ReceiveEvent3) SetReceiveText3(receiveText3 string) {
+	r.ReceiveText3 = receiveText3
+	r.require(receiveEvent3FieldReceiveText3)
 }
 
 func (r *ReceiveEvent3) UnmarshalJSON(data []byte) error {
@@ -158,6 +256,17 @@ func (r *ReceiveEvent3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ReceiveEvent3) MarshalJSON() ([]byte, error) {
+	type embed ReceiveEvent3
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ReceiveEvent3) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -170,9 +279,17 @@ func (r *ReceiveEvent3) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	sendEventFieldSendText  = big.NewInt(1 << 0)
+	sendEventFieldSendParam = big.NewInt(1 << 1)
+)
+
 type SendEvent struct {
 	SendText  string `json:"sendText" url:"sendText"`
 	SendParam int    `json:"sendParam" url:"sendParam"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -196,6 +313,23 @@ func (s *SendEvent) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SendEvent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SendEvent) SetSendText(sendText string) {
+	s.SendText = sendText
+	s.require(sendEventFieldSendText)
+}
+
+func (s *SendEvent) SetSendParam(sendParam int) {
+	s.SendParam = sendParam
+	s.require(sendEventFieldSendParam)
+}
+
 func (s *SendEvent) UnmarshalJSON(data []byte) error {
 	type unmarshaler SendEvent
 	var value unmarshaler
@@ -212,6 +346,17 @@ func (s *SendEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SendEvent) MarshalJSON() ([]byte, error) {
+	type embed SendEvent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SendEvent) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -224,9 +369,17 @@ func (s *SendEvent) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	sendEvent2FieldSendText2  = big.NewInt(1 << 0)
+	sendEvent2FieldSendParam2 = big.NewInt(1 << 1)
+)
+
 type SendEvent2 struct {
 	SendText2  string `json:"sendText2" url:"sendText2"`
 	SendParam2 bool   `json:"sendParam2" url:"sendParam2"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -250,6 +403,23 @@ func (s *SendEvent2) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SendEvent2) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SendEvent2) SetSendText2(sendText2 string) {
+	s.SendText2 = sendText2
+	s.require(sendEvent2FieldSendText2)
+}
+
+func (s *SendEvent2) SetSendParam2(sendParam2 bool) {
+	s.SendParam2 = sendParam2
+	s.require(sendEvent2FieldSendParam2)
+}
+
 func (s *SendEvent2) UnmarshalJSON(data []byte) error {
 	type unmarshaler SendEvent2
 	var value unmarshaler
@@ -266,6 +436,17 @@ func (s *SendEvent2) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SendEvent2) MarshalJSON() ([]byte, error) {
+	type embed SendEvent2
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SendEvent2) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -278,9 +459,17 @@ func (s *SendEvent2) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	receiveSnakeCaseFieldReceiveText = big.NewInt(1 << 0)
+	receiveSnakeCaseFieldReceiveInt  = big.NewInt(1 << 1)
+)
+
 type ReceiveSnakeCase struct {
 	ReceiveText string `json:"receive_text" url:"receive_text"`
 	ReceiveInt  int    `json:"receive_int" url:"receive_int"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -304,6 +493,23 @@ func (r *ReceiveSnakeCase) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *ReceiveSnakeCase) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *ReceiveSnakeCase) SetReceiveText(receiveText string) {
+	r.ReceiveText = receiveText
+	r.require(receiveSnakeCaseFieldReceiveText)
+}
+
+func (r *ReceiveSnakeCase) SetReceiveInt(receiveInt int) {
+	r.ReceiveInt = receiveInt
+	r.require(receiveSnakeCaseFieldReceiveInt)
+}
+
 func (r *ReceiveSnakeCase) UnmarshalJSON(data []byte) error {
 	type unmarshaler ReceiveSnakeCase
 	var value unmarshaler
@@ -320,6 +526,17 @@ func (r *ReceiveSnakeCase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ReceiveSnakeCase) MarshalJSON() ([]byte, error) {
+	type embed ReceiveSnakeCase
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ReceiveSnakeCase) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -332,9 +549,17 @@ func (r *ReceiveSnakeCase) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	sendSnakeCaseFieldSendText  = big.NewInt(1 << 0)
+	sendSnakeCaseFieldSendParam = big.NewInt(1 << 1)
+)
+
 type SendSnakeCase struct {
 	SendText  string `json:"send_text" url:"send_text"`
 	SendParam int    `json:"send_param" url:"send_param"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -358,6 +583,23 @@ func (s *SendSnakeCase) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SendSnakeCase) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SendSnakeCase) SetSendText(sendText string) {
+	s.SendText = sendText
+	s.require(sendSnakeCaseFieldSendText)
+}
+
+func (s *SendSnakeCase) SetSendParam(sendParam int) {
+	s.SendParam = sendParam
+	s.require(sendSnakeCaseFieldSendParam)
+}
+
 func (s *SendSnakeCase) UnmarshalJSON(data []byte) error {
 	type unmarshaler SendSnakeCase
 	var value unmarshaler
@@ -372,6 +614,17 @@ func (s *SendSnakeCase) UnmarshalJSON(data []byte) error {
 	s.extraProperties = extraProperties
 	s.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (s *SendSnakeCase) MarshalJSON() ([]byte, error) {
+	type embed SendSnakeCase
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *SendSnakeCase) String() string {

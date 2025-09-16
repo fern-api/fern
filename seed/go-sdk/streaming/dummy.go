@@ -6,15 +6,35 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/fern-api/stream-go/v2/internal"
+	big "math/big"
+)
+
+var (
+	generateequestFieldNumEvents = big.NewInt(1 << 0)
 )
 
 type Generateequest struct {
 	NumEvents int `json:"num_events" url:"-"`
 	stream    bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (g *Generateequest) Stream() bool {
 	return g.stream
+}
+
+func (g *Generateequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *Generateequest) SetNumEvents(numEvents int) {
+	g.NumEvents = numEvents
+	g.require(generateequestFieldNumEvents)
 }
 
 func (g *Generateequest) UnmarshalJSON(data []byte) error {
@@ -37,16 +57,36 @@ func (g *Generateequest) MarshalJSON() ([]byte, error) {
 		embed:  embed(*g),
 		Stream: false,
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
+
+var (
+	generateStreamRequestFieldNumEvents = big.NewInt(1 << 0)
+)
 
 type GenerateStreamRequest struct {
 	NumEvents int `json:"num_events" url:"-"`
 	stream    bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (g *GenerateStreamRequest) Stream() bool {
 	return g.stream
+}
+
+func (g *GenerateStreamRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GenerateStreamRequest) SetNumEvents(numEvents int) {
+	g.NumEvents = numEvents
+	g.require(generateStreamRequestFieldNumEvents)
 }
 
 func (g *GenerateStreamRequest) UnmarshalJSON(data []byte) error {
@@ -69,12 +109,21 @@ func (g *GenerateStreamRequest) MarshalJSON() ([]byte, error) {
 		embed:  embed(*g),
 		Stream: true,
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
+
+var (
+	streamResponseFieldId   = big.NewInt(1 << 0)
+	streamResponseFieldName = big.NewInt(1 << 1)
+)
 
 type StreamResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -98,6 +147,23 @@ func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *StreamResponse) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *StreamResponse) SetId(id string) {
+	s.Id = id
+	s.require(streamResponseFieldId)
+}
+
+func (s *StreamResponse) SetName(name *string) {
+	s.Name = name
+	s.require(streamResponseFieldName)
+}
+
 func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler StreamResponse
 	var value unmarshaler
@@ -112,6 +178,17 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 	s.extraProperties = extraProperties
 	s.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (s *StreamResponse) MarshalJSON() ([]byte, error) {
+	type embed StreamResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *StreamResponse) String() string {

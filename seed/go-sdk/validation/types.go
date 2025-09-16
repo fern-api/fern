@@ -6,6 +6,14 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/validation/fern/internal"
+	big "math/big"
+)
+
+var (
+	createRequestFieldDecimal = big.NewInt(1 << 0)
+	createRequestFieldEven    = big.NewInt(1 << 1)
+	createRequestFieldName    = big.NewInt(1 << 2)
+	createRequestFieldShape   = big.NewInt(1 << 3)
 )
 
 type CreateRequest struct {
@@ -13,12 +21,73 @@ type CreateRequest struct {
 	Even    int     `json:"even" url:"-"`
 	Name    string  `json:"name" url:"-"`
 	Shape   Shape   `json:"shape" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (c *CreateRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CreateRequest) SetDecimal(decimal float64) {
+	c.Decimal = decimal
+	c.require(createRequestFieldDecimal)
+}
+
+func (c *CreateRequest) SetEven(even int) {
+	c.Even = even
+	c.require(createRequestFieldEven)
+}
+
+func (c *CreateRequest) SetName(name string) {
+	c.Name = name
+	c.require(createRequestFieldName)
+}
+
+func (c *CreateRequest) SetShape(shape Shape) {
+	c.Shape = shape
+	c.require(createRequestFieldShape)
+}
+
+var (
+	getRequestFieldDecimal = big.NewInt(1 << 0)
+	getRequestFieldEven    = big.NewInt(1 << 1)
+	getRequestFieldName    = big.NewInt(1 << 2)
+)
 
 type GetRequest struct {
 	Decimal float64 `json:"-" url:"decimal"`
 	Even    int     `json:"-" url:"even"`
 	Name    string  `json:"-" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetRequest) SetDecimal(decimal float64) {
+	g.Decimal = decimal
+	g.require(getRequestFieldDecimal)
+}
+
+func (g *GetRequest) SetEven(even int) {
+	g.Even = even
+	g.require(getRequestFieldEven)
+}
+
+func (g *GetRequest) SetName(name string) {
+	g.Name = name
+	g.require(getRequestFieldName)
 }
 
 type Double = float64
@@ -55,11 +124,21 @@ func (s Shape) Ptr() *Shape {
 type SmallInteger = int
 
 // Defines properties with default values and validation rules.
+var (
+	typeFieldDecimal = big.NewInt(1 << 0)
+	typeFieldEven    = big.NewInt(1 << 1)
+	typeFieldName    = big.NewInt(1 << 2)
+	typeFieldShape   = big.NewInt(1 << 3)
+)
+
 type Type struct {
 	Decimal float64 `json:"decimal" url:"decimal"`
 	Even    int     `json:"even" url:"even"`
 	Name    string  `json:"name" url:"name"`
 	Shape   Shape   `json:"shape" url:"shape"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -97,6 +176,33 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Type) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *Type) SetDecimal(decimal float64) {
+	t.Decimal = decimal
+	t.require(typeFieldDecimal)
+}
+
+func (t *Type) SetEven(even int) {
+	t.Even = even
+	t.require(typeFieldEven)
+}
+
+func (t *Type) SetName(name string) {
+	t.Name = name
+	t.require(typeFieldName)
+}
+
+func (t *Type) SetShape(shape Shape) {
+	t.Shape = shape
+	t.require(typeFieldShape)
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	type unmarshaler Type
 	var value unmarshaler
@@ -111,6 +217,17 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Type) String() string {

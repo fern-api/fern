@@ -2,9 +2,50 @@
 
 package enum
 
+import (
+	big "math/big"
+)
+
+var (
+	sendEnumAsHeaderRequestFieldOperand             = big.NewInt(1 << 0)
+	sendEnumAsHeaderRequestFieldMaybeOperand        = big.NewInt(1 << 1)
+	sendEnumAsHeaderRequestFieldOperandOrColor      = big.NewInt(1 << 2)
+	sendEnumAsHeaderRequestFieldMaybeOperandOrColor = big.NewInt(1 << 3)
+)
+
 type SendEnumAsHeaderRequest struct {
 	Operand             Operand         `json:"-" url:"-"`
 	MaybeOperand        *Operand        `json:"-" url:"-"`
 	OperandOrColor      *ColorOrOperand `json:"-" url:"-"`
 	MaybeOperandOrColor *ColorOrOperand `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SendEnumAsHeaderRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SendEnumAsHeaderRequest) SetOperand(operand Operand) {
+	s.Operand = operand
+	s.require(sendEnumAsHeaderRequestFieldOperand)
+}
+
+func (s *SendEnumAsHeaderRequest) SetMaybeOperand(maybeOperand *Operand) {
+	s.MaybeOperand = maybeOperand
+	s.require(sendEnumAsHeaderRequestFieldMaybeOperand)
+}
+
+func (s *SendEnumAsHeaderRequest) SetOperandOrColor(operandOrColor *ColorOrOperand) {
+	s.OperandOrColor = operandOrColor
+	s.require(sendEnumAsHeaderRequestFieldOperandOrColor)
+}
+
+func (s *SendEnumAsHeaderRequest) SetMaybeOperandOrColor(maybeOperandOrColor *ColorOrOperand) {
+	s.MaybeOperandOrColor = maybeOperandOrColor
+	s.require(sendEnumAsHeaderRequestFieldMaybeOperandOrColor)
 }

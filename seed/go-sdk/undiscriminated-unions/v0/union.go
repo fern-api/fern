@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/undiscriminated-unions/fern/internal"
+	big "math/big"
 )
 
 type Key struct {
@@ -342,9 +343,17 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+var (
+	namedMetadataFieldName  = big.NewInt(1 << 0)
+	namedMetadataFieldValue = big.NewInt(1 << 1)
+)
+
 type NamedMetadata struct {
 	Name  string                 `json:"name" url:"name"`
 	Value map[string]interface{} `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -368,6 +377,23 @@ func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NamedMetadata) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *NamedMetadata) SetName(name string) {
+	n.Name = name
+	n.require(namedMetadataFieldName)
+}
+
+func (n *NamedMetadata) SetValue(value map[string]interface{}) {
+	n.Value = value
+	n.require(namedMetadataFieldValue)
+}
+
 func (n *NamedMetadata) UnmarshalJSON(data []byte) error {
 	type unmarshaler NamedMetadata
 	var value unmarshaler
@@ -382,6 +408,17 @@ func (n *NamedMetadata) UnmarshalJSON(data []byte) error {
 	n.extraProperties = extraProperties
 	n.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (n *NamedMetadata) MarshalJSON() ([]byte, error) {
+	type embed NamedMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (n *NamedMetadata) String() string {
@@ -711,8 +748,15 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 
 type OptionalMetadata = map[string]interface{}
 
+var (
+	requestFieldUnion = big.NewInt(1 << 0)
+)
+
 type Request struct {
 	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -727,6 +771,18 @@ func (r *Request) GetUnion() *MetadataUnion {
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *Request) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *Request) SetUnion(union *MetadataUnion) {
+	r.Union = union
+	r.require(requestFieldUnion)
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -745,6 +801,17 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Request) MarshalJSON() ([]byte, error) {
+	type embed Request
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Request) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -757,8 +824,15 @@ func (r *Request) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	typeWithOptionalUnionFieldMyUnion = big.NewInt(1 << 0)
+)
+
 type TypeWithOptionalUnion struct {
 	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -775,6 +849,18 @@ func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TypeWithOptionalUnion) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *TypeWithOptionalUnion) SetMyUnion(myUnion *MyUnion) {
+	t.MyUnion = myUnion
+	t.require(typeWithOptionalUnionFieldMyUnion)
+}
+
 func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
 	type unmarshaler TypeWithOptionalUnion
 	var value unmarshaler
@@ -789,6 +875,17 @@ func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *TypeWithOptionalUnion) MarshalJSON() ([]byte, error) {
+	type embed TypeWithOptionalUnion
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TypeWithOptionalUnion) String() string {

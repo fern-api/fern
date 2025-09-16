@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/fern-api/unions-go/internal"
+	big "math/big"
+)
+
+var (
+	circleFieldRadius = big.NewInt(1 << 0)
 )
 
 type Circle struct {
 	Radius float64 `json:"radius" url:"radius"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -24,6 +32,18 @@ func (c *Circle) GetRadius() float64 {
 
 func (c *Circle) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *Circle) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *Circle) SetRadius(radius float64) {
+	c.Radius = radius
+	c.require(circleFieldRadius)
 }
 
 func (c *Circle) UnmarshalJSON(data []byte) error {
@@ -42,6 +62,17 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Circle) MarshalJSON() ([]byte, error) {
+	type embed Circle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Circle) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -54,8 +85,15 @@ func (c *Circle) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getShapeRequestFieldId = big.NewInt(1 << 0)
+)
+
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -72,6 +110,18 @@ func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
 
+func (g *GetShapeRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetShapeRequest) SetId(id string) {
+	g.Id = id
+	g.require(getShapeRequestFieldId)
+}
+
 func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler GetShapeRequest
 	var value unmarshaler
@@ -86,6 +136,17 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 	g.extraProperties = extraProperties
 	g.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (g *GetShapeRequest) MarshalJSON() ([]byte, error) {
+	type embed GetShapeRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (g *GetShapeRequest) String() string {
@@ -227,8 +288,15 @@ func (s *Shape) validate() error {
 	return nil
 }
 
+var (
+	squareFieldLength = big.NewInt(1 << 0)
+)
+
 type Square struct {
 	Length float64 `json:"length" url:"length"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -245,6 +313,18 @@ func (s *Square) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *Square) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *Square) SetLength(length float64) {
+	s.Length = length
+	s.require(squareFieldLength)
+}
+
 func (s *Square) UnmarshalJSON(data []byte) error {
 	type unmarshaler Square
 	var value unmarshaler
@@ -259,6 +339,17 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 	s.extraProperties = extraProperties
 	s.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (s *Square) MarshalJSON() ([]byte, error) {
+	type embed Square
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *Square) String() string {

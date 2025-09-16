@@ -6,16 +6,43 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/extends/fern/internal"
+	big "math/big"
+)
+
+var (
+	inlinedFieldUnique = big.NewInt(1 << 0)
 )
 
 type Inlined struct {
 	Docs   string `json:"docs" url:"-"`
 	Name   string `json:"name" url:"-"`
 	Unique string `json:"unique" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (i *Inlined) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+func (i *Inlined) SetUnique(unique string) {
+	i.Unique = unique
+	i.require(inlinedFieldUnique)
+}
+
+var (
+	docsFieldDocs = big.NewInt(1 << 0)
+)
 
 type Docs struct {
 	Docs string `json:"docs" url:"docs"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -30,6 +57,18 @@ func (d *Docs) GetDocs() string {
 
 func (d *Docs) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *Docs) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *Docs) SetDocs(docs string) {
+	d.Docs = docs
+	d.require(docsFieldDocs)
 }
 
 func (d *Docs) UnmarshalJSON(data []byte) error {
@@ -48,6 +87,17 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *Docs) MarshalJSON() ([]byte, error) {
+	type embed Docs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *Docs) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -60,9 +110,17 @@ func (d *Docs) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	exampleTypeFieldDocs = big.NewInt(1 << 0)
+	exampleTypeFieldName = big.NewInt(1 << 1)
+)
+
 type ExampleType struct {
 	Docs string `json:"docs" url:"docs"`
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -86,6 +144,23 @@ func (e *ExampleType) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *ExampleType) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *ExampleType) SetDocs(docs string) {
+	e.Docs = docs
+	e.require(exampleTypeFieldDocs)
+}
+
+func (e *ExampleType) SetName(name string) {
+	e.Name = name
+	e.require(exampleTypeFieldName)
+}
+
 func (e *ExampleType) UnmarshalJSON(data []byte) error {
 	type unmarshaler ExampleType
 	var value unmarshaler
@@ -102,6 +177,17 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *ExampleType) MarshalJSON() ([]byte, error) {
+	type embed ExampleType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *ExampleType) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -114,9 +200,17 @@ func (e *ExampleType) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	jsonFieldDocs = big.NewInt(1 << 0)
+	jsonFieldRaw  = big.NewInt(1 << 1)
+)
+
 type Json struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -140,6 +234,23 @@ func (j *Json) GetExtraProperties() map[string]interface{} {
 	return j.extraProperties
 }
 
+func (j *Json) require(field *big.Int) {
+	if j.explicitFields == nil {
+		j.explicitFields = big.NewInt(0)
+	}
+	j.explicitFields.Or(j.explicitFields, field)
+}
+
+func (j *Json) SetDocs(docs string) {
+	j.Docs = docs
+	j.require(jsonFieldDocs)
+}
+
+func (j *Json) SetRaw(raw string) {
+	j.Raw = raw
+	j.require(jsonFieldRaw)
+}
+
 func (j *Json) UnmarshalJSON(data []byte) error {
 	type unmarshaler Json
 	var value unmarshaler
@@ -156,6 +267,17 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (j *Json) MarshalJSON() ([]byte, error) {
+	type embed Json
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (j *Json) String() string {
 	if len(j.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
@@ -168,10 +290,19 @@ func (j *Json) String() string {
 	return fmt.Sprintf("%#v", j)
 }
 
+var (
+	nestedTypeFieldDocs = big.NewInt(1 << 0)
+	nestedTypeFieldRaw  = big.NewInt(1 << 1)
+	nestedTypeFieldName = big.NewInt(1 << 2)
+)
+
 type NestedType struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -202,6 +333,28 @@ func (n *NestedType) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NestedType) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *NestedType) SetDocs(docs string) {
+	n.Docs = docs
+	n.require(nestedTypeFieldDocs)
+}
+
+func (n *NestedType) SetRaw(raw string) {
+	n.Raw = raw
+	n.require(nestedTypeFieldRaw)
+}
+
+func (n *NestedType) SetName(name string) {
+	n.Name = name
+	n.require(nestedTypeFieldName)
+}
+
 func (n *NestedType) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedType
 	var value unmarshaler
@@ -216,6 +369,17 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 	n.extraProperties = extraProperties
 	n.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (n *NestedType) MarshalJSON() ([]byte, error) {
+	type embed NestedType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (n *NestedType) String() string {

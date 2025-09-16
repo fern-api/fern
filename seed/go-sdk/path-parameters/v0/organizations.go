@@ -6,15 +6,43 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/path-parameters/fern/internal"
+	big "math/big"
+)
+
+var (
+	searchOrganizationsRequestFieldLimit = big.NewInt(1 << 0)
 )
 
 type SearchOrganizationsRequest struct {
 	Limit *int `json:"-" url:"limit,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SearchOrganizationsRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchOrganizationsRequest) SetLimit(limit *int) {
+	s.Limit = limit
+	s.require(searchOrganizationsRequestFieldLimit)
+}
+
+var (
+	organizationFieldName = big.NewInt(1 << 0)
+	organizationFieldTags = big.NewInt(1 << 1)
+)
 
 type Organization struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -38,6 +66,23 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *Organization) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
+func (o *Organization) SetTags(tags []string) {
+	o.Tags = tags
+	o.require(organizationFieldTags)
+}
+
 func (o *Organization) UnmarshalJSON(data []byte) error {
 	type unmarshaler Organization
 	var value unmarshaler
@@ -52,6 +97,17 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	o.extraProperties = extraProperties
 	o.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (o *Organization) MarshalJSON() ([]byte, error) {
+	type embed Organization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *Organization) String() string {

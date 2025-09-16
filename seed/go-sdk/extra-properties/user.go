@@ -6,6 +6,11 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/extra-properties/fern/internal"
+	big "math/big"
+)
+
+var (
+	createUserRequestFieldName = big.NewInt(1 << 0)
 )
 
 type CreateUserRequest struct {
@@ -14,6 +19,9 @@ type CreateUserRequest struct {
 	version string
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (c *CreateUserRequest) Type() string {
@@ -22,6 +30,18 @@ func (c *CreateUserRequest) Type() string {
 
 func (c *CreateUserRequest) Version() string {
 	return c.version
+}
+
+func (c *CreateUserRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CreateUserRequest) SetName(name string) {
+	c.Name = name
+	c.require(createUserRequestFieldName)
 }
 
 func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
@@ -53,11 +73,19 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 		Type:    "CreateUserRequest",
 		Version: "v1",
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
+
+var (
+	userFieldName = big.NewInt(1 << 0)
+)
 
 type User struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -73,6 +101,18 @@ func (u *User) GetName() string {
 
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -102,7 +142,8 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *User) String() string {

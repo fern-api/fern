@@ -6,10 +6,44 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/client-side-params/fern/internal"
+	big "math/big"
 	time "time"
 )
 
 // Represents a client application
+var (
+	clientFieldClientId                = big.NewInt(1 << 0)
+	clientFieldTenant                  = big.NewInt(1 << 1)
+	clientFieldName                    = big.NewInt(1 << 2)
+	clientFieldDescription             = big.NewInt(1 << 3)
+	clientFieldGlobal                  = big.NewInt(1 << 4)
+	clientFieldClientSecret            = big.NewInt(1 << 5)
+	clientFieldAppType                 = big.NewInt(1 << 6)
+	clientFieldLogoUri                 = big.NewInt(1 << 7)
+	clientFieldIsFirstParty            = big.NewInt(1 << 8)
+	clientFieldOidcConformant          = big.NewInt(1 << 9)
+	clientFieldCallbacks               = big.NewInt(1 << 10)
+	clientFieldAllowedOrigins          = big.NewInt(1 << 11)
+	clientFieldWebOrigins              = big.NewInt(1 << 12)
+	clientFieldGrantTypes              = big.NewInt(1 << 13)
+	clientFieldJwtConfiguration        = big.NewInt(1 << 14)
+	clientFieldSigningKeys             = big.NewInt(1 << 15)
+	clientFieldEncryptionKey           = big.NewInt(1 << 16)
+	clientFieldSso                     = big.NewInt(1 << 17)
+	clientFieldSsoDisabled             = big.NewInt(1 << 18)
+	clientFieldCrossOriginAuth         = big.NewInt(1 << 19)
+	clientFieldCrossOriginLoc          = big.NewInt(1 << 20)
+	clientFieldCustomLoginPageOn       = big.NewInt(1 << 21)
+	clientFieldCustomLoginPage         = big.NewInt(1 << 22)
+	clientFieldCustomLoginPagePreview  = big.NewInt(1 << 23)
+	clientFieldFormTemplate            = big.NewInt(1 << 24)
+	clientFieldIsHerokuApp             = big.NewInt(1 << 25)
+	clientFieldAddons                  = big.NewInt(1 << 26)
+	clientFieldTokenEndpointAuthMethod = big.NewInt(1 << 27)
+	clientFieldClientMetadata          = big.NewInt(1 << 28)
+	clientFieldMobile                  = big.NewInt(1 << 29)
+)
+
 type Client struct {
 	// The unique client identifier
 	ClientId string `json:"client_id" url:"client_id"`
@@ -71,6 +105,9 @@ type Client struct {
 	ClientMetadata map[string]interface{} `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
 	// Mobile app settings
 	Mobile map[string]interface{} `json:"mobile,omitempty" url:"mobile,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -290,6 +327,163 @@ func (c *Client) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *Client) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *Client) SetClientId(clientId string) {
+	c.ClientId = clientId
+	c.require(clientFieldClientId)
+}
+
+func (c *Client) SetTenant(tenant *string) {
+	c.Tenant = tenant
+	c.require(clientFieldTenant)
+}
+
+func (c *Client) SetName(name string) {
+	c.Name = name
+	c.require(clientFieldName)
+}
+
+func (c *Client) SetDescription(description *string) {
+	c.Description = description
+	c.require(clientFieldDescription)
+}
+
+func (c *Client) SetGlobal(global *bool) {
+	c.Global = global
+	c.require(clientFieldGlobal)
+}
+
+func (c *Client) SetClientSecret(clientSecret *string) {
+	c.ClientSecret = clientSecret
+	c.require(clientFieldClientSecret)
+}
+
+func (c *Client) SetAppType(appType *string) {
+	c.AppType = appType
+	c.require(clientFieldAppType)
+}
+
+func (c *Client) SetLogoUri(logoUri *string) {
+	c.LogoUri = logoUri
+	c.require(clientFieldLogoUri)
+}
+
+func (c *Client) SetIsFirstParty(isFirstParty *bool) {
+	c.IsFirstParty = isFirstParty
+	c.require(clientFieldIsFirstParty)
+}
+
+func (c *Client) SetOidcConformant(oidcConformant *bool) {
+	c.OidcConformant = oidcConformant
+	c.require(clientFieldOidcConformant)
+}
+
+func (c *Client) SetCallbacks(callbacks []string) {
+	c.Callbacks = callbacks
+	c.require(clientFieldCallbacks)
+}
+
+func (c *Client) SetAllowedOrigins(allowedOrigins []string) {
+	c.AllowedOrigins = allowedOrigins
+	c.require(clientFieldAllowedOrigins)
+}
+
+func (c *Client) SetWebOrigins(webOrigins []string) {
+	c.WebOrigins = webOrigins
+	c.require(clientFieldWebOrigins)
+}
+
+func (c *Client) SetGrantTypes(grantTypes []string) {
+	c.GrantTypes = grantTypes
+	c.require(clientFieldGrantTypes)
+}
+
+func (c *Client) SetJwtConfiguration(jwtConfiguration map[string]interface{}) {
+	c.JwtConfiguration = jwtConfiguration
+	c.require(clientFieldJwtConfiguration)
+}
+
+func (c *Client) SetSigningKeys(signingKeys []map[string]interface{}) {
+	c.SigningKeys = signingKeys
+	c.require(clientFieldSigningKeys)
+}
+
+func (c *Client) SetEncryptionKey(encryptionKey map[string]interface{}) {
+	c.EncryptionKey = encryptionKey
+	c.require(clientFieldEncryptionKey)
+}
+
+func (c *Client) SetSso(sso *bool) {
+	c.Sso = sso
+	c.require(clientFieldSso)
+}
+
+func (c *Client) SetSsoDisabled(ssoDisabled *bool) {
+	c.SsoDisabled = ssoDisabled
+	c.require(clientFieldSsoDisabled)
+}
+
+func (c *Client) SetCrossOriginAuth(crossOriginAuth *bool) {
+	c.CrossOriginAuth = crossOriginAuth
+	c.require(clientFieldCrossOriginAuth)
+}
+
+func (c *Client) SetCrossOriginLoc(crossOriginLoc *string) {
+	c.CrossOriginLoc = crossOriginLoc
+	c.require(clientFieldCrossOriginLoc)
+}
+
+func (c *Client) SetCustomLoginPageOn(customLoginPageOn *bool) {
+	c.CustomLoginPageOn = customLoginPageOn
+	c.require(clientFieldCustomLoginPageOn)
+}
+
+func (c *Client) SetCustomLoginPage(customLoginPage *string) {
+	c.CustomLoginPage = customLoginPage
+	c.require(clientFieldCustomLoginPage)
+}
+
+func (c *Client) SetCustomLoginPagePreview(customLoginPagePreview *string) {
+	c.CustomLoginPagePreview = customLoginPagePreview
+	c.require(clientFieldCustomLoginPagePreview)
+}
+
+func (c *Client) SetFormTemplate(formTemplate *string) {
+	c.FormTemplate = formTemplate
+	c.require(clientFieldFormTemplate)
+}
+
+func (c *Client) SetIsHerokuApp(isHerokuApp *bool) {
+	c.IsHerokuApp = isHerokuApp
+	c.require(clientFieldIsHerokuApp)
+}
+
+func (c *Client) SetAddons(addons map[string]interface{}) {
+	c.Addons = addons
+	c.require(clientFieldAddons)
+}
+
+func (c *Client) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *string) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(clientFieldTokenEndpointAuthMethod)
+}
+
+func (c *Client) SetClientMetadata(clientMetadata map[string]interface{}) {
+	c.ClientMetadata = clientMetadata
+	c.require(clientFieldClientMetadata)
+}
+
+func (c *Client) SetMobile(mobile map[string]interface{}) {
+	c.Mobile = mobile
+	c.require(clientFieldMobile)
+}
+
 func (c *Client) UnmarshalJSON(data []byte) error {
 	type unmarshaler Client
 	var value unmarshaler
@@ -306,6 +500,17 @@ func (c *Client) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Client) MarshalJSON() ([]byte, error) {
+	type embed Client
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Client) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -319,6 +524,18 @@ func (c *Client) String() string {
 }
 
 // Represents an identity provider connection
+var (
+	connectionFieldId                 = big.NewInt(1 << 0)
+	connectionFieldName               = big.NewInt(1 << 1)
+	connectionFieldDisplayName        = big.NewInt(1 << 2)
+	connectionFieldStrategy           = big.NewInt(1 << 3)
+	connectionFieldOptions            = big.NewInt(1 << 4)
+	connectionFieldEnabledClients     = big.NewInt(1 << 5)
+	connectionFieldRealms             = big.NewInt(1 << 6)
+	connectionFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionFieldMetadata           = big.NewInt(1 << 8)
+)
+
 type Connection struct {
 	// Connection identifier
 	Id string `json:"id" url:"id"`
@@ -338,6 +555,9 @@ type Connection struct {
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Additional metadata
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -410,6 +630,58 @@ func (c *Connection) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *Connection) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *Connection) SetId(id string) {
+	c.Id = id
+	c.require(connectionFieldId)
+}
+
+func (c *Connection) SetName(name string) {
+	c.Name = name
+	c.require(connectionFieldName)
+}
+
+func (c *Connection) SetDisplayName(displayName *string) {
+	c.DisplayName = displayName
+	c.require(connectionFieldDisplayName)
+}
+
+func (c *Connection) SetStrategy(strategy string) {
+	c.Strategy = strategy
+	c.require(connectionFieldStrategy)
+}
+
+func (c *Connection) SetOptions(options map[string]interface{}) {
+	c.Options = options
+	c.require(connectionFieldOptions)
+}
+
+func (c *Connection) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionFieldEnabledClients)
+}
+
+func (c *Connection) SetRealms(realms []string) {
+	c.Realms = realms
+	c.require(connectionFieldRealms)
+}
+
+func (c *Connection) SetIsDomainConnection(isDomainConnection *bool) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionFieldIsDomainConnection)
+}
+
+func (c *Connection) SetMetadata(metadata map[string]interface{}) {
+	c.Metadata = metadata
+	c.require(connectionFieldMetadata)
+}
+
 func (c *Connection) UnmarshalJSON(data []byte) error {
 	type unmarshaler Connection
 	var value unmarshaler
@@ -426,6 +698,17 @@ func (c *Connection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Connection) MarshalJSON() ([]byte, error) {
+	type embed Connection
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Connection) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -438,6 +721,18 @@ func (c *Connection) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createUserRequestFieldEmail         = big.NewInt(1 << 0)
+	createUserRequestFieldEmailVerified = big.NewInt(1 << 1)
+	createUserRequestFieldUsername      = big.NewInt(1 << 2)
+	createUserRequestFieldPassword      = big.NewInt(1 << 3)
+	createUserRequestFieldPhoneNumber   = big.NewInt(1 << 4)
+	createUserRequestFieldPhoneVerified = big.NewInt(1 << 5)
+	createUserRequestFieldUserMetadata  = big.NewInt(1 << 6)
+	createUserRequestFieldAppMetadata   = big.NewInt(1 << 7)
+	createUserRequestFieldConnection    = big.NewInt(1 << 8)
+)
+
 type CreateUserRequest struct {
 	Email         string                 `json:"email" url:"email"`
 	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
@@ -448,6 +743,9 @@ type CreateUserRequest struct {
 	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
 	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
 	Connection    string                 `json:"connection" url:"connection"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -520,6 +818,58 @@ func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CreateUserRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CreateUserRequest) SetEmail(email string) {
+	c.Email = email
+	c.require(createUserRequestFieldEmail)
+}
+
+func (c *CreateUserRequest) SetEmailVerified(emailVerified *bool) {
+	c.EmailVerified = emailVerified
+	c.require(createUserRequestFieldEmailVerified)
+}
+
+func (c *CreateUserRequest) SetUsername(username *string) {
+	c.Username = username
+	c.require(createUserRequestFieldUsername)
+}
+
+func (c *CreateUserRequest) SetPassword(password *string) {
+	c.Password = password
+	c.require(createUserRequestFieldPassword)
+}
+
+func (c *CreateUserRequest) SetPhoneNumber(phoneNumber *string) {
+	c.PhoneNumber = phoneNumber
+	c.require(createUserRequestFieldPhoneNumber)
+}
+
+func (c *CreateUserRequest) SetPhoneVerified(phoneVerified *bool) {
+	c.PhoneVerified = phoneVerified
+	c.require(createUserRequestFieldPhoneVerified)
+}
+
+func (c *CreateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
+	c.UserMetadata = userMetadata
+	c.require(createUserRequestFieldUserMetadata)
+}
+
+func (c *CreateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
+	c.AppMetadata = appMetadata
+	c.require(createUserRequestFieldAppMetadata)
+}
+
+func (c *CreateUserRequest) SetConnection(connection string) {
+	c.Connection = connection
+	c.require(createUserRequestFieldConnection)
+}
+
 func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateUserRequest
 	var value unmarshaler
@@ -536,6 +886,17 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateUserRequest) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -548,6 +909,15 @@ func (c *CreateUserRequest) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	identityFieldConnection  = big.NewInt(1 << 0)
+	identityFieldUserId      = big.NewInt(1 << 1)
+	identityFieldProvider    = big.NewInt(1 << 2)
+	identityFieldIsSocial    = big.NewInt(1 << 3)
+	identityFieldAccessToken = big.NewInt(1 << 4)
+	identityFieldExpiresIn   = big.NewInt(1 << 5)
+)
+
 type Identity struct {
 	Connection  string  `json:"connection" url:"connection"`
 	UserId      string  `json:"user_id" url:"user_id"`
@@ -555,6 +925,9 @@ type Identity struct {
 	IsSocial    bool    `json:"is_social" url:"is_social"`
 	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
 	ExpiresIn   *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -606,6 +979,43 @@ func (i *Identity) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
 
+func (i *Identity) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+func (i *Identity) SetConnection(connection string) {
+	i.Connection = connection
+	i.require(identityFieldConnection)
+}
+
+func (i *Identity) SetUserId(userId string) {
+	i.UserId = userId
+	i.require(identityFieldUserId)
+}
+
+func (i *Identity) SetProvider(provider string) {
+	i.Provider = provider
+	i.require(identityFieldProvider)
+}
+
+func (i *Identity) SetIsSocial(isSocial bool) {
+	i.IsSocial = isSocial
+	i.require(identityFieldIsSocial)
+}
+
+func (i *Identity) SetAccessToken(accessToken *string) {
+	i.AccessToken = accessToken
+	i.require(identityFieldAccessToken)
+}
+
+func (i *Identity) SetExpiresIn(expiresIn *int) {
+	i.ExpiresIn = expiresIn
+	i.require(identityFieldExpiresIn)
+}
+
 func (i *Identity) UnmarshalJSON(data []byte) error {
 	type unmarshaler Identity
 	var value unmarshaler
@@ -622,6 +1032,17 @@ func (i *Identity) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (i *Identity) MarshalJSON() ([]byte, error) {
+	type embed Identity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (i *Identity) String() string {
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
@@ -635,6 +1056,14 @@ func (i *Identity) String() string {
 }
 
 // Paginated response for clients listing
+var (
+	paginatedClientResponseFieldStart   = big.NewInt(1 << 0)
+	paginatedClientResponseFieldLimit   = big.NewInt(1 << 1)
+	paginatedClientResponseFieldLength  = big.NewInt(1 << 2)
+	paginatedClientResponseFieldTotal   = big.NewInt(1 << 3)
+	paginatedClientResponseFieldClients = big.NewInt(1 << 4)
+)
+
 type PaginatedClientResponse struct {
 	// Starting index (zero-based)
 	Start int `json:"start" url:"start"`
@@ -646,6 +1075,9 @@ type PaginatedClientResponse struct {
 	Total *int `json:"total,omitempty" url:"total,omitempty"`
 	// List of clients
 	Clients []*Client `json:"clients" url:"clients"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -690,6 +1122,38 @@ func (p *PaginatedClientResponse) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *PaginatedClientResponse) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PaginatedClientResponse) SetStart(start int) {
+	p.Start = start
+	p.require(paginatedClientResponseFieldStart)
+}
+
+func (p *PaginatedClientResponse) SetLimit(limit int) {
+	p.Limit = limit
+	p.require(paginatedClientResponseFieldLimit)
+}
+
+func (p *PaginatedClientResponse) SetLength(length int) {
+	p.Length = length
+	p.require(paginatedClientResponseFieldLength)
+}
+
+func (p *PaginatedClientResponse) SetTotal(total *int) {
+	p.Total = total
+	p.require(paginatedClientResponseFieldTotal)
+}
+
+func (p *PaginatedClientResponse) SetClients(clients []*Client) {
+	p.Clients = clients
+	p.require(paginatedClientResponseFieldClients)
+}
+
 func (p *PaginatedClientResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler PaginatedClientResponse
 	var value unmarshaler
@@ -706,6 +1170,17 @@ func (p *PaginatedClientResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (p *PaginatedClientResponse) MarshalJSON() ([]byte, error) {
+	type embed PaginatedClientResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (p *PaginatedClientResponse) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -719,12 +1194,23 @@ func (p *PaginatedClientResponse) String() string {
 }
 
 // Response with pagination info like Auth0
+var (
+	paginatedUserResponseFieldUsers  = big.NewInt(1 << 0)
+	paginatedUserResponseFieldStart  = big.NewInt(1 << 1)
+	paginatedUserResponseFieldLimit  = big.NewInt(1 << 2)
+	paginatedUserResponseFieldLength = big.NewInt(1 << 3)
+	paginatedUserResponseFieldTotal  = big.NewInt(1 << 4)
+)
+
 type PaginatedUserResponse struct {
 	Users  []*User `json:"users" url:"users"`
 	Start  int     `json:"start" url:"start"`
 	Limit  int     `json:"limit" url:"limit"`
 	Length int     `json:"length" url:"length"`
 	Total  *int    `json:"total,omitempty" url:"total,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -769,6 +1255,38 @@ func (p *PaginatedUserResponse) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *PaginatedUserResponse) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *PaginatedUserResponse) SetUsers(users []*User) {
+	p.Users = users
+	p.require(paginatedUserResponseFieldUsers)
+}
+
+func (p *PaginatedUserResponse) SetStart(start int) {
+	p.Start = start
+	p.require(paginatedUserResponseFieldStart)
+}
+
+func (p *PaginatedUserResponse) SetLimit(limit int) {
+	p.Limit = limit
+	p.require(paginatedUserResponseFieldLimit)
+}
+
+func (p *PaginatedUserResponse) SetLength(length int) {
+	p.Length = length
+	p.require(paginatedUserResponseFieldLength)
+}
+
+func (p *PaginatedUserResponse) SetTotal(total *int) {
+	p.Total = total
+	p.require(paginatedUserResponseFieldTotal)
+}
+
 func (p *PaginatedUserResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler PaginatedUserResponse
 	var value unmarshaler
@@ -785,6 +1303,17 @@ func (p *PaginatedUserResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (p *PaginatedUserResponse) MarshalJSON() ([]byte, error) {
+	type embed PaginatedUserResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (p *PaginatedUserResponse) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -797,6 +1326,15 @@ func (p *PaginatedUserResponse) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+var (
+	resourceFieldId          = big.NewInt(1 << 0)
+	resourceFieldName        = big.NewInt(1 << 1)
+	resourceFieldDescription = big.NewInt(1 << 2)
+	resourceFieldCreatedAt   = big.NewInt(1 << 3)
+	resourceFieldUpdatedAt   = big.NewInt(1 << 4)
+	resourceFieldMetadata    = big.NewInt(1 << 5)
+)
+
 type Resource struct {
 	Id          string                 `json:"id" url:"id"`
 	Name        string                 `json:"name" url:"name"`
@@ -804,6 +1342,9 @@ type Resource struct {
 	CreatedAt   time.Time              `json:"created_at" url:"created_at"`
 	UpdatedAt   time.Time              `json:"updated_at" url:"updated_at"`
 	Metadata    map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -855,6 +1396,43 @@ func (r *Resource) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *Resource) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *Resource) SetId(id string) {
+	r.Id = id
+	r.require(resourceFieldId)
+}
+
+func (r *Resource) SetName(name string) {
+	r.Name = name
+	r.require(resourceFieldName)
+}
+
+func (r *Resource) SetDescription(description *string) {
+	r.Description = description
+	r.require(resourceFieldDescription)
+}
+
+func (r *Resource) SetCreatedAt(createdAt time.Time) {
+	r.CreatedAt = createdAt
+	r.require(resourceFieldCreatedAt)
+}
+
+func (r *Resource) SetUpdatedAt(updatedAt time.Time) {
+	r.UpdatedAt = updatedAt
+	r.require(resourceFieldUpdatedAt)
+}
+
+func (r *Resource) SetMetadata(metadata map[string]interface{}) {
+	r.Metadata = metadata
+	r.require(resourceFieldMetadata)
+}
+
 func (r *Resource) UnmarshalJSON(data []byte) error {
 	type embed Resource
 	var unmarshaler = struct {
@@ -890,7 +1468,8 @@ func (r *Resource) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(r.CreatedAt),
 		UpdatedAt: internal.NewDateTime(r.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (r *Resource) String() string {
@@ -905,10 +1484,19 @@ func (r *Resource) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	searchResponseFieldResults    = big.NewInt(1 << 0)
+	searchResponseFieldTotal      = big.NewInt(1 << 1)
+	searchResponseFieldNextOffset = big.NewInt(1 << 2)
+)
+
 type SearchResponse struct {
 	Results    []*Resource `json:"results" url:"results"`
 	Total      *int        `json:"total,omitempty" url:"total,omitempty"`
 	NextOffset *int        `json:"next_offset,omitempty" url:"next_offset,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -939,6 +1527,28 @@ func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SearchResponse) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchResponse) SetResults(results []*Resource) {
+	s.Results = results
+	s.require(searchResponseFieldResults)
+}
+
+func (s *SearchResponse) SetTotal(total *int) {
+	s.Total = total
+	s.require(searchResponseFieldTotal)
+}
+
+func (s *SearchResponse) SetNextOffset(nextOffset *int) {
+	s.NextOffset = nextOffset
+	s.require(searchResponseFieldNextOffset)
+}
+
 func (s *SearchResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler SearchResponse
 	var value unmarshaler
@@ -955,6 +1565,17 @@ func (s *SearchResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SearchResponse) MarshalJSON() ([]byte, error) {
+	type embed SearchResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SearchResponse) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -967,6 +1588,18 @@ func (s *SearchResponse) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	updateUserRequestFieldEmail         = big.NewInt(1 << 0)
+	updateUserRequestFieldEmailVerified = big.NewInt(1 << 1)
+	updateUserRequestFieldUsername      = big.NewInt(1 << 2)
+	updateUserRequestFieldPhoneNumber   = big.NewInt(1 << 3)
+	updateUserRequestFieldPhoneVerified = big.NewInt(1 << 4)
+	updateUserRequestFieldUserMetadata  = big.NewInt(1 << 5)
+	updateUserRequestFieldAppMetadata   = big.NewInt(1 << 6)
+	updateUserRequestFieldPassword      = big.NewInt(1 << 7)
+	updateUserRequestFieldBlocked       = big.NewInt(1 << 8)
+)
+
 type UpdateUserRequest struct {
 	Email         *string                `json:"email,omitempty" url:"email,omitempty"`
 	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
@@ -977,6 +1610,9 @@ type UpdateUserRequest struct {
 	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
 	Password      *string                `json:"password,omitempty" url:"password,omitempty"`
 	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1049,6 +1685,58 @@ func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UpdateUserRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UpdateUserRequest) SetEmail(email *string) {
+	u.Email = email
+	u.require(updateUserRequestFieldEmail)
+}
+
+func (u *UpdateUserRequest) SetEmailVerified(emailVerified *bool) {
+	u.EmailVerified = emailVerified
+	u.require(updateUserRequestFieldEmailVerified)
+}
+
+func (u *UpdateUserRequest) SetUsername(username *string) {
+	u.Username = username
+	u.require(updateUserRequestFieldUsername)
+}
+
+func (u *UpdateUserRequest) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(updateUserRequestFieldPhoneNumber)
+}
+
+func (u *UpdateUserRequest) SetPhoneVerified(phoneVerified *bool) {
+	u.PhoneVerified = phoneVerified
+	u.require(updateUserRequestFieldPhoneVerified)
+}
+
+func (u *UpdateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
+	u.UserMetadata = userMetadata
+	u.require(updateUserRequestFieldUserMetadata)
+}
+
+func (u *UpdateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
+	u.AppMetadata = appMetadata
+	u.require(updateUserRequestFieldAppMetadata)
+}
+
+func (u *UpdateUserRequest) SetPassword(password *string) {
+	u.Password = password
+	u.require(updateUserRequestFieldPassword)
+}
+
+func (u *UpdateUserRequest) SetBlocked(blocked *bool) {
+	u.Blocked = blocked
+	u.require(updateUserRequestFieldBlocked)
+}
+
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateUserRequest
 	var value unmarshaler
@@ -1065,6 +1753,17 @@ func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateUserRequest) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -1078,6 +1777,30 @@ func (u *UpdateUserRequest) String() string {
 }
 
 // User object similar to Auth0 users
+var (
+	userFieldUserId        = big.NewInt(1 << 0)
+	userFieldEmail         = big.NewInt(1 << 1)
+	userFieldEmailVerified = big.NewInt(1 << 2)
+	userFieldUsername      = big.NewInt(1 << 3)
+	userFieldPhoneNumber   = big.NewInt(1 << 4)
+	userFieldPhoneVerified = big.NewInt(1 << 5)
+	userFieldCreatedAt     = big.NewInt(1 << 6)
+	userFieldUpdatedAt     = big.NewInt(1 << 7)
+	userFieldIdentities    = big.NewInt(1 << 8)
+	userFieldAppMetadata   = big.NewInt(1 << 9)
+	userFieldUserMetadata  = big.NewInt(1 << 10)
+	userFieldPicture       = big.NewInt(1 << 11)
+	userFieldName          = big.NewInt(1 << 12)
+	userFieldNickname      = big.NewInt(1 << 13)
+	userFieldMultifactor   = big.NewInt(1 << 14)
+	userFieldLastIp        = big.NewInt(1 << 15)
+	userFieldLastLogin     = big.NewInt(1 << 16)
+	userFieldLoginsCount   = big.NewInt(1 << 17)
+	userFieldBlocked       = big.NewInt(1 << 18)
+	userFieldGivenName     = big.NewInt(1 << 19)
+	userFieldFamilyName    = big.NewInt(1 << 20)
+)
+
 type User struct {
 	UserId        string                 `json:"user_id" url:"user_id"`
 	Email         string                 `json:"email" url:"email"`
@@ -1100,6 +1823,9 @@ type User struct {
 	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
 	GivenName     *string                `json:"given_name,omitempty" url:"given_name,omitempty"`
 	FamilyName    *string                `json:"family_name,omitempty" url:"family_name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1256,6 +1982,118 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *User) SetUserId(userId string) {
+	u.UserId = userId
+	u.require(userFieldUserId)
+}
+
+func (u *User) SetEmail(email string) {
+	u.Email = email
+	u.require(userFieldEmail)
+}
+
+func (u *User) SetEmailVerified(emailVerified bool) {
+	u.EmailVerified = emailVerified
+	u.require(userFieldEmailVerified)
+}
+
+func (u *User) SetUsername(username *string) {
+	u.Username = username
+	u.require(userFieldUsername)
+}
+
+func (u *User) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(userFieldPhoneNumber)
+}
+
+func (u *User) SetPhoneVerified(phoneVerified *bool) {
+	u.PhoneVerified = phoneVerified
+	u.require(userFieldPhoneVerified)
+}
+
+func (u *User) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userFieldCreatedAt)
+}
+
+func (u *User) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userFieldUpdatedAt)
+}
+
+func (u *User) SetIdentities(identities []*Identity) {
+	u.Identities = identities
+	u.require(userFieldIdentities)
+}
+
+func (u *User) SetAppMetadata(appMetadata map[string]interface{}) {
+	u.AppMetadata = appMetadata
+	u.require(userFieldAppMetadata)
+}
+
+func (u *User) SetUserMetadata(userMetadata map[string]interface{}) {
+	u.UserMetadata = userMetadata
+	u.require(userFieldUserMetadata)
+}
+
+func (u *User) SetPicture(picture *string) {
+	u.Picture = picture
+	u.require(userFieldPicture)
+}
+
+func (u *User) SetName(name *string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+func (u *User) SetNickname(nickname *string) {
+	u.Nickname = nickname
+	u.require(userFieldNickname)
+}
+
+func (u *User) SetMultifactor(multifactor []string) {
+	u.Multifactor = multifactor
+	u.require(userFieldMultifactor)
+}
+
+func (u *User) SetLastIp(lastIp *string) {
+	u.LastIp = lastIp
+	u.require(userFieldLastIp)
+}
+
+func (u *User) SetLastLogin(lastLogin *time.Time) {
+	u.LastLogin = lastLogin
+	u.require(userFieldLastLogin)
+}
+
+func (u *User) SetLoginsCount(loginsCount *int) {
+	u.LoginsCount = loginsCount
+	u.require(userFieldLoginsCount)
+}
+
+func (u *User) SetBlocked(blocked *bool) {
+	u.Blocked = blocked
+	u.require(userFieldBlocked)
+}
+
+func (u *User) SetGivenName(givenName *string) {
+	u.GivenName = givenName
+	u.require(userFieldGivenName)
+}
+
+func (u *User) SetFamilyName(familyName *string) {
+	u.FamilyName = familyName
+	u.require(userFieldFamilyName)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type embed User
 	var unmarshaler = struct {
@@ -1295,7 +2133,8 @@ func (u *User) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
 		LastLogin: internal.NewOptionalDateTime(u.LastLogin),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

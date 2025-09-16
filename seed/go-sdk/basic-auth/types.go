@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/basic-auth/fern/internal"
+	big "math/big"
+)
+
+var (
+	unauthorizedRequestErrorBodyFieldMessage = big.NewInt(1 << 0)
 )
 
 type UnauthorizedRequestErrorBody struct {
 	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,18 @@ func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface
 	return u.extraProperties
 }
 
+func (u *UnauthorizedRequestErrorBody) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *UnauthorizedRequestErrorBody) SetMessage(message string) {
+	u.Message = message
+	u.require(unauthorizedRequestErrorBodyFieldMessage)
+}
+
 func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 	type unmarshaler UnauthorizedRequestErrorBody
 	var value unmarshaler
@@ -40,6 +60,17 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *UnauthorizedRequestErrorBody) MarshalJSON() ([]byte, error) {
+	type embed UnauthorizedRequestErrorBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {

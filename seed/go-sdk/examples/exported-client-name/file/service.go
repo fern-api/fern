@@ -2,8 +2,31 @@
 
 package file
 
+import (
+	big "math/big"
+)
+
+var (
+	getFileRequestFieldXFileApiVersion = big.NewInt(1 << 0)
+)
+
 type GetFileRequest struct {
 	XFileApiVersion string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetFileRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetFileRequest) SetXFileApiVersion(xFileApiVersion string) {
+	g.XFileApiVersion = xFileApiVersion
+	g.require(getFileRequestFieldXFileApiVersion)
 }
 
 type Filename = string

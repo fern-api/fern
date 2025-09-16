@@ -2,8 +2,43 @@
 
 package examples
 
+import (
+	big "math/big"
+)
+
+var (
+	getMetadataRequestFieldXApiVersion = big.NewInt(1 << 0)
+	getMetadataRequestFieldShallow     = big.NewInt(1 << 1)
+	getMetadataRequestFieldTag         = big.NewInt(1 << 2)
+)
+
 type GetMetadataRequest struct {
 	XApiVersion string    `json:"-" url:"-"`
 	Shallow     *bool     `json:"-" url:"shallow,omitempty"`
 	Tag         []*string `json:"-" url:"tag,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetMetadataRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetMetadataRequest) SetXApiVersion(xApiVersion string) {
+	g.XApiVersion = xApiVersion
+	g.require(getMetadataRequestFieldXApiVersion)
+}
+
+func (g *GetMetadataRequest) SetShallow(shallow *bool) {
+	g.Shallow = shallow
+	g.require(getMetadataRequestFieldShallow)
+}
+
+func (g *GetMetadataRequest) SetTag(tag []*string) {
+	g.Tag = tag
+	g.require(getMetadataRequestFieldTag)
 }

@@ -6,17 +6,46 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/mixed-file-directory/fern/internal"
+	big "math/big"
+)
+
+var (
+	listUsersRequestFieldLimit = big.NewInt(1 << 0)
 )
 
 type ListUsersRequest struct {
 	// The maximum number of results to return.
 	Limit *int `json:"-" url:"limit,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListUsersRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listUsersRequestFieldLimit)
+}
+
+var (
+	userFieldId   = big.NewInt(1 << 0)
+	userFieldName = big.NewInt(1 << 1)
+	userFieldAge  = big.NewInt(1 << 2)
+)
 
 type User struct {
 	Id   Id     `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -47,6 +76,28 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+func (u *User) SetId(id Id) {
+	u.Id = id
+	u.require(userFieldId)
+}
+
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+func (u *User) SetAge(age int) {
+	u.Age = age
+	u.require(userFieldAge)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -61,6 +112,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

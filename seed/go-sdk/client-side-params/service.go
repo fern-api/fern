@@ -2,31 +2,140 @@
 
 package clientsideparams
 
+import (
+	big "math/big"
+)
+
+var (
+	getClientRequestFieldFields        = big.NewInt(1 << 0)
+	getClientRequestFieldIncludeFields = big.NewInt(1 << 1)
+)
+
 type GetClientRequest struct {
 	// Comma-separated list of fields to include
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// Whether specified fields are included or excluded
 	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetClientRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetClientRequest) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getClientRequestFieldFields)
+}
+
+func (g *GetClientRequest) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getClientRequestFieldIncludeFields)
+}
+
+var (
+	getConnectionRequestFieldFields = big.NewInt(1 << 0)
+)
 
 type GetConnectionRequest struct {
 	// Comma-separated list of fields to include
 	Fields *string `json:"-" url:"fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetConnectionRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetConnectionRequest) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getConnectionRequestFieldFields)
+}
+
+var (
+	getResourceRequestFieldIncludeMetadata = big.NewInt(1 << 0)
+	getResourceRequestFieldFormat          = big.NewInt(1 << 1)
+)
 
 type GetResourceRequest struct {
 	// Include metadata in response
 	IncludeMetadata bool `json:"-" url:"include_metadata"`
 	// Response format
 	Format string `json:"-" url:"format"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetResourceRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetResourceRequest) SetIncludeMetadata(includeMetadata bool) {
+	g.IncludeMetadata = includeMetadata
+	g.require(getResourceRequestFieldIncludeMetadata)
+}
+
+func (g *GetResourceRequest) SetFormat(format string) {
+	g.Format = format
+	g.require(getResourceRequestFieldFormat)
+}
+
+var (
+	getUserRequestFieldFields        = big.NewInt(1 << 0)
+	getUserRequestFieldIncludeFields = big.NewInt(1 << 1)
+)
 
 type GetUserRequest struct {
 	// Comma-separated list of fields to include or exclude
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// true to include the fields specified, false to exclude them
 	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetUserRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+func (g *GetUserRequest) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getUserRequestFieldFields)
+}
+
+func (g *GetUserRequest) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getUserRequestFieldIncludeFields)
+}
+
+var (
+	listClientsRequestFieldFields        = big.NewInt(1 << 0)
+	listClientsRequestFieldIncludeFields = big.NewInt(1 << 1)
+	listClientsRequestFieldPage          = big.NewInt(1 << 2)
+	listClientsRequestFieldPerPage       = big.NewInt(1 << 3)
+	listClientsRequestFieldIncludeTotals = big.NewInt(1 << 4)
+	listClientsRequestFieldIsGlobal      = big.NewInt(1 << 5)
+	listClientsRequestFieldIsFirstParty  = big.NewInt(1 << 6)
+	listClientsRequestFieldAppType       = big.NewInt(1 << 7)
+)
 
 type ListClientsRequest struct {
 	// Comma-separated list of fields to include
@@ -45,7 +154,63 @@ type ListClientsRequest struct {
 	IsFirstParty *bool `json:"-" url:"is_first_party,omitempty"`
 	// Filter by application type (spa, native, regular_web, non_interactive)
 	AppType []string `json:"-" url:"app_type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListClientsRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListClientsRequest) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listClientsRequestFieldFields)
+}
+
+func (l *ListClientsRequest) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listClientsRequestFieldIncludeFields)
+}
+
+func (l *ListClientsRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listClientsRequestFieldPage)
+}
+
+func (l *ListClientsRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listClientsRequestFieldPerPage)
+}
+
+func (l *ListClientsRequest) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listClientsRequestFieldIncludeTotals)
+}
+
+func (l *ListClientsRequest) SetIsGlobal(isGlobal *bool) {
+	l.IsGlobal = isGlobal
+	l.require(listClientsRequestFieldIsGlobal)
+}
+
+func (l *ListClientsRequest) SetIsFirstParty(isFirstParty *bool) {
+	l.IsFirstParty = isFirstParty
+	l.require(listClientsRequestFieldIsFirstParty)
+}
+
+func (l *ListClientsRequest) SetAppType(appType []string) {
+	l.AppType = appType
+	l.require(listClientsRequestFieldAppType)
+}
+
+var (
+	listConnectionsRequestFieldStrategy = big.NewInt(1 << 0)
+	listConnectionsRequestFieldName     = big.NewInt(1 << 1)
+	listConnectionsRequestFieldFields   = big.NewInt(1 << 2)
+)
 
 type ListConnectionsRequest struct {
 	// Filter by strategy type (e.g., auth0, google-oauth2, samlp)
@@ -54,7 +219,42 @@ type ListConnectionsRequest struct {
 	Name *string `json:"-" url:"name,omitempty"`
 	// Comma-separated list of fields to include
 	Fields *string `json:"-" url:"fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListConnectionsRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListConnectionsRequest) SetStrategy(strategy *string) {
+	l.Strategy = strategy
+	l.require(listConnectionsRequestFieldStrategy)
+}
+
+func (l *ListConnectionsRequest) SetName(name *string) {
+	l.Name = name
+	l.require(listConnectionsRequestFieldName)
+}
+
+func (l *ListConnectionsRequest) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listConnectionsRequestFieldFields)
+}
+
+var (
+	listResourcesRequestFieldPage          = big.NewInt(1 << 0)
+	listResourcesRequestFieldPerPage       = big.NewInt(1 << 1)
+	listResourcesRequestFieldSort          = big.NewInt(1 << 2)
+	listResourcesRequestFieldOrder         = big.NewInt(1 << 3)
+	listResourcesRequestFieldIncludeTotals = big.NewInt(1 << 4)
+	listResourcesRequestFieldFields        = big.NewInt(1 << 5)
+	listResourcesRequestFieldSearch        = big.NewInt(1 << 6)
+)
 
 type ListResourcesRequest struct {
 	// Zero-indexed page number
@@ -71,7 +271,63 @@ type ListResourcesRequest struct {
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// Search query
 	Search *string `json:"-" url:"search,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListResourcesRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListResourcesRequest) SetPage(page int) {
+	l.Page = page
+	l.require(listResourcesRequestFieldPage)
+}
+
+func (l *ListResourcesRequest) SetPerPage(perPage int) {
+	l.PerPage = perPage
+	l.require(listResourcesRequestFieldPerPage)
+}
+
+func (l *ListResourcesRequest) SetSort(sort string) {
+	l.Sort = sort
+	l.require(listResourcesRequestFieldSort)
+}
+
+func (l *ListResourcesRequest) SetOrder(order string) {
+	l.Order = order
+	l.require(listResourcesRequestFieldOrder)
+}
+
+func (l *ListResourcesRequest) SetIncludeTotals(includeTotals bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listResourcesRequestFieldIncludeTotals)
+}
+
+func (l *ListResourcesRequest) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listResourcesRequestFieldFields)
+}
+
+func (l *ListResourcesRequest) SetSearch(search *string) {
+	l.Search = search
+	l.require(listResourcesRequestFieldSearch)
+}
+
+var (
+	listUsersRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersRequestFieldIncludeTotals = big.NewInt(1 << 2)
+	listUsersRequestFieldSort          = big.NewInt(1 << 3)
+	listUsersRequestFieldConnection    = big.NewInt(1 << 4)
+	listUsersRequestFieldQ             = big.NewInt(1 << 5)
+	listUsersRequestFieldSearchEngine  = big.NewInt(1 << 6)
+	listUsersRequestFieldFields        = big.NewInt(1 << 7)
+)
 
 type ListUsersRequest struct {
 	// Page index of the results to return. First page is 0.
@@ -90,7 +346,64 @@ type ListUsersRequest struct {
 	SearchEngine *string `json:"-" url:"search_engine,omitempty"`
 	// Comma-separated list of fields to include or exclude
 	Fields *string `json:"-" url:"fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+func (l *ListUsersRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersRequestFieldPage)
+}
+
+func (l *ListUsersRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUsersRequestFieldPerPage)
+}
+
+func (l *ListUsersRequest) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listUsersRequestFieldIncludeTotals)
+}
+
+func (l *ListUsersRequest) SetSort(sort *string) {
+	l.Sort = sort
+	l.require(listUsersRequestFieldSort)
+}
+
+func (l *ListUsersRequest) SetConnection(connection *string) {
+	l.Connection = connection
+	l.require(listUsersRequestFieldConnection)
+}
+
+func (l *ListUsersRequest) SetQ(q *string) {
+	l.Q = q
+	l.require(listUsersRequestFieldQ)
+}
+
+func (l *ListUsersRequest) SetSearchEngine(searchEngine *string) {
+	l.SearchEngine = searchEngine
+	l.require(listUsersRequestFieldSearchEngine)
+}
+
+func (l *ListUsersRequest) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listUsersRequestFieldFields)
+}
+
+var (
+	searchResourcesRequestFieldLimit   = big.NewInt(1 << 0)
+	searchResourcesRequestFieldOffset  = big.NewInt(1 << 1)
+	searchResourcesRequestFieldQuery   = big.NewInt(1 << 2)
+	searchResourcesRequestFieldFilters = big.NewInt(1 << 3)
+)
 
 type SearchResourcesRequest struct {
 	// Maximum results to return
@@ -100,4 +413,34 @@ type SearchResourcesRequest struct {
 	// Search query text
 	Query   *string                `json:"query,omitempty" url:"-"`
 	Filters map[string]interface{} `json:"filters,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SearchResourcesRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *SearchResourcesRequest) SetLimit(limit int) {
+	s.Limit = limit
+	s.require(searchResourcesRequestFieldLimit)
+}
+
+func (s *SearchResourcesRequest) SetOffset(offset int) {
+	s.Offset = offset
+	s.require(searchResourcesRequestFieldOffset)
+}
+
+func (s *SearchResourcesRequest) SetQuery(query *string) {
+	s.Query = query
+	s.require(searchResourcesRequestFieldQuery)
+}
+
+func (s *SearchResourcesRequest) SetFilters(filters map[string]interface{}) {
+	s.Filters = filters
+	s.require(searchResourcesRequestFieldFilters)
 }

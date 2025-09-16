@@ -8,6 +8,7 @@ import (
 	commons "github.com/examples/fern/commons"
 	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
+	big "math/big"
 	time "time"
 )
 
@@ -58,10 +59,19 @@ func (c ComplexType) Ptr() *ComplexType {
 	return &c
 }
 
+var (
+	identifierFieldType  = big.NewInt(1 << 0)
+	identifierFieldValue = big.NewInt(1 << 1)
+	identifierFieldLabel = big.NewInt(1 << 2)
+)
+
 type Identifier struct {
 	Type  *Type  `json:"type" url:"type"`
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -92,6 +102,28 @@ func (i *Identifier) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
 
+func (i *Identifier) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+func (i *Identifier) SetType(type_ *Type) {
+	i.Type = type_
+	i.require(identifierFieldType)
+}
+
+func (i *Identifier) SetValue(value string) {
+	i.Value = value
+	i.require(identifierFieldValue)
+}
+
+func (i *Identifier) SetLabel(label string) {
+	i.Label = label
+	i.require(identifierFieldLabel)
+}
+
 func (i *Identifier) UnmarshalJSON(data []byte) error {
 	type unmarshaler Identifier
 	var value unmarshaler
@@ -106,6 +138,17 @@ func (i *Identifier) UnmarshalJSON(data []byte) error {
 	i.extraProperties = extraProperties
 	i.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (i *Identifier) MarshalJSON() ([]byte, error) {
+	type embed Identifier
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (i *Identifier) String() string {
@@ -182,9 +225,17 @@ func (t *Type) Accept(visitor TypeVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", t)
 }
 
+var (
+	actorFieldName = big.NewInt(1 << 0)
+	actorFieldId   = big.NewInt(1 << 1)
+)
+
 type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -208,6 +259,23 @@ func (a *Actor) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Actor) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+func (a *Actor) SetName(name string) {
+	a.Name = name
+	a.require(actorFieldName)
+}
+
+func (a *Actor) SetId(id string) {
+	a.Id = id
+	a.require(actorFieldId)
+}
+
 func (a *Actor) UnmarshalJSON(data []byte) error {
 	type unmarshaler Actor
 	var value unmarshaler
@@ -224,6 +292,17 @@ func (a *Actor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (a *Actor) MarshalJSON() ([]byte, error) {
+	type embed Actor
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (a *Actor) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -236,9 +315,17 @@ func (a *Actor) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	actressFieldName = big.NewInt(1 << 0)
+	actressFieldId   = big.NewInt(1 << 1)
+)
+
 type Actress struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -262,6 +349,23 @@ func (a *Actress) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Actress) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+func (a *Actress) SetName(name string) {
+	a.Name = name
+	a.require(actressFieldName)
+}
+
+func (a *Actress) SetId(id string) {
+	a.Id = id
+	a.require(actressFieldId)
+}
+
 func (a *Actress) UnmarshalJSON(data []byte) error {
 	type unmarshaler Actress
 	var value unmarshaler
@@ -278,6 +382,17 @@ func (a *Actress) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (a *Actress) MarshalJSON() ([]byte, error) {
+	type embed Actress
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (a *Actress) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -289,6 +404,22 @@ func (a *Actress) String() string {
 	}
 	return fmt.Sprintf("%#v", a)
 }
+
+var (
+	bigEntityFieldCastMember     = big.NewInt(1 << 0)
+	bigEntityFieldExtendedMovie  = big.NewInt(1 << 1)
+	bigEntityFieldEntity         = big.NewInt(1 << 2)
+	bigEntityFieldMetadata       = big.NewInt(1 << 3)
+	bigEntityFieldCommonMetadata = big.NewInt(1 << 4)
+	bigEntityFieldEventInfo      = big.NewInt(1 << 5)
+	bigEntityFieldData           = big.NewInt(1 << 6)
+	bigEntityFieldMigration      = big.NewInt(1 << 7)
+	bigEntityFieldException      = big.NewInt(1 << 8)
+	bigEntityFieldTest           = big.NewInt(1 << 9)
+	bigEntityFieldNode           = big.NewInt(1 << 10)
+	bigEntityFieldDirectory      = big.NewInt(1 << 11)
+	bigEntityFieldMoment         = big.NewInt(1 << 12)
+)
 
 type BigEntity struct {
 	CastMember     *CastMember        `json:"castMember,omitempty" url:"castMember,omitempty"`
@@ -304,6 +435,9 @@ type BigEntity struct {
 	Node           *Node              `json:"node,omitempty" url:"node,omitempty"`
 	Directory      *Directory         `json:"directory,omitempty" url:"directory,omitempty"`
 	Moment         *Moment            `json:"moment,omitempty" url:"moment,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -404,6 +538,78 @@ func (b *BigEntity) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
 
+func (b *BigEntity) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+func (b *BigEntity) SetCastMember(castMember *CastMember) {
+	b.CastMember = castMember
+	b.require(bigEntityFieldCastMember)
+}
+
+func (b *BigEntity) SetExtendedMovie(extendedMovie *ExtendedMovie) {
+	b.ExtendedMovie = extendedMovie
+	b.require(bigEntityFieldExtendedMovie)
+}
+
+func (b *BigEntity) SetEntity(entity *Entity) {
+	b.Entity = entity
+	b.require(bigEntityFieldEntity)
+}
+
+func (b *BigEntity) SetMetadata(metadata *Metadata) {
+	b.Metadata = metadata
+	b.require(bigEntityFieldMetadata)
+}
+
+func (b *BigEntity) SetCommonMetadata(commonMetadata *commons.Metadata) {
+	b.CommonMetadata = commonMetadata
+	b.require(bigEntityFieldCommonMetadata)
+}
+
+func (b *BigEntity) SetEventInfo(eventInfo *commons.EventInfo) {
+	b.EventInfo = eventInfo
+	b.require(bigEntityFieldEventInfo)
+}
+
+func (b *BigEntity) SetData(data *commons.Data) {
+	b.Data = data
+	b.require(bigEntityFieldData)
+}
+
+func (b *BigEntity) SetMigration(migration *Migration) {
+	b.Migration = migration
+	b.require(bigEntityFieldMigration)
+}
+
+func (b *BigEntity) SetException(exception *Exception) {
+	b.Exception = exception
+	b.require(bigEntityFieldException)
+}
+
+func (b *BigEntity) SetTest(test *Test) {
+	b.Test = test
+	b.require(bigEntityFieldTest)
+}
+
+func (b *BigEntity) SetNode(node *Node) {
+	b.Node = node
+	b.require(bigEntityFieldNode)
+}
+
+func (b *BigEntity) SetDirectory(directory *Directory) {
+	b.Directory = directory
+	b.require(bigEntityFieldDirectory)
+}
+
+func (b *BigEntity) SetMoment(moment *Moment) {
+	b.Moment = moment
+	b.require(bigEntityFieldMoment)
+}
+
 func (b *BigEntity) UnmarshalJSON(data []byte) error {
 	type unmarshaler BigEntity
 	var value unmarshaler
@@ -418,6 +624,17 @@ func (b *BigEntity) UnmarshalJSON(data []byte) error {
 	b.extraProperties = extraProperties
 	b.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (b *BigEntity) MarshalJSON() ([]byte, error) {
+	type embed BigEntity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (b *BigEntity) String() string {
@@ -515,8 +732,15 @@ func (c *CastMember) Accept(visitor CastMemberVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+var (
+	cronJobFieldExpression = big.NewInt(1 << 0)
+)
+
 type CronJob struct {
 	Expression string `json:"expression" url:"expression"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -531,6 +755,18 @@ func (c *CronJob) GetExpression() string {
 
 func (c *CronJob) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CronJob) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CronJob) SetExpression(expression string) {
+	c.Expression = expression
+	c.require(cronJobFieldExpression)
 }
 
 func (c *CronJob) UnmarshalJSON(data []byte) error {
@@ -549,6 +785,17 @@ func (c *CronJob) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CronJob) MarshalJSON() ([]byte, error) {
+	type embed CronJob
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CronJob) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -561,10 +808,19 @@ func (c *CronJob) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	directoryFieldName        = big.NewInt(1 << 0)
+	directoryFieldFiles       = big.NewInt(1 << 1)
+	directoryFieldDirectories = big.NewInt(1 << 2)
+)
+
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -595,6 +851,28 @@ func (d *Directory) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Directory) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+func (d *Directory) SetName(name string) {
+	d.Name = name
+	d.require(directoryFieldName)
+}
+
+func (d *Directory) SetFiles(files []*File) {
+	d.Files = files
+	d.require(directoryFieldFiles)
+}
+
+func (d *Directory) SetDirectories(directories []*Directory) {
+	d.Directories = directories
+	d.require(directoryFieldDirectories)
+}
+
 func (d *Directory) UnmarshalJSON(data []byte) error {
 	type unmarshaler Directory
 	var value unmarshaler
@@ -611,6 +889,17 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *Directory) MarshalJSON() ([]byte, error) {
+	type embed Directory
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *Directory) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -623,9 +912,17 @@ func (d *Directory) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	entityFieldType = big.NewInt(1 << 0)
+	entityFieldName = big.NewInt(1 << 1)
+)
+
 type Entity struct {
 	Type *Type  `json:"type" url:"type"`
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -649,6 +946,23 @@ func (e *Entity) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *Entity) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *Entity) SetType(type_ *Type) {
+	e.Type = type_
+	e.require(entityFieldType)
+}
+
+func (e *Entity) SetName(name string) {
+	e.Name = name
+	e.require(entityFieldName)
+}
+
 func (e *Entity) UnmarshalJSON(data []byte) error {
 	type unmarshaler Entity
 	var value unmarshaler
@@ -663,6 +977,17 @@ func (e *Entity) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *Entity) MarshalJSON() ([]byte, error) {
+	type embed Entity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *Entity) String() string {
@@ -801,10 +1126,19 @@ func (e *Exception) validate() error {
 	return nil
 }
 
+var (
+	exceptionInfoFieldExceptionType       = big.NewInt(1 << 0)
+	exceptionInfoFieldExceptionMessage    = big.NewInt(1 << 1)
+	exceptionInfoFieldExceptionStacktrace = big.NewInt(1 << 2)
+)
+
 type ExceptionInfo struct {
 	ExceptionType       string `json:"exceptionType" url:"exceptionType"`
 	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
 	ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -835,6 +1169,28 @@ func (e *ExceptionInfo) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *ExceptionInfo) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *ExceptionInfo) SetExceptionType(exceptionType string) {
+	e.ExceptionType = exceptionType
+	e.require(exceptionInfoFieldExceptionType)
+}
+
+func (e *ExceptionInfo) SetExceptionMessage(exceptionMessage string) {
+	e.ExceptionMessage = exceptionMessage
+	e.require(exceptionInfoFieldExceptionMessage)
+}
+
+func (e *ExceptionInfo) SetExceptionStacktrace(exceptionStacktrace string) {
+	e.ExceptionStacktrace = exceptionStacktrace
+	e.require(exceptionInfoFieldExceptionStacktrace)
+}
+
 func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
 	type unmarshaler ExceptionInfo
 	var value unmarshaler
@@ -851,6 +1207,17 @@ func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *ExceptionInfo) MarshalJSON() ([]byte, error) {
+	type embed ExceptionInfo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *ExceptionInfo) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -862,6 +1229,19 @@ func (e *ExceptionInfo) String() string {
 	}
 	return fmt.Sprintf("%#v", e)
 }
+
+var (
+	extendedMovieFieldId       = big.NewInt(1 << 0)
+	extendedMovieFieldPrequel  = big.NewInt(1 << 1)
+	extendedMovieFieldTitle    = big.NewInt(1 << 2)
+	extendedMovieFieldFrom     = big.NewInt(1 << 3)
+	extendedMovieFieldRating   = big.NewInt(1 << 4)
+	extendedMovieFieldTag      = big.NewInt(1 << 5)
+	extendedMovieFieldBook     = big.NewInt(1 << 6)
+	extendedMovieFieldMetadata = big.NewInt(1 << 7)
+	extendedMovieFieldRevenue  = big.NewInt(1 << 8)
+	extendedMovieFieldCast     = big.NewInt(1 << 9)
+)
 
 type ExtendedMovie struct {
 	Id      MovieId  `json:"id" url:"id"`
@@ -875,7 +1255,10 @@ type ExtendedMovie struct {
 	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
 	Revenue  int64                  `json:"revenue" url:"revenue"`
 	Cast     []string               `json:"cast" url:"cast"`
-	type_    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -959,6 +1342,63 @@ func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *ExtendedMovie) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+func (e *ExtendedMovie) SetId(id MovieId) {
+	e.Id = id
+	e.require(extendedMovieFieldId)
+}
+
+func (e *ExtendedMovie) SetPrequel(prequel *MovieId) {
+	e.Prequel = prequel
+	e.require(extendedMovieFieldPrequel)
+}
+
+func (e *ExtendedMovie) SetTitle(title string) {
+	e.Title = title
+	e.require(extendedMovieFieldTitle)
+}
+
+func (e *ExtendedMovie) SetFrom(from string) {
+	e.From = from
+	e.require(extendedMovieFieldFrom)
+}
+
+func (e *ExtendedMovie) SetRating(rating float64) {
+	e.Rating = rating
+	e.require(extendedMovieFieldRating)
+}
+
+func (e *ExtendedMovie) SetTag(tag commons.Tag) {
+	e.Tag = tag
+	e.require(extendedMovieFieldTag)
+}
+
+func (e *ExtendedMovie) SetBook(book *string) {
+	e.Book = book
+	e.require(extendedMovieFieldBook)
+}
+
+func (e *ExtendedMovie) SetMetadata(metadata map[string]interface{}) {
+	e.Metadata = metadata
+	e.require(extendedMovieFieldMetadata)
+}
+
+func (e *ExtendedMovie) SetRevenue(revenue int64) {
+	e.Revenue = revenue
+	e.require(extendedMovieFieldRevenue)
+}
+
+func (e *ExtendedMovie) SetCast(cast []string) {
+	e.Cast = cast
+	e.require(extendedMovieFieldCast)
+}
+
 func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	type embed ExtendedMovie
 	var unmarshaler = struct {
@@ -993,7 +1433,8 @@ func (e *ExtendedMovie) MarshalJSON() ([]byte, error) {
 		embed: embed(*e),
 		Type:  "movie",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *ExtendedMovie) String() string {
@@ -1008,9 +1449,17 @@ func (e *ExtendedMovie) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	fileFieldName     = big.NewInt(1 << 0)
+	fileFieldContents = big.NewInt(1 << 1)
+)
+
 type File struct {
 	Name     string `json:"name" url:"name"`
 	Contents string `json:"contents" url:"contents"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1034,6 +1483,23 @@ func (f *File) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *File) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+func (f *File) SetName(name string) {
+	f.Name = name
+	f.require(fileFieldName)
+}
+
+func (f *File) SetContents(contents string) {
+	f.Contents = contents
+	f.require(fileFieldContents)
+}
+
 func (f *File) UnmarshalJSON(data []byte) error {
 	type unmarshaler File
 	var value unmarshaler
@@ -1048,6 +1514,17 @@ func (f *File) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *File) MarshalJSON() ([]byte, error) {
+	type embed File
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *File) String() string {
@@ -1225,9 +1702,17 @@ func (m *Metadata) validate() error {
 	return nil
 }
 
+var (
+	migrationFieldName   = big.NewInt(1 << 0)
+	migrationFieldStatus = big.NewInt(1 << 1)
+)
+
 type Migration struct {
 	Name   string          `json:"name" url:"name"`
 	Status MigrationStatus `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1251,6 +1736,23 @@ func (m *Migration) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Migration) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *Migration) SetName(name string) {
+	m.Name = name
+	m.require(migrationFieldName)
+}
+
+func (m *Migration) SetStatus(status MigrationStatus) {
+	m.Status = status
+	m.require(migrationFieldStatus)
+}
+
 func (m *Migration) UnmarshalJSON(data []byte) error {
 	type unmarshaler Migration
 	var value unmarshaler
@@ -1265,6 +1767,17 @@ func (m *Migration) UnmarshalJSON(data []byte) error {
 	m.extraProperties = extraProperties
 	m.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (m *Migration) MarshalJSON() ([]byte, error) {
+	type embed Migration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Migration) String() string {
@@ -1306,10 +1819,19 @@ func (m MigrationStatus) Ptr() *MigrationStatus {
 	return &m
 }
 
+var (
+	momentFieldId       = big.NewInt(1 << 0)
+	momentFieldDate     = big.NewInt(1 << 1)
+	momentFieldDatetime = big.NewInt(1 << 2)
+)
+
 type Moment struct {
 	Id       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date" format:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1338,6 +1860,28 @@ func (m *Moment) GetDatetime() time.Time {
 
 func (m *Moment) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
+}
+
+func (m *Moment) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *Moment) SetId(id uuid.UUID) {
+	m.Id = id
+	m.require(momentFieldId)
+}
+
+func (m *Moment) SetDate(date time.Time) {
+	m.Date = date
+	m.require(momentFieldDate)
+}
+
+func (m *Moment) SetDatetime(datetime time.Time) {
+	m.Datetime = datetime
+	m.require(momentFieldDatetime)
 }
 
 func (m *Moment) UnmarshalJSON(data []byte) error {
@@ -1375,7 +1919,8 @@ func (m *Moment) MarshalJSON() ([]byte, error) {
 		Date:     internal.NewDate(m.Date),
 		Datetime: internal.NewDateTime(m.Datetime),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Moment) String() string {
@@ -1390,6 +1935,18 @@ func (m *Moment) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+var (
+	movieFieldId       = big.NewInt(1 << 0)
+	movieFieldPrequel  = big.NewInt(1 << 1)
+	movieFieldTitle    = big.NewInt(1 << 2)
+	movieFieldFrom     = big.NewInt(1 << 3)
+	movieFieldRating   = big.NewInt(1 << 4)
+	movieFieldTag      = big.NewInt(1 << 5)
+	movieFieldBook     = big.NewInt(1 << 6)
+	movieFieldMetadata = big.NewInt(1 << 7)
+	movieFieldRevenue  = big.NewInt(1 << 8)
+)
+
 type Movie struct {
 	Id      MovieId  `json:"id" url:"id"`
 	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
@@ -1401,7 +1958,10 @@ type Movie struct {
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
 	Revenue  int64                  `json:"revenue" url:"revenue"`
-	type_    string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1478,6 +2038,58 @@ func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Movie) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *Movie) SetId(id MovieId) {
+	m.Id = id
+	m.require(movieFieldId)
+}
+
+func (m *Movie) SetPrequel(prequel *MovieId) {
+	m.Prequel = prequel
+	m.require(movieFieldPrequel)
+}
+
+func (m *Movie) SetTitle(title string) {
+	m.Title = title
+	m.require(movieFieldTitle)
+}
+
+func (m *Movie) SetFrom(from string) {
+	m.From = from
+	m.require(movieFieldFrom)
+}
+
+func (m *Movie) SetRating(rating float64) {
+	m.Rating = rating
+	m.require(movieFieldRating)
+}
+
+func (m *Movie) SetTag(tag commons.Tag) {
+	m.Tag = tag
+	m.require(movieFieldTag)
+}
+
+func (m *Movie) SetBook(book *string) {
+	m.Book = book
+	m.require(movieFieldBook)
+}
+
+func (m *Movie) SetMetadata(metadata map[string]interface{}) {
+	m.Metadata = metadata
+	m.require(movieFieldMetadata)
+}
+
+func (m *Movie) SetRevenue(revenue int64) {
+	m.Revenue = revenue
+	m.require(movieFieldRevenue)
+}
+
 func (m *Movie) UnmarshalJSON(data []byte) error {
 	type embed Movie
 	var unmarshaler = struct {
@@ -1512,7 +2124,8 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 		embed: embed(*m),
 		Type:  "movie",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Movie) String() string {
@@ -1529,10 +2142,19 @@ func (m *Movie) String() string {
 
 type MovieId = string
 
+var (
+	nodeFieldName  = big.NewInt(1 << 0)
+	nodeFieldNodes = big.NewInt(1 << 1)
+	nodeFieldTrees = big.NewInt(1 << 2)
+)
+
 type Node struct {
 	Name  string  `json:"name" url:"name"`
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1563,6 +2185,28 @@ func (n *Node) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *Node) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *Node) SetName(name string) {
+	n.Name = name
+	n.require(nodeFieldName)
+}
+
+func (n *Node) SetNodes(nodes []*Node) {
+	n.Nodes = nodes
+	n.require(nodeFieldNodes)
+}
+
+func (n *Node) SetTrees(trees []*Tree) {
+	n.Trees = trees
+	n.require(nodeFieldTrees)
+}
+
 func (n *Node) UnmarshalJSON(data []byte) error {
 	type unmarshaler Node
 	var value unmarshaler
@@ -1579,6 +2223,17 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *Node) MarshalJSON() ([]byte, error) {
+	type embed Node
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *Node) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -1591,8 +2246,15 @@ func (n *Node) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	refreshTokenRequestFieldTtl = big.NewInt(1 << 0)
+)
+
 type RefreshTokenRequest struct {
 	Ttl int `json:"ttl" url:"ttl"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1607,6 +2269,18 @@ func (r *RefreshTokenRequest) GetTtl() int {
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *RefreshTokenRequest) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *RefreshTokenRequest) SetTtl(ttl int) {
+	r.Ttl = ttl
+	r.require(refreshTokenRequestFieldTtl)
 }
 
 func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
@@ -1625,6 +2299,17 @@ func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
+	type embed RefreshTokenRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *RefreshTokenRequest) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1637,8 +2322,15 @@ func (r *RefreshTokenRequest) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	requestFieldRequest = big.NewInt(1 << 0)
+)
+
 type Request struct {
 	Request interface{} `json:"request" url:"request"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1653,6 +2345,18 @@ func (r *Request) GetRequest() interface{} {
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *Request) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *Request) SetRequest(request interface{}) {
+	r.Request = request
+	r.require(requestFieldRequest)
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -1671,6 +2375,17 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Request) MarshalJSON() ([]byte, error) {
+	type embed Request
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Request) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1683,9 +2398,17 @@ func (r *Request) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	responseFieldResponse    = big.NewInt(1 << 0)
+	responseFieldIdentifiers = big.NewInt(1 << 1)
+)
+
 type Response struct {
 	Response    interface{}   `json:"response" url:"response"`
 	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1709,6 +2432,23 @@ func (r *Response) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *Response) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *Response) SetResponse(response interface{}) {
+	r.Response = response
+	r.require(responseFieldResponse)
+}
+
+func (r *Response) SetIdentifiers(identifiers []*Identifier) {
+	r.Identifiers = identifiers
+	r.require(responseFieldIdentifiers)
+}
+
 func (r *Response) UnmarshalJSON(data []byte) error {
 	type unmarshaler Response
 	var value unmarshaler
@@ -1725,6 +2465,17 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Response) MarshalJSON() ([]byte, error) {
+	type embed Response
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Response) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1737,8 +2488,15 @@ func (r *Response) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	responseTypeFieldType = big.NewInt(1 << 0)
+)
+
 type ResponseType struct {
 	Type *Type `json:"type" url:"type"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1753,6 +2511,18 @@ func (r *ResponseType) GetType() *Type {
 
 func (r *ResponseType) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ResponseType) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *ResponseType) SetType(type_ *Type) {
+	r.Type = type_
+	r.require(responseTypeFieldType)
 }
 
 func (r *ResponseType) UnmarshalJSON(data []byte) error {
@@ -1771,6 +2541,17 @@ func (r *ResponseType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ResponseType) MarshalJSON() ([]byte, error) {
+	type embed ResponseType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ResponseType) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1783,9 +2564,17 @@ func (r *ResponseType) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	stuntDoubleFieldName             = big.NewInt(1 << 0)
+	stuntDoubleFieldActorOrActressId = big.NewInt(1 << 1)
+)
+
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
 	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1809,6 +2598,23 @@ func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *StuntDouble) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+func (s *StuntDouble) SetName(name string) {
+	s.Name = name
+	s.require(stuntDoubleFieldName)
+}
+
+func (s *StuntDouble) SetActorOrActressId(actorOrActressId string) {
+	s.ActorOrActressId = actorOrActressId
+	s.require(stuntDoubleFieldActorOrActressId)
+}
+
 func (s *StuntDouble) UnmarshalJSON(data []byte) error {
 	type unmarshaler StuntDouble
 	var value unmarshaler
@@ -1823,6 +2629,17 @@ func (s *StuntDouble) UnmarshalJSON(data []byte) error {
 	s.extraProperties = extraProperties
 	s.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (s *StuntDouble) MarshalJSON() ([]byte, error) {
+	type embed StuntDouble
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *StuntDouble) String() string {
@@ -1972,8 +2789,15 @@ func (t *Test) validate() error {
 	return nil
 }
 
+var (
+	treeFieldNodes = big.NewInt(1 << 0)
+)
+
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1990,6 +2814,18 @@ func (t *Tree) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Tree) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+func (t *Tree) SetNodes(nodes []*Node) {
+	t.Nodes = nodes
+	t.require(treeFieldNodes)
+}
+
 func (t *Tree) UnmarshalJSON(data []byte) error {
 	type unmarshaler Tree
 	var value unmarshaler
@@ -2004,6 +2840,17 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *Tree) MarshalJSON() ([]byte, error) {
+	type embed Tree
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Tree) String() string {

@@ -6,6 +6,15 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/file-upload/fern/internal"
+	big "math/big"
+)
+
+var (
+	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
+	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
+	justFileWithQueryParamsRequestFieldMaybeInteger          = big.NewInt(1 << 2)
+	justFileWithQueryParamsRequestFieldListOfStrings         = big.NewInt(1 << 3)
+	justFileWithQueryParamsRequestFieldOptionalListOfStrings = big.NewInt(1 << 4)
 )
 
 type JustFileWithQueryParamsRequest struct {
@@ -14,10 +23,55 @@ type JustFileWithQueryParamsRequest struct {
 	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`
 	ListOfStrings         []string  `json:"-" url:"listOfStrings"`
 	OptionalListOfStrings []*string `json:"-" url:"optionalListOfStrings,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (j *JustFileWithQueryParamsRequest) require(field *big.Int) {
+	if j.explicitFields == nil {
+		j.explicitFields = big.NewInt(0)
+	}
+	j.explicitFields.Or(j.explicitFields, field)
+}
+
+func (j *JustFileWithQueryParamsRequest) SetMaybeString(maybeString *string) {
+	j.MaybeString = maybeString
+	j.require(justFileWithQueryParamsRequestFieldMaybeString)
+}
+
+func (j *JustFileWithQueryParamsRequest) SetInteger(integer int) {
+	j.Integer = integer
+	j.require(justFileWithQueryParamsRequestFieldInteger)
+}
+
+func (j *JustFileWithQueryParamsRequest) SetMaybeInteger(maybeInteger *int) {
+	j.MaybeInteger = maybeInteger
+	j.require(justFileWithQueryParamsRequestFieldMaybeInteger)
+}
+
+func (j *JustFileWithQueryParamsRequest) SetListOfStrings(listOfStrings []string) {
+	j.ListOfStrings = listOfStrings
+	j.require(justFileWithQueryParamsRequestFieldListOfStrings)
+}
+
+func (j *JustFileWithQueryParamsRequest) SetOptionalListOfStrings(optionalListOfStrings []*string) {
+	j.OptionalListOfStrings = optionalListOfStrings
+	j.require(justFileWithQueryParamsRequestFieldOptionalListOfStrings)
 }
 
 type OptionalArgsRequest struct {
 	Request interface{} `json:"request,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (o *OptionalArgsRequest) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 type MyRequest struct {
@@ -32,6 +86,16 @@ type MyRequest struct {
 	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
 	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
 	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (m *MyRequest) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 type Id = string
@@ -40,8 +104,15 @@ type MyAliasObject = *MyObject
 
 type MyCollectionAliasObject = []*MyObject
 
+var (
+	myInlineTypeFieldBar = big.NewInt(1 << 0)
+)
+
 type MyInlineType struct {
 	Bar string `json:"bar" url:"bar"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -56,6 +127,18 @@ func (m *MyInlineType) GetBar() string {
 
 func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
+}
+
+func (m *MyInlineType) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *MyInlineType) SetBar(bar string) {
+	m.Bar = bar
+	m.require(myInlineTypeFieldBar)
 }
 
 func (m *MyInlineType) UnmarshalJSON(data []byte) error {
@@ -74,6 +157,17 @@ func (m *MyInlineType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (m *MyInlineType) MarshalJSON() ([]byte, error) {
+	type embed MyInlineType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (m *MyInlineType) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -86,8 +180,15 @@ func (m *MyInlineType) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+var (
+	myObjectFieldFoo = big.NewInt(1 << 0)
+)
+
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -102,6 +203,18 @@ func (m *MyObject) GetFoo() string {
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
+}
+
+func (m *MyObject) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *MyObject) SetFoo(foo string) {
+	m.Foo = foo
+	m.require(myObjectFieldFoo)
 }
 
 func (m *MyObject) UnmarshalJSON(data []byte) error {
@@ -120,6 +233,17 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (m *MyObject) MarshalJSON() ([]byte, error) {
+	type embed MyObject
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (m *MyObject) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -132,9 +256,17 @@ func (m *MyObject) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+var (
+	myObjectWithOptionalFieldProp         = big.NewInt(1 << 0)
+	myObjectWithOptionalFieldOptionalProp = big.NewInt(1 << 1)
+)
+
 type MyObjectWithOptional struct {
 	Prop         string  `json:"prop" url:"prop"`
 	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -158,6 +290,23 @@ func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *MyObjectWithOptional) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+func (m *MyObjectWithOptional) SetProp(prop string) {
+	m.Prop = prop
+	m.require(myObjectWithOptionalFieldProp)
+}
+
+func (m *MyObjectWithOptional) SetOptionalProp(optionalProp *string) {
+	m.OptionalProp = optionalProp
+	m.require(myObjectWithOptionalFieldOptionalProp)
+}
+
 func (m *MyObjectWithOptional) UnmarshalJSON(data []byte) error {
 	type unmarshaler MyObjectWithOptional
 	var value unmarshaler
@@ -172,6 +321,17 @@ func (m *MyObjectWithOptional) UnmarshalJSON(data []byte) error {
 	m.extraProperties = extraProperties
 	m.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (m *MyObjectWithOptional) MarshalJSON() ([]byte, error) {
+	type embed MyObjectWithOptional
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *MyObjectWithOptional) String() string {
@@ -212,6 +372,16 @@ type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithContentTypeRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
 }
 
 type MyOtherRequest struct {
@@ -227,13 +397,43 @@ type MyOtherRequest struct {
 	AliasObject                MyAliasObject           `json:"alias_object,omitempty" url:"-"`
 	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
 	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (m *MyOtherRequest) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 type WithFormEncodingRequest struct {
 	Foo string    `json:"foo" url:"-"`
 	Bar *MyObject `json:"bar,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithFormEncodingRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
 }
 
 type InlineTypeRequest struct {
 	Request *MyInlineType `json:"request,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (i *InlineTypeRequest) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
 }

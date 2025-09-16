@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/circular-references/fern/internal"
+	big "math/big"
+)
+
+var (
+	importingAFieldA = big.NewInt(1 << 0)
 )
 
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -24,6 +32,18 @@ func (i *ImportingA) GetA() *A {
 
 func (i *ImportingA) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
+}
+
+func (i *ImportingA) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+func (i *ImportingA) SetA(a *A) {
+	i.A = a
+	i.require(importingAFieldA)
 }
 
 func (i *ImportingA) UnmarshalJSON(data []byte) error {
@@ -42,6 +62,17 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (i *ImportingA) MarshalJSON() ([]byte, error) {
+	type embed ImportingA
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (i *ImportingA) String() string {
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
@@ -54,8 +85,15 @@ func (i *ImportingA) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+var (
+	rootTypeFieldS = big.NewInt(1 << 0)
+)
+
 type RootType struct {
 	S string `json:"s" url:"s"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -72,6 +110,18 @@ func (r *RootType) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *RootType) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+func (r *RootType) SetS(s string) {
+	r.S = s
+	r.require(rootTypeFieldS)
+}
+
 func (r *RootType) UnmarshalJSON(data []byte) error {
 	type unmarshaler RootType
 	var value unmarshaler
@@ -86,6 +136,17 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 	r.extraProperties = extraProperties
 	r.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (r *RootType) MarshalJSON() ([]byte, error) {
+	type embed RootType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (r *RootType) String() string {
