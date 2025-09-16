@@ -88,6 +88,7 @@ export class ReferenceConfigAssembler {
                     service,
                     endpoint,
                     endpointMethod,
+                    // TODO(kafkas): Implement
                     singleEndpointSnippet: {
                         imports: "Foundation",
                         exampleIdentifier: "example",
@@ -132,7 +133,13 @@ export class ReferenceConfigAssembler {
             },
             description: endpoint.docs,
             snippet: singleEndpointSnippet.endpointCall.trim(),
-            parameters: [] // TODO(kafkas): Implement
+            parameters: endpointMethod.parameters.map((p) => ({
+                name: p.unsafeName,
+                type: p.type.toString(),
+                required: !p.type.isOptional,
+                description: p.docsContent,
+                location: undefined // TODO(kafkas): Implement
+            }))
         };
     }
 
