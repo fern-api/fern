@@ -28,7 +28,7 @@ publish:
     context: .
 
 scripts:
-  - docker: ruby:2.7
+  - docker: ruby:3.3
     commands:
       - bundle install
       - bundle exec rake test
