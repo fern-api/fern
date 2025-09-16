@@ -85,11 +85,7 @@ export class HttpEndpointGenerator {
                         body: ruby.raise({
                             errorClass: ruby.classReference({
                                 name: "TimeoutError",
-                                modules: [
-                                    // TODO: DRY this up
-                                    firstCharUpperCase(this.context.config.organization || "fern"),
-                                    "Errors"
-                                ]
+                                modules: [this.context.getRootModule().name, "Errors"]
                             })
                         })
                     }
@@ -183,9 +179,4 @@ export class HttpEndpointGenerator {
                 break;
         }
     }
-}
-
-// TODO: DRY this up
-function firstCharUpperCase(st: string): string {
-    return st.length < 1 ? st : st.charAt(0).toUpperCase() + st.substring(1);
 }
