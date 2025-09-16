@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Begin > writes empty begin block 1`] = `
+"begin
+end"
+`;
+
+exports[`Begin > writes begin block with no rescues 1`] = `
+"begin
+  2 + 2
+end"
+`;

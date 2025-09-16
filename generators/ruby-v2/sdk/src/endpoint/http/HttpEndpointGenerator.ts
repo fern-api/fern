@@ -76,7 +76,27 @@ export class HttpEndpointGenerator {
         }
 
         statements.push(
-            ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+            ruby.begin({
+                body: ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+                rescues: [
+                    {
+                        errorClass: ruby.classReference({ name: "HTTPRequestTimeout", modules: ["Net"] }),
+                        body: ruby.raise({
+                            errorClass: ruby.classReference({
+                                name: "TimeoutError",
+                                modules: [
+                                    // TODO: DRY this up
+                                    firstCharUpperCase(this.context.config.organization || "fern"),
+                                    "Errors"
+                                ]
+                            })
+                        })
+                    }
+                ]
+            })
+        );
+
+        statements.push(
             ruby.ifElse({
                 if: {
                     condition: ruby.codeblock(`${HTTP_RESPONSE_VN}.code >= "200" && ${HTTP_RESPONSE_VN}.code < "300"`),
@@ -157,4 +177,9 @@ export class HttpEndpointGenerator {
                 break;
         }
     }
+}
+
+// TODO: DRY this up
+function firstCharUpperCase(st: string): string {
+    return st.length < 1 ? st : st.charAt(0).toUpperCase() + st.substring(1);
 }
