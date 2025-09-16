@@ -308,6 +308,8 @@ export declare namespace DocsNavigationItem {
         java: string | VersionedSnippetLanguageConfiguration | undefined;
         ruby: string | VersionedSnippetLanguageConfiguration | undefined;
         csharp: string | VersionedSnippetLanguageConfiguration | undefined;
+        php: string | VersionedSnippetLanguageConfiguration | undefined;
+        swift: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 

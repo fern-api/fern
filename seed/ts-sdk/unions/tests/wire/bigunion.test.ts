@@ -12,10 +12,10 @@ describe("Bigunion", () => {
 
         const rawResponseBody = {
             type: "normalSweet",
-            value: "value",
             id: "id",
             "created-at": "2024-01-15T09:30:00Z",
             "archived-at": "2024-01-15T09:30:00Z",
+            value: "value",
         };
         server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -31,10 +31,10 @@ describe("Bigunion", () => {
         const client = new SeedUnionsClient({ environment: server.baseUrl });
         const rawRequestBody = {
             type: "normalSweet",
-            value: "value",
             id: "id",
             "created-at": "2024-01-15T09:30:00Z",
             "archived-at": "2024-01-15T09:30:00Z",
+            value: "value",
         };
         const rawResponseBody = true;
         server
@@ -59,17 +59,17 @@ describe("Bigunion", () => {
         const rawRequestBody = [
             {
                 type: "normalSweet",
-                value: "value",
                 id: "id",
                 "created-at": "2024-01-15T09:30:00Z",
                 "archived-at": "2024-01-15T09:30:00Z",
+                value: "value",
             },
             {
                 type: "normalSweet",
-                value: "value",
                 id: "id",
                 "created-at": "2024-01-15T09:30:00Z",
                 "archived-at": "2024-01-15T09:30:00Z",
+                value: "value",
             },
         ];
         const rawResponseBody = { string: true };

@@ -10,12 +10,15 @@ module Seed
 
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)
-        _query_param_names = ["starting_after"]
+        _query_param_names = [
+          ["starting_after"],
+          %i[starting_after]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
           query: _query

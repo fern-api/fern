@@ -5,13 +5,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionTypeState {
-        Test {
-            #[serde(flatten)]
-            data: TestSubmissionState,
-        },
+    Test {
+        #[serde(flatten)]
+        data: TestSubmissionState,
+    },
 
-        Workspace {
-            #[serde(flatten)]
-            data: WorkspaceSubmissionState,
-        },
+    Workspace {
+        #[serde(flatten)]
+        data: WorkspaceSubmissionState,
+    },
 }

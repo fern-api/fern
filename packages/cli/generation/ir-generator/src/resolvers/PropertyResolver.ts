@@ -1,5 +1,12 @@
+import { assertNever } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
-import { Name, ObjectProperty, RequestProperty, RequestPropertyValue, ResponseProperty } from "@fern-api/ir-sdk";
+import {
+    ObjectProperty,
+    PropertyPathItem,
+    RequestProperty,
+    RequestPropertyValue,
+    ResponseProperty
+} from "@fern-api/ir-sdk";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
@@ -8,6 +15,7 @@ import {
 import { convertQueryParameter } from "../converters/services/convertQueryParameter";
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "./EndpointResolver";
+import { ResolvedType } from "./ResolvedType";
 import { TypeResolver } from "./TypeResolver";
 
 export interface PropertyResolver {
@@ -84,9 +92,13 @@ export class PropertyResolverImpl implements PropertyResolver {
                 propertyComponents
             });
         }
+        const resolvedRequestType = this.typeResolver.resolveTypeOrThrow({
+            type: resolvedEndpoint.endpoint.request,
+            file: resolvedEndpoint.file
+        });
         const objectProperty = this.resolveObjectProperty({
             file: resolvedEndpoint.file,
-            typeName: resolvedEndpoint.endpoint.request,
+            resolvedType: resolvedRequestType,
             propertyComponents
         });
         if (objectProperty == null) {
@@ -95,7 +107,8 @@ export class PropertyResolverImpl implements PropertyResolver {
         return {
             propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
-                file
+                file,
+                resolvedType: resolvedRequestType
             }),
             property: RequestPropertyValue.body(objectProperty)
         };
@@ -132,12 +145,16 @@ export class PropertyResolverImpl implements PropertyResolver {
             endpoint,
             file
         });
-        const objectProperty = this.resolveObjectProperty({
-            file: resolvedEndpoint.file,
-            typeName:
+        const resolvedEndpointResponseType = this.typeResolver.resolveTypeOrThrow({
+            type:
                 (typeof resolvedEndpoint.endpoint.response !== "string"
                     ? resolvedEndpoint.endpoint.response?.type
                     : resolvedEndpoint.endpoint.response) ?? "",
+            file: resolvedEndpoint.file
+        });
+        const objectProperty = this.resolveObjectProperty({
+            file: resolvedEndpoint.file,
+            resolvedType: resolvedEndpointResponseType,
             propertyComponents
         });
         if (objectProperty == null) {
@@ -146,6 +163,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         return {
             propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
+                resolvedType: resolvedEndpointResponseType,
                 file
             }),
             property: objectProperty
@@ -203,9 +221,13 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         if (typeof requestType.body === "string") {
+            const resolvedBodyType = typeResolver.resolveTypeOrThrow({
+                type: requestType.body,
+                file
+            });
             const objectProperty = this.resolveObjectProperty({
                 file,
-                typeName: requestType.body,
+                resolvedType: resolvedBodyType,
                 propertyComponents
             });
             if (objectProperty == null) {
@@ -214,7 +236,8 @@ export class PropertyResolverImpl implements PropertyResolver {
             return {
                 propertyPath: this.propertyPathFromPropertyComponents({
                     propertyComponents,
-                    file
+                    file,
+                    resolvedType: resolvedBodyType
                 }),
                 property: RequestPropertyValue.body(objectProperty)
             };
@@ -230,16 +253,22 @@ export class PropertyResolverImpl implements PropertyResolver {
                 return undefined;
             }
             return {
-                propertyPath: this.propertyPathFromPropertyComponents({
+                propertyPath: this.propertyPathFromPropertyComponentsFromInlineRequestBody({
                     propertyComponents,
-                    file
+                    file,
+                    body: requestType.body
                 }),
                 property: RequestPropertyValue.body(objectProperty)
             };
         }
-        const objectProperty = this.resolveObjectProperty({
+        const resolvedSchema = typeResolver.resolveTypeOrThrow({
+            type: requestType.body.type,
+            file
+        });
+        const objectProperty = getNestedObjectPropertyFromResolvedType({
+            typeResolver,
             file,
-            typeName: requestType.body.type,
+            resolvedType: resolvedSchema,
             propertyComponents
         });
         if (objectProperty == null) {
@@ -248,7 +277,8 @@ export class PropertyResolverImpl implements PropertyResolver {
         return {
             propertyPath: this.propertyPathFromPropertyComponents({
                 propertyComponents,
-                file
+                file,
+                resolvedType: resolvedSchema
             }),
             property: RequestPropertyValue.body(objectProperty)
         };
@@ -256,17 +286,13 @@ export class PropertyResolverImpl implements PropertyResolver {
 
     private resolveObjectProperty({
         file,
-        typeName,
+        resolvedType,
         propertyComponents
     }: {
         file: FernFileContext;
-        typeName: string;
+        resolvedType: ResolvedType;
         propertyComponents: string[];
     }): ObjectProperty | undefined {
-        const resolvedType = this.typeResolver.resolveTypeOrThrow({
-            type: typeName,
-            file
-        });
         return getNestedObjectPropertyFromResolvedType({
             typeResolver: this.typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
@@ -277,14 +303,272 @@ export class PropertyResolverImpl implements PropertyResolver {
 
     private propertyPathFromPropertyComponents({
         propertyComponents,
-        file
+        file,
+        resolvedType
     }: {
         propertyComponents: string[];
         file: FernFileContext;
-    }): Name[] {
+        resolvedType: ResolvedType;
+    }): PropertyPathItem[] {
         if (propertyComponents.length <= 1) {
             return [];
         }
-        return propertyComponents.slice(0, -1).map((property) => file.casingsGenerator.generateName(property));
+        const rootTypeTitle = getTitleForResolvedType(resolvedType);
+        let currentType = resolvedType;
+        const result: PropertyPathItem[] = [];
+        const breadcrumbs: string[] = [];
+        for (const component of propertyComponents.slice(0, -1)) {
+            breadcrumbs.push(component);
+            currentType = getNestedObjectPropertyTypeOrThrow({
+                typeResolver: this.typeResolver,
+                file,
+                resolvedType: currentType,
+                propertyName: component,
+                breadcrumbs,
+                rootTypeTitle
+            });
+            result.push({
+                name: file.casingsGenerator.generateName(component),
+                type: currentType.originalTypeReference
+            });
+        }
+
+        return result;
+    }
+
+    private propertyPathFromPropertyComponentsFromInlineRequestBody({
+        propertyComponents,
+        file,
+        body
+    }: {
+        propertyComponents: string[];
+        file: FernFileContext;
+        body: RawSchemas.HttpInlineRequestBodySchema | RawSchemas.HttpReferencedRequestBodySchema;
+    }): PropertyPathItem[] {
+        if (propertyComponents.length <= 1) {
+            return [];
+        }
+        const result: PropertyPathItem[] = [];
+        const breadcrumbs: string[] = [];
+        for (const component of propertyComponents.slice(0, -1)) {
+            breadcrumbs.push(component);
+            const currentType = getNestedObjectPropertyFromObjectSchema({
+                typeResolver: this.typeResolver,
+                file,
+                objectSchema: body,
+                propertyComponents: breadcrumbs
+            });
+            if (!currentType) {
+                throw new Error(
+                    `Cannot find property '${breadcrumbs.join(".")}' in inline request body in file ${file.relativeFilepath}`
+                );
+            }
+            result.push({
+                name: file.casingsGenerator.generateName(component),
+                type: currentType.valueType
+            });
+        }
+
+        return result;
+    }
+}
+function getNestedObjectPropertyTypeOrThrow({
+    typeResolver,
+    file,
+    resolvedType,
+    propertyName,
+    breadcrumbs,
+    rootTypeTitle: rootTypeLabel
+}: {
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedType: ResolvedType;
+    propertyName: string;
+    breadcrumbs: string[];
+    rootTypeTitle: string;
+}): ResolvedType {
+    const nestedPropertyType = getNestedObjectPropertyType({
+        typeResolver,
+        file,
+        resolvedType,
+        propertyName
+    });
+    if (!nestedPropertyType) {
+        throw new Error(`Cannot find property '${breadcrumbs.join(".")}' in ${rootTypeLabel}`);
+    }
+    return nestedPropertyType;
+}
+
+function getNestedObjectPropertyType({
+    typeResolver,
+    file,
+    resolvedType,
+    propertyName
+}: {
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedType: ResolvedType;
+    propertyName: string;
+}): ResolvedType | undefined {
+    switch (resolvedType._type) {
+        case "container":
+            switch (resolvedType.container._type) {
+                case "list":
+                    return undefined;
+                case "literal":
+                    return undefined;
+                case "map":
+                    return undefined;
+                case "nullable": {
+                    const innerNestedObjectPropertyType = getNestedObjectPropertyType({
+                        typeResolver,
+                        file,
+                        resolvedType: resolvedType.container.itemType,
+                        propertyName
+                    });
+                    if (innerNestedObjectPropertyType) {
+                        return innerNestedObjectPropertyType;
+                    }
+                    return undefined;
+                }
+                case "optional": {
+                    const innerNestedObjectPropertyType = getNestedObjectPropertyType({
+                        typeResolver,
+                        file,
+                        resolvedType: resolvedType.container.itemType,
+                        propertyName
+                    });
+                    if (innerNestedObjectPropertyType) {
+                        return innerNestedObjectPropertyType;
+                    }
+                    return undefined;
+                }
+                case "set":
+                    return undefined;
+                default:
+                    assertNever(resolvedType.container);
+            }
+            break;
+        case "primitive":
+            return undefined;
+        case "unknown":
+            return undefined;
+        case "named": {
+            const declaration = resolvedType.declaration;
+            if ("properties" in declaration && declaration.properties != null) {
+                for (const [name, type] of Object.entries(declaration.properties)) {
+                    if (name === propertyName) {
+                        return typeResolver.resolveTypeOrThrow({
+                            type: typeof type === "string" ? type : type.type,
+                            file: resolvedType.file
+                        });
+                    }
+                }
+            }
+            if ("base-properties" in declaration && declaration["base-properties"] != null) {
+                for (const [name, type] of Object.entries(declaration["base-properties"])) {
+                    if (name === propertyName) {
+                        return typeResolver.resolveTypeOrThrow({
+                            type: typeof type === "string" ? type : type.type,
+                            file: resolvedType.file
+                        });
+                    }
+                }
+            }
+            if ("extends" in declaration && declaration.extends != null) {
+                const extends_ = Array.isArray(declaration.extends) ? declaration.extends : [declaration.extends];
+                for (const extendedType of extends_) {
+                    const resolvedExtendedType = typeResolver.resolveTypeOrThrow({
+                        type: extendedType,
+                        file: resolvedType.file
+                    });
+                    const nestedPropertyType = getNestedObjectPropertyType({
+                        file: "file" in resolvedExtendedType ? resolvedExtendedType.file : file,
+                        typeResolver,
+                        resolvedType: resolvedExtendedType,
+                        propertyName
+                    });
+                    if (nestedPropertyType) {
+                        return nestedPropertyType;
+                    }
+                }
+            }
+            if ("union" in declaration && declaration.union != null) {
+                if (Array.isArray(declaration.union)) {
+                    for (const member of declaration.union) {
+                        const resolvedUnionMemberType = typeResolver.resolveTypeOrThrow({
+                            type: typeof member === "string" ? member : member.type,
+                            file: resolvedType.file
+                        });
+                        const unionMemberType = getNestedObjectPropertyType({
+                            file: "file" in resolvedUnionMemberType ? resolvedUnionMemberType.file : file,
+                            typeResolver,
+                            resolvedType: resolvedUnionMemberType,
+                            propertyName
+                        });
+                        if (unionMemberType) {
+                            return unionMemberType;
+                        }
+                    }
+                } else {
+                    for (const [, member] of Object.entries(declaration.union)) {
+                        const memberType = typeof member === "string" ? member : member.type;
+                        if (!memberType) {
+                            continue;
+                        }
+                        const resolvedUnionMemberType = typeResolver.resolveTypeOrThrow({
+                            type: memberType,
+                            file: resolvedType.file
+                        });
+                        const unionMemberType = getNestedObjectPropertyType({
+                            file: "file" in resolvedUnionMemberType ? resolvedUnionMemberType.file : file,
+                            typeResolver,
+                            resolvedType: resolvedUnionMemberType,
+                            propertyName
+                        });
+                        if (unionMemberType) {
+                            return unionMemberType;
+                        }
+                    }
+                }
+            }
+            return undefined;
+        }
+        default:
+            assertNever(resolvedType);
+    }
+}
+function getTitleForResolvedType(resolvedType: ResolvedType): string {
+    switch (resolvedType._type) {
+        case "container":
+            switch (resolvedType.container._type) {
+                case "list":
+                    return `list<${getTitleForResolvedType(resolvedType.container.itemType)}>}`;
+                case "literal":
+                    return `literal<${resolvedType.container.literal._visit<string>({
+                        boolean: (v) => v.toString(),
+                        string: (v) => v,
+                        _other: (v) => v.type
+                    })}>`;
+                case "map":
+                    return `map<${getTitleForResolvedType(resolvedType.container.keyType)}, ${getTitleForResolvedType(resolvedType.container.valueType)}>}`;
+                case "nullable":
+                    return `nullable<${getTitleForResolvedType(resolvedType.container.itemType)}>}`;
+                case "optional":
+                    return `optional<${getTitleForResolvedType(resolvedType.container.itemType)}>}`;
+                case "set":
+                    return `set<${getTitleForResolvedType(resolvedType.container.itemType)}>}`;
+                default:
+                    assertNever(resolvedType.container);
+            }
+            break;
+        case "named":
+            return resolvedType.name.name.originalName;
+        case "primitive":
+            return resolvedType.primitive.v1;
+        case "unknown":
+            return "unknown";
+        default:
+            assertNever(resolvedType);
     }
 }

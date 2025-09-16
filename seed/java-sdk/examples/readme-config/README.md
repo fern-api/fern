@@ -39,6 +39,11 @@ Add the dependency in your `pom.xml` file:
 
 A full reference for this library is available [here](./reference.md).
 
+## Custom Section
+
+This is a custom section. Latest package info is com.fern:examples:0.0.1
+
+
 ## Usage
 
 Instantiate and use the client with the following:

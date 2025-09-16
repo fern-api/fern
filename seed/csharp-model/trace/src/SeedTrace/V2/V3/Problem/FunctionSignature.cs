@@ -290,8 +290,9 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Void(SeedTrace.V2.V3.VoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator FunctionSignature.Void(
+            SeedTrace.V2.V3.VoidFunctionSignature value
+        ) => new(value);
     }
 
     /// <summary>
@@ -309,8 +310,9 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NonVoid(SeedTrace.V2.V3.NonVoidFunctionSignature value) =>
-            new(value);
+        public static implicit operator FunctionSignature.NonVoid(
+            SeedTrace.V2.V3.NonVoidFunctionSignature value
+        ) => new(value);
     }
 
     /// <summary>
@@ -330,7 +332,7 @@ public record FunctionSignature
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator VoidThatTakesActualResult(
+        public static implicit operator FunctionSignature.VoidThatTakesActualResult(
             SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult value
         ) => new(value);
     }

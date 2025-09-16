@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedErrors;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example14
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedErrorsClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

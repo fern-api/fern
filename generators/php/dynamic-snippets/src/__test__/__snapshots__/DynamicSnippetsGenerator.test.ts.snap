@@ -521,6 +521,63 @@ $client->nullable->getUsers(
 "
 `;
 
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->createUser(
+    new User([
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->createUser(
+    new User([
+        'id' => 'id',
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
+    ]),
+);
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "<?php
 

@@ -7,6 +7,13 @@ describe("snippets", () => {
     const runner = new DynamicSnippetsTestRunner();
     runner.runTests({
         buildGenerator: ({ irFilepath }) =>
-            buildDynamicSnippetsGenerator({ irFilepath, config: buildGeneratorConfig() })
+            buildDynamicSnippetsGenerator({
+                irFilepath,
+                config: buildGeneratorConfig({
+                    customConfig: {
+                        experimentalGenerateReadWriteOnlyTypes: true
+                    }
+                })
+            })
     });
 });

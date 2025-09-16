@@ -9,14 +9,18 @@ module Seed
       end
 
       # @return [Seed::Types::SendResponse]
-      def send(request_options: {}, **params)
-        _query_param_names = %w[prompt optional_prompt alias_prompt alias_optional_prompt query stream
-                                optional_stream alias_stream alias_optional_stream]
+      def send_(request_options: {}, **params)
+        _query_param_names = [
+          %w[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream
+             alias_stream alias_optional_stream],
+          %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream alias_stream
+             alias_optional_stream]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "query",
           query: _query

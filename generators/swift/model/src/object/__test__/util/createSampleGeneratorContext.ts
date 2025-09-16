@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../../../ModelCustomConfig";
 import { ModelGeneratorContext } from "../../../ModelGeneratorContext";
 
@@ -16,8 +16,12 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
         type: "local",
         _visit: (visitor) => visitor.local()
     });
-    // biome-ignore lint/suspicious/noExplicitAny: allow
-    return new ModelGeneratorContext(ir as any, generatorConfig, customConfig, notificationService);
+    return new ModelGeneratorContext(
+        ir as IntermediateRepresentation,
+        generatorConfig,
+        customConfig,
+        notificationService
+    );
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {

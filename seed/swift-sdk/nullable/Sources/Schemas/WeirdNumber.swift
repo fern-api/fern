@@ -2,18 +2,18 @@ import Foundation
 
 public enum WeirdNumber: Codable, Hashable, Sendable {
     case int(Int)
-    case json(JSONValue)
-    case optionalJson(JSONValue?)
+    case nullableFloat(Nullable<Float>)
+    case optionalNullableString(Nullable<String>?)
     case double(Double)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(Int.self) {
             self = .int(value)
-        } else if let value = try? container.decode(JSONValue.self) {
-            self = .json(value)
-        } else if let value = try? container.decode(JSONValue?.self) {
-            self = .optionalJson(value)
+        } else if let value = try? container.decode(Nullable<Float>.self) {
+            self = .nullableFloat(value)
+        } else if let value = try? container.decode(Nullable<String>?.self) {
+            self = .optionalNullableString(value)
         } else if let value = try? container.decode(Double.self) {
             self = .double(value)
         } else {
@@ -29,9 +29,9 @@ public enum WeirdNumber: Codable, Hashable, Sendable {
         switch self {
         case .int(let value):
             try container.encode(value)
-        case .json(let value):
+        case .nullableFloat(let value):
             try container.encode(value)
-        case .optionalJson(let value):
+        case .optionalNullableString(let value):
             try container.encode(value)
         case .double(let value):
             try container.encode(value)

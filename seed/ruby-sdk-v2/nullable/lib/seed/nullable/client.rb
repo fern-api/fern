@@ -10,12 +10,15 @@ module Seed
 
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
-        _query_param_names = %w[usernames avatar activated tags extra]
+        _query_param_names = [
+          %w[usernames avatar activated tags extra],
+          %i[usernames avatar activated tags extra]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
           query: _query
@@ -29,7 +32,7 @@ module Seed
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/users",
           body: params
@@ -43,7 +46,7 @@ module Seed
       # @return [bool]
       def delete_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "DELETE",
           path: "/users",
           body: params

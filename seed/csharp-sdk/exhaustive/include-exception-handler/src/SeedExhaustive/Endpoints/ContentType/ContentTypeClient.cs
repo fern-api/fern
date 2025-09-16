@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -36,7 +36,7 @@ public partial class ContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PostJsonPatchContentTypeAsync(
+    public async Task PostJsonPatchContentTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -95,7 +95,7 @@ public partial class ContentTypeClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PostJsonPatchContentWithCharsetTypeAsync(
+    public async Task PostJsonPatchContentWithCharsetTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}"
         )
@@ -24,7 +24,7 @@ module Seed
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/#{params[:tenant_id]}/user/",
           body: Seed::User::Types::User.new(params).to_h
@@ -40,7 +40,7 @@ module Seed
         _path_param_names = %w[tenant_id user_id]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
           body: params.except(*_path_param_names)
@@ -53,12 +53,15 @@ module Seed
 
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
-        _query_param_names = ["limit"]
+        _query_param_names = [
+          ["limit"],
+          %i[limit]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/search",
           query: _query

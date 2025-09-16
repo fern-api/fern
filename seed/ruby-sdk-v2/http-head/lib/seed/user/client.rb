@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def head(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "HEAD",
           path: "/users"
         )
@@ -23,12 +23,15 @@ module Seed
 
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)
-        _query_param_names = ["limit"]
+        _query_param_names = [
+          ["limit"],
+          %i[limit]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
           query: _query

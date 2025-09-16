@@ -10,12 +10,15 @@ module Seed
 
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
-        _query_param_names = ["optionalString"]
+        _query_param_names = [
+          ["optionalString"],
+          %i[optionalString]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "",
           query: _query,

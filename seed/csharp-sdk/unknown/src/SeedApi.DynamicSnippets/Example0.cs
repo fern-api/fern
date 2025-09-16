@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedUnknownAsAny;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedUnknownAsAnyClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

@@ -10,12 +10,15 @@ module Seed
 
       # @return [untyped]
       def create_username(request_options: {}, **params)
-        _query_param_names = ["tags"]
+        _query_param_names = [
+          ["tags"],
+          %i[tags]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username",
           query: _query,
@@ -29,12 +32,15 @@ module Seed
 
       # @return [untyped]
       def create_username_with_referenced_type(request_options: {}, **params)
-        _query_param_names = ["tags"]
+        _query_param_names = [
+          ["tags"],
+          %i[tags]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username-referenced",
           query: _query,
@@ -48,13 +54,17 @@ module Seed
 
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
-        _query_param_names = %w[limit id date deadline bytes user userList optionalDeadline
-                                keyValue optionalString nestedUser optionalUser excludeUser filter longParam bigIntParam]
+        _query_param_names = [
+          %w[limit id date deadline bytes user userList optionalDeadline keyValue
+             optionalString nestedUser optionalUser excludeUser filter longParam bigIntParam],
+          %i[limit id date deadline bytes user userList optionalDeadline keyValue optionalString nestedUser
+             optionalUser excludeUser filter longParam bigIntParam]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/user",
           query: _query

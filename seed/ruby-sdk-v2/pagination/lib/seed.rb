@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,8 +24,6 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
 require_relative "seed/types/username_page"
 require_relative "seed/types/username_cursor"
 require_relative "seed/complex/types/multiple_filter_search_request_operator"
@@ -53,8 +50,6 @@ require_relative "seed/users/types/next_page"
 require_relative "seed/users/types/page"
 require_relative "seed/users/types/list_users_pagination_response"
 require_relative "seed/users/types/list_users_mixed_type_pagination_response"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/complex/client"
 require_relative "seed/users/client"
@@ -70,4 +65,3 @@ require_relative "seed/users/types/list_users_extended_request"
 require_relative "seed/users/types/list_users_extended_request_for_optional_data"
 require_relative "seed/users/types/list_usernames_request"
 require_relative "seed/users/types/list_with_global_config_request"
-require_relative "../README.md"

@@ -5,7 +5,7 @@ namespace SeedPackageYml.Test.Unit.MockServer;
 [TestFixture]
 public class NopTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest_1()
     {
         Server
@@ -15,7 +15,7 @@ public class NopTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(async () => await Client.Service.NopAsync("id", "nestedId"));
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest_2()
     {
         Server

@@ -219,7 +219,7 @@ public record UnionWithSubTypes
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithSubTypes.Foo(SeedUnions.Foo value) => new(value);
     }
 
     /// <summary>
@@ -237,6 +237,8 @@ public record UnionWithSubTypes
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator FooExtended(SeedUnions.FooExtended value) => new(value);
+        public static implicit operator UnionWithSubTypes.FooExtended(
+            SeedUnions.FooExtended value
+        ) => new(value);
     }
 }

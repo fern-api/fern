@@ -1,5 +1,5 @@
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedContentTypes.Core;
 
 namespace SeedContentTypes;
@@ -18,7 +18,7 @@ public partial class ServiceClient
     ///     new PatchProxyRequest { Application = "application", RequireAuth = true }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PatchAsync(
+    public async Task PatchAsync(
         PatchProxyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -88,7 +88,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PatchComplexAsync(
+    public async Task PatchComplexAsync(
         string id,
         PatchComplexRequest request,
         RequestOptions? options = null,
@@ -138,7 +138,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task NamedPatchWithMixedAsync(
+    public async Task NamedPatchWithMixedAsync(
         string id,
         NamedMixedPatchRequest request,
         RequestOptions? options = null,
@@ -191,7 +191,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task OptionalMergePatchTestAsync(
+    public async Task OptionalMergePatchTestAsync(
         OptionalMergePatchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -234,7 +234,7 @@ public partial class ServiceClient
     ///     new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task RegularPatchAsync(
+    public async Task RegularPatchAsync(
         string id,
         RegularPatchRequest request,
         RequestOptions? options = null,

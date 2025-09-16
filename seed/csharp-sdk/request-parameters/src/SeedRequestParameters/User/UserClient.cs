@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedRequestParameters.Core;
 
 namespace SeedRequestParameters;
@@ -26,7 +26,7 @@ public partial class UserClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task CreateUsernameAsync(
+    public async Task CreateUsernameAsync(
         CreateUsernameRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +76,7 @@ public partial class UserClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task CreateUsernameWithReferencedTypeAsync(
+    public async Task CreateUsernameWithReferencedTypeAsync(
         CreateUsernameReferencedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

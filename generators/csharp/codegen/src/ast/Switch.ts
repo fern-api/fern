@@ -1,3 +1,4 @@
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -21,8 +22,8 @@ export class Switch extends AstNode {
     private condition: AstNode;
     private cases: Switch.Case[];
 
-    constructor({ condition, cases }: Switch.Args) {
-        super();
+    constructor({ condition, cases }: Switch.Args, csharp: CSharp) {
+        super(csharp);
 
         this.condition = condition;
         this.cases = cases;

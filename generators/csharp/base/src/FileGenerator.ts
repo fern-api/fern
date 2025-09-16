@@ -2,14 +2,18 @@ import { File } from "@fern-api/base-generator";
 import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+import { BaseCsharpGeneratorContext } from "./context/BaseCsharpGeneratorContext";
 
 export abstract class FileGenerator<
     GeneratedFile extends File,
     CustomConfig extends BaseCsharpCustomConfigSchema,
-    Context extends AbstractCsharpGeneratorContext<CustomConfig>
+    Context extends BaseCsharpGeneratorContext<CustomConfig>
 > {
     constructor(protected readonly context: Context) {}
+
+    protected get csharp() {
+        return this.context.csharp;
+    }
 
     public generate(): GeneratedFile {
         if (this.shouldGenerate()) {

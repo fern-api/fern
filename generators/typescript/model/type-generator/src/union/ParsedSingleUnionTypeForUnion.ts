@@ -24,6 +24,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -40,7 +41,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         includeSerdeLayer,
         retainOriginalCasing,
         noOptionalProperties,
-        enableInlineTypes
+        enableInlineTypes,
+        generateReadWriteOnlyTypes
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -51,6 +53,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                         new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended, enableInlineTypes }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
+                            getTypeName: () => this.getTypeName(),
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                                 includeSerdeLayer,
                                 retainOriginalCasing
@@ -60,7 +63,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                             getReferenceToPropertyTypeForInlineUnion: (context) =>
                                 context.type.getReferenceToTypeForInlineUnion(singleProperty.type),
                             noOptionalProperties,
-                            enableInlineTypes
+                            enableInlineTypes,
+                            generateReadWriteOnlyTypes
                         }),
                     _other: () => {
                         throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
@@ -80,8 +84,12 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         return this.singleUnionTypeFromUnion.docs;
     }
 
-    public getInterfaceName(): string {
+    public getTypeName(): string {
         return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName;
+    }
+
+    public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
+        return this.singleUnionType.needsRequestResponse(context);
     }
 
     public getDiscriminantValue(): string {

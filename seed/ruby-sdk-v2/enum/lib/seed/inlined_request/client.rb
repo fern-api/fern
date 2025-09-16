@@ -9,9 +9,9 @@ module Seed
       end
 
       # @return [untyped]
-      def send(request_options: {}, **params)
+      def send_(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
           body: params

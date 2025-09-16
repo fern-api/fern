@@ -1,3 +1,4 @@
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -11,8 +12,8 @@ export declare namespace Or {
 export class Or extends AstNode {
     private conditions: AstNode[];
 
-    constructor(args: Or.Args) {
-        super();
+    constructor(args: Or.Args, csharp: CSharp) {
+        super(csharp);
         this.conditions = args.conditions;
     }
 

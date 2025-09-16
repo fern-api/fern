@@ -6,7 +6,7 @@ namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer.Ne
 [TestFixture]
 public class GetSomethingTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

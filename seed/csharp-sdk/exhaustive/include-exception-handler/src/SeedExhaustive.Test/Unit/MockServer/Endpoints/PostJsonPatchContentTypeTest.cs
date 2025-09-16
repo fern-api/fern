@@ -8,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 [TestFixture]
 public class PostJsonPatchContentTypeTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

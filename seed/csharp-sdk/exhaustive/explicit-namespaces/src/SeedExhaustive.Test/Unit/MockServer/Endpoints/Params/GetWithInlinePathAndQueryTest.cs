@@ -7,7 +7,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 [TestFixture]
 public class GetWithInlinePathAndQueryTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

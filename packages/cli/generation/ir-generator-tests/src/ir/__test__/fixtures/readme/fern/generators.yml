@@ -6,6 +6,16 @@ readme:
   bannerLink: https://www.fernapi.com
   apiReferenceLink: https://www.docs.fernapi.com
   defaultEndpoint: POST /movies/create-movie
+  customSections:
+    - title: "Custom Section"
+      language: typescript
+      content: "This is a custom section piped through the readme config in generators.yml"
+    - title: "Custom Section Multiline"
+      language: typescript
+      content: |
+        This is a custom section with a multiline content.
+        It is piped through the readme config in generators.yml.
+
   features:
     timeouts:
       - GET /movies/{id}

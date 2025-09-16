@@ -6,7 +6,7 @@ namespace SeedContentTypes.Test.Unit.MockServer;
 [TestFixture]
 public class OptionalMergePatchTestTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

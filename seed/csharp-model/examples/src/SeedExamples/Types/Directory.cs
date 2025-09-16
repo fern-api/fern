@@ -15,7 +15,7 @@ public record Directory : IJsonOnDeserialized
     public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; set; }
+    public IEnumerable<File_>? Files { get; set; }
 
     [JsonPropertyName("directories")]
     public IEnumerable<Directory>? Directories { get; set; }

@@ -232,7 +232,7 @@ public record AssertCorrectnessCheck
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DeepEquality(
+        public static implicit operator AssertCorrectnessCheck.DeepEquality(
             SeedTrace.V2.DeepEqualityCorrectnessCheck value
         ) => new(value);
     }
@@ -252,7 +252,7 @@ public record AssertCorrectnessCheck
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(
+        public static implicit operator AssertCorrectnessCheck.Custom(
             SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult value
         ) => new(value);
     }

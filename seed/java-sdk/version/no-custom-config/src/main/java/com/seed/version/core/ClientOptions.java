@@ -165,7 +165,7 @@ public final class ClientOptions {
          * version.toString() is sent as the "X-API-Version" header.
          */
         public Builder version(ApiVersion version) {
-            this.version = Optional.of(version);
+            this.version = Optional.ofNullable(version);
             return this;
         }
 
@@ -203,7 +203,7 @@ public final class ClientOptions {
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
             if (clientOptions.version != null) {
-                builder.version = Optional.of(clientOptions.version);
+                builder.version = Optional.ofNullable(clientOptions.version);
             } else {
                 builder.version = Optional.of(ApiVersion.V_2);
             }

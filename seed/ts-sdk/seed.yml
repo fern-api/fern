@@ -327,6 +327,12 @@ fixtures:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
       outputFolder: no-serde
+  property-access:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - customConfig:
+        experimentalGenerateReadWriteOnlyTypes: true
+      outputFolder: generate-read-write-only-types
   websocket-bearer-auth:
     - customConfig:
         shouldGenerateWebsocketClients: true
@@ -345,7 +351,7 @@ scripts:
           corepack enable
           corepack prepare pnpm@10.14.0 --activate
           echo "Running pnpm install..."
-          pnpm install
+          pnpm install --prefer-offline --frozen-lockfile
           echo "Running pnpm build..."
           if grep -q '"build":' package.json; then pnpm build; fi
           echo "Running pnpm test..."
@@ -357,7 +363,7 @@ scripts:
           corepack enable
           corepack prepare yarn@1.22.22 --activate
           echo "Running yarn install..."
-          yarn install
+          yarn install --prefer-offline --frozen-lockfile
           echo "Running yarn build..."
           if grep -q '"build":' package.json; then yarn build; fi
           echo "Running yarn test..."

@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
@@ -75,6 +75,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Generate dynamic-snippets directory with individual .rs files
         await this.generateDynamicSnippetFiles(context);
         context.logger.info("=== dynamic-snippets COMPLETE ===");
+        
+        context.logger.info("=== RUNNING rustfmt ===");
+        await formatRustCode({
+            outputDir: context.project.absolutePathToOutputDirectory,
+            logger: context.logger
+        });
+        context.logger.info("=== RUSTFMT COMPLETE ===");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
@@ -364,7 +371,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
 
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-                ir: convertIr(dynamicIr),
+                // biome-ignore lint/suspicious/noExplicitAny: allow
+                ir: convertIr(dynamicIr) as any,
                 config: context.config
             });
 
