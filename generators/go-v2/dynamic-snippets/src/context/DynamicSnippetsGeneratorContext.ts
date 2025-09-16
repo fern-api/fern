@@ -44,6 +44,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.unsafeName;
     }
 
+    public getTestMethodName(endpoint: FernIr.dynamic.Endpoint): string {
+        return (
+            endpoint.declaration.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("") +
+            endpoint.declaration.name.pascalCase.unsafeName
+        );
+    }
+
     public getTypeName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
     }
@@ -74,6 +81,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return go.typeReference({
             name: "Reader",
             importPath: "io"
+        });
+    }
+
+    public getTestingTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "T",
+            importPath: "testing"
         });
     }
 
@@ -136,5 +150,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             name: `Environments.${this.getTypeName(name)}`,
             importPath: this.rootImportPath
         });
+    }
+
+    public static chainMethods(
+        baseFunc: go.FuncInvocation,
+        ...methods: Omit<go.MethodInvocation.Args, "on">[]
+    ): go.MethodInvocation {
+        if (methods.length === 0) {
+            throw new Error("Must have methods to chain");
+        }
+
+        let current: go.AstNode = baseFunc;
+        for (const method of methods) {
+            current = go.invokeMethod({
+                on: current,
+                method: method.method,
+                arguments_: method.arguments_,
+                multiline: method.multiline
+            });
+        }
+        return current as go.MethodInvocation;
     }
 }

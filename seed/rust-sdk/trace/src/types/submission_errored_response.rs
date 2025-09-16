@@ -1,5 +1,5 @@
-use crate::submission_submission_id::SubmissionId;
 use crate::submission_error_info::ErrorInfo;
+use crate::submission_submission_id::SubmissionId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

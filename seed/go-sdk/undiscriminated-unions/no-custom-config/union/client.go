@@ -4,7 +4,7 @@ package union
 
 import (
 	context "context"
-	undiscriminated "github.com/fern-api/undiscriminated-go"
+	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
 	internal "github.com/fern-api/undiscriminated-go/internal"
 	option "github.com/fern-api/undiscriminated-go/option"
@@ -34,9 +34,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Get(
 	ctx context.Context,
-	request *undiscriminated.MyUnion,
+	request *undiscriminatedgo.MyUnion,
 	opts ...option.RequestOption,
-) (*undiscriminated.MyUnion, error) {
+) (*undiscriminatedgo.MyUnion, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		request,
@@ -51,7 +51,7 @@ func (c *Client) Get(
 func (c *Client) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (undiscriminated.Metadata, error) {
+) (undiscriminatedgo.Metadata, error) {
 	response, err := c.WithRawResponse.GetMetadata(
 		ctx,
 		opts...,
@@ -64,7 +64,7 @@ func (c *Client) GetMetadata(
 
 func (c *Client) UpdateMetadata(
 	ctx context.Context,
-	request *undiscriminated.MetadataUnion,
+	request *undiscriminatedgo.MetadataUnion,
 	opts ...option.RequestOption,
 ) (bool, error) {
 	response, err := c.WithRawResponse.UpdateMetadata(
@@ -80,7 +80,7 @@ func (c *Client) UpdateMetadata(
 
 func (c *Client) Call(
 	ctx context.Context,
-	request *undiscriminated.Request,
+	request *undiscriminatedgo.Request,
 	opts ...option.RequestOption,
 ) (bool, error) {
 	response, err := c.WithRawResponse.Call(
@@ -96,9 +96,9 @@ func (c *Client) Call(
 
 func (c *Client) DuplicateTypesUnion(
 	ctx context.Context,
-	request *undiscriminated.UnionWithDuplicateTypes,
+	request *undiscriminatedgo.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
-) (*undiscriminated.UnionWithDuplicateTypes, error) {
+) (*undiscriminatedgo.UnionWithDuplicateTypes, error) {
 	response, err := c.WithRawResponse.DuplicateTypesUnion(
 		ctx,
 		request,
@@ -112,7 +112,7 @@ func (c *Client) DuplicateTypesUnion(
 
 func (c *Client) NestedUnions(
 	ctx context.Context,
-	request *undiscriminated.NestedUnionRoot,
+	request *undiscriminatedgo.NestedUnionRoot,
 	opts ...option.RequestOption,
 ) (string, error) {
 	response, err := c.WithRawResponse.NestedUnions(

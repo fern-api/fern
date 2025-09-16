@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+require_relative "seed_property_access_client/types/user"
+require_relative "seed_property_access_client/types/user_profile"
+require_relative "seed_property_access_client/types/user_profile_verification"
+require_relative "seed_property_access_client/types/admin"
+require_relative "seed_property_access_client/types/user_or_admin"
+require_relative "seed_property_access_client/types/user_or_admin_discriminated"
+require_relative "seed_property_access_client/types/foo"

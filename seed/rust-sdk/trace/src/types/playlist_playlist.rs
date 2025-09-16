@@ -1,6 +1,6 @@
-use crate::playlist_playlist_id::PlaylistId;
 use crate::commons_user_id::UserId;
 use crate::playlist_playlist_create_request::PlaylistCreateRequest;
+use crate::playlist_playlist_id::PlaylistId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

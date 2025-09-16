@@ -158,10 +158,24 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    public getDefaultEnvironmentClassReference(): ruby.ClassReference {
-        const defaultEnvironmentName = this.ir.environments?.defaultEnvironment ?? "SANDBOX";
+    public getDefaultEnvironmentClassReference() {
+        const defaultEnvironmentId = this.ir.environments?.defaultEnvironment;
+        if (defaultEnvironmentId == null) {
+            return undefined;
+        }
+
+        // Lookup the default environment by id
+        const defaultEnvironment = this.ir.environments?.environments.environments.find(
+            (env) => env.id === defaultEnvironmentId
+        );
+        if (defaultEnvironment == null) {
+            this.logger.warn(`Default environment ${defaultEnvironmentId} not found`);
+            return undefined;
+        }
+
+        // Return the class reference, performing the same casing as the SingleUrlEnvironmentGenerator
         return ruby.classReference({
-            name: defaultEnvironmentName,
+            name: defaultEnvironment.name.screamingSnakeCase.safeName,
             modules: [this.getRootModule().name, "Environment"]
         });
     }

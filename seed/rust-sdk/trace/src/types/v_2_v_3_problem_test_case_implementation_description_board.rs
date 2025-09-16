@@ -4,11 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestCaseImplementationDescriptionBoard {
-        Html {
-            value: String,
-        },
+    Html { value: String },
 
-        ParamId {
-            value: ParameterId,
-        },
+    ParamId { value: ParameterId },
 }

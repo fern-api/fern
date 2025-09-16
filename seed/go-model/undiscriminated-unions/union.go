@@ -248,3 +248,16 @@ func NewKeyTypeFromString(s string) (KeyType, error) {
 func (k KeyType) Ptr() *KeyType {
 	return &k
 }
+
+// Multiple string types that all resolve to String in Java.
+// This tests the fix for duplicate method signatures.
+type UnionWithIdenticalStrings struct {
+	String string
+}
+
+// Mix of primitives where some resolve to the same Java type.
+type UnionWithIdenticalPrimitives struct {
+	Integer int
+	Double  float64
+	String  string
+}

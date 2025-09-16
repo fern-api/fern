@@ -1,55 +1,55 @@
-use crate::commons_map_value::MapValue;
 use crate::commons_binary_tree_value::BinaryTreeValue;
-use crate::commons_singly_linked_list_value::SinglyLinkedListValue;
 use crate::commons_doubly_linked_list_value::DoublyLinkedListValue;
+use crate::commons_map_value::MapValue;
+use crate::commons_singly_linked_list_value::SinglyLinkedListValue;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum VariableValue {
-        IntegerValue {
-            value: i32,
-        },
+    IntegerValue {
+        value: i32,
+    },
 
-        BooleanValue {
-            value: bool,
-        },
+    BooleanValue {
+        value: bool,
+    },
 
-        DoubleValue {
-            value: f64,
-        },
+    DoubleValue {
+        value: f64,
+    },
 
-        StringValue {
-            value: String,
-        },
+    StringValue {
+        value: String,
+    },
 
-        CharValue {
-            value: String,
-        },
+    CharValue {
+        value: String,
+    },
 
-        MapValue {
-            #[serde(flatten)]
-            data: MapValue,
-        },
+    MapValue {
+        #[serde(flatten)]
+        data: MapValue,
+    },
 
-        ListValue {
-            value: Vec<VariableValue>,
-        },
+    ListValue {
+        value: Vec<VariableValue>,
+    },
 
-        BinaryTreeValue {
-            #[serde(flatten)]
-            data: BinaryTreeValue,
-        },
+    BinaryTreeValue {
+        #[serde(flatten)]
+        data: BinaryTreeValue,
+    },
 
-        SinglyLinkedListValue {
-            #[serde(flatten)]
-            data: SinglyLinkedListValue,
-        },
+    SinglyLinkedListValue {
+        #[serde(flatten)]
+        data: SinglyLinkedListValue,
+    },
 
-        DoublyLinkedListValue {
-            #[serde(flatten)]
-            data: DoublyLinkedListValue,
-        },
+    DoublyLinkedListValue {
+        #[serde(flatten)]
+        data: DoublyLinkedListValue,
+    },
 
-        NullValue,
+    NullValue,
 }

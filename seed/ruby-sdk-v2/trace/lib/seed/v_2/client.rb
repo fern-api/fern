@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def test(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: ""
         )

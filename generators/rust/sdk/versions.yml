@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.8
+  createdAt: "2025-09-10"
+  changelogEntry:
+    - type: chore
+      summary: enhanced error handling and rustfmt
+  irVersion: 58
+
 - version: 0.0.7
   createdAt: "2025-08-27"
   changelogEntry:

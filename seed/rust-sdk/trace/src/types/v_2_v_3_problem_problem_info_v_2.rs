@@ -1,12 +1,12 @@
+use crate::commons_language::Language;
 use crate::commons_problem_id::ProblemId;
 use crate::problem_problem_description::ProblemDescription;
-use crate::commons_language::Language;
 use crate::v_2_problem_custom_files::CustomFiles;
 use crate::v_2_problem_generated_files::GeneratedFiles;
 use crate::v_2_problem_test_case_template::TestCaseTemplate;
 use crate::v_2_problem_test_case_v_2::TestCaseV2;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ProblemInfoV2 {
