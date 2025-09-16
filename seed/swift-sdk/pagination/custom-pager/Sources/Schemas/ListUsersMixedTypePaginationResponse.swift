@@ -2,13 +2,13 @@ import Foundation
 
 public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable {
     public let next: String
-    public let data: [User]
+    public let data: Users
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         next: String,
-        data: [User],
+        data: Users,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.next = next
@@ -19,7 +19,7 @@ public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.next = try container.decode(String.self, forKey: .next)
-        self.data = try container.decode([User].self, forKey: .data)
+        self.data = try container.decode(Users.self, forKey: .data)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

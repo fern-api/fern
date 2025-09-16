@@ -9,6 +9,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 
 if typing.TYPE_CHECKING:
     from .complex_.client import AsyncComplexClient, ComplexClient
+    from .inline_users.client import AsyncInlineUsersClient, InlineUsersClient
     from .users.client import AsyncUsersClient, UsersClient
 
 
@@ -69,6 +70,7 @@ class SeedPagination:
             timeout=_defaulted_timeout,
         )
         self._complex_: typing.Optional[ComplexClient] = None
+        self._inline_users: typing.Optional[InlineUsersClient] = None
         self._users: typing.Optional[UsersClient] = None
 
     @property
@@ -78,6 +80,14 @@ class SeedPagination:
 
             self._complex_ = ComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_
+
+    @property
+    def inline_users(self):
+        if self._inline_users is None:
+            from .inline_users.client import InlineUsersClient  # noqa: E402
+
+            self._inline_users = InlineUsersClient(client_wrapper=self._client_wrapper)
+        return self._inline_users
 
     @property
     def users(self):
@@ -145,6 +155,7 @@ class AsyncSeedPagination:
             timeout=_defaulted_timeout,
         )
         self._complex_: typing.Optional[AsyncComplexClient] = None
+        self._inline_users: typing.Optional[AsyncInlineUsersClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
 
     @property
@@ -154,6 +165,14 @@ class AsyncSeedPagination:
 
             self._complex_ = AsyncComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_
+
+    @property
+    def inline_users(self):
+        if self._inline_users is None:
+            from .inline_users.client import AsyncInlineUsersClient  # noqa: E402
+
+            self._inline_users = AsyncInlineUsersClient(client_wrapper=self._client_wrapper)
+        return self._inline_users
 
     @property
     def users(self):
