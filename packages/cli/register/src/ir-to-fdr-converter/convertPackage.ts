@@ -418,7 +418,8 @@ function convertIrEnvironments({
                         const endpointBaseUrl = singleBaseUrlEnvironment.urls[baseUrlId];
                         if (endpointBaseUrl == null) {
                             throw new Error(
-                                `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`
+                                // Encountered undefined x-fern-sever-name "identity_adi_haha" at endpoint POST /authorize
+                                `Encountered undefined server name "${endpoint.baseUrl}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}`
                             );
                         }
                         return {
@@ -439,7 +440,7 @@ function convertIrEnvironments({
                 const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
                 if (endpointBaseUrl == null) {
                     throw new Error(
-                        `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`
+                        `Encountered undefined server name "${endpoint.baseUrl}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}`
                     );
                 }
                 return {
@@ -477,7 +478,7 @@ function convertIrWebSocketEnvironments({
                 const channelBaseUrl = singleBaseUrlEnvironment.urls[channelBaseUrlId];
                 if (channelBaseUrl == null) {
                     throw new Error(
-                        `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
+                        `Encountered undefined server name ${channelBaseUrl} at channel ${channel.name.originalName} ${channel.path.head}`
                     );
                 }
                 return {
