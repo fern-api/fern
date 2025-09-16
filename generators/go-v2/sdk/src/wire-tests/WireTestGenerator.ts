@@ -8,10 +8,11 @@ import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSn
 import { convertIr } from "../utils/convertIr";
 
 export class WireTestGenerator {
+    private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor(private readonly context: SdkGeneratorContext) {
+    constructor(context: SdkGeneratorContext) {
         this.context = context;
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
