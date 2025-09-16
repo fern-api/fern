@@ -15,6 +15,8 @@ from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
 from .union_with_no_properties import UnionWithNoProperties
 from .union_with_optional_time import UnionWithOptionalTime
 from .union_with_primitive import UnionWithPrimitive
+from .union_with_same_number_types import UnionWithSameNumberTypes
+from .union_with_same_string_types import UnionWithSameStringTypes
 from .union_with_single_element import UnionWithSingleElement
 from .union_with_sub_types import UnionWithSubTypes
 from .union_with_time import UnionWithTime
@@ -34,6 +36,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",

@@ -11,3 +11,5 @@ export * from "./OptionalMetadata.js";
 export * from "./Metadata.js";
 export * from "./Key.js";
 export * from "./KeyType.js";
+export * from "./UnionWithIdenticalStrings.js";
+export * from "./UnionWithIdenticalPrimitives.js";

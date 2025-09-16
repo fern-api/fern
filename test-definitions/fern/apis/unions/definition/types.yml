@@ -276,3 +276,42 @@ types:
       - name: Two
         value:
           name: example2
+
+  # Test cases for unions with identical underlying types
+  UnionWithSameStringTypes:
+    union:
+      customFormat: string
+      regularString: string
+      patternString: string
+    examples:
+      - name: customFormat
+        value:
+          type: customFormat
+          value: custom-123
+      - name: regularString
+        value:
+          type: regularString
+          value: regular text
+      - name: patternString
+        value:
+          type: patternString
+          value: PATTERN123
+
+  UnionWithSameNumberTypes:
+    union:
+      positiveInt: integer
+      negativeInt: integer
+      anyNumber: double
+    examples:
+      - name: positiveInt
+        value:
+          type: positiveInt
+          value: 100
+      - name: negativeInt
+        value:
+          type: negativeInt
+          value: -50
+      - name: anyNumber
+        value:
+          type: anyNumber
+          value: 3.14159
