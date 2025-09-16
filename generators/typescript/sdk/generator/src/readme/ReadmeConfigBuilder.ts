@@ -3,9 +3,10 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
-import { FernIr } from "@fern-fern/ir-sdk";
-
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+
+const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema;
 
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
@@ -76,7 +77,7 @@ export class ReadmeConfigBuilder {
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
                 : undefined,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
-            customSections: toGeneratorCliCustomSections(context.ir.readmeConfig?.customSections),
+            customSections: getCustomSections(context),
             features
         };
     }
@@ -106,18 +107,26 @@ export class ReadmeConfigBuilder {
     }
 }
 
-function toGeneratorCliCustomSections(
-    customSections: FernIr.ReadmeCustomSection[] | undefined
-): FernGeneratorCli.CustomSection[] | undefined {
+function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
+    const irCustomSections = context.ir.readmeConfig?.customSections;
+    const customConfigSections = SdkCustomConfigSchema.parse(context.config.customConfig)?.readmeCustomSections;
+
     let sections: FernGeneratorCli.CustomSection[] = [];
-    for (const section of customSections ?? []) {
-        if (section.language === "typescript") {
+    for (const section of irCustomSections ?? []) {
+        if (section.language === "typescript" && !customConfigSections?.some((s) => s.title === section.title)) {
             sections.push({
                 name: section.title,
                 language: FernGeneratorCli.Language.Typescript,
                 content: section.content
             });
         }
+    }
+    for (const section of customConfigSections ?? []) {
+        sections.push({
+            name: section.title,
+            language: FernGeneratorCli.Language.Typescript,
+            content: section.content
+        });
     }
     return sections.length > 0 ? sections : undefined;
 }
