@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 	ctx := context.Background()
 	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
 		ctx,
-		&testing.T{}, // We need a testing.T for the cleanup function, but we'll handle cleanup manually
+		&testing.T{},
 		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
 	)
 	if err != nil {
@@ -46,11 +46,10 @@ func TestMain(m *testing.M) {
 	// Run all tests
 	code := m.Run()
 
-    // This step is most likely unnecessary
 	// Cleanup
-	//if WireMockContainer != nil {
-	//	WireMockContainer.Terminate(ctx)
-	//}
+	if WireMockContainer != nil {
+		WireMockContainer.Terminate(ctx)
+	}
 
 	// Exit with the same code as the tests
 	os.Exit(code)
