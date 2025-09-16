@@ -257,7 +257,6 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - java-pagination-deep-cursor-path
   - literal
-  - literals-unions
   - nullable-optional:with-nullable-annotation
   - nullable-optional:legacy
   - oauth-client-credentials-custom
