@@ -260,3 +260,17 @@ func (b *Bar) String() string {
 	}
 	return fmt.Sprintf("%#v", b)
 }
+
+type UnionWithSameStringTypes struct {
+	Type          string
+	CustomFormat  string
+	RegularString string
+	PatternString string
+}
+
+type UnionWithSameNumberTypes struct {
+	Type        string
+	PositiveInt int
+	NegativeInt int
+	AnyNumber   float64
+}
