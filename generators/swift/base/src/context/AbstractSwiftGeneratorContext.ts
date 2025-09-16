@@ -211,10 +211,12 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
-        const packageOrSubpackage = this.getPackageOrSubpackageForEndpoint(endpoint);
-        if (packageOrSubpackage == null) {
+        const endpointContainer = this.getEndpointContainer(endpoint);
+        if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
         }
+        const packageOrSubpackage =
+            endpointContainer.type === "root-package" ? this.ir.rootPackage : endpointContainer.subpackage;
         const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName);
         const leadingPath = leadingParts.join(".");
         const methodName = endpoint.name.camelCase.unsafeName;
@@ -227,22 +229,27 @@ export abstract class AbstractSwiftGeneratorContext<
         };
     }
 
-    public getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
+    public getEndpointContainer(
+        endpoint: HttpEndpoint
+    ):
+        | { type: "root-package"; package: Package }
+        | { type: "subpackage"; subpackageId: SubpackageId; subpackage: Subpackage }
+        | { type: "none" } {
         const rootPackageServiceId = this.ir.rootPackage.service;
         if (rootPackageServiceId) {
             const rootPackageService = this.getHttpServiceOrThrow(rootPackageServiceId);
             if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
-                return this.ir.rootPackage;
+                return { type: "root-package", package: this.ir.rootPackage };
             }
         }
-        for (const subpackage of Object.values(this.ir.subpackages)) {
+        for (const [subpackageId, subpackage] of Object.entries(this.ir.subpackages)) {
             if (typeof subpackage.service === "string") {
                 const service = this.getHttpServiceOrThrow(subpackage.service);
                 if (service.endpoints.some((e) => e.id === endpoint.id)) {
-                    return subpackage;
+                    return { type: "subpackage", subpackageId, subpackage };
                 }
             }
         }
-        return null;
+        return { type: "none" };
     }
 }

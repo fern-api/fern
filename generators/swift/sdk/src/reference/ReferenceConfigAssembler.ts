@@ -1,4 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -70,12 +71,15 @@ export class ReferenceConfigAssembler {
                 //     serviceId,
                 //     endpoint
                 // });
-                const package_ = this.context.getPackageOrSubpackageForEndpoint(endpoint);
-                if (package_ == null) {
+                const endpointContainer = this.context.getEndpointContainer(endpoint);
+                if (endpointContainer.type === "none") {
                     throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
                 }
                 const clientGeneratorContext = new ClientGeneratorContext({
-                    packageOrSubpackage: package_,
+                    packageOrSubpackage:
+                        endpointContainer.type === "root-package"
+                            ? endpointContainer.package
+                            : endpointContainer.subpackage,
                     sdkGeneratorContext: this.context
                 });
                 const endpointMethodGenerator = new EndpointMethodGenerator({
@@ -122,7 +126,7 @@ export class ReferenceConfigAssembler {
                     {
                         text: methodName,
                         location: {
-                            path: this.getServiceFilepath({ serviceId, service })
+                            path: this.getSubclientFilepath(endpoint)
                         }
                     },
                     {
@@ -148,8 +152,21 @@ export class ReferenceConfigAssembler {
         return `(${paramsJoined})`;
     }
 
-    private getServiceFilepath({ serviceId, service }: { serviceId: ServiceId; service: HttpService }): string {
-        // TODO(kafkas): Implement
-        return "path/to/service";
+    private getSubclientFilepath(endpoint: HttpEndpoint): string {
+        const endpointContainer = this.context.getEndpointContainer(endpoint);
+        if (endpointContainer.type === "none") {
+            throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+        } else if (endpointContainer.type === "root-package") {
+            const rootClientName = this.context.project.symbolRegistry.getRootClientSymbolOrThrow();
+            return `/${this.context.project.sourcesDirectory}/${rootClientName}.swift`;
+        } else if (endpointContainer.type === "subpackage") {
+            const subclientName = this.context.project.symbolRegistry.getSubClientSymbolOrThrow(
+                endpointContainer.subpackageId
+            );
+            const fernFilepathDir = this.context.getDirectoryForFernFilepath(endpointContainer.subpackage.fernFilepath);
+            return `/${this.context.project.sourcesDirectory}/${this.context.resourcesDirectory}/${fernFilepathDir}/${subclientName}.swift`;
+        } else {
+            assertNever(endpointContainer);
+        }
     }
 }
