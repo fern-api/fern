@@ -207,8 +207,7 @@ jobs:
 
   fastapi-seed-update:
     needs: [changes, setup]
-    if: false
-    # if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -231,8 +230,7 @@ jobs:
 
   openapi-seed-update:
     needs: [changes, setup]
-    if: false
-    # if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -590,8 +588,7 @@ jobs:
 
   rust-model-seed-update:
     needs: [changes, setup]
-    if: false
-    # if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
@@ -614,8 +611,7 @@ jobs:
 
   rust-sdk-seed-update:
     needs: [changes, setup]
-    if: false
-    # if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
       - name: Checkout repo
