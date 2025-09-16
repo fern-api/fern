@@ -18,7 +18,7 @@ on:
   # (which will use the push trigger above)
   workflow_run:
     workflows: [update-seed,"Update Seed"]
-    types: [in_progress]
+    types: [requested]
     # branches-ignore:
     #   - main
   workflow_call:
