@@ -583,12 +583,10 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const serverToUse = matchingTopLevelServer ?? operationServer;
 
-        const serverName = ServersConverter.getServerName({
+        return ServersConverter.getServerName({
             server: serverToUse,
             context: this.context
         });
-
-        return serverName;
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
