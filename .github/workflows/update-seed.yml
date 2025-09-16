@@ -13,16 +13,20 @@ on:
       - "test-definitions-openapi/**"
       - "generators/**"
       - "seed/**"
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
+  # TODO: Re-enable this trigger once repository_dispatch trigger is verified, then remove it from seed.yml
+  # pull_request:
+  #   types: [opened, synchronize, reopened, ready_for_review]
+  #   branches:
+  #     - main
   workflow_dispatch:
 
+# TODO: Re-enable this concurrency once repository_dispatch trigger is verified
+# Also need to verify that stopping this workflow won't miss the addition of new seed
+# changes, which likely means playing around with how changes works or the path filering
 # Cancel previous workflows on previous push
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+#   cancel-in-progress: true
 
 permissions:
   pull-requests: write
@@ -704,37 +708,17 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped. 
   # Add check back to make sure it doesn't run for failures or cancellations.
   # Only trigger if there are no new patches (seed is up to date)
-        # needs.commit-seed-changes.outputs.has-patches == 'false' && CHRISM ADD BACK
   trigger-seed-snapshot-tests:
     needs: [commit-seed-changes, changes, setup]
     if: >-
       ${{ 
         always() && needs.setup.outputs.create-artifacts == 'true' &&
+        needs.commit-seed-changes.outputs.has-patches == 'false' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     runs-on: Seed
     steps: 
-      - name: Manually call seed snapshot tests
-        uses: ./.github/workflows/seed.yml
-    # outputs:
-    # steps:
-    #   - name: Checkout repo
-    #     uses: actions/checkout@v4
-    #     with:
-    #       token: ${{ secrets.FERN_GITHUB_PAT }}
-
-    #   - name: Trigger seed snapshot tests
-    #     uses: fern-api/fern/.github/workflows/seed.yml@mallinson/example-PR-level-testing #CHRISM - change
-
-  trigger-seed-snapshot-tests2:
-    needs: [commit-seed-changes, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: Seed
-    steps: 
+    # Note: this will trigger to the default branch of the repo, not the PR branch
     - name: Trigger seed tests
       uses: peter-evans/repository-dispatch@v2
       with:

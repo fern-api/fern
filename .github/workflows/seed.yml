@@ -1,26 +1,14 @@
 name: Seed Snapshot Tests
 
 on:
-  # Note: for push, run this when something merges to main and meets path filter criteria
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/update-seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
-  # Note: for workflow_run, run this when update-seed workflow completes unless the branch is main 
-  # (which will use the push trigger above)
-  workflow_run:
-    workflows: [update-seed,"Update Seed"]
-    types: [requested]
-    # branches-ignore:
-    #   - main
+  # Note: pull request trigger will be removed once repository_dispatch trigger is verified
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
   repository_dispatch:
     types: [seed-tests]
   workflow_call:
