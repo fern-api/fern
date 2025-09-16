@@ -17,7 +17,7 @@ on:
   # Note: for workflow_run, run this when update-seed workflow completes unless the branch is main 
   # (which will use the push trigger above)
   workflow_run:
-    workflows: [update-seed,UpdateSeed]
+    workflows: [update-seed,"Update Seed"]
     types: [in_progress]
     # branches-ignore:
     #   - main
