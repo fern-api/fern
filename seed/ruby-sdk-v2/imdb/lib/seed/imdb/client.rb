@@ -18,7 +18,12 @@ module Seed
           path: "/movies/create-movie",
           body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h
         )
-        _response = @client.send(_request)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+
         return Seed::Imdb::Types::MovieId.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
         raise _response.body
@@ -31,7 +36,12 @@ module Seed
           method: "GET",
           path: "/movies/#{params[:movieId]}"
         )
-        _response = @client.send(_request)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+
         return Seed::Imdb::Types::Movie.load(_response.body) if _response.code >= "200" && _response.code < "300"
 
         raise _response.body
