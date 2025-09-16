@@ -27,7 +27,7 @@ module Seed
         if code.between?(200, 299)
           Seed::Imdb::Types::MovieId.load(_response.body)
         else
-          error_class = Errors::ResponseError.subclass_for_code(code)
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(_response.body, code: code)
         end
       end
@@ -48,7 +48,7 @@ module Seed
         if code.between?(200, 299)
           Seed::Imdb::Types::Movie.load(_response.body)
         else
-          error_class = Errors::ResponseError.subclass_for_code(code)
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(_response.body, code: code)
         end
       end

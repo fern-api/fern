@@ -119,7 +119,10 @@ export class HttpEndpointGenerator {
                     ]
                 },
                 elseBody: ruby.codeblock((writer) => {
-                    writer.writeLine(`error_class = Errors::ResponseError.subclass_for_code(${CODE_VN})`);
+                    const rootModuleName = this.context.getRootModule().name;
+                    writer.writeLine(
+                        `error_class = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
+                    );
 
                     ruby.raise({
                         errorClass: ruby.codeblock(`error_class.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
