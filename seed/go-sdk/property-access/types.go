@@ -6,9 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/property-access/fern/internal"
+	big "math/big"
 )
 
 // Admin user object
+var (
+	adminFieldId         = big.NewInt(1 << 0)
+	adminFieldEmail      = big.NewInt(1 << 1)
+	adminFieldPassword   = big.NewInt(1 << 2)
+	adminFieldProfile    = big.NewInt(1 << 3)
+	adminFieldAdminLevel = big.NewInt(1 << 4)
+)
+
 type Admin struct {
 	// The unique identifier for the user.
 	Id string `json:"id" url:"id"`
@@ -20,6 +29,9 @@ type Admin struct {
 	Profile *UserProfile `json:"profile" url:"profile"`
 	// The level of admin privileges.
 	AdminLevel string `json:"adminLevel" url:"adminLevel"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -64,6 +76,48 @@ func (a *Admin) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Admin) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Admin) SetId(id string) {
+	a.Id = id
+	a.require(adminFieldId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Admin) SetEmail(email string) {
+	a.Email = email
+	a.require(adminFieldEmail)
+}
+
+// SetPassword sets the Password field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Admin) SetPassword(password string) {
+	a.Password = password
+	a.require(adminFieldPassword)
+}
+
+// SetProfile sets the Profile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Admin) SetProfile(profile *UserProfile) {
+	a.Profile = profile
+	a.require(adminFieldProfile)
+}
+
+// SetAdminLevel sets the AdminLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Admin) SetAdminLevel(adminLevel string) {
+	a.AdminLevel = adminLevel
+	a.require(adminFieldAdminLevel)
+}
+
 func (a *Admin) UnmarshalJSON(data []byte) error {
 	type unmarshaler Admin
 	var value unmarshaler
@@ -80,6 +134,17 @@ func (a *Admin) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (a *Admin) MarshalJSON() ([]byte, error) {
+	type embed Admin
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (a *Admin) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -92,10 +157,19 @@ func (a *Admin) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	fooFieldNormal = big.NewInt(1 << 0)
+	fooFieldRead   = big.NewInt(1 << 1)
+	fooFieldWrite  = big.NewInt(1 << 2)
+)
+
 type Foo struct {
 	Normal string `json:"normal" url:"normal"`
 	Read   string `json:"read" url:"read"`
 	Write  string `json:"write" url:"write"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -126,6 +200,34 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *Foo) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetNormal sets the Normal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetNormal(normal string) {
+	f.Normal = normal
+	f.require(fooFieldNormal)
+}
+
+// SetRead sets the Read field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetRead(read string) {
+	f.Read = read
+	f.require(fooFieldRead)
+}
+
+// SetWrite sets the Write field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetWrite(write string) {
+	f.Write = write
+	f.require(fooFieldWrite)
+}
+
 func (f *Foo) UnmarshalJSON(data []byte) error {
 	type unmarshaler Foo
 	var value unmarshaler
@@ -142,6 +244,17 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *Foo) MarshalJSON() ([]byte, error) {
+	type embed Foo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *Foo) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -155,6 +268,13 @@ func (f *Foo) String() string {
 }
 
 // User object
+var (
+	userFieldId       = big.NewInt(1 << 0)
+	userFieldEmail    = big.NewInt(1 << 1)
+	userFieldPassword = big.NewInt(1 << 2)
+	userFieldProfile  = big.NewInt(1 << 3)
+)
+
 type User struct {
 	// The unique identifier for the user.
 	Id string `json:"id" url:"id"`
@@ -164,6 +284,9 @@ type User struct {
 	Password string `json:"password" url:"password"`
 	// User profile object
 	Profile *UserProfile `json:"profile" url:"profile"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -201,6 +324,41 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetId(id string) {
+	u.Id = id
+	u.require(userFieldId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetEmail(email string) {
+	u.Email = email
+	u.require(userFieldEmail)
+}
+
+// SetPassword sets the Password field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetPassword(password string) {
+	u.Password = password
+	u.require(userFieldPassword)
+}
+
+// SetProfile sets the Profile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetProfile(profile *UserProfile) {
+	u.Profile = profile
+	u.require(userFieldProfile)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -215,6 +373,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {
@@ -521,6 +690,12 @@ func (u *UserOrAdminDiscriminated) validate() error {
 }
 
 // User profile object
+var (
+	userProfileFieldName         = big.NewInt(1 << 0)
+	userProfileFieldVerification = big.NewInt(1 << 1)
+	userProfileFieldSsn          = big.NewInt(1 << 2)
+)
+
 type UserProfile struct {
 	// The name of the user.
 	Name string `json:"name" url:"name"`
@@ -528,6 +703,9 @@ type UserProfile struct {
 	Verification *UserProfileVerification `json:"verification" url:"verification"`
 	// The social security number of the user.
 	Ssn string `json:"ssn" url:"ssn"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -558,6 +736,34 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserProfile) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetName(name string) {
+	u.Name = name
+	u.require(userProfileFieldName)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetVerification(verification *UserProfileVerification) {
+	u.Verification = verification
+	u.require(userProfileFieldVerification)
+}
+
+// SetSsn sets the Ssn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetSsn(ssn string) {
+	u.Ssn = ssn
+	u.require(userProfileFieldSsn)
+}
+
 func (u *UserProfile) UnmarshalJSON(data []byte) error {
 	type unmarshaler UserProfile
 	var value unmarshaler
@@ -574,6 +780,17 @@ func (u *UserProfile) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserProfile) MarshalJSON() ([]byte, error) {
+	type embed UserProfile
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserProfile) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -587,9 +804,16 @@ func (u *UserProfile) String() string {
 }
 
 // User profile verification object
+var (
+	userProfileVerificationFieldVerified = big.NewInt(1 << 0)
+)
+
 type UserProfileVerification struct {
 	// User profile verification status
 	Verified string `json:"verified" url:"verified"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -606,6 +830,20 @@ func (u *UserProfileVerification) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserProfileVerification) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetVerified sets the Verified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfileVerification) SetVerified(verified string) {
+	u.Verified = verified
+	u.require(userProfileVerificationFieldVerified)
+}
+
 func (u *UserProfileVerification) UnmarshalJSON(data []byte) error {
 	type unmarshaler UserProfileVerification
 	var value unmarshaler
@@ -620,6 +858,17 @@ func (u *UserProfileVerification) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *UserProfileVerification) MarshalJSON() ([]byte, error) {
+	type embed UserProfileVerification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserProfileVerification) String() string {
