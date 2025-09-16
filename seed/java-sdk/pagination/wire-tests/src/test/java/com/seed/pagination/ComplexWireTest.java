@@ -74,7 +74,6 @@ public class ComplexWireTest {
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
-        // Enhanced union type validation
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -84,24 +83,14 @@ public class ComplexWireTest {
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
         
-        // Enhanced optional/nullable type validation
-        if (actualJson.isNull()) {
-            // Null values are acceptable for optional types
-        } else {
+        if (!actualJson.isNull()) {
             Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
         }
         
-        // Enhanced generic/collection type validation
         if (actualJson.isArray()) {
             Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
-            // Validate array elements if present
-            for (int i = 0; i < actualJson.size(); i++) {
-                JsonNode element = actualJson.get(i);
-                Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");
-            }
         }
         if (actualJson.isObject()) {
-            // Validate object structure
             Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
         }
         
@@ -134,21 +123,18 @@ public class ComplexWireTest {
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Enhanced pagination validation
-        // Validate pagination response structure
-        // Validate results field at path: data
-        if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+        // Pagination validation
+        // Results at path: conversations
+        if (actualResponseNode.has("conversations")) {
+            Assertions.assertTrue(actualResponseNode.get("conversations").isArray(), "Pagination results should be an array");
+            Assertions.assertTrue(actualResponseNode.get("conversations").size() >= 0, "Pagination results array should have valid size");
         }
-        // Validate next cursor field for pagination navigation
-        if (actualResponseNode.has("data")) {
+        // Next cursor at path: starting_after
+        if (actualResponseNode.has("starting_after")) {
             // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("data").isNull() || actualResponseNode.get("data").isTextual(), "Next cursor should be null (last page) or string (next page)");
+            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
         }
-        // General pagination structure validation
         Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
-        // Enhanced union type validation
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -158,24 +144,14 @@ public class ComplexWireTest {
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
         
-        // Enhanced optional/nullable type validation
-        if (actualResponseNode.isNull()) {
-            // Null values are acceptable for optional types
-        } else {
+        if (!actualResponseNode.isNull()) {
             Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
         }
         
-        // Enhanced generic/collection type validation
         if (actualResponseNode.isArray()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
-            // Validate array elements if present
-            for (int i = 0; i < actualResponseNode.size(); i++) {
-                JsonNode element = actualResponseNode.get(i);
-                Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");
-            }
         }
         if (actualResponseNode.isObject()) {
-            // Validate object structure
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
     }

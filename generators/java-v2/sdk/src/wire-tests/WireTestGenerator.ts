@@ -3,7 +3,15 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { AuthScheme, dynamic, EnvironmentsConfig, HttpEndpoint, Pagination } from "@fern-fern/ir-sdk/api";
+import {
+    AuthScheme,
+    dynamic,
+    EnvironmentsConfig,
+    HttpEndpoint,
+    ObjectProperty,
+    Pagination,
+    ResponseProperty
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -141,7 +149,6 @@ export class WireTestGenerator {
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
 
-                // Enhanced JSON validation with complex type support
                 this.generateEnhancedJsonValidation(writer, endpoint, "request", "actualJson", "expectedJson");
             }
 
@@ -171,7 +178,6 @@ export class WireTestGenerator {
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
 
-                // Enhanced JSON validation with complex type support
                 this.generateEnhancedJsonValidation(writer, endpoint, "response", "actualResponseNode", "expectedResponseNode");
             } else if (hasResponseBody) {
                 writer.writeLine("");
@@ -752,18 +758,15 @@ export class WireTestGenerator {
         const environments = this.context.ir.environments;
 
         if (!environments) {
-            // No environment configuration - use simple base URL
             writer.writeLine('.url(server.url("/").toString())');
             return;
         }
 
-        // Check if this is a multi-URL environment setup
         const isMultiUrlEnvironment = this.isMultiUrlEnvironment(environments);
 
         if (isMultiUrlEnvironment) {
             this.generateMultiUrlEnvironmentConfiguration(writer, environments);
         } else {
-            // Single URL environment - use simple URL configuration
             writer.writeLine('.url(server.url("/").toString())');
         }
     }
@@ -776,8 +779,6 @@ export class WireTestGenerator {
             return false;
         }
 
-        // Check if any environment value has a 'urls' property
-        // This handles the structure like: { Production: { urls: { ec2: "...", s3: "..." } } }
         for (const envValue of Object.values(environments)) {
             if (envValue && typeof envValue === "object" && "urls" in envValue) {
                 return true;
@@ -791,7 +792,6 @@ export class WireTestGenerator {
      * Generates multi-URL environment configuration
      */
     private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
-        // Get the first environment that has URLs configuration
         let environmentWithUrls: MultiUrlEnvironment | null = null;
         for (const envValue of Object.values(environments)) {
             if (envValue && typeof envValue === "object" && "urls" in envValue) {
@@ -801,16 +801,13 @@ export class WireTestGenerator {
         }
 
         if (!environmentWithUrls || !environmentWithUrls.urls) {
-            // Fallback to simple URL if environment structure is unexpected
             writer.writeLine('.url(server.url("/").toString())');
             return;
         }
 
-        // Generate Environment.custom() call for multi-URL setup
         writer.writeLine('.environment(Environment.custom()');
         writer.indent();
 
-        // Add URL mappings for each service
         for (const [serviceName, _] of Object.entries(environmentWithUrls.urls)) {
             const methodName = this.getEnvironmentUrlMethodName(serviceName);
             writer.writeLine(`.${methodName}(server.url("/").toString())`);
@@ -841,13 +838,11 @@ export class WireTestGenerator {
         actualVarName: string,
         expectedVarName: string
     ): void {
-        // Start with basic structure validation
         writer.writeLine(
             `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
             `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
-        // Add enhanced validation for complex types
         if (context === "response") {
             this.generateResponseTypeValidation(writer, endpoint, actualVarName);
         } else {
@@ -864,18 +859,14 @@ export class WireTestGenerator {
             return;
         }
 
-        // Add pagination validation if endpoint is paginated
         if (this.isPaginatedEndpoint(endpoint)) {
             this.generatePaginationValidation(writer, endpoint, actualVarName);
         }
 
-        // Add union type validation if applicable
         this.generateUnionTypeValidation(writer, actualVarName, "response");
 
-        // Add nullable validation for optional types
         this.generateOptionalTypeValidation(writer, actualVarName, "response");
 
-        // Add collection/generic type validation
         this.generateGenericTypeValidation(writer, actualVarName, "response");
     }
 
@@ -888,13 +879,10 @@ export class WireTestGenerator {
             return;
         }
 
-        // Add union type validation if applicable
         this.generateUnionTypeValidation(writer, actualVarName, "request");
 
-        // Add nullable validation for optional types
         this.generateOptionalTypeValidation(writer, actualVarName, "request");
 
-        // Add collection/generic type validation
         this.generateGenericTypeValidation(writer, actualVarName, "request");
     }
 
@@ -902,8 +890,6 @@ export class WireTestGenerator {
      * Generates union type validation assertions
      */
     private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
-        // Check for discriminator field if this looks like a discriminated union
-        writer.writeLine("// Enhanced union type validation");
         writer.writeLine(`if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`);
         writer.indent();
         writer.writeLine(`String discriminator = null;`);
@@ -921,12 +907,7 @@ export class WireTestGenerator {
      */
     private generateOptionalTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
         writer.writeLine("");
-        writer.writeLine("// Enhanced optional/nullable type validation");
-        writer.writeLine(`if (${jsonVarName}.isNull()) {`);
-        writer.indent();
-        writer.writeLine(`// Null values are acceptable for optional types`);
-        writer.dedent();
-        writer.writeLine("} else {");
+        writer.writeLine(`if (!${jsonVarName}.isNull()) {`);
         writer.indent();
         writer.writeLine(`Assertions.assertTrue(${jsonVarName}.isObject() || ${jsonVarName}.isArray() || ${jsonVarName}.isValueNode(), ` +
             `"${context} should be a valid JSON value");`);
@@ -939,23 +920,13 @@ export class WireTestGenerator {
      */
     private generateGenericTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
         writer.writeLine("");
-        writer.writeLine("// Enhanced generic/collection type validation");
         writer.writeLine(`if (${jsonVarName}.isArray()) {`);
         writer.indent();
         writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Array should have valid size");`);
-        writer.writeLine(`// Validate array elements if present`);
-        writer.writeLine(`for (int i = 0; i < ${jsonVarName}.size(); i++) {`);
-        writer.indent();
-        writer.writeLine(`JsonNode element = ${jsonVarName}.get(i);`);
-        writer.writeLine(`Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");`);
         writer.dedent();
         writer.writeLine("}");
-        writer.dedent();
-        writer.writeLine("}");
-
         writer.writeLine(`if (${jsonVarName}.isObject()) {`);
         writer.indent();
-        writer.writeLine(`// Validate object structure`);
         writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Object should have valid field count");`);
         writer.dedent();
         writer.writeLine("}");
@@ -978,27 +949,20 @@ export class WireTestGenerator {
         }
 
         writer.writeLine("");
-        writer.writeLine("// Enhanced pagination validation");
+        writer.writeLine("// Pagination validation");
 
-        // Validate pagination response structure
-        writer.writeLine(`// Validate pagination response structure`);
-
-        // Check for results field (contains the data array)
         const resultsPath = this.extractPaginationResultsPath(pagination);
         if (resultsPath) {
-            writer.writeLine(`// Validate results field at path: ${resultsPath}`);
+            writer.writeLine(`// Results at path: ${resultsPath}`);
             this.generatePaginationResultsValidation(writer, actualVarName, resultsPath);
         }
 
-        // Check for next cursor field (indicates if there are more pages)
         const nextCursorPath = this.extractPaginationNextCursorPath(pagination);
         if (nextCursorPath) {
-            writer.writeLine(`// Validate next cursor field for pagination navigation`);
+            writer.writeLine(`// Next cursor at path: ${nextCursorPath}`);
             this.generatePaginationNextCursorValidation(writer, actualVarName, nextCursorPath);
         }
 
-        // Add general pagination structure validation
-        writer.writeLine(`// General pagination structure validation`);
         writer.writeLine(`Assertions.assertTrue(${actualVarName}.isObject(), "Paginated response should be an object");`);
     }
 
@@ -1010,18 +974,16 @@ export class WireTestGenerator {
         // Use visitor pattern to extract results path
         return pagination._visit({
             cursor: (cursor) => {
-                // cursor.results is a ResponseProperty object
                 return this.buildPathFromResponseProperty(cursor.results);
             },
             offset: (offset) => {
-                // offset.results is a ResponseProperty object
                 return this.buildPathFromResponseProperty(offset.results);
             },
             custom: () => {
-                return "data"; // Fallback for custom pagination
+                return "data";
             },
             _other: () => {
-                return "data"; // Fallback to common pattern
+                return "data";
             }
         });
     }
@@ -1031,20 +993,19 @@ export class WireTestGenerator {
      * Handles different pagination types and structures
      */
     private extractPaginationNextCursorPath(pagination: Pagination): string | null {
-        // Use visitor pattern to extract next cursor path
         return pagination._visit({
             cursor: (cursor) => {
                 // cursor.next is a ResponseProperty object
                 return this.buildPathFromResponseProperty(cursor.next);
             },
             offset: () => {
-                return null; // Offset pagination doesn't use cursors
+                return null;
             },
             custom: () => {
-                return "next"; // Fallback for custom pagination
+                return "next";
             },
             _other: () => {
-                return "next"; // Fallback to common pattern
+                return "next";
             }
         });
     }
@@ -1052,39 +1013,89 @@ export class WireTestGenerator {
     /**
      * Builds a path string from a ResponseProperty object
      */
-    private buildPathFromResponseProperty(responseProperty: any): string {
+    private buildPathFromResponseProperty(responseProperty: ResponseProperty | undefined | null): string {
+        // Defensive null check with clear fallback
         if (!responseProperty) {
+            this.context.logger.debug("ResponseProperty is null or undefined, using default 'data' path");
             return "data";
         }
 
-        // Build the path from propertyPath and property name
         const pathParts: string[] = [];
 
-        // Add property path items if they exist
-        if (responseProperty.propertyPath && Array.isArray(responseProperty.propertyPath)) {
+        if (responseProperty.propertyPath != null && Array.isArray(responseProperty.propertyPath)) {
             for (const pathItem of responseProperty.propertyPath) {
-                if (pathItem?.property?.name?.originalName) {
-                    pathParts.push(pathItem.property.name.originalName);
-                } else if (pathItem?.property?.name?.camelCase?.unsafeName) {
-                    pathParts.push(pathItem.property.name.camelCase.unsafeName);
+                // Defensive checks for deeply nested properties
+                if (pathItem != null) {
+                    const pathItemName = this.extractNameFromPathItem(pathItem);
+                    if (pathItemName) {
+                        pathParts.push(pathItemName);
+                    }
                 }
             }
         }
 
-        // Add the final property name
-        if (responseProperty.property?.name?.originalName) {
-            pathParts.push(responseProperty.property.name.originalName);
-        } else if (responseProperty.property?.name?.camelCase?.unsafeName) {
-            pathParts.push(responseProperty.property.name.camelCase.unsafeName);
+        if (responseProperty.property != null) {
+            const propertyName = this.extractNameFromProperty(responseProperty.property);
+            if (propertyName) {
+                pathParts.push(propertyName);
+            }
         }
 
-        // If we have path parts, join them with dots
         if (pathParts.length > 0) {
-            return pathParts.join(".");
+            const result = pathParts.join(".");
+            this.context.logger.debug(`Extracted pagination path: ${result}`);
+            return result;
         }
 
-        // Fallback to "data" if we couldn't extract the path
+        this.context.logger.debug("Could not extract path from ResponseProperty, using default 'data'");
         return "data";
+    }
+
+    /**
+     * Safely extracts name from a PropertyPathItem
+     * PropertyPathItem has a name property of type Name
+     * Using a structural type to avoid importing the internal type
+     */
+    private extractNameFromPathItem(pathItem: {
+        name?: {
+            originalName?: string;
+            camelCase?: {
+                unsafeName?: string;
+                safeName?: string
+            }
+        }
+    } | unknown): string | undefined {
+        const item = pathItem as any; // Safe because we check properties exist
+
+        if (item?.name?.originalName) {
+            return item.name.originalName;
+        }
+        if (item?.name?.camelCase?.unsafeName) {
+            return item.name.camelCase.unsafeName;
+        }
+        if (item?.name?.camelCase?.safeName) {
+            return item.name.camelCase.safeName;
+        }
+        return undefined;
+    }
+
+    /**
+     * Safely extracts name from an ObjectProperty
+     */
+    private extractNameFromProperty(property: ObjectProperty): string | undefined {
+        if (property.name?.wireValue) {
+            return property.name.wireValue;
+        }
+        if (property.name?.name?.originalName) {
+            return property.name.name.originalName;
+        }
+        if (property.name?.name?.camelCase?.unsafeName) {
+            return property.name.name.camelCase.unsafeName;
+        }
+        if (property.name?.name?.camelCase?.safeName) {
+            return property.name.name.camelCase.safeName;
+        }
+        return undefined;
     }
 
     /**
@@ -1094,18 +1105,15 @@ export class WireTestGenerator {
         const pathParts = resultsPath.split(".");
         let currentPath = actualVarName;
 
-        // Navigate to the results field
         for (const part of pathParts) {
             writer.writeLine(`if (${currentPath}.has("${part}")) {`);
             writer.indent();
             currentPath = `${currentPath}.get("${part}")`;
         }
 
-        // Validate the results array
         writer.writeLine(`Assertions.assertTrue(${currentPath}.isArray(), "Pagination results should be an array");`);
         writer.writeLine(`Assertions.assertTrue(${currentPath}.size() >= 0, "Pagination results array should have valid size");`);
 
-        // Close the nested if statements
         for (let i = 0; i < pathParts.length; i++) {
             writer.dedent();
             writer.writeLine("}");
@@ -1119,19 +1127,16 @@ export class WireTestGenerator {
         const pathParts = nextCursorPath.split(".");
         let currentPath = actualVarName;
 
-        // Navigate to the next cursor field
         for (const part of pathParts) {
             writer.writeLine(`if (${currentPath}.has("${part}")) {`);
             writer.indent();
             currentPath = `${currentPath}.get("${part}")`;
         }
 
-        // Validate the next cursor (can be null/empty for last page)
         writer.writeLine(`// Next cursor can be null for last page, or string for next page`);
         writer.writeLine(`Assertions.assertTrue(${currentPath}.isNull() || ${currentPath}.isTextual(), ` +
             `"Next cursor should be null (last page) or string (next page)");`);
 
-        // Close the nested if statements
         for (let i = 0; i < pathParts.length; i++) {
             writer.dedent();
             writer.writeLine("}");
@@ -1152,12 +1157,9 @@ export class WireTestGenerator {
         writer.writeLine("");
         writer.writeLine("// Validate headers");
 
-        // Generate assertions for each expected header
         for (const [headerName, expectedValue] of Object.entries(headers)) {
-            // Sanitize the expected value to prevent breaking Java string literals
             const sanitizedValue = this.sanitizeAuthValue(expectedValue);
 
-            // Add assertion with descriptive error message
             writer.writeLine(
                 `Assertions.assertEquals("${sanitizedValue}", request.getHeader("${headerName}"), ` +
                 `"Header '${headerName}' should match expected value");`

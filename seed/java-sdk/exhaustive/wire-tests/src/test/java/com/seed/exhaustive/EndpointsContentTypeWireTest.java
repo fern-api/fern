@@ -92,7 +92,6 @@ public class EndpointsContentTypeWireTest {
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
-        // Enhanced union type validation
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -102,24 +101,14 @@ public class EndpointsContentTypeWireTest {
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
         
-        // Enhanced optional/nullable type validation
-        if (actualJson.isNull()) {
-            // Null values are acceptable for optional types
-        } else {
+        if (!actualJson.isNull()) {
             Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
         }
         
-        // Enhanced generic/collection type validation
         if (actualJson.isArray()) {
             Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
-            // Validate array elements if present
-            for (int i = 0; i < actualJson.size(); i++) {
-                JsonNode element = actualJson.get(i);
-                Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");
-            }
         }
         if (actualJson.isObject()) {
-            // Validate object structure
             Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
         }
     }
@@ -188,7 +177,6 @@ public class EndpointsContentTypeWireTest {
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
-        // Enhanced union type validation
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -198,24 +186,14 @@ public class EndpointsContentTypeWireTest {
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
         
-        // Enhanced optional/nullable type validation
-        if (actualJson.isNull()) {
-            // Null values are acceptable for optional types
-        } else {
+        if (!actualJson.isNull()) {
             Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
         }
         
-        // Enhanced generic/collection type validation
         if (actualJson.isArray()) {
             Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
-            // Validate array elements if present
-            for (int i = 0; i < actualJson.size(); i++) {
-                JsonNode element = actualJson.get(i);
-                Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");
-            }
         }
         if (actualJson.isObject()) {
-            // Validate object structure
             Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
         }
     }
