@@ -616,6 +616,8 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped. 
   # Add check back to make sure it doesn't run for failures or cancellations.
   commit-seed-changes:
+    outputs:
+      has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
       ${{ 
         always() && needs.setup.outputs.create-artifacts == 'true' &&
@@ -690,6 +692,7 @@ jobs:
           git apply artifacts/*.patch 
 
       - name: Add and Commit Changes
+        id: commit-changes
         uses: EndBug/add-and-commit@v9
         if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
         with:
@@ -698,19 +701,23 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
           
-  # # Use always() to ensure this runs even if stages from needs are skipped. 
-  # # Add check back to make sure it doesn't run for failures or cancellations.
-  # start-seed-snapshot-tests:
-  #   needs: [commit-seed-changes, changes, setup]
-  #   if: >-
-  #     ${{ 
-  #       always() && needs.setup.outputs.create-artifacts == 'true' &&
-  #       !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-  #     }}
-  #   runs-on: Seed
-  #   steps:
-  #     - name: Trigger seed snapshot tests
-  #       shell: bash
-  #       run: |
-  #         echo "Triggering seed snapshot tests"
-  #         echo "seed-snapshot-tests-triggered=true" >> $GITHUB_OUTPUT
+  # Use always() to ensure this runs even if stages from needs are skipped. 
+  # Add check back to make sure it doesn't run for failures or cancellations.
+  # Only trigger if there are no new patches (seed is up to date)
+  trigger-seed-snapshot-tests:
+    needs: [commit-seed-changes, changes, setup]
+    if: >-
+      ${{ 
+        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        needs.commit-seed-changes.outputs.has-patches == 'false' &&
+        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      }}
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Trigger seed snapshot tests
+        uses: ./.github/workflows/seed.yml
