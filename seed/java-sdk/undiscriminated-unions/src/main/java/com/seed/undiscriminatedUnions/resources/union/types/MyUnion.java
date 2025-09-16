@@ -37,13 +37,13 @@ public final class MyUnion {
         if (this.type == 0) {
             return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visitListOfString((List<String>) this.value);
+            return visitor.visit((List<String>) this.value);
         } else if (this.type == 2) {
             return visitor.visit((int) this.value);
         } else if (this.type == 3) {
-            return visitor.visitListOfInteger((List<Integer>) this.value);
+            return visitor.visit((List<Integer>) this.value);
         } else if (this.type == 4) {
-            return visitor.visitListOfListOfInteger((List<List<Integer>>) this.value);
+            return visitor.visit((List<List<Integer>>) this.value);
         } else if (this.type == 5) {
             return visitor.visit((Set<String>) this.value);
         }
@@ -74,7 +74,7 @@ public final class MyUnion {
         return new MyUnion(value, 0);
     }
 
-    public static MyUnion ofListOfString(List<String> value) {
+    public static MyUnion of(List<String> value) {
         return new MyUnion(value, 1);
     }
 
@@ -82,11 +82,11 @@ public final class MyUnion {
         return new MyUnion(value, 2);
     }
 
-    public static MyUnion ofListOfInteger(List<Integer> value) {
+    public static MyUnion of(List<Integer> value) {
         return new MyUnion(value, 3);
     }
 
-    public static MyUnion ofListOfListOfInteger(List<List<Integer>> value) {
+    public static MyUnion of(List<List<Integer>> value) {
         return new MyUnion(value, 4);
     }
 
@@ -97,13 +97,13 @@ public final class MyUnion {
     public interface Visitor<T> {
         T visit(String value);
 
-        T visitListOfString(List<String> value);
+        T visit(List<String> value);
 
         T visit(int value);
 
-        T visitListOfInteger(List<Integer> value);
+        T visit(List<Integer> value);
 
-        T visitListOfListOfInteger(List<List<Integer>> value);
+        T visit(List<List<Integer>> value);
 
         T visit(Set<String> value);
     }
@@ -121,21 +121,18 @@ public final class MyUnion {
             } catch (RuntimeException e) {
             }
             try {
-                return ofListOfString(
-                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
             } catch (RuntimeException e) {
             }
             if (value instanceof Integer) {
                 return of((Integer) value);
             }
             try {
-                return ofListOfInteger(
-                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
             } catch (RuntimeException e) {
             }
             try {
-                return ofListOfListOfInteger(
-                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
             } catch (RuntimeException e) {
             }
             try {
