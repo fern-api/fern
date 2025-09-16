@@ -109,7 +109,7 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = SdkCustomConfigSchema.parse(context.config.customConfig)?.readmeCustomSections;
+    const customConfigSections = SdkCustomConfigSchema.parse(context.config.customConfig)?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {

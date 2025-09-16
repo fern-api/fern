@@ -260,7 +260,7 @@ fixtures:
   examples:
     - customConfig:
         includeApiReference: true
-        readmeCustomSections:
+        customReadmeSections:
           - title: "Override Section"
             content: "Override Content"
           - title: "Generator Invocation Custom Section"

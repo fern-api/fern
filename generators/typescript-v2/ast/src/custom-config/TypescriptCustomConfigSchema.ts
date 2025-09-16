@@ -33,7 +33,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
-    readmeCustomSections: z.optional(z.array(CustomReadmeSectionSchema)),
+    customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),
