@@ -22,3 +22,4 @@ fixtures:
       outputFolder: collection-name
 generatorType: Documentation
 defaultOutputMode: local_files
+# force some more updates
