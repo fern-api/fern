@@ -140,7 +140,7 @@ function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): Sd
     try {
         return SdkCustomConfigSchema.parse(customConfig);
     } catch (error) {
-        logger.error(`Error parsing custom config: ${error}`);
+        logger.error(`Error parsing custom config during readme generation: ${error}`);
         return undefined;
     }
 }
