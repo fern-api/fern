@@ -15,10 +15,7 @@ func do() {
             "<value>",
         ),
     )
-    client.CustomAuth.PostWithCustomAuth(
+    client.CustomAuth.GetWithCustomAuth(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
     )
 }
