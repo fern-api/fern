@@ -19,8 +19,8 @@ on:
   workflow_run:
     workflows: ["Update Seed"]
     types: [completed]
-    branches-ignore:
-      - main
+    # branches-ignore:
+    #   - main
   workflow_call:
   workflow_dispatch:
 
