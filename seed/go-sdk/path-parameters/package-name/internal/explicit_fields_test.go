@@ -342,6 +342,146 @@ func TestHandleExplicitFieldsTagHandling(t *testing.T) {
 	assert.JSONEq(t, `{"field1":"test1","field4":"test4"}`, string(bytes))
 }
 
+// Test types for nested struct explicit fields testing
+type testNestedStruct struct {
+	NestedName     *string `json:"nested_name,omitempty"`
+	NestedCode     *string `json:"nested_code,omitempty"`
+	explicitFields *big.Int `json:"-"`
+}
+
+type testParentStruct struct {
+	ParentName     *string           `json:"parent_name,omitempty"`
+	Nested         *testNestedStruct `json:"nested,omitempty"`
+	explicitFields *big.Int          `json:"-"`
+}
+
+var (
+	nestedFieldName = big.NewInt(1 << 0)
+	nestedFieldCode = big.NewInt(1 << 1)
+)
+
+var (
+	parentFieldName   = big.NewInt(1 << 0)
+	parentFieldNested = big.NewInt(1 << 1)
+)
+
+func (n *testNestedStruct) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+func (n *testNestedStruct) SetNestedName(name *string) {
+	n.NestedName = name
+	n.require(nestedFieldName)
+}
+
+func (n *testNestedStruct) SetNestedCode(code *string) {
+	n.NestedCode = code
+	n.require(nestedFieldCode)
+}
+
+func (n *testNestedStruct) MarshalJSON() ([]byte, error) {
+	type embed testNestedStruct
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	return json.Marshal(HandleExplicitFields(marshaler, n.explicitFields))
+}
+
+func (p *testParentStruct) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+func (p *testParentStruct) SetParentName(name *string) {
+	p.ParentName = name
+	p.require(parentFieldName)
+}
+
+func (p *testParentStruct) SetNested(nested *testNestedStruct) {
+	p.Nested = nested
+	p.require(parentFieldNested)
+}
+
+func (p *testParentStruct) MarshalJSON() ([]byte, error) {
+	type embed testParentStruct
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	return json.Marshal(HandleExplicitFields(marshaler, p.explicitFields))
+}
+
+func TestHandleExplicitFieldsNestedStruct(t *testing.T) {
+	tests := []struct {
+		desc      string
+		setupFunc func() *testParentStruct
+		wantBytes []byte
+	}{
+		{
+			desc: "nested struct with explicit nil in nested object",
+			setupFunc: func() *testParentStruct {
+				nested := &testNestedStruct{
+					NestedName: stringPtr("implicit-nested"),
+				}
+				nested.SetNestedCode(nil) // explicit nil
+
+				return &testParentStruct{
+					ParentName: stringPtr("implicit-parent"),
+					Nested:     nested,
+				}
+			},
+			wantBytes: []byte(`{"parent_name":"implicit-parent","nested":{"nested_name":"implicit-nested","nested_code":null}}`),
+		},
+		{
+			desc: "parent with explicit nil nested struct",
+			setupFunc: func() *testParentStruct {
+				parent := &testParentStruct{
+					ParentName: stringPtr("implicit-parent"),
+				}
+				parent.SetNested(nil) // explicit nil nested struct
+				return parent
+			},
+			wantBytes: []byte(`{"parent_name":"implicit-parent","nested":null}`),
+		},
+		{
+			desc: "all explicit fields in nested structure",
+			setupFunc: func() *testParentStruct {
+				nested := &testNestedStruct{}
+				nested.SetNestedName(stringPtr("explicit-nested"))
+				nested.SetNestedCode(nil) // explicit nil
+
+				parent := &testParentStruct{}
+				parent.SetParentName(nil) // explicit nil
+				parent.SetNested(nested)  // explicit nested struct
+
+				return parent
+			},
+			wantBytes: []byte(`{"parent_name":null,"nested":{"nested_name":"explicit-nested","nested_code":null}}`),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			parent := tt.setupFunc()
+			bytes, err := parent.MarshalJSON()
+			require.NoError(t, err)
+			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
+
+			// Verify it's valid JSON
+			var value interface{}
+			require.NoError(t, json.Unmarshal(bytes, &value))
+		})
+	}
+}
+
 // Helper functions
 func stringPtr(s string) *string {
 	return &s
