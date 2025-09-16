@@ -43,6 +43,9 @@ public class FileServiceWireTest {
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
         
+        // Validate headers
+        Assertions.assertEquals("0.0.2", request.getHeader("X-File-API-Version"), "Header 'X-File-API-Version' should match expected value");
+        
         // Validate response deserialization
         Assertions.assertNotNull(response, "Response should not be null");
         // Verify the response can be serialized back to JSON
