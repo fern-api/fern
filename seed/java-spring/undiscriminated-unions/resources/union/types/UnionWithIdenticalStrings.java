@@ -20,14 +20,14 @@ import java.lang.SuppressWarnings;
 import java.util.Objects;
 
 @JsonDeserialize(
-    using = Key.Deserializer.class
+    using = UnionWithIdenticalStrings.Deserializer.class
 )
-public final class Key {
+public final class UnionWithIdenticalStrings {
   private final Object value;
 
   private final int type;
 
-  private Key(Object value, int type) {
+  private UnionWithIdenticalStrings(Object value, int type) {
     this.value = value;
     this.type = type;
   }
@@ -40,9 +40,7 @@ public final class Key {
   @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
-      return visitor.visit((KeyType) this.value);
-    } else if(this.type == 1) {
-      return visitor.visit2((String) this.value);
+      return visitor.visit((String) this.value);
     }
     throw new IllegalStateException("Failed to visit value. This should never happen.");
   }
@@ -50,10 +48,10 @@ public final class Key {
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
-    return other instanceof Key && equalTo((Key) other);
+    return other instanceof UnionWithIdenticalStrings && equalTo((UnionWithIdenticalStrings) other);
   }
 
-  private boolean equalTo(Key other) {
+  private boolean equalTo(UnionWithIdenticalStrings other) {
     return value.equals(other.value);
   }
 
@@ -67,46 +65,25 @@ public final class Key {
     return this.value.toString();
   }
 
-  public static Key of(KeyType value) {
-    return new Key(value, 0);
-  }
-
-  /**
-   * @param value must be one of the following:
-   * <ul>
-   * <li>"default"</li>
-   * </ul>
-   */
-  public static Key of2(String value) {
-    return new Key(value, 1);
+  public static UnionWithIdenticalStrings of(String value) {
+    return new UnionWithIdenticalStrings(value, 0);
   }
 
   public interface Visitor<T> {
-    T visit(KeyType value);
-
-    /**
-     * @param value must be one of the following:
-     * <ul>
-     * <li>"default"</li>
-     * </ul>
-     */
-    T visit2(String value);
+    T visit(String value);
   }
 
-  static final class Deserializer extends StdDeserializer<Key> {
+  static final class Deserializer extends StdDeserializer<UnionWithIdenticalStrings> {
     Deserializer() {
-      super(Key.class);
+      super(UnionWithIdenticalStrings.class);
     }
 
     @java.lang.Override
-    public Key deserialize(JsonParser p, DeserializationContext context) throws IOException {
+    public UnionWithIdenticalStrings deserialize(JsonParser p, DeserializationContext context)
+        throws IOException {
       Object value = p.readValueAs(Object.class);
       try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, KeyType.class));
-      } catch(RuntimeException e) {
-      }
-      try {
-        return of2(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+        return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(RuntimeException e) {
       }
       throw new JsonParseException(p, "Failed to deserialize");
