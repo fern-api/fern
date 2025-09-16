@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - mallinson/example-PR-level-testing
+      - mallinson/push-branch-for-testing
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
