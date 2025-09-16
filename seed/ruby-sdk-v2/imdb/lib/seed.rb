@@ -25,8 +25,6 @@ require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
 require_relative "seed/errors/api_error"
-
-# API Types
 require_relative "seed/imdb/types/movie"
 require_relative "seed/imdb/types/create_movie_request"
 require_relative "seed/client"
