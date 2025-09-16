@@ -738,6 +738,6 @@ jobs:
     - name: Trigger seed tests
       uses: peter-evans/repository-dispatch@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.FERN_GITHUB_PAT }}
         event-type: seed-tests
         client-payload: '{"ref": "${{ github.ref }}"}'
