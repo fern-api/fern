@@ -21,6 +21,8 @@ on:
     types: [requested]
     # branches-ignore:
     #   - main
+  repository_dispatch:
+    types: [seed-tests]
   workflow_call:
   workflow_dispatch:
 
