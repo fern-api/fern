@@ -29,6 +29,8 @@ func (i *Inlined) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+// SetUnique sets the Unique field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Inlined) SetUnique(unique string) {
 	i.Unique = unique
 	i.require(inlinedFieldUnique)
@@ -66,6 +68,8 @@ func (d *Docs) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Docs) SetDocs(docs string) {
 	d.Docs = docs
 	d.require(docsFieldDocs)
@@ -151,11 +155,15 @@ func (e *ExampleType) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExampleType) SetDocs(docs string) {
 	e.Docs = docs
 	e.require(exampleTypeFieldDocs)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExampleType) SetName(name string) {
 	e.Name = name
 	e.require(exampleTypeFieldName)
@@ -241,11 +249,15 @@ func (j *Json) require(field *big.Int) {
 	j.explicitFields.Or(j.explicitFields, field)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *Json) SetDocs(docs string) {
 	j.Docs = docs
 	j.require(jsonFieldDocs)
 }
 
+// SetRaw sets the Raw field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *Json) SetRaw(raw string) {
 	j.Raw = raw
 	j.require(jsonFieldRaw)
@@ -340,16 +352,22 @@ func (n *NestedType) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedType) SetDocs(docs string) {
 	n.Docs = docs
 	n.require(nestedTypeFieldDocs)
 }
 
+// SetRaw sets the Raw field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedType) SetRaw(raw string) {
 	n.Raw = raw
 	n.require(nestedTypeFieldRaw)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedType) SetName(name string) {
 	n.Name = name
 	n.require(nestedTypeFieldName)

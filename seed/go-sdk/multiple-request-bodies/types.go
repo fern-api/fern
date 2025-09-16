@@ -68,21 +68,29 @@ func (d *DocumentMetadata) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentMetadata) SetAuthor(author *string) {
 	d.Author = author
 	d.require(documentMetadataFieldAuthor)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentMetadata) SetId(id *int) {
 	d.Id = id
 	d.require(documentMetadataFieldId)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentMetadata) SetTags(tags []interface{}) {
 	d.Tags = tags
 	d.require(documentMetadataFieldTags)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentMetadata) SetTitle(title *string) {
 	d.Title = title
 	d.require(documentMetadataFieldTitle)
@@ -168,11 +176,15 @@ func (d *DocumentUploadResult) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetFileId sets the FileId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentUploadResult) SetFileId(fileId *string) {
 	d.FileId = fileId
 	d.require(documentUploadResultFieldFileId)
 }
 
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DocumentUploadResult) SetStatus(status *string) {
 	d.Status = status
 	d.require(documentUploadResultFieldStatus)
@@ -301,16 +313,22 @@ func (u *UploadDocumentRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UploadDocumentRequest) SetAuthor(author *string) {
 	u.Author = author
 	u.require(uploadDocumentRequestFieldAuthor)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UploadDocumentRequest) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(uploadDocumentRequestFieldTags)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UploadDocumentRequest) SetTitle(title *string) {
 	u.Title = title
 	u.require(uploadDocumentRequestFieldTitle)

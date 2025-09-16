@@ -41,6 +41,8 @@ func (c *Conversation) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Conversation) SetFoo(foo string) {
 	c.Foo = foo
 	c.require(conversationFieldFoo)
@@ -149,21 +151,29 @@ func (c *CursorPages) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CursorPages) SetNext(next *StartingAfterPaging) {
 	c.Next = next
 	c.require(cursorPagesFieldNext)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CursorPages) SetPage(page *int) {
 	c.Page = page
 	c.require(cursorPagesFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CursorPages) SetPerPage(perPage *int) {
 	c.PerPage = perPage
 	c.require(cursorPagesFieldPerPage)
 }
 
+// SetTotalPages sets the TotalPages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CursorPages) SetTotalPages(totalPages *int) {
 	c.TotalPages = totalPages
 	c.require(cursorPagesFieldTotalPages)
@@ -260,11 +270,15 @@ func (m *MultipleFilterSearchRequest) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetOperator sets the Operator field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MultipleFilterSearchRequest) SetOperator(operator *MultipleFilterSearchRequestOperator) {
 	m.Operator = operator
 	m.require(multipleFilterSearchRequestFieldOperator)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MultipleFilterSearchRequest) SetValue(value *MultipleFilterSearchRequestValue) {
 	m.Value = value
 	m.require(multipleFilterSearchRequestFieldValue)
@@ -448,16 +462,22 @@ func (p *PaginatedConversationResponse) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetConversations sets the Conversations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedConversationResponse) SetConversations(conversations []*Conversation) {
 	p.Conversations = conversations
 	p.require(paginatedConversationResponseFieldConversations)
 }
 
+// SetPages sets the Pages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedConversationResponse) SetPages(pages *CursorPages) {
 	p.Pages = pages
 	p.require(paginatedConversationResponseFieldPages)
 }
 
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedConversationResponse) SetTotalCount(totalCount int) {
 	p.TotalCount = totalCount
 	p.require(paginatedConversationResponseFieldTotalCount)
@@ -554,11 +574,15 @@ func (s *SearchRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetPagination(pagination *StartingAfterPaging) {
 	s.Pagination = pagination
 	s.require(searchRequestFieldPagination)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetQuery(query *SearchRequestQuery) {
 	s.Query = query
 	s.require(searchRequestFieldQuery)
@@ -715,16 +739,22 @@ func (s *SingleFilterSearchRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetField sets the Field field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SingleFilterSearchRequest) SetField(field *string) {
 	s.Field = field
 	s.require(singleFilterSearchRequestFieldField)
 }
 
+// SetOperator sets the Operator field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SingleFilterSearchRequest) SetOperator(operator *SingleFilterSearchRequestOperator) {
 	s.Operator = operator
 	s.require(singleFilterSearchRequestFieldOperator)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SingleFilterSearchRequest) SetValue(value *string) {
 	s.Value = value
 	s.require(singleFilterSearchRequestFieldValue)
@@ -856,11 +886,15 @@ func (s *StartingAfterPaging) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StartingAfterPaging) SetPerPage(perPage int) {
 	s.PerPage = perPage
 	s.require(startingAfterPagingFieldPerPage)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StartingAfterPaging) SetStartingAfter(startingAfter *string) {
 	s.StartingAfter = startingAfter
 	s.require(startingAfterPagingFieldStartingAfter)

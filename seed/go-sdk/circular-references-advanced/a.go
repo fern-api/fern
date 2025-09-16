@@ -41,6 +41,8 @@ func (a *A) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetS sets the S field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *A) SetS(s string) {
 	a.S = s
 	a.require(aFieldS)

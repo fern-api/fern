@@ -28,16 +28,22 @@ func (n *NamedMixedPatchRequest) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetAppId sets the AppId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NamedMixedPatchRequest) SetAppId(appId *string) {
 	n.AppId = appId
 	n.require(namedMixedPatchRequestFieldAppId)
 }
 
+// SetInstructions sets the Instructions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NamedMixedPatchRequest) SetInstructions(instructions *string) {
 	n.Instructions = instructions
 	n.require(namedMixedPatchRequestFieldInstructions)
 }
 
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NamedMixedPatchRequest) SetActive(active *bool) {
 	n.Active = active
 	n.require(namedMixedPatchRequestFieldActive)
@@ -69,26 +75,36 @@ func (o *OptionalMergePatchRequest) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetRequiredField sets the RequiredField field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *OptionalMergePatchRequest) SetRequiredField(requiredField string) {
 	o.RequiredField = requiredField
 	o.require(optionalMergePatchRequestFieldRequiredField)
 }
 
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *OptionalMergePatchRequest) SetOptionalString(optionalString *string) {
 	o.OptionalString = optionalString
 	o.require(optionalMergePatchRequestFieldOptionalString)
 }
 
+// SetOptionalInteger sets the OptionalInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *OptionalMergePatchRequest) SetOptionalInteger(optionalInteger *int) {
 	o.OptionalInteger = optionalInteger
 	o.require(optionalMergePatchRequestFieldOptionalInteger)
 }
 
+// SetOptionalBoolean sets the OptionalBoolean field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *OptionalMergePatchRequest) SetOptionalBoolean(optionalBoolean *bool) {
 	o.OptionalBoolean = optionalBoolean
 	o.require(optionalMergePatchRequestFieldOptionalBoolean)
 }
 
+// SetNullableString sets the NullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *OptionalMergePatchRequest) SetNullableString(nullableString *string) {
 	o.NullableString = nullableString
 	o.require(optionalMergePatchRequestFieldNullableString)
@@ -114,11 +130,15 @@ func (p *PatchProxyRequest) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetApplication sets the Application field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchProxyRequest) SetApplication(application *string) {
 	p.Application = application
 	p.require(patchProxyRequestFieldApplication)
 }
 
+// SetRequireAuth sets the RequireAuth field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchProxyRequest) SetRequireAuth(requireAuth *bool) {
 	p.RequireAuth = requireAuth
 	p.require(patchProxyRequestFieldRequireAuth)
@@ -160,51 +180,71 @@ func (p *PatchComplexRequest) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetName(name *string) {
 	p.Name = name
 	p.require(patchComplexRequestFieldName)
 }
 
+// SetAge sets the Age field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetAge(age *int) {
 	p.Age = age
 	p.require(patchComplexRequestFieldAge)
 }
 
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetActive(active *bool) {
 	p.Active = active
 	p.require(patchComplexRequestFieldActive)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetMetadata(metadata map[string]interface{}) {
 	p.Metadata = metadata
 	p.require(patchComplexRequestFieldMetadata)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetTags(tags []string) {
 	p.Tags = tags
 	p.require(patchComplexRequestFieldTags)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetEmail(email *string) {
 	p.Email = email
 	p.require(patchComplexRequestFieldEmail)
 }
 
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetNickname(nickname *string) {
 	p.Nickname = nickname
 	p.require(patchComplexRequestFieldNickname)
 }
 
+// SetBio sets the Bio field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetBio(bio *string) {
 	p.Bio = bio
 	p.require(patchComplexRequestFieldBio)
 }
 
+// SetProfileImageUrl sets the ProfileImageUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetProfileImageUrl(profileImageUrl *string) {
 	p.ProfileImageUrl = profileImageUrl
 	p.require(patchComplexRequestFieldProfileImageUrl)
 }
 
+// SetSettings sets the Settings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PatchComplexRequest) SetSettings(settings map[string]interface{}) {
 	p.Settings = settings
 	p.require(patchComplexRequestFieldSettings)
@@ -230,11 +270,15 @@ func (r *RegularPatchRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetField1 sets the Field1 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RegularPatchRequest) SetField1(field1 *string) {
 	r.Field1 = field1
 	r.require(regularPatchRequestFieldField1)
 }
 
+// SetField2 sets the Field2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RegularPatchRequest) SetField2(field2 *int) {
 	r.Field2 = field2
 	r.require(regularPatchRequestFieldField2)

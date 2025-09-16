@@ -43,6 +43,8 @@ func (d *DoubleOptional) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DoubleOptional) SetOptionalAlias(optionalAlias *OptionalAlias) {
 	d.OptionalAlias = optionalAlias
 	d.require(doubleOptionalFieldOptionalAlias)
@@ -128,11 +130,15 @@ func (n *NestedObjectWithOptionalField) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedObjectWithOptionalField) SetString(string_ *string) {
 	n.String = string_
 	n.require(nestedObjectWithOptionalFieldFieldString)
 }
 
+// SetNestedObject sets the NestedObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedObjectWithOptionalField) SetNestedObject(nestedObject *ObjectWithOptionalField) {
 	n.NestedObject = nestedObject
 	n.require(nestedObjectWithOptionalFieldFieldNestedObject)
@@ -218,11 +224,15 @@ func (n *NestedObjectWithRequiredField) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedObjectWithRequiredField) SetString(string_ string) {
 	n.String = string_
 	n.require(nestedObjectWithRequiredFieldFieldString)
 }
 
+// SetNestedObject sets the NestedObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedObjectWithRequiredField) SetNestedObject(nestedObject *ObjectWithOptionalField) {
 	n.NestedObject = nestedObject
 	n.require(nestedObjectWithRequiredFieldFieldNestedObject)
@@ -299,6 +309,8 @@ func (o *ObjectWithMapOfMap) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetMap sets the Map field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithMapOfMap) SetMap(map_ map[string]map[string]string) {
 	o.Map = map_
 	o.require(objectWithMapOfMapFieldMap)
@@ -484,66 +496,92 @@ func (o *ObjectWithOptionalField) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetString(string_ *string) {
 	o.String = string_
 	o.require(objectWithOptionalFieldFieldString)
 }
 
+// SetInteger sets the Integer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetInteger(integer *int) {
 	o.Integer = integer
 	o.require(objectWithOptionalFieldFieldInteger)
 }
 
+// SetLong sets the Long field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetLong(long *int64) {
 	o.Long = long
 	o.require(objectWithOptionalFieldFieldLong)
 }
 
+// SetDouble sets the Double field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetDouble(double *float64) {
 	o.Double = double
 	o.require(objectWithOptionalFieldFieldDouble)
 }
 
+// SetBool sets the Bool field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetBool(bool_ *bool) {
 	o.Bool = bool_
 	o.require(objectWithOptionalFieldFieldBool)
 }
 
+// SetDatetime sets the Datetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetDatetime(datetime *time.Time) {
 	o.Datetime = datetime
 	o.require(objectWithOptionalFieldFieldDatetime)
 }
 
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetDate(date *time.Time) {
 	o.Date = date
 	o.require(objectWithOptionalFieldFieldDate)
 }
 
+// SetUuid sets the Uuid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetUuid(uuid *uuid.UUID) {
 	o.Uuid = uuid
 	o.require(objectWithOptionalFieldFieldUuid)
 }
 
+// SetBase64 sets the Base64 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetBase64(base64 *[]byte) {
 	o.Base64 = base64
 	o.require(objectWithOptionalFieldFieldBase64)
 }
 
+// SetList sets the List field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetList(list []string) {
 	o.List = list
 	o.require(objectWithOptionalFieldFieldList)
 }
 
+// SetSet sets the Set field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetSet(set []string) {
 	o.Set = set
 	o.require(objectWithOptionalFieldFieldSet)
 }
 
+// SetMap sets the Map field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetMap(map_ map[int]string) {
 	o.Map = map_
 	o.require(objectWithOptionalFieldFieldMap)
 }
 
+// SetBigint sets the Bigint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithOptionalField) SetBigint(bigint *string) {
 	o.Bigint = bigint
 	o.require(objectWithOptionalFieldFieldBigint)
@@ -632,6 +670,8 @@ func (o *ObjectWithRequiredField) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithRequiredField) SetString(string_ string) {
 	o.String = string_
 	o.require(objectWithRequiredFieldFieldString)

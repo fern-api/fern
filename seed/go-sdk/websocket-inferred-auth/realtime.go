@@ -50,11 +50,15 @@ func (r *ReceiveEvent) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetAlpha sets the Alpha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent) SetAlpha(alpha string) {
 	r.Alpha = alpha
 	r.require(receiveEventFieldAlpha)
 }
 
+// SetBeta sets the Beta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent) SetBeta(beta int) {
 	r.Beta = beta
 	r.require(receiveEventFieldBeta)
@@ -149,16 +153,22 @@ func (r *ReceiveEvent2) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetGamma sets the Gamma field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent2) SetGamma(gamma string) {
 	r.Gamma = gamma
 	r.require(receiveEvent2FieldGamma)
 }
 
+// SetDelta sets the Delta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent2) SetDelta(delta int) {
 	r.Delta = delta
 	r.require(receiveEvent2FieldDelta)
 }
 
+// SetEpsilon sets the Epsilon field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent2) SetEpsilon(epsilon bool) {
 	r.Epsilon = epsilon
 	r.require(receiveEvent2FieldEpsilon)
@@ -235,6 +245,8 @@ func (r *ReceiveEvent3) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetReceiveText3 sets the ReceiveText3 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveEvent3) SetReceiveText3(receiveText3 string) {
 	r.ReceiveText3 = receiveText3
 	r.require(receiveEvent3FieldReceiveText3)
@@ -320,11 +332,15 @@ func (s *SendEvent) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetSendText sets the SendText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEvent) SetSendText(sendText string) {
 	s.SendText = sendText
 	s.require(sendEventFieldSendText)
 }
 
+// SetSendParam sets the SendParam field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEvent) SetSendParam(sendParam int) {
 	s.SendParam = sendParam
 	s.require(sendEventFieldSendParam)
@@ -410,11 +426,15 @@ func (s *SendEvent2) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetSendText2 sets the SendText2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEvent2) SetSendText2(sendText2 string) {
 	s.SendText2 = sendText2
 	s.require(sendEvent2FieldSendText2)
 }
 
+// SetSendParam2 sets the SendParam2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEvent2) SetSendParam2(sendParam2 bool) {
 	s.SendParam2 = sendParam2
 	s.require(sendEvent2FieldSendParam2)
@@ -500,11 +520,15 @@ func (r *ReceiveSnakeCase) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetReceiveText sets the ReceiveText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveSnakeCase) SetReceiveText(receiveText string) {
 	r.ReceiveText = receiveText
 	r.require(receiveSnakeCaseFieldReceiveText)
 }
 
+// SetReceiveInt sets the ReceiveInt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReceiveSnakeCase) SetReceiveInt(receiveInt int) {
 	r.ReceiveInt = receiveInt
 	r.require(receiveSnakeCaseFieldReceiveInt)
@@ -590,11 +614,15 @@ func (s *SendSnakeCase) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetSendText sets the SendText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendSnakeCase) SetSendText(sendText string) {
 	s.SendText = sendText
 	s.require(sendSnakeCaseFieldSendText)
 }
 
+// SetSendParam sets the SendParam field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendSnakeCase) SetSendParam(sendParam int) {
 	s.SendParam = sendParam
 	s.require(sendSnakeCaseFieldSendParam)

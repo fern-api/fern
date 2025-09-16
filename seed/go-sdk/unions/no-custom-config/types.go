@@ -42,6 +42,8 @@ func (b *Bar) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *Bar) SetName(name string) {
 	b.Name = name
 	b.require(barFieldName)
@@ -118,6 +120,8 @@ func (f *Foo) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *Foo) SetName(name string) {
 	f.Name = name
 	f.require(fooFieldName)
@@ -203,11 +207,15 @@ func (f *FooExtended) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FooExtended) SetName(name string) {
 	f.Name = name
 	f.require(fooExtendedFieldName)
 }
 
+// SetAge sets the Age field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FooExtended) SetAge(age int) {
 	f.Age = age
 	f.require(fooExtendedFieldAge)

@@ -42,6 +42,8 @@ func (r *Response) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetFoo(foo *folderb.Foo) {
 	r.Foo = foo
 	r.require(responseFieldFoo)

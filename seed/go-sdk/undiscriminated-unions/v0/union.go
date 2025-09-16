@@ -384,11 +384,15 @@ func (n *NamedMetadata) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NamedMetadata) SetName(name string) {
 	n.Name = name
 	n.require(namedMetadataFieldName)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NamedMetadata) SetValue(value map[string]interface{}) {
 	n.Value = value
 	n.require(namedMetadataFieldValue)
@@ -780,6 +784,8 @@ func (r *Request) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetUnion sets the Union field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Request) SetUnion(union *MetadataUnion) {
 	r.Union = union
 	r.require(requestFieldUnion)
@@ -856,6 +862,8 @@ func (t *TypeWithOptionalUnion) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetMyUnion sets the MyUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TypeWithOptionalUnion) SetMyUnion(myUnion *MyUnion) {
 	t.MyUnion = myUnion
 	t.require(typeWithOptionalUnionFieldMyUnion)

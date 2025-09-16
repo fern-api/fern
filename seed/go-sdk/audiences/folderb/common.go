@@ -42,6 +42,8 @@ func (f *Foo) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *Foo) SetFoo(foo *folderc.FolderCFoo) {
 	f.Foo = foo
 	f.require(fooFieldFoo)

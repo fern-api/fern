@@ -50,11 +50,15 @@ func (e *ErrorBody) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ErrorBody) SetMessage(message string) {
 	e.Message = message
 	e.require(errorBodyFieldMessage)
 }
 
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ErrorBody) SetCode(code int) {
 	e.Code = code
 	e.require(errorBodyFieldCode)

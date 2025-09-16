@@ -59,16 +59,22 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetId(id string) {
 	u.Id = id
 	u.require(userFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetEmail(email string) {
 	u.Email = email
 	u.require(userFieldEmail)

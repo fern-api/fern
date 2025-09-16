@@ -541,6 +541,8 @@ func (t *T) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetChild sets the Child field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *T) SetChild(child *TorU) {
 	t.Child = child
 	t.require(tFieldChild)
@@ -679,6 +681,8 @@ func (u *U) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetChild sets the Child field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *U) SetChild(child *T) {
 	u.Child = child
 	u.require(uFieldChild)

@@ -33,21 +33,29 @@ func (c *CreateRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetDecimal sets the Decimal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateRequest) SetDecimal(decimal float64) {
 	c.Decimal = decimal
 	c.require(createRequestFieldDecimal)
 }
 
+// SetEven sets the Even field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateRequest) SetEven(even int) {
 	c.Even = even
 	c.require(createRequestFieldEven)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateRequest) SetName(name string) {
 	c.Name = name
 	c.require(createRequestFieldName)
 }
 
+// SetShape sets the Shape field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateRequest) SetShape(shape Shape) {
 	c.Shape = shape
 	c.require(createRequestFieldShape)
@@ -75,16 +83,22 @@ func (g *GetRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetDecimal sets the Decimal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetRequest) SetDecimal(decimal float64) {
 	g.Decimal = decimal
 	g.require(getRequestFieldDecimal)
 }
 
+// SetEven sets the Even field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetRequest) SetEven(even int) {
 	g.Even = even
 	g.require(getRequestFieldEven)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetRequest) SetName(name string) {
 	g.Name = name
 	g.require(getRequestFieldName)
@@ -183,21 +197,29 @@ func (t *Type) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetDecimal sets the Decimal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetDecimal(decimal float64) {
 	t.Decimal = decimal
 	t.require(typeFieldDecimal)
 }
 
+// SetEven sets the Even field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetEven(even int) {
 	t.Even = even
 	t.require(typeFieldEven)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetName(name string) {
 	t.Name = name
 	t.require(typeFieldName)
 }
 
+// SetShape sets the Shape field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetShape(shape Shape) {
 	t.Shape = shape
 	t.require(typeFieldShape)

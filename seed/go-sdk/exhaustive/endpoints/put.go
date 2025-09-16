@@ -27,6 +27,8 @@ func (p *PutRequest) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PutRequest) SetId(id string) {
 	p.Id = id
 	p.require(putRequestFieldId)
@@ -91,21 +93,29 @@ func (e *Error) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Error) SetCategory(category ErrorCategory) {
 	e.Category = category
 	e.require(errorFieldCategory)
 }
 
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Error) SetCode(code ErrorCode) {
 	e.Code = code
 	e.require(errorFieldCode)
 }
 
+// SetDetail sets the Detail field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Error) SetDetail(detail *string) {
 	e.Detail = detail
 	e.require(errorFieldDetail)
 }
 
+// SetField sets the Field field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Error) SetField(field *string) {
 	e.Field = field
 	e.require(errorFieldField)
@@ -256,6 +266,8 @@ func (p *PutResponse) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PutResponse) SetErrors(errors []*Error) {
 	p.Errors = errors
 	p.require(putResponseFieldErrors)

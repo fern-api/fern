@@ -42,6 +42,8 @@ func (t *Type) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetName(name string) {
 	t.Name = name
 	t.require(typeFieldName)

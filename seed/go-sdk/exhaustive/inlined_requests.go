@@ -29,16 +29,22 @@ func (p *PostWithObjectBody) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PostWithObjectBody) SetString(string_ string) {
 	p.String = string_
 	p.require(postWithObjectBodyFieldString)
 }
 
+// SetInteger sets the Integer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PostWithObjectBody) SetInteger(integer int) {
 	p.Integer = integer
 	p.require(postWithObjectBodyFieldInteger)
 }
 
+// SetNestedObject sets the NestedObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PostWithObjectBody) SetNestedObject(nestedObject *types.ObjectWithOptionalField) {
 	p.NestedObject = nestedObject
 	p.require(postWithObjectBodyFieldNestedObject)

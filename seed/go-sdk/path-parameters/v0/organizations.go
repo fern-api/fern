@@ -27,6 +27,8 @@ func (s *SearchOrganizationsRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchOrganizationsRequest) SetLimit(limit *int) {
 	s.Limit = limit
 	s.require(searchOrganizationsRequestFieldLimit)
@@ -73,11 +75,15 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetName(name string) {
 	o.Name = name
 	o.require(organizationFieldName)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetTags(tags []string) {
 	o.Tags = tags
 	o.require(organizationFieldTags)

@@ -82,26 +82,36 @@ func (a *Address) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetLine1 sets the Line1 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetLine1(line1 string) {
 	a.Line1 = line1
 	a.require(addressFieldLine1)
 }
 
+// SetLine2 sets the Line2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetLine2(line2 *string) {
 	a.Line2 = line2
 	a.require(addressFieldLine2)
 }
 
+// SetCity sets the City field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetCity(city string) {
 	a.City = city
 	a.require(addressFieldCity)
 }
 
+// SetState sets the State field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetState(state string) {
 	a.State = state
 	a.require(addressFieldState)
 }
 
+// SetZip sets the Zip field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetZip(zip string) {
 	a.Zip = zip
 	a.require(addressFieldZip)
@@ -198,11 +208,15 @@ func (p *Person) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Person) SetName(name string) {
 	p.Name = name
 	p.require(personFieldName)
 }
 
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Person) SetAddress(address *Address) {
 	p.Address = address
 	p.require(personFieldAddress)

@@ -27,11 +27,15 @@ func (c *CreatePaymentRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetAmount sets the Amount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreatePaymentRequest) SetAmount(amount int) {
 	c.Amount = amount
 	c.require(createPaymentRequestFieldAmount)
 }
 
+// SetCurrency sets the Currency field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreatePaymentRequest) SetCurrency(currency Currency) {
 	c.Currency = currency
 	c.require(createPaymentRequestFieldCurrency)

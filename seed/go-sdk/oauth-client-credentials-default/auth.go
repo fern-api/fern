@@ -34,11 +34,15 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetClientId(clientId string) {
 	g.ClientId = clientId
 	g.require(getTokenRequestFieldClientId)
 }
 
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
 	g.ClientSecret = clientSecret
 	g.require(getTokenRequestFieldClientSecret)
@@ -110,11 +114,15 @@ func (t *TokenResponse) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TokenResponse) SetAccessToken(accessToken string) {
 	t.AccessToken = accessToken
 	t.require(tokenResponseFieldAccessToken)
 }
 
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TokenResponse) SetExpiresIn(expiresIn int) {
 	t.ExpiresIn = expiresIn
 	t.require(tokenResponseFieldExpiresIn)

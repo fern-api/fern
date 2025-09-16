@@ -52,11 +52,15 @@ func (n *Name) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Name) SetId(id string) {
 	n.Id = id
 	n.require(nameFieldId)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Name) SetValue(value string) {
 	n.Value = value
 	n.require(nameFieldValue)
@@ -346,121 +350,169 @@ func (t *Type) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetOne sets the One field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetOne(one int) {
 	t.One = one
 	t.require(typeFieldOne)
 }
 
+// SetTwo sets the Two field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwo(two float64) {
 	t.Two = two
 	t.require(typeFieldTwo)
 }
 
+// SetThree sets the Three field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetThree(three string) {
 	t.Three = three
 	t.require(typeFieldThree)
 }
 
+// SetFour sets the Four field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetFour(four bool) {
 	t.Four = four
 	t.require(typeFieldFour)
 }
 
+// SetFive sets the Five field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetFive(five int64) {
 	t.Five = five
 	t.require(typeFieldFive)
 }
 
+// SetSix sets the Six field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetSix(six time.Time) {
 	t.Six = six
 	t.require(typeFieldSix)
 }
 
+// SetSeven sets the Seven field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetSeven(seven time.Time) {
 	t.Seven = seven
 	t.require(typeFieldSeven)
 }
 
+// SetEight sets the Eight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetEight(eight uuid.UUID) {
 	t.Eight = eight
 	t.require(typeFieldEight)
 }
 
+// SetNine sets the Nine field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetNine(nine []byte) {
 	t.Nine = nine
 	t.require(typeFieldNine)
 }
 
+// SetTen sets the Ten field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTen(ten []int) {
 	t.Ten = ten
 	t.require(typeFieldTen)
 }
 
+// SetEleven sets the Eleven field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetEleven(eleven []float64) {
 	t.Eleven = eleven
 	t.require(typeFieldEleven)
 }
 
+// SetTwelve sets the Twelve field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwelve(twelve map[string]bool) {
 	t.Twelve = twelve
 	t.require(typeFieldTwelve)
 }
 
+// SetThirteen sets the Thirteen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetThirteen(thirteen *int64) {
 	t.Thirteen = thirteen
 	t.require(typeFieldThirteen)
 }
 
+// SetFourteen sets the Fourteen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetFourteen(fourteen interface{}) {
 	t.Fourteen = fourteen
 	t.require(typeFieldFourteen)
 }
 
+// SetFifteen sets the Fifteen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetFifteen(fifteen [][]int) {
 	t.Fifteen = fifteen
 	t.require(typeFieldFifteen)
 }
 
+// SetSixteen sets the Sixteen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetSixteen(sixteen []map[string]int) {
 	t.Sixteen = sixteen
 	t.require(typeFieldSixteen)
 }
 
+// SetSeventeen sets the Seventeen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetSeventeen(seventeen []*uuid.UUID) {
 	t.Seventeen = seventeen
 	t.require(typeFieldSeventeen)
 }
 
+// SetNineteen sets the Nineteen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetNineteen(nineteen *Name) {
 	t.Nineteen = nineteen
 	t.require(typeFieldNineteen)
 }
 
+// SetTwenty sets the Twenty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwenty(twenty int) {
 	t.Twenty = twenty
 	t.require(typeFieldTwenty)
 }
 
+// SetTwentyone sets the Twentyone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwentyone(twentyone int64) {
 	t.Twentyone = twentyone
 	t.require(typeFieldTwentyone)
 }
 
+// SetTwentytwo sets the Twentytwo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwentytwo(twentytwo float64) {
 	t.Twentytwo = twentytwo
 	t.require(typeFieldTwentytwo)
 }
 
+// SetTwentythree sets the Twentythree field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwentythree(twentythree string) {
 	t.Twentythree = twentythree
 	t.require(typeFieldTwentythree)
 }
 
+// SetTwentyfour sets the Twentyfour field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwentyfour(twentyfour *time.Time) {
 	t.Twentyfour = twentyfour
 	t.require(typeFieldTwentyfour)
 }
 
+// SetTwentyfive sets the Twentyfive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Type) SetTwentyfive(twentyfive *time.Time) {
 	t.Twentyfive = twentyfive
 	t.require(typeFieldTwentyfive)

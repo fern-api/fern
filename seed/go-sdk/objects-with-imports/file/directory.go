@@ -60,16 +60,22 @@ func (d *Directory) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetName(name string) {
 	d.Name = name
 	d.require(directoryFieldName)
 }
 
+// SetFiles sets the Files field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetFiles(files []*fern.File) {
 	d.Files = files
 	d.require(directoryFieldFiles)
 }
 
+// SetDirectories sets the Directories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetDirectories(directories []*Directory) {
 	d.Directories = directories
 	d.require(directoryFieldDirectories)

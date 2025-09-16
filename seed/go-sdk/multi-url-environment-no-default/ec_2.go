@@ -24,6 +24,8 @@ func (b *BootInstanceRequest) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BootInstanceRequest) SetSize(size string) {
 	b.Size = size
 	b.require(bootInstanceRequestFieldSize)

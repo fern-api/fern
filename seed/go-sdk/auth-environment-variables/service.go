@@ -25,6 +25,8 @@ func (h *HeaderAuthRequest) require(field *big.Int) {
 	h.explicitFields.Or(h.explicitFields, field)
 }
 
+// SetXEndpointHeader sets the XEndpointHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (h *HeaderAuthRequest) SetXEndpointHeader(xEndpointHeader string) {
 	h.XEndpointHeader = xEndpointHeader
 	h.require(headerAuthRequestFieldXEndpointHeader)

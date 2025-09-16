@@ -31,16 +31,22 @@ func (g *GetOrganizationUserRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetOrganizationUserRequest) SetTenantId(tenantId string) {
 	g.TenantId = tenantId
 	g.require(getOrganizationUserRequestFieldTenantId)
 }
 
+// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetOrganizationUserRequest) SetOrganizationId(organizationId string) {
 	g.OrganizationId = organizationId
 	g.require(getOrganizationUserRequestFieldOrganizationId)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetOrganizationUserRequest) SetUserId(userId string) {
 	g.UserId = userId
 	g.require(getOrganizationUserRequestFieldUserId)
@@ -64,6 +70,8 @@ func (s *SearchOrganizationsRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchOrganizationsRequest) SetLimit(limit *int) {
 	s.Limit = limit
 	s.require(searchOrganizationsRequestFieldLimit)
@@ -110,11 +118,15 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetName(name string) {
 	o.Name = name
 	o.require(organizationFieldName)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetTags(tags []string) {
 	o.Tags = tags
 	o.require(organizationFieldTags)

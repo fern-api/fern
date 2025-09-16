@@ -96,6 +96,8 @@ func (o *ObjectWithDocs) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectWithDocs) SetString(string_ string) {
 	o.String = string_
 	o.require(objectWithDocsFieldString)

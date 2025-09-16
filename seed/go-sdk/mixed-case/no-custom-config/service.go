@@ -30,11 +30,15 @@ func (l *ListResourcesRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPageLimit sets the PageLimit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetPageLimit(pageLimit int) {
 	l.PageLimit = pageLimit
 	l.require(listResourcesRequestFieldPageLimit)
 }
 
+// SetBeforeDate sets the BeforeDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetBeforeDate(beforeDate time.Time) {
 	l.BeforeDate = beforeDate
 	l.require(listResourcesRequestFieldBeforeDate)
@@ -81,11 +85,15 @@ func (n *NestedUser) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedUser) SetName(name string) {
 	n.Name = name
 	n.require(nestedUserFieldName)
 }
 
+// SetNestedUser sets the NestedUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedUser) SetNestedUser(nestedUser *User) {
 	n.NestedUser = nestedUser
 	n.require(nestedUserFieldNestedUser)
@@ -162,6 +170,8 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetName(name string) {
 	o.Name = name
 	o.require(organizationFieldName)
@@ -405,16 +415,22 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetUserName sets the UserName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetUserName(userName string) {
 	u.UserName = userName
 	u.require(userFieldUserName)
 }
 
+// SetMetadataTags sets the MetadataTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetMetadataTags(metadataTags []string) {
 	u.MetadataTags = metadataTags
 	u.require(userFieldMetadataTags)
 }
 
+// SetExtraProperties sets the ExtraProperties field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetExtraProperties(extraProperties map[string]string) {
 	u.ExtraProperties = extraProperties
 	u.require(userFieldExtraProperties)

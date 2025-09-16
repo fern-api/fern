@@ -41,6 +41,8 @@ func (a *Acai) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Acai) SetAnimal(animal *Animal) {
 	a.Animal = animal
 	a.require(acaiFieldAnimal)
@@ -179,6 +181,8 @@ func (b *Berry) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *Berry) SetAnimal(animal *Animal) {
 	b.Animal = animal
 	b.require(berryFieldAnimal)
@@ -255,6 +259,8 @@ func (b *BranchNode) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetChildren sets the Children field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BranchNode) SetChildren(children []*Node) {
 	b.Children = children
 	b.require(branchNodeFieldChildren)
@@ -331,6 +337,8 @@ func (c *Cat) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetFruit sets the Fruit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Cat) SetFruit(fruit *Fruit) {
 	c.Fruit = fruit
 	c.require(catFieldFruit)
@@ -542,6 +550,8 @@ func (d *Dog) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetFruit sets the Fruit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Dog) SetFruit(fruit *Fruit) {
 	d.Fruit = fruit
 	d.require(dogFieldFruit)
@@ -779,6 +789,8 @@ func (f *Fig) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *Fig) SetAnimal(animal *Animal) {
 	f.Animal = animal
 	f.require(figFieldAnimal)
@@ -1038,6 +1050,8 @@ func (n *NodesWrapper) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NodesWrapper) SetNodes(nodes [][]*Node) {
 	n.Nodes = nodes
 	n.require(nodesWrapperFieldNodes)
@@ -1124,11 +1138,15 @@ func (o *ObjectFieldValue) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectFieldValue) SetName(name FieldName) {
 	o.Name = name
 	o.require(objectFieldValueFieldName)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *ObjectFieldValue) SetValue(value *FieldValue) {
 	o.Value = value
 	o.require(objectFieldValueFieldValue)

@@ -42,6 +42,8 @@ func (f *FolderCFoo) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetBarProperty sets the BarProperty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FolderCFoo) SetBarProperty(barProperty uuid.UUID) {
 	f.BarProperty = barProperty
 	f.require(folderCFooFieldBarProperty)

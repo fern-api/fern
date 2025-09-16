@@ -34,21 +34,29 @@ func (c *CreateUserRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetUsername(username string) {
 	c.Username = username
 	c.require(createUserRequestFieldUsername)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetTags(tags []string) {
 	c.Tags = tags
 	c.require(createUserRequestFieldTags)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetMetadata(metadata *Metadata) {
 	c.Metadata = metadata
 	c.require(createUserRequestFieldMetadata)
 }
 
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetAvatar(avatar *string) {
 	c.Avatar = avatar
 	c.require(createUserRequestFieldAvatar)
@@ -73,6 +81,8 @@ func (d *DeleteUserRequest) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeleteUserRequest) SetUsername(username *string) {
 	d.Username = username
 	d.require(deleteUserRequestFieldUsername)
@@ -104,26 +114,36 @@ func (g *GetUsersRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetUsernames sets the Usernames field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetUsernames(usernames []*string) {
 	g.Usernames = usernames
 	g.require(getUsersRequestFieldUsernames)
 }
 
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetAvatar(avatar *string) {
 	g.Avatar = avatar
 	g.require(getUsersRequestFieldAvatar)
 }
 
+// SetActivated sets the Activated field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetActivated(activated []*bool) {
 	g.Activated = activated
 	g.require(getUsersRequestFieldActivated)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetTags(tags []*string) {
 	g.Tags = tags
 	g.require(getUsersRequestFieldTags)
 }
 
+// SetExtra sets the Extra field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetExtra(extra *bool) {
 	g.Extra = extra
 	g.require(getUsersRequestFieldExtra)
@@ -208,31 +228,43 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetCreatedAt(createdAt time.Time) {
 	m.CreatedAt = createdAt
 	m.require(metadataFieldCreatedAt)
 }
 
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetUpdatedAt(updatedAt time.Time) {
 	m.UpdatedAt = updatedAt
 	m.require(metadataFieldUpdatedAt)
 }
 
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetAvatar(avatar *string) {
 	m.Avatar = avatar
 	m.require(metadataFieldAvatar)
 }
 
+// SetActivated sets the Activated field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetActivated(activated *bool) {
 	m.Activated = activated
 	m.require(metadataFieldActivated)
 }
 
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetStatus(status *Status) {
 	m.Status = status
 	m.require(metadataFieldStatus)
 }
 
+// SetValues sets the Values field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetValues(values map[string]*string) {
 	m.Values = values
 	m.require(metadataFieldValues)
@@ -550,41 +582,57 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetId(id UserId) {
 	u.Id = id
 	u.require(userFieldId)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(userFieldTags)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetMetadata(metadata *Metadata) {
 	u.Metadata = metadata
 	u.require(userFieldMetadata)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetEmail(email Email) {
 	u.Email = email
 	u.require(userFieldEmail)
 }
 
+// SetFavoriteNumber sets the FavoriteNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetFavoriteNumber(favoriteNumber *WeirdNumber) {
 	u.FavoriteNumber = favoriteNumber
 	u.require(userFieldFavoriteNumber)
 }
 
+// SetNumbers sets the Numbers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetNumbers(numbers []int) {
 	u.Numbers = numbers
 	u.require(userFieldNumbers)
 }
 
+// SetStrings sets the Strings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetStrings(strings map[string]interface{}) {
 	u.Strings = strings
 	u.require(userFieldStrings)

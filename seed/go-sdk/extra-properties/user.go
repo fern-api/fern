@@ -39,6 +39,8 @@ func (c *CreateUserRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetName(name string) {
 	c.Name = name
 	c.require(createUserRequestFieldName)
@@ -110,6 +112,8 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)

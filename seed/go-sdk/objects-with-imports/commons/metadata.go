@@ -50,11 +50,15 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetId(id string) {
 	m.Id = id
 	m.require(metadataFieldId)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetData(data map[string]string) {
 	m.Data = data
 	m.require(metadataFieldData)

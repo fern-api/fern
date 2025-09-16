@@ -30,6 +30,8 @@ func (l *ListUsernamesRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsernamesRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
 	l.require(listUsernamesRequestFieldStartingAfter)
@@ -55,6 +57,8 @@ func (l *ListUsersBodyCursorPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersBodyCursorPaginationRequest) SetPagination(pagination *WithCursor) {
 	l.Pagination = pagination
 	l.require(listUsersBodyCursorPaginationRequestFieldPagination)
@@ -80,6 +84,8 @@ func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersBodyOffsetPaginationRequest) SetPagination(pagination *WithPage) {
 	l.Pagination = pagination
 	l.require(listUsersBodyOffsetPaginationRequestFieldPagination)
@@ -113,21 +119,29 @@ func (l *ListUsersCursorPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersCursorPaginationRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listUsersCursorPaginationRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersCursorPaginationRequest) SetPerPage(perPage *int) {
 	l.PerPage = perPage
 	l.require(listUsersCursorPaginationRequestFieldPerPage)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersCursorPaginationRequest) SetOrder(order *Order) {
 	l.Order = order
 	l.require(listUsersCursorPaginationRequestFieldOrder)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersCursorPaginationRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
 	l.require(listUsersCursorPaginationRequestFieldStartingAfter)
@@ -161,21 +175,29 @@ func (l *ListUsersDoubleOffsetPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersDoubleOffsetPaginationRequest) SetPage(page *float64) {
 	l.Page = page
 	l.require(listUsersDoubleOffsetPaginationRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersDoubleOffsetPaginationRequest) SetPerPage(perPage *float64) {
 	l.PerPage = perPage
 	l.require(listUsersDoubleOffsetPaginationRequestFieldPerPage)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersDoubleOffsetPaginationRequest) SetOrder(order *Order) {
 	l.Order = order
 	l.require(listUsersDoubleOffsetPaginationRequestFieldOrder)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersDoubleOffsetPaginationRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
 	l.require(listUsersDoubleOffsetPaginationRequestFieldStartingAfter)
@@ -199,6 +221,8 @@ func (l *ListUsersExtendedRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedRequest) SetCursor(cursor *uuid.UUID) {
 	l.Cursor = cursor
 	l.require(listUsersExtendedRequestFieldCursor)
@@ -222,6 +246,8 @@ func (l *ListUsersExtendedRequestForOptionalData) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedRequestForOptionalData) SetCursor(cursor *uuid.UUID) {
 	l.Cursor = cursor
 	l.require(listUsersExtendedRequestForOptionalDataFieldCursor)
@@ -245,6 +271,8 @@ func (l *ListWithGlobalConfigRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListWithGlobalConfigRequest) SetOffset(offset *int) {
 	l.Offset = offset
 	l.require(listWithGlobalConfigRequestFieldOffset)
@@ -268,6 +296,8 @@ func (l *ListUsersMixedTypeCursorPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersMixedTypeCursorPaginationRequest) SetCursor(cursor *string) {
 	l.Cursor = cursor
 	l.require(listUsersMixedTypeCursorPaginationRequestFieldCursor)
@@ -301,21 +331,29 @@ func (l *ListUsersOffsetPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetPaginationRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listUsersOffsetPaginationRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetPaginationRequest) SetPerPage(perPage *int) {
 	l.PerPage = perPage
 	l.require(listUsersOffsetPaginationRequestFieldPerPage)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetPaginationRequest) SetOrder(order *Order) {
 	l.Order = order
 	l.require(listUsersOffsetPaginationRequestFieldOrder)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetPaginationRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
 	l.require(listUsersOffsetPaginationRequestFieldStartingAfter)
@@ -347,16 +385,22 @@ func (l *ListWithOffsetPaginationHasNextPageRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListWithOffsetPaginationHasNextPageRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listWithOffsetPaginationHasNextPageRequestFieldPage)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListWithOffsetPaginationHasNextPageRequest) SetLimit(limit *int) {
 	l.Limit = limit
 	l.require(listWithOffsetPaginationHasNextPageRequestFieldLimit)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListWithOffsetPaginationHasNextPageRequest) SetOrder(order *Order) {
 	l.Order = order
 	l.require(listWithOffsetPaginationHasNextPageRequestFieldOrder)
@@ -388,16 +432,22 @@ func (l *ListUsersOffsetStepPaginationRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetStepPaginationRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listUsersOffsetStepPaginationRequestFieldPage)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetStepPaginationRequest) SetLimit(limit *int) {
 	l.Limit = limit
 	l.require(listUsersOffsetStepPaginationRequestFieldLimit)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersOffsetStepPaginationRequest) SetOrder(order *Order) {
 	l.Order = order
 	l.require(listUsersOffsetStepPaginationRequestFieldOrder)
@@ -435,6 +485,8 @@ func (u *UsernameCursor) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UsernameCursor) SetCursor(cursor *UsernamePage) {
 	u.Cursor = cursor
 	u.require(usernameCursorFieldCursor)
@@ -520,11 +572,15 @@ func (u *UsernamePage) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetAfter sets the After field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UsernamePage) SetAfter(after *string) {
 	u.After = after
 	u.require(usernamePageFieldAfter)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UsernamePage) SetData(data []string) {
 	u.Data = data
 	u.require(usernamePageFieldData)
@@ -620,16 +676,22 @@ func (l *ListUsersExtendedOptionalListResponse) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedOptionalListResponse) SetData(data *UserOptionalListContainer) {
 	l.Data = data
 	l.require(listUsersExtendedOptionalListResponseFieldData)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedOptionalListResponse) SetNext(next *uuid.UUID) {
 	l.Next = next
 	l.require(listUsersExtendedOptionalListResponseFieldNext)
 }
 
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedOptionalListResponse) SetTotalCount(totalCount int) {
 	l.TotalCount = totalCount
 	l.require(listUsersExtendedOptionalListResponseFieldTotalCount)
@@ -725,16 +787,22 @@ func (l *ListUsersExtendedResponse) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedResponse) SetData(data *UserListContainer) {
 	l.Data = data
 	l.require(listUsersExtendedResponseFieldData)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedResponse) SetNext(next *uuid.UUID) {
 	l.Next = next
 	l.require(listUsersExtendedResponseFieldNext)
 }
 
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersExtendedResponse) SetTotalCount(totalCount int) {
 	l.TotalCount = totalCount
 	l.require(listUsersExtendedResponseFieldTotalCount)
@@ -820,11 +888,15 @@ func (l *ListUsersMixedTypePaginationResponse) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersMixedTypePaginationResponse) SetNext(next string) {
 	l.Next = next
 	l.require(listUsersMixedTypePaginationResponseFieldNext)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersMixedTypePaginationResponse) SetData(data []*User) {
 	l.Data = data
 	l.require(listUsersMixedTypePaginationResponseFieldData)
@@ -929,21 +1001,29 @@ func (l *ListUsersPaginationResponse) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetHasNextPage sets the HasNextPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersPaginationResponse) SetHasNextPage(hasNextPage *bool) {
 	l.HasNextPage = hasNextPage
 	l.require(listUsersPaginationResponseFieldHasNextPage)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersPaginationResponse) SetPage(page *Page) {
 	l.Page = page
 	l.require(listUsersPaginationResponseFieldPage)
 }
 
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersPaginationResponse) SetTotalCount(totalCount int) {
 	l.TotalCount = totalCount
 	l.require(listUsersPaginationResponseFieldTotalCount)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersPaginationResponse) SetData(data []*User) {
 	l.Data = data
 	l.require(listUsersPaginationResponseFieldData)
@@ -1029,11 +1109,15 @@ func (n *NextPage) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NextPage) SetPage(page int) {
 	n.Page = page
 	n.require(nextPageFieldPage)
 }
 
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NextPage) SetStartingAfter(startingAfter string) {
 	n.StartingAfter = startingAfter
 	n.require(nextPageFieldStartingAfter)
@@ -1160,21 +1244,29 @@ func (p *Page) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Page) SetPage(page int) {
 	p.Page = page
 	p.require(pageFieldPage)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Page) SetNext(next *NextPage) {
 	p.Next = next
 	p.require(pageFieldNext)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Page) SetPerPage(perPage int) {
 	p.PerPage = perPage
 	p.require(pageFieldPerPage)
 }
 
+// SetTotalPage sets the TotalPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Page) SetTotalPage(totalPage int) {
 	p.TotalPage = totalPage
 	p.require(pageFieldTotalPage)
@@ -1260,11 +1352,15 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetId(id int) {
 	u.Id = id
 	u.require(userFieldId)
@@ -1341,6 +1437,8 @@ func (u *UserListContainer) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserListContainer) SetUsers(users []*User) {
 	u.Users = users
 	u.require(userListContainerFieldUsers)
@@ -1417,6 +1515,8 @@ func (u *UserOptionalListContainer) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserOptionalListContainer) SetUsers(users []*User) {
 	u.Users = users
 	u.require(userOptionalListContainerFieldUsers)
@@ -1502,11 +1602,15 @@ func (u *UserOptionalListPage) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserOptionalListPage) SetData(data *UserOptionalListContainer) {
 	u.Data = data
 	u.require(userOptionalListPageFieldData)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserOptionalListPage) SetNext(next *uuid.UUID) {
 	u.Next = next
 	u.require(userOptionalListPageFieldNext)
@@ -1592,11 +1696,15 @@ func (u *UserPage) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserPage) SetData(data *UserListContainer) {
 	u.Data = data
 	u.require(userPageFieldData)
 }
 
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserPage) SetNext(next *uuid.UUID) {
 	u.Next = next
 	u.require(userPageFieldNext)
@@ -1673,6 +1781,8 @@ func (u *UsernameContainer) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetResults sets the Results field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UsernameContainer) SetResults(results []string) {
 	u.Results = results
 	u.require(usernameContainerFieldResults)
@@ -1749,6 +1859,8 @@ func (w *WithCursor) require(field *big.Int) {
 	w.explicitFields.Or(w.explicitFields, field)
 }
 
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (w *WithCursor) SetCursor(cursor *string) {
 	w.Cursor = cursor
 	w.require(withCursorFieldCursor)
@@ -1825,6 +1937,8 @@ func (w *WithPage) require(field *big.Int) {
 	w.explicitFields.Or(w.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (w *WithPage) SetPage(page *int) {
 	w.Page = page
 	w.require(withPageFieldPage)

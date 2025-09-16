@@ -28,16 +28,22 @@ func (g *GetMetadataRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetXApiVersion sets the XApiVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetMetadataRequest) SetXApiVersion(xApiVersion string) {
 	g.XApiVersion = xApiVersion
 	g.require(getMetadataRequestFieldXApiVersion)
 }
 
+// SetShallow sets the Shallow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetMetadataRequest) SetShallow(shallow *bool) {
 	g.Shallow = shallow
 	g.require(getMetadataRequestFieldShallow)
 }
 
+// SetTag sets the Tag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetMetadataRequest) SetTag(tag []*string) {
 	g.Tag = tag
 	g.require(getMetadataRequestFieldTag)

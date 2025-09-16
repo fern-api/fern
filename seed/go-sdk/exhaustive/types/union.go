@@ -167,11 +167,15 @@ func (c *Cat) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Cat) SetName(name string) {
 	c.Name = name
 	c.require(catFieldName)
 }
 
+// SetLikesToMeow sets the LikesToMeow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Cat) SetLikesToMeow(likesToMeow bool) {
 	c.LikesToMeow = likesToMeow
 	c.require(catFieldLikesToMeow)
@@ -257,11 +261,15 @@ func (d *Dog) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Dog) SetName(name string) {
 	d.Name = name
 	d.require(dogFieldName)
 }
 
+// SetLikesToWoof sets the LikesToWoof field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Dog) SetLikesToWoof(likesToWoof bool) {
 	d.LikesToWoof = likesToWoof
 	d.require(dogFieldLikesToWoof)

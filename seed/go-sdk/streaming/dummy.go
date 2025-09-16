@@ -32,6 +32,8 @@ func (g *Generateequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetNumEvents sets the NumEvents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *Generateequest) SetNumEvents(numEvents int) {
 	g.NumEvents = numEvents
 	g.require(generateequestFieldNumEvents)
@@ -84,6 +86,8 @@ func (g *GenerateStreamRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetNumEvents sets the NumEvents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GenerateStreamRequest) SetNumEvents(numEvents int) {
 	g.NumEvents = numEvents
 	g.require(generateStreamRequestFieldNumEvents)
@@ -154,11 +158,15 @@ func (s *StreamResponse) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StreamResponse) SetId(id string) {
 	s.Id = id
 	s.require(streamResponseFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StreamResponse) SetName(name *string) {
 	s.Name = name
 	s.require(streamResponseFieldName)

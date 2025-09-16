@@ -27,11 +27,15 @@ func (g *GetWithMultipleQuery) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithMultipleQuery) SetQuery(query []string) {
 	g.Query = query
 	g.require(getWithMultipleQueryFieldQuery)
 }
 
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithMultipleQuery) SetNumber(number []int) {
 	g.Number = number
 	g.require(getWithMultipleQueryFieldNumber)
@@ -55,6 +59,8 @@ func (g *GetWithInlinePath) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetParam sets the Param field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithInlinePath) SetParam(param string) {
 	g.Param = param
 	g.require(getWithInlinePathFieldParam)
@@ -80,11 +86,15 @@ func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetParam sets the Param field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithInlinePathAndQuery) SetParam(param string) {
 	g.Param = param
 	g.require(getWithInlinePathAndQueryFieldParam)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithInlinePathAndQuery) SetQuery(query string) {
 	g.Query = query
 	g.require(getWithInlinePathAndQueryFieldQuery)
@@ -108,6 +118,8 @@ func (g *GetWithPathAndQuery) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithPathAndQuery) SetQuery(query string) {
 	g.Query = query
 	g.require(getWithPathAndQueryFieldQuery)
@@ -133,11 +145,15 @@ func (g *GetWithQuery) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithQuery) SetQuery(query string) {
 	g.Query = query
 	g.require(getWithQueryFieldQuery)
 }
 
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetWithQuery) SetNumber(number int) {
 	g.Number = number
 	g.require(getWithQueryFieldNumber)
@@ -162,6 +178,8 @@ func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetParam sets the Param field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *ModifyResourceAtInlinedPath) SetParam(param string) {
 	m.Param = param
 	m.require(modifyResourceAtInlinedPathFieldParam)

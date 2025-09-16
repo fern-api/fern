@@ -29,11 +29,15 @@ func (g *GetUsersRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetTenantId(tenantId string) {
 	g.TenantId = tenantId
 	g.require(getUsersRequestFieldTenantId)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUsersRequest) SetUserId(userId string) {
 	g.UserId = userId
 	g.require(getUsersRequestFieldUserId)
@@ -61,16 +65,22 @@ func (s *SearchUsersRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetTenantId(tenantId string) {
 	s.TenantId = tenantId
 	s.require(searchUsersRequestFieldTenantId)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetUserId(userId string) {
 	s.UserId = userId
 	s.require(searchUsersRequestFieldUserId)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetLimit(limit *int) {
 	s.Limit = limit
 	s.require(searchUsersRequestFieldLimit)
@@ -117,11 +127,15 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(userFieldTags)
@@ -187,11 +201,15 @@ func (u *UpdateUserRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetTenantId(tenantId string) {
 	u.TenantId = tenantId
 	u.require(updateUserRequestFieldTenantId)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetUserId(userId string) {
 	u.UserId = userId
 	u.require(updateUserRequestFieldUserId)

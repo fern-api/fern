@@ -43,6 +43,8 @@ func (m *MyObject) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetUnknown sets the Unknown field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MyObject) SetUnknown(unknown interface{}) {
 	m.Unknown = unknown
 	m.require(myObjectFieldUnknown)

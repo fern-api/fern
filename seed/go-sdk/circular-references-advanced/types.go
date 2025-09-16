@@ -41,6 +41,8 @@ func (i *ImportingA) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+// SetA sets the A field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *ImportingA) SetA(a *A) {
 	i.A = a
 	i.require(importingAFieldA)
@@ -117,6 +119,8 @@ func (r *RootType) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetS sets the S field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RootType) SetS(s string) {
 	r.S = s
 	r.require(rootTypeFieldS)

@@ -32,16 +32,22 @@ func (f *FilterByRoleRequest) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetRole sets the Role field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FilterByRoleRequest) SetRole(role *UserRole) {
 	f.Role = role
 	f.require(filterByRoleRequestFieldRole)
 }
 
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FilterByRoleRequest) SetStatus(status *UserStatus) {
 	f.Status = status
 	f.require(filterByRoleRequestFieldStatus)
 }
 
+// SetSecondaryRole sets the SecondaryRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FilterByRoleRequest) SetSecondaryRole(secondaryRole *UserRole) {
 	f.SecondaryRole = secondaryRole
 	f.require(filterByRoleRequestFieldSecondaryRole)
@@ -69,16 +75,22 @@ func (s *SearchRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetQuery(query string) {
 	s.Query = query
 	s.require(searchRequestFieldQuery)
 }
 
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetFilters(filters map[string]*string) {
 	s.Filters = filters
 	s.require(searchRequestFieldFilters)
 }
 
+// SetIncludeTypes sets the IncludeTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetIncludeTypes(includeTypes []string) {
 	s.IncludeTypes = includeTypes
 	s.require(searchRequestFieldIncludeTypes)
@@ -108,21 +120,29 @@ func (l *ListUsersRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetLimit(limit *int) {
 	l.Limit = limit
 	l.require(listUsersRequestFieldLimit)
 }
 
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetOffset(offset *int) {
 	l.Offset = offset
 	l.require(listUsersRequestFieldOffset)
 }
 
+// SetIncludeDeleted sets the IncludeDeleted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetIncludeDeleted(includeDeleted *bool) {
 	l.IncludeDeleted = includeDeleted
 	l.require(listUsersRequestFieldIncludeDeleted)
 }
 
+// SetSortBy sets the SortBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetSortBy(sortBy *string) {
 	l.SortBy = sortBy
 	l.require(listUsersRequestFieldSortBy)
@@ -152,21 +172,29 @@ func (s *SearchUsersRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetQuery(query string) {
 	s.Query = query
 	s.require(searchUsersRequestFieldQuery)
 }
 
+// SetDepartment sets the Department field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetDepartment(department *string) {
 	s.Department = department
 	s.require(searchUsersRequestFieldDepartment)
 }
 
+// SetRole sets the Role field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetRole(role *string) {
 	s.Role = role
 	s.require(searchUsersRequestFieldRole)
 }
 
+// SetIsActive sets the IsActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchUsersRequest) SetIsActive(isActive *bool) {
 	s.IsActive = isActive
 	s.require(searchUsersRequestFieldIsActive)
@@ -259,36 +287,50 @@ func (a *Address) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetStreet sets the Street field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetStreet(street string) {
 	a.Street = street
 	a.require(addressFieldStreet)
 }
 
+// SetCity sets the City field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetCity(city *string) {
 	a.City = city
 	a.require(addressFieldCity)
 }
 
+// SetState sets the State field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetState(state *string) {
 	a.State = state
 	a.require(addressFieldState)
 }
 
+// SetZipCode sets the ZipCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetZipCode(zipCode string) {
 	a.ZipCode = zipCode
 	a.require(addressFieldZipCode)
 }
 
+// SetCountry sets the Country field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetCountry(country *string) {
 	a.Country = country
 	a.require(addressFieldCountry)
 }
 
+// SetBuildingId sets the BuildingId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetBuildingId(buildingId NullableUserId) {
 	a.BuildingId = buildingId
 	a.require(addressFieldBuildingId)
 }
 
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Address) SetTenantId(tenantId OptionalUserId) {
 	a.TenantId = tenantId
 	a.require(addressFieldTenantId)
@@ -528,96 +570,134 @@ func (c *ComplexProfile) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetId(id string) {
 	c.Id = id
 	c.require(complexProfileFieldId)
 }
 
+// SetNullableRole sets the NullableRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableRole(nullableRole *UserRole) {
 	c.NullableRole = nullableRole
 	c.require(complexProfileFieldNullableRole)
 }
 
+// SetOptionalRole sets the OptionalRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalRole(optionalRole *UserRole) {
 	c.OptionalRole = optionalRole
 	c.require(complexProfileFieldOptionalRole)
 }
 
+// SetOptionalNullableRole sets the OptionalNullableRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalNullableRole(optionalNullableRole *UserRole) {
 	c.OptionalNullableRole = optionalNullableRole
 	c.require(complexProfileFieldOptionalNullableRole)
 }
 
+// SetNullableStatus sets the NullableStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableStatus(nullableStatus *UserStatus) {
 	c.NullableStatus = nullableStatus
 	c.require(complexProfileFieldNullableStatus)
 }
 
+// SetOptionalStatus sets the OptionalStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalStatus(optionalStatus *UserStatus) {
 	c.OptionalStatus = optionalStatus
 	c.require(complexProfileFieldOptionalStatus)
 }
 
+// SetOptionalNullableStatus sets the OptionalNullableStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalNullableStatus(optionalNullableStatus *UserStatus) {
 	c.OptionalNullableStatus = optionalNullableStatus
 	c.require(complexProfileFieldOptionalNullableStatus)
 }
 
+// SetNullableNotification sets the NullableNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableNotification(nullableNotification *NotificationMethod) {
 	c.NullableNotification = nullableNotification
 	c.require(complexProfileFieldNullableNotification)
 }
 
+// SetOptionalNotification sets the OptionalNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalNotification(optionalNotification *NotificationMethod) {
 	c.OptionalNotification = optionalNotification
 	c.require(complexProfileFieldOptionalNotification)
 }
 
+// SetOptionalNullableNotification sets the OptionalNullableNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalNullableNotification(optionalNullableNotification *NotificationMethod) {
 	c.OptionalNullableNotification = optionalNullableNotification
 	c.require(complexProfileFieldOptionalNullableNotification)
 }
 
+// SetNullableSearchResult sets the NullableSearchResult field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableSearchResult(nullableSearchResult *SearchResult) {
 	c.NullableSearchResult = nullableSearchResult
 	c.require(complexProfileFieldNullableSearchResult)
 }
 
+// SetOptionalSearchResult sets the OptionalSearchResult field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalSearchResult(optionalSearchResult *SearchResult) {
 	c.OptionalSearchResult = optionalSearchResult
 	c.require(complexProfileFieldOptionalSearchResult)
 }
 
+// SetNullableArray sets the NullableArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableArray(nullableArray []string) {
 	c.NullableArray = nullableArray
 	c.require(complexProfileFieldNullableArray)
 }
 
+// SetOptionalArray sets the OptionalArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalArray(optionalArray []string) {
 	c.OptionalArray = optionalArray
 	c.require(complexProfileFieldOptionalArray)
 }
 
+// SetOptionalNullableArray sets the OptionalNullableArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalNullableArray(optionalNullableArray []string) {
 	c.OptionalNullableArray = optionalNullableArray
 	c.require(complexProfileFieldOptionalNullableArray)
 }
 
+// SetNullableListOfNullables sets the NullableListOfNullables field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableListOfNullables(nullableListOfNullables []*string) {
 	c.NullableListOfNullables = nullableListOfNullables
 	c.require(complexProfileFieldNullableListOfNullables)
 }
 
+// SetNullableMapOfNullables sets the NullableMapOfNullables field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableMapOfNullables(nullableMapOfNullables map[string]*Address) {
 	c.NullableMapOfNullables = nullableMapOfNullables
 	c.require(complexProfileFieldNullableMapOfNullables)
 }
 
+// SetNullableListOfUnions sets the NullableListOfUnions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetNullableListOfUnions(nullableListOfUnions []*NotificationMethod) {
 	c.NullableListOfUnions = nullableListOfUnions
 	c.require(complexProfileFieldNullableListOfUnions)
 }
 
+// SetOptionalMapOfEnums sets the OptionalMapOfEnums field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ComplexProfile) SetOptionalMapOfEnums(optionalMapOfEnums map[string]UserRole) {
 	c.OptionalMapOfEnums = optionalMapOfEnums
 	c.require(complexProfileFieldOptionalMapOfEnums)
@@ -721,21 +801,29 @@ func (c *CreateUserRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetUsername(username string) {
 	c.Username = username
 	c.require(createUserRequestFieldUsername)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetEmail(email *string) {
 	c.Email = email
 	c.require(createUserRequestFieldEmail)
 }
 
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetPhone(phone *string) {
 	c.Phone = phone
 	c.require(createUserRequestFieldPhone)
 }
 
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetAddress(address *Address) {
 	c.Address = address
 	c.require(createUserRequestFieldAddress)
@@ -912,61 +1000,85 @@ func (d *DeserializationTestRequest) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetRequiredString(requiredString string) {
 	d.RequiredString = requiredString
 	d.require(deserializationTestRequestFieldRequiredString)
 }
 
+// SetNullableString sets the NullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableString(nullableString *string) {
 	d.NullableString = nullableString
 	d.require(deserializationTestRequestFieldNullableString)
 }
 
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetOptionalString(optionalString *string) {
 	d.OptionalString = optionalString
 	d.require(deserializationTestRequestFieldOptionalString)
 }
 
+// SetOptionalNullableString sets the OptionalNullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetOptionalNullableString(optionalNullableString *string) {
 	d.OptionalNullableString = optionalNullableString
 	d.require(deserializationTestRequestFieldOptionalNullableString)
 }
 
+// SetNullableEnum sets the NullableEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableEnum(nullableEnum *UserRole) {
 	d.NullableEnum = nullableEnum
 	d.require(deserializationTestRequestFieldNullableEnum)
 }
 
+// SetOptionalEnum sets the OptionalEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetOptionalEnum(optionalEnum *UserStatus) {
 	d.OptionalEnum = optionalEnum
 	d.require(deserializationTestRequestFieldOptionalEnum)
 }
 
+// SetNullableUnion sets the NullableUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableUnion(nullableUnion *NotificationMethod) {
 	d.NullableUnion = nullableUnion
 	d.require(deserializationTestRequestFieldNullableUnion)
 }
 
+// SetOptionalUnion sets the OptionalUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetOptionalUnion(optionalUnion *SearchResult) {
 	d.OptionalUnion = optionalUnion
 	d.require(deserializationTestRequestFieldOptionalUnion)
 }
 
+// SetNullableList sets the NullableList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableList(nullableList []string) {
 	d.NullableList = nullableList
 	d.require(deserializationTestRequestFieldNullableList)
 }
 
+// SetNullableMap sets the NullableMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableMap(nullableMap map[string]int) {
 	d.NullableMap = nullableMap
 	d.require(deserializationTestRequestFieldNullableMap)
 }
 
+// SetNullableObject sets the NullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetNullableObject(nullableObject *Address) {
 	d.NullableObject = nullableObject
 	d.require(deserializationTestRequestFieldNullableObject)
 }
 
+// SetOptionalObject sets the OptionalObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestRequest) SetOptionalObject(optionalObject *Organization) {
 	d.OptionalObject = optionalObject
 	d.require(deserializationTestRequestFieldOptionalObject)
@@ -1071,21 +1183,29 @@ func (d *DeserializationTestResponse) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetEcho sets the Echo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestResponse) SetEcho(echo *DeserializationTestRequest) {
 	d.Echo = echo
 	d.require(deserializationTestResponseFieldEcho)
 }
 
+// SetProcessedAt sets the ProcessedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestResponse) SetProcessedAt(processedAt time.Time) {
 	d.ProcessedAt = processedAt
 	d.require(deserializationTestResponseFieldProcessedAt)
 }
 
+// SetNullCount sets the NullCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestResponse) SetNullCount(nullCount int) {
 	d.NullCount = nullCount
 	d.require(deserializationTestResponseFieldNullCount)
 }
 
+// SetPresentFieldsCount sets the PresentFieldsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DeserializationTestResponse) SetPresentFieldsCount(presentFieldsCount int) {
 	d.PresentFieldsCount = presentFieldsCount
 	d.require(deserializationTestResponseFieldPresentFieldsCount)
@@ -1206,26 +1326,36 @@ func (d *Document) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Document) SetId(id string) {
 	d.Id = id
 	d.require(documentFieldId)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Document) SetTitle(title string) {
 	d.Title = title
 	d.require(documentFieldTitle)
 }
 
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Document) SetContent(content string) {
 	d.Content = content
 	d.require(documentFieldContent)
 }
 
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Document) SetAuthor(author *string) {
 	d.Author = author
 	d.require(documentFieldAuthor)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Document) SetTags(tags []string) {
 	d.Tags = tags
 	d.require(documentFieldTags)
@@ -1320,16 +1450,22 @@ func (e *EmailNotification) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetEmailAddress sets the EmailAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *EmailNotification) SetEmailAddress(emailAddress string) {
 	e.EmailAddress = emailAddress
 	e.require(emailNotificationFieldEmailAddress)
 }
 
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *EmailNotification) SetSubject(subject string) {
 	e.Subject = subject
 	e.require(emailNotificationFieldSubject)
 }
 
+// SetHtmlContent sets the HtmlContent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *EmailNotification) SetHtmlContent(htmlContent *string) {
 	e.HtmlContent = htmlContent
 	e.require(emailNotificationFieldHtmlContent)
@@ -1581,21 +1717,29 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetId(id string) {
 	o.Id = id
 	o.require(organizationFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetName(name string) {
 	o.Name = name
 	o.require(organizationFieldName)
 }
 
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetDomain(domain *string) {
 	o.Domain = domain
 	o.require(organizationFieldDomain)
 }
 
+// SetEmployeeCount sets the EmployeeCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetEmployeeCount(employeeCount *int) {
 	o.EmployeeCount = employeeCount
 	o.require(organizationFieldEmployeeCount)
@@ -1699,21 +1843,29 @@ func (p *PushNotification) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetDeviceToken sets the DeviceToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PushNotification) SetDeviceToken(deviceToken string) {
 	p.DeviceToken = deviceToken
 	p.require(pushNotificationFieldDeviceToken)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PushNotification) SetTitle(title string) {
 	p.Title = title
 	p.require(pushNotificationFieldTitle)
 }
 
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PushNotification) SetBody(body string) {
 	p.Body = body
 	p.require(pushNotificationFieldBody)
 }
 
+// SetBadge sets the Badge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PushNotification) SetBadge(badge *int) {
 	p.Badge = badge
 	p.require(pushNotificationFieldBadge)
@@ -1950,16 +2102,22 @@ func (s *SmsNotification) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SmsNotification) SetPhoneNumber(phoneNumber string) {
 	s.PhoneNumber = phoneNumber
 	s.require(smsNotificationFieldPhoneNumber)
 }
 
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SmsNotification) SetMessage(message string) {
 	s.Message = message
 	s.require(smsNotificationFieldMessage)
 }
 
+// SetShortCode sets the ShortCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SmsNotification) SetShortCode(shortCode *string) {
 	s.ShortCode = shortCode
 	s.require(smsNotificationFieldShortCode)
@@ -2064,21 +2222,29 @@ func (u *UpdateUserRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetUsername(username *string) {
 	u.Username = username
 	u.require(updateUserRequestFieldUsername)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetEmail(email *string) {
 	u.Email = email
 	u.require(updateUserRequestFieldEmail)
 }
 
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetPhone(phone *string) {
 	u.Phone = phone
 	u.require(updateUserRequestFieldPhone)
 }
 
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetAddress(address *Address) {
 	u.Address = address
 	u.require(updateUserRequestFieldAddress)
@@ -2309,91 +2475,127 @@ func (u *UserProfile) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetId(id string) {
 	u.Id = id
 	u.require(userProfileFieldId)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetUsername(username string) {
 	u.Username = username
 	u.require(userProfileFieldUsername)
 }
 
+// SetNullableString sets the NullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableString(nullableString *string) {
 	u.NullableString = nullableString
 	u.require(userProfileFieldNullableString)
 }
 
+// SetNullableInteger sets the NullableInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableInteger(nullableInteger *int) {
 	u.NullableInteger = nullableInteger
 	u.require(userProfileFieldNullableInteger)
 }
 
+// SetNullableBoolean sets the NullableBoolean field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableBoolean(nullableBoolean *bool) {
 	u.NullableBoolean = nullableBoolean
 	u.require(userProfileFieldNullableBoolean)
 }
 
+// SetNullableDate sets the NullableDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableDate(nullableDate *time.Time) {
 	u.NullableDate = nullableDate
 	u.require(userProfileFieldNullableDate)
 }
 
+// SetNullableObject sets the NullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableObject(nullableObject *Address) {
 	u.NullableObject = nullableObject
 	u.require(userProfileFieldNullableObject)
 }
 
+// SetNullableList sets the NullableList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableList(nullableList []string) {
 	u.NullableList = nullableList
 	u.require(userProfileFieldNullableList)
 }
 
+// SetNullableMap sets the NullableMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetNullableMap(nullableMap map[string]string) {
 	u.NullableMap = nullableMap
 	u.require(userProfileFieldNullableMap)
 }
 
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalString(optionalString *string) {
 	u.OptionalString = optionalString
 	u.require(userProfileFieldOptionalString)
 }
 
+// SetOptionalInteger sets the OptionalInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalInteger(optionalInteger *int) {
 	u.OptionalInteger = optionalInteger
 	u.require(userProfileFieldOptionalInteger)
 }
 
+// SetOptionalBoolean sets the OptionalBoolean field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalBoolean(optionalBoolean *bool) {
 	u.OptionalBoolean = optionalBoolean
 	u.require(userProfileFieldOptionalBoolean)
 }
 
+// SetOptionalDate sets the OptionalDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalDate(optionalDate *time.Time) {
 	u.OptionalDate = optionalDate
 	u.require(userProfileFieldOptionalDate)
 }
 
+// SetOptionalObject sets the OptionalObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalObject(optionalObject *Address) {
 	u.OptionalObject = optionalObject
 	u.require(userProfileFieldOptionalObject)
 }
 
+// SetOptionalList sets the OptionalList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalList(optionalList []string) {
 	u.OptionalList = optionalList
 	u.require(userProfileFieldOptionalList)
 }
 
+// SetOptionalMap sets the OptionalMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalMap(optionalMap map[string]string) {
 	u.OptionalMap = optionalMap
 	u.require(userProfileFieldOptionalMap)
 }
 
+// SetOptionalNullableString sets the OptionalNullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalNullableString(optionalNullableString *string) {
 	u.OptionalNullableString = optionalNullableString
 	u.require(userProfileFieldOptionalNullableString)
 }
 
+// SetOptionalNullableObject sets the OptionalNullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserProfile) SetOptionalNullableObject(optionalNullableObject *Address) {
 	u.OptionalNullableObject = optionalNullableObject
 	u.require(userProfileFieldOptionalNullableObject)
@@ -2536,36 +2738,50 @@ func (u *UserResponse) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetId(id string) {
 	u.Id = id
 	u.require(userResponseFieldId)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetUsername(username string) {
 	u.Username = username
 	u.require(userResponseFieldUsername)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetEmail(email *string) {
 	u.Email = email
 	u.require(userResponseFieldEmail)
 }
 
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetPhone(phone *string) {
 	u.Phone = phone
 	u.require(userResponseFieldPhone)
 }
 
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetCreatedAt(createdAt time.Time) {
 	u.CreatedAt = createdAt
 	u.require(userResponseFieldCreatedAt)
 }
 
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetUpdatedAt(updatedAt *time.Time) {
 	u.UpdatedAt = updatedAt
 	u.require(userResponseFieldUpdatedAt)
 }
 
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponse) SetAddress(address *Address) {
 	u.Address = address
 	u.require(userResponseFieldAddress)
@@ -2706,26 +2922,36 @@ func (u *UpdateComplexProfileRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetNullableRole sets the NullableRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateComplexProfileRequest) SetNullableRole(nullableRole *UserRole) {
 	u.NullableRole = nullableRole
 	u.require(updateComplexProfileRequestFieldNullableRole)
 }
 
+// SetNullableStatus sets the NullableStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateComplexProfileRequest) SetNullableStatus(nullableStatus *UserStatus) {
 	u.NullableStatus = nullableStatus
 	u.require(updateComplexProfileRequestFieldNullableStatus)
 }
 
+// SetNullableNotification sets the NullableNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateComplexProfileRequest) SetNullableNotification(nullableNotification *NotificationMethod) {
 	u.NullableNotification = nullableNotification
 	u.require(updateComplexProfileRequestFieldNullableNotification)
 }
 
+// SetNullableSearchResult sets the NullableSearchResult field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateComplexProfileRequest) SetNullableSearchResult(nullableSearchResult *SearchResult) {
 	u.NullableSearchResult = nullableSearchResult
 	u.require(updateComplexProfileRequestFieldNullableSearchResult)
 }
 
+// SetNullableArray sets the NullableArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateComplexProfileRequest) SetNullableArray(nullableArray []string) {
 	u.NullableArray = nullableArray
 	u.require(updateComplexProfileRequestFieldNullableArray)
@@ -2753,16 +2979,22 @@ func (u *UpdateTagsRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateTagsRequest) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(updateTagsRequestFieldTags)
 }
 
+// SetCategories sets the Categories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateTagsRequest) SetCategories(categories []string) {
 	u.Categories = categories
 	u.require(updateTagsRequestFieldCategories)
 }
 
+// SetLabels sets the Labels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateTagsRequest) SetLabels(labels []string) {
 	u.Labels = labels
 	u.require(updateTagsRequestFieldLabels)

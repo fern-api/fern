@@ -41,6 +41,8 @@ func (p *PropertyBasedErrorTestBody) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PropertyBasedErrorTestBody) SetMessage(message string) {
 	p.Message = message
 	p.require(propertyBasedErrorTestBodyFieldMessage)

@@ -41,6 +41,8 @@ func (c *Circle) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetRadius sets the Radius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Circle) SetRadius(radius float64) {
 	c.Radius = radius
 	c.require(circleFieldRadius)
@@ -117,6 +119,8 @@ func (g *GetShapeRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetShapeRequest) SetId(id string) {
 	g.Id = id
 	g.require(getShapeRequestFieldId)
@@ -330,6 +334,8 @@ func (s *Square) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *Square) SetLength(length float64) {
 	s.Length = length
 	s.require(squareFieldLength)

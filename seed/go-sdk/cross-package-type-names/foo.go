@@ -31,16 +31,22 @@ func (f *FindRequest) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FindRequest) SetOptionalString(optionalString OptionalString) {
 	f.OptionalString = optionalString
 	f.require(findRequestFieldOptionalString)
 }
 
+// SetPublicProperty sets the PublicProperty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FindRequest) SetPublicProperty(publicProperty *string) {
 	f.PublicProperty = publicProperty
 	f.require(findRequestFieldPublicProperty)
 }
 
+// SetPrivateProperty sets the PrivateProperty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FindRequest) SetPrivateProperty(privateProperty *int) {
 	f.PrivateProperty = privateProperty
 	f.require(findRequestFieldPrivateProperty)
@@ -78,6 +84,8 @@ func (i *ImportingType) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+// SetImported sets the Imported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *ImportingType) SetImported(imported Imported) {
 	i.Imported = imported
 	i.require(importingTypeFieldImported)

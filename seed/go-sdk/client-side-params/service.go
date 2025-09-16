@@ -28,11 +28,15 @@ func (g *GetClientRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientRequest) SetFields(fields *string) {
 	g.Fields = fields
 	g.require(getClientRequestFieldFields)
 }
 
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientRequest) SetIncludeFields(includeFields *bool) {
 	g.IncludeFields = includeFields
 	g.require(getClientRequestFieldIncludeFields)
@@ -57,6 +61,8 @@ func (g *GetConnectionRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetConnectionRequest) SetFields(fields *string) {
 	g.Fields = fields
 	g.require(getConnectionRequestFieldFields)
@@ -84,11 +90,15 @@ func (g *GetResourceRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetIncludeMetadata sets the IncludeMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetResourceRequest) SetIncludeMetadata(includeMetadata bool) {
 	g.IncludeMetadata = includeMetadata
 	g.require(getResourceRequestFieldIncludeMetadata)
 }
 
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetResourceRequest) SetFormat(format string) {
 	g.Format = format
 	g.require(getResourceRequestFieldFormat)
@@ -116,11 +126,15 @@ func (g *GetUserRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUserRequest) SetFields(fields *string) {
 	g.Fields = fields
 	g.require(getUserRequestFieldFields)
 }
 
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUserRequest) SetIncludeFields(includeFields *bool) {
 	g.IncludeFields = includeFields
 	g.require(getUserRequestFieldIncludeFields)
@@ -166,41 +180,57 @@ func (l *ListClientsRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetFields(fields *string) {
 	l.Fields = fields
 	l.require(listClientsRequestFieldFields)
 }
 
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetIncludeFields(includeFields *bool) {
 	l.IncludeFields = includeFields
 	l.require(listClientsRequestFieldIncludeFields)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listClientsRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetPerPage(perPage *int) {
 	l.PerPage = perPage
 	l.require(listClientsRequestFieldPerPage)
 }
 
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetIncludeTotals(includeTotals *bool) {
 	l.IncludeTotals = includeTotals
 	l.require(listClientsRequestFieldIncludeTotals)
 }
 
+// SetIsGlobal sets the IsGlobal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetIsGlobal(isGlobal *bool) {
 	l.IsGlobal = isGlobal
 	l.require(listClientsRequestFieldIsGlobal)
 }
 
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetIsFirstParty(isFirstParty *bool) {
 	l.IsFirstParty = isFirstParty
 	l.require(listClientsRequestFieldIsFirstParty)
 }
 
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListClientsRequest) SetAppType(appType []string) {
 	l.AppType = appType
 	l.require(listClientsRequestFieldAppType)
@@ -231,16 +261,22 @@ func (l *ListConnectionsRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListConnectionsRequest) SetStrategy(strategy *string) {
 	l.Strategy = strategy
 	l.require(listConnectionsRequestFieldStrategy)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListConnectionsRequest) SetName(name *string) {
 	l.Name = name
 	l.require(listConnectionsRequestFieldName)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListConnectionsRequest) SetFields(fields *string) {
 	l.Fields = fields
 	l.require(listConnectionsRequestFieldFields)
@@ -283,36 +319,50 @@ func (l *ListResourcesRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetPage(page int) {
 	l.Page = page
 	l.require(listResourcesRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetPerPage(perPage int) {
 	l.PerPage = perPage
 	l.require(listResourcesRequestFieldPerPage)
 }
 
+// SetSort sets the Sort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetSort(sort string) {
 	l.Sort = sort
 	l.require(listResourcesRequestFieldSort)
 }
 
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetOrder(order string) {
 	l.Order = order
 	l.require(listResourcesRequestFieldOrder)
 }
 
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetIncludeTotals(includeTotals bool) {
 	l.IncludeTotals = includeTotals
 	l.require(listResourcesRequestFieldIncludeTotals)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetFields(fields *string) {
 	l.Fields = fields
 	l.require(listResourcesRequestFieldFields)
 }
 
+// SetSearch sets the Search field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListResourcesRequest) SetSearch(search *string) {
 	l.Search = search
 	l.require(listResourcesRequestFieldSearch)
@@ -358,41 +408,57 @@ func (l *ListUsersRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listUsersRequestFieldPage)
 }
 
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetPerPage(perPage *int) {
 	l.PerPage = perPage
 	l.require(listUsersRequestFieldPerPage)
 }
 
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetIncludeTotals(includeTotals *bool) {
 	l.IncludeTotals = includeTotals
 	l.require(listUsersRequestFieldIncludeTotals)
 }
 
+// SetSort sets the Sort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetSort(sort *string) {
 	l.Sort = sort
 	l.require(listUsersRequestFieldSort)
 }
 
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetConnection(connection *string) {
 	l.Connection = connection
 	l.require(listUsersRequestFieldConnection)
 }
 
+// SetQ sets the Q field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetQ(q *string) {
 	l.Q = q
 	l.require(listUsersRequestFieldQ)
 }
 
+// SetSearchEngine sets the SearchEngine field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetSearchEngine(searchEngine *string) {
 	l.SearchEngine = searchEngine
 	l.require(listUsersRequestFieldSearchEngine)
 }
 
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetFields(fields *string) {
 	l.Fields = fields
 	l.require(listUsersRequestFieldFields)
@@ -425,21 +491,29 @@ func (s *SearchResourcesRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResourcesRequest) SetLimit(limit int) {
 	s.Limit = limit
 	s.require(searchResourcesRequestFieldLimit)
 }
 
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResourcesRequest) SetOffset(offset int) {
 	s.Offset = offset
 	s.require(searchResourcesRequestFieldOffset)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResourcesRequest) SetQuery(query *string) {
 	s.Query = query
 	s.require(searchResourcesRequestFieldQuery)
 }
 
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResourcesRequest) SetFilters(filters map[string]interface{}) {
 	s.Filters = filters
 	s.require(searchResourcesRequestFieldFilters)

@@ -35,26 +35,36 @@ func (j *JustFileWithQueryParamsRequest) require(field *big.Int) {
 	j.explicitFields.Or(j.explicitFields, field)
 }
 
+// SetMaybeString sets the MaybeString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JustFileWithQueryParamsRequest) SetMaybeString(maybeString *string) {
 	j.MaybeString = maybeString
 	j.require(justFileWithQueryParamsRequestFieldMaybeString)
 }
 
+// SetInteger sets the Integer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JustFileWithQueryParamsRequest) SetInteger(integer int) {
 	j.Integer = integer
 	j.require(justFileWithQueryParamsRequestFieldInteger)
 }
 
+// SetMaybeInteger sets the MaybeInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JustFileWithQueryParamsRequest) SetMaybeInteger(maybeInteger *int) {
 	j.MaybeInteger = maybeInteger
 	j.require(justFileWithQueryParamsRequestFieldMaybeInteger)
 }
 
+// SetListOfStrings sets the ListOfStrings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JustFileWithQueryParamsRequest) SetListOfStrings(listOfStrings []string) {
 	j.ListOfStrings = listOfStrings
 	j.require(justFileWithQueryParamsRequestFieldListOfStrings)
 }
 
+// SetOptionalListOfStrings sets the OptionalListOfStrings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JustFileWithQueryParamsRequest) SetOptionalListOfStrings(optionalListOfStrings []*string) {
 	j.OptionalListOfStrings = optionalListOfStrings
 	j.require(justFileWithQueryParamsRequestFieldOptionalListOfStrings)
@@ -136,6 +146,8 @@ func (m *MyInlineType) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetBar sets the Bar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MyInlineType) SetBar(bar string) {
 	m.Bar = bar
 	m.require(myInlineTypeFieldBar)
@@ -212,6 +224,8 @@ func (m *MyObject) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MyObject) SetFoo(foo string) {
 	m.Foo = foo
 	m.require(myObjectFieldFoo)
@@ -297,11 +311,15 @@ func (m *MyObjectWithOptional) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetProp sets the Prop field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MyObjectWithOptional) SetProp(prop string) {
 	m.Prop = prop
 	m.require(myObjectWithOptionalFieldProp)
 }
 
+// SetOptionalProp sets the OptionalProp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MyObjectWithOptional) SetOptionalProp(optionalProp *string) {
 	m.OptionalProp = optionalProp
 	m.require(myObjectWithOptionalFieldOptionalProp)

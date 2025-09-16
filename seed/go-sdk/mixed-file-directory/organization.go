@@ -41,6 +41,8 @@ func (c *CreateOrganizationRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateOrganizationRequest) SetName(name string) {
 	c.Name = name
 	c.require(createOrganizationRequestFieldName)
@@ -135,16 +137,22 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetId(id Id) {
 	o.Id = id
 	o.require(organizationFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetName(name string) {
 	o.Name = name
 	o.require(organizationFieldName)
 }
 
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (o *Organization) SetUsers(users []*User) {
 	o.Users = users
 	o.require(organizationFieldUsers)

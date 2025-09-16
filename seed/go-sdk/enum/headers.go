@@ -30,21 +30,29 @@ func (s *SendEnumAsHeaderRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetOperand sets the Operand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEnumAsHeaderRequest) SetOperand(operand Operand) {
 	s.Operand = operand
 	s.require(sendEnumAsHeaderRequestFieldOperand)
 }
 
+// SetMaybeOperand sets the MaybeOperand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEnumAsHeaderRequest) SetMaybeOperand(maybeOperand *Operand) {
 	s.MaybeOperand = maybeOperand
 	s.require(sendEnumAsHeaderRequestFieldMaybeOperand)
 }
 
+// SetOperandOrColor sets the OperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEnumAsHeaderRequest) SetOperandOrColor(operandOrColor *ColorOrOperand) {
 	s.OperandOrColor = operandOrColor
 	s.require(sendEnumAsHeaderRequestFieldOperandOrColor)
 }
 
+// SetMaybeOperandOrColor sets the MaybeOperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SendEnumAsHeaderRequest) SetMaybeOperandOrColor(maybeOperandOrColor *ColorOrOperand) {
 	s.MaybeOperandOrColor = maybeOperandOrColor
 	s.require(sendEnumAsHeaderRequestFieldMaybeOperandOrColor)

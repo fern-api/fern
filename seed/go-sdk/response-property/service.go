@@ -43,6 +43,8 @@ func (s *StringResponse) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StringResponse) SetData(data string) {
 	s.Data = data
 	s.require(stringResponseFieldData)
@@ -119,6 +121,8 @@ func (w *WithMetadata) require(field *big.Int) {
 	w.explicitFields.Or(w.explicitFields, field)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (w *WithMetadata) SetMetadata(metadata map[string]string) {
 	w.Metadata = metadata
 	w.require(withMetadataFieldMetadata)
@@ -204,11 +208,15 @@ func (m *Movie) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetId(id string) {
 	m.Id = id
 	m.require(movieFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetName(name string) {
 	m.Name = name
 	m.require(movieFieldName)
@@ -305,16 +313,22 @@ func (r *Response) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetMetadata(metadata map[string]string) {
 	r.Metadata = metadata
 	r.require(responseFieldMetadata)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetDocs(docs string) {
 	r.Docs = docs
 	r.require(responseFieldDocs)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetData(data *Movie) {
 	r.Data = data
 	r.require(responseFieldData)
@@ -391,6 +405,8 @@ func (w *WithDocs) require(field *big.Int) {
 	w.explicitFields.Or(w.explicitFields, field)
 }
 
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (w *WithDocs) SetDocs(docs string) {
 	w.Docs = docs
 	w.require(withDocsFieldDocs)

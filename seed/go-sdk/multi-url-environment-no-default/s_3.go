@@ -24,6 +24,8 @@ func (g *GetPresignedUrlRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetS3Key sets the S3Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetPresignedUrlRequest) SetS3Key(s3Key string) {
 	g.S3Key = s3Key
 	g.require(getPresignedUrlRequestFieldS3Key)

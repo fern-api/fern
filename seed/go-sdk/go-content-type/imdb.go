@@ -50,11 +50,15 @@ func (c *CreateMovieRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateMovieRequest) SetTitle(title string) {
 	c.Title = title
 	c.require(createMovieRequestFieldTitle)
 }
 
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateMovieRequest) SetRating(rating float64) {
 	c.Rating = rating
 	c.require(createMovieRequestFieldRating)

@@ -91,31 +91,43 @@ func (a *Account) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetId(id string) {
 	a.Id = id
 	a.require(accountFieldId)
 }
 
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetRelatedResources(relatedResources []*ResourceList) {
 	a.RelatedResources = relatedResources
 	a.require(accountFieldRelatedResources)
 }
 
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetMemo(memo *Memo) {
 	a.Memo = memo
 	a.require(accountFieldMemo)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetName(name string) {
 	a.Name = name
 	a.require(accountFieldName)
 }
 
+// SetPatient sets the Patient field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetPatient(patient *Patient) {
 	a.Patient = patient
 	a.require(accountFieldPatient)
 }
 
+// SetPractitioner sets the Practitioner field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Account) SetPractitioner(practitioner *Practitioner) {
 	a.Practitioner = practitioner
 	a.require(accountFieldPractitioner)
@@ -221,16 +233,22 @@ func (b *BaseResource) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BaseResource) SetId(id string) {
 	b.Id = id
 	b.require(baseResourceFieldId)
 }
 
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BaseResource) SetRelatedResources(relatedResources []*ResourceList) {
 	b.RelatedResources = relatedResources
 	b.require(baseResourceFieldRelatedResources)
 }
 
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BaseResource) SetMemo(memo *Memo) {
 	b.Memo = memo
 	b.require(baseResourceFieldMemo)
@@ -316,11 +334,15 @@ func (m *Memo) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Memo) SetDescription(description string) {
 	m.Description = description
 	m.require(memoFieldDescription)
 }
 
+// SetAccount sets the Account field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Memo) SetAccount(account *Account) {
 	m.Account = account
 	m.require(memoFieldAccount)
@@ -438,26 +460,36 @@ func (p *Patient) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Patient) SetId(id string) {
 	p.Id = id
 	p.require(patientFieldId)
 }
 
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Patient) SetRelatedResources(relatedResources []*ResourceList) {
 	p.RelatedResources = relatedResources
 	p.require(patientFieldRelatedResources)
 }
 
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Patient) SetMemo(memo *Memo) {
 	p.Memo = memo
 	p.require(patientFieldMemo)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Patient) SetName(name string) {
 	p.Name = name
 	p.require(patientFieldName)
 }
 
+// SetScripts sets the Scripts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Patient) SetScripts(scripts []*Script) {
 	p.Scripts = scripts
 	p.require(patientFieldScripts)
@@ -577,21 +609,29 @@ func (p *Practitioner) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Practitioner) SetId(id string) {
 	p.Id = id
 	p.require(practitionerFieldId)
 }
 
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Practitioner) SetRelatedResources(relatedResources []*ResourceList) {
 	p.RelatedResources = relatedResources
 	p.require(practitionerFieldRelatedResources)
 }
 
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Practitioner) SetMemo(memo *Memo) {
 	p.Memo = memo
 	p.require(practitionerFieldMemo)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *Practitioner) SetName(name string) {
 	p.Name = name
 	p.require(practitionerFieldName)
@@ -815,21 +855,29 @@ func (s *Script) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *Script) SetId(id string) {
 	s.Id = id
 	s.require(scriptFieldId)
 }
 
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *Script) SetRelatedResources(relatedResources []*ResourceList) {
 	s.RelatedResources = relatedResources
 	s.require(scriptFieldRelatedResources)
 }
 
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *Script) SetMemo(memo *Memo) {
 	s.Memo = memo
 	s.require(scriptFieldMemo)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *Script) SetName(name string) {
 	s.Name = name
 	s.require(scriptFieldName)

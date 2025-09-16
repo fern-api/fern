@@ -27,6 +27,8 @@ func (l *ListUsersRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUsersRequest) SetLimit(limit int) {
 	l.Limit = limit
 	l.require(listUsersRequestFieldLimit)
@@ -73,11 +75,15 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(userFieldTags)

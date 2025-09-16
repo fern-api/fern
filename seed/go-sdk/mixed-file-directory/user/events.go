@@ -29,6 +29,8 @@ func (l *ListUserEventsRequest) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *ListUserEventsRequest) SetLimit(limit *int) {
 	l.Limit = limit
 	l.require(listUserEventsRequestFieldLimit)
@@ -75,11 +77,15 @@ func (e *Event) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Event) SetId(id fern.Id) {
 	e.Id = id
 	e.require(eventFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Event) SetName(name string) {
 	e.Name = name
 	e.require(eventFieldName)

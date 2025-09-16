@@ -334,151 +334,211 @@ func (c *Client) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetClientId(clientId string) {
 	c.ClientId = clientId
 	c.require(clientFieldClientId)
 }
 
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetTenant(tenant *string) {
 	c.Tenant = tenant
 	c.require(clientFieldTenant)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetName(name string) {
 	c.Name = name
 	c.require(clientFieldName)
 }
 
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetDescription(description *string) {
 	c.Description = description
 	c.require(clientFieldDescription)
 }
 
+// SetGlobal sets the Global field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetGlobal(global *bool) {
 	c.Global = global
 	c.require(clientFieldGlobal)
 }
 
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetClientSecret(clientSecret *string) {
 	c.ClientSecret = clientSecret
 	c.require(clientFieldClientSecret)
 }
 
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetAppType(appType *string) {
 	c.AppType = appType
 	c.require(clientFieldAppType)
 }
 
+// SetLogoUri sets the LogoUri field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetLogoUri(logoUri *string) {
 	c.LogoUri = logoUri
 	c.require(clientFieldLogoUri)
 }
 
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetIsFirstParty(isFirstParty *bool) {
 	c.IsFirstParty = isFirstParty
 	c.require(clientFieldIsFirstParty)
 }
 
+// SetOidcConformant sets the OidcConformant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetOidcConformant(oidcConformant *bool) {
 	c.OidcConformant = oidcConformant
 	c.require(clientFieldOidcConformant)
 }
 
+// SetCallbacks sets the Callbacks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCallbacks(callbacks []string) {
 	c.Callbacks = callbacks
 	c.require(clientFieldCallbacks)
 }
 
+// SetAllowedOrigins sets the AllowedOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetAllowedOrigins(allowedOrigins []string) {
 	c.AllowedOrigins = allowedOrigins
 	c.require(clientFieldAllowedOrigins)
 }
 
+// SetWebOrigins sets the WebOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetWebOrigins(webOrigins []string) {
 	c.WebOrigins = webOrigins
 	c.require(clientFieldWebOrigins)
 }
 
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetGrantTypes(grantTypes []string) {
 	c.GrantTypes = grantTypes
 	c.require(clientFieldGrantTypes)
 }
 
+// SetJwtConfiguration sets the JwtConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetJwtConfiguration(jwtConfiguration map[string]interface{}) {
 	c.JwtConfiguration = jwtConfiguration
 	c.require(clientFieldJwtConfiguration)
 }
 
+// SetSigningKeys sets the SigningKeys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetSigningKeys(signingKeys []map[string]interface{}) {
 	c.SigningKeys = signingKeys
 	c.require(clientFieldSigningKeys)
 }
 
+// SetEncryptionKey sets the EncryptionKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetEncryptionKey(encryptionKey map[string]interface{}) {
 	c.EncryptionKey = encryptionKey
 	c.require(clientFieldEncryptionKey)
 }
 
+// SetSso sets the Sso field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetSso(sso *bool) {
 	c.Sso = sso
 	c.require(clientFieldSso)
 }
 
+// SetSsoDisabled sets the SsoDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetSsoDisabled(ssoDisabled *bool) {
 	c.SsoDisabled = ssoDisabled
 	c.require(clientFieldSsoDisabled)
 }
 
+// SetCrossOriginAuth sets the CrossOriginAuth field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCrossOriginAuth(crossOriginAuth *bool) {
 	c.CrossOriginAuth = crossOriginAuth
 	c.require(clientFieldCrossOriginAuth)
 }
 
+// SetCrossOriginLoc sets the CrossOriginLoc field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCrossOriginLoc(crossOriginLoc *string) {
 	c.CrossOriginLoc = crossOriginLoc
 	c.require(clientFieldCrossOriginLoc)
 }
 
+// SetCustomLoginPageOn sets the CustomLoginPageOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCustomLoginPageOn(customLoginPageOn *bool) {
 	c.CustomLoginPageOn = customLoginPageOn
 	c.require(clientFieldCustomLoginPageOn)
 }
 
+// SetCustomLoginPage sets the CustomLoginPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCustomLoginPage(customLoginPage *string) {
 	c.CustomLoginPage = customLoginPage
 	c.require(clientFieldCustomLoginPage)
 }
 
+// SetCustomLoginPagePreview sets the CustomLoginPagePreview field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetCustomLoginPagePreview(customLoginPagePreview *string) {
 	c.CustomLoginPagePreview = customLoginPagePreview
 	c.require(clientFieldCustomLoginPagePreview)
 }
 
+// SetFormTemplate sets the FormTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetFormTemplate(formTemplate *string) {
 	c.FormTemplate = formTemplate
 	c.require(clientFieldFormTemplate)
 }
 
+// SetIsHerokuApp sets the IsHerokuApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetIsHerokuApp(isHerokuApp *bool) {
 	c.IsHerokuApp = isHerokuApp
 	c.require(clientFieldIsHerokuApp)
 }
 
+// SetAddons sets the Addons field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetAddons(addons map[string]interface{}) {
 	c.Addons = addons
 	c.require(clientFieldAddons)
 }
 
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *string) {
 	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
 	c.require(clientFieldTokenEndpointAuthMethod)
 }
 
+// SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetClientMetadata(clientMetadata map[string]interface{}) {
 	c.ClientMetadata = clientMetadata
 	c.require(clientFieldClientMetadata)
 }
 
+// SetMobile sets the Mobile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetMobile(mobile map[string]interface{}) {
 	c.Mobile = mobile
 	c.require(clientFieldMobile)
@@ -637,46 +697,64 @@ func (c *Connection) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetId(id string) {
 	c.Id = id
 	c.require(connectionFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetName(name string) {
 	c.Name = name
 	c.require(connectionFieldName)
 }
 
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetDisplayName(displayName *string) {
 	c.DisplayName = displayName
 	c.require(connectionFieldDisplayName)
 }
 
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetStrategy(strategy string) {
 	c.Strategy = strategy
 	c.require(connectionFieldStrategy)
 }
 
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetOptions(options map[string]interface{}) {
 	c.Options = options
 	c.require(connectionFieldOptions)
 }
 
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetEnabledClients(enabledClients []string) {
 	c.EnabledClients = enabledClients
 	c.require(connectionFieldEnabledClients)
 }
 
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetRealms(realms []string) {
 	c.Realms = realms
 	c.require(connectionFieldRealms)
 }
 
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetIsDomainConnection(isDomainConnection *bool) {
 	c.IsDomainConnection = isDomainConnection
 	c.require(connectionFieldIsDomainConnection)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Connection) SetMetadata(metadata map[string]interface{}) {
 	c.Metadata = metadata
 	c.require(connectionFieldMetadata)
@@ -825,46 +903,64 @@ func (c *CreateUserRequest) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetEmail(email string) {
 	c.Email = email
 	c.require(createUserRequestFieldEmail)
 }
 
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetEmailVerified(emailVerified *bool) {
 	c.EmailVerified = emailVerified
 	c.require(createUserRequestFieldEmailVerified)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetUsername(username *string) {
 	c.Username = username
 	c.require(createUserRequestFieldUsername)
 }
 
+// SetPassword sets the Password field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetPassword(password *string) {
 	c.Password = password
 	c.require(createUserRequestFieldPassword)
 }
 
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetPhoneNumber(phoneNumber *string) {
 	c.PhoneNumber = phoneNumber
 	c.require(createUserRequestFieldPhoneNumber)
 }
 
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetPhoneVerified(phoneVerified *bool) {
 	c.PhoneVerified = phoneVerified
 	c.require(createUserRequestFieldPhoneVerified)
 }
 
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
 	c.UserMetadata = userMetadata
 	c.require(createUserRequestFieldUserMetadata)
 }
 
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
 	c.AppMetadata = appMetadata
 	c.require(createUserRequestFieldAppMetadata)
 }
 
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserRequest) SetConnection(connection string) {
 	c.Connection = connection
 	c.require(createUserRequestFieldConnection)
@@ -986,31 +1082,43 @@ func (i *Identity) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetConnection(connection string) {
 	i.Connection = connection
 	i.require(identityFieldConnection)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetUserId(userId string) {
 	i.UserId = userId
 	i.require(identityFieldUserId)
 }
 
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetProvider(provider string) {
 	i.Provider = provider
 	i.require(identityFieldProvider)
 }
 
+// SetIsSocial sets the IsSocial field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetIsSocial(isSocial bool) {
 	i.IsSocial = isSocial
 	i.require(identityFieldIsSocial)
 }
 
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetAccessToken(accessToken *string) {
 	i.AccessToken = accessToken
 	i.require(identityFieldAccessToken)
 }
 
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identity) SetExpiresIn(expiresIn *int) {
 	i.ExpiresIn = expiresIn
 	i.require(identityFieldExpiresIn)
@@ -1129,26 +1237,36 @@ func (p *PaginatedClientResponse) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedClientResponse) SetStart(start int) {
 	p.Start = start
 	p.require(paginatedClientResponseFieldStart)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedClientResponse) SetLimit(limit int) {
 	p.Limit = limit
 	p.require(paginatedClientResponseFieldLimit)
 }
 
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedClientResponse) SetLength(length int) {
 	p.Length = length
 	p.require(paginatedClientResponseFieldLength)
 }
 
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedClientResponse) SetTotal(total *int) {
 	p.Total = total
 	p.require(paginatedClientResponseFieldTotal)
 }
 
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedClientResponse) SetClients(clients []*Client) {
 	p.Clients = clients
 	p.require(paginatedClientResponseFieldClients)
@@ -1262,26 +1380,36 @@ func (p *PaginatedUserResponse) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedUserResponse) SetUsers(users []*User) {
 	p.Users = users
 	p.require(paginatedUserResponseFieldUsers)
 }
 
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedUserResponse) SetStart(start int) {
 	p.Start = start
 	p.require(paginatedUserResponseFieldStart)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedUserResponse) SetLimit(limit int) {
 	p.Limit = limit
 	p.require(paginatedUserResponseFieldLimit)
 }
 
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedUserResponse) SetLength(length int) {
 	p.Length = length
 	p.require(paginatedUserResponseFieldLength)
 }
 
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PaginatedUserResponse) SetTotal(total *int) {
 	p.Total = total
 	p.require(paginatedUserResponseFieldTotal)
@@ -1403,31 +1531,43 @@ func (r *Resource) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetId(id string) {
 	r.Id = id
 	r.require(resourceFieldId)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetName(name string) {
 	r.Name = name
 	r.require(resourceFieldName)
 }
 
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetDescription(description *string) {
 	r.Description = description
 	r.require(resourceFieldDescription)
 }
 
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetCreatedAt(createdAt time.Time) {
 	r.CreatedAt = createdAt
 	r.require(resourceFieldCreatedAt)
 }
 
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetUpdatedAt(updatedAt time.Time) {
 	r.UpdatedAt = updatedAt
 	r.require(resourceFieldUpdatedAt)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Resource) SetMetadata(metadata map[string]interface{}) {
 	r.Metadata = metadata
 	r.require(resourceFieldMetadata)
@@ -1534,16 +1674,22 @@ func (s *SearchResponse) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetResults sets the Results field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResponse) SetResults(results []*Resource) {
 	s.Results = results
 	s.require(searchResponseFieldResults)
 }
 
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResponse) SetTotal(total *int) {
 	s.Total = total
 	s.require(searchResponseFieldTotal)
 }
 
+// SetNextOffset sets the NextOffset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResponse) SetNextOffset(nextOffset *int) {
 	s.NextOffset = nextOffset
 	s.require(searchResponseFieldNextOffset)
@@ -1692,46 +1838,64 @@ func (u *UpdateUserRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetEmail(email *string) {
 	u.Email = email
 	u.require(updateUserRequestFieldEmail)
 }
 
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetEmailVerified(emailVerified *bool) {
 	u.EmailVerified = emailVerified
 	u.require(updateUserRequestFieldEmailVerified)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetUsername(username *string) {
 	u.Username = username
 	u.require(updateUserRequestFieldUsername)
 }
 
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetPhoneNumber(phoneNumber *string) {
 	u.PhoneNumber = phoneNumber
 	u.require(updateUserRequestFieldPhoneNumber)
 }
 
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetPhoneVerified(phoneVerified *bool) {
 	u.PhoneVerified = phoneVerified
 	u.require(updateUserRequestFieldPhoneVerified)
 }
 
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
 	u.UserMetadata = userMetadata
 	u.require(updateUserRequestFieldUserMetadata)
 }
 
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
 	u.AppMetadata = appMetadata
 	u.require(updateUserRequestFieldAppMetadata)
 }
 
+// SetPassword sets the Password field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetPassword(password *string) {
 	u.Password = password
 	u.require(updateUserRequestFieldPassword)
 }
 
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserRequest) SetBlocked(blocked *bool) {
 	u.Blocked = blocked
 	u.require(updateUserRequestFieldBlocked)
@@ -1989,106 +2153,148 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetUserId(userId string) {
 	u.UserId = userId
 	u.require(userFieldUserId)
 }
 
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetEmail(email string) {
 	u.Email = email
 	u.require(userFieldEmail)
 }
 
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetEmailVerified(emailVerified bool) {
 	u.EmailVerified = emailVerified
 	u.require(userFieldEmailVerified)
 }
 
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetUsername(username *string) {
 	u.Username = username
 	u.require(userFieldUsername)
 }
 
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetPhoneNumber(phoneNumber *string) {
 	u.PhoneNumber = phoneNumber
 	u.require(userFieldPhoneNumber)
 }
 
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetPhoneVerified(phoneVerified *bool) {
 	u.PhoneVerified = phoneVerified
 	u.require(userFieldPhoneVerified)
 }
 
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetCreatedAt(createdAt time.Time) {
 	u.CreatedAt = createdAt
 	u.require(userFieldCreatedAt)
 }
 
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetUpdatedAt(updatedAt time.Time) {
 	u.UpdatedAt = updatedAt
 	u.require(userFieldUpdatedAt)
 }
 
+// SetIdentities sets the Identities field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetIdentities(identities []*Identity) {
 	u.Identities = identities
 	u.require(userFieldIdentities)
 }
 
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetAppMetadata(appMetadata map[string]interface{}) {
 	u.AppMetadata = appMetadata
 	u.require(userFieldAppMetadata)
 }
 
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetUserMetadata(userMetadata map[string]interface{}) {
 	u.UserMetadata = userMetadata
 	u.require(userFieldUserMetadata)
 }
 
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetPicture(picture *string) {
 	u.Picture = picture
 	u.require(userFieldPicture)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name *string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetNickname(nickname *string) {
 	u.Nickname = nickname
 	u.require(userFieldNickname)
 }
 
+// SetMultifactor sets the Multifactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetMultifactor(multifactor []string) {
 	u.Multifactor = multifactor
 	u.require(userFieldMultifactor)
 }
 
+// SetLastIp sets the LastIp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetLastIp(lastIp *string) {
 	u.LastIp = lastIp
 	u.require(userFieldLastIp)
 }
 
+// SetLastLogin sets the LastLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetLastLogin(lastLogin *time.Time) {
 	u.LastLogin = lastLogin
 	u.require(userFieldLastLogin)
 }
 
+// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetLoginsCount(loginsCount *int) {
 	u.LoginsCount = loginsCount
 	u.require(userFieldLoginsCount)
 }
 
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetBlocked(blocked *bool) {
 	u.Blocked = blocked
 	u.require(userFieldBlocked)
 }
 
+// SetGivenName sets the GivenName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetGivenName(givenName *string) {
 	u.GivenName = givenName
 	u.require(userFieldGivenName)
 }
 
+// SetFamilyName sets the FamilyName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetFamilyName(familyName *string) {
 	u.FamilyName = familyName
 	u.require(userFieldFamilyName)

@@ -43,21 +43,29 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetXApiKey sets the XApiKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetXApiKey(xApiKey string) {
 	g.XApiKey = xApiKey
 	g.require(getTokenRequestFieldXApiKey)
 }
 
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetClientId(clientId string) {
 	g.ClientId = clientId
 	g.require(getTokenRequestFieldClientId)
 }
 
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
 	g.ClientSecret = clientSecret
 	g.require(getTokenRequestFieldClientSecret)
 }
 
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetTokenRequest) SetScope(scope *string) {
 	g.Scope = scope
 	g.require(getTokenRequestFieldScope)
@@ -126,26 +134,36 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetXApiKey sets the XApiKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetXApiKey(xApiKey string) {
 	r.XApiKey = xApiKey
 	r.require(refreshTokenRequestFieldXApiKey)
 }
 
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetClientId(clientId string) {
 	r.ClientId = clientId
 	r.require(refreshTokenRequestFieldClientId)
 }
 
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetClientSecret(clientSecret string) {
 	r.ClientSecret = clientSecret
 	r.require(refreshTokenRequestFieldClientSecret)
 }
 
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetRefreshToken(refreshToken string) {
 	r.RefreshToken = refreshToken
 	r.require(refreshTokenRequestFieldRefreshToken)
 }
 
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetScope(scope *string) {
 	r.Scope = scope
 	r.require(refreshTokenRequestFieldScope)
@@ -229,16 +247,22 @@ func (t *TokenResponse) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TokenResponse) SetAccessToken(accessToken string) {
 	t.AccessToken = accessToken
 	t.require(tokenResponseFieldAccessToken)
 }
 
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TokenResponse) SetExpiresIn(expiresIn int) {
 	t.ExpiresIn = expiresIn
 	t.require(tokenResponseFieldExpiresIn)
 }
 
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TokenResponse) SetRefreshToken(refreshToken *string) {
 	t.RefreshToken = refreshToken
 	t.require(tokenResponseFieldRefreshToken)

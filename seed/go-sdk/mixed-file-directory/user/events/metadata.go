@@ -28,6 +28,8 @@ func (g *GetEventMetadataRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetEventMetadataRequest) SetId(id fern.Id) {
 	g.Id = id
 	g.require(getEventMetadataRequestFieldId)
@@ -74,11 +76,15 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetId(id fern.Id) {
 	m.Id = id
 	m.require(metadataFieldId)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Metadata) SetValue(value interface{}) {
 	m.Value = value
 	m.require(metadataFieldValue)

@@ -27,6 +27,8 @@ func (s *StreamCompletionRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StreamCompletionRequest) SetQuery(query string) {
 	s.Query = query
 	s.require(streamCompletionRequestFieldQuery)
@@ -73,11 +75,15 @@ func (s *StreamedCompletion) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetDelta sets the Delta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StreamedCompletion) SetDelta(delta string) {
 	s.Delta = delta
 	s.require(streamedCompletionFieldDelta)
 }
 
+// SetTokens sets the Tokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StreamedCompletion) SetTokens(tokens *int) {
 	s.Tokens = tokens
 	s.require(streamedCompletionFieldTokens)

@@ -28,11 +28,15 @@ func (r *ReqWithHeaders) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetXTestServiceHeader sets the XTestServiceHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReqWithHeaders) SetXTestServiceHeader(xTestServiceHeader string) {
 	r.XTestServiceHeader = xTestServiceHeader
 	r.require(reqWithHeadersFieldXTestServiceHeader)
 }
 
+// SetXTestEndpointHeader sets the XTestEndpointHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ReqWithHeaders) SetXTestEndpointHeader(xTestEndpointHeader string) {
 	r.XTestEndpointHeader = xTestEndpointHeader
 	r.require(reqWithHeadersFieldXTestEndpointHeader)

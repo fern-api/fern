@@ -42,6 +42,8 @@ func (a *ActiveDiamond) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *ActiveDiamond) SetValue(value string) {
 	a.Value = value
 	a.require(activeDiamondFieldValue)
@@ -118,6 +120,8 @@ func (a *AttractiveScript) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *AttractiveScript) SetValue(value string) {
 	a.Value = value
 	a.require(attractiveScriptFieldValue)
@@ -1053,6 +1057,8 @@ func (c *CircularCard) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CircularCard) SetValue(value string) {
 	c.Value = value
 	c.require(circularCardFieldValue)
@@ -1129,6 +1135,8 @@ func (c *ColorfulCover) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ColorfulCover) SetValue(value string) {
 	c.Value = value
 	c.require(colorfulCoverFieldValue)
@@ -1205,6 +1213,8 @@ func (d *DiligentDeal) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DiligentDeal) SetValue(value string) {
 	d.Value = value
 	d.require(diligentDealFieldValue)
@@ -1281,6 +1291,8 @@ func (d *DisloyalValue) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DisloyalValue) SetValue(value string) {
 	d.Value = value
 	d.require(disloyalValueFieldValue)
@@ -1357,6 +1369,8 @@ func (d *DistinctFailure) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *DistinctFailure) SetValue(value string) {
 	d.Value = value
 	d.require(distinctFailureFieldValue)
@@ -1433,6 +1447,8 @@ func (f *FalseMirror) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FalseMirror) SetValue(value string) {
 	f.Value = value
 	f.require(falseMirrorFieldValue)
@@ -1509,6 +1525,8 @@ func (f *FrozenSleep) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FrozenSleep) SetValue(value string) {
 	f.Value = value
 	f.require(frozenSleepFieldValue)
@@ -1585,6 +1603,8 @@ func (g *GaseousRoad) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GaseousRoad) SetValue(value string) {
 	g.Value = value
 	g.require(gaseousRoadFieldValue)
@@ -1661,6 +1681,8 @@ func (g *GruesomeCoach) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GruesomeCoach) SetValue(value string) {
 	g.Value = value
 	g.require(gruesomeCoachFieldValue)
@@ -1737,6 +1759,8 @@ func (h *HarmoniousPlay) require(field *big.Int) {
 	h.explicitFields.Or(h.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (h *HarmoniousPlay) SetValue(value string) {
 	h.Value = value
 	h.require(harmoniousPlayFieldValue)
@@ -1813,6 +1837,8 @@ func (h *HastyPain) require(field *big.Int) {
 	h.explicitFields.Or(h.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (h *HastyPain) SetValue(value string) {
 	h.Value = value
 	h.require(hastyPainFieldValue)
@@ -1889,6 +1915,8 @@ func (h *HoarseMouse) require(field *big.Int) {
 	h.explicitFields.Or(h.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (h *HoarseMouse) SetValue(value string) {
 	h.Value = value
 	h.require(hoarseMouseFieldValue)
@@ -1965,6 +1993,8 @@ func (j *JumboEnd) require(field *big.Int) {
 	j.explicitFields.Or(j.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (j *JumboEnd) SetValue(value string) {
 	j.Value = value
 	j.require(jumboEndFieldValue)
@@ -2041,6 +2071,8 @@ func (l *LimpingStep) require(field *big.Int) {
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (l *LimpingStep) SetValue(value string) {
 	l.Value = value
 	l.require(limpingStepFieldValue)
@@ -2117,6 +2149,8 @@ func (m *MistySnow) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *MistySnow) SetValue(value string) {
 	m.Value = value
 	m.require(mistySnowFieldValue)
@@ -2193,6 +2227,8 @@ func (n *NormalSweet) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NormalSweet) SetValue(value string) {
 	n.Value = value
 	n.require(normalSweetFieldValue)
@@ -2269,6 +2305,8 @@ func (p *PopularLimit) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PopularLimit) SetValue(value string) {
 	p.Value = value
 	p.require(popularLimitFieldValue)
@@ -2345,6 +2383,8 @@ func (p *PotableBad) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PotableBad) SetValue(value string) {
 	p.Value = value
 	p.require(potableBadFieldValue)
@@ -2421,6 +2461,8 @@ func (p *PracticalPrinciple) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PracticalPrinciple) SetValue(value string) {
 	p.Value = value
 	p.require(practicalPrincipleFieldValue)
@@ -2497,6 +2539,8 @@ func (p *PrimaryBlock) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PrimaryBlock) SetValue(value string) {
 	p.Value = value
 	p.require(primaryBlockFieldValue)
@@ -2573,6 +2617,8 @@ func (r *RotatingRatio) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotatingRatio) SetValue(value string) {
 	r.Value = value
 	r.require(rotatingRatioFieldValue)
@@ -2649,6 +2695,8 @@ func (t *ThankfulFactor) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *ThankfulFactor) SetValue(value string) {
 	t.Value = value
 	t.require(thankfulFactorFieldValue)
@@ -2725,6 +2773,8 @@ func (t *TotalWork) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TotalWork) SetValue(value string) {
 	t.Value = value
 	t.require(totalWorkFieldValue)
@@ -2801,6 +2851,8 @@ func (t *TriangularRepair) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *TriangularRepair) SetValue(value string) {
 	t.Value = value
 	t.require(triangularRepairFieldValue)
@@ -2877,6 +2929,8 @@ func (u *UniqueStress) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UniqueStress) SetValue(value string) {
 	u.Value = value
 	u.require(uniqueStressFieldValue)
@@ -2953,6 +3007,8 @@ func (u *UnwillingSmoke) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UnwillingSmoke) SetValue(value string) {
 	u.Value = value
 	u.require(unwillingSmokeFieldValue)
@@ -3029,6 +3085,8 @@ func (v *VibrantExcitement) require(field *big.Int) {
 	v.explicitFields.Or(v.explicitFields, field)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (v *VibrantExcitement) SetValue(value string) {
 	v.Value = value
 	v.require(vibrantExcitementFieldValue)

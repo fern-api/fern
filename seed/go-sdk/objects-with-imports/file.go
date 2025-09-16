@@ -59,16 +59,22 @@ func (f *File) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *File) SetName(name string) {
 	f.Name = name
 	f.require(fileFieldName)
 }
 
+// SetContents sets the Contents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *File) SetContents(contents string) {
 	f.Contents = contents
 	f.require(fileFieldContents)
 }
 
+// SetInfo sets the Info field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *File) SetInfo(info FileInfo) {
 	f.Info = info
 	f.require(fileFieldInfo)

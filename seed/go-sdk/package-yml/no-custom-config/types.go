@@ -50,11 +50,15 @@ func (e *EchoRequest) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *EchoRequest) SetName(name string) {
 	e.Name = name
 	e.require(echoRequestFieldName)
 }
 
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *EchoRequest) SetSize(size int) {
 	e.Size = size
 	e.require(echoRequestFieldSize)

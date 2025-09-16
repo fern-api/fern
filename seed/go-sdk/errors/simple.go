@@ -41,6 +41,8 @@ func (f *FooRequest) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetBar sets the Bar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FooRequest) SetBar(bar string) {
 	f.Bar = bar
 	f.require(fooRequestFieldBar)
@@ -117,6 +119,8 @@ func (f *FooResponse) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetBar sets the Bar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *FooResponse) SetBar(bar string) {
 	f.Bar = bar
 	f.require(fooResponseFieldBar)

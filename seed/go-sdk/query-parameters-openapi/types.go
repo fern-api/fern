@@ -58,81 +58,113 @@ func (s *SearchRequest) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetLimit(limit int) {
 	s.Limit = limit
 	s.require(searchRequestFieldLimit)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetId(id string) {
 	s.Id = id
 	s.require(searchRequestFieldId)
 }
 
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetDate(date string) {
 	s.Date = date
 	s.require(searchRequestFieldDate)
 }
 
+// SetDeadline sets the Deadline field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetDeadline(deadline time.Time) {
 	s.Deadline = deadline
 	s.require(searchRequestFieldDeadline)
 }
 
+// SetBytes sets the Bytes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetBytes(bytes string) {
 	s.Bytes = bytes
 	s.require(searchRequestFieldBytes)
 }
 
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetUser(user *User) {
 	s.User = user
 	s.require(searchRequestFieldUser)
 }
 
+// SetUserList sets the UserList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetUserList(userList []*User) {
 	s.UserList = userList
 	s.require(searchRequestFieldUserList)
 }
 
+// SetOptionalDeadline sets the OptionalDeadline field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
 	s.OptionalDeadline = optionalDeadline
 	s.require(searchRequestFieldOptionalDeadline)
 }
 
+// SetKeyValue sets the KeyValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetKeyValue(keyValue map[string]*string) {
 	s.KeyValue = keyValue
 	s.require(searchRequestFieldKeyValue)
 }
 
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetOptionalString(optionalString *string) {
 	s.OptionalString = optionalString
 	s.require(searchRequestFieldOptionalString)
 }
 
+// SetNestedUser sets the NestedUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetNestedUser(nestedUser *NestedUser) {
 	s.NestedUser = nestedUser
 	s.require(searchRequestFieldNestedUser)
 }
 
+// SetOptionalUser sets the OptionalUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetOptionalUser(optionalUser *User) {
 	s.OptionalUser = optionalUser
 	s.require(searchRequestFieldOptionalUser)
 }
 
+// SetExcludeUser sets the ExcludeUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetExcludeUser(excludeUser []*User) {
 	s.ExcludeUser = excludeUser
 	s.require(searchRequestFieldExcludeUser)
 }
 
+// SetFilter sets the Filter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetFilter(filter []*string) {
 	s.Filter = filter
 	s.require(searchRequestFieldFilter)
 }
 
+// SetNeighbor sets the Neighbor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetNeighbor(neighbor *User) {
 	s.Neighbor = neighbor
 	s.require(searchRequestFieldNeighbor)
 }
 
+// SetNeighborRequired sets the NeighborRequired field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchRequest) SetNeighborRequired(neighborRequired *SearchRequestNeighborRequired) {
 	s.NeighborRequired = neighborRequired
 	s.require(searchRequestFieldNeighborRequired)
@@ -179,11 +211,15 @@ func (n *NestedUser) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedUser) SetName(name *string) {
 	n.Name = name
 	n.require(nestedUserFieldName)
 }
 
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *NestedUser) SetUser(user *User) {
 	n.User = user
 	n.require(nestedUserFieldUser)
@@ -364,6 +400,8 @@ func (s *SearchResponse) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetResults sets the Results field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *SearchResponse) SetResults(results []string) {
 	s.Results = results
 	s.require(searchResponseFieldResults)
@@ -449,11 +487,15 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetName(name *string) {
 	u.Name = name
 	u.require(userFieldName)
 }
 
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (u *User) SetTags(tags []string) {
 	u.Tags = tags
 	u.require(userFieldTags)

@@ -60,16 +60,22 @@ func (n *Node) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetId(id string) {
 	n.Id = id
 	n.require(nodeFieldId)
 }
 
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetLabel(label *string) {
 	n.Label = label
 	n.require(nodeFieldLabel)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetMetadata(metadata *commons.Metadata) {
 	n.Metadata = metadata
 	n.require(nodeFieldMetadata)
@@ -146,6 +152,8 @@ func (t *Tree) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Tree) SetNodes(nodes []*Node) {
 	t.Nodes = nodes
 	t.require(treeFieldNodes)

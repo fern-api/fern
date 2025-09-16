@@ -109,16 +109,22 @@ func (i *Identifier) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identifier) SetType(type_ *Type) {
 	i.Type = type_
 	i.require(identifierFieldType)
 }
 
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identifier) SetValue(value string) {
 	i.Value = value
 	i.require(identifierFieldValue)
 }
 
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (i *Identifier) SetLabel(label string) {
 	i.Label = label
 	i.require(identifierFieldLabel)
@@ -274,11 +280,15 @@ func (a *Actor) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Actor) SetName(name string) {
 	a.Name = name
 	a.require(actorFieldName)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Actor) SetId(id string) {
 	a.Id = id
 	a.require(actorFieldId)
@@ -364,11 +374,15 @@ func (a *Actress) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Actress) SetName(name string) {
 	a.Name = name
 	a.require(actressFieldName)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (a *Actress) SetId(id string) {
 	a.Id = id
 	a.require(actressFieldId)
@@ -553,66 +567,92 @@ func (b *BigEntity) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
+// SetCastMember sets the CastMember field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetCastMember(castMember *CastMember) {
 	b.CastMember = castMember
 	b.require(bigEntityFieldCastMember)
 }
 
+// SetExtendedMovie sets the ExtendedMovie field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetExtendedMovie(extendedMovie *ExtendedMovie) {
 	b.ExtendedMovie = extendedMovie
 	b.require(bigEntityFieldExtendedMovie)
 }
 
+// SetEntity sets the Entity field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetEntity(entity *Entity) {
 	b.Entity = entity
 	b.require(bigEntityFieldEntity)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetMetadata(metadata *Metadata) {
 	b.Metadata = metadata
 	b.require(bigEntityFieldMetadata)
 }
 
+// SetCommonMetadata sets the CommonMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetCommonMetadata(commonMetadata *commons.Metadata) {
 	b.CommonMetadata = commonMetadata
 	b.require(bigEntityFieldCommonMetadata)
 }
 
+// SetEventInfo sets the EventInfo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetEventInfo(eventInfo *commons.EventInfo) {
 	b.EventInfo = eventInfo
 	b.require(bigEntityFieldEventInfo)
 }
 
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetData(data *commons.Data) {
 	b.Data = data
 	b.require(bigEntityFieldData)
 }
 
+// SetMigration sets the Migration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetMigration(migration *Migration) {
 	b.Migration = migration
 	b.require(bigEntityFieldMigration)
 }
 
+// SetException sets the Exception field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetException(exception *Exception) {
 	b.Exception = exception
 	b.require(bigEntityFieldException)
 }
 
+// SetTest sets the Test field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetTest(test *Test) {
 	b.Test = test
 	b.require(bigEntityFieldTest)
 }
 
+// SetNode sets the Node field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetNode(node *Node) {
 	b.Node = node
 	b.require(bigEntityFieldNode)
 }
 
+// SetDirectory sets the Directory field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetDirectory(directory *Directory) {
 	b.Directory = directory
 	b.require(bigEntityFieldDirectory)
 }
 
+// SetMoment sets the Moment field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (b *BigEntity) SetMoment(moment *Moment) {
 	b.Moment = moment
 	b.require(bigEntityFieldMoment)
@@ -784,6 +824,8 @@ func (c *CronJob) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
+// SetExpression sets the Expression field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CronJob) SetExpression(expression string) {
 	c.Expression = expression
 	c.require(cronJobFieldExpression)
@@ -878,16 +920,22 @@ func (d *Directory) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetName(name string) {
 	d.Name = name
 	d.require(directoryFieldName)
 }
 
+// SetFiles sets the Files field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetFiles(files []*File) {
 	d.Files = files
 	d.require(directoryFieldFiles)
 }
 
+// SetDirectories sets the Directories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (d *Directory) SetDirectories(directories []*Directory) {
 	d.Directories = directories
 	d.require(directoryFieldDirectories)
@@ -973,11 +1021,15 @@ func (e *Entity) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Entity) SetType(type_ *Type) {
 	e.Type = type_
 	e.require(entityFieldType)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *Entity) SetName(name string) {
 	e.Name = name
 	e.require(entityFieldName)
@@ -1206,16 +1258,22 @@ func (e *ExceptionInfo) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetExceptionType sets the ExceptionType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExceptionInfo) SetExceptionType(exceptionType string) {
 	e.ExceptionType = exceptionType
 	e.require(exceptionInfoFieldExceptionType)
 }
 
+// SetExceptionMessage sets the ExceptionMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExceptionInfo) SetExceptionMessage(exceptionMessage string) {
 	e.ExceptionMessage = exceptionMessage
 	e.require(exceptionInfoFieldExceptionMessage)
 }
 
+// SetExceptionStacktrace sets the ExceptionStacktrace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExceptionInfo) SetExceptionStacktrace(exceptionStacktrace string) {
 	e.ExceptionStacktrace = exceptionStacktrace
 	e.require(exceptionInfoFieldExceptionStacktrace)
@@ -1379,51 +1437,71 @@ func (e *ExtendedMovie) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetId(id MovieId) {
 	e.Id = id
 	e.require(extendedMovieFieldId)
 }
 
+// SetPrequel sets the Prequel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetPrequel(prequel *MovieId) {
 	e.Prequel = prequel
 	e.require(extendedMovieFieldPrequel)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetTitle(title string) {
 	e.Title = title
 	e.require(extendedMovieFieldTitle)
 }
 
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetFrom(from string) {
 	e.From = from
 	e.require(extendedMovieFieldFrom)
 }
 
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetRating(rating float64) {
 	e.Rating = rating
 	e.require(extendedMovieFieldRating)
 }
 
+// SetTag sets the Tag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetTag(tag commons.Tag) {
 	e.Tag = tag
 	e.require(extendedMovieFieldTag)
 }
 
+// SetBook sets the Book field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetBook(book *string) {
 	e.Book = book
 	e.require(extendedMovieFieldBook)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetMetadata(metadata map[string]interface{}) {
 	e.Metadata = metadata
 	e.require(extendedMovieFieldMetadata)
 }
 
+// SetRevenue sets the Revenue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetRevenue(revenue int64) {
 	e.Revenue = revenue
 	e.require(extendedMovieFieldRevenue)
 }
 
+// SetCast sets the Cast field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (e *ExtendedMovie) SetCast(cast []string) {
 	e.Cast = cast
 	e.require(extendedMovieFieldCast)
@@ -1520,11 +1598,15 @@ func (f *File) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *File) SetName(name string) {
 	f.Name = name
 	f.require(fileFieldName)
 }
 
+// SetContents sets the Contents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (f *File) SetContents(contents string) {
 	f.Contents = contents
 	f.require(fileFieldContents)
@@ -1783,11 +1865,15 @@ func (m *Migration) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Migration) SetName(name string) {
 	m.Name = name
 	m.require(migrationFieldName)
 }
 
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Migration) SetStatus(status MigrationStatus) {
 	m.Status = status
 	m.require(migrationFieldStatus)
@@ -1909,16 +1995,22 @@ func (m *Moment) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Moment) SetId(id uuid.UUID) {
 	m.Id = id
 	m.require(momentFieldId)
 }
 
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Moment) SetDate(date time.Time) {
 	m.Date = date
 	m.require(momentFieldDate)
 }
 
+// SetDatetime sets the Datetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Moment) SetDatetime(datetime time.Time) {
 	m.Datetime = datetime
 	m.require(momentFieldDatetime)
@@ -2085,46 +2177,64 @@ func (m *Movie) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetId(id MovieId) {
 	m.Id = id
 	m.require(movieFieldId)
 }
 
+// SetPrequel sets the Prequel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetPrequel(prequel *MovieId) {
 	m.Prequel = prequel
 	m.require(movieFieldPrequel)
 }
 
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetTitle(title string) {
 	m.Title = title
 	m.require(movieFieldTitle)
 }
 
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetFrom(from string) {
 	m.From = from
 	m.require(movieFieldFrom)
 }
 
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetRating(rating float64) {
 	m.Rating = rating
 	m.require(movieFieldRating)
 }
 
+// SetTag sets the Tag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetTag(tag commons.Tag) {
 	m.Tag = tag
 	m.require(movieFieldTag)
 }
 
+// SetBook sets the Book field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetBook(book *string) {
 	m.Book = book
 	m.require(movieFieldBook)
 }
 
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetMetadata(metadata map[string]interface{}) {
 	m.Metadata = metadata
 	m.require(movieFieldMetadata)
 }
 
+// SetRevenue sets the Revenue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (m *Movie) SetRevenue(revenue int64) {
 	m.Revenue = revenue
 	m.require(movieFieldRevenue)
@@ -2232,16 +2342,22 @@ func (n *Node) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetName(name string) {
 	n.Name = name
 	n.require(nodeFieldName)
 }
 
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetNodes(nodes []*Node) {
 	n.Nodes = nodes
 	n.require(nodeFieldNodes)
 }
 
+// SetTrees sets the Trees field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (n *Node) SetTrees(trees []*Tree) {
 	n.Trees = trees
 	n.require(nodeFieldTrees)
@@ -2318,6 +2434,8 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetTtl sets the Ttl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RefreshTokenRequest) SetTtl(ttl int) {
 	r.Ttl = ttl
 	r.require(refreshTokenRequestFieldTtl)
@@ -2394,6 +2512,8 @@ func (r *Request) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetRequest sets the Request field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Request) SetRequest(request interface{}) {
 	r.Request = request
 	r.require(requestFieldRequest)
@@ -2479,11 +2599,15 @@ func (r *Response) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetResponse sets the Response field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetResponse(response interface{}) {
 	r.Response = response
 	r.require(responseFieldResponse)
 }
 
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *Response) SetIdentifiers(identifiers []*Identifier) {
 	r.Identifiers = identifiers
 	r.require(responseFieldIdentifiers)
@@ -2560,6 +2684,8 @@ func (r *ResponseType) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ResponseType) SetType(type_ *Type) {
 	r.Type = type_
 	r.require(responseTypeFieldType)
@@ -2645,11 +2771,15 @@ func (s *StuntDouble) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StuntDouble) SetName(name string) {
 	s.Name = name
 	s.require(stuntDoubleFieldName)
 }
 
+// SetActorOrActressId sets the ActorOrActressId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (s *StuntDouble) SetActorOrActressId(actorOrActressId string) {
 	s.ActorOrActressId = actorOrActressId
 	s.require(stuntDoubleFieldActorOrActressId)
@@ -2871,6 +3001,8 @@ func (t *Tree) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (t *Tree) SetNodes(nodes []*Node) {
 	t.Nodes = nodes
 	t.require(treeFieldNodes)

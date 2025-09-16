@@ -24,6 +24,8 @@ func (g *GetFileRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
+// SetXFileApiVersion sets the XFileApiVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetFileRequest) SetXFileApiVersion(xFileApiVersion string) {
 	g.XFileApiVersion = xFileApiVersion
 	g.require(getFileRequestFieldXFileApiVersion)
