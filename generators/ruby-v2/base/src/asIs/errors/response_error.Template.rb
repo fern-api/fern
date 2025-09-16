@@ -10,6 +10,10 @@ module <%= gem_namespace %>
         super(msg)
       end
 
+      def inspect
+        "#<#{self.class.name} @code=#{code} @body=#{message}>"
+      end
+
       # Returns the most appropriate error class for the given code.
       #
       # @return [Class]
