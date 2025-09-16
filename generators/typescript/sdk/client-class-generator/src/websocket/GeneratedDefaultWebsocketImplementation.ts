@@ -324,7 +324,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
-            
         } else {
             const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
             mergeOnlyDefinedHeaders.push(
@@ -477,7 +476,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters: this.channel.queryParameters.length > 0 ? ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME) : ts.factory.createObjectLiteralExpression([], false)
+            queryParameters:
+                this.channel.queryParameters.length > 0
+                    ? ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
+                    : ts.factory.createObjectLiteralExpression([], false)
         });
     }
 
