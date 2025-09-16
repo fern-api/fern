@@ -13,13 +13,13 @@ import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = Key.Deserializer.class)
-public final class Key {
+@JsonDeserialize(using = UnionWithIdenticalPrimitives.Deserializer.class)
+public final class UnionWithIdenticalPrimitives {
     private final Object value;
 
     private final int type;
 
-    private Key(Object value, int type) {
+    private UnionWithIdenticalPrimitives(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -32,9 +32,11 @@ public final class Key {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((KeyType) this.value);
+            return visitor.visit((int) this.value);
         } else if (this.type == 1) {
-            return visitor.visit2((String) this.value);
+            return visitor.visit((double) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((String) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -42,10 +44,10 @@ public final class Key {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Key && equalTo((Key) other);
+        return other instanceof UnionWithIdenticalPrimitives && equalTo((UnionWithIdenticalPrimitives) other);
     }
 
-    private boolean equalTo(Key other) {
+    private boolean equalTo(UnionWithIdenticalPrimitives other) {
         return value.equals(other.value);
     }
 
@@ -59,46 +61,43 @@ public final class Key {
         return this.value.toString();
     }
 
-    public static Key of(KeyType value) {
-        return new Key(value, 0);
+    public static UnionWithIdenticalPrimitives of(int value) {
+        return new UnionWithIdenticalPrimitives(value, 0);
     }
 
-    /**
-     * @param value must be one of the following:
-     * <ul>
-     * <li>"default"</li>
-     * </ul>
-     */
-    public static Key of2(String value) {
-        return new Key(value, 1);
+    public static UnionWithIdenticalPrimitives of(double value) {
+        return new UnionWithIdenticalPrimitives(value, 1);
+    }
+
+    public static UnionWithIdenticalPrimitives of(String value) {
+        return new UnionWithIdenticalPrimitives(value, 2);
     }
 
     public interface Visitor<T> {
-        T visit(KeyType value);
+        T visit(int value);
 
-        /**
-         * @param value must be one of the following:
-         * <ul>
-         * <li>"default"</li>
-         * </ul>
-         */
-        T visit2(String value);
+        T visit(double value);
+
+        T visit(String value);
     }
 
-    static final class Deserializer extends StdDeserializer<Key> {
+    static final class Deserializer extends StdDeserializer<UnionWithIdenticalPrimitives> {
         Deserializer() {
-            super(Key.class);
+            super(UnionWithIdenticalPrimitives.class);
         }
 
         @java.lang.Override
-        public Key deserialize(JsonParser p, DeserializationContext context) throws IOException {
+        public UnionWithIdenticalPrimitives deserialize(JsonParser p, DeserializationContext context)
+                throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, KeyType.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Integer) {
+                return of((Integer) value);
+            }
+            if (value instanceof Double) {
+                return of((Double) value);
             }
             try {
-                return of2(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
