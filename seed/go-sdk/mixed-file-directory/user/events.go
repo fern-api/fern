@@ -7,16 +7,46 @@ import (
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
 	internal "github.com/mixed-file-directory/fern/internal"
+	big "math/big"
+)
+
+var (
+	listUserEventsRequestFieldLimit = big.NewInt(1 << 0)
 )
 
 type ListUserEventsRequest struct {
 	// The maximum number of results to return.
 	Limit *int `json:"-" url:"limit,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUserEventsRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEventsRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listUserEventsRequestFieldLimit)
+}
+
+var (
+	eventFieldId   = big.NewInt(1 << 0)
+	eventFieldName = big.NewInt(1 << 1)
+)
 
 type Event struct {
 	Id   fern.Id `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -40,6 +70,27 @@ func (e *Event) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *Event) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Event) SetId(id fern.Id) {
+	e.Id = id
+	e.require(eventFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Event) SetName(name string) {
+	e.Name = name
+	e.require(eventFieldName)
+}
+
 func (e *Event) UnmarshalJSON(data []byte) error {
 	type unmarshaler Event
 	var value unmarshaler
@@ -54,6 +105,17 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *Event) MarshalJSON() ([]byte, error) {
+	type embed Event
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *Event) String() string {

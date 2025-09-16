@@ -6,12 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/response-property/fern/internal"
+	big "math/big"
 )
 
 type OptionalStringResponse = *StringResponse
 
+var (
+	stringResponseFieldData = big.NewInt(1 << 0)
+)
+
 type StringResponse struct {
 	Data string `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,20 @@ func (s *StringResponse) GetData() string {
 
 func (s *StringResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
+}
+
+func (s *StringResponse) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StringResponse) SetData(data string) {
+	s.Data = data
+	s.require(stringResponseFieldData)
 }
 
 func (s *StringResponse) UnmarshalJSON(data []byte) error {
@@ -44,6 +66,17 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *StringResponse) MarshalJSON() ([]byte, error) {
+	type embed StringResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *StringResponse) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -56,8 +89,15 @@ func (s *StringResponse) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	withMetadataFieldMetadata = big.NewInt(1 << 0)
+)
+
 type WithMetadata struct {
 	Metadata map[string]string `json:"metadata" url:"metadata"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -72,6 +112,20 @@ func (w *WithMetadata) GetMetadata() map[string]string {
 
 func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
+}
+
+func (w *WithMetadata) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithMetadata) SetMetadata(metadata map[string]string) {
+	w.Metadata = metadata
+	w.require(withMetadataFieldMetadata)
 }
 
 func (w *WithMetadata) UnmarshalJSON(data []byte) error {
@@ -90,6 +144,17 @@ func (w *WithMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (w *WithMetadata) MarshalJSON() ([]byte, error) {
+	type embed WithMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (w *WithMetadata) String() string {
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -102,9 +167,17 @@ func (w *WithMetadata) String() string {
 	return fmt.Sprintf("%#v", w)
 }
 
+var (
+	movieFieldId   = big.NewInt(1 << 0)
+	movieFieldName = big.NewInt(1 << 1)
+)
+
 type Movie struct {
 	Id   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -128,6 +201,27 @@ func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Movie) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Movie) SetId(id string) {
+	m.Id = id
+	m.require(movieFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Movie) SetName(name string) {
+	m.Name = name
+	m.require(movieFieldName)
+}
+
 func (m *Movie) UnmarshalJSON(data []byte) error {
 	type unmarshaler Movie
 	var value unmarshaler
@@ -144,6 +238,17 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (m *Movie) MarshalJSON() ([]byte, error) {
+	type embed Movie
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (m *Movie) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -158,10 +263,19 @@ func (m *Movie) String() string {
 
 type OptionalWithDocs = *WithDocs
 
+var (
+	responseFieldMetadata = big.NewInt(1 << 0)
+	responseFieldDocs     = big.NewInt(1 << 1)
+	responseFieldData     = big.NewInt(1 << 2)
+)
+
 type Response struct {
 	Metadata map[string]string `json:"metadata" url:"metadata"`
 	Docs     string            `json:"docs" url:"docs"`
 	Data     *Movie            `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -192,6 +306,34 @@ func (r *Response) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *Response) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Response) SetMetadata(metadata map[string]string) {
+	r.Metadata = metadata
+	r.require(responseFieldMetadata)
+}
+
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Response) SetDocs(docs string) {
+	r.Docs = docs
+	r.require(responseFieldDocs)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Response) SetData(data *Movie) {
+	r.Data = data
+	r.require(responseFieldData)
+}
+
 func (r *Response) UnmarshalJSON(data []byte) error {
 	type unmarshaler Response
 	var value unmarshaler
@@ -208,6 +350,17 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Response) MarshalJSON() ([]byte, error) {
+	type embed Response
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Response) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -220,8 +373,15 @@ func (r *Response) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	withDocsFieldDocs = big.NewInt(1 << 0)
+)
+
 type WithDocs struct {
 	Docs string `json:"docs" url:"docs"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -238,6 +398,20 @@ func (w *WithDocs) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
 
+func (w *WithDocs) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetDocs sets the Docs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithDocs) SetDocs(docs string) {
+	w.Docs = docs
+	w.require(withDocsFieldDocs)
+}
+
 func (w *WithDocs) UnmarshalJSON(data []byte) error {
 	type unmarshaler WithDocs
 	var value unmarshaler
@@ -252,6 +426,17 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 	w.extraProperties = extraProperties
 	w.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (w *WithDocs) MarshalJSON() ([]byte, error) {
+	type embed WithDocs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (w *WithDocs) String() string {

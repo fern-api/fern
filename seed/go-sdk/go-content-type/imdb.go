@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/go-content-type/fern/internal"
+	big "math/big"
+)
+
+var (
+	createMovieRequestFieldTitle  = big.NewInt(1 << 0)
+	createMovieRequestFieldRating = big.NewInt(1 << 1)
 )
 
 type CreateMovieRequest struct {
 	Title  string  `json:"title" url:"title"`
 	Rating float64 `json:"rating" url:"rating"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -34,6 +43,27 @@ func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CreateMovieRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateMovieRequest) SetTitle(title string) {
+	c.Title = title
+	c.require(createMovieRequestFieldTitle)
+}
+
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateMovieRequest) SetRating(rating float64) {
+	c.Rating = rating
+	c.require(createMovieRequestFieldRating)
+}
+
 func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateMovieRequest
 	var value unmarshaler
@@ -48,6 +78,17 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	c.extraProperties = extraProperties
 	c.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (c *CreateMovieRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateMovieRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CreateMovieRequest) String() string {
