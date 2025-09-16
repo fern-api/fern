@@ -1,4 +1,4 @@
-import { File, Style } from "@fern-api/base-generator";
+import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
@@ -177,7 +177,7 @@ export class WireTestGenerator {
         return [testMethodContent, imports];
     }
 
-    private writeImports(writer: any, imports: Map<string, string>): void {
+    private writeImports(writer: go.Writer, imports: Map<string, string>): void {
         const standardLibraryImports: string[] = [];
         const externalImports: Array<[string, string]> = [];
 
