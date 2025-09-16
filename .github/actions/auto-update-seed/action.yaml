@@ -93,7 +93,7 @@ runs:
 
     # Create PR, approve and set to merge all at generator level
     - name: Create Pull Request
-      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-pr == 'true'
+      if: inputs.create-pr == 'true'
       id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
