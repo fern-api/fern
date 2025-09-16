@@ -634,9 +634,6 @@ jobs:
 
   # Use always() to ensure this runs even if stages are skipped. Add check back to
   # make sure it doesn't run for failures or cancellations
-  # always() && ${{ needs.setup.outputs.create-artifacts == 'true' }} &&
-      # !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-    # CHRISM - need to fix the always later
   commit-seed-changes:
     if: >-
       ${{ 
@@ -660,6 +657,8 @@ jobs:
         run: |
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
+
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
@@ -671,7 +670,6 @@ jobs:
         run: |
           mkdir artifacts
 
-      #CHRISM - test on failure (no changes)
       # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise 
       # they are subfoldered into folders that match *.patch pattern and cause errors downstream
       - name: Download patches
@@ -712,7 +710,5 @@ jobs:
           push: true
           fetch: false
           message: "Automated update of seed files"
-          committer_name: "Fern Support"
-          committer_email: "26544928+fern-support@users.noreply.github.com"
-
+          
   #CHRISM - kick off seed snapshot tests
