@@ -574,13 +574,10 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const operationServer = this.operation.servers?.[0];
-
         if (operationServer == null) {
             return undefined;
         }
-
         const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
-
         const serverToUse = matchingTopLevelServer ?? operationServer;
 
         return ServersConverter.getServerName({
