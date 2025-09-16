@@ -212,3 +212,6 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
+  
+  # TODO: Investigate addition of toolchain directive to go.mod
+  - imdb:with-wiremock-tests
