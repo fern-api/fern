@@ -12,6 +12,7 @@ import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commo
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernOpenAPIExtension } from "../../../../../openapi/openapi-ir-parser/src/openapi/v3/extensions/fernExtensions";
+import { ServerFromOperationNameExtension } from "../../../../../v3-importer-commons/src/extensions/x-fern-server-name-from-operation";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
@@ -565,12 +566,17 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrl(): string | undefined {
-        if (FernOpenAPIExtension.SERVER_NAME_V2 in this.operation) {
-            // eslint-disable-next-line no-console
+        const serverFromOperationNameExtension = new ServerFromOperationNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            context: this.context
+        });
+        const serverFromOperationName = serverFromOperationNameExtension.convert();
+        if (serverFromOperationName != null) {
             this.context.logger.debug(
-                `[getEndpointBaseUrl] Endpoint ${this.method.toUpperCase()} ${this.path} specifies a server with "${FernOpenAPIExtension.SERVER_NAME_V2}" extension. Returning server type: ${this.operation[FernOpenAPIExtension.SERVER_NAME_V2]}`
+                `[getEndpointBaseUrl] Endpoint ${this.method.toUpperCase()} ${this.path} specifies a server with "${FernOpenAPIExtension.SERVER_NAME_V2}" extension. Returning server type: ${serverFromOperationName}`
             );
-            return this.operation[FernOpenAPIExtension.SERVER_NAME_V2] as string | undefined;
+            return serverFromOperationName;
         }
 
         const operationServer = this.operation.servers?.[0];
