@@ -19,6 +19,8 @@ if typing.TYPE_CHECKING:
     from .union_with_no_properties import UnionWithNoProperties
     from .union_with_optional_time import UnionWithOptionalTime
     from .union_with_primitive import UnionWithPrimitive
+    from .union_with_same_number_types import UnionWithSameNumberTypes
+    from .union_with_same_string_types import UnionWithSameStringTypes
     from .union_with_single_element import UnionWithSingleElement
     from .union_with_sub_types import UnionWithSubTypes
     from .union_with_time import UnionWithTime
@@ -37,6 +39,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".union_with_no_properties",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithPrimitive": ".union_with_primitive",
+    "UnionWithSameNumberTypes": ".union_with_same_number_types",
+    "UnionWithSameStringTypes": ".union_with_same_string_types",
     "UnionWithSingleElement": ".union_with_single_element",
     "UnionWithSubTypes": ".union_with_sub_types",
     "UnionWithTime": ".union_with_time",
@@ -77,6 +81,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",
