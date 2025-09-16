@@ -15,6 +15,7 @@ export declare namespace HttpEndpointGenerator {
 export const HTTP_RESPONSE_VN = "_response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
+export const ERROR_CLASS_VN = "error_class";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -121,11 +122,11 @@ export class HttpEndpointGenerator {
                 elseBody: ruby.codeblock((writer) => {
                     const rootModuleName = this.context.getRootModule().name;
                     writer.writeLine(
-                        `error_class = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
+                        `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
                     );
 
                     ruby.raise({
-                        errorClass: ruby.codeblock(`error_class.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                        errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
                     }).write(writer);
                 })
             })
