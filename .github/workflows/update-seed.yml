@@ -739,4 +739,4 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
       - name: Trigger seed snapshot tests
-        uses: ./.github/workflows/seed.yml
+        uses: fern-api/fern/.github/workflows/seed.yml@mallinson/example-PR-level-testing #CHRISM - change
