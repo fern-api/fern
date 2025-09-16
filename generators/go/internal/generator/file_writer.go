@@ -170,7 +170,8 @@ func (f *fileWriter) WriteRaw(s string) {
 	fmt.Fprint(f.buffer, s)
 }
 
-// WriteStructPropertyBitConstants writes bigint constants for each property of a struct.
+// WriteStructPropertyBitConstants writes bigint constants for each property of a struct;
+// these are used when interfacing with explicitFields.
 func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNames []string) {
 	if len(propertyNames) == 0 {
 		return
@@ -187,7 +188,7 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 	f.P()
 }
 
-// WriteSetterMethods writes setter methods for each field that call the require method.
+// WriteSetterMethods writes setter methods for each field.
 func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string) {
 	if len(propertyNames) == 0 {
 		return
@@ -204,6 +205,8 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 		paramName := propertySafeNames[i]
 		propertyType := propertyTypes[i]
 
+		f.P("// ", setterName, " sets the ", propertyName, " field and marks it as non-optional;")
+		f.P("// ", "this prevents an empty or null value for this field from being omitted during serialization.")
 		f.P("func (", receiver, " *", typeName, ") ", setterName, "(", paramName, " ", propertyType, ") {")
 		f.P("\t", receiver, ".", propertyName, " = ", paramName)
 		f.P("\t", receiver, ".require(", fieldConstantName, ")")
