@@ -672,10 +672,13 @@ jobs:
           mkdir artifacts
 
       #CHRISM - test on failure (no changes)
+      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise 
+      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
       - name: Download patches
         uses: actions/download-artifact@v5
         with:
           path: ./artifacts
+          merge-multiple: true
 
       - name: Get number of patches
         shell: bash
@@ -708,6 +711,8 @@ jobs:
           add: "seed/*"
           push: true
           message: "Automated update of seed files"
+          committer_name: "Fern Support"
+
 
 
   #CHRISM - kick off seed snapshot tests
