@@ -711,7 +711,7 @@ jobs:
           add: "seed/*"
           push: true
           message: "Automated update of seed files"
-          committer_name: "Fern Support"
+          author_name: "Fern Support"
 
 
 
