@@ -1,14 +1,26 @@
 name: Seed Snapshot Tests
 
 on:
-  # Note: only want this to run when the Update Seed workflow runs so all
-  # settings to start are in that workflow (except the manual trigger which
-  # is also allowed here). This will kick off so long as the Update Seed workflow
-  # passes or is skipped, it will not run if the Update Seed workflow never starts.
-# CHRISM - note, have to make sure this runs after merge to PR branch
+  # Note: for push, run this when something merges to main and meets path filter criteria
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/update-seed.yml"
+      - "packages/seed/**"
+      - "packages/ir-sdk/fern/apis/**"
+      - "packages/cli/generation/ir-generator/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+      - "generators/**"
+      - "seed/**"
+  # Note: for workflow_run, run this when update-seed workflow completes unless the branch is main 
+  # (which will use the push trigger above)
   workflow_run:
-    workflows: [Update Seed]
+    workflows: ["Update Seed"]
     types: [completed]
+    branches-ignore:
+      - main
   workflow_call:
   workflow_dispatch:
 
