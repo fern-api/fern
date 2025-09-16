@@ -77,9 +77,9 @@ const asIsTopoValue = {
     [AsIsFiles.TypesHash]: 18,
     [AsIsFiles.TypesUnknown]: 19,
     [AsIsFiles.ApiError]: 20,
-    [AsIsFiles.ClientError]: 21,
-    [AsIsFiles.RedirectError]: 22,
-    [AsIsFiles.ResponseError]: 23,
+    [AsIsFiles.ResponseError]: 21,
+    [AsIsFiles.ClientError]: 22,
+    [AsIsFiles.RedirectError]: 23,
     [AsIsFiles.ServerError]: 24,
     [AsIsFiles.TimeoutError]: 25,
 };
