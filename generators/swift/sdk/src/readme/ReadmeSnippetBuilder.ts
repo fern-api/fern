@@ -112,7 +112,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         swift.Expression.await(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("client"),
-                                methodName: this.getMethodName(endpoint),
+                                methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
                                 arguments_: [
                                     swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                     swift.functionArgument({
@@ -158,7 +158,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                             swift.Expression.await(
                                 swift.Expression.methodCall({
                                     target: swift.Expression.reference("client"),
-                                    methodName: this.getMethodName(endpoint),
+                                    methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
                                     arguments_: [
                                         swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                         swift.functionArgument({
@@ -208,7 +208,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         swift.Expression.await(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("client"),
-                                methodName: this.getMethodName(endpoint),
+                                methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
                                 arguments_: [
                                     swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                     swift.functionArgument({
@@ -256,36 +256,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             })
         ]);
         return [content];
-    }
-
-    private getMethodName(endpoint: HttpEndpoint): string {
-        const packageOrSubpackage = this.getPackageOrSubpackageForEndpoint(endpoint);
-        if (packageOrSubpackage == null) {
-            throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
-        }
-        return [
-            ...packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName),
-            endpoint.name.camelCase.unsafeName
-        ].join(".");
-    }
-
-    private getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
-        const rootPackageServiceId = this.context.ir.rootPackage.service;
-        if (rootPackageServiceId) {
-            const rootPackageService = this.context.getHttpServiceOrThrow(rootPackageServiceId);
-            if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
-                return this.context.ir.rootPackage;
-            }
-        }
-        for (const subpackage of Object.values(this.context.ir.subpackages)) {
-            if (typeof subpackage.service === "string") {
-                const service = this.context.getHttpServiceOrThrow(subpackage.service);
-                if (service.endpoints.some((e) => e.id === endpoint.id)) {
-                    return subpackage;
-                }
-            }
-        }
-        return null;
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
@@ -21,6 +21,7 @@ import {
     SingleUrlEnvironmentGenerator,
     SubClientGenerator
 } from "./generators";
+import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -101,8 +102,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateReference(context: SdkGeneratorContext): Promise<void> {
         try {
-            const builder = new ReferenceConfigBuilder();
-            // TODO(kafkas): Implement endpoints
+            const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
             const content = await context.generatorAgent.generateReference(builder);
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {

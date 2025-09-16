@@ -4,6 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
+    HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
     Package,
@@ -207,5 +208,35 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public getFullyQualifiedNameForSchemaType(symbolName: string): string {
         return `${this.targetName}.${symbolName}`;
+    }
+
+    public getFullyQualifiedEndpointMethodName(endpoint: HttpEndpoint): string {
+        const packageOrSubpackage = this.getPackageOrSubpackageForEndpoint(endpoint);
+        if (packageOrSubpackage == null) {
+            throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+        }
+        return [
+            ...packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName),
+            endpoint.name.camelCase.unsafeName
+        ].join(".");
+    }
+
+    private getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
+        const rootPackageServiceId = this.ir.rootPackage.service;
+        if (rootPackageServiceId) {
+            const rootPackageService = this.getHttpServiceOrThrow(rootPackageServiceId);
+            if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
+                return this.ir.rootPackage;
+            }
+        }
+        for (const subpackage of Object.values(this.ir.subpackages)) {
+            if (typeof subpackage.service === "string") {
+                const service = this.getHttpServiceOrThrow(subpackage.service);
+                if (service.endpoints.some((e) => e.id === endpoint.id)) {
+                    return subpackage;
+                }
+            }
+        }
+        return null;
     }
 }
