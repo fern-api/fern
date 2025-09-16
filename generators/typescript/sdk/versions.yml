@@ -1,10 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-16"
+  irVersion: 59
+
 - version: 2.11.2
   changelogEntry:
     - summary: |
         Websocket client generation compiles when there are no query parameters and when the auth 
         scheme has custom authentication headers.
       type: fix
+
   createdAt: "2025-09-16"
   irVersion: 59
 
