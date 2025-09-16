@@ -13,20 +13,16 @@ on:
       - "test-definitions-openapi/**"
       - "generators/**"
       - "seed/**"
-  # TODO: Re-enable this trigger once repository_dispatch trigger is verified, then remove it from seed.yml
-  # pull_request:
-  #   types: [opened, synchronize, reopened, ready_for_review]
-  #   branches:
-  #     - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
   workflow_dispatch:
 
-# TODO: Re-enable this concurrency once repository_dispatch trigger is verified
-# Also need to verify that stopping this workflow won't miss the addition of new seed
-# changes, which likely means playing around with how changes works or the path filering
 # Cancel previous workflows on previous push
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-#   cancel-in-progress: true
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   pull-requests: write
