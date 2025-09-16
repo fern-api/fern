@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/imdb/fern/internal"
+	big "math/big"
+)
+
+var (
+	createMovieRequestFieldTitle  = big.NewInt(1 << 0)
+	createMovieRequestFieldRating = big.NewInt(1 << 1)
 )
 
 type CreateMovieRequest struct {
 	Title  string  `json:"title" url:"title"`
 	Rating float64 `json:"rating" url:"rating"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -34,6 +43,27 @@ func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CreateMovieRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateMovieRequest) SetTitle(title string) {
+	c.Title = title
+	c.require(createMovieRequestFieldTitle)
+}
+
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateMovieRequest) SetRating(rating float64) {
+	c.Rating = rating
+	c.require(createMovieRequestFieldRating)
+}
+
 func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateMovieRequest
 	var value unmarshaler
@@ -50,6 +80,17 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateMovieRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateMovieRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateMovieRequest) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -62,11 +103,20 @@ func (c *CreateMovieRequest) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	movieFieldId     = big.NewInt(1 << 0)
+	movieFieldTitle  = big.NewInt(1 << 1)
+	movieFieldRating = big.NewInt(1 << 2)
+)
+
 type Movie struct {
 	Id    MovieId `json:"id" url:"id"`
 	Title string  `json:"title" url:"title"`
 	// The rating scale is one to five stars
 	Rating float64 `json:"rating" url:"rating"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -97,6 +147,34 @@ func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Movie) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Movie) SetId(id MovieId) {
+	m.Id = id
+	m.require(movieFieldId)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Movie) SetTitle(title string) {
+	m.Title = title
+	m.require(movieFieldTitle)
+}
+
+// SetRating sets the Rating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Movie) SetRating(rating float64) {
+	m.Rating = rating
+	m.require(movieFieldRating)
+}
+
 func (m *Movie) UnmarshalJSON(data []byte) error {
 	type unmarshaler Movie
 	var value unmarshaler
@@ -111,6 +189,17 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	m.extraProperties = extraProperties
 	m.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (m *Movie) MarshalJSON() ([]byte, error) {
+	type embed Movie
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Movie) String() string {
