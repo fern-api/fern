@@ -69,6 +69,5 @@ export class Begin extends AstNode {
         }
 
         writer.write("end");
-        writer.writeNewLineIfLastLineNot();
     }
 }
