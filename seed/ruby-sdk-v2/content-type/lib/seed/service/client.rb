@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Service
@@ -10,18 +11,15 @@ module Seed
       # @return [untyped]
       def patch(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Update with JSON merge patch - complex types.
@@ -34,18 +32,15 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Named request with mixed optional/nullable fields and merge-patch content type.
@@ -56,18 +51,15 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
@@ -78,18 +70,15 @@ module Seed
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Regular PATCH endpoint without merge-patch semantics
@@ -99,20 +88,16 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

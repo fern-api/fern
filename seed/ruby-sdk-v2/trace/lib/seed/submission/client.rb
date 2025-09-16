@@ -13,7 +13,7 @@ module Seed
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "POST",
           path: "/sessions/create-session/#{params[:language]}"
         )
@@ -30,7 +30,7 @@ module Seed
       # @return [Seed::Submission::Types::ExecutionSessionResponse | nil]
       def get_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "GET",
           path: "/sessions/#{params[:sessionId]}"
         )
@@ -45,7 +45,7 @@ module Seed
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "DELETE",
           path: "/sessions/stop/#{params[:sessionId]}"
         )
@@ -58,7 +58,7 @@ module Seed
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Prod,
           method: "GET",
           path: "/sessions/execution-sessions-state"
         )

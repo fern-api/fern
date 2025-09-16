@@ -37,7 +37,6 @@ export class RawClient {
             writer.write(" || ");
             writer.writeNode(this.context.getDefaultEnvironmentClassReference());
         }
-        writer.writeNewLineIfLastLineNot();
     }
 
     public sendRequest({

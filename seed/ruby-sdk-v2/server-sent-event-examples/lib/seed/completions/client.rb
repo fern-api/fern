@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Completions
@@ -10,19 +11,16 @@ module Seed
       # @return [untyped]
       def stream(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "stream",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

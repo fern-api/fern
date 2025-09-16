@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def boot_instance(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Production,
           method: "POST",
           path: "/ec2/boot",
           body: params

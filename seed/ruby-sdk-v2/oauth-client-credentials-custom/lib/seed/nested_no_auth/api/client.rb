@@ -12,7 +12,7 @@ module Seed
         # @return [untyped]
         def get_something(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/nested-no-auth/get-something"
           )

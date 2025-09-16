@@ -12,7 +12,7 @@ module Seed
         # @return [untyped]
         def post_json_patch_content_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/foo/bar",
             body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h
@@ -26,7 +26,7 @@ module Seed
         # @return [untyped]
         def post_json_patch_content_with_charset_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/foo/baz",
             body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h

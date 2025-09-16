@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Service
@@ -10,21 +11,17 @@ module Seed
       # GET request with custom api key
       #
       # @return [String]
-      def get_with_bearer_token(request_options: {}, **params)
+      def get_with_bearer_token(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url]
-          ,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "apiKey"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end
