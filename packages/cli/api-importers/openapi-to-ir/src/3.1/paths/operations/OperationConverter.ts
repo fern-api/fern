@@ -567,51 +567,26 @@ export class OperationConverter extends AbstractOperationConverter {
     private getEndpointBaseUrl(): string | undefined {
         if (FernOpenAPIExtension.SERVER_NAME_V2 in this.operation) {
             // eslint-disable-next-line no-console
-            this.context.logger.trace(
+            this.context.logger.debug(
                 `[getEndpointBaseUrl] Endpoint ${this.method.toUpperCase()} ${this.path} specifies a server with "${FernOpenAPIExtension.SERVER_NAME_V2}" extension. Returning server type: ${this.operation[FernOpenAPIExtension.SERVER_NAME_V2]}`
             );
             return this.operation[FernOpenAPIExtension.SERVER_NAME_V2] as string | undefined;
         }
 
         const operationServer = this.operation.servers?.[0];
-        // trace print: operation servers
-        // eslint-disable-next-line no-console
-        this.context.logger.trace("[getEndpointBaseUrl] operation.servers:", JSON.stringify(this.operation.servers));
 
         if (operationServer == null) {
-            // trace print: no operation server found
-            // eslint-disable-next-line no-console
-            this.context.logger.trace("[getEndpointBaseUrl] No operation server found, returning undefined.");
             return undefined;
         }
 
-        // trace print: operation server selected
-        // eslint-disable-next-line no-console
-        this.context.logger.trace("[getEndpointBaseUrl] operationServer selected:", JSON.stringify(operationServer));
-
         const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
 
-        // trace print: matching top-level server
-        // eslint-disable-next-line no-console
-        this.context.logger.trace(
-            "[getEndpointBaseUrl] matchingTopLevelServer:",
-            JSON.stringify(matchingTopLevelServer)
-        );
-
         const serverToUse = matchingTopLevelServer ?? operationServer;
-
-        // trace print: server to use
-        // eslint-disable-next-line no-console
-        this.context.logger.trace("[getEndpointBaseUrl] serverToUse:", JSON.stringify(serverToUse));
 
         const serverName = ServersConverter.getServerName({
             server: serverToUse,
             context: this.context
         });
-
-        // trace print: server name result
-        // eslint-disable-next-line no-console
-        this.context.logger.trace("[getEndpointBaseUrl] serverName:", JSON.stringify(serverName));
 
         return serverName;
     }

@@ -679,7 +679,7 @@
         {
           "displayName": "Get user information",
           "method": "GET",
-          "baseUrl": "https://a.com",
+          "baseUrl": "user",
           "path": {
             "head": "/users/",
             "parts": [
@@ -928,7 +928,7 @@
                     "method": "GET",
                     "path": "/users/userId"
                   },
-                  "environment": "https://a.com",
+                  "environment": "user",
                   "pathParameters": {
                     "userId": "userId"
                   },
@@ -1008,7 +1008,7 @@
         {
           "displayName": "Get authentication token",
           "method": "GET",
-          "baseUrl": "https://a.com",
+          "baseUrl": "auth",
           "path": {
             "head": "/token",
             "parts": []
@@ -1139,7 +1139,7 @@
                     "method": "GET",
                     "path": "/token"
                   },
-                  "environment": "https://a.com",
+                  "environment": "auth",
                   "pathParameters": {},
                   "queryParameters": {},
                   "headers": {}
