@@ -20,7 +20,8 @@ export const baseGoCustomConfigSchema = z.object({
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
-    gettersPassByValue: z.boolean().optional()
+    gettersPassByValue: z.boolean().optional(),
+    enableWireTests: z.boolean().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

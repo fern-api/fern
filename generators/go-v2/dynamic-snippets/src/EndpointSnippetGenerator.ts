@@ -1075,7 +1075,7 @@ export class EndpointSnippetGenerator {
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             // IMPORTANT: currently not capturing the response/error values since its not trivial to determine
-            // the number of return values for the method
+            // the number of return values for the method using the dynamic ir
 
             // Call the method and capture response and error
             // writer.write("_, invocationErr := ");
@@ -1145,7 +1145,7 @@ export class EndpointSnippetGenerator {
             writer.writeLine();
 
             // IMPORTANT: currently not asserting that the call succeeded since its not trivial to determine
-            // the number of return values for the method
+            // the number of return values for the method using the dynamic ir
 
             // Verify the call succeeded (may not assert this at all and only assert the WireMock request was matched)
             // Since we don't necessarily have valid response bodies in our WireMock stubs (so type casting will fail)

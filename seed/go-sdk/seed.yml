@@ -80,6 +80,9 @@ fixtures:
       customConfig:
         useReaderForBytesRequest: true
   imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
