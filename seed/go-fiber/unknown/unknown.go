@@ -6,12 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/unknown/fern/internal"
+	big "math/big"
 )
 
 type MyAlias = interface{}
 
+var (
+	myObjectFieldUnknown = big.NewInt(1 << 0)
+)
+
 type MyObject struct {
 	Unknown interface{} `json:"unknown" url:"unknown"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -27,6 +35,20 @@ func (m *MyObject) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *MyObject) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetUnknown sets the Unknown field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MyObject) SetUnknown(unknown interface{}) {
+	m.Unknown = unknown
+	m.require(myObjectFieldUnknown)
+}
+
 func (m *MyObject) UnmarshalJSON(data []byte) error {
 	type unmarshaler MyObject
 	var value unmarshaler
@@ -40,6 +62,17 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 	}
 	m.extraProperties = extraProperties
 	return nil
+}
+
+func (m *MyObject) MarshalJSON() ([]byte, error) {
+	type embed MyObject
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *MyObject) String() string {

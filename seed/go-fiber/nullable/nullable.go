@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/nullable/fern/internal"
+	big "math/big"
 	time "time"
 )
 
@@ -31,6 +32,15 @@ type GetUsersRequest struct {
 
 type Email = *string
 
+var (
+	metadataFieldCreatedAt = big.NewInt(1 << 0)
+	metadataFieldUpdatedAt = big.NewInt(1 << 1)
+	metadataFieldAvatar    = big.NewInt(1 << 2)
+	metadataFieldActivated = big.NewInt(1 << 3)
+	metadataFieldStatus    = big.NewInt(1 << 4)
+	metadataFieldValues    = big.NewInt(1 << 5)
+)
+
 type Metadata struct {
 	CreatedAt time.Time          `json:"createdAt" url:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt" url:"updatedAt"`
@@ -38,6 +48,9 @@ type Metadata struct {
 	Activated *bool              `json:"activated,omitempty" url:"activated,omitempty"`
 	Status    *Status            `json:"status" url:"status"`
 	Values    map[string]*string `json:"values,omitempty" url:"values,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -88,6 +101,55 @@ func (m *Metadata) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Metadata) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetCreatedAt(createdAt time.Time) {
+	m.CreatedAt = createdAt
+	m.require(metadataFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetUpdatedAt(updatedAt time.Time) {
+	m.UpdatedAt = updatedAt
+	m.require(metadataFieldUpdatedAt)
+}
+
+// SetAvatar sets the Avatar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetAvatar(avatar *string) {
+	m.Avatar = avatar
+	m.require(metadataFieldAvatar)
+}
+
+// SetActivated sets the Activated field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetActivated(activated *bool) {
+	m.Activated = activated
+	m.require(metadataFieldActivated)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetStatus(status *Status) {
+	m.Status = status
+	m.require(metadataFieldStatus)
+}
+
+// SetValues sets the Values field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetValues(values map[string]*string) {
+	m.Values = values
+	m.require(metadataFieldValues)
+}
+
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	type embed Metadata
 	var unmarshaler = struct {
@@ -122,7 +184,8 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(m.CreatedAt),
 		UpdatedAt: internal.NewDateTime(m.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Metadata) String() string {
@@ -298,6 +361,17 @@ func (s *Status) validate() error {
 	return nil
 }
 
+var (
+	userFieldName           = big.NewInt(1 << 0)
+	userFieldId             = big.NewInt(1 << 1)
+	userFieldTags           = big.NewInt(1 << 2)
+	userFieldMetadata       = big.NewInt(1 << 3)
+	userFieldEmail          = big.NewInt(1 << 4)
+	userFieldFavoriteNumber = big.NewInt(1 << 5)
+	userFieldNumbers        = big.NewInt(1 << 6)
+	userFieldStrings        = big.NewInt(1 << 7)
+)
+
 type User struct {
 	Name           string                 `json:"name" url:"name"`
 	Id             UserId                 `json:"id" url:"id"`
@@ -307,6 +381,9 @@ type User struct {
 	FavoriteNumber *WeirdNumber           `json:"favorite-number" url:"favorite-number"`
 	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
 	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -371,6 +448,69 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetId(id UserId) {
+	u.Id = id
+	u.require(userFieldId)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetMetadata(metadata *Metadata) {
+	u.Metadata = metadata
+	u.require(userFieldMetadata)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetEmail(email Email) {
+	u.Email = email
+	u.require(userFieldEmail)
+}
+
+// SetFavoriteNumber sets the FavoriteNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetFavoriteNumber(favoriteNumber *WeirdNumber) {
+	u.FavoriteNumber = favoriteNumber
+	u.require(userFieldFavoriteNumber)
+}
+
+// SetNumbers sets the Numbers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetNumbers(numbers []int) {
+	u.Numbers = numbers
+	u.require(userFieldNumbers)
+}
+
+// SetStrings sets the Strings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetStrings(strings map[string]interface{}) {
+	u.Strings = strings
+	u.require(userFieldStrings)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -384,6 +524,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	u.extraProperties = extraProperties
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

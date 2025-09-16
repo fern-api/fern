@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
 	internal "github.com/mixed-file-directory/fern/internal"
+	big "math/big"
 )
 
 type ListUserEventsRequest struct {
@@ -14,9 +15,17 @@ type ListUserEventsRequest struct {
 	Limit *int `query:"limit"`
 }
 
+var (
+	eventFieldId   = big.NewInt(1 << 0)
+	eventFieldName = big.NewInt(1 << 1)
+)
+
 type Event struct {
 	Id   fern.Id `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -39,6 +48,27 @@ func (e *Event) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *Event) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Event) SetId(id fern.Id) {
+	e.Id = id
+	e.require(eventFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Event) SetName(name string) {
+	e.Name = name
+	e.require(eventFieldName)
+}
+
 func (e *Event) UnmarshalJSON(data []byte) error {
 	type unmarshaler Event
 	var value unmarshaler
@@ -52,6 +82,17 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 	}
 	e.extraProperties = extraProperties
 	return nil
+}
+
+func (e *Event) MarshalJSON() ([]byte, error) {
+	type embed Event
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *Event) String() string {

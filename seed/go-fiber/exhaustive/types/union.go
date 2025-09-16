@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
+	big "math/big"
 )
 
 type Animal struct {
@@ -125,9 +126,17 @@ func (a *Animal) validate() error {
 	return nil
 }
 
+var (
+	catFieldName        = big.NewInt(1 << 0)
+	catFieldLikesToMeow = big.NewInt(1 << 1)
+)
+
 type Cat struct {
 	Name        string `json:"name" url:"name"`
 	LikesToMeow bool   `json:"likesToMeow" url:"likesToMeow"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -150,6 +159,27 @@ func (c *Cat) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *Cat) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Cat) SetName(name string) {
+	c.Name = name
+	c.require(catFieldName)
+}
+
+// SetLikesToMeow sets the LikesToMeow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Cat) SetLikesToMeow(likesToMeow bool) {
+	c.LikesToMeow = likesToMeow
+	c.require(catFieldLikesToMeow)
+}
+
 func (c *Cat) UnmarshalJSON(data []byte) error {
 	type unmarshaler Cat
 	var value unmarshaler
@@ -165,6 +195,17 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Cat) MarshalJSON() ([]byte, error) {
+	type embed Cat
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Cat) String() string {
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
@@ -172,9 +213,17 @@ func (c *Cat) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	dogFieldName        = big.NewInt(1 << 0)
+	dogFieldLikesToWoof = big.NewInt(1 << 1)
+)
+
 type Dog struct {
 	Name        string `json:"name" url:"name"`
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -197,6 +246,27 @@ func (d *Dog) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Dog) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Dog) SetName(name string) {
+	d.Name = name
+	d.require(dogFieldName)
+}
+
+// SetLikesToWoof sets the LikesToWoof field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Dog) SetLikesToWoof(likesToWoof bool) {
+	d.LikesToWoof = likesToWoof
+	d.require(dogFieldLikesToWoof)
+}
+
 func (d *Dog) UnmarshalJSON(data []byte) error {
 	type unmarshaler Dog
 	var value unmarshaler
@@ -210,6 +280,17 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 	}
 	d.extraProperties = extraProperties
 	return nil
+}
+
+func (d *Dog) MarshalJSON() ([]byte, error) {
+	type embed Dog
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *Dog) String() string {

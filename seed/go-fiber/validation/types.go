@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/validation/fern/internal"
+	big "math/big"
 )
 
 type CreateRequest struct {
@@ -55,11 +56,21 @@ func (s Shape) Ptr() *Shape {
 type SmallInteger = int
 
 // Defines properties with default values and validation rules.
+var (
+	typeFieldDecimal = big.NewInt(1 << 0)
+	typeFieldEven    = big.NewInt(1 << 1)
+	typeFieldName    = big.NewInt(1 << 2)
+	typeFieldShape   = big.NewInt(1 << 3)
+)
+
 type Type struct {
 	Decimal float64 `json:"decimal" url:"decimal"`
 	Even    int     `json:"even" url:"even"`
 	Name    string  `json:"name" url:"name"`
 	Shape   Shape   `json:"shape" url:"shape"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -96,6 +107,41 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Type) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetDecimal sets the Decimal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetDecimal(decimal float64) {
+	t.Decimal = decimal
+	t.require(typeFieldDecimal)
+}
+
+// SetEven sets the Even field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetEven(even int) {
+	t.Even = even
+	t.require(typeFieldEven)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetName(name string) {
+	t.Name = name
+	t.require(typeFieldName)
+}
+
+// SetShape sets the Shape field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetShape(shape Shape) {
+	t.Shape = shape
+	t.require(typeFieldShape)
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	type unmarshaler Type
 	var value unmarshaler
@@ -109,6 +155,17 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Type) String() string {
