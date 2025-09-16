@@ -54,7 +54,7 @@ exports[`Snippets > 'enum (optional)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = acme.StatusDeactivated.Ptr()"
@@ -64,7 +64,7 @@ exports[`Snippets > 'enum (required)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = acme.StatusActivated"
@@ -80,7 +80,7 @@ exports[`Snippets > 'map (nested)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = map[string]acme.User{
@@ -151,7 +151,7 @@ exports[`Snippets > 'struct (empty)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = acme.User{}"
@@ -161,7 +161,7 @@ exports[`Snippets > 'struct (nested)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
     billing "github.com/acme/acme-go/billing"
     uuid "github.com/google/uuid"
 )
@@ -186,7 +186,7 @@ exports[`Snippets > 'struct (primitives)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = acme.User{
@@ -202,7 +202,7 @@ exports[`Snippets > 'struct (w/ nop)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
 var value = acme.User{
