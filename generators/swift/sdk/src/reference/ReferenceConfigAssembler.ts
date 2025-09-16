@@ -11,10 +11,6 @@ interface SingleEndpointSnippet {
     endpointCall: string;
 }
 
-interface EndpointSignatureInfo {
-    returnType: swift.Type | undefined;
-}
-
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
 
@@ -91,7 +87,6 @@ export class ReferenceConfigAssembler {
                     serviceId,
                     service,
                     endpoint,
-                    endpointSignatureInfo: { returnType: endpointMethod.returnType },
                     endpointMethod,
                     singleEndpointSnippet: {
                         imports: "Foundation",
@@ -107,14 +102,12 @@ export class ReferenceConfigAssembler {
         serviceId,
         service,
         endpoint,
-        endpointSignatureInfo,
         endpointMethod,
         singleEndpointSnippet
     }: {
         serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
-        endpointSignatureInfo: EndpointSignatureInfo;
         endpointMethod: swift.Method;
         singleEndpointSnippet: SingleEndpointSnippet;
     }): FernGeneratorCli.EndpointReference {
@@ -132,7 +125,7 @@ export class ReferenceConfigAssembler {
                         }
                     },
                     {
-                        text: this.getReferenceEndpointInvocationParameters(endpointSignatureInfo)
+                        text: this.getReferenceEndpointInvocationParameters(endpointMethod)
                     }
                 ],
                 returnValue: { text: endpointMethod.returnType.toString() }
@@ -143,10 +136,9 @@ export class ReferenceConfigAssembler {
         };
     }
 
-    private getReferenceEndpointInvocationParameters(endpointSignatureInfo: EndpointSignatureInfo): string {
-        let result = "param123: String";
-        // TODO(kafkas): Implement
-        return `(${result})`;
+    private getReferenceEndpointInvocationParameters(method: swift.Method): string {
+        const paramsJoined = method.parameters.map((p) => `${p.unsafeName}: ${p.type.toString()}`).join(", ");
+        return `(${paramsJoined})`;
     }
 
     private getServiceFilepath({ serviceId, service }: { serviceId: ServiceId; service: HttpService }): string {
