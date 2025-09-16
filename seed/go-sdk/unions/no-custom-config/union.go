@@ -380,8 +380,15 @@ func (s *Square) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	withNameFieldName = big.NewInt(1 << 0)
+)
+
 type WithName struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -398,6 +405,20 @@ func (w *WithName) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
 
+func (w *WithName) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithName) SetName(name string) {
+	w.Name = name
+	w.require(withNameFieldName)
+}
+
 func (w *WithName) UnmarshalJSON(data []byte) error {
 	type unmarshaler WithName
 	var value unmarshaler
@@ -412,6 +433,17 @@ func (w *WithName) UnmarshalJSON(data []byte) error {
 	w.extraProperties = extraProperties
 	w.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (w *WithName) MarshalJSON() ([]byte, error) {
+	type embed WithName
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (w *WithName) String() string {
