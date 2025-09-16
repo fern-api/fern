@@ -1,8 +1,49 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Begin > writes begin block with multiple rescue clauses 1`] = `
+"begin
+  2 + 2
+rescue StandardError => e
+  puts "standard = #{e}"
+rescue RuntimeError => e
+  puts "runtime = #{e}"
+end"
+`;
+
 exports[`Begin > writes begin block with no rescues 1`] = `
 "begin
   2 + 2
+end"
+`;
+
+exports[`Begin > writes begin block with one blanket rescue that assigns 1`] = `
+"begin
+  2 + 2
+rescue => e
+  puts e
+end"
+`;
+
+exports[`Begin > writes begin block with one class-specific rescue that assigns 1`] = `
+"begin
+  2 + 2
+rescue RuntimeError => e
+  puts e
+end"
+`;
+
+exports[`Begin > writes begin block with one empty rescue 1`] = `
+"begin
+  2 + 2
+rescue
+end"
+`;
+
+exports[`Begin > writes begin block with one rescue specific to a class that doesn't assign 1`] = `
+"begin
+  2 + 2
+rescue RuntimeError
+  puts "couldn't add"
 end"
 `;
 
