@@ -201,7 +201,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                                 .map(Name::getPascalCase)
                                                 .map(SafeAndUnsafeString::getSafeName)
                                                 .collect(Collectors.toList())
-                                        : List.of())
+                                        : Collections.emptyList())
                         .build());
         this.visitorClassName = className.nestedClass(visitorName);
         this.deserializerClassName = className.nestedClass("Deserializer");
@@ -228,12 +228,26 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
      */
     private boolean hasDuplicatedJavaTypes() {
         Set<TypeName> seen = new HashSet<>();
+        Set<TypeName> erasedSeen = new HashSet<>();
         for (TypeName typeName : memberTypeNames.values()) {
-            if (!seen.add(typeName)) {
+            TypeName erasedType = getErasedType(typeName);
+            // Check both exact type match and erased type match
+            if (!seen.add(typeName) || !erasedSeen.add(erasedType)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the erased type for a given TypeName. For parameterized types like List<String>, this returns the raw
+     * type List. For non-generic types, returns the type itself.
+     */
+    private TypeName getErasedType(TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName) {
+            return ((ParameterizedTypeName) typeName).rawType;
+        }
+        return typeName;
     }
 
     @Override
@@ -523,18 +537,24 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
         }
 
         TypeName memberType = memberTypeNames.get(member);
-        long typeCount = memberTypeNames.values().stream()
+        TypeName erasedMemberType = getErasedType(memberType);
+
+        long exactTypeCount = memberTypeNames.values().stream()
                 .filter(type -> type.equals(memberType))
                 .count();
 
-        if (typeCount <= 1) {
+        long erasedTypeCount = memberTypeNames.values().stream()
+                .filter(type -> getErasedType(type).equals(erasedMemberType))
+                .count();
+
+        if (exactTypeCount <= 1 && erasedTypeCount <= 1) {
             return prefix;
         }
 
-        // Try to use type reference name first if it's meaningful
         Optional<ContainerTypeEnum> containerTypeEnum = TypeReferenceUtils.toContainerType(member.getType());
         if (containerTypeEnum.isPresent() && duplicatedOuterContainerTypes.contains(containerTypeEnum.get())) {
-            return prefix + member.getType().visit(new TypeReferenceToName());
+            String suffix = member.getType().visit(new TypeReferenceToName());
+            return prefix + suffix;
         }
 
         Integer memberIndex = memberIndexMap.get(member);
