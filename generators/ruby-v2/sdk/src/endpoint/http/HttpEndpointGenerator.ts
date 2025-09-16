@@ -14,6 +14,7 @@ export declare namespace HttpEndpointGenerator {
 
 export const HTTP_RESPONSE_VN = "_response";
 export const PARAMS_VN = "params";
+export const CODE_VN = "code";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -96,10 +97,12 @@ export class HttpEndpointGenerator {
             })
         );
 
+        statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
+
         statements.push(
             ruby.ifElse({
                 if: {
-                    condition: ruby.codeblock(`${HTTP_RESPONSE_VN}.code >= "200" && ${HTTP_RESPONSE_VN}.code < "300"`),
+                    condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
                     thenBody: [
                         ruby.codeblock((writer) => {
                             if (endpoint.response?.body == null) {
@@ -107,7 +110,6 @@ export class HttpEndpointGenerator {
                             } else {
                                 switch (endpoint.response.body.type) {
                                     case "json":
-                                        writer.write(`return `);
                                         this.loadResponseBodyFromJson({
                                             writer,
                                             typeReference: endpoint.response.body.value.responseBodyType
@@ -121,7 +123,11 @@ export class HttpEndpointGenerator {
                     ]
                 },
                 elseBody: ruby.codeblock((writer) => {
-                    writer.writeLine(`raise ${HTTP_RESPONSE_VN}.body`);
+                    writer.writeLine(`error_class = Errors::ResponseError.subclass_for_code(${CODE_VN})`);
+
+                    ruby.raise({
+                        errorClass: ruby.codeblock(`error_class.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                    }).write(writer);
                 })
             })
         );
