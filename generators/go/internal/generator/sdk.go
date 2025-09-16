@@ -2898,7 +2898,6 @@ func (f *fileWriter) WriteRequestType(
 	f.WriteRequireMethod(typeName)
 
 	// Write setter methods for all properties
-	fmt.Printf("[DEBUG] WriteRequestType: Writing setters for %s (with request body)\n", typeName)
 	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	var (
