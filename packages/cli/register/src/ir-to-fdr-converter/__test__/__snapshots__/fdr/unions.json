@@ -2330,6 +2330,126 @@
         ]
       }
     },
+    "type_types:UnionWithSameStringTypes": {
+      "name": "UnionWithSameStringTypes",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "customFormat",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "regularString",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "patternString",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "type_types:UnionWithSameNumberTypes": {
+      "name": "UnionWithSameNumberTypes",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "positiveInt",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "negativeInt",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "anyNumber",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "type_union:GetShapeRequest": {
       "name": "GetShapeRequest",
       "shape": {
@@ -2786,7 +2906,9 @@
         "type_types:UnionWithSubTypes",
         "type_types:Foo",
         "type_types:FooExtended",
-        "type_types:Bar"
+        "type_types:Bar",
+        "type_types:UnionWithSameStringTypes",
+        "type_types:UnionWithSameNumberTypes"
       ],
       "subpackages": []
     },

@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.Union.Get(request) -> *undiscriminated.MyUnion</code></summary>
+<details><summary><code>client.Union.Get(request) -> *undiscriminatedgo.MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 ```go
 client.Union.Get(
         context.TODO(),
-        &undiscriminated.MyUnion{
+        &undiscriminatedgo.MyUnion{
             String: "string",
         },
     )
@@ -34,7 +34,7 @@ client.Union.Get(
 <dl>
 <dd>
 
-**request:** `*undiscriminated.MyUnion` 
+**request:** `*undiscriminatedgo.MyUnion` 
     
 </dd>
 </dl>
@@ -46,7 +46,7 @@ client.Union.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Union.GetMetadata() -> undiscriminated.Metadata</code></summary>
+<details><summary><code>client.Union.GetMetadata() -> undiscriminatedgo.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -89,7 +89,7 @@ client.Union.GetMetadata(
 ```go
 client.Union.UpdateMetadata(
         context.TODO(),
-        &undiscriminated.MetadataUnion{
+        &undiscriminatedgo.MetadataUnion{
             OptionalMetadata: map[string]any{
                 "string": map[string]any{
                     "key": "value",
@@ -112,7 +112,7 @@ client.Union.UpdateMetadata(
 <dl>
 <dd>
 
-**request:** `*undiscriminated.MetadataUnion` 
+**request:** `*undiscriminatedgo.MetadataUnion` 
     
 </dd>
 </dl>
@@ -139,8 +139,8 @@ client.Union.UpdateMetadata(
 ```go
 client.Union.Call(
         context.TODO(),
-        &undiscriminated.Request{
-            Union: &undiscriminated.MetadataUnion{
+        &undiscriminatedgo.Request{
+            Union: &undiscriminatedgo.MetadataUnion{
                 OptionalMetadata: map[string]any{
                     "union": map[string]any{
                         "key": "value",
@@ -164,7 +164,7 @@ client.Union.Call(
 <dl>
 <dd>
 
-**request:** `*undiscriminated.Request` 
+**request:** `*undiscriminatedgo.Request` 
     
 </dd>
 </dl>
@@ -176,7 +176,7 @@ client.Union.Call(
 </dl>
 </details>
 
-<details><summary><code>client.Union.DuplicateTypesUnion(request) -> *undiscriminated.UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.Union.DuplicateTypesUnion(request) -> *undiscriminatedgo.UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -191,7 +191,7 @@ client.Union.Call(
 ```go
 client.Union.DuplicateTypesUnion(
         context.TODO(),
-        &undiscriminated.UnionWithDuplicateTypes{
+        &undiscriminatedgo.UnionWithDuplicateTypes{
             String: "string",
         },
     )
@@ -210,7 +210,7 @@ client.Union.DuplicateTypesUnion(
 <dl>
 <dd>
 
-**request:** `*undiscriminated.UnionWithDuplicateTypes` 
+**request:** `*undiscriminatedgo.UnionWithDuplicateTypes` 
     
 </dd>
 </dl>
@@ -237,7 +237,7 @@ client.Union.DuplicateTypesUnion(
 ```go
 client.Union.NestedUnions(
         context.TODO(),
-        &undiscriminated.NestedUnionRoot{
+        &undiscriminatedgo.NestedUnionRoot{
             String: "string",
         },
     )
@@ -256,7 +256,7 @@ client.Union.NestedUnions(
 <dl>
 <dd>
 
-**request:** `*undiscriminated.NestedUnionRoot` 
+**request:** `*undiscriminatedgo.NestedUnionRoot` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct MigrationClient {
     pub http_client: HttpClient,
@@ -12,15 +12,12 @@ impl MigrationClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get_attempted_migrations(&self, options: Option<RequestOptions>) -> Result<Vec<Migration>, ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            "/migration-info/all",
-            None,
-            None,
-            options,
-        ).await
+    pub async fn get_attempted_migrations(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<Migration>, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "/migration-info/all", None, None, options)
+            .await
     }
-
 }
-

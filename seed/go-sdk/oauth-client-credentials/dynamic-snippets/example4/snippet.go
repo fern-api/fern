@@ -13,7 +13,7 @@ func do() {
         ),
         nil,
     )
-    client.Simple.GetSomething(
+    client.NestedNoAuth.Api.GetSomething(
         context.TODO(),
     )
 }

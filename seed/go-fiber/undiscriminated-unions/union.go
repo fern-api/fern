@@ -810,3 +810,130 @@ func (u *UnionWithDuplicateTypes) Accept(visitor UnionWithDuplicateTypesVisitor)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
+
+// Mix of primitives where some resolve to the same Java type.
+type UnionWithIdenticalPrimitives struct {
+	Integer int
+	Double  float64
+	String  string
+
+	typ string
+}
+
+func (u *UnionWithIdenticalPrimitives) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithIdenticalPrimitives) GetDouble() float64 {
+	if u == nil {
+		return 0
+	}
+	return u.Double
+}
+
+func (u *UnionWithIdenticalPrimitives) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithIdenticalPrimitives) UnmarshalJSON(data []byte) error {
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		u.typ = "Integer"
+		u.Integer = valueInteger
+		return nil
+	}
+	var valueDouble float64
+	if err := json.Unmarshal(data, &valueDouble); err == nil {
+		u.typ = "Double"
+		u.Double = valueDouble
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithIdenticalPrimitives) MarshalJSON() ([]byte, error) {
+	if u.typ == "Integer" || u.Integer != 0 {
+		return json.Marshal(u.Integer)
+	}
+	if u.typ == "Double" || u.Double != 0 {
+		return json.Marshal(u.Double)
+	}
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithIdenticalPrimitivesVisitor interface {
+	VisitInteger(int) error
+	VisitDouble(float64) error
+	VisitString(string) error
+}
+
+func (u *UnionWithIdenticalPrimitives) Accept(visitor UnionWithIdenticalPrimitivesVisitor) error {
+	if u.typ == "Integer" || u.Integer != 0 {
+		return visitor.VisitInteger(u.Integer)
+	}
+	if u.typ == "Double" || u.Double != 0 {
+		return visitor.VisitDouble(u.Double)
+	}
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// Multiple string types that all resolve to String in Java.
+// This tests the fix for duplicate method signatures.
+type UnionWithIdenticalStrings struct {
+	String string
+
+	typ string
+}
+
+func (u *UnionWithIdenticalStrings) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithIdenticalStrings) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithIdenticalStrings) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithIdenticalStringsVisitor interface {
+	VisitString(string) error
+}
+
+func (u *UnionWithIdenticalStrings) Accept(visitor UnionWithIdenticalStringsVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}

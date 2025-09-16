@@ -54,20 +54,20 @@ exports[`Snippets > 'enum (optional)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = acme.StatusDeactivated.Ptr()"
+var value = acmego.StatusDeactivated.Ptr()"
 `;
 
 exports[`Snippets > 'enum (required)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = acme.StatusActivated"
+var value = acmego.StatusActivated"
 `;
 
 exports[`Snippets > 'map (empty)' 1`] = `
@@ -80,14 +80,14 @@ exports[`Snippets > 'map (nested)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = map[string]acme.User{
-    "john": acme.User{
+var value = map[string]acmego.User{
+    "john": acmego.User{
         Name: "John Doe",
     },
-    "jane": acme.User{
+    "jane": acmego.User{
         Name: "Jane Doe",
     },
 }"
@@ -151,30 +151,30 @@ exports[`Snippets > 'struct (empty)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = acme.User{}"
+var value = acmego.User{}"
 `;
 
 exports[`Snippets > 'struct (nested)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
     billing "github.com/acme/acme-go/billing"
     uuid "github.com/google/uuid"
 )
 
-var value = acme.User{
+var value = acmego.User{
     Name: "John Doe",
     Address: billing.Address{
         ID: uuid.MustParse(
             "123e4567-e89b-12d3-a456-426614174000",
         ),
         Street: "123 Main St.",
-        CreatedAt: acme.Time(
-            acme.MustParseDateTime(
+        CreatedAt: acmego.Time(
+            acmego.MustParseDateTime(
                 "1994-01-01T00:00:00Z",
             ),
         ),
@@ -186,13 +186,13 @@ exports[`Snippets > 'struct (primitives)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = acme.User{
+var value = acmego.User{
     Name: "John Doe",
     Age: 42,
-    Active: acme.Bool(
+    Active: acmego.Bool(
         true,
     ),
 }"
@@ -202,10 +202,10 @@ exports[`Snippets > 'struct (w/ nop)' 1`] = `
 "package example
 
 import (
-    acme "github.com/acme/acme-go"
+    acmego "github.com/acme/acme-go"
 )
 
-var value = acme.User{
+var value = acmego.User{
     Name: "John Doe",
     Age: 42,
 }"

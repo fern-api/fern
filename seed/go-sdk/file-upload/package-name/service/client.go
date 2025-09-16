@@ -4,7 +4,7 @@ package service
 
 import (
 	context "context"
-	file "github.com/fern-api/file-upload-go"
+	fileuploadgo "github.com/fern-api/file-upload-go"
 	core "github.com/fern-api/file-upload-go/core"
 	internal "github.com/fern-api/file-upload-go/internal"
 	option "github.com/fern-api/file-upload-go/option"
@@ -34,7 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Post(
 	ctx context.Context,
-	request *file.MyRequest,
+	request *fileuploadgo.MyRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
@@ -50,7 +50,7 @@ func (c *Client) Post(
 
 func (c *Client) JustFile(
 	ctx context.Context,
-	request *file.JustFileRequest,
+	request *fileuploadgo.JustFileRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.JustFile(
@@ -66,7 +66,7 @@ func (c *Client) JustFile(
 
 func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
-	request *file.JustFileWithQueryParamsRequest,
+	request *fileuploadgo.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.JustFileWithQueryParams(
@@ -82,7 +82,7 @@ func (c *Client) JustFileWithQueryParams(
 
 func (c *Client) WithContentType(
 	ctx context.Context,
-	request *file.WithContentTypeRequest,
+	request *fileuploadgo.WithContentTypeRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.WithContentType(
@@ -98,7 +98,7 @@ func (c *Client) WithContentType(
 
 func (c *Client) WithFormEncoding(
 	ctx context.Context,
-	request *file.WithFormEncodingRequest,
+	request *fileuploadgo.WithFormEncodingRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.WithFormEncoding(
@@ -114,7 +114,7 @@ func (c *Client) WithFormEncoding(
 
 func (c *Client) WithFormEncodedContainers(
 	ctx context.Context,
-	request *file.MyOtherRequest,
+	request *fileuploadgo.MyOtherRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.WithFormEncodedContainers(
@@ -130,7 +130,7 @@ func (c *Client) WithFormEncodedContainers(
 
 func (c *Client) OptionalArgs(
 	ctx context.Context,
-	request *file.OptionalArgsRequest,
+	request *fileuploadgo.OptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
 	response, err := c.WithRawResponse.OptionalArgs(
@@ -146,7 +146,7 @@ func (c *Client) OptionalArgs(
 
 func (c *Client) WithInlineType(
 	ctx context.Context,
-	request *file.InlineTypeRequest,
+	request *fileuploadgo.InlineTypeRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
 	response, err := c.WithRawResponse.WithInlineType(

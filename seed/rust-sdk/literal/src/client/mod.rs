@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod headers;
 pub mod inlined;
@@ -22,10 +22,9 @@ impl LiteralClient {
             inlined: InlinedClient::new(config.clone())?,
             path: PathClient::new(config.clone())?,
             query: QueryClient::new(config.clone())?,
-            reference: ReferenceClient::new(config.clone())?
+            reference: ReferenceClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use headers::HeadersClient;

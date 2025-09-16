@@ -1,7 +1,7 @@
 use crate::nullable_status::Status;
 use chrono::{DateTime, NaiveDate, Utc};
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {

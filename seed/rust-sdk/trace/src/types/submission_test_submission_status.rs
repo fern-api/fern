@@ -1,22 +1,22 @@
 use crate::submission_error_info::ErrorInfo;
 use crate::submission_running_submission_state::RunningSubmissionState;
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestSubmissionStatus {
-        Stopped,
+    Stopped,
 
-        Errored {
-            value: ErrorInfo,
-        },
+    Errored {
+        value: ErrorInfo,
+    },
 
-        Running {
-            value: RunningSubmissionState,
-        },
+    Running {
+        value: RunningSubmissionState,
+    },
 
-        TestCaseIdToState {
-            value: HashMap<String, SubmissionStatusForTestCase>,
-        },
+    TestCaseIdToState {
+        value: HashMap<String, SubmissionStatusForTestCase>,
+    },
 }
