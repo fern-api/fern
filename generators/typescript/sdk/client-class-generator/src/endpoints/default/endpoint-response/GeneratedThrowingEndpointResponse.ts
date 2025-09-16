@@ -6,14 +6,19 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpResponseBody,
-    Name,
-    NameAndWireValue,
     OffsetPagination,
     PrimitiveTypeV2,
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getFullPathForEndpoint, getTextOfTsNode, PackageId, Stream } from "@fern-typescript/commons";
+import {
+    getElementTypeFromArrayType,
+    getFullPathForEndpoint,
+    getTextOfTsNode,
+    PackageId,
+    removeUndefinedAndNullFromTypeNode,
+    Stream
+} from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -145,14 +150,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference);
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: cursor.results
+                })
+            )
+        );
 
         // hasNextPage checks if next property is not null
         const nextPropertyAccess = context.type.generateGetterForResponseProperty({
             property: cursor.next,
             variable: "response",
             isVariableOptional: true
-        })
+        });
 
         const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
             nextPropertyAccess,
@@ -202,8 +214,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // loadPage
         const pagePropertyPathForSet = context.type.generateSetterForRequestPropertyAsString({
-            property: cursor.page,
-        })
+            property: cursor.page
+        });
         const loadPage = [
             ts.factory.createReturnStatement(
                 ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
@@ -216,11 +228,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         ];
 
-        const test : { foo: string } | undefined = { foo: "bar"};
-test.foo = "";
         return {
             type: "cursor",
-            itemType: itemType.responseTypeNode ?? itemType.typeNode,
+            itemType: itemType,
             responseType: successReturnType,
             hasNextPage,
             getItems,
@@ -244,20 +254,25 @@ test.foo = "";
             return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference);
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: offset.results
+                })
+            )
+        );
 
         // initializeOffset uses the offset property if set
         const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
         const pagePropertyPathForSet = context.type.generateSetterForRequestPropertyAsString({
-            property: offset.page,
+            property: offset.page
         });
-        const pagePropertyAccess = context.type.generateGetterForRequestProperty(
-            {
-                property: offset.page,
-                variable: "request",
-                isVariableOptional: true
-            }
-        );
+        const pagePropertyAccess = context.type.generateGetterForRequestProperty({
+            property: offset.page,
+            variable: "request",
+            isVariableOptional: true
+        });
         const initializeOffset = ts.factory.createVariableStatement(
             undefined,
             ts.factory.createVariableDeclarationList(
@@ -312,7 +327,7 @@ test.foo = "";
             const hasNextPagePropertyAccess = context.type.generateGetterForResponseProperty({
                 property: offset.hasNextPage,
                 variable: "response",
-            isVariableOptional: true
+                isVariableOptional: true
             });
             hasNextPage = ts.factory.createBinaryExpression(
                 hasNextPagePropertyAccess,
@@ -372,7 +387,7 @@ test.foo = "";
         return {
             type: offset.step != null ? "offset-step" : "offset",
             initializeOffset,
-            itemType: itemType.responseTypeNode ?? itemType.typeNode,
+            itemType: itemType,
             responseType: successReturnType,
             hasNextPage,
             getItems,

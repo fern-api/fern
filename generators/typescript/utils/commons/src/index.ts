@@ -35,3 +35,5 @@ export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";
 export { FernWriters, ObjectWriter } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";
 export { writeTemplateFiles } from "./writeTemplateFiles";
+export { getElementTypeFromArrayType } from "./getElementTypeFromArrayType";
+export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode";

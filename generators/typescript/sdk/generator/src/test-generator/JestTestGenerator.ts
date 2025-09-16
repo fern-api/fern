@@ -779,23 +779,23 @@ describe("${serviceName}", () => {
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
-                    property: endpoint.pagination.results,
-                    variable: "expected",
-                })
+                      property: endpoint.pagination.results,
+                      variable: "expected"
+                  })
                 : "expected";
         const pageName =
             endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
                 ? context.type.generateGetterForResponsePropertyAsString({
-                    property: endpoint.pagination.results,
-                    variable: "page",
-                })
+                      property: endpoint.pagination.results,
+                      variable: "page"
+                  })
                 : "page";
         const nextPageName =
             endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
                 ? context.type.generateGetterForResponsePropertyAsString({
-                    property: endpoint.pagination.results,
-                    variable: "nextPage",
-                })
+                      property: endpoint.pagination.results,
+                      variable: "nextPage"
+                  })
                 : "nextPage";
         const paginationBlock =
             endpoint.pagination !== undefined

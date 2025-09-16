@@ -68,7 +68,7 @@ export interface TypeContext {
     generateGetterForRequestProperty({
         variable,
         isVariableOptional,
-        property,
+        property
     }: {
         variable?: string;
         isVariableOptional?: boolean;
@@ -76,16 +76,24 @@ export interface TypeContext {
     }): ts.Expression;
     generateSetterForRequestPropertyAsString({
         variable,
-        property,
+        property
     }: {
         variable?: string;
         property: FernIr.RequestProperty;
     }): string;
     generateSetterForRequestProperty({
         variable,
-        property,
+        property
     }: {
         variable?: string;
         property: FernIr.RequestProperty;
     }): ts.Expression;
+
+    getReferenceToResponsePropertyType({
+        responseType,
+        property
+    }: {
+        responseType: ts.TypeNode;
+        property: FernIr.ResponseProperty;
+    }): ts.TypeNode;
 }

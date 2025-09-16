@@ -308,7 +308,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                       [
                                           context.type.generateGetterForResponseProperty({
                                               variable: "response",
-                                              property: this.authScheme.tokenEndpoint.expiryProperty,
+                                              property: this.authScheme.tokenEndpoint.expiryProperty
                                           })
                                       ]
                                   )
