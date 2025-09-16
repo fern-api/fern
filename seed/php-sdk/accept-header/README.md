@@ -6,7 +6,7 @@
 The Seed PHP library provides convenient access to the Seed APIs from PHP.
 forcing test the right way
 ## Requirements
-force a diff
+force a diff and another
 This SDK requires PHP ^8.1.
 
 ## Installation

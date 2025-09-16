@@ -551,6 +551,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+          ref: mallinson/example-PR-level-testing
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
