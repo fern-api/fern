@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-submission-status/#{params[:submissionId]}",
           body: Seed::Submission::Types::TestSubmissionStatus.new(params).to_h
@@ -25,7 +25,7 @@ module Seed
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-submission-status-v2/#{params[:submissionId]}",
           body: Seed::Submission::Types::TestSubmissionUpdate.new(params).to_h
@@ -39,7 +39,7 @@ module Seed
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-submission-status/#{params[:submissionId]}",
           body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(params).to_h
@@ -53,7 +53,7 @@ module Seed
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-submission-status-v2/#{params[:submissionId]}",
           body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(params).to_h
@@ -69,7 +69,7 @@ module Seed
         _path_param_names = %w[submissionId testCaseId]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-trace/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}",
           body: params.except(*_path_param_names)
@@ -83,7 +83,7 @@ module Seed
       # @return [untyped]
       def store_traced_test_case_v_2(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-trace-v2/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}",
           body: params
@@ -99,7 +99,7 @@ module Seed
         _path_param_names = ["submissionId"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-trace/submission/#{params[:submissionId]}",
           body: params.except(*_path_param_names)
@@ -113,7 +113,7 @@ module Seed
       # @return [untyped]
       def store_traced_workspace_v_2(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-trace-v2/submission/#{params[:submissionId]}",
           body: params
