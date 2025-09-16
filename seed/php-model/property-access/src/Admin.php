@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\User;
 use Seed\Core\Json\JsonProperty;
-
+// Make this different from where I push in the other branch
 /**
  * Admin user object
  */
