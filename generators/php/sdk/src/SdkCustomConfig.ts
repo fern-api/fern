@@ -1,6 +1,6 @@
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { z } from "zod";
-
+// Force test
 export const SdkCustomConfigSchema = z
     .strictObject({
         // Deprecated; use clientName instead.
