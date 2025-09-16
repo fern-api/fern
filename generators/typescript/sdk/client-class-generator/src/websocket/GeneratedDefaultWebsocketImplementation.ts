@@ -303,7 +303,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         const mergeHeaders: ts.Expression[] = [];
         const authProviderStatements = [];
-        const mergeOnlyDefinedHeaders: ts.PropertyAssignment[] = [];
+        const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
         if (this.generatedSdkClientClass.hasAuthProvider()) {
             authProviderStatements.push(
                 ts.factory.createVariableStatement(
@@ -324,6 +324,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
+            
         } else {
             const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
             mergeOnlyDefinedHeaders.push(
@@ -331,8 +332,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
                     : this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
                       ? [
-                            ts.factory.createPropertyAssignment(
-                                "Authorization",
+                            ts.factory.createSpreadAssignment(
                                 ts.factory.createAwaitExpression(
                                     ts.factory.createCallExpression(
                                         ts.factory.createPropertyAccessExpression(
@@ -351,7 +351,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {
                 return ts.factory.createPropertyAssignment(
-                    header.name.wireValue,
+                    ts.factory.createStringLiteral(header.name.wireValue),
                     this.getReferenceToArg(header.name.wireValue)
                 );
             })
@@ -477,7 +477,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-            queryParameters: ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
+            queryParameters: this.channel.queryParameters.length > 0 ? ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME) : ts.factory.createObjectLiteralExpression([], false)
         });
     }
 
