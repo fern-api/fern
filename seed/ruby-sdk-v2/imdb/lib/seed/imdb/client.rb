@@ -13,7 +13,7 @@ module Seed
       # @return [String]
       def create_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/movies/create-movie",
           body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h
@@ -27,7 +27,7 @@ module Seed
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/movies/#{params[:movieId]}"
         )

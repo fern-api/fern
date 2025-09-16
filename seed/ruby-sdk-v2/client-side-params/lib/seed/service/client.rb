@@ -20,7 +20,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/resources",
           query: _query
@@ -43,7 +43,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/resources/#{params[:resourceId]}",
           query: _query
@@ -66,7 +66,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/resources/search",
           query: _query,
@@ -92,7 +92,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users",
           query: _query
@@ -117,7 +117,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/#{params[:userId]}",
           query: _query
@@ -133,7 +133,7 @@ module Seed
       # @return [Seed::Types::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/users",
           body: Seed::Types::Types::CreateUserRequest.new(params).to_h
@@ -149,7 +149,7 @@ module Seed
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{params[:userId]}",
           body: Seed::Types::Types::UpdateUserRequest.new(params).to_h
@@ -165,7 +165,7 @@ module Seed
       # @return [untyped]
       def delete_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "DELETE",
           path: "/api/users/#{params[:userId]}"
         )
@@ -187,7 +187,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/connections",
           query: _query
@@ -210,7 +210,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/connections/#{params[:connectionId]}",
           query: _query
@@ -233,7 +233,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/clients",
           query: _query
@@ -258,7 +258,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/clients/#{params[:clientId]}",
           query: _query

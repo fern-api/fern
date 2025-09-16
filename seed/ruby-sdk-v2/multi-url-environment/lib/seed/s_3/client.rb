@@ -11,7 +11,7 @@ module Seed
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::Production,
           method: "POST",
           path: "/s3/presigned-url",
           body: params
