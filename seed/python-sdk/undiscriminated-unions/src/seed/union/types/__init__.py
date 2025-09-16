@@ -19,6 +19,8 @@ if typing.TYPE_CHECKING:
     from .request import Request
     from .type_with_optional_union import TypeWithOptionalUnion
     from .union_with_duplicate_types import UnionWithDuplicateTypes
+    from .union_with_identical_primitives import UnionWithIdenticalPrimitives
+    from .union_with_identical_strings import UnionWithIdenticalStrings
 _dynamic_imports: typing.Dict[str, str] = {
     "Key": ".key",
     "KeyType": ".key_type",
@@ -33,6 +35,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Request": ".request",
     "TypeWithOptionalUnion": ".type_with_optional_union",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+    "UnionWithIdenticalPrimitives": ".union_with_identical_primitives",
+    "UnionWithIdenticalStrings": ".union_with_identical_strings",
 }
 
 
@@ -69,4 +73,6 @@ __all__ = [
     "Request",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
+    "UnionWithIdenticalPrimitives",
+    "UnionWithIdenticalStrings",
 ]
