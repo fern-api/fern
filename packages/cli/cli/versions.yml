@@ -1,5 +1,105 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Support nested folders with x-fern-sdk-group-name in AsyncAPI parsing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.3
+
+- changelogEntry:
+    - summary: Support for PHP dynamic SDK snippets in the docs.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.2
+
+- changelogEntry:
+    - summary: \'upgrades available\' only display on actual upgrade needed
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.1
+
+- changelogEntry:
+    - summary: Add customSections property to ReadmeConfig.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.77.0
+
+- changelogEntry:
+    - summary: |
+        Add missing reserved keywords for Ruby language.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.3
+
+- changelogEntry:
+    - summary: |
+        Additional handling of OpenAPI parsing failures for security schemes.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.2
+
+- changelogEntry:
+    - summary: |
+        Handle OpenAPI parsing failures for security schemes gracefully.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.76.1
+
+- changelogEntry:
+    - summary: |
+        Add Maven publishTarget support for Java generators with local filesystem output.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.76.0
+
+- changelogEntry:
+    - summary: |
+        Enable dynamic SDK snippets for PHP in docs.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.4
+
+- changelogEntry:
+    - summary: |
+        Add availability to `products.schema.json`
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.3
+
+- changelogEntry:
+    - summary: |
+        Add google sign in, and logout command
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.2
+
+- changelogEntry:
+    - summary: |
+        Availability is now inherited by children when set in the `docs.yml` navigation.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.1
+
+- changelogEntry:
+    - summary: |
+        Add support for translating deprecated flags in protobuf to availability status in fern-ir.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.0
+
+- changelogEntry:
     - summary: |
         If OpenAPI schema parsing throws an exception then coerce the schema to unknown to unblock SDK generation.
       type: fix

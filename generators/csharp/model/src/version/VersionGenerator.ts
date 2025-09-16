@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
@@ -8,7 +8,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 const DEFAULT_VERSION = "0.0.0";
 
 export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: ast.ClassReference;
 
     constructor(context: ModelGeneratorContext) {
         super(context);
@@ -16,20 +16,22 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Internal,
+            access: ast.Access.Internal,
             annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addField(
-            csharp.field({
+            this.csharp.field({
                 name: this.context.getCurrentVersionPropertyName(),
-                type: csharp.Type.string(),
-                access: csharp.Access.Public,
+                type: this.csharp.Type.string(),
+                access: ast.Access.Public,
                 const_: true,
-                initializer: csharp.codeblock(csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
+                initializer: this.csharp.codeblock(
+                    this.csharp.string_({ string: this.context.version ?? DEFAULT_VERSION })
+                )
             })
         );
 

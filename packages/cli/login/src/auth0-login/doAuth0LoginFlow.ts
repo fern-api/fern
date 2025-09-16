@@ -124,10 +124,10 @@ function constructAuth0Url({
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
         response_type: "code",
-        connection: "github",
         scope: "openid profile email offline_access",
         redirect_uri: origin,
         audience
     });
-    return `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    return url;
 }

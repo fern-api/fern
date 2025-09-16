@@ -210,7 +210,8 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
-            enableInlineTypes: false
+            enableInlineTypes: false,
+            generateReadWriteOnlyTypes: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -594,7 +595,8 @@ export class ExpressGenerator {
             allowExtraFields: this.config.allowExtraFields,
             omitUndefined: false,
             relativePackagePath: this.getRelativePackagePath(),
-            relativeTestPath: this.getRelativeTestPath()
+            relativeTestPath: this.getRelativeTestPath(),
+            generateReadWriteOnlyTypes: false
         });
     }
 

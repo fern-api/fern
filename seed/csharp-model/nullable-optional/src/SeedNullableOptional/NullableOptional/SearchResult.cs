@@ -277,7 +277,9 @@ public record SearchResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator User(SeedNullableOptional.UserResponse value) => new(value);
+        public static implicit operator SearchResult.User(
+            SeedNullableOptional.UserResponse value
+        ) => new(value);
     }
 
     /// <summary>
@@ -295,8 +297,9 @@ public record SearchResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Organization(SeedNullableOptional.Organization value) =>
-            new(value);
+        public static implicit operator SearchResult.Organization(
+            SeedNullableOptional.Organization value
+        ) => new(value);
     }
 
     /// <summary>
@@ -314,6 +317,8 @@ public record SearchResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Document(SeedNullableOptional.Document value) => new(value);
+        public static implicit operator SearchResult.Document(
+            SeedNullableOptional.Document value
+        ) => new(value);
     }
 }

@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Core;
@@ -8,8 +8,8 @@ namespace SeedStreaming.Test.Unit.MockServer;
 [TestFixture]
 public class GenerateTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -49,8 +49,8 @@ public class GenerateTest : BaseMockServerTest
         );
     }
 
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string requestJson = """
             {

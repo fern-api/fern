@@ -45,7 +45,6 @@ import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -69,34 +68,26 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build(),
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build(),
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .keyValue(
@@ -113,33 +104,25 @@ public class Example {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
+                                    Arrays.asList("tags", "tags")
                                 )
                                 .build()
                         )
                         .build()
                 )
                 .excludeUser(
-                    new ArrayList<User>(
-                        Arrays.asList(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    new ArrayList<String>(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Arrays.asList("tags", "tags")
+                            )
+                            .build()
                     )
                 )
                 .filter(
-                    new ArrayList<String>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList("filter")
                 )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .optionalString("optionalString")
@@ -148,9 +131,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )

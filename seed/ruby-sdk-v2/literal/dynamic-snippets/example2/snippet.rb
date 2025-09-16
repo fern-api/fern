@@ -2,7 +2,7 @@ require "seed"
 
 client = seed::Client.new(base_url: 'https://api.fern.com');
 
-client.inlined.send({
+client.inlined.send_({
   temperature:10.1,
   prompt:'You are a helpful assistant',
   context:"You're super wise",

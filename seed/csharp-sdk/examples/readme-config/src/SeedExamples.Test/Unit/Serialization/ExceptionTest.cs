@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class ExceptionTest
@@ -19,8 +19,8 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var expectedObject = new Exception(
-            new Exception.Generic(
+        var expectedObject = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
                 new ExceptionInfo
                 {
                     ExceptionType = "Unavailable",
@@ -29,7 +29,7 @@ public class ExceptionTest
                 }
             )
         );
-        var deserializedObject = JsonUtils.Deserialize<Exception>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedExamples.Exception>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -44,8 +44,8 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var actualObj = new Exception(
-            new Exception.Generic(
+        var actualObj = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
                 new ExceptionInfo
                 {
                     ExceptionType = "Unavailable",

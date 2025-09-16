@@ -38,8 +38,11 @@ class FunctionSignature(AstNode):
     def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write("(")
         just_wrote_parameter = False
-
+        written_params = set()
         for parameter in self.parameters:
+            if parameter.name in written_params:
+                continue
+            written_params.add(parameter.name)
             if just_wrote_parameter:
                 writer.write(", ")
             writer.write_node(parameter)
@@ -58,6 +61,9 @@ class FunctionSignature(AstNode):
             just_wrote_parameter = True
 
         for named_parameter in self.named_parameters:
+            if named_parameter.name in written_params:
+                continue
+            written_params.add(named_parameter.name)
             if just_wrote_parameter:
                 writer.write(", ")
             writer.write_node(named_parameter)

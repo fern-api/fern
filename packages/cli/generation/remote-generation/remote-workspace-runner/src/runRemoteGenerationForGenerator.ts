@@ -97,7 +97,9 @@ export async function runRemoteGenerationForGenerator({
             javaSdk: undefined,
             rubySdk: undefined,
             goSdk: undefined,
-            csharpSdk: undefined
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined
         },
         context: interactiveTaskContext
     });
@@ -245,6 +247,12 @@ async function computeSemanticVersion({
             break;
         case "typescript":
             language = "TypeScript";
+            break;
+        case "php":
+            language = "Php";
+            break;
+        case "swift":
+            language = "Swift";
             break;
         default:
             return undefined;

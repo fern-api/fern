@@ -241,7 +241,7 @@ public record Resource
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator User(SeedMixedCase.User value) => new(value);
+        public static implicit operator Resource.User(SeedMixedCase.User value) => new(value);
     }
 
     /// <summary>
@@ -259,7 +259,7 @@ public record Resource
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Organization(SeedMixedCase.Organization value) =>
+        public static implicit operator Resource.Organization(SeedMixedCase.Organization value) =>
             new(value);
     }
 }

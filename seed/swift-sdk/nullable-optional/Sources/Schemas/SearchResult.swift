@@ -41,10 +41,10 @@ public enum SearchResult: Codable, Hashable, Sendable {
         public let type: String = "user"
         public let id: String
         public let username: String
-        public let email: JSONValue
+        public let email: Nullable<String>
         public let phone: String?
         public let createdAt: Date
-        public let updatedAt: JSONValue
+        public let updatedAt: Nullable<Date>
         public let address: Address?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
@@ -52,10 +52,10 @@ public enum SearchResult: Codable, Hashable, Sendable {
         public init(
             id: String,
             username: String,
-            email: JSONValue,
+            email: Nullable<String>,
             phone: String? = nil,
             createdAt: Date,
-            updatedAt: JSONValue,
+            updatedAt: Nullable<Date>,
             address: Address? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -73,10 +73,10 @@ public enum SearchResult: Codable, Hashable, Sendable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(String.self, forKey: .id)
             self.username = try container.decode(String.self, forKey: .username)
-            self.email = try container.decode(JSONValue.self, forKey: .email)
+            self.email = try container.decode(Nullable<String>.self, forKey: .email)
             self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
             self.createdAt = try container.decode(Date.self, forKey: .createdAt)
-            self.updatedAt = try container.decode(JSONValue.self, forKey: .updatedAt)
+            self.updatedAt = try container.decode(Nullable<Date>.self, forKey: .updatedAt)
             self.address = try container.decodeIfPresent(Address.self, forKey: .address)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
@@ -111,7 +111,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
         public let type: String = "organization"
         public let id: String
         public let name: String
-        public let domain: JSONValue
+        public let domain: Nullable<String>
         public let employeeCount: Int?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
@@ -119,7 +119,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
         public init(
             id: String,
             name: String,
-            domain: JSONValue,
+            domain: Nullable<String>,
             employeeCount: Int? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -134,7 +134,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(String.self, forKey: .id)
             self.name = try container.decode(String.self, forKey: .name)
-            self.domain = try container.decode(JSONValue.self, forKey: .domain)
+            self.domain = try container.decode(Nullable<String>.self, forKey: .domain)
             self.employeeCount = try container.decodeIfPresent(Int.self, forKey: .employeeCount)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
@@ -164,7 +164,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
         public let id: String
         public let title: String
         public let content: String
-        public let author: JSONValue
+        public let author: Nullable<String>
         public let tags: [String]?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
@@ -173,7 +173,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
             id: String,
             title: String,
             content: String,
-            author: JSONValue,
+            author: Nullable<String>,
             tags: [String]? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -190,7 +190,7 @@ public enum SearchResult: Codable, Hashable, Sendable {
             self.id = try container.decode(String.self, forKey: .id)
             self.title = try container.decode(String.self, forKey: .title)
             self.content = try container.decode(String.self, forKey: .content)
-            self.author = try container.decode(JSONValue.self, forKey: .author)
+            self.author = try container.decode(Nullable<String>.self, forKey: .author)
             self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }

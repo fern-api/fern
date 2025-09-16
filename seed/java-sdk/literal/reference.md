@@ -366,15 +366,13 @@ client.reference().send(
             ContainerObject
                 .builder()
                 .nestedObjects(
-                    new ArrayList<NestedObjectWithLiterals>(
-                        Arrays.asList(
-                            NestedObjectWithLiterals
-                                .builder()
-                                .literal1("literal1")
-                                .literal2("literal2")
-                                .strProp("strProp")
-                                .build()
-                        )
+                    Arrays.asList(
+                        NestedObjectWithLiterals
+                            .builder()
+                            .literal1("literal1")
+                            .literal2("literal2")
+                            .strProp("strProp")
+                            .build()
                     )
                 )
                 .build()

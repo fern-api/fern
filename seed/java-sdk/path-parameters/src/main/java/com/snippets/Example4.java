@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.pathParameters.SeedPathParametersClient;
 import com.seed.pathParameters.resources.user.types.User;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example4 {
@@ -18,9 +17,7 @@ public class Example4 {
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         );

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class EventInfoTest
@@ -22,7 +22,7 @@ public class EventInfoTest
             }
             """;
         var expectedObject = new EventInfo(
-            new EventInfo.Metadata(
+            new Commons.EventInfo.Metadata(
                 new Commons.Metadata
                 {
                     Id = "metadata-alskjfg8",
@@ -49,7 +49,7 @@ public class EventInfoTest
             }
             """;
         var actualObj = new EventInfo(
-            new EventInfo.Metadata(
+            new Commons.EventInfo.Metadata(
                 new Commons.Metadata
                 {
                     Id = "metadata-alskjfg8",

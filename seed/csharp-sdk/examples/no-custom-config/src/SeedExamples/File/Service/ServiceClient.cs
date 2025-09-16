@@ -1,10 +1,11 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.File;
+namespace SeedExamples.File_;
 
 public partial class ServiceClient
 {

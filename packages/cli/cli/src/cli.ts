@@ -13,7 +13,7 @@ import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSo
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login } from "@fern-api/login";
+import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
@@ -175,6 +175,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
+    addLogoutCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
@@ -551,9 +552,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
                 })
-                .option("dynamic-snippets", {
+                .option("disable-dynamic-snippets", {
                     boolean: true,
-                    description: "Use dynamic SDK snippets in docs generation",
+                    description: "Disable dynamic SDK snippets in docs generation",
                     default: false
                 }),
         async (argv) => {
@@ -605,7 +606,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
-                    dynamicSnippets: argv.dynamicSnippets
+                    disableDynamicSnippets: argv.disableDynamicSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1042,6 +1043,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
+            });
+        }
+    );
+}
+
+function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "logout",
+        "Log out of Fern",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.runTask(async (context) => {
+                await cliContext.instrumentPostHogEvent({
+                    command: "fern logout"
+                });
+                await logout(context);
             });
         }
     );

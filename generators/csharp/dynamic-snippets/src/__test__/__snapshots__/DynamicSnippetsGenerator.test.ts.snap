@@ -77,7 +77,7 @@ await client.Service.CreateBigEntityAsync(
                     ["imdb"] = 7.6,
                 },
             },
-            Revenue = 1000000l
+            Revenue = 1000000L
         },
         EventInfo = new EventInfo(
             new Metadata{
@@ -140,7 +140,7 @@ await client.Service.CreateMovieAsync(
                 ["imdb"] = 7.6,
             },
         },
-        Revenue = 1000000l
+        Revenue = 1000000L
     }
 );
 "
@@ -159,7 +159,7 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     new ObjectWithOptionalField{
         String = "string",
         Integer = 1,
-        Long = 1000000l,
+        Long = 1000000L,
         Double = 1.1,
         Bool = true,
         Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
@@ -487,6 +487,51 @@ await client.Nullable.GetUsersAsync(
             null,
         },
         Extra = null
+    }
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User{
+        Password = "password",
+        Profile = new UserProfile{
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
+    }
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User{
+        ID = "id",
+        Password = "password",
+        Profile = new UserProfile{
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
     }
 );
 "

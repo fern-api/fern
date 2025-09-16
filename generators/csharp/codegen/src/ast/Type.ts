@@ -1,13 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { cloneDeep } from "lodash-es";
-
-import {
-    ClassReference,
-    OneOfBaseClassReference,
-    OneOfClassReference,
-    StringEnumClassReference
-} from "./ClassReference";
+import { type CSharp } from "../csharp";
+import { ClassReference } from "./ClassReference";
 import { CoreClassReference } from "./CoreClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -196,8 +191,11 @@ interface CsharpType {
 
 /* A C# parameter to a method */
 export class Type extends AstNode {
-    private constructor(public readonly internalType: InternalType) {
-        super();
+    constructor(
+        public readonly internalType: InternalType,
+        csharp: CSharp
+    ) {
+        super(csharp);
     }
 
     public write(writer: Writer, parentType: Type | undefined = undefined): void {
@@ -315,29 +313,25 @@ export class Type extends AstNode {
                 writer.write(this.internalType.value.name);
                 break;
             case "oneOf":
-                writer.addReference(OneOfClassReference);
-                writer.write("OneOf<");
-                this.internalType.memberValues.forEach((value, index) => {
-                    if (index !== 0) {
-                        writer.write(", ");
-                    }
-                    value.write(writer);
-                });
-                writer.write(">");
+                {
+                    const oneOf = this.csharp.OneOf.OneOf(this.internalType.memberValues);
+                    writer.addReference(oneOf);
+                    writer.writeNode(oneOf);
+                }
+
                 break;
             case "oneOfBase":
-                writer.addReference(OneOfBaseClassReference);
-                writer.write("OneOfBase<");
-                this.internalType.memberValues.forEach((value, index) => {
-                    if (index !== 0) {
-                        writer.write(", ");
-                    }
-                    value.write(writer);
-                });
-                writer.write(">");
+                {
+                    const oneOfBase = this.csharp.OneOf.OneOfBase(this.internalType.memberValues);
+                    writer.addReference(oneOfBase);
+                    writer.writeNode(oneOfBase);
+                }
                 break;
             case "stringEnum":
-                writer.addReference(StringEnumClassReference);
+                // todo: how to get a proper reference to the <namespace>.StringEnum class
+                // at this point? (it has been working because the .Core namespace is always imported I guess)
+                // writer.addReference(writer.context.getStringEnumClassReference());
+                // formerly writer.addReference(StringEnumClassReference); (from classreference.ts)
                 writer.write("StringEnum<");
                 this.internalType.value.write(writer);
                 writer.write(">");
@@ -414,7 +408,7 @@ export class Type extends AstNode {
             case "array":
                 return this.internalType.value;
             case "map":
-                return Type.keyValuePair(this.internalType.keyType, this.internalType.valueType);
+                return this.csharp.Type.keyValuePair(this.internalType.keyType, this.internalType.valueType);
             default:
                 return undefined;
         }
@@ -461,7 +455,7 @@ export class Type extends AstNode {
         if (this.internalType.type === "optional") {
             return this;
         }
-        return Type.optional(this);
+        return this.csharp.Type.optional(this);
     }
 
     public underlyingTypeIfOptional(): Type | undefined {
@@ -485,219 +479,16 @@ export class Type extends AstNode {
     public cloneOptionalWithUnderlyingType(underlyingType: Type): Type {
         switch (this.internalType.type) {
             case "optional":
-                return new Type({
-                    type: "optional",
-                    value: this.internalType.value.cloneOptionalWithUnderlyingType(underlyingType)
-                });
+                return new Type(
+                    {
+                        type: "optional",
+                        value: this.internalType.value.cloneOptionalWithUnderlyingType(underlyingType)
+                    },
+                    this.csharp
+                );
             default:
-                return new Type(cloneDeep(underlyingType.internalType));
+                return new Type(cloneDeep(underlyingType.internalType), this.csharp);
         }
-    }
-
-    /* Static factory methods for creating a Type */
-    public static string(): Type {
-        return new this({
-            type: "string"
-        });
-    }
-
-    public static boolean(): Type {
-        return new this({
-            type: "bool"
-        });
-    }
-
-    public static integer(): Type {
-        return new this({
-            type: "int"
-        });
-    }
-
-    public static long(): Type {
-        return new this({
-            type: "long"
-        });
-    }
-
-    public static uint(): Type {
-        return new this({
-            type: "uint"
-        });
-    }
-
-    public static ulong(): Type {
-        return new this({
-            type: "ulong"
-        });
-    }
-
-    public static float(): Type {
-        return new this({
-            type: "float"
-        });
-    }
-
-    public static double(): Type {
-        return new this({
-            type: "double"
-        });
-    }
-
-    public static dateOnly(): Type {
-        return new this({
-            type: "dateOnly"
-        });
-    }
-
-    public static dateTime(): Type {
-        return new this({
-            type: "dateTime"
-        });
-    }
-
-    public static uuid(): Type {
-        return new this({
-            type: "uuid"
-        });
-    }
-
-    public static object(): Type {
-        return new this({
-            type: "object"
-        });
-    }
-
-    public static array(value: Type): Type {
-        return new this({
-            type: "array",
-            value
-        });
-    }
-
-    public static listType(value: Type): Type {
-        return new this({
-            type: "listType",
-            value
-        });
-    }
-
-    public static list(value: Type): Type {
-        return new this({
-            type: "list",
-            value
-        });
-    }
-
-    public static set(value: Type): Type {
-        return new this({
-            type: "set",
-            value
-        });
-    }
-
-    public static map(keyType: Type, valueType: Type, options?: Map.Options): Type {
-        return new this({
-            type: "map",
-            keyType,
-            valueType,
-            options
-        });
-    }
-
-    public static idictionary(keyType: Type, valueType: Type, options?: IDictionary.Options): Type {
-        return new this({
-            type: "idictionary",
-            keyType,
-            valueType,
-            options
-        });
-    }
-    public static keyValuePair(keyType: Type, valueType: Type): Type {
-        return new this({
-            type: "keyValuePair",
-            keyType,
-            valueType
-        });
-    }
-
-    public static optional(value: Type): Type {
-        if (this.isAlreadyOptional(value)) {
-            // Avoids double optional.
-            return value;
-        }
-        return new this({
-            type: "optional",
-            value
-        });
-    }
-
-    public static reference(value: ClassReference): Type {
-        return new this({
-            type: "reference",
-            value
-        });
-    }
-
-    public static coreClass(value: CoreClassReference): Type {
-        return new this({
-            type: "coreReference",
-            value
-        });
-    }
-
-    public static oneOf(memberValues: Type[]): Type {
-        return new this({
-            type: "oneOf",
-            memberValues
-        });
-    }
-
-    public static oneOfBase(memberValues: Type[]): Type {
-        return new this({
-            type: "oneOfBase",
-            memberValues
-        });
-    }
-
-    public static stringEnum(value: ClassReference): Type {
-        return new this({
-            type: "stringEnum",
-            value
-        });
-    }
-
-    public static action({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }): Type {
-        return new this({
-            type: "action",
-            typeParameters
-        });
-    }
-
-    public static func({
-        typeParameters,
-        returnType
-    }: {
-        typeParameters: (Type | TypeParameter)[];
-        returnType: Type | TypeParameter;
-    }): Type {
-        return new this({
-            type: "func",
-            typeParameters,
-            returnType
-        });
-    }
-
-    public static csharpType(): Type {
-        return new this({
-            type: "csharpType"
-        });
-    }
-
-    public static fileParam(classReference: ClassReference): Type {
-        return new this({
-            type: "fileParam",
-            value: classReference
-        });
     }
 
     private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
@@ -706,30 +497,10 @@ export class Type extends AstNode {
         writer.write(">");
     }
 
-    private static isAlreadyOptional(value: Type) {
+    static isAlreadyOptional(value: Type) {
         return value.internalType.type === "optional";
     }
 }
-
-/**
- * The set of valid types supported by the 'read-only-memory-types' custom config option.
- *
- * The types are expressed in their C# type representation so that users can more easily
- * control the generated code.
- *
- * Also note that we use the InternalType's type property to determine the type of the Type
- * so that the two always remain in sync.
- */
-export const VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
-    Type.integer().internalType.type,
-    Type.long().internalType.type,
-    Type.uint().internalType.type,
-    Type.ulong().internalType.type,
-    Type.string().internalType.type,
-    Type.boolean().internalType.type,
-    Type.float().internalType.type,
-    Type.double().internalType.type
-]);
 
 export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
     return readOnlyMemoryTypeNames.map((typeName) => {

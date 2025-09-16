@@ -4,7 +4,7 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-namespace SeedTrace.Test.Unit.MockServer;
+namespace SeedTrace.Test_.Unit.MockServer;
 
 [SetUpFixture]
 public class BaseMockServerTest

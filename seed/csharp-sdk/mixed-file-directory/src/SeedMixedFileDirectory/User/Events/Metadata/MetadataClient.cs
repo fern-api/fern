@@ -1,10 +1,11 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory.User.Events;
+namespace SeedMixedFileDirectory.User_.Events;
 
 public partial class MetadataClient
 {

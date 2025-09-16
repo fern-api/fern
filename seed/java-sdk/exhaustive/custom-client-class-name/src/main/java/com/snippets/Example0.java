@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example0 {
@@ -13,9 +12,7 @@ public class Example0 {
             .build();
 
         client.endpoints().container().getAndReturnListOfPrimitives(
-            new ArrayList<String>(
-                Arrays.asList("string", "string")
-            )
+            Arrays.asList("string", "string")
         );
     }
 }

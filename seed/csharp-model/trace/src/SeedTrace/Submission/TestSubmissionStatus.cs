@@ -341,7 +341,8 @@ public record TestSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator TestSubmissionStatus.Errored(SeedTrace.ErrorInfo value) =>
+            new(value);
     }
 
     /// <summary>
@@ -359,8 +360,9 @@ public record TestSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator TestSubmissionStatus.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -379,7 +381,7 @@ public record TestSubmissionStatus
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator TestCaseIdToState(
+        public static implicit operator TestSubmissionStatus.TestCaseIdToState(
             Dictionary<string, SubmissionStatusForTestCase> value
         ) => new(value);
     }

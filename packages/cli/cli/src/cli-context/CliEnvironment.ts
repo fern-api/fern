@@ -1,5 +1,5 @@
 export interface CliEnvironment {
     readonly packageName: string;
-    readonly packageVersion: string;
+    packageVersion: string;
     readonly cliName: string;
 }

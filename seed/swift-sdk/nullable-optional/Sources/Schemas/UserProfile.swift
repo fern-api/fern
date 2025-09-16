@@ -4,13 +4,13 @@ import Foundation
 public struct UserProfile: Codable, Hashable, Sendable {
     public let id: String
     public let username: String
-    public let nullableString: JSONValue
-    public let nullableInteger: JSONValue
-    public let nullableBoolean: JSONValue
-    public let nullableDate: JSONValue
-    public let nullableObject: JSONValue
-    public let nullableList: JSONValue
-    public let nullableMap: JSONValue
+    public let nullableString: Nullable<String>
+    public let nullableInteger: Nullable<Int>
+    public let nullableBoolean: Nullable<Bool>
+    public let nullableDate: Nullable<Date>
+    public let nullableObject: Nullable<Address>
+    public let nullableList: Nullable<[String]>
+    public let nullableMap: Nullable<[String: String]>
     public let optionalString: String?
     public let optionalInteger: Int?
     public let optionalBoolean: Bool?
@@ -18,21 +18,21 @@ public struct UserProfile: Codable, Hashable, Sendable {
     public let optionalObject: Address?
     public let optionalList: [String]?
     public let optionalMap: [String: String]?
-    public let optionalNullableString: JSONValue?
-    public let optionalNullableObject: JSONValue?
+    public let optionalNullableString: Nullable<String>?
+    public let optionalNullableObject: Nullable<Address>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         username: String,
-        nullableString: JSONValue,
-        nullableInteger: JSONValue,
-        nullableBoolean: JSONValue,
-        nullableDate: JSONValue,
-        nullableObject: JSONValue,
-        nullableList: JSONValue,
-        nullableMap: JSONValue,
+        nullableString: Nullable<String>,
+        nullableInteger: Nullable<Int>,
+        nullableBoolean: Nullable<Bool>,
+        nullableDate: Nullable<Date>,
+        nullableObject: Nullable<Address>,
+        nullableList: Nullable<[String]>,
+        nullableMap: Nullable<[String: String]>,
         optionalString: String? = nil,
         optionalInteger: Int? = nil,
         optionalBoolean: Bool? = nil,
@@ -40,8 +40,8 @@ public struct UserProfile: Codable, Hashable, Sendable {
         optionalObject: Address? = nil,
         optionalList: [String]? = nil,
         optionalMap: [String: String]? = nil,
-        optionalNullableString: JSONValue? = nil,
-        optionalNullableObject: JSONValue? = nil,
+        optionalNullableString: Nullable<String>? = nil,
+        optionalNullableObject: Nullable<Address>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -69,13 +69,13 @@ public struct UserProfile: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.username = try container.decode(String.self, forKey: .username)
-        self.nullableString = try container.decode(JSONValue.self, forKey: .nullableString)
-        self.nullableInteger = try container.decode(JSONValue.self, forKey: .nullableInteger)
-        self.nullableBoolean = try container.decode(JSONValue.self, forKey: .nullableBoolean)
-        self.nullableDate = try container.decode(JSONValue.self, forKey: .nullableDate)
-        self.nullableObject = try container.decode(JSONValue.self, forKey: .nullableObject)
-        self.nullableList = try container.decode(JSONValue.self, forKey: .nullableList)
-        self.nullableMap = try container.decode(JSONValue.self, forKey: .nullableMap)
+        self.nullableString = try container.decode(Nullable<String>.self, forKey: .nullableString)
+        self.nullableInteger = try container.decode(Nullable<Int>.self, forKey: .nullableInteger)
+        self.nullableBoolean = try container.decode(Nullable<Bool>.self, forKey: .nullableBoolean)
+        self.nullableDate = try container.decode(Nullable<Date>.self, forKey: .nullableDate)
+        self.nullableObject = try container.decode(Nullable<Address>.self, forKey: .nullableObject)
+        self.nullableList = try container.decode(Nullable<[String]>.self, forKey: .nullableList)
+        self.nullableMap = try container.decode(Nullable<[String: String]>.self, forKey: .nullableMap)
         self.optionalString = try container.decodeIfPresent(String.self, forKey: .optionalString)
         self.optionalInteger = try container.decodeIfPresent(Int.self, forKey: .optionalInteger)
         self.optionalBoolean = try container.decodeIfPresent(Bool.self, forKey: .optionalBoolean)
@@ -83,8 +83,8 @@ public struct UserProfile: Codable, Hashable, Sendable {
         self.optionalObject = try container.decodeIfPresent(Address.self, forKey: .optionalObject)
         self.optionalList = try container.decodeIfPresent([String].self, forKey: .optionalList)
         self.optionalMap = try container.decodeIfPresent([String: String].self, forKey: .optionalMap)
-        self.optionalNullableString = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableString)
-        self.optionalNullableObject = try container.decodeIfPresent(JSONValue.self, forKey: .optionalNullableObject)
+        self.optionalNullableString = try container.decodeNullableIfPresent(String.self, forKey: .optionalNullableString)
+        self.optionalNullableObject = try container.decodeNullableIfPresent(Address.self, forKey: .optionalNullableObject)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -107,8 +107,8 @@ public struct UserProfile: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.optionalObject, forKey: .optionalObject)
         try container.encodeIfPresent(self.optionalList, forKey: .optionalList)
         try container.encodeIfPresent(self.optionalMap, forKey: .optionalMap)
-        try container.encodeIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
-        try container.encodeIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
+        try container.encodeNullableIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
+        try container.encodeNullableIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
     }
 
     /// Keys for encoding/decoding struct properties.

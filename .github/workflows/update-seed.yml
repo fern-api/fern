@@ -27,75 +27,33 @@ jobs:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.seed }}
-      ruby: ${{ steps.filter.outputs.ruby }}
-      ruby-v2: ${{ steps.filter.outputs.ruby-v2 }}
-      openapi: ${{ steps.filter.outputs.openapi }}
-      python: ${{ steps.filter.outputs.python }}
-      postman: ${{ steps.filter.outputs.postman }}
-      java: ${{ steps.filter.outputs.java }}
-      typescript: ${{ steps.filter.outputs.typescript }}
-      go: ${{ steps.filter.outputs.go }}
-      csharp: ${{ steps.filter.outputs.csharp }}
-      php: ${{ steps.filter.outputs.php }}
+      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed }}
+      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
+      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
+      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
+      python: ${{ steps.get-generator-changes.outputs.python }}
+      postman: ${{ steps.get-generator-changes.outputs.postman }}
+      java: ${{ steps.get-generator-changes.outputs.java }}
+      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
+      go: ${{ steps.get-generator-changes.outputs.go }}
+      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
+      php: ${{ steps.get-generator-changes.outputs.php }}
+      swift: ${{ steps.get-generator-changes.outputs.swift }}
+      rust: ${{ steps.get-generator-changes.outputs.rust }}
     steps:
       - if: github.event_name != 'workflow_dispatch'
+        name: Checkout repo
         uses: actions/checkout@v4
-      - if: github.event_name != 'workflow_dispatch'
-        uses: dorny/paths-filter@v2
-        id: filter
         with:
-          filters: |
-            seed:
-              - '.github/workflows/update-seed.yml'
-              - 'packages/seed/**'
-              - 'packages/ir-sdk/fern/apis/**'
-              - 'packages/cli/generation/ir-generator/**'
-              - 'test-definitions/**'
-              - 'test-definitions-openapi/**'
-            ruby:
-              - 'generators/ruby/**'
-              - seed/ruby-sdk/seed.yml
-              - seed/ruby-model/seed.yml
-            ruby-v2:
-              - 'generators/ruby-v2/**'
-              - seed/ruby-sdk-v2/seed.yml
-            openapi:
-              - 'generators/openapi/**'
-              - seed/openapi/seed.yml
-            python:
-              - 'generators/python/**'
-              - seed/pydantic/seed.yml
-              - seed/pydantic-v2/seed.yml
-              - seed/python-sdk/seed.yml
-              - seed/fastapi/seed.yml
-            postman:
-              - 'generators/postman/**'
-              - seed/postman/seed.yml
-            java:
-              - 'generators/java/**'
-              - seed/java-sdk/seed.yml
-              - seed/java-model/seed.yml
-              - seed/java-spring/seed.yml
-            typescript:
-              - 'generators/typescript/**'
-              - seed/ts-sdk/seed.yml
-              - seed/ts-express/seed.yml
-            go:
-              - 'generators/go/**'
-              - seed/go-sdk/seed.yml
-              - seed/go-model/seed.yml
-              - seed/go-fiber/seed.yml
-            csharp:
-              - 'generators/csharp/**'
-              - seed/csharp-sdk/seed.yml
-              - seed/csharp-model/seed.yml
-            php:
-              - 'generators/php/**'
-              - seed/php-sdk/seed.yml
-              - seed/php-model/seed.yml
+          # Get sufficient history to check for changes
+          fetch-depth: 200
 
-  ruby-model:
+      - if: github.event_name != 'workflow_dispatch'
+        name: Get generator changes
+        id: get-generator-changes
+        uses: ./.github/actions/get-generator-changes
+
+  ruby-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -105,43 +63,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
-          validate-git-diff: false
+          language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(ruby): update ruby-model seed"
-          title: "chore(ruby): update ruby-model seed"
-          branch: update-ruby-model-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/ruby
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  ruby-sdk:
+  ruby-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -151,43 +83,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
-          validate-git-diff: false
+          language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(ruby): update ruby-sdk seed"
-          title: "chore(ruby): update ruby-sdk seed"
-          branch: update-ruby-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/ruby
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  ruby-sdk-v2:
+  ruby-sdk-v2-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -197,42 +103,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
-          validate-git-diff: false
+          language-name: ruby
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(ruby): update ruby-sdk-v2 seed"
-          title: "chore(ruby): update ruby-sdk-v2 seed"
-          branch: update-ruby-sdk-v2-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/ruby
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-  pydantic-model:
+  pydantic-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -242,43 +123,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: pydantic
           generator-path: generators/python
-          validate-git-diff: false
+          language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(python): update pydantic seed"
-          title: "chore(python): update pydantic seed"
-          branch: update-pydantic-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/python
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  python-sdk:
+  python-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -288,43 +143,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: python-sdk
           generator-path: generators/python
-          validate-git-diff: false
+          language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(python): update python-sdk seed"
-          title: "chore(python): update python-sdk seed"
-          branch: update-python-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/python
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  fastapi:
+  fastapi-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -334,43 +163,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: fastapi
           generator-path: generators/python
-          validate-git-diff: false
+          language-name: python
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(python): update fastapi seed"
-          title: "chore(python): update fastapi seed"
-          branch: update-fastapi-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/python
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  openapi:
+  openapi-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -380,43 +183,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: openapi
           generator-path: generators/openapi
-          validate-git-diff: false
+          language-name: openapi
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(openapi): update openapi seed"
-          title: "chore(openapi): update openapi seed"
-          branch: update-openapi-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/openapi
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  postman:
+  postman-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -426,43 +203,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: postman
           generator-path: generators/postman
-          validate-git-diff: false
+          language-name: postman
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(postman): update postman seed"
-          title: "chore(postman): update postman seed"
-          branch: update-postman-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/postman
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  java-sdk:
+  java-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -472,43 +223,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-sdk
           generator-path: generators/java
-          validate-git-diff: false
+          language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(java): update java-sdk seed"
-          title: "chore(java): update java-sdk seed"
-          branch: update-java-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/java
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  java-model:
+  java-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -518,43 +243,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-model
           generator-path: generators/java
-          validate-git-diff: false
+          language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(java): update java-model seed"
-          title: "chore(java): update java-model seed"
-          branch: update-java-model-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/java
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  java-spring:
+  java-spring-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -564,43 +263,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-spring
           generator-path: generators/java
-          validate-git-diff: false
+          language-name: java
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(java): update java-spring seed"
-          title: "chore(java): update java-spring seed"
-          branch: update-java-spring-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/java
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  typescript-sdk:
+  typescript-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -610,43 +283,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          validate-git-diff: false
+          language-name: typescript
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(typescript): update typescript-sdk seed"
-          title: "chore(typescript): update typescript-sdk seed"
-          branch: update-typescript-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/typescript
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  typescript-express:
+  typescript-express-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -656,43 +303,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-express
           generator-path: generators/typescript
-          validate-git-diff: false
+          language-name: typescript
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(typescript): update typescript-express seed"
-          title: "chore(typescript): update typescript-express seed"
-          branch: update-typescript-express-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/typescript
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  go-fiber:
+  go-fiber-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -702,43 +323,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-fiber
           generator-path: generators/go
-          validate-git-diff: false
+          language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(go): update go-fiber seed"
-          title: "chore(go): update go-fiber seed"
-          branch: update-go-fiber-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/go
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  go-model:
+  go-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -748,43 +343,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-model
           generator-path: generators/go
-          validate-git-diff: false
+          language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(go): update go-model seed"
-          title: "chore(go): update go-model seed"
-          branch: update-go-model-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/go
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  go-sdk:
+  go-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -794,43 +363,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-sdk
           generator-path: generators/go
-          validate-git-diff: false
+          language-name: go
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(go): update go-sdk seed"
-          title: "chore(go): update go-sdk seed"
-          branch: update-go-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/go
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  csharp-model:
+  csharp-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -840,43 +383,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
-          validate-git-diff: false
+          language-name: csharp
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(csharp): update csharp-model seed"
-          title: "chore(csharp): update csharp-model seed"
-          branch: update-csharp-model-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/csharp
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  csharp-sdk:
+  csharp-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -886,43 +403,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
-          validate-git-diff: false
+          language-name: csharp
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(csharp): update csharp-sdk seed"
-          title: "chore(csharp): update csharp-sdk seed"
-          branch: update-csharp-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/csharp
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  php-model:
+  php-model-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -932,43 +423,17 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: php-model
           generator-path: generators/php
-          validate-git-diff: false
+          language-name: php
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(php): update php-model seed"
-          title: "chore(php): update php-model seed"
-          branch: update-php-model-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/php
-
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  php-sdk:
+  php-sdk-seed-update:
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
@@ -978,38 +443,72 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: php-sdk
           generator-path: generators/php
-          validate-git-diff: false
+          language-name: php
           allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
+  swift-sdk-seed-update:
+    needs: changes
+    if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(php): update php-sdk seed"
-          title: "chore(php): update php-sdk seed"
-          branch: update-php-sdk-seed
-          delete-branch: true
-          labels: |
-            seed
-            language/php
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
+        with:
+          generator-name: swift-sdk
+          generator-path: generators/swift
+          language-name: swift
+          allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
+
+  rust-model-seed-update:
+    needs: changes
+    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          generator-name: rust-model
+          generator-path: generators/rust
+          language-name: rust
+          allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
+
+  rust-sdk-seed-update:
+    needs: changes
+    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
+        with:
+          generator-name: rust-sdk
+          generator-path: generators/rust
+          language-name: rust
+          allow-unexpected-failures: true
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}

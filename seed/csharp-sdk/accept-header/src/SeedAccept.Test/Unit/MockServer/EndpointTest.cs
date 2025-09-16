@@ -5,7 +5,7 @@ namespace SeedAccept.Test.Unit.MockServer;
 [TestFixture]
 public class EndpointTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

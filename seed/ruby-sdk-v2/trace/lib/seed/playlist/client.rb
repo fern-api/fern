@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Playlist
@@ -13,7 +14,10 @@ module Seed
       def create_playlist(request_options: {}, **params)
         _path_param_names = ["serviceParam"]
 
-        _query_param_names = ["datetime", "optionalDatetime"]
+        _query_param_names = [
+          %w[datetime optionalDatetime],
+          %i[datetime optionalDatetime]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -22,21 +26,22 @@ module Seed
           method: "POST",
           path: "/v2/playlist/#{params[:serviceParam]}/create",
           query: _query,
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Playlist::Types::Playlist.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Playlist::Types::Playlist.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Returns the user's playlists
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
-        _query_param_names = ["limit", "otherField", "multiLineDocs", "optionalMultipleField", "multipleField"]
+        _query_param_names = [
+          %w[limit otherField multiLineDocs optionalMultipleField multipleField],
+          %i[limit otherField multiLineDocs optionalMultipleField multipleField]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -44,14 +49,12 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
           path: "/v2/playlist/#{params[:serviceParam]}/all",
-          query: _query,
+          query: _query
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Returns a playlist
@@ -61,14 +64,12 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "GET",
-          path: "/v2/playlist/#{/#{"
+          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Playlist::Types::Playlist.load(_response.body)
-        else
-          raise _response.body
-        end
+        return Seed::Playlist::Types::Playlist.load(_response.body) if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Updates a playlist
@@ -79,14 +80,12 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "PUT",
           path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
-          body: params,
+          body: params
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
-        end
+        return if _response.code >= "200" && _response.code < "300"
+
+        raise _response.body
       end
 
       # Deletes a playlist
@@ -96,16 +95,13 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
           method: "DELETE",
-          path: "/v2/playlist/#{/#{"
+          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
         )
         _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
-        end
-      end
+        return if _response.code >= "200" && _response.code < "300"
 
+        raise _response.body
+      end
     end
   end
 end

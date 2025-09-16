@@ -1,7 +1,7 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
-
-import { AstNode, Writer } from "../csharp";
-
+import { type Writer } from "../ast";
+import { type CSharp } from "../csharp";
+import { AstNode } from "./core/AstNode";
 export declare namespace CodeBlock {
     /* Write arbitrary code */
     type Arg = CommonCodeBlock.Arg<Writer>;
@@ -10,8 +10,8 @@ export declare namespace CodeBlock {
 export class CodeBlock extends AstNode {
     private arg: CodeBlock.Arg;
 
-    public constructor(arg: CodeBlock.Arg) {
-        super();
+    public constructor(arg: CodeBlock.Arg, csharp: CSharp) {
+        super(csharp);
         this.arg = arg;
     }
 

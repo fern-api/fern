@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -25,7 +25,7 @@ public partial class ReqWithHeadersClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
+    public async Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

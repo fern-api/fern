@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using SeedCsharpSystemCollision;
 
 namespace Usage;

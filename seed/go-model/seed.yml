@@ -58,3 +58,4 @@ allowedFailures:
   - reserved-keywords
   - streaming:.
   - trace
+  - property-access

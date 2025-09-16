@@ -8,7 +8,7 @@ namespace SeedUnknownAsAny.Test;
 [TestFixture]
 public class MyObjectTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -31,7 +31,7 @@ public class MyObjectTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """
