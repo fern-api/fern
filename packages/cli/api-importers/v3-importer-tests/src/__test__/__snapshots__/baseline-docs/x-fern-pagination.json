@@ -921,22 +921,57 @@
             "hasNextPage": {
               "propertyPath": [
                 {
-                  "originalName": "meta",
-                  "camelCase": {
-                    "unsafeName": "meta",
-                    "safeName": "meta"
+                  "name": {
+                    "originalName": "meta",
+                    "camelCase": {
+                      "unsafeName": "meta",
+                      "safeName": "meta"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "meta",
+                      "safeName": "meta"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "META",
+                      "safeName": "META"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Meta",
+                      "safeName": "Meta"
+                    }
                   },
-                  "snakeCase": {
-                    "unsafeName": "meta",
-                    "safeName": "meta"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "META",
-                    "safeName": "META"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Meta",
-                    "safeName": "Meta"
+                  "type": {
+                    "container": {
+                      "optional": {
+                        "name": {
+                          "originalName": "Meta",
+                          "camelCase": {
+                            "unsafeName": "meta",
+                            "safeName": "meta"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "meta",
+                            "safeName": "meta"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "META",
+                            "safeName": "META"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Meta",
+                            "safeName": "Meta"
+                          }
+                        },
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "typeId": "type_:Meta",
+                        "type": "named"
+                      },
+                      "type": "optional"
+                    },
+                    "type": "container"
                   }
                 }
               ],

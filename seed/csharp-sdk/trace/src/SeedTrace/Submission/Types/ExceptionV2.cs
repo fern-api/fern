@@ -215,7 +215,8 @@ public record ExceptionV2
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator ExceptionV2.Generic(SeedTrace.ExceptionInfo value) =>
+            new(value);
     }
 
     /// <summary>

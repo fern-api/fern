@@ -3,7 +3,7 @@ import Foundation
 public struct Organization: Codable, Hashable, Sendable {
     public let id: String
     public let name: String
-    public let domain: JSONValue
+    public let domain: Nullable<String>
     public let employeeCount: Int?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
@@ -11,7 +11,7 @@ public struct Organization: Codable, Hashable, Sendable {
     public init(
         id: String,
         name: String,
-        domain: JSONValue,
+        domain: Nullable<String>,
         employeeCount: Int? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -26,7 +26,7 @@ public struct Organization: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.domain = try container.decode(JSONValue.self, forKey: .domain)
+        self.domain = try container.decode(Nullable<String>.self, forKey: .domain)
         self.employeeCount = try container.decodeIfPresent(Int.self, forKey: .employeeCount)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

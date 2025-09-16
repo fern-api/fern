@@ -84,8 +84,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": true
-              },
-              "codeSamples": []
+              }
             }
           ]
         },
@@ -175,8 +174,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": true
-              },
-              "codeSamples": []
+              }
             }
           ]
         }

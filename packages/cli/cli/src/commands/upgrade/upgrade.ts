@@ -105,6 +105,7 @@ export async function upgrade({
             )}`
         );
 
+        cliContext.environment.packageVersion = fernCliUpgradeInfo.targetVersion;
         // special case: if we're running the local-dev version of the CLI, simulate a re-run
         if (cliContext.environment.packageVersion === "0.0.0") {
             await runPostUpgradeSteps({

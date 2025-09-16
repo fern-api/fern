@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -23,9 +23,9 @@ export class RequestOptionsInterfaceGenerator extends FileGenerator<
     }
 
     public doGenerate(): CSharpFile {
-        const interace_ = csharp.interface_({
+        const interace_ = this.csharp.interface_({
             ...this.context.getRequestOptionsInterfaceReference(),
-            access: csharp.Access.Internal
+            access: ast.Access.Internal
         });
         interace_.addFields(this.baseOptionsGenerator.getRequestOptionInterfaceFields());
         return new CSharpFile({

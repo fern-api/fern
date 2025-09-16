@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.16-rc0
+  changelogEntry:
+    - type: fix
+      summary: |
+        Enable type disambiguation and renaming during code generation
+        Permits the `examples` test fixtures to compile sucessfully
+  createdAt: "2025-09-05"
+  irVersion: 58
 - version: 2.1.15
   changelogEntry:
     - type: fix

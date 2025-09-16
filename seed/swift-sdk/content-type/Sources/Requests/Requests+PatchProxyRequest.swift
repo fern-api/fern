@@ -2,14 +2,14 @@ import Foundation
 
 extension Requests {
     public struct PatchProxyRequest: Codable, Hashable, Sendable {
-        public let application: JSONValue
-        public let requireAuth: JSONValue
+        public let application: Nullable<String>
+        public let requireAuth: Nullable<Bool>
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            application: JSONValue,
-            requireAuth: JSONValue,
+            application: Nullable<String>,
+            requireAuth: Nullable<Bool>,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.application = application
@@ -19,8 +19,8 @@ extension Requests {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.application = try container.decode(JSONValue.self, forKey: .application)
-            self.requireAuth = try container.decode(JSONValue.self, forKey: .requireAuth)
+            self.application = try container.decode(Nullable<String>.self, forKey: .application)
+            self.requireAuth = try container.decode(Nullable<Bool>.self, forKey: .requireAuth)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

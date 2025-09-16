@@ -1,10 +1,9 @@
-import { csharp } from "..";
+import { CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { ENUM_MEMBER } from "./dependencies/System";
 
 export declare namespace Enum {
     interface Args {
@@ -34,26 +33,28 @@ export declare namespace Enum {
 }
 
 export class Enum extends AstNode {
-    public readonly name: string;
-    public readonly namespace: string;
+    public get name() {
+        return this.reference.name;
+    }
+    public get namespace() {
+        return this.reference.namespace;
+    }
+
     public readonly access: Access;
     public readonly reference: ClassReference;
 
     private annotations: Annotation[];
     private fields: Enum._Member[] = [];
 
-    constructor({ name, namespace, access, annotations }: Enum.Args) {
-        super();
-        this.name = name;
-        this.namespace = namespace;
-        this.access = access;
-
-        this.annotations = annotations ?? [];
-
-        this.reference = new ClassReference({
-            name: this.name,
-            namespace: this.namespace
+    constructor({ name, namespace, access, annotations }: Enum.Args, csharp: CSharp) {
+        super(csharp);
+        this.reference = this.csharp.classReference({
+            name: name,
+            namespace: namespace
         });
+
+        this.access = access;
+        this.annotations = annotations ?? [];
     }
 
     public getNamespace(): string {
@@ -63,11 +64,11 @@ export class Enum extends AstNode {
     public addMember(field: Enum.Member): void {
         this.fields.push({
             name: field.name,
-            value: new Annotation({
-                reference: ENUM_MEMBER,
-                argument: csharp.codeblock((writer) => {
+            value: this.csharp.annotation({
+                reference: this.csharp.System.Runtime.Serialization.EnumMember,
+                argument: this.csharp.codeblock((writer) => {
                     writer.write("Value = ");
-                    writer.writeNode(csharp.string_({ string: field.value }));
+                    writer.writeNode(this.csharp.string_({ string: field.value }));
                 })
             })
         });

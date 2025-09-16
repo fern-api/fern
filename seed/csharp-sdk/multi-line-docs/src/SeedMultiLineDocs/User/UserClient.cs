@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
@@ -22,7 +22,7 @@ public partial class UserClient
     /// <example><code>
     /// await client.User.GetUserAsync("userId");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetUserAsync(
+    public async Task GetUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

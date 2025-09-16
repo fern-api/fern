@@ -34,7 +34,7 @@ scripts:
       - bundle exec rake test
 
 fixtures: {}
-allowedFailures: 
+allowedFailures:
   - accept-header
   - alias
   - alias-extends
@@ -103,6 +103,7 @@ allowedFailures:
   - request-parameters
   - reserved-keywords
   - response-property
+  - ruby-reserved-word-properties
   - server-sent-event-examples
   - server-sent-events
   - simple-api
@@ -122,6 +123,7 @@ allowedFailures:
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
+  - property-access
 features:
   requestOptions: true
   idempotency: false

@@ -7,7 +7,12 @@ types:
         value:
           id: example
 
+  WithName:
+    properties:
+      name: string
+
   Shape:
+    extends: WithName
     base-properties:
       id: string
     union:

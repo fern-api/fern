@@ -6,7 +6,7 @@ using WireMockResponse = WireMock.ResponseBuilders.Response;
 using NUnit.Framework;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core.RawClientTests;
+namespace <%= testNamespace%>.Core.RawClientTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]

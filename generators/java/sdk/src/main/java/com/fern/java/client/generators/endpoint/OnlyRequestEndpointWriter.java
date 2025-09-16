@@ -34,6 +34,7 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -215,6 +216,24 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             this.contentType = contentType;
         }
 
+        /**
+         * Extracts the request body getter name from a wrapped request if it has a ReferencedRequestBodyGetter.
+         *
+         * @return An Optional containing the getter name if a ReferencedRequestBodyGetter is present, empty otherwise
+         */
+        private Optional<String> getRequestBodyGetterName() {
+            if (generatedWrappedRequest != null
+                    && generatedWrappedRequest.requestBodyGetter().isPresent()
+                    && generatedWrappedRequest.requestBodyGetter().get()
+                            instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter) {
+                GeneratedWrappedRequest.ReferencedRequestBodyGetter referencedGetter =
+                        (GeneratedWrappedRequest.ReferencedRequestBodyGetter)
+                                generatedWrappedRequest.requestBodyGetter().get();
+                return Optional.of(referencedGetter.requestBodyGetter().name);
+            }
+            return Optional.empty();
+        }
+
         @Override
         public Void visitTypeReference(HttpRequestBodyReference _typeReference) {
             boolean isOptional = false;
@@ -222,32 +241,30 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
                         this.endpoint.getRequestBody().get());
             }
+
+            Optional<String> requestBodyGetterName = getRequestBodyGetterName();
+
             codeBlock
                     .addStatement("$T $L", RequestBody.class, variables.getOkhttpRequestBodyName())
                     .beginControlFlow("try");
 
             if (isOptional) {
-                codeBlock
-                        .addStatement(
-                                "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
-                        .beginControlFlow("if ($N.isPresent())", "request");
+                codeBlock.addStatement(
+                        "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class);
+
+                if (requestBodyGetterName.isPresent()) {
+                    codeBlock.beginControlFlow("if (request.$L().isPresent())", requestBodyGetterName.get());
+                } else {
+                    codeBlock.beginControlFlow("if ($N.isPresent())", "request");
+                }
             }
 
             CodeBlock requestBodyGetter = CodeBlock.of("request");
 
-            boolean requestBodyGetterPresent = generatedWrappedRequest != null
-                    && generatedWrappedRequest.requestBodyGetter().isPresent();
-
-            if (clientGeneratorContext.getCustomConfig().inlinePathParameters()
-                    && requestBodyGetterPresent
-                    && (generatedWrappedRequest.requestBodyGetter().get()
-                            instanceof GeneratedWrappedRequest.ReferencedRequestBodyGetter)) {
-                String getterName = ((GeneratedWrappedRequest.ReferencedRequestBodyGetter)
-                                generatedWrappedRequest.requestBodyGetter().get())
-                        .requestBodyGetter()
-                        .name;
-
-                requestBodyGetter = CodeBlock.of("request.$L()", getterName);
+            if (requestBodyGetterName.isPresent()) {
+                requestBodyGetter = isOptional
+                        ? CodeBlock.of("request.$L().get()", requestBodyGetterName.get())
+                        : CodeBlock.of("request.$L()", requestBodyGetterName.get());
             }
 
             CodeBlock requestBodyContentType = CodeBlock.of(

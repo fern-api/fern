@@ -6,7 +6,7 @@ namespace SeedEnum.Test.Unit.MockServer;
 [TestFixture]
 public class SendTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest_1()
     {
         Server
@@ -35,7 +35,7 @@ public class SendTest : BaseMockServerTest
         );
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest_2()
     {
         Server

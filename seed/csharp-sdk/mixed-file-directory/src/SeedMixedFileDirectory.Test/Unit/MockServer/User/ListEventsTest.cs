@@ -1,16 +1,16 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.Test.Unit.MockServer;
-using SeedMixedFileDirectory.User;
+using SeedMixedFileDirectory.User_;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
 
 [TestFixture]
 public class ListEventsTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             [

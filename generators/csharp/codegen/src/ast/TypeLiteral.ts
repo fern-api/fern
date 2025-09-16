@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { csharp } from "..";
+import { type CSharp } from "../csharp";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { AstNode, Writer } from "./core";
@@ -81,7 +80,7 @@ interface Dictionary {
     entries: DictionaryEntry[];
 }
 
-interface DictionaryEntry {
+export interface DictionaryEntry {
     key: TypeLiteral;
     value: TypeLiteral;
 }
@@ -136,8 +135,11 @@ interface Nop {
 }
 
 export class TypeLiteral extends AstNode {
-    private constructor(public readonly internalType: InternalTypeLiteral) {
-        super();
+    constructor(
+        public readonly internalType: InternalTypeLiteral,
+        csharp: CSharp
+    ) {
+        super(csharp);
     }
 
     public write(writer: Writer): void {
@@ -179,7 +181,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "long": {
-                writer.write(`${this.internalType.value}l`);
+                writer.write(`${this.internalType.value}L`);
                 break;
             }
             case "uint": {
@@ -203,7 +205,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "string": {
-                writer.writeNode(csharp.string_({ string: this.internalType.value }));
+                writer.writeNode(this.csharp.string_({ string: this.internalType.value }));
                 break;
             }
             case "unknown": {
@@ -235,11 +237,14 @@ export class TypeLiteral extends AstNode {
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
         const fields = filterNopConstructorFields({ fields: class_.fields });
         writer.writeNode(
-            new ClassInstantiation({
-                classReference: class_.reference,
-                arguments_: fields.map((field) => ({ name: field.name, assignment: field.value })),
-                multiline: true
-            })
+            new ClassInstantiation(
+                {
+                    classReference: class_.reference,
+                    arguments_: fields.map((field) => ({ name: field.name, assignment: field.value })),
+                    multiline: true
+                },
+                this.csharp
+            )
         );
     }
 
@@ -249,12 +254,7 @@ export class TypeLiteral extends AstNode {
 
     private writeDateTime({ writer, value }: { writer: Writer; value: string }): void {
         writer.write(`DateTime.Parse("${value}", null, `);
-        writer.writeNode(
-            new ClassReference({
-                name: "DateTimeStyles",
-                namespace: "System.Globalization"
-            })
-        );
+        writer.writeNode(this.csharp.System.Globalization.DateTimeStyles);
         writer.write(".AdjustToUniversal)");
     }
 
@@ -327,114 +327,13 @@ export class TypeLiteral extends AstNode {
         writer.write("}");
     }
 
-    /* Static factory methods for creating a TypeLiteral */
-    public static class_({
-        reference,
-        fields
-    }: {
-        reference: ClassReference;
-        fields: ConstructorField[];
-    }): TypeLiteral {
-        return new this({ type: "class", reference, fields });
-    }
-
-    public static dictionary({
-        keyType,
-        valueType,
-        entries
-    }: {
-        keyType: Type;
-        valueType: Type;
-        entries: DictionaryEntry[];
-    }): TypeLiteral {
-        return new this({ type: "dictionary", keyType, valueType, entries });
-    }
-
-    public static list({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
-        return new this({ type: "list", valueType, values });
-    }
-
-    public static set({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
-        return new this({ type: "set", valueType, values });
-    }
-
-    public static boolean(value: boolean): TypeLiteral {
-        return new this({ type: "boolean", value });
-    }
-
-    public static float(value: number): TypeLiteral {
-        return new this({ type: "float", value });
-    }
-
-    public static date(value: string): TypeLiteral {
-        return new this({ type: "date", value });
-    }
-
-    public static datetime(value: string): TypeLiteral {
-        return new this({ type: "datetime", value });
-    }
-
-    public static decimal(value: number): TypeLiteral {
-        return new this({ type: "decimal", value });
-    }
-
-    public static double(value: number): TypeLiteral {
-        return new this({ type: "double", value });
-    }
-
-    public static integer(value: number): TypeLiteral {
-        return new this({ type: "integer", value });
-    }
-
-    public static long(value: number): TypeLiteral {
-        return new this({ type: "long", value });
-    }
-
-    public static uint(value: number): TypeLiteral {
-        return new this({ type: "uint", value });
-    }
-
-    public static ulong(value: number): TypeLiteral {
-        return new this({ type: "ulong", value });
-    }
-
-    public static reference(value: AstNode): TypeLiteral {
-        return new this({
-            type: "reference",
-            value
-        });
-    }
-
-    public static string(value: string): TypeLiteral {
-        return new this({
-            type: "string",
-            value
-        });
-    }
-
-    public static null(): TypeLiteral {
-        return new this({ type: "null" });
-    }
-
-    public static nop(): TypeLiteral {
-        return new this({ type: "nop" });
-    }
-
-    public static unknown(value: unknown): TypeLiteral {
-        return new this({ type: "unknown", value });
-    }
-
-    public static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === "nop";
-    }
-
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
             case "boolean":
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.writeNode(csharp.string_({ string: value }));
+                writer.writeNode(this.csharp.string_({ string: value }));
                 return;
             case "number":
                 writer.write(value.toString());
@@ -470,7 +369,7 @@ export class TypeLiteral extends AstNode {
         writer.writeLine("new List<object>() {");
         writer.indent();
         for (const element of value) {
-            writer.writeNode(TypeLiteral.unknown(element));
+            writer.writeNode(this.csharp.TypeLiteral.unknown(element));
             writer.writeLine(",");
         }
         writer.dedent();
@@ -487,11 +386,15 @@ export class TypeLiteral extends AstNode {
         writer.indent();
         for (const [key, val] of entries) {
             writer.write(`["${key}"] = `);
-            writer.writeNode(TypeLiteral.unknown(val));
+            writer.writeNode(this.csharp.TypeLiteral.unknown(val));
             writer.writeLine(",");
         }
         writer.dedent();
         writer.write("}");
+    }
+
+    static isNop(typeLiteral: TypeLiteral): boolean {
+        return typeLiteral.internalType.type === "nop";
     }
 }
 

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SeedOauthClientCredentialsWithVariables;
 
 namespace SeedOauthClientCredentialsWithVariables.Core;

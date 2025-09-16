@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedExhaustive;
+using System.Threading.Tasks;
 using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
 public class Example38
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions{

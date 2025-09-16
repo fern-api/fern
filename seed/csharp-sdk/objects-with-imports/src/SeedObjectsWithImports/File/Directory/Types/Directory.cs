@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
 
-namespace SeedObjectsWithImports.File;
+namespace SeedObjectsWithImports.File_;
 
 [Serializable]
 public record Directory : IJsonOnDeserialized

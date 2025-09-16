@@ -1,5 +1,5 @@
 import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
-
+import { type CSharp } from "../../csharp";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { Writer } from "./Writer";
 
@@ -11,6 +11,9 @@ export interface FormattedAstNodeSnippet {
 }
 
 export abstract class AstNode extends AbstractAstNode {
+    constructor(protected readonly csharp: CSharp) {
+        super();
+    }
     /**
      * Writes the node to a string.
      */

@@ -1,6 +1,7 @@
-import { csharp } from "..";
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { type Type } from "./Type";
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -19,7 +20,7 @@ export declare namespace MethodInvocation {
         /* In the event of an instance method, you'll want to invoke it on said instance */
         on?: AstNode;
         /* Any generics used in the method invocation */
-        generics?: csharp.Type[];
+        generics?: Type[];
         /* Whether to use a multiline method invocation */
         multiline?: boolean;
         /* Whether the method returns an async enumerable */
@@ -34,20 +35,23 @@ export class MethodInvocation extends AstNode {
     private ["async"]: boolean;
     private isAsyncEnumerable: boolean;
     private configureAwait: boolean;
-    private generics: csharp.Type[];
+    private generics: Type[];
     private multiline: boolean;
 
-    constructor({
-        method,
-        arguments_,
-        on,
-        async,
-        configureAwait,
-        generics,
-        multiline,
-        isAsyncEnumerable
-    }: MethodInvocation.Args) {
-        super();
+    constructor(
+        {
+            method,
+            arguments_,
+            on,
+            async,
+            configureAwait,
+            generics,
+            multiline,
+            isAsyncEnumerable
+        }: MethodInvocation.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
 
         this.method = method;
         this.arguments = arguments_;
