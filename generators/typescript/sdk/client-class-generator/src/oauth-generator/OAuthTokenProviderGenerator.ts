@@ -7,8 +7,7 @@ import {
     OAuthAccessTokenRequestProperties,
     OAuthAccessTokenResponseProperties,
     OAuthClientCredentials,
-    OAuthScheme,
-    ResponseProperty
+    OAuthScheme
 } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";

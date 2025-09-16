@@ -14,8 +14,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
-    ObjectPropertyAccess,
-    Pagination
+    ObjectPropertyAccess
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,

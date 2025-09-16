@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
@@ -9,10 +10,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-
 import { GeneratedType } from "./GeneratedType";
 import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
-import { FernIr } from "@fern-fern/ir-sdk";
 
 export interface TypeContext {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
