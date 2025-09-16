@@ -3450,8 +3450,8 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-v2/ast
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.42
-        version: 0.0.42
+        specifier: 0.1.1
+        version: 0.1.1
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045

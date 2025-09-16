@@ -3,6 +3,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
@@ -75,6 +76,7 @@ export class ReadmeConfigBuilder {
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
                 : undefined,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
+            customSections: toGeneratorCliCustomSections(context.ir.readmeConfig?.customSections),
             features
         };
     }
@@ -102,4 +104,20 @@ export class ReadmeConfigBuilder {
             fetchSupport: this.fetchSupport
         };
     }
+}
+
+function toGeneratorCliCustomSections(
+    customSections: FernIr.ReadmeCustomSection[] | undefined
+): FernGeneratorCli.CustomSection[] | undefined {
+    let sections: FernGeneratorCli.CustomSection[] = [];
+    for (const section of customSections ?? []) {
+        if (section.language === "typescript") {
+            sections.push({
+                name: section.title,
+                language: FernGeneratorCli.Language.Typescript,
+                content: section.content
+            });
+        }
+    }
+    return sections.length > 0 ? sections : undefined;
 }
