@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "results"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

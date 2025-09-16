@@ -3,12 +3,21 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    NameAndWireValue,
+    PropertyPathItem,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import {
+    ExportsManager,
+    getTextOfTsNode,
+    ImportsManager,
+    NpmPackage,
+    Reference,
+    TypeReferenceNode
+} from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -479,6 +488,174 @@ export class TypeContextImpl implements TypeContext {
             inline: undefined,
             name: typeName.name,
             typeId: typeName.typeId
+        });
+    }
+
+    public generateGetterForResponsePropertyAsString({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining = false
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): string {
+        return (
+            (typeof variable === "undefined"
+                ? ""
+                : variable + (noOptionalChaining ? "." : isVariableOptional ? "?." : ".")) +
+            (property.propertyPath ?? [])
+                .map((item) => ({
+                    ...item,
+                    isOptionalOrNullable: this.isOptional(item.type) || this.isNullable(item.type)
+                }))
+                .map(
+                    (item) =>
+                        `${this.getPropertyName({ name: item.name })}${noOptionalChaining ? "." : item.isOptionalOrNullable ? "?." : "."}`
+                )
+                .join("") +
+            this.getNameFromWireValue({ name: property.property.name })
+        );
+    }
+
+    public generateGetterForResponseProperty({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining = false
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): ts.Expression {
+        return ts.factory.createIdentifier(
+            this.generateGetterForResponsePropertyAsString({
+                variable,
+                isVariableOptional,
+                property,
+                noOptionalChaining
+            })
+        );
+    }
+
+    public generateGetterForRequestProperty({
+        variable,
+        isVariableOptional,
+        property
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.RequestProperty;
+    }): ts.Expression {
+        return ts.factory.createIdentifier(
+            (typeof variable === "undefined" ? "" : variable + (isVariableOptional ? "?." : ".")) +
+                (property.propertyPath ?? [])
+                    .map((item) => ({
+                        ...item,
+                        isOptionalOrNullable: this.isOptional(item.type) || this.isNullable(item.type)
+                    }))
+                    .map(
+                        (item) =>
+                            `${this.getPropertyName({ name: item.name })}${item.isOptionalOrNullable ? "?." : "."}`
+                    )
+                    .join("") +
+                this.getNameFromWireValue({ name: property.property.name })
+        );
+    }
+
+    public generateSetterForRequestPropertyAsString({
+        variable,
+        property
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): string {
+        return (
+            (typeof variable === "undefined" ? "" : variable + ".") +
+            (property.propertyPath ?? []).map((item) => `${this.getPropertyName({ name: item.name })}.`).join("") +
+            this.getNameFromWireValue({ name: property.property.name })
+        );
+    }
+
+    public generateSetterForRequestProperty({
+        variable,
+        property
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): ts.Expression {
+        return ts.factory.createIdentifier(this.generateSetterForRequestPropertyAsString({ variable, property }));
+    }
+
+    private getPropertyName({ name }: { name: FernIr.Name }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getNameFromWireValue({ name }: { name: NameAndWireValue }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer ? name.wireValue : name.name.camelCase.safeName;
+    }
+
+    public getReferenceToResponsePropertyType({
+        responseType,
+        property
+    }: {
+        responseType: ts.TypeNode;
+        property: FernIr.ResponseProperty;
+    }): ts.TypeNode {
+        const propertyPath = [
+            ...(property.propertyPath ?? []),
+            { name: property.property.name.name, type: property.property.valueType } as PropertyPathItem
+        ];
+        let rootNotInlinePropertyPathItem;
+        const inlinePropertyPathItems = [];
+        for (let i = propertyPath.length - 1; i >= 0; i--) {
+            const item = propertyPath[i] as PropertyPathItem;
+            if (!this.isInline(item.type)) {
+                // the root type is not inline, stop here
+                rootNotInlinePropertyPathItem = item;
+                break;
+            }
+            inlinePropertyPathItems.unshift(item);
+        }
+
+        let currentParentTypeNode =
+            typeof rootNotInlinePropertyPathItem === "undefined"
+                ? responseType
+                : this.getReferenceToType(rootNotInlinePropertyPathItem.type).typeNode;
+        for (const inlinePropertyPathItem of inlinePropertyPathItems) {
+            const ref = this.getReferenceToInlinePropertyType(
+                inlinePropertyPathItem.type,
+                getTextOfTsNode(currentParentTypeNode),
+                inlinePropertyPathItem.name.pascalCase.safeName
+            );
+            currentParentTypeNode = ref.responseTypeNode ?? ref.typeNode;
+        }
+
+        return currentParentTypeNode;
+    }
+
+    private isInline(type: TypeReference): boolean {
+        return type._visit({
+            container: (container) =>
+                container._visit({
+                    list: (value: FernIr.TypeReference) => this.isInline(value),
+                    map: (value: FernIr.MapType) => this.isInline(value.keyType) || this.isInline(value.valueType),
+                    nullable: (value: FernIr.TypeReference) => this.isInline(value),
+                    optional: (value: FernIr.TypeReference) => this.isInline(value),
+                    set: (value: FernIr.TypeReference) => this.isInline(value),
+                    literal: () => false,
+                    _other: () => false
+                }),
+            named: (named) => {
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(named.typeId);
+                return typeDeclaration.inline === true;
+            },
+            primitive: () => false,
+            unknown: () => false,
+            _other: () => false
         });
     }
 }

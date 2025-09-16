@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v59
+irVersion: v60
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
