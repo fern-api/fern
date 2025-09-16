@@ -691,9 +691,9 @@ jobs:
         with:
           add: "seed/*"
           push: true
+          fetch: false
           message: "Automated update of seed files"
-          author_name: "Fern Support"
-
-
+          committer_name: "Fern Support"
+          committer_email: "26544928+fern-support@users.noreply.github.com"
 
   #CHRISM - kick off seed snapshot tests
