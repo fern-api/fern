@@ -11,7 +11,7 @@ module Seed
       # @return [Array[Hash[String, Object]]]
       def post(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "",
           body: params
@@ -25,7 +25,7 @@ module Seed
       # @return [Array[Hash[String, Object]]]
       def post_object(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/with-object",
           body: Seed::Unknown::Types::MyObject.new(params).to_h

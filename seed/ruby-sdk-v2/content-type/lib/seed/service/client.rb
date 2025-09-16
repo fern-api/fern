@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def patch(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
           body: params
@@ -32,7 +32,7 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
           body: params.except(*_path_param_names)
@@ -51,7 +51,7 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
           body: params.except(*_path_param_names)
@@ -70,7 +70,7 @@ module Seed
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
           body: params
@@ -88,7 +88,7 @@ module Seed
         _path_param_names = ["id"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
           body: params.except(*_path_param_names)

@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/"
         )
@@ -26,7 +26,7 @@ module Seed
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/users/#{params[:user_id]}"
         )
@@ -46,7 +46,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/search",
           query: _query

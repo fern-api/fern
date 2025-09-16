@@ -11,7 +11,7 @@ module Seed
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "generate-stream",
           body: params
@@ -25,7 +25,7 @@ module Seed
       # @return [Seed::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "generate",
           body: params

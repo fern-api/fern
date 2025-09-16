@@ -12,7 +12,7 @@ module Seed
         # @return [Seed::Types::Union::Types::Animal]
         def get_and_return_union(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/union",
             body: Seed::Types::Union::Types::Animal.new(params).to_h

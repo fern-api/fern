@@ -14,7 +14,7 @@ module Seed
         # @return [String]
         def get_with_path(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params/path/#{params[:param]}"
           )
@@ -29,7 +29,7 @@ module Seed
         # @return [String]
         def get_with_inline_path(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params/path/#{params[:param]}"
           )
@@ -51,7 +51,7 @@ module Seed
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params",
             query: _query
@@ -74,7 +74,7 @@ module Seed
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params",
             query: _query
@@ -97,7 +97,7 @@ module Seed
           params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params/path-query/#{params[:param]}",
             query: _query
@@ -120,7 +120,7 @@ module Seed
           params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/params/path-query/#{params[:param]}",
             query: _query
@@ -136,7 +136,7 @@ module Seed
         # @return [String]
         def modify_with_path(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "PUT",
             path: "/params/path/#{params[:param]}",
             body: params
@@ -154,7 +154,7 @@ module Seed
           _path_param_names = ["param"]
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "PUT",
             path: "/params/path/#{params[:param]}",
             body: params.except(*_path_param_names)

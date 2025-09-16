@@ -12,7 +12,7 @@ module Seed
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/enum",
             body: Seed::Types::Enum::Types::WeatherReport.new(params).to_h

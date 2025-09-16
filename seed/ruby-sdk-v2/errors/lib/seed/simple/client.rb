@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "foo1",
           body: Seed::Simple::Types::FooRequest.new(params).to_h
@@ -27,7 +27,7 @@ module Seed
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "foo2",
           body: Seed::Simple::Types::FooRequest.new(params).to_h
@@ -43,7 +43,7 @@ module Seed
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "foo3",
           body: Seed::Simple::Types::FooRequest.new(params).to_h
