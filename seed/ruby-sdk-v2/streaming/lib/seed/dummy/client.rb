@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Dummy
@@ -11,30 +10,36 @@ module Seed
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "POST",
           path: "generate-stream",
-          body: params
+          body: params,
         )
         _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+        else
+          raise _response.body
+        end
       end
 
       # @return [Seed::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "POST",
           path: "generate",
-          body: params
+          body: params,
         )
         _response = @client.send(_request)
-        raise _response.body unless _response.code >= "200" && _response.code < "300"
-
-        Seed::Dummy::Types::StreamResponse.load(_response.body)
+        if _response.code >= "200" && _response.code < "300"
+          return Seed::Dummy::Types::StreamResponse.load(_response.body)
+        else
+          raise _response.body
+        end
       end
+
     end
   end
 end

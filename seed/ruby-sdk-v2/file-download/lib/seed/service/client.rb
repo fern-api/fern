@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module Service
@@ -9,30 +8,36 @@ module Seed
       end
 
       # @return [untyped]
-      def simple(request_options: {}, **_params)
+      def simple(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "POST",
           path: "/snippet"
         )
         _response = @client.send(_request)
-        raise _response.body unless _response.code >= "200" && _response.code < "300"
-
-        nil
+        if _response.code >= "200" && _response.code < "300"
+          return
+        else
+          raise _response.body
+        end
       end
 
       # @return [untyped]
-      def download_file(request_options: {}, **_params)
+      def download_file(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "POST",
           path: ""
         )
         _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+        else
+          raise _response.body
+        end
       end
+
     end
   end
 end

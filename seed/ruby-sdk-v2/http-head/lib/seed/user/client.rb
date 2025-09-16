@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 module Seed
   module User
@@ -9,16 +8,19 @@ module Seed
       end
 
       # @return [untyped]
-      def head(request_options: {}, **_params)
+      def head(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "HEAD",
           path: "/users"
         )
         _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+          return
+        else
+          raise _response.body
+        end
       end
 
       # @return [Array[Seed::User::Types::User]]
@@ -28,19 +30,23 @@ module Seed
           %i[limit]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url]
+          ,
           method: "GET",
           path: "/users",
-          query: _query
+          query: _query,
         )
         _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        if _response.code >= "200" && _response.code < "300"
+          return 
+        else
+          raise _response.body
+        end
       end
+
     end
   end
 end
