@@ -2,7 +2,7 @@ import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -27,7 +27,7 @@ export class ReferenceConfigAssembler {
                 this.context.ir.rootPackage.service === serviceId
                     ? builder.addRootSection()
                     : builder.addSection({ title: this.getReferenceSectionTitle(service) });
-            const endpoints = this.getEndpointReferencesForService({ serviceId, service });
+            const endpoints = this.getEndpointReferencesForService(service);
             for (const endpoint of endpoints) {
                 section.addEndpoint(endpoint);
             }
@@ -43,13 +43,7 @@ export class ReferenceConfigAssembler {
         );
     }
 
-    private getEndpointReferencesForService({
-        serviceId,
-        service
-    }: {
-        serviceId: ServiceId;
-        service: HttpService;
-    }): FernGeneratorCli.EndpointReference[] {
+    private getEndpointReferencesForService(service: HttpService): FernGeneratorCli.EndpointReference[] {
         return service.endpoints
             .map((endpoint) => {
                 const example =
@@ -88,8 +82,6 @@ export class ReferenceConfigAssembler {
                 });
                 const endpointMethod = endpointMethodGenerator.generateMethod(endpoint);
                 return this.getEndpointReference({
-                    serviceId,
-                    service,
                     endpoint,
                     endpointMethod,
                     // TODO(kafkas): Implement
@@ -104,14 +96,10 @@ export class ReferenceConfigAssembler {
     }
 
     private getEndpointReference({
-        serviceId,
-        service,
         endpoint,
         endpointMethod,
         singleEndpointSnippet
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
         endpoint: HttpEndpoint;
         endpointMethod: swift.Method;
         singleEndpointSnippet: SingleEndpointSnippet;
@@ -126,7 +114,7 @@ export class ReferenceConfigAssembler {
                     {
                         text: methodName,
                         location: {
-                            path: this.getSubclientFilepath(endpoint)
+                            path: this.getEndpointFilepath(endpoint)
                         }
                     },
                     {
@@ -152,7 +140,7 @@ export class ReferenceConfigAssembler {
         return `(${paramsJoined})`;
     }
 
-    private getSubclientFilepath(endpoint: HttpEndpoint): string {
+    private getEndpointFilepath(endpoint: HttpEndpoint): string {
         const endpointContainer = this.context.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
