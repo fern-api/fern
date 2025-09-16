@@ -306,10 +306,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                       ts.factory.createIdentifier(GET_EXPIRES_AT_FN_NAME),
                                       undefined,
                                       [
-                                          getDeepProperty({
+                                          context.type.generateGetterForResponseProperty({
                                               variable: "response",
                                               property: this.authScheme.tokenEndpoint.expiryProperty,
-                                              context
                                           })
                                       ]
                                   )
@@ -337,19 +336,17 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                                       ),
                                                       [
                                                           ts.factory.createTemplateSpan(
-                                                              getDeepProperty({
+                                                              context.type.generateGetterForResponseProperty({
                                                                   variable: "response",
-                                                                  property: header.responseProperty,
-                                                                  context
+                                                                  property: header.responseProperty
                                                               }),
                                                               ts.factory.createTemplateTail("", "")
                                                           )
                                                       ]
                                                   )
-                                                : getDeepProperty({
+                                                : context.type.generateGetterForResponseProperty({
                                                       variable: "response",
-                                                      property: header.responseProperty,
-                                                      context
+                                                      property: header.responseProperty
                                                   })
                                         );
                                     }),
@@ -466,26 +463,4 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     private getAuthTokenParametersTypeNode(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_TOKEN_TYPE_NAME}`);
     }
-}
-
-function getDeepProperty({
-    variable,
-    property,
-    context
-}: {
-    variable: string;
-    property: FernIr.ResponseProperty;
-    context: SdkContext;
-}): ts.Expression {
-    return ts.factory.createIdentifier(
-        variable +
-            "." +
-            [...(property.propertyPath ?? []), { name: property.property.name.name }]
-                .map((item) => getName({ name: item.name, context }))
-                .join(".")
-    );
-}
-
-function getName({ name, context }: { name: FernIr.Name; context: SdkContext }): string {
-    return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
 }

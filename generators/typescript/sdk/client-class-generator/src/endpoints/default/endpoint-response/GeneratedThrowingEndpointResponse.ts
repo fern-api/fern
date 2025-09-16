@@ -148,16 +148,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const itemType = context.type.getReferenceToType(itemTypeReference);
 
         // hasNextPage checks if next property is not null
-        const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
-        const nextPropertyPath = [
-            "response",
-            ...(cursor.next.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
-        ].join("?.");
-        const nextPropertyAccess = ts.factory.createPropertyAccessChain(
-            ts.factory.createIdentifier(nextPropertyPath),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(nextProperty)
-        );
+        const nextPropertyAccess = context.type.generateGetterForResponseProperty({
+            property: cursor.next,
+            variable: "response",
+            isVariableOptional: true
+        })
 
         const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
             nextPropertyAccess,
@@ -195,27 +190,20 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
 
         // getItems gets the items
-        const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
-        const itemsPropertyPath = [
-            "response",
-            ...(cursor.results.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
-        ].join("?.");
         const getItems = ts.factory.createBinaryExpression(
-            ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(itemsPropertyPath),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(itemsProperty)
-            ),
+            context.type.generateGetterForResponseProperty({
+                property: cursor.results,
+                variable: "response",
+                isVariableOptional: true
+            }),
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             ts.factory.createArrayLiteralExpression([], false)
         );
 
         // loadPage
-        const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context });
-        const pagePropertyPathForSet = [
-            ...(cursor.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context })),
-            pageProperty
-        ].join(".");
+        const pagePropertyPathForSet = context.type.generateSetterForRequestPropertyAsString({
+            property: cursor.page,
+        })
         const loadPage = [
             ts.factory.createReturnStatement(
                 ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
@@ -228,6 +216,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         ];
 
+        const test : { foo: string } | undefined = { foo: "bar"};
+test.foo = "";
         return {
             type: "cursor",
             itemType: itemType.responseTypeNode ?? itemType.typeNode,
@@ -257,20 +247,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const itemType = context.type.getReferenceToType(itemTypeReference);
 
         // initializeOffset uses the offset property if set
-        const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
         const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
-        const pagePropertyPath = [
-            "request",
-            ...(offset.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
-        ].join("?.");
-        const pagePropertyPathForSet = [
-            ...(offset.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context })),
-            pageProperty
-        ].join(".");
-        const pagePropertyAccess = ts.factory.createPropertyAccessChain(
-            ts.factory.createIdentifier(pagePropertyPath),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(pageProperty)
+        const pagePropertyPathForSet = context.type.generateSetterForRequestPropertyAsString({
+            property: offset.page,
+        });
+        const pagePropertyAccess = context.type.generateGetterForRequestProperty(
+            {
+                property: offset.page,
+                variable: "request",
+                isVariableOptional: true
+            }
         );
         const initializeOffset = ts.factory.createVariableStatement(
             undefined,
@@ -298,18 +284,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
 
         // hasNextPage checks if the items are not empty
-        const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
-        const itemsPropertyPathComponents = [
-            "response",
-            ...(offset.results.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
-        ];
-        const itemsPropertyPath = itemsPropertyPathComponents.join("?.");
-        const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".");
-        const itemsPropertyAccess = ts.factory.createPropertyAccessChain(
-            ts.factory.createIdentifier(itemsPropertyPath),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(itemsProperty)
-        );
+        const itemsPropertyAccess = context.type.generateGetterForResponseProperty({
+            property: offset.results,
+            variable: "response",
+            isVariableOptional: true
+        });
+        const itemsPropertyAccessWithoutOptional = context.type.generateGetterForResponseProperty({
+            property: offset.results,
+            variable: "response",
+            noOptionalChaining: true
+        });
         let hasNextPage: ts.Expression = ts.factory.createBinaryExpression(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createParenthesizedExpression(
@@ -325,16 +309,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createNumericLiteral("0")
         );
         if (offset.hasNextPage != null) {
-            const hasNextPagePropertyComponents = [
-                "response",
-                ...(offset.hasNextPage.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
-            ];
-            const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context });
-            const hasNextPagePropertyAccess = ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(hasNextPagePropertyComponents.join("?.")),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(hasNextPageProperty)
-            );
+            const hasNextPagePropertyAccess = context.type.generateGetterForResponseProperty({
+                property: offset.hasNextPage,
+                variable: "response",
+            isVariableOptional: true
+            });
             hasNextPage = ts.factory.createBinaryExpression(
                 hasNextPagePropertyAccess,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
@@ -344,11 +323,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // getItems gets the items
         const getItems = ts.factory.createBinaryExpression(
-            ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(itemsPropertyPath),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(itemsProperty)
-            ),
+            itemsPropertyAccess,
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             ts.factory.createArrayLiteralExpression([], false)
         );
@@ -368,10 +343,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                               ),
                               ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                               ts.factory.createPropertyAccessExpression(
-                                  ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier(itemsPropertyPathWithoutOptional),
-                                      ts.factory.createIdentifier(itemsProperty)
-                                  ),
+                                  itemsPropertyAccessWithoutOptional,
                                   ts.factory.createIdentifier("length")
                               ),
                               ts.factory.createToken(ts.SyntaxKind.ColonToken),
@@ -406,16 +378,6 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             getItems,
             loadPage
         };
-    }
-
-    private getName({ name, context }: { name: Name; context: SdkContext }): string {
-        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
-    }
-
-    private getNameFromWireValue({ name, context }: { name: NameAndWireValue; context: SdkContext }): string {
-        return context.retainOriginalCasing || !context.includeSerdeLayer
-            ? name.wireValue
-            : name.name.camelCase.safeName;
     }
 
     private getDefaultPaginationValue({ type }: { type: TypeReference }): string {

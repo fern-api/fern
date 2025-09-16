@@ -3,6 +3,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
+    NameAndWireValue,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
@@ -480,5 +481,97 @@ export class TypeContextImpl implements TypeContext {
             name: typeName.name,
             typeId: typeName.typeId
         });
+    }
+
+    public generateGetterForResponsePropertyAsString({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining = false
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): string {
+            return (typeof variable === "undefined" ? "" : 
+                (variable + (noOptionalChaining ? "." : (isVariableOptional ? "?." : "."))))
+             +
+                (property.propertyPath ?? [])
+                        .map((item) => ({...item, isOptionalOrNullable: this.isOptional(item.type) || this.isNullable(item.type)}))
+                        .map((item) => `${this.getPropertyName({ name: item.name })}${(noOptionalChaining ? "." : item.isOptionalOrNullable ? "?." : ".")}`)
+                        .join("")
+                        + this.getNameFromWireValue({ name: property.property.name });
+    }
+
+    public generateGetterForResponseProperty({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining = false
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): ts.Expression{
+            return ts.factory.createIdentifier(this.generateGetterForResponsePropertyAsString({variable, isVariableOptional, property, noOptionalChaining}));
+    }
+
+    public generateGetterForRequestProperty({
+        variable,
+        isVariableOptional,
+        property,
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.RequestProperty;
+    }): ts.Expression{
+            return ts.factory.createIdentifier(
+                (typeof variable === "undefined" ? "" :
+                     (variable +
+                (isVariableOptional ? "?." : ".")))
+                 +
+                    (property.propertyPath ?? [])
+                        .map((item) => ({...item, isOptionalOrNullable: this.isOptional(item.type) || this.isNullable(item.type)}))
+                        .map((item) => `${this.getPropertyName({ name: item.name })}${(item.isOptionalOrNullable ? "?." : ".")}`)
+                        .join("")
+                        + this.getNameFromWireValue({ name: property.property.name })
+            );
+    }
+
+    public generateSetterForRequestPropertyAsString({
+        variable,
+        property,
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): string {
+                return (typeof variable === "undefined" ? "" : variable + ".")
+                 +
+                    (property.propertyPath ?? [])
+                        .map((item) => `${this.getPropertyName({ name: item.name })}.`)
+                        .join("")
+                        + this.getNameFromWireValue({ name: property.property.name })
+    }
+
+    public generateSetterForRequestProperty({
+        variable,
+        property,
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): ts.Expression{
+            return ts.factory.createIdentifier(this.generateSetterForRequestPropertyAsString({variable, property}));
+    }
+
+    private  getPropertyName({ name }: { name: FernIr.Name; }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getNameFromWireValue({ name }: { name: NameAndWireValue }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer
+            ? name.wireValue
+            : name.name.camelCase.safeName;
     }
 }
