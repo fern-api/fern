@@ -693,6 +693,11 @@ jobs:
             echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Display content of a folder
+        run: |
+          echo "Content of 'artifacts' folder:"
+          ls -R artifacts/
+
       #CHRISM - test on failure (no changes)
       - name: Apply patches
         shell: bash
