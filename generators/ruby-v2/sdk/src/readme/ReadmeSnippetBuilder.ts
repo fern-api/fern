@@ -177,7 +177,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             )
 
             begin
-                list = ${this.getMethodCall(endpoint)}.list
+                result = ${this.getMethodCall(endpoint)}
             rescue ${this.rootPackageClientName}::Errors::TimeoutError
                 puts "API didn't respond before our timeout elapsed"
             rescue ${this.rootPackageClientName}::Errors::ServiceUnavailableError

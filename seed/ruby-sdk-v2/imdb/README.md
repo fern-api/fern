@@ -44,11 +44,11 @@ Failed API calls will raise errors that can be rescued from granularly.
 require "seed"
 
 client = Seed::Client.new(
-    base_url: "https://example.com",
+    base_url: "https://example.com"
 )
 
 begin
-    list = client.Imdb.create_movie.list
+    result = client.imdb.create_movie
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -71,7 +71,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.Imdb.create_movie(
+response = client.imdb.create_movie(
     ...,
     timeout: 30  # 30 second timeout
 )
