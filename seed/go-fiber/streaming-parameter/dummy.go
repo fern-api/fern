@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/streaming-parameter/fern/internal"
+	big "math/big"
 )
 
 type GenerateRequest struct {
@@ -13,9 +14,17 @@ type GenerateRequest struct {
 	NumEvents int  `json:"num_events" url:"-"`
 }
 
+var (
+	regularResponseFieldId   = big.NewInt(1 << 0)
+	regularResponseFieldName = big.NewInt(1 << 1)
+)
+
 type RegularResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -38,6 +47,27 @@ func (r *RegularResponse) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
 
+func (r *RegularResponse) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegularResponse) SetId(id string) {
+	r.Id = id
+	r.require(regularResponseFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegularResponse) SetName(name *string) {
+	r.Name = name
+	r.require(regularResponseFieldName)
+}
+
 func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler RegularResponse
 	var value unmarshaler
@@ -53,6 +83,17 @@ func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *RegularResponse) MarshalJSON() ([]byte, error) {
+	type embed RegularResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *RegularResponse) String() string {
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
@@ -60,9 +101,17 @@ func (r *RegularResponse) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	streamResponseFieldId   = big.NewInt(1 << 0)
+	streamResponseFieldName = big.NewInt(1 << 1)
+)
+
 type StreamResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -85,6 +134,27 @@ func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *StreamResponse) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamResponse) SetId(id string) {
+	s.Id = id
+	s.require(streamResponseFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamResponse) SetName(name *string) {
+	s.Name = name
+	s.require(streamResponseFieldName)
+}
+
 func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler StreamResponse
 	var value unmarshaler
@@ -98,6 +168,17 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 	}
 	s.extraProperties = extraProperties
 	return nil
+}
+
+func (s *StreamResponse) MarshalJSON() ([]byte, error) {
+	type embed StreamResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *StreamResponse) String() string {
