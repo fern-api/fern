@@ -1,7 +1,7 @@
 - version: 3.4.2
   changelogEntry:
     - summary: |
-        Fix bug where customReadmeSections were not included from the generator invocation config.
+        customReadmeSections from the generator invocation config are included in the README.md
       type: fix
   createdAt: "2025-09-16"
   irVersion: 59
