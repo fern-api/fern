@@ -4,7 +4,7 @@ import { Writer } from "./core/Writer";
 
 /**
  * Represents a `begin` block with 0-N `rescue` clauses in the AST. `begin` blocks in Ruby also
- * support optional `else` and `ensure` clauses as well, but support for those are unimplemented for now.
+ * support optional `else` and `ensure` clauses as well, but support for those is unimplemented.
  */
 export declare namespace Begin {
     export type Rescue = {
@@ -42,7 +42,6 @@ export class Begin extends AstNode {
             writer.dedent();
         }
 
-        // Write rescue branches if any
         for (const { errorClass, errorVariable, body } of this.rescues) {
             writer.write("rescue");
 

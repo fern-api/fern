@@ -8,7 +8,7 @@ export declare namespace Raise {
     interface Args {
         /** The error to raise. Can be an arbitrary expression. If none is passed Ruby will default it to a RuntimeError */
         errorClass?: AstNode;
-        /** The expression being passed as the second argument of raise, must resolve to a string */
+        /** The expression being passed as the second argument of raise, must resolve to a string if it exists */
         message?: AstNode;
     }
 }
@@ -24,24 +24,18 @@ export class Raise extends AstNode {
     }
 
     public write(writer: Writer): void {
-        // Write the primary if branch
         writer.write("raise");
-
-        let messageIsSecondArg = false;
 
         if (this.errorClass) {
             writer.write(" ");
             this.errorClass.write(writer);
-            messageIsSecondArg = true;
         }
 
         if (this.message) {
-            if (messageIsSecondArg) {
+            if (this.errorClass) {
                 writer.write(", ");
             }
             this.message.write(writer);
         }
-
-        writer.newLine();
     }
 }
