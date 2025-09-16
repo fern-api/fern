@@ -217,7 +217,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            // Errors
+            // Public errors
             AsIsFiles.ApiError,
             AsIsFiles.ClientError,
             AsIsFiles.RedirectError,
@@ -225,9 +225,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ServerError,
             AsIsFiles.TimeoutError,
 
-            // Internal
-
-            // Errors
+            // Internal errors
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 

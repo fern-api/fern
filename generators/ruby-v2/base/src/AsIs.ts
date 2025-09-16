@@ -7,13 +7,7 @@ export const AsIsFiles = {
     ServerError: "errors/server_error.Template.rb",
     TimeoutError: "errors/timeout_error.Template.rb",
 
-    // Internal files
-
-    ModelField: "internal/types/model/field.Template.rb",
-    Model: "internal/types/model.Template.rb",
-    Array: "internal/types/array.Template.rb",
-
-    // Errors
+    // Internal error classes
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
 
@@ -32,6 +26,9 @@ export const AsIsFiles = {
     MultipartRequest: "internal/multipart/multipart_request.Template.rb",
 
     // Types
+    ModelField: "internal/types/model/field.Template.rb",
+    Model: "internal/types/model.Template.rb",
+    Array: "internal/types/array.Template.rb",
     TypesModelField: "internal/types/model/field.Template.rb",
     TypesArray: "internal/types/array.Template.rb",
     TypesBoolean: "internal/types/boolean.Template.rb",
