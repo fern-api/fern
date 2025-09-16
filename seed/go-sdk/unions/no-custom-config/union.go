@@ -102,6 +102,7 @@ func (g *GetShapeRequest) String() string {
 
 type Shape struct {
 	Type   string
+	Name   string
 	Id     string
 	Circle *Circle
 	Square *Square
@@ -112,6 +113,13 @@ func (s *Shape) GetType() string {
 		return ""
 	}
 	return s.Type
+}
+
+func (s *Shape) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
 }
 
 func (s *Shape) GetId() string {
@@ -138,12 +146,14 @@ func (s *Shape) GetSquare() *Square {
 func (s *Shape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
+		Name string `json:"name" url:"name"`
 		Id   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	s.Type = unmarshaler.Type
+	s.Name = unmarshaler.Name
 	s.Id = unmarshaler.Id
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", s)
@@ -271,4 +281,50 @@ func (s *Square) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+type WithName struct {
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithName) GetName() string {
+	if w == nil {
+		return ""
+	}
+	return w.Name
+}
+
+func (w *WithName) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithName) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithName
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithName(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithName) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }
