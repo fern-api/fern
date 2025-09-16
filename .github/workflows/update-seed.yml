@@ -704,20 +704,20 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped. 
   # Add check back to make sure it doesn't run for failures or cancellations.
   # Only trigger if there are no new patches (seed is up to date)
-  trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        needs.commit-seed-changes.outputs.has-patches == 'false' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: Seed
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+  # trigger-seed-snapshot-tests:
+  #   needs: [commit-seed-changes, changes, setup]
+  #   if: >-
+  #     ${{ 
+  #       always() && needs.setup.outputs.create-artifacts == 'true' &&
+  #       needs.commit-seed-changes.outputs.has-patches == 'false' &&
+  #       !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+  #     }}
+  #   runs-on: Seed
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
+  #       with:
+  #         token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Trigger seed snapshot tests
-        uses: fern-api/fern/.github/workflows/seed.yml@mallinson/example-PR-level-testing #CHRISM - change
+  #     - name: Trigger seed snapshot tests
+  #       uses: fern-api/fern/.github/workflows/seed.yml@mallinson/example-PR-level-testing #CHRISM - change
