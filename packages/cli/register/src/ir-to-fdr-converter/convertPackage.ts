@@ -418,7 +418,7 @@ function convertIrEnvironments({
                         const endpointBaseUrl = singleBaseUrlEnvironment.urls[baseUrlId];
                         if (endpointBaseUrl == null) {
                             throw new Error(
-                                `Encountered undefined server name "${endpoint.baseUrl}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`
+                                `Encountered undefined server name "${baseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`
                             );
                         }
                         return {
@@ -439,7 +439,7 @@ function convertIrEnvironments({
                 const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
                 if (endpointBaseUrl == null) {
                     throw new Error(
-                        `Encountered undefined server name "${endpoint.baseUrl}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`
+                        `Encountered undefined server name "${endpointBaseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`
                     );
                 }
                 return {
