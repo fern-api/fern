@@ -13,7 +13,7 @@ module Seed
       # @return [String]
       def throw_error(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "property-based-error"
         )

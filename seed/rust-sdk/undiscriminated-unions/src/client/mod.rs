@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod union_;
 pub use union_::UnionClient;

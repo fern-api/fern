@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "#{params[:index]}/conversations/search",
           body: Seed::Complex::Types::SearchRequest.new(params).to_h

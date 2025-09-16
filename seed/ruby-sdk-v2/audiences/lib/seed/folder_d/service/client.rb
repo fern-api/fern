@@ -12,7 +12,7 @@ module Seed
         # @return [Seed::FolderD::Service::Types::Response]
         def get_direct_thread(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/partner-path"
           )

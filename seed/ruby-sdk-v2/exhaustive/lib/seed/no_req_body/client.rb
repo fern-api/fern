@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/no-req-body"
         )
@@ -26,7 +26,7 @@ module Seed
       # @return [String]
       def post_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/no-req-body"
         )

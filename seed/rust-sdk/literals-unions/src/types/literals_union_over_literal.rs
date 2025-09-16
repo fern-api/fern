@@ -4,9 +4,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum UnionOverLiteral {
-        String(String),
+    String(String),
 
-        LiteralString(LiteralString),
+    LiteralString(LiteralString),
 }
 
 impl UnionOverLiteral {
@@ -18,33 +18,31 @@ impl UnionOverLiteral {
         matches!(self, Self::LiteralString(_))
     }
 
-
     pub fn as_string(&self) -> Option<&String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_literalstring(&self) -> Option<&LiteralString> {
         match self {
-                    Self::LiteralString(value) => Some(value),
-                    _ => None,
-                }
+            Self::LiteralString(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_literalstring(self) -> Option<LiteralString> {
         match self {
-                    Self::LiteralString(value) => Some(value),
-                    _ => None,
-                }
+            Self::LiteralString(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Union::Types::MyUnion]
       def get(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "",
           body: Seed::Union::Types::MyUnion.new(params).to_h
@@ -25,7 +25,7 @@ module Seed
       # @return [Hash[Seed::Union::Types::Key, String]]
       def get_metadata(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/metadata"
         )
@@ -38,7 +38,7 @@ module Seed
       # @return [bool]
       def update_metadata(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PUT",
           path: "/metadata",
           body: Seed::Union::Types::MetadataUnion.new(params).to_h
@@ -52,7 +52,7 @@ module Seed
       # @return [bool]
       def call(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/call",
           body: Seed::Union::Types::Request.new(params).to_h
@@ -66,7 +66,7 @@ module Seed
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
       def duplicate_types_union(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/duplicate",
           body: Seed::Union::Types::UnionWithDuplicateTypes.new(params).to_h
@@ -82,7 +82,7 @@ module Seed
       # @return [String]
       def nested_unions(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/nested",
           body: Seed::Union::Types::NestedUnionRoot.new(params).to_h

@@ -20,11 +20,20 @@ pub struct PaginationResult<T> {
 /// Async paginator that implements Stream for iterating over paginated results
 pub struct AsyncPaginator<T> {
     http_client: Arc<HttpClient>,
-    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>> + Send + Sync>,
+    page_loader: Box<
+        dyn Fn(
+                Arc<HttpClient>,
+                Option<String>,
+            )
+                -> Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>
+            + Send
+            + Sync,
+    >,
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
-    loading_next: Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>>,
+    loading_next:
+        Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>>,
 }
 
 impl<T> AsyncPaginator<T> {
@@ -58,11 +67,12 @@ impl<T> AsyncPaginator<T> {
             return Ok(Vec::new());
         }
 
-        let result = (self.page_loader)(self.http_client.clone(), self.current_cursor.clone()).await?;
-        
+        let result =
+            (self.page_loader)(self.http_client.clone(), self.current_cursor.clone()).await?;
+
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
-        
+
         Ok(result.items)
     }
 }
@@ -147,7 +157,11 @@ where
 /// Synchronous paginator for blocking iteration
 pub struct SyncPaginator<T> {
     http_client: Arc<HttpClient>,
-    page_loader: Box<dyn Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError> + Send + Sync>,
+    page_loader: Box<
+        dyn Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError>
+            + Send
+            + Sync,
+    >,
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
@@ -160,7 +174,10 @@ impl<T> SyncPaginator<T> {
         initial_cursor: Option<String>,
     ) -> Result<Self, ApiError>
     where
-        F: Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError> + Send + Sync + 'static,
+        F: Fn(Arc<HttpClient>, Option<String>) -> Result<PaginationResult<T>, ApiError>
+            + Send
+            + Sync
+            + 'static,
     {
         Ok(Self {
             http_client,
@@ -183,28 +200,28 @@ impl<T> SyncPaginator<T> {
         }
 
         let result = (self.page_loader)(self.http_client.clone(), self.current_cursor.clone())?;
-        
+
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
-        
+
         Ok(result.items)
     }
 
     /// Get all remaining items by loading all pages
     pub fn collect_all(&mut self) -> Result<Vec<T>, ApiError> {
         let mut all_items = Vec::new();
-        
+
         // Add items from current page
         while let Some(item) = self.current_page.pop_front() {
             all_items.push(item);
         }
-        
+
         // Load all remaining pages
         while self.has_next_page {
             let page_items = self.next_page()?;
             all_items.extend(page_items);
         }
-        
+
         Ok(all_items)
     }
 }
@@ -242,10 +259,10 @@ impl<T> Iterator for SyncPaginator<T> {
 pub trait Paginated<T> {
     /// Extract the items from this page
     fn items(&self) -> &[T];
-    
+
     /// Get the cursor for the next page, if any
     fn next_cursor(&self) -> Option<&str>;
-    
+
     /// Check if there's a next page available
     fn has_next_page(&self) -> bool;
 }
@@ -254,10 +271,10 @@ pub trait Paginated<T> {
 pub trait OffsetPaginated<T> {
     /// Extract the items from this page
     fn items(&self) -> &[T];
-    
+
     /// Check if there's a next page available
     fn has_next_page(&self) -> bool;
-    
+
     /// Get the current page size (for calculating next offset)
     fn page_size(&self) -> usize {
         self.items().len()

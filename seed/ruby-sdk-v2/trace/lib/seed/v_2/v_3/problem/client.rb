@@ -15,7 +15,7 @@ module Seed
           # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
           def get_lightweight_problems(request_options: {}, **_params)
             _request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+              base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
               path: "/problems-v2/lightweight-problem-info"
             )
@@ -30,7 +30,7 @@ module Seed
           # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
           def get_problems(request_options: {}, **_params)
             _request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+              base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
               path: "/problems-v2/problem-info"
             )
@@ -45,7 +45,7 @@ module Seed
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
             _request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+              base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
               path: "/problems-v2/problem-info/#{params[:problemId]}"
             )
@@ -62,7 +62,7 @@ module Seed
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)
             _request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+              base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
               path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
             )

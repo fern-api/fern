@@ -12,7 +12,7 @@ module Seed
         # @return [untyped]
         def endpoint(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/service"
           )
@@ -25,7 +25,7 @@ module Seed
         # @return [untyped]
         def unknown_request(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/service",
             body: params

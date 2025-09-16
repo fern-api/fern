@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/movie/#{params[:movieId]}"
         )
@@ -24,7 +24,7 @@ module Seed
       # @return [String]
       def create_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/movie",
           body: Seed::Types::Types::Movie.new(params).to_h
@@ -45,7 +45,7 @@ module Seed
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/metadata",
           query: _query
@@ -59,7 +59,7 @@ module Seed
       # @return [Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/big-entity",
           body: Seed::Types::Types::BigEntity.new(params).to_h
@@ -73,7 +73,7 @@ module Seed
       # @return [untyped]
       def refresh_token(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/refresh-token",
           body: params

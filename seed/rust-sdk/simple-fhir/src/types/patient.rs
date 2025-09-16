@@ -1,5 +1,5 @@
-use crate::script::Script;
 use crate::base_resource::BaseResource;
+use crate::script::Script;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

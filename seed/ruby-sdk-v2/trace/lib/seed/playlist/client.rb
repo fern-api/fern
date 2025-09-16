@@ -22,7 +22,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/v2/playlist/#{params[:serviceParam]}/create",
           query: _query,
@@ -46,7 +46,7 @@ module Seed
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/v2/playlist/#{params[:serviceParam]}/all",
           query: _query
@@ -62,7 +62,7 @@ module Seed
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
         )
@@ -77,7 +77,7 @@ module Seed
       # @return [Seed::Playlist::Types::Playlist | nil]
       def update_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
           path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
           body: params
@@ -93,7 +93,7 @@ module Seed
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
           path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
         )
