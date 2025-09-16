@@ -11,13 +11,12 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
+import { FernOpenAPIExtension } from "../../../../../openapi/openapi-ir-parser/src/openapi/v3/extensions/fernExtensions";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
 import { ResponseErrorConverter } from "../ResponseErrorConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
-import { FernOpenAPIExtension } from "../../../../../openapi/openapi-ir-parser/src/openapi/v3/extensions/fernExtensions";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
