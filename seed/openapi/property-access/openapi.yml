@@ -1,0 +1,150 @@
+openapi: 3.0.1
+info:
+  title: property-access
+  version: ''
+paths:
+  /users:
+    post:
+      operationId: createUser
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: User object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the user.
+        email:
+          type: string
+          description: The email address of the user.
+        password:
+          type: string
+          description: The password for the user.
+        profile:
+          $ref: '#/components/schemas/UserProfile'
+          description: User profile object
+      required:
+        - id
+        - email
+        - password
+        - profile
+    UserProfile:
+      title: UserProfile
+      type: object
+      description: User profile object
+      properties:
+        name:
+          type: string
+          description: The name of the user.
+        verification:
+          $ref: '#/components/schemas/UserProfileVerification'
+          description: User profile verification object
+        ssn:
+          type: string
+          description: The social security number of the user.
+      required:
+        - name
+        - verification
+        - ssn
+    UserProfileVerification:
+      title: UserProfileVerification
+      type: object
+      description: User profile verification object
+      properties:
+        verified:
+          type: string
+          description: User profile verification status
+      required:
+        - verified
+    UserOrAdmin:
+      title: UserOrAdmin
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/Admin'
+      description: Example of an undiscriminated union
+    Admin:
+      title: Admin
+      type: object
+      description: Admin user object
+      properties:
+        adminLevel:
+          type: string
+          description: The level of admin privileges.
+      required:
+        - adminLevel
+      allOf:
+        - $ref: '#/components/schemas/User'
+    UserOrAdminDiscriminated:
+      title: UserOrAdminDiscriminated
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - user
+            - $ref: '#/components/schemas/User'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - admin
+            admin:
+              $ref: '#/components/schemas/Admin'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - empty
+          required:
+            - type
+      description: Example of an discriminated union
+      required:
+        - normal
+        - foo
+      properties:
+        normal:
+          type: string
+        foo:
+          $ref: '#/components/schemas/Foo'
+    Foo:
+      title: Foo
+      type: object
+      properties:
+        normal:
+          type: string
+        read:
+          type: string
+        write:
+          type: string
+      required:
+        - normal
+        - read
+        - write
+  securitySchemes: {}
