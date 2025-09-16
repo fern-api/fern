@@ -2,7 +2,7 @@ import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
-
+import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 interface SingleEndpointSnippet {
@@ -74,11 +74,25 @@ export class ReferenceConfigAssembler {
                 //     serviceId,
                 //     endpoint
                 // });
+                const package_ = this.context.getPackageOrSubpackageForEndpoint(endpoint);
+                if (package_ == null) {
+                    throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+                }
+                const clientGeneratorContext = new ClientGeneratorContext({
+                    packageOrSubpackage: package_,
+                    sdkGeneratorContext: this.context
+                });
+                const endpointMethodGenerator = new EndpointMethodGenerator({
+                    clientGeneratorContext,
+                    sdkGeneratorContext: this.context
+                });
+                const endpointMethod = endpointMethodGenerator.generateMethod(endpoint);
                 return this.getEndpointReference({
                     serviceId,
                     service,
                     endpoint,
-                    endpointSignatureInfo: { returnType: swift.Type.string() },
+                    endpointSignatureInfo: { returnType: endpointMethod.returnType },
+                    endpointMethod,
                     singleEndpointSnippet: {
                         imports: "Foundation",
                         exampleIdentifier: "example",
@@ -94,22 +108,25 @@ export class ReferenceConfigAssembler {
         service,
         endpoint,
         endpointSignatureInfo,
+        endpointMethod,
         singleEndpointSnippet
     }: {
         serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
         endpointSignatureInfo: EndpointSignatureInfo;
+        endpointMethod: swift.Method;
         singleEndpointSnippet: SingleEndpointSnippet;
     }): FernGeneratorCli.EndpointReference {
+        const { methodName, leadingParts } = this.context.getEndpointMethodDetails(endpoint);
         return {
             title: {
                 snippetParts: [
                     {
-                        text: "client."
+                        text: ["client", ...leadingParts].join(".") + "."
                     },
                     {
-                        text: this.context.getFullyQualifiedEndpointMethodName(endpoint),
+                        text: methodName,
                         location: {
                             path: this.getServiceFilepath({ serviceId, service })
                         }
@@ -118,12 +135,7 @@ export class ReferenceConfigAssembler {
                         text: this.getReferenceEndpointInvocationParameters(endpointSignatureInfo)
                     }
                 ],
-                returnValue:
-                    endpointSignatureInfo.returnType != null
-                        ? {
-                              text: "String" // TODO(kafkas): Implement
-                          }
-                        : undefined
+                returnValue: { text: endpointMethod.returnType.toString() }
             },
             description: endpoint.docs,
             snippet: singleEndpointSnippet.endpointCall.trim(),

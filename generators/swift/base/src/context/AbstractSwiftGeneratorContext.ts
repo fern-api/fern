@@ -210,18 +210,24 @@ export abstract class AbstractSwiftGeneratorContext<
         return `${this.targetName}.${symbolName}`;
     }
 
-    public getFullyQualifiedEndpointMethodName(endpoint: HttpEndpoint): string {
+    public getEndpointMethodDetails(endpoint: HttpEndpoint) {
         const packageOrSubpackage = this.getPackageOrSubpackageForEndpoint(endpoint);
         if (packageOrSubpackage == null) {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
         }
-        return [
-            ...packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName),
-            endpoint.name.camelCase.unsafeName
-        ].join(".");
+        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName);
+        const leadingPath = leadingParts.join(".");
+        const methodName = endpoint.name.camelCase.unsafeName;
+        const fullyQualifiedMethodName = [...leadingParts, methodName].join(".");
+        return {
+            leadingParts,
+            leadingPath,
+            methodName,
+            fullyQualifiedMethodName
+        };
     }
 
-    private getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
+    public getPackageOrSubpackageForEndpoint(endpoint: HttpEndpoint) {
         const rootPackageServiceId = this.ir.rootPackage.service;
         if (rootPackageServiceId) {
             const rootPackageService = this.getHttpServiceOrThrow(rootPackageServiceId);

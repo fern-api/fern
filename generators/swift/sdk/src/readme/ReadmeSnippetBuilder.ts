@@ -112,7 +112,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         swift.Expression.await(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("client"),
-                                methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
+                                methodName: this.context.getEndpointMethodDetails(endpoint).fullyQualifiedMethodName,
                                 arguments_: [
                                     swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                     swift.functionArgument({
@@ -158,7 +158,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                             swift.Expression.await(
                                 swift.Expression.methodCall({
                                     target: swift.Expression.reference("client"),
-                                    methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
+                                    methodName:
+                                        this.context.getEndpointMethodDetails(endpoint).fullyQualifiedMethodName,
                                     arguments_: [
                                         swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                         swift.functionArgument({
@@ -208,7 +209,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                         swift.Expression.await(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("client"),
-                                methodName: this.context.getFullyQualifiedEndpointMethodName(endpoint),
+                                methodName: this.context.getEndpointMethodDetails(endpoint).fullyQualifiedMethodName,
                                 arguments_: [
                                     swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                                     swift.functionArgument({
