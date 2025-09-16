@@ -644,7 +644,8 @@ jobs:
   commit-seed-changes:
     if: >-
       ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' 
+        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     needs:
       [changes, setup, ruby-model-seed-update, ruby-sdk-seed-update, ruby-sdk-v2-seed-update,
