@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -7,6 +8,7 @@ import { template } from "lodash-es";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema;
+type SdkCustomConfigSchema = TypescriptCustomConfigSchema;
 
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
@@ -109,7 +111,10 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = SdkCustomConfigSchema.parse(context.config.customConfig)?.customReadmeSections;
+    const customConfigSections = parseCustomConfigOrUndefined(
+        context.logger,
+        context.config.customConfig
+    )?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
@@ -129,4 +134,13 @@ function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[
         });
     }
     return sections.length > 0 ? sections : undefined;
+}
+
+function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    try {
+        return SdkCustomConfigSchema.parse(customConfig);
+    } catch (error) {
+        logger.error(`Error parsing custom config: ${error}`);
+        return undefined;
+    }
 }
