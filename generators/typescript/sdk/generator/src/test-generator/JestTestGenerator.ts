@@ -865,9 +865,10 @@ describe("${serviceName}", () => {
     }
 
     private getPaginationPropertyPath(base: string, pagination: Pagination, context: SdkContext): string {
-        return [base, ...(pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context }))].join(
-            "."
-        );
+        return [
+            base,
+            ...(pagination.results.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
+        ].join(".");
     }
 
     private getPaginationPropertyName(pagination: Pagination, context: SdkContext): string {

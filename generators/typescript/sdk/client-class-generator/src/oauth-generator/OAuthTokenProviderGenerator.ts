@@ -330,7 +330,7 @@ export class OAuthTokenProviderGenerator {
         }
         return (
             prefix +
-            propertyPath.map((name) => this.getName(name)).join(".") +
+            propertyPath.map((item) => this.getName(item.name)).join(".") +
             "." +
             this.getName(responseProperty.property.name)
         );

@@ -480,8 +480,8 @@ function getDeepProperty({
     return ts.factory.createIdentifier(
         variable +
             "." +
-            [...(property.propertyPath ?? []), property.property.name.name]
-                .map((name) => getName({ name, context }))
+            [...(property.propertyPath ?? []), { name: property.property.name.name }]
+                .map((item) => getName({ name: item.name, context }))
                 .join(".")
     );
 }

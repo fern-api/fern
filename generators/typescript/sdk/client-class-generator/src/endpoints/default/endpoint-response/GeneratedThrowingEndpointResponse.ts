@@ -151,7 +151,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
         const nextPropertyPath = [
             "response",
-            ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ...(cursor.next.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
         ].join("?.");
         const nextPropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(nextPropertyPath),
@@ -198,7 +198,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
         const itemsPropertyPath = [
             "response",
-            ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ...(cursor.results.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
         ].join("?.");
         const getItems = ts.factory.createBinaryExpression(
             ts.factory.createPropertyAccessChain(
@@ -213,7 +213,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         // loadPage
         const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context });
         const pagePropertyPathForSet = [
-            ...(cursor.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            ...(cursor.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context })),
             pageProperty
         ].join(".");
         const loadPage = [
@@ -261,10 +261,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
         const pagePropertyPath = [
             "request",
-            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ...(offset.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
         ].join("?.");
         const pagePropertyPathForSet = [
-            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            ...(offset.page.propertyPath ?? []).map((item) => this.getName({ name: item.name, context })),
             pageProperty
         ].join(".");
         const pagePropertyAccess = ts.factory.createPropertyAccessChain(
@@ -301,7 +301,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
         const itemsPropertyPathComponents = [
             "response",
-            ...(offset.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ...(offset.results.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
         ];
         const itemsPropertyPath = itemsPropertyPathComponents.join("?.");
         const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".");
@@ -327,7 +327,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (offset.hasNextPage != null) {
             const hasNextPagePropertyComponents = [
                 "response",
-                ...(offset.hasNextPage.propertyPath ?? []).map((name) => this.getName({ name, context }))
+                ...(offset.hasNextPage.propertyPath ?? []).map((item) => this.getName({ name: item.name, context }))
             ];
             const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context });
             const hasNextPagePropertyAccess = ts.factory.createPropertyAccessChain(
