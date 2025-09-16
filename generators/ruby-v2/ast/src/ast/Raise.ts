@@ -1,4 +1,3 @@
-import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -7,15 +6,15 @@ import { Writer } from "./core/Writer";
  */
 export declare namespace Raise {
     interface Args {
-        /** The error class being raised, if there is none Ruby will default it to a RuntimeError */
-        errorClass?: ClassReference;
+        /** The error to raise. Can be an arbitrary expression. If none is passed Ruby will default it to a RuntimeError */
+        errorClass?: AstNode;
         /** The expression being passed as the second argument of raise, must resolve to a string */
         message?: AstNode;
     }
 }
 
 export class Raise extends AstNode {
-    public readonly errorClass?: ClassReference;
+    public readonly errorClass?: AstNode;
     public readonly message?: AstNode;
 
     constructor({ errorClass, message }: Raise.Args) {

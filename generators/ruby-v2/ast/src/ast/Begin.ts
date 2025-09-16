@@ -32,7 +32,6 @@ export class Begin extends AstNode {
     }
 
     public write(writer: Writer): void {
-        // Write the primary if branch
         writer.write("begin");
         writer.writeLine();
 
