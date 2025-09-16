@@ -81,5 +81,5 @@ const asIsTopoValue = {
     [AsIsFiles.ClientError]: 22,
     [AsIsFiles.RedirectError]: 23,
     [AsIsFiles.ServerError]: 24,
-    [AsIsFiles.TimeoutError]: 25,
+    [AsIsFiles.TimeoutError]: 25
 };
