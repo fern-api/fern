@@ -13,7 +13,7 @@ module Seed
       # @return [String]
       def get_with_bearer_token(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "apiKey"
         )

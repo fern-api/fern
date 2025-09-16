@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
           body: params

@@ -11,7 +11,7 @@ module Seed
       # @return [String]
       def get_dummy(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
           method: "GET",
           path: "dummy"
         )

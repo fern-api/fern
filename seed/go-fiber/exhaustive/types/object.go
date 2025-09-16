@@ -7,11 +7,19 @@ import (
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
 	uuid "github.com/google/uuid"
+	big "math/big"
 	time "time"
+)
+
+var (
+	doubleOptionalFieldOptionalAlias = big.NewInt(1 << 0)
 )
 
 type DoubleOptional struct {
 	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -25,6 +33,20 @@ func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
 
 func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *DoubleOptional) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DoubleOptional) SetOptionalAlias(optionalAlias *OptionalAlias) {
+	d.OptionalAlias = optionalAlias
+	d.require(doubleOptionalFieldOptionalAlias)
 }
 
 func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
@@ -42,6 +64,17 @@ func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *DoubleOptional) MarshalJSON() ([]byte, error) {
+	type embed DoubleOptional
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *DoubleOptional) String() string {
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
@@ -49,9 +82,17 @@ func (d *DoubleOptional) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	nestedObjectWithOptionalFieldFieldString       = big.NewInt(1 << 0)
+	nestedObjectWithOptionalFieldFieldNestedObject = big.NewInt(1 << 1)
+)
+
 type NestedObjectWithOptionalField struct {
 	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -74,6 +115,27 @@ func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interfac
 	return n.extraProperties
 }
 
+func (n *NestedObjectWithOptionalField) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedObjectWithOptionalField) SetString(string_ *string) {
+	n.String = string_
+	n.require(nestedObjectWithOptionalFieldFieldString)
+}
+
+// SetNestedObject sets the NestedObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedObjectWithOptionalField) SetNestedObject(nestedObject *ObjectWithOptionalField) {
+	n.NestedObject = nestedObject
+	n.require(nestedObjectWithOptionalFieldFieldNestedObject)
+}
+
 func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedObjectWithOptionalField
 	var value unmarshaler
@@ -89,6 +151,17 @@ func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *NestedObjectWithOptionalField) MarshalJSON() ([]byte, error) {
+	type embed NestedObjectWithOptionalField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *NestedObjectWithOptionalField) String() string {
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
@@ -96,9 +169,17 @@ func (n *NestedObjectWithOptionalField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	nestedObjectWithRequiredFieldFieldString       = big.NewInt(1 << 0)
+	nestedObjectWithRequiredFieldFieldNestedObject = big.NewInt(1 << 1)
+)
+
 type NestedObjectWithRequiredField struct {
 	String       string                   `json:"string" url:"string"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject" url:"NestedObject"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -121,6 +202,27 @@ func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interfac
 	return n.extraProperties
 }
 
+func (n *NestedObjectWithRequiredField) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedObjectWithRequiredField) SetString(string_ string) {
+	n.String = string_
+	n.require(nestedObjectWithRequiredFieldFieldString)
+}
+
+// SetNestedObject sets the NestedObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedObjectWithRequiredField) SetNestedObject(nestedObject *ObjectWithOptionalField) {
+	n.NestedObject = nestedObject
+	n.require(nestedObjectWithRequiredFieldFieldNestedObject)
+}
+
 func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedObjectWithRequiredField
 	var value unmarshaler
@@ -136,6 +238,17 @@ func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *NestedObjectWithRequiredField) MarshalJSON() ([]byte, error) {
+	type embed NestedObjectWithRequiredField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *NestedObjectWithRequiredField) String() string {
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
@@ -143,8 +256,15 @@ func (n *NestedObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	objectWithMapOfMapFieldMap = big.NewInt(1 << 0)
+)
+
 type ObjectWithMapOfMap struct {
 	Map map[string]map[string]string `json:"map" url:"map"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -158,6 +278,20 @@ func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
 
 func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
+}
+
+func (o *ObjectWithMapOfMap) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetMap sets the Map field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMapOfMap) SetMap(map_ map[string]map[string]string) {
+	o.Map = map_
+	o.require(objectWithMapOfMapFieldMap)
 }
 
 func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
@@ -175,12 +309,39 @@ func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *ObjectWithMapOfMap) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithMapOfMap
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (o *ObjectWithMapOfMap) String() string {
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
 }
+
+var (
+	objectWithOptionalFieldFieldString   = big.NewInt(1 << 0)
+	objectWithOptionalFieldFieldInteger  = big.NewInt(1 << 1)
+	objectWithOptionalFieldFieldLong     = big.NewInt(1 << 2)
+	objectWithOptionalFieldFieldDouble   = big.NewInt(1 << 3)
+	objectWithOptionalFieldFieldBool     = big.NewInt(1 << 4)
+	objectWithOptionalFieldFieldDatetime = big.NewInt(1 << 5)
+	objectWithOptionalFieldFieldDate     = big.NewInt(1 << 6)
+	objectWithOptionalFieldFieldUuid     = big.NewInt(1 << 7)
+	objectWithOptionalFieldFieldBase64   = big.NewInt(1 << 8)
+	objectWithOptionalFieldFieldList     = big.NewInt(1 << 9)
+	objectWithOptionalFieldFieldSet      = big.NewInt(1 << 10)
+	objectWithOptionalFieldFieldMap      = big.NewInt(1 << 11)
+	objectWithOptionalFieldFieldBigint   = big.NewInt(1 << 12)
+)
 
 type ObjectWithOptionalField struct {
 	// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
@@ -197,6 +358,9 @@ type ObjectWithOptionalField struct {
 	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
 	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
 	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -296,6 +460,104 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *ObjectWithOptionalField) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetString(string_ *string) {
+	o.String = string_
+	o.require(objectWithOptionalFieldFieldString)
+}
+
+// SetInteger sets the Integer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetInteger(integer *int) {
+	o.Integer = integer
+	o.require(objectWithOptionalFieldFieldInteger)
+}
+
+// SetLong sets the Long field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetLong(long *int64) {
+	o.Long = long
+	o.require(objectWithOptionalFieldFieldLong)
+}
+
+// SetDouble sets the Double field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetDouble(double *float64) {
+	o.Double = double
+	o.require(objectWithOptionalFieldFieldDouble)
+}
+
+// SetBool sets the Bool field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetBool(bool_ *bool) {
+	o.Bool = bool_
+	o.require(objectWithOptionalFieldFieldBool)
+}
+
+// SetDatetime sets the Datetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetDatetime(datetime *time.Time) {
+	o.Datetime = datetime
+	o.require(objectWithOptionalFieldFieldDatetime)
+}
+
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetDate(date *time.Time) {
+	o.Date = date
+	o.require(objectWithOptionalFieldFieldDate)
+}
+
+// SetUuid sets the Uuid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetUuid(uuid *uuid.UUID) {
+	o.Uuid = uuid
+	o.require(objectWithOptionalFieldFieldUuid)
+}
+
+// SetBase64 sets the Base64 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetBase64(base64 *[]byte) {
+	o.Base64 = base64
+	o.require(objectWithOptionalFieldFieldBase64)
+}
+
+// SetList sets the List field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetList(list []string) {
+	o.List = list
+	o.require(objectWithOptionalFieldFieldList)
+}
+
+// SetSet sets the Set field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetSet(set []string) {
+	o.Set = set
+	o.require(objectWithOptionalFieldFieldSet)
+}
+
+// SetMap sets the Map field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetMap(map_ map[int]string) {
+	o.Map = map_
+	o.require(objectWithOptionalFieldFieldMap)
+}
+
+// SetBigint sets the Bigint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithOptionalField) SetBigint(bigint *string) {
+	o.Bigint = bigint
+	o.require(objectWithOptionalFieldFieldBigint)
+}
+
 func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	type embed ObjectWithOptionalField
 	var unmarshaler = struct {
@@ -330,7 +592,8 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 		Datetime: internal.NewOptionalDateTime(o.Datetime),
 		Date:     internal.NewOptionalDate(o.Date),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *ObjectWithOptionalField) String() string {
@@ -340,8 +603,15 @@ func (o *ObjectWithOptionalField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+var (
+	objectWithRequiredFieldFieldString = big.NewInt(1 << 0)
+)
+
 type ObjectWithRequiredField struct {
 	String string `json:"string" url:"string"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -357,6 +627,20 @@ func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *ObjectWithRequiredField) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithRequiredField) SetString(string_ string) {
+	o.String = string_
+	o.require(objectWithRequiredFieldFieldString)
+}
+
 func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	type unmarshaler ObjectWithRequiredField
 	var value unmarshaler
@@ -370,6 +654,17 @@ func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	}
 	o.extraProperties = extraProperties
 	return nil
+}
+
+func (o *ObjectWithRequiredField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithRequiredField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *ObjectWithRequiredField) String() string {

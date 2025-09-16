@@ -14,6 +14,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -58,6 +59,19 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateRawClients(context);
 
         await context.snippetGenerator.populateSnippetsCache();
+
+        if (context.customConfig.enableWireTests) {
+            try {
+                const wireTestGenerator = new WireTestGenerator(context);
+                await wireTestGenerator.generate();
+            } catch (e) {
+                context.logger.error("Failed to generate Wiremock tests");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
+            }
+        }
 
         if (this.shouldGenerateReadme(context)) {
             try {

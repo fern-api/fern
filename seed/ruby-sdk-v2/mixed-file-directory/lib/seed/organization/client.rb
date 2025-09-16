@@ -13,7 +13,7 @@ module Seed
       # @return [Seed::Organization::Types::Organization]
       def create(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/organizations/",
           body: Seed::Organization::Types::CreateOrganizationRequest.new(params).to_h

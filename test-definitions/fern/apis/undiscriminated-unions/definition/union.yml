@@ -139,3 +139,26 @@ types:
     enum:
       - name
       - value
+
+  # Test cases for undiscriminated unions with identical underlying Java types
+  UnionWithIdenticalStrings:
+    docs: |
+      Multiple string types that all resolve to String in Java.
+      This tests the fix for duplicate method signatures.
+    discriminated: false
+    union:
+      - string
+      - string
+      - string
+
+  UnionWithIdenticalPrimitives:
+    docs: |
+      Mix of primitives where some resolve to the same Java type.
+    discriminated: false
+    union:
+      - integer
+      - integer
+      - double
+      - double
+      - string
+      - string

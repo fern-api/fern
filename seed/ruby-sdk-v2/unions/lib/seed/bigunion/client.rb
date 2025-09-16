@@ -11,7 +11,7 @@ module Seed
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:id]}"
         )
@@ -24,7 +24,7 @@ module Seed
       # @return [bool]
       def update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
           body: Seed::Bigunion::Types::BigUnion.new(params).to_h
@@ -38,7 +38,7 @@ module Seed
       # @return [Hash[String, bool]]
       def update_many(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "/many",
           body: params

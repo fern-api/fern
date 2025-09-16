@@ -6,22 +6,97 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/fern-api/path-parameters-go/internal"
+	big "math/big"
+)
+
+var (
+	getUsersRequestFieldTenantId = big.NewInt(1 << 0)
+	getUsersRequestFieldUserId   = big.NewInt(1 << 1)
 )
 
 type GetUsersRequest struct {
 	TenantId string `json:"-" url:"-"`
 	UserId   string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetUsersRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetTenantId(tenantId string) {
+	g.TenantId = tenantId
+	g.require(getUsersRequestFieldTenantId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetUserId(userId string) {
+	g.UserId = userId
+	g.require(getUsersRequestFieldUserId)
+}
+
+var (
+	searchUsersRequestFieldTenantId = big.NewInt(1 << 0)
+	searchUsersRequestFieldUserId   = big.NewInt(1 << 1)
+	searchUsersRequestFieldLimit    = big.NewInt(1 << 2)
+)
 
 type SearchUsersRequest struct {
 	TenantId string `json:"-" url:"-"`
 	UserId   string `json:"-" url:"-"`
 	Limit    *int   `json:"-" url:"limit,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SearchUsersRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchUsersRequest) SetTenantId(tenantId string) {
+	s.TenantId = tenantId
+	s.require(searchUsersRequestFieldTenantId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchUsersRequest) SetUserId(userId string) {
+	s.UserId = userId
+	s.require(searchUsersRequestFieldUserId)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchUsersRequest) SetLimit(limit *int) {
+	s.Limit = limit
+	s.require(searchUsersRequestFieldLimit)
+}
+
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldTags = big.NewInt(1 << 1)
+)
 
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -45,6 +120,27 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -61,6 +157,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *User) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -73,10 +180,39 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	updateUserRequestFieldTenantId = big.NewInt(1 << 0)
+	updateUserRequestFieldUserId   = big.NewInt(1 << 1)
+)
+
 type UpdateUserRequest struct {
 	TenantId string `json:"-" url:"-"`
 	UserId   string `json:"-" url:"-"`
 	Body     *User  `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateUserRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetTenantId(tenantId string) {
+	u.TenantId = tenantId
+	u.require(updateUserRequestFieldTenantId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetUserId(userId string) {
+	u.UserId = userId
+	u.require(updateUserRequestFieldUserId)
 }
 
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {

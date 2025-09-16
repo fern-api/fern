@@ -1,5 +1,11 @@
 FROM node:22.12-alpine3.20
 
+# Install system dependencies and Rust toolchain
+RUN apk --no-cache add curl
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.78.0 --profile minimal --component rustfmt
+ENV PATH="/root/.cargo/bin:${PATH}"
+RUN rustfmt --version  # Verify rustfmt is available
+
 COPY generators/rust/model/dist /dist
 
 RUN npm install -f -g @fern-api/generator-cli

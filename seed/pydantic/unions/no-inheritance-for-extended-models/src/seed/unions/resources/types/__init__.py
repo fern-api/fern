@@ -35,6 +35,18 @@ from .union_with_multiple_no_properties import (
 from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
 from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime
 from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
+from .union_with_same_number_types import (
+    UnionWithSameNumberTypes,
+    UnionWithSameNumberTypes_AnyNumber,
+    UnionWithSameNumberTypes_NegativeInt,
+    UnionWithSameNumberTypes_PositiveInt,
+)
+from .union_with_same_string_types import (
+    UnionWithSameStringTypes,
+    UnionWithSameStringTypes_CustomFormat,
+    UnionWithSameStringTypes_PatternString,
+    UnionWithSameStringTypes_RegularString,
+)
 from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
 from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
 from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
@@ -75,6 +87,14 @@ __all__ = [
     "UnionWithPrimitive",
     "UnionWithPrimitive_Integer",
     "UnionWithPrimitive_String",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameNumberTypes_AnyNumber",
+    "UnionWithSameNumberTypes_NegativeInt",
+    "UnionWithSameNumberTypes_PositiveInt",
+    "UnionWithSameStringTypes",
+    "UnionWithSameStringTypes_CustomFormat",
+    "UnionWithSameStringTypes_PatternString",
+    "UnionWithSameStringTypes_RegularString",
     "UnionWithSingleElement",
     "UnionWithSingleElement_Foo",
     "UnionWithSubTypes",

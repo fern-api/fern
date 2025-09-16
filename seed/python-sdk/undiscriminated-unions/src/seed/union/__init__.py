@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
         Request,
         TypeWithOptionalUnion,
         UnionWithDuplicateTypes,
+        UnionWithIdenticalPrimitives,
+        UnionWithIdenticalStrings,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Key": ".types",
@@ -35,6 +37,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Request": ".types",
     "TypeWithOptionalUnion": ".types",
     "UnionWithDuplicateTypes": ".types",
+    "UnionWithIdenticalPrimitives": ".types",
+    "UnionWithIdenticalStrings": ".types",
 }
 
 
@@ -71,4 +75,6 @@ __all__ = [
     "Request",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
+    "UnionWithIdenticalPrimitives",
+    "UnionWithIdenticalStrings",
 ]

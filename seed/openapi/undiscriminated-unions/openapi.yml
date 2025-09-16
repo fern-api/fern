@@ -239,4 +239,19 @@ components:
       enum:
         - name
         - value
+    UnionWithIdenticalStrings:
+      title: UnionWithIdenticalStrings
+      oneOf:
+        - type: string
+      description: |-
+        Multiple string types that all resolve to String in Java.
+        This tests the fix for duplicate method signatures.
+    UnionWithIdenticalPrimitives:
+      title: UnionWithIdenticalPrimitives
+      oneOf:
+        - type: integer
+        - type: number
+          format: double
+        - type: string
+      description: Mix of primitives where some resolve to the same Java type.
   securitySchemes: {}
