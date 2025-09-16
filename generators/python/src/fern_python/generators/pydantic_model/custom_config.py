@@ -50,6 +50,13 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
 
     use_pydantic_field_aliases: bool = True
 
+    use_annotated_field_aliases: bool = False
+    """
+    When enabled, generates type-safe field aliases using typing.Annotated[Type, pydantic.Field(alias="...")]
+    instead of field assignments. This improves type checking compatibility with pyright.
+    Only available for Pydantic v2.
+    """
+
     @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_or_v2_only(self) -> Self:
         version_compat = self.version
@@ -68,6 +75,11 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
             self.use_str_enums = False
         else:
             self.use_str_enums = True
+
+        if self.use_annotated_field_aliases and version_compat != PydanticVersionCompatibility.V2:
+            raise ValueError(
+                "use_annotated_field_aliases is only supported with Pydantic v2, please set version to 'v2' to use this feature."
+            )
 
         return self
 
