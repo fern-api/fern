@@ -4,7 +4,7 @@ import (
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
     context "context"
-    fern "github.com/pagination/fern"
+    inlineusers "github.com/pagination/fern/inlineusers"
 )
 
 func do() {
@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Users.ListWithMixedTypeCursorPagination(
+    client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersMixedTypeCursorPaginationRequest{},
+        &inlineusers.ListUsersMixedTypeCursorPaginationRequest{},
     )
 }

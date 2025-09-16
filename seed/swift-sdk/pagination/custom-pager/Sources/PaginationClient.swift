@@ -3,6 +3,7 @@ import Foundation
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class PaginationClient: Sendable {
     public let complex: ComplexClient
+    public let inlineUsers: InlineUsersClient
     public let users: UsersClient
     private let httpClient: HTTPClient
 
@@ -87,6 +88,7 @@ public final class PaginationClient: Sendable {
             urlSession: urlSession
         )
         self.complex = ComplexClient(config: config)
+        self.inlineUsers = InlineUsersClient(config: config)
         self.users = UsersClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }

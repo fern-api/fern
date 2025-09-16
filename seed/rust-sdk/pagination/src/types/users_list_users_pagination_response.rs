@@ -1,5 +1,5 @@
-use crate::users_page::Page;
-use crate::users_user::User;
+use crate::inline_users_inline_users_page::Page;
+use crate::inline_users_inline_users_user::User;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

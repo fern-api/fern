@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import UsernameCursor, UsernamePage
-    from . import complex_, users
+    from . import complex_, inline_users, users
     from .client import AsyncSeedPagination, SeedPagination
     from .complex_ import (
         Conversation,
@@ -73,6 +73,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WithPage": ".users",
     "__version__": ".version",
     "complex_": ".",
+    "inline_users": ".",
     "users": ".",
 }
 
@@ -129,5 +130,6 @@ __all__ = [
     "WithPage",
     "__version__",
     "complex_",
+    "inline_users",
     "users",
 ]

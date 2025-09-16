@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -35,7 +34,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithGlobalConfigAsync(
-            new ListWithGlobalConfigRequest { Offset = 1 }
+            new SeedPagination.ListWithGlobalConfigRequest { Offset = 1 }
         );
         await foreach (var item in items)
         {
