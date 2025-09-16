@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/any-auth/fern/internal"
+	big "math/big"
 )
 
 type GetTokenRequest struct {
@@ -51,10 +52,19 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 // An OAuth token response.
+var (
+	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
+	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
+	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
+)
+
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -84,6 +94,34 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TokenResponse) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetAccessToken(accessToken string) {
+	t.AccessToken = accessToken
+	t.require(tokenResponseFieldAccessToken)
+}
+
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetExpiresIn(expiresIn int) {
+	t.ExpiresIn = expiresIn
+	t.require(tokenResponseFieldExpiresIn)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetRefreshToken(refreshToken *string) {
+	t.RefreshToken = refreshToken
+	t.require(tokenResponseFieldRefreshToken)
+}
+
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler TokenResponse
 	var value unmarshaler
@@ -97,6 +135,17 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *TokenResponse) MarshalJSON() ([]byte, error) {
+	type embed TokenResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TokenResponse) String() string {

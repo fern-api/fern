@@ -6,15 +6,27 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/empty-clients/fern/internal"
+	big "math/big"
+)
+
+var (
+	addressFieldLine1 = big.NewInt(1 << 0)
+	addressFieldLine2 = big.NewInt(1 << 1)
+	addressFieldCity  = big.NewInt(1 << 2)
+	addressFieldState = big.NewInt(1 << 3)
+	addressFieldZip   = big.NewInt(1 << 4)
 )
 
 type Address struct {
-	Line1   string  `json:"line1" url:"line1"`
-	Line2   *string `json:"line2,omitempty" url:"line2,omitempty"`
-	City    string  `json:"city" url:"city"`
-	State   string  `json:"state" url:"state"`
-	Zip     string  `json:"zip" url:"zip"`
-	country string
+	Line1 string  `json:"line1" url:"line1"`
+	Line2 *string `json:"line2,omitempty" url:"line2,omitempty"`
+	City  string  `json:"city" url:"city"`
+	State string  `json:"state" url:"state"`
+	Zip   string  `json:"zip" url:"zip"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	country        string
 
 	extraProperties map[string]interface{}
 }
@@ -62,6 +74,48 @@ func (a *Address) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Address) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetLine1 sets the Line1 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetLine1(line1 string) {
+	a.Line1 = line1
+	a.require(addressFieldLine1)
+}
+
+// SetLine2 sets the Line2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetLine2(line2 *string) {
+	a.Line2 = line2
+	a.require(addressFieldLine2)
+}
+
+// SetCity sets the City field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetCity(city string) {
+	a.City = city
+	a.require(addressFieldCity)
+}
+
+// SetState sets the State field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetState(state string) {
+	a.State = state
+	a.require(addressFieldState)
+}
+
+// SetZip sets the Zip field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetZip(zip string) {
+	a.Zip = zip
+	a.require(addressFieldZip)
+}
+
 func (a *Address) UnmarshalJSON(data []byte) error {
 	type embed Address
 	var unmarshaler = struct {
@@ -95,7 +149,8 @@ func (a *Address) MarshalJSON() ([]byte, error) {
 		embed:   embed(*a),
 		Country: "USA",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (a *Address) String() string {
@@ -105,9 +160,17 @@ func (a *Address) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	personFieldName    = big.NewInt(1 << 0)
+	personFieldAddress = big.NewInt(1 << 1)
+)
+
 type Person struct {
 	Name    string   `json:"name" url:"name"`
 	Address *Address `json:"address" url:"address"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -130,6 +193,27 @@ func (p *Person) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *Person) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Person) SetName(name string) {
+	p.Name = name
+	p.require(personFieldName)
+}
+
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Person) SetAddress(address *Address) {
+	p.Address = address
+	p.require(personFieldAddress)
+}
+
 func (p *Person) UnmarshalJSON(data []byte) error {
 	type unmarshaler Person
 	var value unmarshaler
@@ -143,6 +227,17 @@ func (p *Person) UnmarshalJSON(data []byte) error {
 	}
 	p.extraProperties = extraProperties
 	return nil
+}
+
+func (p *Person) MarshalJSON() ([]byte, error) {
+	type embed Person
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *Person) String() string {
