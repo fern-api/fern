@@ -173,6 +173,11 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        customSections:
+          - title: "Custom Section"
+            language: "JAVA"
+            content: |
+              This is a custom section. Latest package info is {{ group }}:{{ artifact }}:{{ version }}
         features:
           timeouts:
             - GET /movie/{movieId}

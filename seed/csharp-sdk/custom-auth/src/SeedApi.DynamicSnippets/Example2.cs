@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedCustomAuth;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example2
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedCustomAuthClient(
             customAuthScheme: "<value>",
             clientOptions: new ClientOptions{
@@ -13,11 +13,7 @@ public class Example2
             }
         );
 
-        await client.CustomAuth.PostWithCustomAuthAsync(
-            new Dictionary<string, object>() {
-                ["key"] = "value",
-            }
-        );
+        await client.CustomAuth.GetWithCustomAuthAsync();
     }
 
 }

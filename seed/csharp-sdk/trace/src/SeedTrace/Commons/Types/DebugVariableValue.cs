@@ -794,7 +794,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator IntegerValue(int value) => new(value);
+        public static implicit operator DebugVariableValue.IntegerValue(int value) => new(value);
     }
 
     /// <summary>
@@ -812,7 +812,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BooleanValue(bool value) => new(value);
+        public static implicit operator DebugVariableValue.BooleanValue(bool value) => new(value);
     }
 
     /// <summary>
@@ -830,7 +830,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DoubleValue(double value) => new(value);
+        public static implicit operator DebugVariableValue.DoubleValue(double value) => new(value);
     }
 
     /// <summary>
@@ -848,7 +848,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value;
 
-        public static implicit operator StringValue(string value) => new(value);
+        public static implicit operator DebugVariableValue.StringValue(string value) => new(value);
     }
 
     /// <summary>
@@ -866,7 +866,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value;
 
-        public static implicit operator CharValue(string value) => new(value);
+        public static implicit operator DebugVariableValue.CharValue(string value) => new(value);
     }
 
     /// <summary>
@@ -884,7 +884,9 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator MapValue(SeedTrace.DebugMapValue value) => new(value);
+        public static implicit operator DebugVariableValue.MapValue(
+            SeedTrace.DebugMapValue value
+        ) => new(value);
     }
 
     /// <summary>
@@ -919,7 +921,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BinaryTreeNodeValue(
+        public static implicit operator DebugVariableValue.BinaryTreeNodeValue(
             SeedTrace.BinaryTreeNodeAndTreeValue value
         ) => new(value);
     }
@@ -939,7 +941,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SinglyLinkedListNodeValue(
+        public static implicit operator DebugVariableValue.SinglyLinkedListNodeValue(
             SeedTrace.SinglyLinkedListNodeAndListValue value
         ) => new(value);
     }
@@ -959,7 +961,7 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DoublyLinkedListNodeValue(
+        public static implicit operator DebugVariableValue.DoublyLinkedListNodeValue(
             SeedTrace.DoublyLinkedListNodeAndListValue value
         ) => new(value);
     }
@@ -1001,6 +1003,8 @@ public record DebugVariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GenericValue(SeedTrace.GenericValue value) => new(value);
+        public static implicit operator DebugVariableValue.GenericValue(
+            SeedTrace.GenericValue value
+        ) => new(value);
     }
 }

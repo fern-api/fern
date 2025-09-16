@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedPagination;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example4
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions{

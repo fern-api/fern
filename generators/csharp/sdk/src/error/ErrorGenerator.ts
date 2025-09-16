@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
@@ -22,17 +22,17 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         const bodyType =
             this.errorDeclaration.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclaration.type })
-                : csharp.Type.object();
-        const class_ = csharp.class_({
+                : this.csharp.Type.object();
+        const class_ = this.csharp.class_({
             ...this.classReference,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parentClassReference: this.context.getBaseApiExceptionClassReference(),
             primaryConstructor: {
-                parameters: [csharp.parameter({ name: "body", type: bodyType })],
+                parameters: [this.csharp.parameter({ name: "body", type: bodyType })],
                 superClassArguments: [
-                    csharp.codeblock(`"${this.classReference.name}"`),
-                    csharp.codeblock(`${this.errorDeclaration.statusCode}`),
-                    csharp.codeblock("body")
+                    this.csharp.codeblock(`"${this.classReference.name}"`),
+                    this.csharp.codeblock(`${this.errorDeclaration.statusCode}`),
+                    this.csharp.codeblock("body")
                 ]
             },
             summary: "This exception type will be thrown for any non-2XX API responses.",
@@ -40,12 +40,12 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         });
         if (this.errorDeclaration.type != null) {
             class_.addField(
-                csharp.field({
+                this.csharp.field({
                     name: "Body",
                     type: bodyType,
-                    access: csharp.Access.Public,
+                    access: ast.Access.Public,
                     get: true,
-                    initializer: csharp.codeblock("body"),
+                    initializer: this.csharp.codeblock("body"),
                     summary: "The body of the response that triggered the exception.",
                     new_: true
                 })

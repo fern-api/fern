@@ -7,7 +7,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 [TestFixture]
 public class GetWithQueryTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

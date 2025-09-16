@@ -26,7 +26,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCsharpNamespaceCollision;
 
-var client = new global::SeedCsharpNamespaceCollision.SeedCsharpNamespaceCollisionClient();
+var client = new SeedCsharpNamespaceCollisionClient();
 await client.CreateUserAsync(
     new global::SeedCsharpNamespaceCollision.User
     {

@@ -1,6 +1,6 @@
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
@@ -16,29 +16,29 @@ export declare namespace RawClient {
         /** The reference to the client */
         clientReference: string;
         /** The instance of the request wrapper */
-        request: csharp.AstNode;
+        request: ast.AstNode;
     }
 
     export interface SendRequestArgsWithRequestWrapper {
         /** The reference to the client */
         clientReference: string;
         /** The instance of the request wrapper */
-        request: csharp.AstNode;
+        request: ast.AstNode;
     }
 
     export interface SendRequestWithHttpRequestArgs {
         /** The reference to the client */
         clientReference: string;
         /** Request options */
-        options: csharp.CodeBlock;
+        options: ast.CodeBlock;
         /** The instance of the request wrapper */
-        request: csharp.CodeBlock | csharp.ClassInstantiation;
+        request: ast.CodeBlock | ast.ClassInstantiation;
         /** Cancellation token */
-        cancellationToken: csharp.CodeBlock;
+        cancellationToken: ast.CodeBlock;
     }
 
     export interface CreateHttpRequestWrapperArgs {
-        baseUrl: csharp.CodeBlock;
+        baseUrl: ast.CodeBlock;
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
@@ -55,8 +55,8 @@ export declare namespace RawClient {
     }
 
     export interface CreateHttpRequestWrapperCodeBlock {
-        code?: csharp.CodeBlock;
-        requestReference: csharp.AstNode;
+        code?: ast.CodeBlock;
+        requestReference: ast.AstNode;
     }
 }
 
@@ -68,6 +68,10 @@ export class RawClient {
 
     public constructor(context: SdkGeneratorContext) {
         this.context = context;
+    }
+
+    private get csharp() {
+        return this.context.csharp;
     }
 
     /**
@@ -94,7 +98,7 @@ export class RawClient {
             },
             {
                 name: "Path",
-                assignment: csharp.codeblock(
+                assignment: this.csharp.codeblock(
                     (writer) =>
                         `${this.writePathString({
                             writer,
@@ -107,45 +111,45 @@ export class RawClient {
         if (bodyReference != null) {
             args.push({
                 name: "Body",
-                assignment: csharp.codeblock(bodyReference)
+                assignment: this.csharp.codeblock(bodyReference)
             });
         }
         if (queryBagReference != null) {
             args.push({
                 name: "Query",
-                assignment: csharp.codeblock(queryBagReference)
+                assignment: this.csharp.codeblock(queryBagReference)
             });
         }
         if (headerBagReference != null) {
             args.push({
                 name: "Headers",
-                assignment: csharp.codeblock(headerBagReference)
+                assignment: this.csharp.codeblock(headerBagReference)
             });
         }
         const requestContentType = getContentTypeFromRequestBody(endpoint);
         if (requestContentType) {
             args.push({
                 name: "ContentType",
-                assignment: csharp.codeblock(`"${requestContentType}"`)
+                assignment: this.csharp.codeblock(`"${requestContentType}"`)
             });
         }
         if (endpoint.idempotent) {
             args.push({
                 name: "Options",
-                assignment: csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
             });
         } else {
             args.push({
                 name: "Options",
-                assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
+                assignment: this.csharp.codeblock(this.context.getRequestOptionsParameterName())
             });
         }
         switch (requestType) {
             case "bytes":
                 return {
-                    requestReference: csharp.instantiateClass({
+                    requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: csharp.classReference({
+                        classReference: this.csharp.classReference({
                             name: "StreamRequest",
                             namespace: this.context.getCoreNamespace()
                         })
@@ -157,12 +161,12 @@ export class RawClient {
                 }
                 const requestBody = endpoint.requestBody;
                 const varName = "multipartFormRequest_";
-                const createMultipartFormRequest = csharp.codeblock((writer) => {
+                const createMultipartFormRequest = this.csharp.codeblock((writer) => {
                     writer.write(`var ${varName} = `);
                     writer.writeNode(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             arguments_: args,
-                            classReference: csharp.classReference({
+                            classReference: this.csharp.classReference({
                                 name: "MultipartFormRequest",
                                 namespace: this.context.getCoreNamespace()
                             })
@@ -186,18 +190,15 @@ export class RawClient {
                 });
                 return {
                     code: createMultipartFormRequest,
-                    requestReference: csharp.codeblock(varName)
+                    requestReference: this.csharp.codeblock(varName)
                 };
             }
             case "json":
             default:
                 return {
-                    requestReference: csharp.instantiateClass({
+                    requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: csharp.classReference({
-                            name: "JsonRequest",
-                            namespace: this.context.getCoreNamespace()
-                        })
+                        classReference: this.context.getJsonRequestClassReference()
                     })
                 };
         }
@@ -207,13 +208,13 @@ export class RawClient {
         propertyName: string;
         partName: string;
         contentType: string | undefined;
-        csharpType: csharp.Type;
+        csharpType: ast.Type;
         encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
     } {
         let propertyName: string;
         let partName: string;
         let contentType: string | undefined;
-        let csharpType: csharp.Type;
+        let csharpType: ast.Type;
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
@@ -248,7 +249,7 @@ export class RawClient {
         csharpType,
         encoding
     }: {
-        csharpType: csharp.Type;
+        csharpType: ast.Type;
         encoding?: FernIr.FileUploadBodyPropertyEncoding;
     }): string {
         csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
@@ -313,9 +314,9 @@ export class RawClient {
     /**
      * Creates an HTTP request using the RawClient.
      */
-    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): csharp.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(clientReference),
             method: "CreateHttpRequest",
             arguments_: [request]
         });
@@ -327,11 +328,11 @@ export class RawClient {
     public sendRequestWithRequestWrapper({
         clientReference,
         request
-    }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+    }: RawClient.SendRequestArgsWithRequestWrapper): ast.MethodInvocation {
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }
@@ -344,16 +345,16 @@ export class RawClient {
         options,
         request,
         cancellationToken
-    }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
-        return csharp.invokeMethod({
-            on: csharp.codeblock(clientReference),
+    }: RawClient.SendRequestWithHttpRequestArgs): ast.MethodInvocation {
+        return this.csharp.invokeMethod({
+            on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
-            arguments_: [request, options, csharp.codeblock(this.context.getCancellationTokenParameterName())],
+            arguments_: [request, options, this.csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }
 
-    private getCsharpHttpMethod(irMethod: HttpMethod): csharp.CodeBlock {
+    private getCsharpHttpMethod(irMethod: HttpMethod): ast.CodeBlock {
         let method: string;
         switch (irMethod) {
             case "POST":
@@ -363,8 +364,8 @@ export class RawClient {
                 method = "Delete";
                 break;
             case "PATCH":
-                return csharp.codeblock((writer) => {
-                    writer.writeNode(csharp.coreClassReference({ name: "HttpMethodExtensions" }));
+                return this.csharp.codeblock((writer) => {
+                    writer.writeNode(this.csharp.coreClassReference({ name: "HttpMethodExtensions" }));
                     writer.write(".Patch");
                 });
             case "GET":
@@ -379,8 +380,8 @@ export class RawClient {
             default:
                 assertNever(irMethod);
         }
-        return csharp.codeblock((writer) => {
-            writer.writeNode(csharp.classReference({ name: "HttpMethod", namespace: "System.Net.Http" }));
+        return this.csharp.codeblock((writer) => {
+            writer.writeNode(this.csharp.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -390,7 +391,7 @@ export class RawClient {
         endpoint,
         pathParameterReferences
     }: {
-        writer: csharp.Writer;
+        writer: Writer;
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): void {
@@ -400,7 +401,7 @@ export class RawClient {
             return;
         }
         writer.write(`string.Format("${endpoint.fullPath.head}`);
-        const formatParams: csharp.AstNode[] = [];
+        const formatParams: ast.AstNode[] = [];
         let counter = 0;
         for (const part of endpoint.fullPath.parts) {
             writer.write(`{${counter++}}`);
@@ -411,7 +412,7 @@ export class RawClient {
                 );
             }
             formatParams.push(
-                csharp.codeblock((writer) => {
+                this.csharp.codeblock((writer) => {
                     writer.writeNode(this.context.getValueConvertReference());
                     writer.write(`.ToPathParameterString(${reference})`);
                 })
@@ -422,7 +423,7 @@ export class RawClient {
         if (formatParams.length > 0) {
             writer.write(", ");
             for (let i = 0; i < formatParams.length; i++) {
-                writer.writeNode(formatParams[i] as csharp.AstNode);
+                writer.writeNode(formatParams[i] as ast.AstNode);
                 if (i < formatParams.length - 1) {
                     writer.write(", ");
                 }

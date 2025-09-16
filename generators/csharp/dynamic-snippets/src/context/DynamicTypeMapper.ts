@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
@@ -18,14 +18,18 @@ export class DynamicTypeMapper {
         this.context = context;
     }
 
-    public convert(args: DynamicTypeMapper.Args): csharp.Type {
+    private get csharp() {
+        return this.context.csharp;
+    }
+
+    public convert(args: DynamicTypeMapper.Args): ast.Type {
         switch (args.typeReference.type) {
             case "list":
-                return csharp.Type.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.csharp.Type.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map": {
-                return csharp.Type.map(
+                return this.csharp.Type.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 );
@@ -40,12 +44,12 @@ export class DynamicTypeMapper {
             case "optional":
             case "nullable": {
                 const value = this.convert({ typeReference: args.typeReference.value });
-                return args.unboxOptionals ? value : csharp.Type.optional(value);
+                return args.unboxOptionals ? value : this.csharp.Type.optional(value);
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                return csharp.Type.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.csharp.Type.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "unknown":
                 return this.convertUnknown();
             default:
@@ -53,30 +57,37 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): csharp.Type {
+    convertToClassReference(named: FernIr.dynamic.NamedType): ast.ClassReference {
+        return this.csharp.classReference({
+            name: this.context.getClassName(named.declaration.name),
+            namespace: this.context.getNamespace(named.declaration.fernFilepath)
+        });
+    }
+
+    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): ast.Type {
         switch (named.type) {
             case "alias":
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "object":
-                return csharp.Type.reference(
-                    csharp.classReference({
+                return this.csharp.Type.reference(
+                    this.csharp.classReference({
                         name: this.context.getClassName(named.declaration.name),
                         namespace: this.context.getNamespace(named.declaration.fernFilepath)
                     })
                 );
             case "discriminatedUnion":
                 if (!this.context.shouldUseDiscriminatedUnions()) {
-                    return csharp.Type.object();
+                    return this.csharp.Type.object();
                 }
-                return csharp.Type.reference(
-                    csharp.classReference({
+                return this.csharp.Type.reference(
+                    this.csharp.classReference({
                         name: this.context.getClassName(named.declaration.name),
                         namespace: this.context.getNamespace(named.declaration.fernFilepath)
                     })
                 );
             case "undiscriminatedUnion":
-                return csharp.Type.oneOf(
+                return this.csharp.Type.oneOf(
                     named.types.map((typeReference) => {
                         return this.convert({ typeReference });
                     })
@@ -86,47 +97,47 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): csharp.Type {
+    private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): ast.Type {
         switch (literal.type) {
             case "boolean":
-                return csharp.Type.boolean();
+                return this.csharp.Type.boolean();
             case "string":
-                return csharp.Type.string();
+                return this.csharp.Type.string();
         }
     }
 
-    private convertUnknown(): csharp.Type {
-        return csharp.Type.object();
+    private convertUnknown(): ast.Type {
+        return this.csharp.Type.object();
     }
 
-    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): csharp.Type {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): ast.Type {
         switch (primitive) {
             case "INTEGER":
-                return csharp.Type.integer();
+                return this.csharp.Type.integer();
             case "UINT":
-                return csharp.Type.uint();
+                return this.csharp.Type.uint();
             case "LONG":
-                return csharp.Type.long();
+                return this.csharp.Type.long();
             case "UINT_64":
-                return csharp.Type.ulong();
+                return this.csharp.Type.ulong();
             case "FLOAT":
-                return csharp.Type.float();
+                return this.csharp.Type.float();
             case "DOUBLE":
-                return csharp.Type.double();
+                return this.csharp.Type.double();
             case "BOOLEAN":
-                return csharp.Type.boolean();
+                return this.csharp.Type.boolean();
             case "STRING":
-                return csharp.Type.string();
+                return this.csharp.Type.string();
             case "DATE":
-                return csharp.Type.dateOnly();
+                return this.csharp.Type.dateOnly();
             case "DATE_TIME":
-                return csharp.Type.dateTime();
+                return this.csharp.Type.dateTime();
             case "UUID":
-                return csharp.Type.string();
+                return this.csharp.Type.string();
             case "BASE_64":
-                return csharp.Type.string();
+                return this.csharp.Type.string();
             case "BIG_INTEGER":
-                return csharp.Type.string();
+                return this.csharp.Type.string();
             default:
                 assertNever(primitive);
         }

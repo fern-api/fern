@@ -13,7 +13,7 @@ module Seed
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)
             _request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+              base_url: request_options[:base_url],
               method: "GET",
               path: "/file/notification/#{params[:notificationId]}"
             )

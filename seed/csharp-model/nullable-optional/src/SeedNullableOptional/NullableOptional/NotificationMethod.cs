@@ -278,8 +278,9 @@ public record NotificationMethod
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Email(SeedNullableOptional.EmailNotification value) =>
-            new(value);
+        public static implicit operator NotificationMethod.Email(
+            SeedNullableOptional.EmailNotification value
+        ) => new(value);
     }
 
     /// <summary>
@@ -297,8 +298,9 @@ public record NotificationMethod
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Sms(SeedNullableOptional.SmsNotification value) =>
-            new(value);
+        public static implicit operator NotificationMethod.Sms(
+            SeedNullableOptional.SmsNotification value
+        ) => new(value);
     }
 
     /// <summary>
@@ -316,7 +318,8 @@ public record NotificationMethod
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Push(SeedNullableOptional.PushNotification value) =>
-            new(value);
+        public static implicit operator NotificationMethod.Push(
+            SeedNullableOptional.PushNotification value
+        ) => new(value);
     }
 }

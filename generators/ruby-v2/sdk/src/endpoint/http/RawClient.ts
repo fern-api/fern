@@ -30,6 +30,15 @@ export class RawClient {
         this.context = context;
     }
 
+    private writeBaseUrlDeclaration(writer: ruby.Writer): void {
+        // Write base URL declaration, including default environment if specified
+        writer.write("base_url: request_options[:base_url]");
+        if (this.context.ir.environments?.defaultEnvironment != null) {
+            writer.write(" || ");
+            writer.writeNode(this.context.getDefaultEnvironmentClassReference());
+        }
+    }
+
     public sendRequest({
         baseUrl,
         endpoint,
@@ -46,9 +55,8 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(
-                        `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-                    );
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences });
@@ -95,9 +103,8 @@ export class RawClient {
                 `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
             );
             writer.indent();
-            writer.writeLine(
-                `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-            );
+            this.writeBaseUrlDeclaration(writer);
+            writer.writeLine(",");
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });

@@ -12,7 +12,7 @@ module Seed
         # @return [Array[String]]
         def get_and_return_list_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-primitives",
             body: params
@@ -26,7 +26,7 @@ module Seed
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/list-of-objects",
             body: params
@@ -40,7 +40,7 @@ module Seed
         # @return [Array[String]]
         def get_and_return_set_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-primitives",
             body: params
@@ -54,7 +54,7 @@ module Seed
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/set-of-objects",
             body: params
@@ -68,7 +68,7 @@ module Seed
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-prim",
             body: params
@@ -82,7 +82,7 @@ module Seed
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-object",
             body: params
@@ -96,7 +96,7 @@ module Seed
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField | nil]
         def get_and_return_optional(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/container/opt-objects",
             body: params

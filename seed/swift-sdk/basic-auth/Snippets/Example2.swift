@@ -8,9 +8,7 @@ private func main() async throws {
         password: "<password>"
     )
 
-    try await client.basicAuth.postWithBasicAuth(request: .object([
-        "key": .string("value")
-    ]))
+    try await client.basicAuth.getWithBasicAuth()
 }
 
 try await main()

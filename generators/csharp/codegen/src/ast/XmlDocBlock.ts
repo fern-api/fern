@@ -1,6 +1,7 @@
-import { AstNode, Writer } from "../csharp";
+import { type CSharp } from "../csharp";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { XmlDocWriter } from "./core/XmlDocWriter";
-
 export declare namespace XmlDocBlock {
     type Like = XmlDocBlock | XmlDocBlock.Arg;
     type XmlDocProps = {
@@ -21,14 +22,10 @@ export declare namespace XmlDocBlock {
 }
 
 export class XmlDocBlock extends AstNode {
-    public static of(xmlDocBlockLike: XmlDocBlock.Like): XmlDocBlock {
-        return xmlDocBlockLike instanceof XmlDocBlock ? xmlDocBlockLike : new XmlDocBlock(xmlDocBlockLike);
-    }
-
     private arg: XmlDocBlock.Arg;
 
-    public constructor(arg: XmlDocBlock.Arg) {
-        super();
+    public constructor(arg: XmlDocBlock.Arg, csharp: CSharp) {
+        super(csharp);
         this.arg = arg;
     }
 

@@ -1,3 +1,21 @@
+- version: 3.4.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 3.3.0
+  changelogEntry:
+    - summary: |
+        Wire tests now automatically configure authentication based on the API's auth scheme (Bearer, Basic, Header/Custom, 
+        OAuth, or Inferred) instead of using hardcoded tokens. Real authentication values are extracted from IR examples
+        when available, making tests more accurate and maintainable.
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
 - version: 3.2.2
   changelogEntry:
     - summary: |

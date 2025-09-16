@@ -4,7 +4,7 @@ using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test;
+namespace SeedExamples.Test_;
 
 [TestFixture]
 public class MomentTest

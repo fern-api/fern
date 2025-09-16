@@ -286,7 +286,7 @@ public record InvalidRequestCause
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SubmissionIdNotFound(
+        public static implicit operator InvalidRequestCause.SubmissionIdNotFound(
             SeedTrace.SubmissionIdNotFound value
         ) => new(value);
     }
@@ -306,7 +306,7 @@ public record InvalidRequestCause
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CustomTestCasesUnsupported(
+        public static implicit operator InvalidRequestCause.CustomTestCasesUnsupported(
             SeedTrace.CustomTestCasesUnsupported value
         ) => new(value);
     }
@@ -326,7 +326,7 @@ public record InvalidRequestCause
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator UnexpectedLanguage(
+        public static implicit operator InvalidRequestCause.UnexpectedLanguage(
             SeedTrace.UnexpectedLanguageError value
         ) => new(value);
     }

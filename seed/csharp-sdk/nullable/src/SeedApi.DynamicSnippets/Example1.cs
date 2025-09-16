@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedNullable;
+using System.Threading.Tasks;
 using System.Globalization;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedNullableClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

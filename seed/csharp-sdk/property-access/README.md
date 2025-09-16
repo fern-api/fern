@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedCsharpAccess)](https://nuget.org/packages/SeedCsharpAccess)
+[![nuget shield](https://img.shields.io/nuget/v/SeedPropertyAccess)](https://nuget.org/packages/SeedPropertyAccess)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -12,7 +12,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedCsharpAccess
+dotnet add package SeedPropertyAccess
 ```
 
 ## Reference
@@ -24,16 +24,21 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedCsharpAccess;
+using SeedPropertyAccess;
 
-var client = new SeedCsharpAccessClient();
+var client = new SeedPropertyAccessClient();
 await client.CreateUserAsync(
     new User
     {
         Id = "id",
-        Name = "name",
         Email = "email",
         Password = "password",
+        Profile = new UserProfile
+        {
+            Name = "name",
+            Verification = new UserProfileVerification { Verified = "verified" },
+            Ssn = "ssn",
+        },
     }
 );
 ```
@@ -44,11 +49,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedCsharpAccess;
+using SeedPropertyAccess;
 
 try {
     var response = await client.CreateUserAsync(...);
-} catch (SeedCsharpAccessApiException e) {
+} catch (SeedPropertyAccessApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }

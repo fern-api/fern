@@ -12,7 +12,7 @@ module Seed
         # @return [String]
         def get_and_return_string(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/string",
             body: params
@@ -26,7 +26,7 @@ module Seed
         # @return [Integer]
         def get_and_return_int(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/integer",
             body: params
@@ -40,7 +40,7 @@ module Seed
         # @return [Integer]
         def get_and_return_long(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/long",
             body: params
@@ -54,7 +54,7 @@ module Seed
         # @return [Integer]
         def get_and_return_double(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/double",
             body: params
@@ -68,7 +68,7 @@ module Seed
         # @return [bool]
         def get_and_return_bool(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/boolean",
             body: params
@@ -82,7 +82,7 @@ module Seed
         # @return [String]
         def get_and_return_datetime(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/datetime",
             body: params
@@ -96,7 +96,7 @@ module Seed
         # @return [String]
         def get_and_return_date(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/date",
             body: params
@@ -110,7 +110,7 @@ module Seed
         # @return [String]
         def get_and_return_uuid(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/uuid",
             body: params
@@ -124,7 +124,7 @@ module Seed
         # @return [String]
         def get_and_return_base_64(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/base64",
             body: params

@@ -8,7 +8,7 @@ import { template } from "lodash-es";
 import path from "path";
 
 import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContext";
 import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
@@ -22,7 +22,7 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
-export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
+export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
     private name: string;
     private sourceFiles: CSharpFile[] = [];
     private testFiles: CSharpFile[] = [];
@@ -39,7 +39,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         context,
         name
     }: {
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         name: string;
     }) {
         super(context);
@@ -447,12 +447,13 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -464,12 +465,12 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -490,12 +491,12 @@ dotnet_diagnostic.IDE0005.severity = error
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             ),
             new File(
@@ -503,12 +504,12 @@ dotnet_diagnostic.IDE0005.severity = error
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContextContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             )
         ];
@@ -521,12 +522,13 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.context.getTestUtilsNamespace(),
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -547,25 +549,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
     return template(contents)(variables);
-}
-
-function getTemplateVariables({
-    grpc,
-    idempotencyHeaders,
-    namespace,
-    additionalProperties
-}: {
-    grpc: boolean;
-    idempotencyHeaders: boolean;
-    namespace: string;
-    additionalProperties: boolean;
-}): Record<string, unknown> {
-    return {
-        grpc,
-        idempotencyHeaders,
-        namespace,
-        additionalProperties
-    };
 }
 
 function getAsIsFilepath(filename: string): string {
@@ -610,7 +593,7 @@ declare namespace CsProj {
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         protobufSourceFilePaths: RelativeFilePath[];
     }
 }
@@ -622,7 +605,7 @@ class CsProj {
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
-    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
     public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {

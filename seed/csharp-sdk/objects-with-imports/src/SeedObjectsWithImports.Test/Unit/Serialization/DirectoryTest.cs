@@ -1,15 +1,13 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
-using SeedObjectsWithImports.File;
 
 namespace SeedObjectsWithImports.Test;
 
 [TestFixture]
 public class DirectoryTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -36,7 +34,7 @@ public class DirectoryTest
               ]
             }
             """;
-        var expectedObject = new Directory
+        var expectedObject = new SeedObjectsWithImports.File_.Directory
         {
             Name = "root",
             Files = new List<SeedObjectsWithImports.File>()
@@ -45,12 +43,12 @@ public class DirectoryTest
                 {
                     Name = "file.txt",
                     Contents = "...",
-                    Info = FileInfo.Regular,
+                    Info = SeedObjectsWithImports.FileInfo.Regular,
                 },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedObjectsWithImports.File_.Directory>()
             {
-                new Directory
+                new SeedObjectsWithImports.File_.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedObjectsWithImports.File>()
@@ -59,17 +57,19 @@ public class DirectoryTest
                         {
                             Name = "another_file.txt",
                             Contents = "...",
-                            Info = FileInfo.Regular,
+                            Info = SeedObjectsWithImports.FileInfo.Regular,
                         },
                     },
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<Directory>(json);
+        var deserializedObject = JsonUtils.Deserialize<SeedObjectsWithImports.File_.Directory>(
+            json
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -96,7 +96,7 @@ public class DirectoryTest
               ]
             }
             """;
-        var actualObj = new Directory
+        var actualObj = new SeedObjectsWithImports.File_.Directory
         {
             Name = "root",
             Files = new List<SeedObjectsWithImports.File>()
@@ -105,12 +105,12 @@ public class DirectoryTest
                 {
                     Name = "file.txt",
                     Contents = "...",
-                    Info = FileInfo.Regular,
+                    Info = SeedObjectsWithImports.FileInfo.Regular,
                 },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedObjectsWithImports.File_.Directory>()
             {
-                new Directory
+                new SeedObjectsWithImports.File_.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedObjectsWithImports.File>()
@@ -119,7 +119,7 @@ public class DirectoryTest
                         {
                             Name = "another_file.txt",
                             Contents = "...",
-                            Info = FileInfo.Regular,
+                            Info = SeedObjectsWithImports.FileInfo.Regular,
                         },
                     },
                 },

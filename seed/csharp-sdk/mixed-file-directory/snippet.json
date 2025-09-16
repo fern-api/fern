@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });\n"
+                "client": "using SeedMixedFileDirectory.User_;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory.User.Events;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = \"id\" });\n"
+                "client": "using SeedMixedFileDirectory.User_.Events;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = \"id\" });\n"
             }
         }
     ]

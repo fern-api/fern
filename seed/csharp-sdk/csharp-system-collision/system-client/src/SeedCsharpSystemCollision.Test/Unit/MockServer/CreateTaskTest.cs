@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCsharpSystemCollision;
 using SeedCsharpSystemCollision.Core;
@@ -8,7 +7,7 @@ namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 [TestFixture]
 public class CreateTaskTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -55,7 +54,7 @@ public class CreateTaskTest : BaseMockServerTest
             );
 
         var response = await Client.CreateTaskAsync(
-            new Task
+            new SeedCsharpSystemCollision.Task
             {
                 Name = "name",
                 User = new User
@@ -71,7 +70,8 @@ public class CreateTaskTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Task>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedCsharpSystemCollision.Task>(mockResponse))
+                .UsingDefaults()
         );
     }
 }
