@@ -9,4 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->nestedNoAuth->api->getSomething();
+$client->simple->getSomething();
