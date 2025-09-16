@@ -49,6 +49,7 @@ pub mod union__circle;
 pub mod union__get_shape_request;
 pub mod union__shape;
 pub mod union__square;
+pub mod union__with_name;
 
 pub use bigunion_active_diamond::*;
 pub use bigunion_attractive_script::*;
@@ -101,3 +102,4 @@ pub use union__circle::*;
 pub use union__get_shape_request::*;
 pub use union__shape::*;
 pub use union__square::*;
+pub use union__with_name::*;
