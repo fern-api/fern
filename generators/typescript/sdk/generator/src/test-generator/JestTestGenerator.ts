@@ -802,15 +802,15 @@ describe("${serviceName}", () => {
                 ? code`
                 const expected = ${expected}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                expect(${expectedName}).toEqual(${pageName}.data);
                 ${
                     endpoint.pagination.type !== "custom"
                         ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : ""
+                        : code`expect(${expectedName}).toEqual(${pageName});`
                 }
                 `
                 : "";

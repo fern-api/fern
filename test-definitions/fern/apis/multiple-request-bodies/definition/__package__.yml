@@ -5,18 +5,12 @@ types:
       id: optional<integer>
       tags: optional<list<unknown>>
       title: optional<string>
-    source:
-      openapi: openapi.yml
   DocumentUploadResult:
     properties:
       fileId: optional<string>
       status: optional<string>
-    source:
-      openapi: openapi.yml
   UploadDocumentResponse:
     discriminated: false
-    source:
-      openapi: openapi.yml
     union:
       - DocumentMetadata
       - DocumentUploadResult
@@ -50,8 +44,6 @@ service:
         docs: Successful response
         status-code: 200
         type: UploadDocumentResponse
-      source:
-        openapi: openapi.yml
     uploadPdfDocument:
       auth: true
       display-name: Upload document metadata (JSON) or document file
@@ -64,7 +56,3 @@ service:
         docs: Successful response
         status-code: 200
         type: UploadDocumentResponse
-      source:
-        openapi: openapi.yml
-  source:
-    openapi: openapi.yml
