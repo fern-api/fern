@@ -162,3 +162,56 @@ def test_annotated_field_aliases_only_v2() -> None:
 
     # Should NOT use annotated syntax for v1
     assert "typing.Annotated[int, pydantic.Field(" not in generated_code
+
+
+def test_no_double_annotation() -> None:
+    """Test that we don't get double annotations when use_annotated_field_aliases=True"""
+    source_file = SourceFileFactory(should_format=True).create_snippet()
+
+    # Mock field metadata getter
+    def mock_field_metadata_getter() -> FieldMetadata:
+        return FieldMetadata(reference=AST.ClassReference(qualified_name_excluding_import=("FieldMetadata",)))
+
+    # Create PydanticModel with both flags set - this used to cause double annotation
+    model = PydanticModel(
+        source_file=source_file,
+        name="TestModel",
+        frozen=False,
+        orm_mode=False,
+        smart_union=False,
+        version=PydanticVersionCompatibility.V2,
+        is_pydantic_v2=AST.Expression("True"),
+        universal_root_validator=lambda pre: AST.FunctionInvocation(
+            function_definition=AST.Reference(qualified_name_excluding_import=("validator",))
+        ),
+        universal_field_validator=lambda field_name, pre: AST.FunctionInvocation(
+            function_definition=AST.Reference(qualified_name_excluding_import=("field_validator",))
+        ),
+        require_optional_fields=False,
+        update_forward_ref_function_reference=AST.Reference(qualified_name_excluding_import=("update_refs",)),
+        field_metadata_getter=mock_field_metadata_getter,
+        use_pydantic_field_aliases=False,  # This would trigger FieldMetadata approach
+        use_annotated_field_aliases=True,  # This should override and use pydantic.Field approach
+    )
+
+    # Add a field with an alias
+    field = PydanticField(
+        name="total_items",
+        pascal_case_field_name="TotalItems",
+        json_field_name="totalItems",
+        type_hint=AST.TypeHint.int_(),
+    )
+    model.add_field(field)
+
+    model.finish()
+
+    # Generate the code
+    generated_code = source_file.to_str()
+
+    # Should only have ONE level of Annotated, not nested
+    assert "typing_extensions.Annotated" in generated_code
+    assert 'pydantic.Field(\n            alias="totalItems"' in generated_code
+
+    # Should NOT have double annotation (FieldMetadata inside pydantic.Field annotation)
+    assert "FieldMetadata" not in generated_code
+    assert generated_code.count("typing_extensions.Annotated") == 1

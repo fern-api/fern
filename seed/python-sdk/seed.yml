@@ -235,6 +235,11 @@ fixtures:
     - customConfig:
         lazy_imports: false
       outputFolder: eager-imports
+    - customConfig:
+        pydantic_config:
+          version: v2
+          use_annotated_field_aliases: true
+      outputFolder: use-annotated-field-aliases
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

@@ -127,29 +127,13 @@ class PydanticModel:
             version=self._version,
         )
 
-        if is_aliased and not self._use_pydantic_field_aliases:
-            field_metadata = self._field_metadata_getter().get_instance()
-            field_metadata.add_alias(field.json_field_name)
-
-            aliased_type_hint = AST.TypeHint.annotated(
-                type=field.type_hint,
-                annotation=field_metadata.get_as_node(),
-            )
-
-            prev_fields = field.__dict__
-            del prev_fields["type_hint"]
-            field = PydanticField(
-                **(field.__dict__),
-                type_hint=aliased_type_hint,
-            )
-
-        # New annotated field aliases feature
+        # Handle field aliasing approaches (mutually exclusive)
         if (
             is_aliased
             and self._use_annotated_field_aliases
             and self._version == PydanticVersionCompatibility.V2
         ):
-            # Create pydantic.Field annotation
+            # New annotated field aliases feature - use pydantic.Field in Annotated
             pydantic_field_annotation = AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=Pydantic(self._version).Field(),
@@ -173,6 +157,23 @@ class PydanticModel:
 
             # Use only the default value as initializer, not pydantic.Field
             initializer = default_value
+
+        elif is_aliased and not self._use_pydantic_field_aliases:
+            # Legacy approach - use FieldMetadata in Annotated
+            field_metadata = self._field_metadata_getter().get_instance()
+            field_metadata.add_alias(field.json_field_name)
+
+            aliased_type_hint = AST.TypeHint.annotated(
+                type=field.type_hint,
+                annotation=field_metadata.get_as_node(),
+            )
+
+            prev_fields = field.__dict__
+            del prev_fields["type_hint"]
+            field = PydanticField(
+                **(field.__dict__),
+                type_hint=aliased_type_hint,
+            )
 
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)

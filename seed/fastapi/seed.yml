@@ -77,6 +77,11 @@ fixtures:
         pydantic_config:
           extra_fields: ignore
       outputFolder: ignore-extra-fields
+    - customConfig:
+        pydantic_config:
+          version: v2
+          use_annotated_field_aliases: true
+      outputFolder: use-annotated-field-aliases
   file-download:
     - customConfig: null
       outputFolder: no-custom-config
