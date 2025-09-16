@@ -35,6 +35,12 @@ var (
 	//go:embed sdk/internal/error_decoder_test.go
 	errorDecoderTestFile string
 
+	//go:embed sdk/internal/explicit_fields.go
+	explicitFieldsFile string
+
+	//go:embed sdk/internal/explicit_fields_test.go
+	explicitFieldsTestFile string
+
 	//go:embed sdk/internal/extra_properties.go
 	extraPropertiesFile string
 

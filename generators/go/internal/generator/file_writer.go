@@ -81,6 +81,7 @@ func newFileWriter(
 	scope.AddImport("strings")
 	scope.AddImport("testing")
 	scope.AddImport("time")
+	scope.AddImport("math/big")
 	scope.AddImport("github.com/google/uuid")
 	scope.AddImport("github.com/stretchr/testify/assert")
 	scope.AddImport("github.com/stretchr/testify/require")
@@ -167,6 +168,67 @@ func (f *fileWriter) WriteDocs(docs *string) {
 // WriteRaw writes the raw string into the file.
 func (f *fileWriter) WriteRaw(s string) {
 	fmt.Fprint(f.buffer, s)
+}
+
+// WriteStructPropertyBitConstants writes bigint constants for each property of a struct.
+func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNames []string) {
+	if len(propertyNames) == 0 {
+		return
+	}
+
+	f.P("var (")
+	for i, propertyName := range propertyNames {
+		constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+		// Convert to camelCase for the constant name (not exported)
+		constantName = strings.ToLower(constantName[:1]) + constantName[1:]
+		f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
+	}
+	f.P(")")
+	f.P()
+}
+
+// WriteSetterMethods writes setter methods for each field that call the require method.
+func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string) {
+	if len(propertyNames) == 0 {
+		return
+	}
+
+	receiver := typeNameToReceiver(typeName)
+	for i, propertyName := range propertyNames {
+		setterName := fmt.Sprintf("Set%s", propertyName)
+		fieldConstantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+		// Convert to camelCase for the constant name
+		fieldConstantName = strings.ToLower(fieldConstantName[:1]) + fieldConstantName[1:]
+
+		// Use safe name for parameter to avoid reserved keywords
+		paramName := propertySafeNames[i]
+		propertyType := propertyTypes[i]
+
+		f.P("func (", receiver, " *", typeName, ") ", setterName, "(", paramName, " ", propertyType, ") {")
+		f.P("\t", receiver, ".", propertyName, " = ", paramName)
+		f.P("\t", receiver, ".require(", fieldConstantName, ")")
+		f.P("}")
+		f.P()
+	}
+}
+
+// WriteRequireMethod writes the require helper method for explicit field tracking.
+func (f *fileWriter) WriteRequireMethod(typeName string) {
+	receiver := typeNameToReceiver(typeName)
+	f.P("func (", receiver, " *", typeName, ") require(field *big.Int) {")
+	f.P("\tif ", receiver, ".explicitFields == nil {")
+	f.P("\t\t", receiver, ".explicitFields = big.NewInt(0)")
+	f.P("\t}")
+	f.P("\t", receiver, ".explicitFields.Or(", receiver, ".explicitFields, field)")
+	f.P("}")
+	f.P()
+}
+
+// WriteExplicitFields writes the explicitFields field into the file.
+func (f *fileWriter) WriteExplicitFields() {
+	f.P()
+	f.P("// Private bitmask of fields set to an explicit value and therefore not to be omitted")
+	f.P("explicitFields *big.Int `json:\"-\" url:\"-\"`")
 }
 
 // clone returns a clone of this fileWriter.

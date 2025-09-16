@@ -333,6 +333,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
+	files = append(files, newExplicitFieldsFile(g.coordinator))
+	files = append(files, newExplicitFieldsTestFile(g.coordinator))
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
@@ -1362,6 +1364,22 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/time.go",
 		[]byte(timeFile),
+	)
+}
+
+func newExplicitFieldsFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/explicit_fields.go",
+		[]byte(explicitFieldsFile),
+	)
+}
+
+func newExplicitFieldsTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/explicit_fields_test.go",
+		[]byte(explicitFieldsTestFile),
 	)
 }
 
