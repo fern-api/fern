@@ -90,8 +90,8 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
      */
     private final Set<ContainerTypeEnum> duplicatedOuterContainerTypes;
     /**
-     * Map from member to a unique identifier for disambiguation. This is used when multiple members
-     * resolve to the same Java type (e.g., two string types with different formats).
+     * Map from member to a unique identifier for disambiguation. This is used when multiple members resolve to the same
+     * Java type (e.g., two string types with different formats).
      */
     private final Map<UndiscriminatedUnionMember, Integer> memberIndexMap;
 
@@ -222,9 +222,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     }
 
     /**
-     * Returns true if there are multiple members that resolve to the same Java type.
-     * This is needed to detect conflicts beyond just container types, including cases where
-     * different IR types map to the same Java type (e.g., string vs string enum).
+     * Returns true if there are multiple members that resolve to the same Java type. This is needed to detect conflicts
+     * beyond just container types, including cases where different IR types map to the same Java type (e.g., string vs
+     * string enum).
      */
     private boolean hasDuplicatedJavaTypes() {
         Set<TypeName> seen = new HashSet<>();
