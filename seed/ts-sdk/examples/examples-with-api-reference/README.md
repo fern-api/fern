@@ -21,6 +21,18 @@ npm i -s @fern/examples
 
 A full reference for this library is available [here](./reference.md).
 
+## Base Readme Custom Section
+
+Base Readme Custom Content for @fern/examples
+
+## Override Section
+
+Override Content
+
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for @fern/examples
+
 ## Usage
 
 Instantiate and use the client with the following:

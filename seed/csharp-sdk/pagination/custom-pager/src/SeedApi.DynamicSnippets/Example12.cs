@@ -13,8 +13,8 @@ public class Example12
             }
         );
 
-        await client.Users.ListWithGlobalConfigAsync(
-            new ListWithGlobalConfigRequest{
+        await client.InlineUsers.InlineUsers.ListWithGlobalConfigAsync(
+            new SeedPagination.InlineUsers.ListWithGlobalConfigRequest{
                 Offset = 1
             }
         );

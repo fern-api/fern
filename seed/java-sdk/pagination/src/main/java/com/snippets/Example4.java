@@ -1,8 +1,8 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
-import com.seed.pagination.resources.users.types.Order;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
 
 public class Example4 {
     public static void main(String[] args) {
@@ -12,7 +12,7 @@ public class Example4 {
             .url("https://api.fern.com")
             .build();
 
-        client.users().listWithCursorPagination(
+        client.inlineUsers().inlineUsers().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
                 .page(1)

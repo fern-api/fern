@@ -1,4 +1,5 @@
 using SeedPagination.Core;
+using SeedPagination.InlineUsers;
 
 namespace SeedPagination;
 
@@ -28,10 +29,13 @@ public partial class SeedPaginationClient
         }
         _client = new RawClient(clientOptions);
         Complex = new ComplexClient(_client);
+        InlineUsers = new InlineUsersClient(_client);
         Users = new UsersClient(_client);
     }
 
     public ComplexClient Complex { get; }
+
+    public InlineUsersClient InlineUsers { get; }
 
     public UsersClient Users { get; }
 }

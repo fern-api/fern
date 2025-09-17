@@ -7,10 +7,18 @@ import (
 	fmt "fmt"
 	folderc "github.com/audiences/fern/folderc"
 	internal "github.com/audiences/fern/internal"
+	big "math/big"
+)
+
+var (
+	fooFieldFoo = big.NewInt(1 << 0)
 )
 
 type Foo struct {
 	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -26,6 +34,20 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *Foo) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetFoo(foo *folderc.FolderCFoo) {
+	f.Foo = foo
+	f.require(fooFieldFoo)
+}
+
 func (f *Foo) UnmarshalJSON(data []byte) error {
 	type unmarshaler Foo
 	var value unmarshaler
@@ -39,6 +61,17 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	f.extraProperties = extraProperties
 	return nil
+}
+
+func (f *Foo) MarshalJSON() ([]byte, error) {
+	type embed Foo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *Foo) String() string {

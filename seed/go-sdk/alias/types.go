@@ -6,15 +6,24 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/alias/fern/internal"
+	big "math/big"
 )
 
 // Object is an alias for a type.
 type Object = *Type
 
 // A simple type with just a name.
+var (
+	typeFieldId   = big.NewInt(1 << 0)
+	typeFieldName = big.NewInt(1 << 1)
+)
+
 type Type struct {
 	Id   TypeId `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -38,6 +47,27 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Type) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetId(id TypeId) {
+	t.Id = id
+	t.require(typeFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetName(name string) {
+	t.Name = name
+	t.require(typeFieldName)
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	type unmarshaler Type
 	var value unmarshaler
@@ -52,6 +82,17 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Type) String() string {

@@ -5,6 +5,6 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.users.list_with_cursor_pagination({
+client.inline_users.inline_users.list_with_cursor_pagination({
   startingAfter:'starting_after'
 });

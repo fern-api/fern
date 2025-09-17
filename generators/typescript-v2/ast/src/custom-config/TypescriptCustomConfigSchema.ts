@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
@@ -32,6 +33,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
+    customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

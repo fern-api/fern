@@ -6,6 +6,16 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/simple-fhir/fern/internal"
+	big "math/big"
+)
+
+var (
+	accountFieldId               = big.NewInt(1 << 0)
+	accountFieldRelatedResources = big.NewInt(1 << 1)
+	accountFieldMemo             = big.NewInt(1 << 2)
+	accountFieldName             = big.NewInt(1 << 3)
+	accountFieldPatient          = big.NewInt(1 << 4)
+	accountFieldPractitioner     = big.NewInt(1 << 5)
 )
 
 type Account struct {
@@ -15,7 +25,10 @@ type Account struct {
 	Name             string          `json:"name" url:"name"`
 	Patient          *Patient        `json:"patient,omitempty" url:"patient,omitempty"`
 	Practitioner     *Practitioner   `json:"practitioner,omitempty" url:"practitioner,omitempty"`
-	resourceType     string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	resourceType   string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -71,6 +84,55 @@ func (a *Account) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Account) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetId(id string) {
+	a.Id = id
+	a.require(accountFieldId)
+}
+
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetRelatedResources(relatedResources []*ResourceList) {
+	a.RelatedResources = relatedResources
+	a.require(accountFieldRelatedResources)
+}
+
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetMemo(memo *Memo) {
+	a.Memo = memo
+	a.require(accountFieldMemo)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetName(name string) {
+	a.Name = name
+	a.require(accountFieldName)
+}
+
+// SetPatient sets the Patient field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetPatient(patient *Patient) {
+	a.Patient = patient
+	a.require(accountFieldPatient)
+}
+
+// SetPractitioner sets the Practitioner field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Account) SetPractitioner(practitioner *Practitioner) {
+	a.Practitioner = practitioner
+	a.require(accountFieldPractitioner)
+}
+
 func (a *Account) UnmarshalJSON(data []byte) error {
 	type embed Account
 	var unmarshaler = struct {
@@ -105,7 +167,8 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 		embed:        embed(*a),
 		ResourceType: "Account",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (a *Account) String() string {
@@ -120,10 +183,19 @@ func (a *Account) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	baseResourceFieldId               = big.NewInt(1 << 0)
+	baseResourceFieldRelatedResources = big.NewInt(1 << 1)
+	baseResourceFieldMemo             = big.NewInt(1 << 2)
+)
+
 type BaseResource struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -154,6 +226,34 @@ func (b *BaseResource) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
 
+func (b *BaseResource) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BaseResource) SetId(id string) {
+	b.Id = id
+	b.require(baseResourceFieldId)
+}
+
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BaseResource) SetRelatedResources(relatedResources []*ResourceList) {
+	b.RelatedResources = relatedResources
+	b.require(baseResourceFieldRelatedResources)
+}
+
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BaseResource) SetMemo(memo *Memo) {
+	b.Memo = memo
+	b.require(baseResourceFieldMemo)
+}
+
 func (b *BaseResource) UnmarshalJSON(data []byte) error {
 	type unmarshaler BaseResource
 	var value unmarshaler
@@ -170,6 +270,17 @@ func (b *BaseResource) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *BaseResource) MarshalJSON() ([]byte, error) {
+	type embed BaseResource
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *BaseResource) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -182,9 +293,17 @@ func (b *BaseResource) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+var (
+	memoFieldDescription = big.NewInt(1 << 0)
+	memoFieldAccount     = big.NewInt(1 << 1)
+)
+
 type Memo struct {
 	Description string   `json:"description" url:"description"`
 	Account     *Account `json:"account,omitempty" url:"account,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -208,6 +327,27 @@ func (m *Memo) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Memo) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Memo) SetDescription(description string) {
+	m.Description = description
+	m.require(memoFieldDescription)
+}
+
+// SetAccount sets the Account field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Memo) SetAccount(account *Account) {
+	m.Account = account
+	m.require(memoFieldAccount)
+}
+
 func (m *Memo) UnmarshalJSON(data []byte) error {
 	type unmarshaler Memo
 	var value unmarshaler
@@ -224,6 +364,17 @@ func (m *Memo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (m *Memo) MarshalJSON() ([]byte, error) {
+	type embed Memo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (m *Memo) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -236,13 +387,24 @@ func (m *Memo) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+var (
+	patientFieldId               = big.NewInt(1 << 0)
+	patientFieldRelatedResources = big.NewInt(1 << 1)
+	patientFieldMemo             = big.NewInt(1 << 2)
+	patientFieldName             = big.NewInt(1 << 3)
+	patientFieldScripts          = big.NewInt(1 << 4)
+)
+
 type Patient struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
 	Scripts          []*Script       `json:"scripts" url:"scripts"`
-	resourceType     string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	resourceType   string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -291,6 +453,48 @@ func (p *Patient) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *Patient) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Patient) SetId(id string) {
+	p.Id = id
+	p.require(patientFieldId)
+}
+
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Patient) SetRelatedResources(relatedResources []*ResourceList) {
+	p.RelatedResources = relatedResources
+	p.require(patientFieldRelatedResources)
+}
+
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Patient) SetMemo(memo *Memo) {
+	p.Memo = memo
+	p.require(patientFieldMemo)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Patient) SetName(name string) {
+	p.Name = name
+	p.require(patientFieldName)
+}
+
+// SetScripts sets the Scripts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Patient) SetScripts(scripts []*Script) {
+	p.Scripts = scripts
+	p.require(patientFieldScripts)
+}
+
 func (p *Patient) UnmarshalJSON(data []byte) error {
 	type embed Patient
 	var unmarshaler = struct {
@@ -325,7 +529,8 @@ func (p *Patient) MarshalJSON() ([]byte, error) {
 		embed:        embed(*p),
 		ResourceType: "Patient",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *Patient) String() string {
@@ -340,12 +545,22 @@ func (p *Patient) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+var (
+	practitionerFieldId               = big.NewInt(1 << 0)
+	practitionerFieldRelatedResources = big.NewInt(1 << 1)
+	practitionerFieldMemo             = big.NewInt(1 << 2)
+	practitionerFieldName             = big.NewInt(1 << 3)
+)
+
 type Practitioner struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
-	resourceType     string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	resourceType   string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -387,6 +602,41 @@ func (p *Practitioner) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *Practitioner) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Practitioner) SetId(id string) {
+	p.Id = id
+	p.require(practitionerFieldId)
+}
+
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Practitioner) SetRelatedResources(relatedResources []*ResourceList) {
+	p.RelatedResources = relatedResources
+	p.require(practitionerFieldRelatedResources)
+}
+
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Practitioner) SetMemo(memo *Memo) {
+	p.Memo = memo
+	p.require(practitionerFieldMemo)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Practitioner) SetName(name string) {
+	p.Name = name
+	p.require(practitionerFieldName)
+}
+
 func (p *Practitioner) UnmarshalJSON(data []byte) error {
 	type embed Practitioner
 	var unmarshaler = struct {
@@ -421,7 +671,8 @@ func (p *Practitioner) MarshalJSON() ([]byte, error) {
 		embed:        embed(*p),
 		ResourceType: "Practitioner",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *Practitioner) String() string {
@@ -540,12 +791,22 @@ func (r *ResourceList) Accept(visitor ResourceListVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", r)
 }
 
+var (
+	scriptFieldId               = big.NewInt(1 << 0)
+	scriptFieldRelatedResources = big.NewInt(1 << 1)
+	scriptFieldMemo             = big.NewInt(1 << 2)
+	scriptFieldName             = big.NewInt(1 << 3)
+)
+
 type Script struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
-	resourceType     string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	resourceType   string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -587,6 +848,41 @@ func (s *Script) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *Script) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Script) SetId(id string) {
+	s.Id = id
+	s.require(scriptFieldId)
+}
+
+// SetRelatedResources sets the RelatedResources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Script) SetRelatedResources(relatedResources []*ResourceList) {
+	s.RelatedResources = relatedResources
+	s.require(scriptFieldRelatedResources)
+}
+
+// SetMemo sets the Memo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Script) SetMemo(memo *Memo) {
+	s.Memo = memo
+	s.require(scriptFieldMemo)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Script) SetName(name string) {
+	s.Name = name
+	s.require(scriptFieldName)
+}
+
 func (s *Script) UnmarshalJSON(data []byte) error {
 	type embed Script
 	var unmarshaler = struct {
@@ -621,7 +917,8 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 		embed:        embed(*s),
 		ResourceType: "Script",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *Script) String() string {

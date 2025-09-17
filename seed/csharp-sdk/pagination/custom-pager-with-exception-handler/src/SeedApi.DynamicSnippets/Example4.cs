@@ -13,11 +13,11 @@ public class Example4
             }
         );
 
-        await client.Users.ListWithCursorPaginationAsync(
-            new ListUsersCursorPaginationRequest{
+        await client.InlineUsers.InlineUsers.ListWithCursorPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersCursorPaginationRequest{
                 Page = 1,
                 PerPage = 1,
-                Order = Order.Asc,
+                Order = SeedPagination.InlineUsers.Order.Asc,
                 StartingAfter = "starting_after"
             }
         );

@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -38,7 +37,7 @@ public class ListUsernamesTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListUsernamesAsync(
-            new ListUsernamesRequest { StartingAfter = "starting_after" }
+            new SeedPagination.ListUsernamesRequest { StartingAfter = "starting_after" }
         );
         await foreach (var item in items)
         {

@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/nullable-optional/fern/internal"
+	big "math/big"
 	time "time"
 )
 
@@ -36,6 +37,16 @@ type SearchUsersRequest struct {
 }
 
 // Nested object for testing
+var (
+	addressFieldStreet     = big.NewInt(1 << 0)
+	addressFieldCity       = big.NewInt(1 << 1)
+	addressFieldState      = big.NewInt(1 << 2)
+	addressFieldZipCode    = big.NewInt(1 << 3)
+	addressFieldCountry    = big.NewInt(1 << 4)
+	addressFieldBuildingId = big.NewInt(1 << 5)
+	addressFieldTenantId   = big.NewInt(1 << 6)
+)
+
 type Address struct {
 	Street     string         `json:"street" url:"street"`
 	City       *string        `json:"city,omitempty" url:"city,omitempty"`
@@ -44,6 +55,9 @@ type Address struct {
 	Country    *string        `json:"country,omitempty" url:"country,omitempty"`
 	BuildingId NullableUserId `json:"buildingId,omitempty" url:"buildingId,omitempty"`
 	TenantId   OptionalUserId `json:"tenantId,omitempty" url:"tenantId,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -101,6 +115,62 @@ func (a *Address) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Address) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetStreet sets the Street field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetStreet(street string) {
+	a.Street = street
+	a.require(addressFieldStreet)
+}
+
+// SetCity sets the City field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetCity(city *string) {
+	a.City = city
+	a.require(addressFieldCity)
+}
+
+// SetState sets the State field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetState(state *string) {
+	a.State = state
+	a.require(addressFieldState)
+}
+
+// SetZipCode sets the ZipCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetZipCode(zipCode string) {
+	a.ZipCode = zipCode
+	a.require(addressFieldZipCode)
+}
+
+// SetCountry sets the Country field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetCountry(country *string) {
+	a.Country = country
+	a.require(addressFieldCountry)
+}
+
+// SetBuildingId sets the BuildingId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetBuildingId(buildingId NullableUserId) {
+	a.BuildingId = buildingId
+	a.require(addressFieldBuildingId)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Address) SetTenantId(tenantId OptionalUserId) {
+	a.TenantId = tenantId
+	a.require(addressFieldTenantId)
+}
+
 func (a *Address) UnmarshalJSON(data []byte) error {
 	type unmarshaler Address
 	var value unmarshaler
@@ -116,6 +186,17 @@ func (a *Address) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (a *Address) MarshalJSON() ([]byte, error) {
+	type embed Address
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (a *Address) String() string {
 	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
@@ -124,6 +205,28 @@ func (a *Address) String() string {
 }
 
 // Test object with nullable enums, unions, and arrays
+var (
+	complexProfileFieldId                           = big.NewInt(1 << 0)
+	complexProfileFieldNullableRole                 = big.NewInt(1 << 1)
+	complexProfileFieldOptionalRole                 = big.NewInt(1 << 2)
+	complexProfileFieldOptionalNullableRole         = big.NewInt(1 << 3)
+	complexProfileFieldNullableStatus               = big.NewInt(1 << 4)
+	complexProfileFieldOptionalStatus               = big.NewInt(1 << 5)
+	complexProfileFieldOptionalNullableStatus       = big.NewInt(1 << 6)
+	complexProfileFieldNullableNotification         = big.NewInt(1 << 7)
+	complexProfileFieldOptionalNotification         = big.NewInt(1 << 8)
+	complexProfileFieldOptionalNullableNotification = big.NewInt(1 << 9)
+	complexProfileFieldNullableSearchResult         = big.NewInt(1 << 10)
+	complexProfileFieldOptionalSearchResult         = big.NewInt(1 << 11)
+	complexProfileFieldNullableArray                = big.NewInt(1 << 12)
+	complexProfileFieldOptionalArray                = big.NewInt(1 << 13)
+	complexProfileFieldOptionalNullableArray        = big.NewInt(1 << 14)
+	complexProfileFieldNullableListOfNullables      = big.NewInt(1 << 15)
+	complexProfileFieldNullableMapOfNullables       = big.NewInt(1 << 16)
+	complexProfileFieldNullableListOfUnions         = big.NewInt(1 << 17)
+	complexProfileFieldOptionalMapOfEnums           = big.NewInt(1 << 18)
+)
+
 type ComplexProfile struct {
 	Id                           string                `json:"id" url:"id"`
 	NullableRole                 *UserRole             `json:"nullableRole,omitempty" url:"nullableRole,omitempty"`
@@ -144,6 +247,9 @@ type ComplexProfile struct {
 	NullableMapOfNullables       map[string]*Address   `json:"nullableMapOfNullables,omitempty" url:"nullableMapOfNullables,omitempty"`
 	NullableListOfUnions         []*NotificationMethod `json:"nullableListOfUnions,omitempty" url:"nullableListOfUnions,omitempty"`
 	OptionalMapOfEnums           map[string]UserRole   `json:"optionalMapOfEnums,omitempty" url:"optionalMapOfEnums,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -285,6 +391,146 @@ func (c *ComplexProfile) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *ComplexProfile) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetId(id string) {
+	c.Id = id
+	c.require(complexProfileFieldId)
+}
+
+// SetNullableRole sets the NullableRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableRole(nullableRole *UserRole) {
+	c.NullableRole = nullableRole
+	c.require(complexProfileFieldNullableRole)
+}
+
+// SetOptionalRole sets the OptionalRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalRole(optionalRole *UserRole) {
+	c.OptionalRole = optionalRole
+	c.require(complexProfileFieldOptionalRole)
+}
+
+// SetOptionalNullableRole sets the OptionalNullableRole field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalNullableRole(optionalNullableRole *UserRole) {
+	c.OptionalNullableRole = optionalNullableRole
+	c.require(complexProfileFieldOptionalNullableRole)
+}
+
+// SetNullableStatus sets the NullableStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableStatus(nullableStatus *UserStatus) {
+	c.NullableStatus = nullableStatus
+	c.require(complexProfileFieldNullableStatus)
+}
+
+// SetOptionalStatus sets the OptionalStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalStatus(optionalStatus *UserStatus) {
+	c.OptionalStatus = optionalStatus
+	c.require(complexProfileFieldOptionalStatus)
+}
+
+// SetOptionalNullableStatus sets the OptionalNullableStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalNullableStatus(optionalNullableStatus *UserStatus) {
+	c.OptionalNullableStatus = optionalNullableStatus
+	c.require(complexProfileFieldOptionalNullableStatus)
+}
+
+// SetNullableNotification sets the NullableNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableNotification(nullableNotification *NotificationMethod) {
+	c.NullableNotification = nullableNotification
+	c.require(complexProfileFieldNullableNotification)
+}
+
+// SetOptionalNotification sets the OptionalNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalNotification(optionalNotification *NotificationMethod) {
+	c.OptionalNotification = optionalNotification
+	c.require(complexProfileFieldOptionalNotification)
+}
+
+// SetOptionalNullableNotification sets the OptionalNullableNotification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalNullableNotification(optionalNullableNotification *NotificationMethod) {
+	c.OptionalNullableNotification = optionalNullableNotification
+	c.require(complexProfileFieldOptionalNullableNotification)
+}
+
+// SetNullableSearchResult sets the NullableSearchResult field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableSearchResult(nullableSearchResult *SearchResult) {
+	c.NullableSearchResult = nullableSearchResult
+	c.require(complexProfileFieldNullableSearchResult)
+}
+
+// SetOptionalSearchResult sets the OptionalSearchResult field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalSearchResult(optionalSearchResult *SearchResult) {
+	c.OptionalSearchResult = optionalSearchResult
+	c.require(complexProfileFieldOptionalSearchResult)
+}
+
+// SetNullableArray sets the NullableArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableArray(nullableArray []string) {
+	c.NullableArray = nullableArray
+	c.require(complexProfileFieldNullableArray)
+}
+
+// SetOptionalArray sets the OptionalArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalArray(optionalArray []string) {
+	c.OptionalArray = optionalArray
+	c.require(complexProfileFieldOptionalArray)
+}
+
+// SetOptionalNullableArray sets the OptionalNullableArray field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalNullableArray(optionalNullableArray []string) {
+	c.OptionalNullableArray = optionalNullableArray
+	c.require(complexProfileFieldOptionalNullableArray)
+}
+
+// SetNullableListOfNullables sets the NullableListOfNullables field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableListOfNullables(nullableListOfNullables []*string) {
+	c.NullableListOfNullables = nullableListOfNullables
+	c.require(complexProfileFieldNullableListOfNullables)
+}
+
+// SetNullableMapOfNullables sets the NullableMapOfNullables field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableMapOfNullables(nullableMapOfNullables map[string]*Address) {
+	c.NullableMapOfNullables = nullableMapOfNullables
+	c.require(complexProfileFieldNullableMapOfNullables)
+}
+
+// SetNullableListOfUnions sets the NullableListOfUnions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetNullableListOfUnions(nullableListOfUnions []*NotificationMethod) {
+	c.NullableListOfUnions = nullableListOfUnions
+	c.require(complexProfileFieldNullableListOfUnions)
+}
+
+// SetOptionalMapOfEnums sets the OptionalMapOfEnums field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ComplexProfile) SetOptionalMapOfEnums(optionalMapOfEnums map[string]UserRole) {
+	c.OptionalMapOfEnums = optionalMapOfEnums
+	c.require(complexProfileFieldOptionalMapOfEnums)
+}
+
 func (c *ComplexProfile) UnmarshalJSON(data []byte) error {
 	type unmarshaler ComplexProfile
 	var value unmarshaler
@@ -300,6 +546,17 @@ func (c *ComplexProfile) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *ComplexProfile) MarshalJSON() ([]byte, error) {
+	type embed ComplexProfile
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *ComplexProfile) String() string {
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
@@ -307,11 +564,21 @@ func (c *ComplexProfile) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createUserRequestFieldUsername = big.NewInt(1 << 0)
+	createUserRequestFieldEmail    = big.NewInt(1 << 1)
+	createUserRequestFieldPhone    = big.NewInt(1 << 2)
+	createUserRequestFieldAddress  = big.NewInt(1 << 3)
+)
+
 type CreateUserRequest struct {
 	Username string   `json:"username" url:"username"`
 	Email    *string  `json:"email,omitempty" url:"email,omitempty"`
 	Phone    *string  `json:"phone,omitempty" url:"phone,omitempty"`
 	Address  *Address `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -348,6 +615,41 @@ func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CreateUserRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserRequest) SetUsername(username string) {
+	c.Username = username
+	c.require(createUserRequestFieldUsername)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserRequest) SetEmail(email *string) {
+	c.Email = email
+	c.require(createUserRequestFieldEmail)
+}
+
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserRequest) SetPhone(phone *string) {
+	c.Phone = phone
+	c.require(createUserRequestFieldPhone)
+}
+
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserRequest) SetAddress(address *Address) {
+	c.Address = address
+	c.require(createUserRequestFieldAddress)
+}
+
 func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateUserRequest
 	var value unmarshaler
@@ -363,6 +665,17 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateUserRequest) String() string {
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
@@ -371,6 +684,21 @@ func (c *CreateUserRequest) String() string {
 }
 
 // Request body for testing deserialization of null values
+var (
+	deserializationTestRequestFieldRequiredString         = big.NewInt(1 << 0)
+	deserializationTestRequestFieldNullableString         = big.NewInt(1 << 1)
+	deserializationTestRequestFieldOptionalString         = big.NewInt(1 << 2)
+	deserializationTestRequestFieldOptionalNullableString = big.NewInt(1 << 3)
+	deserializationTestRequestFieldNullableEnum           = big.NewInt(1 << 4)
+	deserializationTestRequestFieldOptionalEnum           = big.NewInt(1 << 5)
+	deserializationTestRequestFieldNullableUnion          = big.NewInt(1 << 6)
+	deserializationTestRequestFieldOptionalUnion          = big.NewInt(1 << 7)
+	deserializationTestRequestFieldNullableList           = big.NewInt(1 << 8)
+	deserializationTestRequestFieldNullableMap            = big.NewInt(1 << 9)
+	deserializationTestRequestFieldNullableObject         = big.NewInt(1 << 10)
+	deserializationTestRequestFieldOptionalObject         = big.NewInt(1 << 11)
+)
+
 type DeserializationTestRequest struct {
 	RequiredString         string              `json:"requiredString" url:"requiredString"`
 	NullableString         *string             `json:"nullableString,omitempty" url:"nullableString,omitempty"`
@@ -384,6 +712,9 @@ type DeserializationTestRequest struct {
 	NullableMap            map[string]int      `json:"nullableMap,omitempty" url:"nullableMap,omitempty"`
 	NullableObject         *Address            `json:"nullableObject,omitempty" url:"nullableObject,omitempty"`
 	OptionalObject         *Organization       `json:"optionalObject,omitempty" url:"optionalObject,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -476,6 +807,97 @@ func (d *DeserializationTestRequest) GetExtraProperties() map[string]interface{}
 	return d.extraProperties
 }
 
+func (d *DeserializationTestRequest) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetRequiredString(requiredString string) {
+	d.RequiredString = requiredString
+	d.require(deserializationTestRequestFieldRequiredString)
+}
+
+// SetNullableString sets the NullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableString(nullableString *string) {
+	d.NullableString = nullableString
+	d.require(deserializationTestRequestFieldNullableString)
+}
+
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetOptionalString(optionalString *string) {
+	d.OptionalString = optionalString
+	d.require(deserializationTestRequestFieldOptionalString)
+}
+
+// SetOptionalNullableString sets the OptionalNullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetOptionalNullableString(optionalNullableString *string) {
+	d.OptionalNullableString = optionalNullableString
+	d.require(deserializationTestRequestFieldOptionalNullableString)
+}
+
+// SetNullableEnum sets the NullableEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableEnum(nullableEnum *UserRole) {
+	d.NullableEnum = nullableEnum
+	d.require(deserializationTestRequestFieldNullableEnum)
+}
+
+// SetOptionalEnum sets the OptionalEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetOptionalEnum(optionalEnum *UserStatus) {
+	d.OptionalEnum = optionalEnum
+	d.require(deserializationTestRequestFieldOptionalEnum)
+}
+
+// SetNullableUnion sets the NullableUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableUnion(nullableUnion *NotificationMethod) {
+	d.NullableUnion = nullableUnion
+	d.require(deserializationTestRequestFieldNullableUnion)
+}
+
+// SetOptionalUnion sets the OptionalUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetOptionalUnion(optionalUnion *SearchResult) {
+	d.OptionalUnion = optionalUnion
+	d.require(deserializationTestRequestFieldOptionalUnion)
+}
+
+// SetNullableList sets the NullableList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableList(nullableList []string) {
+	d.NullableList = nullableList
+	d.require(deserializationTestRequestFieldNullableList)
+}
+
+// SetNullableMap sets the NullableMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableMap(nullableMap map[string]int) {
+	d.NullableMap = nullableMap
+	d.require(deserializationTestRequestFieldNullableMap)
+}
+
+// SetNullableObject sets the NullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetNullableObject(nullableObject *Address) {
+	d.NullableObject = nullableObject
+	d.require(deserializationTestRequestFieldNullableObject)
+}
+
+// SetOptionalObject sets the OptionalObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestRequest) SetOptionalObject(optionalObject *Organization) {
+	d.OptionalObject = optionalObject
+	d.require(deserializationTestRequestFieldOptionalObject)
+}
+
 func (d *DeserializationTestRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler DeserializationTestRequest
 	var value unmarshaler
@@ -491,6 +913,17 @@ func (d *DeserializationTestRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *DeserializationTestRequest) MarshalJSON() ([]byte, error) {
+	type embed DeserializationTestRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *DeserializationTestRequest) String() string {
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
@@ -499,11 +932,21 @@ func (d *DeserializationTestRequest) String() string {
 }
 
 // Response for deserialization test
+var (
+	deserializationTestResponseFieldEcho               = big.NewInt(1 << 0)
+	deserializationTestResponseFieldProcessedAt        = big.NewInt(1 << 1)
+	deserializationTestResponseFieldNullCount          = big.NewInt(1 << 2)
+	deserializationTestResponseFieldPresentFieldsCount = big.NewInt(1 << 3)
+)
+
 type DeserializationTestResponse struct {
 	Echo               *DeserializationTestRequest `json:"echo" url:"echo"`
 	ProcessedAt        time.Time                   `json:"processedAt" url:"processedAt"`
 	NullCount          int                         `json:"nullCount" url:"nullCount"`
 	PresentFieldsCount int                         `json:"presentFieldsCount" url:"presentFieldsCount"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -540,6 +983,41 @@ func (d *DeserializationTestResponse) GetExtraProperties() map[string]interface{
 	return d.extraProperties
 }
 
+func (d *DeserializationTestResponse) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetEcho sets the Echo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestResponse) SetEcho(echo *DeserializationTestRequest) {
+	d.Echo = echo
+	d.require(deserializationTestResponseFieldEcho)
+}
+
+// SetProcessedAt sets the ProcessedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestResponse) SetProcessedAt(processedAt time.Time) {
+	d.ProcessedAt = processedAt
+	d.require(deserializationTestResponseFieldProcessedAt)
+}
+
+// SetNullCount sets the NullCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestResponse) SetNullCount(nullCount int) {
+	d.NullCount = nullCount
+	d.require(deserializationTestResponseFieldNullCount)
+}
+
+// SetPresentFieldsCount sets the PresentFieldsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeserializationTestResponse) SetPresentFieldsCount(presentFieldsCount int) {
+	d.PresentFieldsCount = presentFieldsCount
+	d.require(deserializationTestResponseFieldPresentFieldsCount)
+}
+
 func (d *DeserializationTestResponse) UnmarshalJSON(data []byte) error {
 	type embed DeserializationTestResponse
 	var unmarshaler = struct {
@@ -570,7 +1048,8 @@ func (d *DeserializationTestResponse) MarshalJSON() ([]byte, error) {
 		embed:       embed(*d),
 		ProcessedAt: internal.NewDateTime(d.ProcessedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DeserializationTestResponse) String() string {
@@ -580,12 +1059,23 @@ func (d *DeserializationTestResponse) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	documentFieldId      = big.NewInt(1 << 0)
+	documentFieldTitle   = big.NewInt(1 << 1)
+	documentFieldContent = big.NewInt(1 << 2)
+	documentFieldAuthor  = big.NewInt(1 << 3)
+	documentFieldTags    = big.NewInt(1 << 4)
+)
+
 type Document struct {
 	Id      string   `json:"id" url:"id"`
 	Title   string   `json:"title" url:"title"`
 	Content string   `json:"content" url:"content"`
 	Author  *string  `json:"author,omitempty" url:"author,omitempty"`
 	Tags    []string `json:"tags,omitempty" url:"tags,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -629,6 +1119,48 @@ func (d *Document) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Document) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Document) SetId(id string) {
+	d.Id = id
+	d.require(documentFieldId)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Document) SetTitle(title string) {
+	d.Title = title
+	d.require(documentFieldTitle)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Document) SetContent(content string) {
+	d.Content = content
+	d.require(documentFieldContent)
+}
+
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Document) SetAuthor(author *string) {
+	d.Author = author
+	d.require(documentFieldAuthor)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Document) SetTags(tags []string) {
+	d.Tags = tags
+	d.require(documentFieldTags)
+}
+
 func (d *Document) UnmarshalJSON(data []byte) error {
 	type unmarshaler Document
 	var value unmarshaler
@@ -644,6 +1176,17 @@ func (d *Document) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *Document) MarshalJSON() ([]byte, error) {
+	type embed Document
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *Document) String() string {
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
@@ -651,10 +1194,19 @@ func (d *Document) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	emailNotificationFieldEmailAddress = big.NewInt(1 << 0)
+	emailNotificationFieldSubject      = big.NewInt(1 << 1)
+	emailNotificationFieldHtmlContent  = big.NewInt(1 << 2)
+)
+
 type EmailNotification struct {
 	EmailAddress string  `json:"emailAddress" url:"emailAddress"`
 	Subject      string  `json:"subject" url:"subject"`
 	HtmlContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -684,6 +1236,34 @@ func (e *EmailNotification) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *EmailNotification) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetEmailAddress sets the EmailAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailNotification) SetEmailAddress(emailAddress string) {
+	e.EmailAddress = emailAddress
+	e.require(emailNotificationFieldEmailAddress)
+}
+
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailNotification) SetSubject(subject string) {
+	e.Subject = subject
+	e.require(emailNotificationFieldSubject)
+}
+
+// SetHtmlContent sets the HtmlContent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailNotification) SetHtmlContent(htmlContent *string) {
+	e.HtmlContent = htmlContent
+	e.require(emailNotificationFieldHtmlContent)
+}
+
 func (e *EmailNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler EmailNotification
 	var value unmarshaler
@@ -697,6 +1277,17 @@ func (e *EmailNotification) UnmarshalJSON(data []byte) error {
 	}
 	e.extraProperties = extraProperties
 	return nil
+}
+
+func (e *EmailNotification) MarshalJSON() ([]byte, error) {
+	type embed EmailNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EmailNotification) String() string {
@@ -854,11 +1445,21 @@ type NullableUserId = *string
 // An alias for an optional user ID
 type OptionalUserId = *string
 
+var (
+	organizationFieldId            = big.NewInt(1 << 0)
+	organizationFieldName          = big.NewInt(1 << 1)
+	organizationFieldDomain        = big.NewInt(1 << 2)
+	organizationFieldEmployeeCount = big.NewInt(1 << 3)
+)
+
 type Organization struct {
 	Id            string  `json:"id" url:"id"`
 	Name          string  `json:"name" url:"name"`
 	Domain        *string `json:"domain,omitempty" url:"domain,omitempty"`
 	EmployeeCount *int    `json:"employeeCount,omitempty" url:"employeeCount,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -895,6 +1496,41 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *Organization) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetId(id string) {
+	o.Id = id
+	o.require(organizationFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetDomain(domain *string) {
+	o.Domain = domain
+	o.require(organizationFieldDomain)
+}
+
+// SetEmployeeCount sets the EmployeeCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetEmployeeCount(employeeCount *int) {
+	o.EmployeeCount = employeeCount
+	o.require(organizationFieldEmployeeCount)
+}
+
 func (o *Organization) UnmarshalJSON(data []byte) error {
 	type unmarshaler Organization
 	var value unmarshaler
@@ -910,6 +1546,17 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *Organization) MarshalJSON() ([]byte, error) {
+	type embed Organization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (o *Organization) String() string {
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
@@ -917,11 +1564,21 @@ func (o *Organization) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+var (
+	pushNotificationFieldDeviceToken = big.NewInt(1 << 0)
+	pushNotificationFieldTitle       = big.NewInt(1 << 1)
+	pushNotificationFieldBody        = big.NewInt(1 << 2)
+	pushNotificationFieldBadge       = big.NewInt(1 << 3)
+)
+
 type PushNotification struct {
 	DeviceToken string `json:"deviceToken" url:"deviceToken"`
 	Title       string `json:"title" url:"title"`
 	Body        string `json:"body" url:"body"`
 	Badge       *int   `json:"badge,omitempty" url:"badge,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -958,6 +1615,41 @@ func (p *PushNotification) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *PushNotification) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetDeviceToken sets the DeviceToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PushNotification) SetDeviceToken(deviceToken string) {
+	p.DeviceToken = deviceToken
+	p.require(pushNotificationFieldDeviceToken)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PushNotification) SetTitle(title string) {
+	p.Title = title
+	p.require(pushNotificationFieldTitle)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PushNotification) SetBody(body string) {
+	p.Body = body
+	p.require(pushNotificationFieldBody)
+}
+
+// SetBadge sets the Badge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PushNotification) SetBadge(badge *int) {
+	p.Badge = badge
+	p.require(pushNotificationFieldBadge)
+}
+
 func (p *PushNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler PushNotification
 	var value unmarshaler
@@ -971,6 +1663,17 @@ func (p *PushNotification) UnmarshalJSON(data []byte) error {
 	}
 	p.extraProperties = extraProperties
 	return nil
+}
+
+func (p *PushNotification) MarshalJSON() ([]byte, error) {
+	type embed PushNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *PushNotification) String() string {
@@ -1122,10 +1825,19 @@ func (s *SearchResult) validate() error {
 	return nil
 }
 
+var (
+	smsNotificationFieldPhoneNumber = big.NewInt(1 << 0)
+	smsNotificationFieldMessage     = big.NewInt(1 << 1)
+	smsNotificationFieldShortCode   = big.NewInt(1 << 2)
+)
+
 type SmsNotification struct {
 	PhoneNumber string  `json:"phoneNumber" url:"phoneNumber"`
 	Message     string  `json:"message" url:"message"`
 	ShortCode   *string `json:"shortCode,omitempty" url:"shortCode,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -1155,6 +1867,34 @@ func (s *SmsNotification) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SmsNotification) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SmsNotification) SetPhoneNumber(phoneNumber string) {
+	s.PhoneNumber = phoneNumber
+	s.require(smsNotificationFieldPhoneNumber)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SmsNotification) SetMessage(message string) {
+	s.Message = message
+	s.require(smsNotificationFieldMessage)
+}
+
+// SetShortCode sets the ShortCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SmsNotification) SetShortCode(shortCode *string) {
+	s.ShortCode = shortCode
+	s.require(smsNotificationFieldShortCode)
+}
+
 func (s *SmsNotification) UnmarshalJSON(data []byte) error {
 	type unmarshaler SmsNotification
 	var value unmarshaler
@@ -1170,6 +1910,17 @@ func (s *SmsNotification) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SmsNotification) MarshalJSON() ([]byte, error) {
+	type embed SmsNotification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SmsNotification) String() string {
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
@@ -1178,11 +1929,21 @@ func (s *SmsNotification) String() string {
 }
 
 // For testing PATCH operations
+var (
+	updateUserRequestFieldUsername = big.NewInt(1 << 0)
+	updateUserRequestFieldEmail    = big.NewInt(1 << 1)
+	updateUserRequestFieldPhone    = big.NewInt(1 << 2)
+	updateUserRequestFieldAddress  = big.NewInt(1 << 3)
+)
+
 type UpdateUserRequest struct {
 	Username *string  `json:"username,omitempty" url:"username,omitempty"`
 	Email    *string  `json:"email,omitempty" url:"email,omitempty"`
 	Phone    *string  `json:"phone,omitempty" url:"phone,omitempty"`
 	Address  *Address `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -1219,6 +1980,41 @@ func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UpdateUserRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetUsername(username *string) {
+	u.Username = username
+	u.require(updateUserRequestFieldUsername)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetEmail(email *string) {
+	u.Email = email
+	u.require(updateUserRequestFieldEmail)
+}
+
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetPhone(phone *string) {
+	u.Phone = phone
+	u.require(updateUserRequestFieldPhone)
+}
+
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserRequest) SetAddress(address *Address) {
+	u.Address = address
+	u.require(updateUserRequestFieldAddress)
+}
+
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateUserRequest
 	var value unmarshaler
@@ -1234,6 +2030,17 @@ func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateUserRequest) String() string {
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
@@ -1242,6 +2049,27 @@ func (u *UpdateUserRequest) String() string {
 }
 
 // Test object with nullable and optional fields
+var (
+	userProfileFieldId                     = big.NewInt(1 << 0)
+	userProfileFieldUsername               = big.NewInt(1 << 1)
+	userProfileFieldNullableString         = big.NewInt(1 << 2)
+	userProfileFieldNullableInteger        = big.NewInt(1 << 3)
+	userProfileFieldNullableBoolean        = big.NewInt(1 << 4)
+	userProfileFieldNullableDate           = big.NewInt(1 << 5)
+	userProfileFieldNullableObject         = big.NewInt(1 << 6)
+	userProfileFieldNullableList           = big.NewInt(1 << 7)
+	userProfileFieldNullableMap            = big.NewInt(1 << 8)
+	userProfileFieldOptionalString         = big.NewInt(1 << 9)
+	userProfileFieldOptionalInteger        = big.NewInt(1 << 10)
+	userProfileFieldOptionalBoolean        = big.NewInt(1 << 11)
+	userProfileFieldOptionalDate           = big.NewInt(1 << 12)
+	userProfileFieldOptionalObject         = big.NewInt(1 << 13)
+	userProfileFieldOptionalList           = big.NewInt(1 << 14)
+	userProfileFieldOptionalMap            = big.NewInt(1 << 15)
+	userProfileFieldOptionalNullableString = big.NewInt(1 << 16)
+	userProfileFieldOptionalNullableObject = big.NewInt(1 << 17)
+)
+
 type UserProfile struct {
 	Id                     string            `json:"id" url:"id"`
 	Username               string            `json:"username" url:"username"`
@@ -1261,6 +2089,9 @@ type UserProfile struct {
 	OptionalMap            map[string]string `json:"optionalMap,omitempty" url:"optionalMap,omitempty"`
 	OptionalNullableString *string           `json:"optionalNullableString,omitempty" url:"optionalNullableString,omitempty"`
 	OptionalNullableObject *Address          `json:"optionalNullableObject,omitempty" url:"optionalNullableObject,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -1395,6 +2226,139 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserProfile) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetId(id string) {
+	u.Id = id
+	u.require(userProfileFieldId)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetUsername(username string) {
+	u.Username = username
+	u.require(userProfileFieldUsername)
+}
+
+// SetNullableString sets the NullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableString(nullableString *string) {
+	u.NullableString = nullableString
+	u.require(userProfileFieldNullableString)
+}
+
+// SetNullableInteger sets the NullableInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableInteger(nullableInteger *int) {
+	u.NullableInteger = nullableInteger
+	u.require(userProfileFieldNullableInteger)
+}
+
+// SetNullableBoolean sets the NullableBoolean field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableBoolean(nullableBoolean *bool) {
+	u.NullableBoolean = nullableBoolean
+	u.require(userProfileFieldNullableBoolean)
+}
+
+// SetNullableDate sets the NullableDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableDate(nullableDate *time.Time) {
+	u.NullableDate = nullableDate
+	u.require(userProfileFieldNullableDate)
+}
+
+// SetNullableObject sets the NullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableObject(nullableObject *Address) {
+	u.NullableObject = nullableObject
+	u.require(userProfileFieldNullableObject)
+}
+
+// SetNullableList sets the NullableList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableList(nullableList []string) {
+	u.NullableList = nullableList
+	u.require(userProfileFieldNullableList)
+}
+
+// SetNullableMap sets the NullableMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetNullableMap(nullableMap map[string]string) {
+	u.NullableMap = nullableMap
+	u.require(userProfileFieldNullableMap)
+}
+
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalString(optionalString *string) {
+	u.OptionalString = optionalString
+	u.require(userProfileFieldOptionalString)
+}
+
+// SetOptionalInteger sets the OptionalInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalInteger(optionalInteger *int) {
+	u.OptionalInteger = optionalInteger
+	u.require(userProfileFieldOptionalInteger)
+}
+
+// SetOptionalBoolean sets the OptionalBoolean field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalBoolean(optionalBoolean *bool) {
+	u.OptionalBoolean = optionalBoolean
+	u.require(userProfileFieldOptionalBoolean)
+}
+
+// SetOptionalDate sets the OptionalDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalDate(optionalDate *time.Time) {
+	u.OptionalDate = optionalDate
+	u.require(userProfileFieldOptionalDate)
+}
+
+// SetOptionalObject sets the OptionalObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalObject(optionalObject *Address) {
+	u.OptionalObject = optionalObject
+	u.require(userProfileFieldOptionalObject)
+}
+
+// SetOptionalList sets the OptionalList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalList(optionalList []string) {
+	u.OptionalList = optionalList
+	u.require(userProfileFieldOptionalList)
+}
+
+// SetOptionalMap sets the OptionalMap field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalMap(optionalMap map[string]string) {
+	u.OptionalMap = optionalMap
+	u.require(userProfileFieldOptionalMap)
+}
+
+// SetOptionalNullableString sets the OptionalNullableString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalNullableString(optionalNullableString *string) {
+	u.OptionalNullableString = optionalNullableString
+	u.require(userProfileFieldOptionalNullableString)
+}
+
+// SetOptionalNullableObject sets the OptionalNullableObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserProfile) SetOptionalNullableObject(optionalNullableObject *Address) {
+	u.OptionalNullableObject = optionalNullableObject
+	u.require(userProfileFieldOptionalNullableObject)
+}
+
 func (u *UserProfile) UnmarshalJSON(data []byte) error {
 	type embed UserProfile
 	var unmarshaler = struct {
@@ -1429,7 +2393,8 @@ func (u *UserProfile) MarshalJSON() ([]byte, error) {
 		NullableDate: internal.NewOptionalDateTime(u.NullableDate),
 		OptionalDate: internal.NewOptionalDateTime(u.OptionalDate),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserProfile) String() string {
@@ -1439,6 +2404,16 @@ func (u *UserProfile) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userResponseFieldId        = big.NewInt(1 << 0)
+	userResponseFieldUsername  = big.NewInt(1 << 1)
+	userResponseFieldEmail     = big.NewInt(1 << 2)
+	userResponseFieldPhone     = big.NewInt(1 << 3)
+	userResponseFieldCreatedAt = big.NewInt(1 << 4)
+	userResponseFieldUpdatedAt = big.NewInt(1 << 5)
+	userResponseFieldAddress   = big.NewInt(1 << 6)
+)
+
 type UserResponse struct {
 	Id        string     `json:"id" url:"id"`
 	Username  string     `json:"username" url:"username"`
@@ -1447,6 +2422,9 @@ type UserResponse struct {
 	CreatedAt time.Time  `json:"createdAt" url:"createdAt"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty" url:"updatedAt,omitempty"`
 	Address   *Address   `json:"address,omitempty" url:"address,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -1504,6 +2482,62 @@ func (u *UserResponse) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserResponse) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetId(id string) {
+	u.Id = id
+	u.require(userResponseFieldId)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetUsername(username string) {
+	u.Username = username
+	u.require(userResponseFieldUsername)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetEmail(email *string) {
+	u.Email = email
+	u.require(userResponseFieldEmail)
+}
+
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetPhone(phone *string) {
+	u.Phone = phone
+	u.require(userResponseFieldPhone)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userResponseFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userResponseFieldUpdatedAt)
+}
+
+// SetAddress sets the Address field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponse) SetAddress(address *Address) {
+	u.Address = address
+	u.require(userResponseFieldAddress)
+}
+
 func (u *UserResponse) UnmarshalJSON(data []byte) error {
 	type embed UserResponse
 	var unmarshaler = struct {
@@ -1538,7 +2572,8 @@ func (u *UserResponse) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(u.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserResponse) String() string {

@@ -7,8 +7,7 @@ import {
     OAuthAccessTokenRequestProperties,
     OAuthAccessTokenResponseProperties,
     OAuthClientCredentials,
-    OAuthScheme,
-    ResponseProperty
+    OAuthScheme
 } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -258,13 +257,15 @@ export class OAuthTokenProviderGenerator {
     }): Code {
         const clientIdProperty = this.getName(requestProperties.clientId.property.name);
         const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name);
-        const accessTokenProperty = this.responsePropertyToDotDelimitedAccessor({
-            responseProperty: responseProperties.accessToken
+        const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
+            property: responseProperties.accessToken,
+            variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
         });
         const handleNeverThrowErrors = this.getNeverThrowErrorsHandler({ context });
         if (responseProperties.expiresIn != null) {
-            const expiresInProperty = this.responsePropertyToDotDelimitedAccessor({
-                responseProperty: responseProperties.expiresIn
+            const expiresInProperty = context.type.generateGetterForResponsePropertyAsString({
+                property: responseProperties.expiresIn,
+                variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
             });
             return code`
                 private async refresh(): Promise<string> {
@@ -273,8 +274,8 @@ export class OAuthTokenProviderGenerator {
                         ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                     });
                     ${handleNeverThrowErrors}
-                    this._accessToken = tokenResponse.${accessTokenProperty};
-                    this._expiresAt = this.getExpiresAt(tokenResponse.${expiresInProperty}, this.BUFFER_IN_MINUTES);
+                    this._accessToken = ${accessTokenProperty};
+                    this._expiresAt = this.getExpiresAt(${expiresInProperty}, this.BUFFER_IN_MINUTES);
                     return this._accessToken;
                 }
             `;
@@ -286,7 +287,7 @@ export class OAuthTokenProviderGenerator {
                     ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                 });
                 ${handleNeverThrowErrors}
-                this._accessToken = tokenResponse.${accessTokenProperty};
+                this._accessToken = ${accessTokenProperty};
                 return this._accessToken;
             }
         `;
@@ -316,24 +317,6 @@ export class OAuthTokenProviderGenerator {
                 return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
             }
         `;
-    }
-
-    private responsePropertyToDotDelimitedAccessor({
-        responseProperty
-    }: {
-        responseProperty: ResponseProperty;
-    }): string {
-        const prefix = this.neverThrowErrors ? "body." : "";
-        const propertyPath = responseProperty.propertyPath;
-        if (propertyPath == null || propertyPath.length === 0) {
-            return prefix + this.getName(responseProperty.property.name);
-        }
-        return (
-            prefix +
-            propertyPath.map((name) => this.getName(name)).join(".") +
-            "." +
-            this.getName(responseProperty.property.name)
-        );
     }
     private getName(name: Name | NameAndWireValue): string {
         if (this.includeSerdeLayer) {

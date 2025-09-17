@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/package-yml/fern/internal"
+	big "math/big"
+)
+
+var (
+	echoRequestFieldName = big.NewInt(1 << 0)
+	echoRequestFieldSize = big.NewInt(1 << 1)
 )
 
 type EchoRequest struct {
 	Name string `json:"name" url:"name"`
 	Size int    `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -34,6 +43,27 @@ func (e *EchoRequest) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *EchoRequest) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EchoRequest) SetName(name string) {
+	e.Name = name
+	e.require(echoRequestFieldName)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EchoRequest) SetSize(size int) {
+	e.Size = size
+	e.require(echoRequestFieldSize)
+}
+
 func (e *EchoRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler EchoRequest
 	var value unmarshaler
@@ -48,6 +78,17 @@ func (e *EchoRequest) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *EchoRequest) MarshalJSON() ([]byte, error) {
+	type embed EchoRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EchoRequest) String() string {

@@ -7,12 +7,22 @@ import (
 	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
 	internal "github.com/objects-with-imports/fern/internal"
+	big "math/big"
+)
+
+var (
+	nodeFieldId       = big.NewInt(1 << 0)
+	nodeFieldLabel    = big.NewInt(1 << 1)
+	nodeFieldMetadata = big.NewInt(1 << 2)
 )
 
 type Node struct {
 	Id       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -42,6 +52,34 @@ func (n *Node) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *Node) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *Node) SetId(id string) {
+	n.Id = id
+	n.require(nodeFieldId)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *Node) SetLabel(label *string) {
+	n.Label = label
+	n.require(nodeFieldLabel)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *Node) SetMetadata(metadata *commons.Metadata) {
+	n.Metadata = metadata
+	n.require(nodeFieldMetadata)
+}
+
 func (n *Node) UnmarshalJSON(data []byte) error {
 	type unmarshaler Node
 	var value unmarshaler
@@ -57,6 +95,17 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *Node) MarshalJSON() ([]byte, error) {
+	type embed Node
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *Node) String() string {
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
@@ -64,8 +113,15 @@ func (n *Node) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	treeFieldNodes = big.NewInt(1 << 0)
+)
+
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -81,6 +137,20 @@ func (t *Tree) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Tree) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Tree) SetNodes(nodes []*Node) {
+	t.Nodes = nodes
+	t.require(treeFieldNodes)
+}
+
 func (t *Tree) UnmarshalJSON(data []byte) error {
 	type unmarshaler Tree
 	var value unmarshaler
@@ -94,6 +164,17 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *Tree) MarshalJSON() ([]byte, error) {
+	type embed Tree
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Tree) String() string {

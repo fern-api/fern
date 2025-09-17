@@ -14,8 +14,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
-    ObjectPropertyAccess,
-    Pagination
+    ObjectPropertyAccess
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
@@ -778,32 +777,39 @@ describe("${serviceName}", () => {
 
         const expectedName =
             endpoint.pagination !== undefined
-                ? this.getPaginationPropertyPath("expected", endpoint.pagination, context)
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "expected"
+                  })
                 : "expected";
         const pageName =
             endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? this.getPaginationPropertyPath("page", endpoint.pagination, context)
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "page"
+                  })
                 : "page";
         const nextPageName =
             endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? this.getPaginationPropertyPath("nextPage", endpoint.pagination, context)
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "nextPage"
+                  })
                 : "nextPage";
-        const paginationPropertyName =
-            endpoint.pagination !== undefined ? this.getPaginationPropertyName(endpoint.pagination, context) : "";
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
                 const expected = ${expected}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                expect(${expectedName}.${paginationPropertyName}).toEqual(${pageName}.data);
                 ${
                     endpoint.pagination.type !== "custom"
                         ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
-                            expect(${expectedName}.${paginationPropertyName}).toEqual(${nextPageName}.data);
+                            expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : ""
+                        : code`expect(${expectedName}).toEqual(${pageName});`
                 }
                 `
                 : "";
@@ -862,19 +868,6 @@ describe("${serviceName}", () => {
         }
     });
           `;
-    }
-
-    private getPaginationPropertyPath(base: string, pagination: Pagination, context: SdkContext): string {
-        return [base, ...(pagination.results.propertyPath ?? []).map((name) => this.getName({ name, context }))].join(
-            "."
-        );
-    }
-
-    private getPaginationPropertyName(pagination: Pagination, context: SdkContext): string {
-        return this.getName({
-            name: pagination.results.property.name.name,
-            context
-        });
     }
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {

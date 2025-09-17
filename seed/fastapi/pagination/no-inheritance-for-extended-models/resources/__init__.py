@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import complex, users
+from . import complex, inline_users, users
 from .complex import (
     Conversation,
     CursorPages,
@@ -66,5 +66,6 @@ __all__ = [
     "WithCursor",
     "WithPage",
     "complex",
+    "inline_users",
     "users",
 ]

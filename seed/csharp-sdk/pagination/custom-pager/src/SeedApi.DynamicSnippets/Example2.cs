@@ -13,8 +13,8 @@ public class Example2
             }
         );
 
-        await client.Users.ListWithMixedTypeCursorPaginationAsync(
-            new ListUsersMixedTypeCursorPaginationRequest{
+        await client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest{
                 Cursor = "cursor"
             }
         );
