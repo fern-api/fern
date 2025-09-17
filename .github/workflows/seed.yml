@@ -266,7 +266,7 @@ jobs:
   create-ts-test-matrix:
     runs-on: Seed
     outputs:
-      matrix_of_tests: ${{ steps.create-test-matrix.outputs.matrix_of_tests }}
+      fixture_list: ${{ steps.create-test-matrix.outputs.fixture_list }}
     # CHRISM - add something like this back at the end
       # if: >-
     #   ${{
@@ -278,118 +278,21 @@ jobs:
       - name: Create Test Matrix
         id: create-test-matrix
         run: |
-          TEST_FIXTURES_1="accept-header alias alias-extends any-auth api-wide-base-path audiences"
-          TEST_FIXTURES_2="auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload"
-          matrix_of_tests=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2")
+          FIXTURE_LIST=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders)
 
-          echo "test_string=$TEST_STRING" >> $GITHUB_OUTPUT
-          echo "Built test matrix string as: "
-          echo "$matrix_of_tests"
+          echo "fixture_list=$FIXTURE_LIST" >> $GITHUB_OUTPUT
 
-          echo "Test string 1 as: "
-          echo "$TEST_FIXTURES_1"
+          # for debug
+          echo "List of fixtures: "
+          echo "$fixture_list"
 
-          echo "Test string 2 as: "
-          echo "$TEST_FIXTURES_2"
-    
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
     needs: create-ts-test-matrix
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix: 
-        fixtures: [
-          "accept-header",
-          "alias",
-          "alias-extends",
-          "any-auth",
-          "api-wide-base-path",
-          "audiences",
-          "auth-environment-variables",
-          "basic-auth",
-          "basic-auth-environment-variables",
-          "bearer-token-environment-variable",
-          "bytes-download",
-          "bytes-upload",
-          "circular-references",
-          "circular-references-advanced",
-          "client-side-params",
-          "content-type",
-          "cross-package-type-names",
-          "custom-auth",
-          "empty-clients",
-          "enum",
-          "error-property",
-          "errors",
-          "examples",
-          # "exhaustive", // skip you for now
-          "extends",
-          "extra-properties",
-          "file-download",
-          "file-upload",
-          "folders",
-          "http-head",
-          "idempotency-headers",
-          "imdb",
-          "inferred-auth-explicit",
-          "inferred-auth-implicit",
-          "inferred-auth-implicit-no-expiry",
-          "license",
-          "literal",
-          "literals-unions",
-          "mixed-case",
-          "mixed-file-directory",
-          "multi-line-docs",
-          "multi-url-environment",
-          "multi-url-environment-no-default",
-          "multiple-request-bodies",
-          "no-environment",
-          "nullable",
-          "nullable-optional",
-          "oauth-client-credentials",
-          "oauth-client-credentials-custom",
-          "oauth-client-credentials-default",
-          "oauth-client-credentials-environment-variables",
-          "oauth-client-credentials-nested-root",
-          "oauth-client-credentials-with-variables",
-          "object",
-          "objects-with-imports",
-          "optional",
-          "package-yml",
-          "pagination",
-          "pagination-custom",
-          "path-parameters",
-          "plain-text",
-          "property-access",
-          "public-object",
-          "query-parameters",
-          "query-parameters-openapi",
-          "query-parameters-openapi-as-objects",
-          "request-parameters",
-          "reserved-keywords",
-          "response-property",
-          "server-sent-event-examples",
-          "server-sent-events",
-          "simple-api",
-          "simple-fhir",
-          "single-url-environment-default",
-          "single-url-environment-no-default",
-          "streaming",
-          "streaming-parameter",
-          "trace",
-          "ts-express-casing",
-          "ts-inline-types",
-          "undiscriminated-unions",
-          "unions",
-          "unknown",
-          "validation",
-          "variables",
-          "version",
-          "version-no-default",
-          "websocket",
-          "websocket-bearer-auth",
-          "websocket-inferred-auth"
-        ]
+        fixtures: ${{ needs.create-ts-test-matrix.outputs.fixture_list }}
         # fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
     # CHRISM - add something like this back at the end
     # if: >-
