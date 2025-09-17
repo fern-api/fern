@@ -10,7 +10,7 @@ import { writeFile } from "fs/promises";
 import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SdkContractTestGenerator } from "./sdk-contract-tests/SdkContractTestGenerator";
+import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 
@@ -91,8 +91,8 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        const contractTestGenerator = new SdkContractTestGenerator(context);
-        await contractTestGenerator.generate();
+        const wireTestGenerator = new SdkWireTestGenerator(context);
+        await wireTestGenerator.generate();
 
         await context.project.persist();
     }
