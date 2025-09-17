@@ -21,7 +21,7 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
     if (retryAfter) {
         // Parse as number of seconds...
         const retryAfterSeconds = parseInt(retryAfter, 10);
-		if (!isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
+        if (!isNaN(retryAfterSeconds) && retryAfterSeconds > 0) {
             return Math.min(retryAfterSeconds * 1000, MAX_RETRY_DELAY);
         }
 
@@ -29,9 +29,9 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
         const retryAfterDate = new Date(retryAfter);
         if (!isNaN(retryAfterDate.getTime())) {
             const delay = retryAfterDate.getTime() - Date.now();
-			if (delay > 0) {
-				return Math.min(Math.max(delay, 0), MAX_RETRY_DELAY);
-			}
+            if (delay > 0) {
+                return Math.min(Math.max(delay, 0), MAX_RETRY_DELAY);
+            }
         }
     }
 
