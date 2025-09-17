@@ -17,7 +17,9 @@ import {
     TypeParameter,
     YieldParameter
 } from "./ast";
+import { Begin } from "./ast/Begin";
 import { IfElse } from "./ast/IfElse";
+import { Raise } from "./ast/Raise";
 
 export {
     Class_,
@@ -107,6 +109,14 @@ export function positionalArgument(args: PositionalArgument.Args): PositionalArg
 
 export function ifElse(args: IfElse.Args): IfElse {
     return new IfElse(args);
+}
+
+export function begin(args: Begin.Args): Begin {
+    return new Begin(args);
+}
+
+export function raise(args: Raise.Args): Raise {
+    return new Raise(args);
 }
 
 export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {

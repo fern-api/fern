@@ -8,6 +8,8 @@ import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { mkdir, writeFile } from "fs/promises";
+import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
@@ -69,6 +71,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.info("=== CALLING persist ===");
         await context.project.persist();
         context.logger.info("=== PERSIST COMPLETE ===");
+
+        // Generate dynamic-snippets directory with individual .rs files
+        await this.generateDynamicSnippetFiles(context);
+        context.logger.info("=== dynamic-snippets COMPLETE ===");
 
         context.logger.info("=== RUNNING rustfmt ===");
         await formatRustCode({
@@ -395,6 +401,68 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.error(`Failed to generate dynamic snippets: ${error}`);
             return endpointSnippets;
         }
+    }
+
+    // ===========================
+    // DYNAMIC SNIPPETS GENERATION
+    // ===========================
+
+    private async generateDynamicSnippetFiles(context: SdkGeneratorContext): Promise<void> {
+        context.logger.info("=== GENERATING DYNAMIC SNIPPETS ===");
+
+        // Check if we have output directory configured
+        if (!context.config.output.path) {
+            context.logger.info("No output path configured, skipping dynamic snippets");
+            return;
+        }
+
+        // Check if we have dynamic IR
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            context.logger.info("No dynamic IR available, skipping dynamic snippets");
+            return;
+        }
+
+        // Create dynamic snippets generator
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        let exampleIndex = 0;
+
+        // Process each endpoint from dynamic IR
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            // Get examples for this endpoint
+            const examples = endpoint.examples ?? [];
+
+            for (const example of examples) {
+                try {
+                    // Convert example to dynamic snippet request
+                    const snippetRequest = convertDynamicEndpointSnippetRequest(example);
+
+                    // Generate the snippet
+                    const snippetResponse = await dynamicSnippetsGenerator.generate(snippetRequest);
+
+                    if (snippetResponse.snippet) {
+                        // Create dynamic-snippets directory if it doesn't exist
+                        const dynamicSnippetsDir = join(context.config.output.path, "dynamic-snippets");
+                        await mkdir(dynamicSnippetsDir, { recursive: true });
+
+                        // Write the Rust snippet file directly
+                        const snippetPath = join(dynamicSnippetsDir, `example${exampleIndex}.rs`);
+                        await writeFile(snippetPath, snippetResponse.snippet);
+
+                        context.logger.info(`Generated dynamic snippet: ${snippetPath}`);
+                        exampleIndex++;
+                    }
+                } catch (error) {
+                    context.logger.warn(`Failed to generate dynamic snippet for ${endpointId}: ${error}`);
+                }
+            }
+        }
+
+        context.logger.info(`=== DYNAMIC SNIPPETS COMPLETE (${exampleIndex} files) ===`);
     }
 
     // ===========================

@@ -33,6 +33,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^59.6.1",
     "@fern-api/path-utils": "workspace:*",
+    "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
