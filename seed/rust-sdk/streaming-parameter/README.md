@@ -33,8 +33,8 @@ async fn main() {
     let client = StreamingClient::new(config).expect("Failed to build client");
     client
         .dummy_generate(GenerateRequest {
-            stream: true,
-            num_events: 1,
+            stream: false,
+            num_events: 5,
         })
         .await;
 }

@@ -8,6 +8,13 @@
   createdAt: "2025-09-17"
   irVersion: 60
 
+- version: 2.12.3
+  changelogEntry:
+    - summary: Updated retry strategy; in particular, don't jitter for `retry-after` header.
+      type: chore
+  createdAt: "2025-09-17"
+  irVersion: 60
+
 - version: 2.12.2
   changelogEntry:
     - summary: Generate correct types for pagination with inline types.
@@ -34,7 +41,7 @@
 - version: 2.11.2
   changelogEntry:
     - summary: |
-        Websocket client generation compiles when there are no query parameters and when the auth 
+        Websocket client generation compiles when there are no query parameters and when the auth
         scheme has custom authentication headers.
       type: fix
 
@@ -44,7 +51,7 @@
 - version: 2.11.1
   changelogEntry:
     - summary: |
-        The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled. 
+        The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled.
         This prevents compilation errors in the TypeScript SDK.
       type: fix
   createdAt: "2025-09-15"

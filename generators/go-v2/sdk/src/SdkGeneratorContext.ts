@@ -686,8 +686,21 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
-        const httpService = this.getHttpServiceOrThrow(serviceId);
-        return this.getPackageLocation(httpService.name.fernFilepath);
+        if (this.customConfig.exportAllRequestsAtRoot) {
+            // All inlined request types are generated in the root package's requests.go
+            return this.getRootPackageLocation();
+        } else {
+            // Otherwise, generate in subpackage based on service filepath
+            const httpService = this.getHttpServiceOrThrow(serviceId);
+            return this.getPackageLocation(httpService.name.fernFilepath);
+        }
+    }
+
+    private getRootPackageLocation(): FileLocation {
+        return {
+            importPath: this.getRootImportPath(),
+            directory: RelativeFilePath.of("")
+        };
     }
 
     public maybeGetExampleEndpointCall(endpoint: HttpEndpoint): ExampleEndpointCall | null {

@@ -49,7 +49,8 @@ public class ReqWithHeadersWireTest {
         Assertions.assertEquals("X-TEST-ENDPOINT-HEADER", request.getHeader("X-TEST-ENDPOINT-HEADER"), "Header 'X-TEST-ENDPOINT-HEADER' should match expected value");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "\"string\"";
+        String expectedRequestBody = ""
+            + "\"string\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");

@@ -31,7 +31,7 @@ use seed_mixed_case::{ClientConfig, MixedCaseClient};
 async fn main() {
     let config = ClientConfig {};
     let client = MixedCaseClient::new(config).expect("Failed to build client");
-    client.service_get_resource("ResourceID").await;
+    client.service_get_resource("rsc-xyz").await;
 }
 ```
 

@@ -28,7 +28,7 @@ use Seed\SeedClient;
 
 $client = new SeedClient();
 $client->service->getResource(
-    'ResourceID',
+    'rsc-xyz',
 );
 
 ```

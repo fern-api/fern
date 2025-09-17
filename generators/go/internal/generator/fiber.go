@@ -14,11 +14,11 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
-		bodyField  = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
-		typeName   = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-		receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		receiver  = typeNameToReceiver(typeName)
 	)
+	importPath := getImportPathForRequestType(f, fernFilepath)
 
 	var literals []*literal
 	f.P("type ", typeName, " struct {")

@@ -39,11 +39,12 @@ public class UnionWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"type\": \"circle\",\n" +
-            "  \"radius\": 1.1,\n" +
-            "  \"id\": \"id\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"type\": \"circle\",\n"
+            + "  \"radius\": 1.1,\n"
+            + "  \"id\": \"id\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -85,11 +86,12 @@ public class UnionWireTest {
         Assertions.assertEquals("PATCH", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"type\": \"circle\",\n" +
-            "  \"radius\": 1.1,\n" +
-            "  \"id\": \"id\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"type\": \"circle\",\n"
+            + "  \"radius\": 1.1,\n"
+            + "  \"id\": \"id\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -116,7 +118,8 @@ public class UnionWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "true";
+        String expectedResponseBody = ""
+            + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
