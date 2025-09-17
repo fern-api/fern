@@ -299,13 +299,17 @@ jobs:
       - name: Create Test Matrix
         id: create-test-matrix
         run: |
-          FIXTURE_LIST=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders)
-
-          echo "fixture_list=$FIXTURE_LIST" >> $GITHUB_OUTPUT
+          FIXTURE_LIST=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | jq -r '.fixtures[]')
+          echo "fixtures<<EOF" >> $GITHUB_OUTPUT
+          echo "$FIXTURE_LIST" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
           # for debug
           echo "List of fixtures: "
-          echo "$fixture_list"
+          echo "$FIXTURE_LIST"
+
+          echo "other struct: "
+          echo "$fixtures"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
