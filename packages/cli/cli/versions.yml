@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: false (was true)
+          - `respect-nullable-schemas`: true (was false)
+          - `inline-path-parameters`: true (was false)
+          - `idiomatic-request-names`: true (was false)
+          - `type-dates-as-strings`: true (was false)
+
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 1.0.0
+
+- changelogEntry:
     - summary: Support running the Rust SDK generator using IR v58.
       type: fix
   irVersion: 59
