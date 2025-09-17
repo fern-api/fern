@@ -32,7 +32,7 @@ async function exponentialBackoff<T>(
 
 export async function startPuppeteer(): Promise<Browser> {
     try {
-        return await launch({ headless: "new", ignoreHTTPSErrors: true });
+        return await launch({ headless: true, args: ['--ignore-certificate-errors'] });
     } catch (error) {
         throw new Error("Could not create a Puppeteer instance");
     }
