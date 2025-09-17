@@ -9,6 +9,7 @@ import {
     ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
+    RetriesConfiguration,
     Schema,
     SchemaId,
     SchemaWithExample,
@@ -351,7 +352,8 @@ export function generateIr({
                     source: error.source,
                     examples
                 };
-            })
+            }),
+            retries: endpointWithExample.retries
         };
     });
 

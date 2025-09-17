@@ -61,6 +61,7 @@ types:
           Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
       pagination: optional<finalIr.Pagination>
+      retries: optional<finalIr.RetriesConfiguration>
 
   WebhookWithExample:
     extends:
