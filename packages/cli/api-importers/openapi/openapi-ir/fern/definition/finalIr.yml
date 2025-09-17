@@ -205,6 +205,11 @@ types:
       servers: list<HttpEndpointServer>
       examples: list<EndpointExample>
       pagination: optional<Pagination>
+      retries: optional<RetriesConfiguration>
+
+  RetriesConfiguration:
+    union:
+      disabled: {}
 
   HttpEndpointServer:
     properties:

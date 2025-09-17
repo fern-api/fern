@@ -53,6 +53,11 @@ types:
       pagination: optional<Pagination>
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
+      retries: optional<RetriesConfiguration>
+
+  RetriesConfiguration:
+    union:
+      disabled: {}
 
   HttpMethodSchema:
     enum:
