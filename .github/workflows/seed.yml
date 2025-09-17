@@ -318,9 +318,7 @@ jobs:
         #   echo "other struct: "
         #   echo "${fixture_list}"
         run: |
-          echo "fixture_list=[\"alias\",\"alias-extends\"]" >> $GITHUB_OUTPUT
-          echo "Testing fixture_list output:"
-          echo "$(echo '["alias","alias-extends"]')"
+          echo 'fixture_list=["alias", "alias-extends"]' >> "$GITHUB_OUTPUT"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
@@ -328,7 +326,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix: 
-        fixtures: ${{ needs.create-ts-test-matrix.outputs.fixture_list }}
+        fixtures: ${{ fromJSON(needs.create-ts-test-matrix.outputs.fixture_list) }}
         # fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
     # CHRISM - add something like this back at the end
     # if: >-
