@@ -6,10 +6,10 @@ import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
-import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
 import { TestClassBuilder } from "./builders/TestClassBuilder";
 import { TestMethodBuilder } from "./builders/TestMethodBuilder";
 import { SnippetExtractor } from "./extractors/SnippetExtractor";
+import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
 
 /**
  * Generates contract tests that validate SDK adherence to API specifications.
@@ -124,9 +124,7 @@ export class SdkContractTestGenerator {
                             });
                         }
                     } catch (error) {
-                        this.context.logger.debug(
-                            `Failed to generate snippet for endpoint ${endpoint.id}: ${error}`
-                        );
+                        this.context.logger.debug(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
                     }
                 }
             }

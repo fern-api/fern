@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, Pagination } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
@@ -215,7 +215,7 @@ export class JsonValidator {
     /**
      * Gets the path to pagination results from the pagination configuration
      */
-    private getPaginationResultsPath(pagination: any): string | undefined {
+    private getPaginationResultsPath(pagination: Pagination): string | undefined {
         // TODO:This is a simplified implementation - actual implementation would
         // parse the ResponseProperty structure from IR
         if (pagination.type === "cursor" || pagination.type === "offset") {
@@ -228,7 +228,7 @@ export class JsonValidator {
     /**
      * Gets the path to the next cursor from the pagination configuration
      */
-    private getPaginationNextCursorPath(pagination: any): string | undefined {
+    private getPaginationNextCursorPath(pagination: Pagination): string | undefined {
         // This is a simplified implementation - actual implementation would
         // parse the ResponseProperty structure from IR
         if (pagination.type === "cursor") {

@@ -164,7 +164,6 @@ export class WireTestDataExtractor {
     }
 
     private createRawJsonExample(typeRef: ExampleTypeReference): unknown {
-        // Simply use jsonExample directly for all types
         return typeRef.jsonExample;
     }
 }

@@ -163,9 +163,10 @@ export class TestClassBuilder {
                 return '.token("test-token")';
             case "basic":
                 return '.username("testuser").password("testpass")';
-            case "header":
+            case "header": {
                 const headerName = scheme.name?.name?.originalName || "X-API-Key";
                 return `.apiKey("test-api-key") // For header: ${headerName}`;
+            }
             case "oauth":
                 return '.token("oauth-test-token")';
             default:

@@ -25,7 +25,7 @@ export class HeaderValidator {
                 const escapedValue = this.escapeJavaString(expectedValue.toString());
                 writer.writeLine(
                     `Assertions.assertEquals("${escapedValue}", request.getHeader("${headerName}"), ` +
-                    `"Header '${headerName}' should match expected value");`
+                        `"Header '${headerName}' should match expected value");`
                 );
             }
         }

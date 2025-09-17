@@ -1,12 +1,12 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
 import { java } from "@fern-api/java-ast";
+import { Writer } from "@fern-api/java-ast/src/ast";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SnippetExtractor } from "../extractors/SnippetExtractor";
 import { WireTestExample } from "../extractors/TestDataExtractor";
 import { HeaderValidator } from "../validators/HeaderValidator";
 import { JsonValidator } from "../validators/JsonValidator";
 import { PaginationValidator } from "../validators/PaginationValidator";
-import { SnippetExtractor } from "../extractors/SnippetExtractor";
 
 /**
  * Builder for generating individual test methods in contract tests.
@@ -79,7 +79,13 @@ export class TestMethodBuilder {
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
 
-                this.jsonValidator.generateEnhancedJsonValidation(writer, endpoint, "request", "actualJson", "expectedJson");
+                this.jsonValidator.generateEnhancedJsonValidation(
+                    writer,
+                    endpoint,
+                    "request",
+                    "actualJson",
+                    "expectedJson"
+                );
             }
 
             if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {

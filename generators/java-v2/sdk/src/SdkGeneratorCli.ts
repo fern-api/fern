@@ -8,11 +8,11 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
 import { buildReference } from "./reference/buildReference";
+import { SdkContractTestGenerator } from "./sdk-contract-tests/SdkContractTestGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { SdkContractTestGenerator } from "./sdk-contract-tests/SdkContractTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

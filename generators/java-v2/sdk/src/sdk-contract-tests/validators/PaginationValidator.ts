@@ -1,5 +1,5 @@
 import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, ResponseProperty } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
@@ -12,11 +12,7 @@ export class PaginationValidator {
     /**
      * Generates pagination validation for endpoints with pagination support.
      */
-    public generatePaginationValidation(
-        writer: Writer,
-        endpoint: HttpEndpoint,
-        actualVarName: string
-    ): void {
+    public generatePaginationValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
         if (!this.isPaginatedEndpoint(endpoint)) {
             return;
         }
@@ -37,7 +33,7 @@ export class PaginationValidator {
 
             writer.writeLine(
                 `Assertions.assertTrue(${currentPath}.isArray(), ` +
-                `"Pagination results at '${paginationPath}' should be an array");`
+                    `"Pagination results at '${paginationPath}' should be an array");`
             );
 
             for (let i = 0; i < pathParts.length; i++) {
@@ -75,7 +71,7 @@ export class PaginationValidator {
      * Extracts a simple path from a ResponseProperty.
      * This is a simplified version - full implementation would handle complex paths.
      */
-    private extractPath(property: any): string {
+    private extractPath(property: ResponseProperty | undefined): string {
         // Simplified extraction - in real implementation this would
         // parse the ResponseProperty structure properly
         return "data";
