@@ -1,5 +1,5 @@
-import { PostmanRequest } from "@fern-fern/postman-sdk/api";
+import { FernPostman } from "@fern-fern/postman-sdk";
 
 export interface GeneratedRequest {
-    get: () => PostmanRequest;
+    get: () => FernPostman.PostmanRequest;
 }

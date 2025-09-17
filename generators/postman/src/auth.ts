@@ -1,5 +1,5 @@
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
-import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
+import { FernPostman } from "@fern-fern/postman-sdk";
 
 import { getReferenceToVariable } from "./utils";
 
@@ -7,9 +7,9 @@ const BASIC_AUTH_USERNAME_VARIABLE = "username";
 const BASIC_AUTH_PASSWORD_VARIABLE = "password";
 const BEARER_AUTH_TOKEN_VARIABLE = "token";
 
-export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefined {
+export function convertAuth(schemes: AuthScheme[]): FernPostman.PostmanRequestAuth | undefined {
     for (const scheme of schemes) {
-        const auth = AuthScheme._visit<PostmanRequestAuth | undefined>(scheme, {
+        const auth = AuthScheme._visit<FernPostman.PostmanRequestAuth | undefined>(scheme, {
             basic: () => ({
                 type: "basic",
                 basic: [
@@ -80,13 +80,13 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
     return undefined;
 }
 
-export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
+export function getAuthHeaders(schemes: AuthScheme[]): FernPostman.PostmanHeader[] {
     return schemes.flatMap((scheme) =>
-        AuthScheme._visit<PostmanHeader[]>(scheme, {
+        AuthScheme._visit<FernPostman.PostmanHeader[]>(scheme, {
             basic: () => [],
             bearer: () => [],
             oauth: () => [],
-            header: (header): PostmanHeader[] => [
+            header: (header): FernPostman.PostmanHeader[] => [
                 {
                     key: header.name.wireValue,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
@@ -101,7 +101,7 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
     );
 }
 
-export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[] {
+export function getVariablesForAuthScheme(scheme: AuthScheme): FernPostman.PostmanVariable[] {
     return AuthScheme._visit(scheme, {
         basic: () => [
             {

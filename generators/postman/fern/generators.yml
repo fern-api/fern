@@ -3,7 +3,7 @@ groups:
   sdks:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.39.5
+        version: 2.10.3
         output:
           location: npm
           url: npm.buildwithfern.com
