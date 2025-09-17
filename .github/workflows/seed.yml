@@ -293,9 +293,10 @@ jobs:
           echo "$TEST_FIXTURES_2"
     
   typescript-sdk-as-matrix:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     needs: create-ts-test-matrix
     strategy:
+      fail-fast: false # Let all tests run, even if some fail
       matrix: 
         fixtures: ["accept-header", "alias", "alias-extends","any-auth", "api-wide-base-path", "audiences"]
         # fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
