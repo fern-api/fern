@@ -100,12 +100,4 @@ export class Class extends AstNode {
         writer.dedent();
         writer.write("}");
     }
-
-    public findLineForMethod(methodName: string): number | null {
-        const writer = new Writer();
-        this.write(writer);
-        const rendered = writer.toString();
-        const lines = rendered.split("\n");
-        return lines.findIndex((line) => line.match(/^.*\b${methodName}\b.*$/));
-    }
 }
