@@ -42,8 +42,8 @@
                 "name": "Request",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "date_query": "optional<date>",
-                  "date_time_query": "optional<datetime>",
+                  "date_query": "optional<nullable<date>>",
+                  "date_time_query": "optional<nullable<datetime>>",
                 },
               },
               "response": {
@@ -87,8 +87,8 @@
       request:
         name: Request
         query-parameters:
-          date_query: optional<date>
-          date_time_query: optional<datetime>
+          date_query: optional<nullable<date>>
+          date_time_query: optional<nullable<datetime>>
         body:
           properties:
             date_only: optional<date>
@@ -129,11 +129,11 @@ types:
       "headers": {
         "date_header": {
           "name": "dateHeader",
-          "type": "optional<date>",
+          "type": "optional<nullable<date>>",
         },
         "date_time_header": {
           "name": "dateTimeHeader",
-          "type": "optional<datetime>",
+          "type": "optional<nullable<datetime>>",
         },
       },
       "name": "api",
@@ -145,10 +145,10 @@ error-discrimination:
 display-name: Test spec for `date` and `date-time` types.
 headers:
   date_header:
-    type: optional<date>
+    type: optional<nullable<date>>
     name: dateHeader
   date_time_header:
-    type: optional<datetime>
+    type: optional<nullable<datetime>>
     name: dateTimeHeader
 ",
   },

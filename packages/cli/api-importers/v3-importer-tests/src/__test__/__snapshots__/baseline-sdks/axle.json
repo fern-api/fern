@@ -7108,13 +7108,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "BOOLEAN",
-                      "v2": {
-                        "type": "boolean"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "BOOLEAN",
+                          "v2": {
+                            "type": "boolean"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -7168,7 +7174,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -7481,13 +7487,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "BOOLEAN",
-                      "v2": {
-                        "type": "boolean"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "BOOLEAN",
+                          "v2": {
+                            "type": "boolean"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -7541,7 +7553,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -7828,6 +7840,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetCarrierRequest",
+                "camelCase": {
+                  "unsafeName": "getCarrierRequest",
+                  "safeName": "getCarrierRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_carrier_request",
+                  "safeName": "get_carrier_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_CARRIER_REQUEST",
+                  "safeName": "GET_CARRIER_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetCarrierRequest",
+                  "safeName": "GetCarrierRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -13043,8 +13119,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "BOOLEAN",
-                  "type": "primitive"
+                  "value": {
+                    "value": "BOOLEAN",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -13052,7 +13131,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -13283,8 +13362,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "BOOLEAN",
-                  "type": "primitive"
+                  "value": {
+                    "value": "BOOLEAN",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -13292,7 +13374,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -13403,6 +13485,70 @@
           "path": "/carriers/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetCarrierRequest",
+              "camelCase": {
+                "unsafeName": "getCarrierRequest",
+                "safeName": "getCarrierRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_carrier_request",
+                "safeName": "get_carrier_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_CARRIER_REQUEST",
+                "safeName": "GET_CARRIER_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetCarrierRequest",
+                "safeName": "GetCarrierRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "carriers",
+                  "camelCase": {
+                    "unsafeName": "carriers",
+                    "safeName": "carriers"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "carriers",
+                    "safeName": "carriers"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CARRIERS",
+                    "safeName": "CARRIERS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Carriers",
+                    "safeName": "Carriers"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "carriers",
+                "camelCase": {
+                  "unsafeName": "carriers",
+                  "safeName": "carriers"
+                },
+                "snakeCase": {
+                  "unsafeName": "carriers",
+                  "safeName": "carriers"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CARRIERS",
+                  "safeName": "CARRIERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Carriers",
+                  "safeName": "Carriers"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -13433,7 +13579,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"

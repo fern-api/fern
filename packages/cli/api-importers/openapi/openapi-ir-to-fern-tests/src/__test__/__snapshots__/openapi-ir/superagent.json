@@ -219,7 +219,6 @@
               "type": "string"
             },
             "generatedName": "GetAgentApiV1AgentsAgentIdGetRequestAgentId",
-            "nameOverride": "Agentid",
             "title": "Agentid",
             "groupName": [],
             "type": "primitive"
@@ -340,7 +339,6 @@
               "type": "string"
             },
             "generatedName": "DeleteAgentApiV1AgentsAgentIdDeleteRequestAgentId",
-            "nameOverride": "Agentid",
             "title": "Agentid",
             "groupName": [],
             "type": "primitive"
@@ -461,7 +459,6 @@
               "type": "string"
             },
             "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestAgentId",
-            "nameOverride": "Agentid",
             "title": "Agentid",
             "groupName": [],
             "type": "primitive"
@@ -481,17 +478,16 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestKey",
+            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestBodyKey",
             "groupName": [],
             "type": "primitive"
           },
           "value": {
-            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestValue",
+            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestBodyValue",
             "type": "unknown"
           },
-          "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequest",
+          "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestBody",
           "title": "Body",
-          "nameOverride": "Body",
           "groupName": [],
           "type": "map"
         },
@@ -632,7 +628,6 @@
               "type": "string"
             },
             "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostRequestAgentId",
-            "nameOverride": "Agentid",
             "title": "Agentid",
             "groupName": [],
             "type": "primitive"
@@ -648,7 +643,7 @@
       "generatedRequestName": "PromptAgentApiV1AgentsAgentIdPredictPostRequest",
       "request": {
         "schema": {
-          "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostRequest",
+          "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostRequestBody",
           "schema": "PredictAgent",
           "source": {
             "file": "../openapi.yml",
@@ -1121,7 +1116,6 @@
               "type": "string"
             },
             "generatedName": "ReadUserApiV1UsersUserIdGetRequestUserId",
-            "nameOverride": "Userid",
             "title": "Userid",
             "groupName": [],
             "type": "primitive"
@@ -1430,7 +1424,6 @@
               "type": "string"
             },
             "generatedName": "GetApiTokenApiV1ApiTokensTokenIdGetRequestTokenId",
-            "nameOverride": "Tokenid",
             "title": "Tokenid",
             "groupName": [],
             "type": "primitive"
@@ -1551,7 +1544,6 @@
               "type": "string"
             },
             "generatedName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestTokenId",
-            "nameOverride": "Tokenid",
             "title": "Tokenid",
             "groupName": [],
             "type": "primitive"
@@ -1875,7 +1867,6 @@
               "type": "string"
             },
             "generatedName": "GetDocumentApiV1DocumentsDocumentIdGetRequestDocumentId",
-            "nameOverride": "Documentid",
             "title": "Documentid",
             "groupName": [],
             "type": "primitive"
@@ -1996,7 +1987,6 @@
               "type": "string"
             },
             "generatedName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestDocumentId",
-            "nameOverride": "Documentid",
             "title": "Documentid",
             "groupName": [],
             "type": "primitive"
@@ -2317,7 +2307,6 @@
               "type": "string"
             },
             "generatedName": "GetPromptApiV1PromptsPromptIdGetRequestPromptId",
-            "nameOverride": "Promptid",
             "title": "Promptid",
             "groupName": [],
             "type": "primitive"
@@ -2438,7 +2427,6 @@
               "type": "string"
             },
             "generatedName": "DeletePromptApiV1PromptsPromptIdDeleteRequestPromptId",
-            "nameOverride": "Promptid",
             "title": "Promptid",
             "groupName": [],
             "type": "primitive"
@@ -2559,7 +2547,6 @@
               "type": "string"
             },
             "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestPromptId",
-            "nameOverride": "Promptid",
             "title": "Promptid",
             "groupName": [],
             "type": "primitive"
@@ -2579,17 +2566,16 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestKey",
+            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestBodyKey",
             "groupName": [],
             "type": "primitive"
           },
           "value": {
-            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestValue",
+            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestBodyValue",
             "type": "unknown"
           },
-          "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequest",
+          "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestBody",
           "title": "Body",
-          "nameOverride": "Body",
           "groupName": [],
           "type": "map"
         },
@@ -2926,7 +2912,6 @@
               "type": "string"
             },
             "generatedName": "GetToolApiV1ToolsToolIdGetRequestToolId",
-            "nameOverride": "Toolid",
             "title": "Toolid",
             "groupName": [],
             "type": "primitive"
@@ -3047,7 +3032,6 @@
               "type": "string"
             },
             "generatedName": "DeleteToolApiV1ToolsToolIdDeleteRequestToolId",
-            "nameOverride": "Toolid",
             "title": "Toolid",
             "groupName": [],
             "type": "primitive"
@@ -3236,7 +3220,6 @@
                 "type": "string"
               },
               "generatedName": "AgentName",
-              "nameOverride": "Name",
               "title": "Name",
               "groupName": [],
               "type": "primitive"
@@ -3252,7 +3235,6 @@
                 "type": "string"
               },
               "generatedName": "AgentType",
-              "nameOverride": "Type",
               "title": "Type",
               "groupName": [],
               "type": "primitive"
@@ -3265,7 +3247,6 @@
             "key": "llm",
             "schema": {
               "generatedName": "agentLlm",
-              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "key": {
@@ -3282,7 +3263,6 @@
                 },
                 "generatedName": "AgentLlm",
                 "title": "Llm",
-                "nameOverride": "Llm",
                 "groupName": [],
                 "type": "map"
               },
@@ -3297,7 +3277,6 @@
             "key": "has_memory",
             "schema": {
               "generatedName": "agentHasMemory",
-              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
@@ -3320,14 +3299,12 @@
             "key": "documentId",
             "schema": {
               "generatedName": "agentDocumentId",
-              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AgentDocumentId",
-                "nameOverride": "Documentid",
                 "title": "Documentid",
                 "groupName": [],
                 "type": "primitive"
@@ -3343,14 +3320,12 @@
             "key": "promptId",
             "schema": {
               "generatedName": "agentPromptId",
-              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AgentPromptId",
-                "nameOverride": "Promptid",
                 "title": "Promptid",
                 "groupName": [],
                 "type": "primitive"
@@ -3366,14 +3341,12 @@
             "key": "toolId",
             "schema": {
               "generatedName": "agentToolId",
-              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AgentToolId",
-                "nameOverride": "Toolid",
                 "title": "Toolid",
                 "groupName": [],
                 "type": "primitive"
@@ -3386,7 +3359,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Agent",
-        "nameOverride": "Agent",
         "title": "Agent",
         "groupName": [],
         "additionalProperties": false,
@@ -3408,7 +3380,6 @@
                 "type": "string"
               },
               "generatedName": "ApiTokenDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -3418,7 +3389,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ApiToken",
-        "nameOverride": "ApiToken",
         "title": "ApiToken",
         "groupName": [],
         "additionalProperties": false,
@@ -3440,7 +3410,6 @@
                 "type": "string"
               },
               "generatedName": "DocumentType",
-              "nameOverride": "Type",
               "title": "Type",
               "groupName": [],
               "type": "primitive"
@@ -3456,7 +3425,6 @@
                 "type": "string"
               },
               "generatedName": "DocumentUrl",
-              "nameOverride": "Url",
               "title": "Url",
               "groupName": [],
               "type": "primitive"
@@ -3472,7 +3440,6 @@
                 "type": "string"
               },
               "generatedName": "DocumentName",
-              "nameOverride": "Name",
               "title": "Name",
               "groupName": [],
               "type": "primitive"
@@ -3485,7 +3452,6 @@
             "key": "authorization",
             "schema": {
               "generatedName": "documentAuthorization",
-              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "key": {
@@ -3502,7 +3468,6 @@
                 },
                 "generatedName": "DocumentAuthorization",
                 "title": "Authorization",
-                "nameOverride": "Authorization",
                 "groupName": [],
                 "type": "map"
               },
@@ -3517,7 +3482,6 @@
             "key": "from_page",
             "schema": {
               "generatedName": "documentFromPage",
-              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "schema": {
@@ -3542,7 +3506,6 @@
             "key": "to_page",
             "schema": {
               "generatedName": "documentToPage",
-              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "schema": {
@@ -3564,7 +3527,6 @@
             "key": "splitter",
             "schema": {
               "generatedName": "documentSplitter",
-              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "key": {
@@ -3581,7 +3543,6 @@
                 },
                 "generatedName": "DocumentSplitter",
                 "title": "Splitter",
-                "nameOverride": "Splitter",
                 "groupName": [],
                 "type": "map"
               },
@@ -3593,7 +3554,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Document",
-        "nameOverride": "Document",
         "title": "Document",
         "groupName": [],
         "additionalProperties": false,
@@ -3612,7 +3572,6 @@
             "key": "detail",
             "schema": {
               "generatedName": "httpValidationErrorDetail",
-              "nameOverride": "HTTPValidationError",
               "title": "HTTPValidationError",
               "value": {
                 "value": {
@@ -3625,7 +3584,6 @@
                   "type": "reference"
                 },
                 "generatedName": "HttpValidationErrorDetail",
-                "nameOverride": "Detail",
                 "title": "Detail",
                 "groupName": [],
                 "type": "array"
@@ -3638,7 +3596,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "HttpValidationError",
-        "nameOverride": "HTTPValidationError",
         "title": "HTTPValidationError",
         "groupName": [],
         "additionalProperties": false,
@@ -3670,7 +3627,6 @@
               },
               "generatedName": "PredictAgentInput",
               "title": "Input",
-              "nameOverride": "Input",
               "groupName": [],
               "type": "map"
             },
@@ -3682,7 +3638,6 @@
             "key": "has_streaming",
             "schema": {
               "generatedName": "predictAgentHasStreaming",
-              "nameOverride": "PredictAgent",
               "title": "PredictAgent",
               "value": {
                 "schema": {
@@ -3702,7 +3657,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "PredictAgent",
-        "nameOverride": "PredictAgent",
         "title": "PredictAgent",
         "groupName": [],
         "additionalProperties": false,
@@ -3724,7 +3678,6 @@
                 "type": "string"
               },
               "generatedName": "PromptName",
-              "nameOverride": "Name",
               "title": "Name",
               "groupName": [],
               "type": "primitive"
@@ -3756,7 +3709,6 @@
                 "type": "string"
               },
               "generatedName": "PromptTemplate",
-              "nameOverride": "Template",
               "title": "Template",
               "groupName": [],
               "type": "primitive"
@@ -3766,7 +3718,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Prompt",
-        "nameOverride": "Prompt",
         "title": "Prompt",
         "groupName": [],
         "additionalProperties": false,
@@ -3788,7 +3739,6 @@
                 "type": "string"
               },
               "generatedName": "SignInEmail",
-              "nameOverride": "Email",
               "title": "Email",
               "groupName": [],
               "type": "primitive"
@@ -3804,7 +3754,6 @@
                 "type": "string"
               },
               "generatedName": "SignInPassword",
-              "nameOverride": "Password",
               "title": "Password",
               "groupName": [],
               "type": "primitive"
@@ -3814,7 +3763,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "SignIn",
-        "nameOverride": "SignIn",
         "title": "SignIn",
         "groupName": [],
         "additionalProperties": false,
@@ -3836,7 +3784,6 @@
                 "type": "string"
               },
               "generatedName": "SignUpEmail",
-              "nameOverride": "Email",
               "title": "Email",
               "groupName": [],
               "type": "primitive"
@@ -3852,7 +3799,6 @@
                 "type": "string"
               },
               "generatedName": "SignUpPassword",
-              "nameOverride": "Password",
               "title": "Password",
               "groupName": [],
               "type": "primitive"
@@ -3865,14 +3811,12 @@
             "key": "name",
             "schema": {
               "generatedName": "signUpName",
-              "nameOverride": "SignUp",
               "title": "SignUp",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "SignUpName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -3888,7 +3832,6 @@
             "key": "metadata",
             "schema": {
               "generatedName": "signUpMetadata",
-              "nameOverride": "SignUp",
               "title": "SignUp",
               "value": {
                 "key": {
@@ -3905,7 +3848,6 @@
                 },
                 "generatedName": "SignUpMetadata",
                 "title": "Metadata",
-                "nameOverride": "Metadata",
                 "groupName": [],
                 "type": "map"
               },
@@ -3917,7 +3859,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "SignUp",
-        "nameOverride": "SignUp",
         "title": "SignUp",
         "groupName": [],
         "additionalProperties": false,
@@ -3939,7 +3880,6 @@
                 "type": "string"
               },
               "generatedName": "ToolName",
-              "nameOverride": "Name",
               "title": "Name",
               "groupName": [],
               "type": "primitive"
@@ -3955,7 +3895,6 @@
                 "type": "string"
               },
               "generatedName": "ToolType",
-              "nameOverride": "Type",
               "title": "Type",
               "groupName": [],
               "type": "primitive"
@@ -3968,7 +3907,6 @@
             "key": "authorization",
             "schema": {
               "generatedName": "toolAuthorization",
-              "nameOverride": "Tool",
               "title": "Tool",
               "value": {
                 "key": {
@@ -3985,7 +3923,6 @@
                 },
                 "generatedName": "ToolAuthorization",
                 "title": "Authorization",
-                "nameOverride": "Authorization",
                 "groupName": [],
                 "type": "map"
               },
@@ -3997,7 +3934,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Tool",
-        "nameOverride": "Tool",
         "title": "Tool",
         "groupName": [],
         "additionalProperties": false,
@@ -4046,7 +3982,6 @@
                 "type": "oneOf"
               },
               "generatedName": "ValidationErrorLoc",
-              "nameOverride": "Location",
               "title": "Location",
               "groupName": [],
               "type": "array"
@@ -4062,7 +3997,6 @@
                 "type": "string"
               },
               "generatedName": "ValidationErrorMsg",
-              "nameOverride": "Message",
               "title": "Message",
               "groupName": [],
               "type": "primitive"
@@ -4087,7 +4021,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ValidationError",
-        "nameOverride": "ValidationError",
         "title": "ValidationError",
         "groupName": [],
         "additionalProperties": false,

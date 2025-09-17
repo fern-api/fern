@@ -74,31 +74,37 @@
       "valueType": {
         "container": {
           "optional": {
-            "name": {
-              "originalName": "IntercomVersion",
-              "camelCase": {
-                "unsafeName": "intercomVersion",
-                "safeName": "intercomVersion"
+            "container": {
+              "nullable": {
+                "name": {
+                  "originalName": "IntercomVersion",
+                  "camelCase": {
+                    "unsafeName": "intercomVersion",
+                    "safeName": "intercomVersion"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "intercom_version",
+                    "safeName": "intercom_version"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERCOM_VERSION",
+                    "safeName": "INTERCOM_VERSION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "IntercomVersion",
+                    "safeName": "IntercomVersion"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "typeId": "type_:IntercomVersion",
+                "type": "named"
               },
-              "snakeCase": {
-                "unsafeName": "intercom_version",
-                "safeName": "intercom_version"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "INTERCOM_VERSION",
-                "safeName": "INTERCOM_VERSION"
-              },
-              "pascalCase": {
-                "unsafeName": "IntercomVersion",
-                "safeName": "IntercomVersion"
-              }
+              "type": "nullable"
             },
-            "fernFilepath": {
-              "allParts": [],
-              "packagePath": []
-            },
-            "typeId": "type_:IntercomVersion",
-            "type": "named"
+            "type": "container"
           },
           "type": "optional"
         },
@@ -2382,13 +2388,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2961,13 +2973,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3005,13 +3023,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3130,16 +3154,22 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "uuid"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "validation": {
+                            "format": "uuid"
+                          },
+                          "type": "string"
+                        }
                       },
-                      "type": "string"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -3573,24 +3603,48 @@
                                           "container": {
                                             "optional": {
                                               "shape": {
-                                                "primitive": {
-                                                  "string": {
-                                                    "original": "bad 'test' parameter"
+                                                "container": {
+                                                  "nullable": {
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "string": {
+                                                          "original": "bad 'test' parameter"
+                                                        },
+                                                        "type": "string"
+                                                      },
+                                                      "type": "primitive"
+                                                    },
+                                                    "jsonExample": "bad 'test' parameter"
                                                   },
-                                                  "type": "string"
+                                                  "valueType": {
+                                                    "primitive": {
+                                                      "v1": "STRING",
+                                                      "v2": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "type": "primitive"
+                                                  },
+                                                  "type": "nullable"
                                                 },
-                                                "type": "primitive"
+                                                "type": "container"
                                               },
                                               "jsonExample": "bad 'test' parameter"
                                             },
                                             "valueType": {
-                                              "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                  "type": "string"
-                                                }
+                                              "container": {
+                                                "nullable": {
+                                                  "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "type": "primitive"
+                                                },
+                                                "type": "nullable"
                                               },
-                                              "type": "primitive"
+                                              "type": "container"
                                             },
                                             "type": "optional"
                                           },
@@ -3948,24 +4002,48 @@
                         "container": {
                           "optional": {
                             "shape": {
-                              "primitive": {
-                                "string": {
-                                  "original": "9b0d6fb9-d2d7-4904-a13c-97557a802323"
+                              "container": {
+                                "nullable": {
+                                  "shape": {
+                                    "primitive": {
+                                      "string": {
+                                        "original": "9b0d6fb9-d2d7-4904-a13c-97557a802323"
+                                      },
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  },
+                                  "jsonExample": "9b0d6fb9-d2d7-4904-a13c-97557a802323"
                                 },
-                                "type": "string"
+                                "valueType": {
+                                  "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "nullable"
                               },
-                              "type": "primitive"
+                              "type": "container"
                             },
                             "jsonExample": "9b0d6fb9-d2d7-4904-a13c-97557a802323"
                           },
                           "valueType": {
-                            "primitive": {
-                              "v1": "STRING",
-                              "v2": {
-                                "type": "string"
-                              }
+                            "container": {
+                              "nullable": {
+                                "primitive": {
+                                  "v1": "STRING",
+                                  "v2": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "nullable"
                             },
-                            "type": "primitive"
+                            "type": "container"
                           },
                           "type": "optional"
                         },
@@ -4147,24 +4225,48 @@
                                           "container": {
                                             "optional": {
                                               "shape": {
-                                                "primitive": {
-                                                  "string": {
-                                                    "original": "Access Token Invalid"
+                                                "container": {
+                                                  "nullable": {
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "string": {
+                                                          "original": "Access Token Invalid"
+                                                        },
+                                                        "type": "string"
+                                                      },
+                                                      "type": "primitive"
+                                                    },
+                                                    "jsonExample": "Access Token Invalid"
                                                   },
-                                                  "type": "string"
+                                                  "valueType": {
+                                                    "primitive": {
+                                                      "v1": "STRING",
+                                                      "v2": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "type": "primitive"
+                                                  },
+                                                  "type": "nullable"
                                                 },
-                                                "type": "primitive"
+                                                "type": "container"
                                               },
                                               "jsonExample": "Access Token Invalid"
                                             },
                                             "valueType": {
-                                              "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                  "type": "string"
-                                                }
+                                              "container": {
+                                                "nullable": {
+                                                  "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "type": "primitive"
+                                                },
+                                                "type": "nullable"
                                               },
-                                              "type": "primitive"
+                                              "type": "container"
                                             },
                                             "type": "optional"
                                           },
@@ -6213,8 +6315,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -6620,8 +6725,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -6651,8 +6759,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -6741,8 +6852,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -6809,8 +6923,11 @@
         },
         "typeReference": {
           "value": {
-            "value": "type_:IntercomVersion",
-            "type": "named"
+            "value": {
+              "value": "type_:IntercomVersion",
+              "type": "named"
+            },
+            "type": "nullable"
           },
           "type": "optional"
         }

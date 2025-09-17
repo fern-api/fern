@@ -22369,7 +22369,6 @@
         },
         "generatedName": "Empty",
         "title": "empty",
-        "nameOverride": "empty",
         "groupName": [],
         "type": "map"
       },
@@ -22409,7 +22408,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Enhancement",
-        "nameOverride": "enhancement",
         "title": "enhancement",
         "groupName": [],
         "additionalProperties": false,
@@ -23802,7 +23800,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Issue",
-        "nameOverride": "issue",
         "title": "issue",
         "groupName": [],
         "additionalProperties": false,
@@ -24247,7 +24244,6 @@
           "discriminantProperty": "type",
           "generatedName": "Part",
           "title": "part",
-          "nameOverride": "part",
           "schemas": {
             "capability": {
               "generatedName": "ComponentsSchemasCapability",
@@ -26058,7 +26054,6 @@
         "allOfPropertyConflicts": [],
         "description": "Describes the current stage of a work item.",
         "generatedName": "Stage",
-        "nameOverride": "stage",
         "title": "stage",
         "groupName": [],
         "additionalProperties": false,
@@ -26228,7 +26223,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Tag",
-        "nameOverride": "tag",
         "title": "tag",
         "groupName": [],
         "additionalProperties": false,
@@ -26859,7 +26853,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Ticket",
-        "nameOverride": "ticket",
         "title": "ticket",
         "groupName": [],
         "additionalProperties": false,
@@ -28064,7 +28057,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Webhook",
-        "nameOverride": "webhook",
         "title": "webhook",
         "groupName": [],
         "additionalProperties": false,
@@ -29315,7 +29307,6 @@
           "discriminantProperty": "type",
           "generatedName": "Work",
           "title": "work",
-          "nameOverride": "work",
           "schemas": {
             "issue": {
               "generatedName": "ComponentsSchemasIssue",

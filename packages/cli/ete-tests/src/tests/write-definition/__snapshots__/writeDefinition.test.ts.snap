@@ -66,7 +66,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               max: 100
       response:
@@ -88,10 +88,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -178,7 +180,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               max: 100
       response:
@@ -202,10 +204,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -589,7 +593,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               max: 100
       response:
@@ -613,10 +617,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -950,7 +956,7 @@ channel:
         type: BookingPaymentSourceBankAccount
       card:
         docs: A card (debit or credit) to take payment from.
-        type: Card
+        type: BookingPaymentSourceCard
   BookingPaymentSourceBankAccount:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
@@ -991,16 +997,7 @@ channel:
     inline: true
     source:
       openapi: openapi/trains/openapi.yml
-  BookingPaymentStatus:
-    docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
-    enum:
-      - pending
-      - succeeded
-      - failed
-    inline: true
-    source:
-      openapi: openapi/trains/openapi.yml
-  Card:
+  BookingPaymentSourceCard:
     docs: A card (debit or credit) to take payment from.
     inline: true
     properties:
@@ -1035,6 +1032,15 @@ channel:
           The card number, as a string without any separators. On read all but
           the last four digits will be masked for security.
         type: string
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
+    enum:
+      - pending
+      - succeeded
+      - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   LinksBooking:
@@ -1341,10 +1347,12 @@ service:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
       method: DELETE
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: DeleteBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
@@ -1373,10 +1381,12 @@ service:
               trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
       method: GET
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: GetBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       response:
         docs: The booking details
         status-code: 200
@@ -1611,13 +1621,14 @@ service:
               status: succeeded
       method: POST
       path: /bookings/{bookingId}/payment
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to pay for.
-          type: string
       request:
         body: trainsRoot.BookingPayment
         content-type: application/json
+        name: CreateBookingPaymentRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to pay for.
+            type: string
       response:
         docs: Payment successful
         status-code: 200
@@ -1826,7 +1837,7 @@ service:
           bicycles:
             default: false
             docs: Only return trips where bicycles are known to be allowed
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
           date:
             docs: >-
               The date and time of the trip in ISO 8601 format in origin
@@ -1840,7 +1851,7 @@ service:
           dogs:
             default: false
             docs: Only return trips where dogs are known to be allowed
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
           origin:
             docs: The ID of the origin station
             type: string
@@ -2337,7 +2348,7 @@ service:
               Pass text/event-stream to receive the streamed response as
               server-sent events. The default is \`\\n\` delimited events.
             name: accepts
-            type: optional<literal<"text/event-stream">>
+            type: optional<nullable<literal<"text/event-stream">>>
         name: ChatRequest
       response:
         docs: OK
@@ -2533,7 +2544,7 @@ errors:
         "contents": "imports:
   v2Root: __package__.yml
 types:
-  V2ChatRequestSafetyMode:
+  ChatV2RequestSafetyMode:
     docs: >
       Used to select the [safety instruction](/docs/safety-modes) inserted into
       the prompt. Defaults to \`CONTEXTUAL\`.
@@ -2639,7 +2650,7 @@ service:
 
                 Compatible Deployments: Cohere Platform, Azure, AWS
                 Sagemaker/Bedrock, Private Deployments
-              type: optional<V2ChatRequestSafetyMode>
+              type: optional<ChatV2RequestSafetyMode>
             stop_sequences:
               docs: >
                 A list of up to 5 strings that the model will use to stop
@@ -2662,7 +2673,7 @@ service:
                 the \`p\` parameter.
               type: optional<float>
         content-type: application/json
-        name: V2ChatRequest
+        name: ChatV2Request
       response:
         docs: OK
         status-code: 200
@@ -2741,7 +2752,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               max: 100
       response:
@@ -2763,10 +2774,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200

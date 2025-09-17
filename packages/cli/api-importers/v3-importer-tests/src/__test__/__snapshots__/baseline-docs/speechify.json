@@ -9457,6 +9457,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "DeleteApiKeyRequest",
+                "camelCase": {
+                  "unsafeName": "deleteAPIKeyRequest",
+                  "safeName": "deleteAPIKeyRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "delete_api_key_request",
+                  "safeName": "delete_api_key_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DELETE_API_KEY_REQUEST",
+                  "safeName": "DELETE_API_KEY_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "DeleteAPIKeyRequest",
+                  "safeName": "DeleteAPIKeyRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {},
           "errors": [],
           "userSpecifiedExamples": [],
@@ -9598,19 +9662,47 @@
           },
           "sdkRequest": {
             "shape": {
-              "value": {
-                "requestBodyType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "primitive"
+              "wrapperName": {
+                "originalName": "UpdateApiKeyRequest",
+                "camelCase": {
+                  "unsafeName": "updateAPIKeyRequest",
+                  "safeName": "updateAPIKeyRequest"
                 },
-                "type": "typeReference"
+                "snakeCase": {
+                  "unsafeName": "update_api_key_request",
+                  "safeName": "update_api_key_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UPDATE_API_KEY_REQUEST",
+                  "safeName": "UPDATE_API_KEY_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "UpdateAPIKeyRequest",
+                  "safeName": "UpdateAPIKeyRequest"
+                }
               },
-              "type": "justRequestBody"
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": false,
+              "type": "wrapper"
             },
             "requestParameterName": {
               "originalName": "request",
@@ -10358,6 +10450,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "DeleteVoiceRequest",
+                "camelCase": {
+                  "unsafeName": "deleteVoiceRequest",
+                  "safeName": "deleteVoiceRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "delete_voice_request",
+                  "safeName": "delete_voice_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DELETE_VOICE_REQUEST",
+                  "safeName": "DELETE_VOICE_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "DeleteVoiceRequest",
+                  "safeName": "DeleteVoiceRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {},
           "errors": [
             {
@@ -16224,6 +16380,70 @@
           "path": "/v1/token/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "DeleteApiKeyRequest",
+              "camelCase": {
+                "unsafeName": "deleteAPIKeyRequest",
+                "safeName": "deleteAPIKeyRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "delete_api_key_request",
+                "safeName": "delete_api_key_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DELETE_API_KEY_REQUEST",
+                "safeName": "DELETE_API_KEY_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "DeleteAPIKeyRequest",
+                "safeName": "DeleteAPIKeyRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "apikey",
+                  "camelCase": {
+                    "unsafeName": "apikey",
+                    "safeName": "apikey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "apikey",
+                    "safeName": "apikey"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "APIKEY",
+                    "safeName": "APIKEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Apikey",
+                    "safeName": "Apikey"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "apikey",
+                "camelCase": {
+                  "unsafeName": "apikey",
+                  "safeName": "apikey"
+                },
+                "snakeCase": {
+                  "unsafeName": "apikey",
+                  "safeName": "apikey"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "APIKEY",
+                  "safeName": "APIKEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Apikey",
+                  "safeName": "Apikey"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -16254,7 +16474,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -16362,6 +16588,70 @@
           "path": "/v1/token/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "UpdateApiKeyRequest",
+              "camelCase": {
+                "unsafeName": "updateAPIKeyRequest",
+                "safeName": "updateAPIKeyRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "update_api_key_request",
+                "safeName": "update_api_key_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "UPDATE_API_KEY_REQUEST",
+                "safeName": "UPDATE_API_KEY_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "UpdateAPIKeyRequest",
+                "safeName": "UpdateAPIKeyRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "apikey",
+                  "camelCase": {
+                    "unsafeName": "apikey",
+                    "safeName": "apikey"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "apikey",
+                    "safeName": "apikey"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "APIKEY",
+                    "safeName": "APIKEY"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Apikey",
+                    "safeName": "Apikey"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "apikey",
+                "camelCase": {
+                  "unsafeName": "apikey",
+                  "safeName": "apikey"
+                },
+                "snakeCase": {
+                  "unsafeName": "apikey",
+                  "safeName": "apikey"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "APIKEY",
+                  "safeName": "APIKEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Apikey",
+                  "safeName": "Apikey"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -16392,14 +16682,42 @@
               }
             }
           ],
+          "queryParameters": [],
+          "headers": [],
           "body": {
-            "value": {
-              "value": "STRING",
-              "type": "primitive"
+            "bodyKey": {
+              "originalName": "body",
+              "camelCase": {
+                "unsafeName": "body",
+                "safeName": "body"
+              },
+              "snakeCase": {
+                "unsafeName": "body",
+                "safeName": "body"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "BODY",
+                "safeName": "BODY"
+              },
+              "pascalCase": {
+                "unsafeName": "Body",
+                "safeName": "Body"
+              }
             },
-            "type": "typeReference"
+            "bodyType": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "typeReference"
+            },
+            "type": "referenced"
           },
-          "type": "body"
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": false
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -16881,6 +17199,70 @@
           "path": "/v1/voices/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "DeleteVoiceRequest",
+              "camelCase": {
+                "unsafeName": "deleteVoiceRequest",
+                "safeName": "deleteVoiceRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "delete_voice_request",
+                "safeName": "delete_voice_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DELETE_VOICE_REQUEST",
+                "safeName": "DELETE_VOICE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "DeleteVoiceRequest",
+                "safeName": "DeleteVoiceRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "voices",
+                  "camelCase": {
+                    "unsafeName": "voices",
+                    "safeName": "voices"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "voices",
+                    "safeName": "voices"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VOICES",
+                    "safeName": "VOICES"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Voices",
+                    "safeName": "Voices"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "voices",
+                "camelCase": {
+                  "unsafeName": "voices",
+                  "safeName": "voices"
+                },
+                "snakeCase": {
+                  "unsafeName": "voices",
+                  "safeName": "voices"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VOICES",
+                  "safeName": "VOICES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Voices",
+                  "safeName": "Voices"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -16911,7 +17293,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"

@@ -610,7 +610,7 @@
       "generatedRequestName": "UpdateEndUserByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateEndUserByIdRequest",
+          "generatedName": "UpdateEndUserByIdRequestBody",
           "schema": "EndUserRequest",
           "source": {
             "file": "../openapi.json",

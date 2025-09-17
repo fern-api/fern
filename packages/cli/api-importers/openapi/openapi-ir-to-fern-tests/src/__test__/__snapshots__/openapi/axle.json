@@ -436,18 +436,18 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetAccountRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "expand": {
                     "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                 },
               },
@@ -635,18 +635,18 @@ service:
         method will NOT refresh the Account object.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique ID for the requested account. Returned as part of the
-            Token Exchange flow in exchangeToken.
       display-name: Get Account
       request:
         name: GetAccountRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique ID for the requested account. Returned as part of the
+              Token Exchange flow in exchangeToken.
         query-parameters:
           expand:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Set to *true* if you would like to expand related entities (e.g.,
               account, policy). Defaults to *false*.
@@ -728,10 +728,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/carriers/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as `carrier`.",
-                  "type": "string",
+              "request": {
+                "name": "GetCarrierRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as `carrier`.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -841,13 +844,15 @@ service:
         details about an Axle-supported insurance carrier.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique ID for the requested carrier. Returned in Account and
-            Policy objects as `carrier`.
       display-name: Get Carrier
+      request:
+        name: GetCarrierRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique ID for the requested carrier. Returned in Account and
+              Policy objects as `carrier`.
       response:
         docs: ''
         type: GetCarrierResponse
@@ -1193,18 +1198,18 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/policies/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetPolicyRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "expand": {
                     "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                 },
               },
@@ -1261,18 +1266,18 @@ service:
         NOT refresh the Policy object.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique ID for the requested policy. Returned by Get Account for
-            each Policy associated with the Account.
       display-name: Get Policy
       request:
         name: GetPolicyRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique ID for the requested policy. Returned by Get Account
+              for each Policy associated with the Account.
         query-parameters:
           expand:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Set to *true* if you would like to expand related entities (e.g.,
               account, policy). Defaults to *false*.

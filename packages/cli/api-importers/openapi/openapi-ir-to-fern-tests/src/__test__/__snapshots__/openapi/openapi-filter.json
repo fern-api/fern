@@ -104,7 +104,7 @@
               },
               "request_id": {
                 "docs": "",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -131,11 +131,11 @@
               },
               "field": {
                 "docs": "Optional. Used to identify a particular field or query parameter that was in error.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "message": {
                 "docs": "Optional. Human readable description of the error.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -217,10 +217,10 @@ types:
           A string indicating the kind of error, used to further qualify the
           HTTP response code
       message:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional. Human readable description of the error.
       field:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Optional. Used to identify a particular field or query parameter that
           was in error.
@@ -236,7 +236,7 @@ types:
         type: string
         docs: The type is error.list
       request_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ''
         validation:
           format: uuid
@@ -695,7 +695,7 @@ types:
             "properties": {
               "count": {
                 "docs": "The number of items in the user segment. It's returned when `include_count=true` is included in the request.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "created_at": {
                 "docs": "The time the segment was created.",
@@ -770,7 +770,7 @@ types:
         type: optional<SegmentPersonType>
         docs: 'Type of the contact: contact (lead) or user.'
       count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The number of items in the user segment. It's returned when
           `include_count=true` is included in the request.
@@ -799,7 +799,7 @@ types:
       "headers": {
         "Intercom-Version": {
           "name": "intercomVersion",
-          "type": "optional<root.IntercomVersion>",
+          "type": "optional<nullable<root.IntercomVersion>>",
         },
       },
       "imports": {
@@ -819,7 +819,7 @@ imports:
   root: __package__.yml
 headers:
   Intercom-Version:
-    type: optional<root.IntercomVersion>
+    type: optional<nullable<root.IntercomVersion>>
     name: intercomVersion
 auth-schemes:
   BearerAuthScheme:

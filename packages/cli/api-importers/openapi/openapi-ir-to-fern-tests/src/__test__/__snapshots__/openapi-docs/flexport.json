@@ -942,13 +942,7 @@
             "properties": {
               "cargo_ready_date": {
                 "docs": "Represents the date when the cargo on the leg is ready for pickup.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "delivery_appointment_requested_at_date": {
                 "docs": "Date at which the appointment was first requested",
@@ -991,12 +985,12 @@
               "country": "optional<string>",
               "country_code": "optional<string>",
               "ref": "optional<string>",
-              "state": "optional<string>",
+              "state": "optional<nullable<string>>",
               "street_address": "optional<string>",
-              "street_address2": "optional<string>",
+              "street_address2": "optional<nullable<string>>",
               "timezone": "optional<string>",
-              "unlocode": "optional<string>",
-              "zip": "optional<string>",
+              "unlocode": "optional<nullable<string>>",
+              "zip": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1115,26 +1109,10 @@
               "air_booking": "optional<AirBookingDetail>",
               "booking_line_items": "optional<BookingLineItemCollectionRef>",
               "cargo": "optional<Cargo>",
-              "cargo_ready_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "cargo_ready_date": "optional<date>",
               "consignee_entity": "optional<CompanyEntity>",
               "created_at": "optional<datetime>",
-              "delivery_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "delivery_date": "optional<date>",
               "destination_address": "optional<Address>",
               "id": {
                 "docs": "Unique identifier for the booking",
@@ -1145,10 +1123,10 @@
                 "docs": "The name of the booking",
                 "type": "optional<string>",
               },
-              "notify_party": "optional<string>",
+              "notify_party": "optional<nullable<string>>",
               "ocean_booking": "optional<OceanBookingDetail>",
               "origin_address": "optional<Address>",
-              "quote_status": "optional<BookingQuoteStatus>",
+              "quote_status": "optional<nullable<BookingQuoteStatus>>",
               "shipment": "optional<ShipmentRef>",
               "shipper_entity": "optional<CompanyEntity>",
               "special_instructions": "optional<string>",
@@ -1194,13 +1172,7 @@
               },
               "new_cargo_ready_date": {
                 "docs": "The requested new cargo ready date",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "new_container_counts": {
                 "docs": "The requested new container count values",
@@ -1580,7 +1552,7 @@
               "currency": "optional<string>",
               "digitization_status": {
                 "docs": "Status about if the digitization process for this commercial invoice is complete. If it is not complete, then the commercial invoice should be considered a draft that can change.",
-                "type": "optional<CommercialInvoiceDigitizationStatus>",
+                "type": "optional<nullable<CommercialInvoiceDigitizationStatus>>",
               },
               "id": {
                 "docs": "Unique identifier for the commercial invoice.",
@@ -1693,7 +1665,7 @@
               "commercial_invoice_line_item_id": "optional<integer>",
               "container_number": "optional<string>",
               "created_at": "optional<datetime>",
-              "deleted_at": "optional<datetime>",
+              "deleted_at": "optional<nullable<datetime>>",
               "id": "optional<integer>",
               "updated_at": "optional<datetime>",
             },
@@ -2268,13 +2240,7 @@
               },
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in the line item's purchase order. Date when cargo is ready for pickup at the origin location.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "destination_locations": {
                 "docs": "List of destinations locations for this line item and the number of units to be sent",
@@ -2312,13 +2278,7 @@
               "metadata": "optional<MetadataCreate>",
               "must_arrive_date": {
                 "docs": "Required if there is no must_arrive_date in the line item's purchase order. The must arrive date for this purchase order.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "origin_location_ref": {
                 "docs": "Optional. Customizable reference ID of network location that is the origin location.",
@@ -2670,13 +2630,7 @@
             "properties": {
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "currency_code": {
                 "docs": "Required if there is no currency_code in each line item. The currency code being used in this purchase order.",
@@ -2700,13 +2654,7 @@
               },
               "issue_date": {
                 "docs": "The issue date for this purchase order.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "line_items": {
                 "docs": "A list of the line items in this purchase order",
@@ -2719,13 +2667,7 @@
               "metadata": "optional<MetadataCreate>",
               "must_arrive_date": {
                 "docs": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "name": {
                 "docs": "Always required. Name of the purchase order.",
@@ -3144,13 +3086,7 @@
               },
               "release_date": {
                 "docs": "The cargo release date for this entry.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "release_status": {
                 "docs": "The release status for this entry.",
@@ -3261,7 +3197,7 @@
               },
               "archived_at": {
                 "docs": "Date-time string when this document was archived. Null if not archived.",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "document_type": {
                 "docs": "Type of the document.",
@@ -3285,7 +3221,7 @@
               },
               "memo": {
                 "docs": "A short message or description about the document",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "shipment": "optional<ShipmentRef>",
             },
@@ -3546,7 +3482,7 @@
               "country_code": "optional<string>",
               "description": {
                 "docs": "Description of HS or HTS code classification.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -3571,13 +3507,7 @@
               },
               "due_date": {
                 "docs": "Due date of the invoice",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "id": {
                 "docs": "Unique ID for the invoice",
@@ -4487,7 +4417,7 @@
               },
               "archived_at": {
                 "docs": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "classifications": "optional<list<ProductClassification>>",
               "client_verified": {
@@ -4653,15 +4583,7 @@
                 "type": "optional<string>",
               },
               "archived_at": "optional<string>",
-              "cargo_ready_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "cargo_ready_date": "optional<date>",
               "created_at": "optional<string>",
               "destination_addresses": "optional<list<Address>>",
               "destination_port": "optional<Place>",
@@ -4673,26 +4595,12 @@
               "incoterm": "optional<PurchaseOrderIncoterm>",
               "issue_date": {
                 "docs": "the date that the order was issued",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "line_items": "optional<PurchaseOrderLineItemCollectionRef>",
               "memo": "optional<string>",
               "metadata": "optional<Metadata>",
-              "must_arrive_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "must_arrive_date": "optional<date>",
               "name": {
                 "docs": "The name of the purchase order",
                 "type": "optional<string>",
@@ -4817,15 +4725,7 @@
                 "type": "optional<list<LineItemMeasurement>>",
               },
               "metadata": "optional<Metadata>",
-              "must_arrive_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "must_arrive_date": "optional<date>",
               "origin_location": "optional<Address>",
               "origin_port": "optional<Place>",
               "parent_line_key": {
@@ -5192,13 +5092,7 @@
               "calculated_weight": "optional<Weight>",
               "cargo_ready_date": {
                 "docs": "Date when cargo is ready for pickup at the origin location",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "child_shipments": {
                 "docs": "Links to the child shipments if the shipment is the parent shipment in a buyer's consol.",
@@ -5274,13 +5168,7 @@
               "status": "optional<ShipmentStatus>",
               "target_delivery_date": {
                 "docs": "Target date for when the shipment will be fully delivered. This date is set when the shipment's booking is confirmed. This value may be different from estimated_delivered_in_full_date, which is updated when there is new information about the progress of a shipment.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "transportation_mode": "optional<TransportationMode>",
               "updated_at": {
@@ -5340,45 +5228,29 @@
                 "docs": "Type of the object",
                 "type": "optional<string>",
               },
-              "actual_arrival_date": "optional<datetime>",
-              "actual_delivery_date": "optional<datetime>",
-              "actual_departure_date": "optional<datetime>",
-              "actual_pickup_date": "optional<datetime>",
-              "available_for_pickup_date": "optional<datetime>",
-              "cargo_ready_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "actual_arrival_date": "optional<nullable<datetime>>",
+              "actual_delivery_date": "optional<nullable<datetime>>",
+              "actual_departure_date": "optional<nullable<datetime>>",
+              "actual_pickup_date": "optional<nullable<datetime>>",
+              "available_for_pickup_date": "optional<nullable<datetime>>",
+              "cargo_ready_date": "optional<nullable<date>>",
               "container_legs": "optional<ContainerLegCollectionRef>",
               "container_number": "optional<string>",
               "container_size": "optional<ShipmentContainerContainerSize>",
               "container_type": "optional<ShipmentContainerContainerType>",
-              "empty_ready_date": "optional<string>",
-              "empty_returned_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "estimated_arrival_date": "optional<datetime>",
-              "estimated_available_for_pickup_date": "optional<datetime>",
-              "estimated_delivery_date": "optional<datetime>",
-              "estimated_departure_date": "optional<datetime>",
-              "estimated_pickup_date": "optional<datetime>",
+              "empty_ready_date": "optional<nullable<string>>",
+              "empty_returned_date": "optional<nullable<date>>",
+              "estimated_arrival_date": "optional<nullable<datetime>>",
+              "estimated_available_for_pickup_date": "optional<nullable<datetime>>",
+              "estimated_delivery_date": "optional<nullable<datetime>>",
+              "estimated_departure_date": "optional<nullable<datetime>>",
+              "estimated_pickup_date": "optional<nullable<datetime>>",
               "id": "optional<integer>",
               "items": "optional<list<ShipmentItem>>",
-              "last_free_day_date": "optional<datetime>",
+              "last_free_day_date": "optional<nullable<datetime>>",
               "metadata": "optional<Metadata>",
-              "pickup_number": "optional<string>",
-              "seal_number": "optional<string>",
+              "pickup_number": "optional<nullable<string>>",
+              "seal_number": "optional<nullable<string>>",
               "shipment": "optional<ShipmentRef>",
             },
             "source": {
@@ -5429,7 +5301,7 @@
                 "docs": "Array of numeric UN codes that combine both the class and the division of the dangerous good classification",
                 "type": "optional<list<string>>",
               },
-              "review_status": "optional<ShipmentDangerousGoodsReviewStatus>",
+              "review_status": "optional<nullable<ShipmentDangerousGoodsReviewStatus>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5554,18 +5426,12 @@
               "air_leg": "optional<AirShipmentLeg>",
               "cargo_ready_date": {
                 "docs": "[DEPRECATED] See additional_dates",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "carrier_name": "optional<string>",
               "deleted_at": {
                 "docs": "Date-time string when this leg was deleted. Null if not deleted.",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "destination": "optional<ShipmentNode>",
               "estimated_arrival_date": "optional<datetime>",
@@ -5859,10 +5725,10 @@
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
-              "pieces": "optional<integer>",
-              "scac_code": "optional<string>",
+              "pieces": "optional<nullable<integer>>",
+              "scac_code": "optional<nullable<string>>",
               "service_type": "optional<TruckingShipmentLegServiceType>",
-              "tracking_number": "optional<string>",
+              "tracking_number": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6825,15 +6691,15 @@
         type: optional<string>
         docs: Type of the object
       street_address: optional<string>
-      street_address2: optional<string>
+      street_address2: optional<nullable<string>>
       city: optional<string>
-      state: optional<string>
+      state: optional<nullable<string>>
       country: optional<string>
       country_code: optional<string>
-      zip: optional<string>
+      zip: optional<nullable<string>>
       timezone: optional<string>
       ref: optional<string>
-      unlocode: optional<string>
+      unlocode: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   HsCode:
@@ -6844,7 +6710,7 @@
           String representing the object’s type. Always `/hs_code` for this
           object.
       description:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Description of HS or HTS code classification.
       code:
         type: optional<string>
@@ -7057,10 +6923,8 @@
         type: optional<Address>
         docs: The requested new destination port (port of unloading)
       new_cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: The requested new cargo ready date
-        validation:
-          format: date
       new_product_descriptions:
         type: optional<list<BookingAmendmentHsCode>>
         docs: New product (HS code) information
@@ -7392,24 +7256,18 @@
         docs: The name of the booking
       shipment: optional<ShipmentRef>
       status: optional<BookingStatus>
-      quote_status: optional<BookingQuoteStatus>
+      quote_status: optional<nullable<BookingQuoteStatus>>
       shipper_entity: optional<CompanyEntity>
       consignee_entity: optional<CompanyEntity>
-      notify_party: optional<string>
+      notify_party: optional<nullable<string>>
       transportation_mode: optional<TransportationMode>
       ocean_booking: optional<OceanBookingDetail>
       air_booking: optional<AirBookingDetail>
       trucking_booking: optional<TruckingBookingDetail>
       origin_address: optional<Address>
-      cargo_ready_date:
-        type: optional<string>
-        validation:
-          format: date
+      cargo_ready_date: optional<date>
       destination_address: optional<Address>
-      delivery_date:
-        type: optional<string>
-        validation:
-          format: date
+      delivery_date: optional<date>
       wants_export_customs_service:
         type: optional<boolean>
         docs: >-
@@ -7695,7 +7553,7 @@
       id: optional<integer>
       container_number: optional<string>
       commercial_invoice_line_item_id: optional<integer>
-      deleted_at: optional<datetime>
+      deleted_at: optional<nullable<datetime>>
       created_at: optional<datetime>
       updated_at: optional<datetime>
     source:
@@ -7794,7 +7652,7 @@
           Invoice number on the commercial invoice, typically used for display
           purposes.
       digitization_status:
-        type: optional<CommercialInvoiceDigitizationStatus>
+        type: optional<nullable<CommercialInvoiceDigitizationStatus>>
         docs: >-
           Status about if the digitization process for this commercial invoice
           is complete. If it is not complete, then the commercial invoice should
@@ -7912,10 +7770,8 @@
         type: optional<CustomsEntryReleaseStatus>
         docs: The release status for this entry.
       release_date:
-        type: optional<string>
+        type: optional<date>
         docs: The cargo release date for this entry.
-        validation:
-          format: date
       shipment: optional<ShipmentRef>
     source:
       openapi: ../openapi.yml
@@ -7945,7 +7801,7 @@
         type: optional<string>
         docs: Type of the document.
       memo:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: A short message or description about the document
       file_link:
         type: optional<string>
@@ -7953,7 +7809,7 @@
         validation:
           format: uri
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: >-
           Date-time string when this document was archived. Null if not
           archived.
@@ -8090,7 +7946,7 @@
       _object:
         type: optional<string>
         docs: Type of this object
-      review_status: optional<ShipmentDangerousGoodsReviewStatus>
+      review_status: optional<nullable<ShipmentDangerousGoodsReviewStatus>>
       classifications:
         type: optional<list<string>>
         docs: >-
@@ -8144,7 +8000,7 @@
         type: optional<string>
         docs: Description of product
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: >-
           If the product has been archived, the time it was archived. If the
           product is still active this will be null.
@@ -8291,10 +8147,8 @@
         type: optional<datetime>
         docs: Actual arrival date to the last port of the main voyage
       cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: Date when cargo is ready for pickup at the origin location
-        validation:
-          format: date
       wants_freight_management_bco:
         type: optional<boolean>
         docs: >-
@@ -8355,14 +8209,12 @@
           Actual pickup date from the origin location. For ocean shipments with
           multiple containers, this is the date of last picked up container
       target_delivery_date:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           Target date for when the shipment will be fully delivered. This date
           is set when the shipment's booking is confirmed. This value may be
           different from estimated_delivered_in_full_date, which is updated when
           there is new information about the progress of a shipment.
-        validation:
-          format: date
       estimated_delivered_in_full_date:
         type: optional<datetime>
         docs: >-
@@ -8414,10 +8266,8 @@
   AdditionalDates:
     properties:
       cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: Represents the date when the cargo on the leg is ready for pickup.
-        validation:
-          format: date
       delivery_appointment_requested_at_date:
         type: optional<datetime>
         docs: Date at which the appointment was first requested
@@ -8518,10 +8368,10 @@
   TruckingShipmentLeg:
     properties:
       _object: optional<string>
-      tracking_number: optional<string>
+      tracking_number: optional<nullable<string>>
       service_type: optional<TruckingShipmentLegServiceType>
-      pieces: optional<integer>
-      scac_code: optional<string>
+      pieces: optional<nullable<integer>>
+      scac_code: optional<nullable<string>>
       container_legs: optional<ContainerLegCollectionRef>
     source:
       openapi: ../openapi.yml
@@ -8543,7 +8393,7 @@
       estimated_departure_date: optional<datetime>
       actual_departure_date: optional<datetime>
       deleted_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date-time string when this leg was deleted. Null if not deleted.
       additional_dates: optional<AdditionalDates>
       origin: optional<ShipmentNode>
@@ -8555,10 +8405,8 @@
       trucking_leg: optional<TruckingShipmentLeg>
       rail_leg: optional<RailShipmentLeg>
       cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: '[DEPRECATED] See additional_dates'
-        validation:
-          format: date
     source:
       openapi: ../openapi.yml
   ContainerRef:
@@ -8625,28 +8473,22 @@
       container_type: optional<ShipmentContainerContainerType>
       container_number: optional<string>
       container_size: optional<ShipmentContainerContainerSize>
-      seal_number: optional<string>
-      pickup_number: optional<string>
-      estimated_departure_date: optional<datetime>
-      actual_departure_date: optional<datetime>
-      estimated_arrival_date: optional<datetime>
-      actual_arrival_date: optional<datetime>
-      estimated_pickup_date: optional<datetime>
-      actual_pickup_date: optional<datetime>
-      estimated_delivery_date: optional<datetime>
-      actual_delivery_date: optional<datetime>
-      last_free_day_date: optional<datetime>
-      empty_ready_date: optional<string>
-      empty_returned_date:
-        type: optional<string>
-        validation:
-          format: date
-      cargo_ready_date:
-        type: optional<string>
-        validation:
-          format: date
-      available_for_pickup_date: optional<datetime>
-      estimated_available_for_pickup_date: optional<datetime>
+      seal_number: optional<nullable<string>>
+      pickup_number: optional<nullable<string>>
+      estimated_departure_date: optional<nullable<datetime>>
+      actual_departure_date: optional<nullable<datetime>>
+      estimated_arrival_date: optional<nullable<datetime>>
+      actual_arrival_date: optional<nullable<datetime>>
+      estimated_pickup_date: optional<nullable<datetime>>
+      actual_pickup_date: optional<nullable<datetime>>
+      estimated_delivery_date: optional<nullable<datetime>>
+      actual_delivery_date: optional<nullable<datetime>>
+      last_free_day_date: optional<nullable<datetime>>
+      empty_ready_date: optional<nullable<string>>
+      empty_returned_date: optional<nullable<date>>
+      cargo_ready_date: optional<nullable<date>>
+      available_for_pickup_date: optional<nullable<datetime>>
+      estimated_available_for_pickup_date: optional<nullable<datetime>>
       shipment: optional<ShipmentRef>
       container_legs: optional<ContainerLegCollectionRef>
       items: optional<list<ShipmentItem>>
@@ -8846,10 +8688,8 @@
         type: optional<datetime>
         docs: When the invoice was issued
       due_date:
-        type: optional<string>
+        type: optional<date>
         docs: Due date of the invoice
-        validation:
-          format: date
       total:
         type: optional<Money>
         docs: Sum of charges on the invoice
@@ -9194,10 +9034,7 @@
       incoterm: optional<PurchaseOrderLineItemIncoterm>
       transportation_mode: optional<TransportationMode>
       unit_of_measure: optional<PurchaseOrderLineItemUnitOfMeasure>
-      must_arrive_date:
-        type: optional<string>
-        validation:
-          format: date
+      must_arrive_date: optional<date>
       origin_port: optional<Place>
       origin_location: optional<Address>
       destination_port: optional<Place>
@@ -9364,21 +9201,13 @@
         type: optional<PurchaseOrderOrderClass>
         docs: Class of the purchase order.
       issue_date:
-        type: optional<string>
+        type: optional<date>
         docs: the date that the order was issued
-        validation:
-          format: date
       freight_paymnet_terms: optional<PurchaseOrderFreightPaymnetTerms>
       priority: optional<PurchaseOrderPriority>
       transportation_mode: optional<TransportationMode>
-      cargo_ready_date:
-        type: optional<string>
-        validation:
-          format: date
-      must_arrive_date:
-        type: optional<string>
-        validation:
-          format: date
+      cargo_ready_date: optional<date>
+      must_arrive_date: optional<date>
       origin_port: optional<Place>
       origin_address: optional<Address>
       destination_port: optional<Place>
@@ -9754,19 +9583,15 @@
         type: optional<CreatePurchaseOrderPort>
         docs: Optional. The destination port
       must_arrive_date:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           Required if there is no must_arrive_date in the line item's purchase
           order. The must arrive date for this purchase order.
-        validation:
-          format: date
       cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           Required if there is no cargo_ready_date in the line item's purchase
           order. Date when cargo is ready for pickup at the origin location.
-        validation:
-          format: date
       transportation_mode:
         type: optional<CreateLineItemTransportationMode>
         docs: Required if there is no transportation_mode in purchase order
@@ -9927,27 +9752,21 @@
         type: optional<CreatePurchaseOrderPort>
         docs: The destination port
       must_arrive_date:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           Required if there is no must_arrive_date in each line item. The must
           arrive date for this purchase order.
-        validation:
-          format: date
       issue_date:
-        type: optional<string>
+        type: optional<date>
         docs: The issue date for this purchase order.
-        validation:
-          format: date
       freight_payment_terms:
         type: optional<CreateOrUpdatePurchaseOrderFreightPaymentTerms>
         docs: The freight payment term for the purchase order
       cargo_ready_date:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           Required if there is no cargo_ready_date in each line item. Date when
           cargo is ready for pickup at the origin location.
-        validation:
-          format: date
       transportation_mode:
         type: optional<CreateOrUpdatePurchaseOrderTransportationMode>
         docs: Required if there is no transportation_mode in purchase order
@@ -10764,74 +10583,74 @@ errors:
                   "direction": {
                     "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
-                    "type": "optional<BookingsIndexRequestDirection>",
+                    "type": "optional<nullable<BookingsIndexRequestDirection>>",
                   },
                   "f.cargo_ready_date": {
                     "docs": "Filters the list for bookings with the specified cargo ready date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.cargo_ready_date.gt": {
                     "docs": "Filters the list for bookings with cargo ready date after the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.cargo_ready_date.gte": {
                     "docs": "Filters the list for bookings with cargo ready date after the specified date, inclusive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.cargo_ready_date.lt": {
                     "docs": "Filters the list for bookings with cargo ready date before the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.cargo_ready_date.lte": {
                     "docs": "Filters the list for bookings with cargo ready date before the specified date, inclusive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.consignee_entity_ref": {
                     "docs": "Filters the list based on the booking's consignee",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.created_at": {
                     "docs": "Filters the list for bookings with the specified created_at",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.created_at.gt": {
                     "docs": "Filters the list for bookings created after the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.created_at.gte": {
                     "docs": "Filters the list for bookings created after the specified date, inclusive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.created_at.lt": {
                     "docs": "Filters the list for bookings created before the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.created_at.lte": {
                     "docs": "Filters the list for bookings created before the specified date, inclusive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
                     "docs": "Filters the list for bookings that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return bookings matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`
 ",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
-                  "f.name": "optional<string>",
+                  "f.name": "optional<nullable<string>>",
                   "f.shipment.id": {
                     "docs": "Filter by the shipment resulting from the booking",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.shipper_entity_ref": {
                     "docs": "Filters the list based on the booking's shipper",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.status": {
                     "docs": "Filter the list based on status of the booking",
-                    "type": "optional<BookingsIndexRequestFStatus>",
+                    "type": "optional<nullable<BookingsIndexRequestFStatus>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -10843,7 +10662,7 @@ errors:
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -10854,7 +10673,7 @@ errors:
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
-                    "type": "optional<BookingsIndexRequestSort>",
+                    "type": "optional<nullable<BookingsIndexRequestSort>>",
                   },
                 },
               },
@@ -11219,13 +11038,7 @@ errors:
                     "cargo": "root.CreateCargo",
                     "cargo_ready_date": {
                       "docs": "Always required. Date when cargo is ready for pickup at the origin location.",
-                      "type": "string",
-                      "validation": {
-                        "format": "date",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
+                      "type": "date",
                     },
                     "consignee_entity_ref": {
                       "docs": "Always required. Customizable reference ID of company entity that is the consignee of the booking.",
@@ -11237,13 +11050,7 @@ errors:
                     },
                     "delivery_date": {
                       "docs": "Optional. Target date by when cargo must be delivered.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "date",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
+                      "type": "optional<date>",
                     },
                     "destination_address_ref": {
                       "docs": "Always required for trucking bookings. Always required for air and ocean bookings if `wants_delivery_service` is TRUE. Customizable reference ID of network location that is the delivery location.",
@@ -11265,7 +11072,7 @@ errors:
                     },
                     "notify_party": {
                       "docs": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "ocean_booking": "optional<root.CreateOceanBooking>",
                     "origin_address_ref": {
@@ -11578,10 +11385,13 @@ errors:
               "method": "GET",
               "pagination": undefined,
               "path": "/bookings/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the booking to be retrieved",
-                  "type": "integer",
+              "request": {
+                "name": "BookingShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the booking to be retrieved",
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -11675,8 +11485,8 @@ errors:
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Booking>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -11719,8 +11529,8 @@ errors:
   BookingsIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.Booking>>
     source:
       openapi: ../openapi.yml
@@ -11780,13 +11590,13 @@ service:
         name: BookingsIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -11795,69 +11605,69 @@ service:
               min: 1
               max: 100
           sort:
-            type: optional<BookingsIndexRequestSort>
+            type: optional<nullable<BookingsIndexRequestSort>>
             docs: Sort results by the specified field.
           direction:
-            type: optional<BookingsIndexRequestDirection>
+            type: optional<nullable<BookingsIndexRequestDirection>>
             default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending).
           f.status:
-            type: optional<BookingsIndexRequestFStatus>
+            type: optional<nullable<BookingsIndexRequestFStatus>>
             docs: Filter the list based on status of the booking
           f.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Filter by the shipment resulting from the booking
           f.consignee_entity_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the booking's consignee
           f.shipper_entity_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the booking's shipper
-          f.name: optional<string>
+          f.name: optional<nullable<string>>
           f.cargo_ready_date:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for bookings with the specified cargo ready date
           f.cargo_ready_date.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings with cargo ready date after the
               specified date
           f.cargo_ready_date.gte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings with cargo ready date after the
               specified date, inclusive
           f.cargo_ready_date.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings with cargo ready date before the
               specified date
           f.cargo_ready_date.lte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings with cargo ready date before the
               specified date, inclusive
           f.created_at:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for bookings with the specified created_at
           f.created_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for bookings created after the specified date
           f.created_at.gte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings created after the specified date,
               inclusive
           f.created_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for bookings created before the specified date
           f.created_at.lte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for bookings created before the specified date,
               inclusive
           f.metadata.YOUR_METADATA_KEY:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >
               Filters the list for bookings that have a specific metadata
               key-value pair. Multiple metadata filters can be added to a single
@@ -12067,7 +11877,7 @@ service:
                 Always required. Customizable reference ID of company entity
                 that is the consignee of the booking.
             notify_party:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 Optional. Name and address of company that is the notify party
                 of the booking. If null, then this is the same as consignee.
@@ -12087,17 +11897,13 @@ service:
                 Customizable reference ID of network location that is the
                 delivery location.
             cargo_ready_date:
-              type: string
+              type: date
               docs: >-
                 Always required. Date when cargo is ready for pickup at the
                 origin location.
-              validation:
-                format: date
             delivery_date:
-              type: optional<string>
+              type: optional<date>
               docs: Optional. Target date by when cargo must be delivered.
-              validation:
-                format: date
             wants_export_customs_service:
               type: boolean
               docs: >-
@@ -12425,11 +12231,13 @@ service:
         Retrieves the details of a single booking.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the booking to be retrieved
       display-name: Retrieve a booking
+      request:
+        name: BookingShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the booking to be retrieved
       response:
         docs: Success
         type: BookingShowResponse
@@ -12877,13 +12685,7 @@ docs: Endpoints relating to Booking objects
                     "new_cargo": "optional<root.CreateCargo>",
                     "new_cargo_ready_date": {
                       "docs": "Date when cargo is ready for pickup at the origin location.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "date",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
+                      "type": "optional<date>",
                     },
                     "new_container_counts": "optional<root.CreateContainerCounts>",
                     "new_destination_address_ref": {
@@ -13036,10 +12838,8 @@ service:
                 `new_destination_port_loc_code` may be specified. UN code for
                 the destination port.
             new_cargo_ready_date:
-              type: optional<string>
+              type: optional<date>
               docs: Date when cargo is ready for pickup at the origin location.
-              validation:
-                format: date
             new_product_descriptions:
               type: optional<list<root.CreateBookingAmendmentHsCode>>
               docs: New product (HS code) information
@@ -13367,24 +13167,24 @@ docs: >-
                   "direction": {
                     "default": "desc",
                     "docs": "Set sort order. Allows "asc" (ascending) or "desc"  (descending)",
-                    "type": "optional<BookingLineItemIndexRequestDirection>",
+                    "type": "optional<nullable<BookingLineItemIndexRequestDirection>>",
                   },
                   "f.booking.id": {
                     "docs": "Filters for all booking line items from a specific booking",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.purchase_order.id": {
                     "docs": "Filters for all booking line items from a purchase order",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.purchase_order_line_item.id": {
                     "docs": "Filters for all booking line items from a specific purchase order line item.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13396,7 +13196,7 @@ docs: >-
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13458,10 +13258,13 @@ docs: >-
               "method": "GET",
               "pagination": undefined,
               "path": "/booking_line_items/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the booking line item to be retrieved",
-                  "type": "integer",
+              "request": {
+                "name": "BookingLineItemShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the booking line item to be retrieved",
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -13522,8 +13325,8 @@ docs: >-
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.BookingLineItem>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13555,8 +13358,8 @@ docs: >-
   BookingLineItemIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.BookingLineItem>>
     source:
       openapi: ../openapi.yml
@@ -13603,13 +13406,13 @@ service:
         name: BookingLineItemIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -13618,17 +13421,17 @@ service:
               min: 1
               max: 100
           direction:
-            type: optional<BookingLineItemIndexRequestDirection>
+            type: optional<nullable<BookingLineItemIndexRequestDirection>>
             default: desc
             docs: Set sort order. Allows "asc" (ascending) or "desc"  (descending)
           f.purchase_order.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Filters for all booking line items from a purchase order
           f.booking.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Filters for all booking line items from a specific booking
           f.purchase_order_line_item.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Filters for all booking line items from a specific purchase order
               line item.
@@ -13731,11 +13534,13 @@ service:
       docs: Returns a list of booking line items
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the booking line item to be retrieved
       display-name: Retrieves the details of a single booking line item.
+      request:
+        name: BookingLineItemShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the booking line item to be retrieved
       response:
         docs: A collection of booking line items
         type: BookingLineItemShowResponse
@@ -14510,24 +14315,24 @@ docs: Endpoints relating to Carbon Calculations
                 "query-parameters": {
                   "f.invoice_number": {
                     "docs": "Filters results based on the invoice number.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.involved_party_seller_id": {
                     "docs": "Filters results based on the involved party seller ID.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.involved_party_seller_ref": {
                     "docs": "Filters results based on the invoolved party seller ref.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment.id": {
                     "docs": "The unique id for the shipment.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -14539,7 +14344,7 @@ docs: Endpoints relating to Carbon Calculations
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -14694,10 +14499,13 @@ docs: Endpoints relating to Carbon Calculations
               "method": "GET",
               "pagination": undefined,
               "path": "/commercial_invoices/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested commercial invoice",
-                  "type": "string",
+              "request": {
+                "name": "CommercialInvoicesShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested commercial invoice",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -14916,8 +14724,8 @@ docs: Endpoints relating to Carbon Calculations
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CommercialInvoice>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -14957,8 +14765,8 @@ types:
   CommercialInvoicesIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.CommercialInvoice>>
     source:
       openapi: ../openapi.yml
@@ -15011,13 +14819,13 @@ service:
         name: CommercialInvoicesIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -15026,16 +14834,16 @@ service:
               min: 1
               max: 100
           f.shipment.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The unique id for the shipment.
           f.invoice_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters results based on the invoice number.
           f.involved_party_seller_id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters results based on the involved party seller ID.
           f.involved_party_seller_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters results based on the invoolved party seller ref.
       response:
         docs: Success
@@ -15432,11 +15240,13 @@ service:
       docs: Retrieves the details of a single commercial invoice.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested commercial invoice
       display-name: Retrieve a commercial invoice
+      request:
+        name: CommercialInvoicesShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested commercial invoice
       response:
         docs: Success
         type: CommercialInvoicesShowResponse
@@ -15746,16 +15556,16 @@ docs: Endpoints relating to Commercial Invoice objects
                 "query-parameters": {
                   "f.metadata.YOUR_METADATA_KEY": {
                     "docs": "Only return companies that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return companies matching any of the specified metadata values for that metadata key.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.ref": {
                     "docs": "The ref for the company.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15767,7 +15577,7 @@ docs: Endpoints relating to Commercial Invoice objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15941,10 +15751,13 @@ docs: Endpoints relating to Commercial Invoice objects
               "method": "GET",
               "pagination": undefined,
               "path": "/network/companies/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested company",
-                  "type": "string",
+              "request": {
+                "name": "NetworkCompanyShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested company",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -16035,12 +15848,6 @@ docs: Endpoints relating to Commercial Invoice objects
               "method": "PATCH",
               "pagination": undefined,
               "path": "/network/companies/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested company",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -16057,7 +15864,12 @@ docs: Endpoints relating to Commercial Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompany",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested company",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -16107,8 +15919,8 @@ docs: Endpoints relating to Commercial Invoice objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Company>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -16162,8 +15974,8 @@ types:
   NetworkCompanyIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<root.Company>>
     source:
@@ -16225,13 +16037,13 @@ service:
         name: NetworkCompanyIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -16240,10 +16052,10 @@ service:
               min: 1
               max: 100
           f.ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for the company.
           f.metadata.YOUR_METADATA_KEY:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Only return companies that have a specific metadata key-value
               pair. Multiple metadata filters can be added to a single query. If
@@ -16389,11 +16201,13 @@ service:
       docs: Retrieves the details of a single company.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested company
       display-name: Retrieve a company
+      request:
+        name: NetworkCompanyShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested company
       response:
         docs: Success
         type: NetworkCompanyShowResponse
@@ -16450,13 +16264,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested company
       display-name: Update an existing company
       request:
         name: UpdateCompany
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested company
         body:
           properties:
             name:
@@ -16667,20 +16481,20 @@ docs: Endpoints relating to Company objects
                 "query-parameters": {
                   "f.company_id": {
                     "docs": "The id for the company entity's parent company",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.company_ref": {
                     "docs": "The ref for the company entity's parent company",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.ref": {
                     "docs": "The ref for the company entity",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16692,7 +16506,7 @@ docs: Endpoints relating to Company objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16859,10 +16673,13 @@ docs: Endpoints relating to Company objects
               "method": "GET",
               "pagination": undefined,
               "path": "/network/company_entities/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested company entity",
-                  "type": "string",
+              "request": {
+                "name": "NetworkCompanyEntityShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested company entity",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -16926,12 +16743,6 @@ docs: Endpoints relating to Company objects
               "method": "PATCH",
               "pagination": undefined,
               "path": "/network/company_entities/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested company entity",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -16953,7 +16764,12 @@ docs: Endpoints relating to Company objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompanyEntity",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested company entity",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -16990,8 +16806,8 @@ docs: Endpoints relating to Company objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CompanyEntity>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -17045,8 +16861,8 @@ types:
   CompanyEntityIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<root.CompanyEntity>>
     source:
@@ -17100,13 +16916,13 @@ service:
         name: CompanyEntityIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -17115,13 +16931,13 @@ service:
               min: 1
               max: 100
           f.ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for the company entity
           f.company_id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The id for the company entity's parent company
           f.company_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for the company entity's parent company
       response:
         docs: collection of company entities
@@ -17249,11 +17065,13 @@ service:
       docs: Retrieves the details of a single company entity
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested company entity
       display-name: Retrieve a company entity
+      request:
+        name: NetworkCompanyEntityShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested company entity
       response:
         docs: Success
         type: NetworkCompanyEntityShowResponse
@@ -17296,13 +17114,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested company entity
       display-name: Update a company entity
       request:
         name: UpdateCompanyEntity
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested company entity
         body:
           properties:
             name:
@@ -17510,20 +17328,20 @@ docs: Endpoints relating to CompanyEntity objects
                 "query-parameters": {
                   "f.company.id": {
                     "docs": "The id for the company.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.company_ref": {
                     "docs": "The ref for the company.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.location.id": {
                     "docs": "Filters out all contacts not related to this location.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -17535,7 +17353,7 @@ docs: Endpoints relating to CompanyEntity objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -17598,10 +17416,13 @@ docs: Endpoints relating to CompanyEntity objects
               "method": "GET",
               "pagination": undefined,
               "path": "/network/contacts/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested contact",
-                  "type": "string",
+              "request": {
+                "name": "NetworkContactShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested contact",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -17657,12 +17478,6 @@ docs: Endpoints relating to CompanyEntity objects
               "method": "PATCH",
               "pagination": undefined,
               "path": "/network/contacts/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested contact",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -17683,7 +17498,12 @@ docs: Endpoints relating to CompanyEntity objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateContact",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested contact",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -17733,8 +17553,8 @@ docs: Endpoints relating to CompanyEntity objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Contact>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -17775,8 +17595,8 @@ types:
   NetworkContactIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<root.Contact>>
     source:
@@ -17830,13 +17650,13 @@ service:
         name: NetworkContactIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -17845,13 +17665,13 @@ service:
               min: 1
               max: 100
           f.company_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for the company.
           f.company.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The id for the company.
           f.location.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters out all contacts not related to this location.
       response:
         docs: collection of contacts
@@ -17956,11 +17776,13 @@ service:
       docs: Retrieves the details of a single contact.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested contact
       display-name: Retrieve a contact
+      request:
+        name: NetworkContactShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested contact
       response:
         docs: Success
         type: NetworkContactShowResponse
@@ -17998,13 +17820,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested contact
       display-name: Update an existing contact
       request:
         name: UpdateContact
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested contact
         body:
           properties:
             name:
@@ -18169,20 +17991,20 @@ docs: Endpoints relating to Contact objects
                 "query-parameters": {
                   "f.container_number": {
                     "docs": "Only return containers associated with the given container number.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
                     "docs": "Only return containers that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return containers matching any of the specified metadata values for that metadata key.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment.id": {
                     "docs": "Only return containers associated with the shipment specified by this id.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18194,7 +18016,7 @@ docs: Endpoints relating to Contact objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18303,10 +18125,13 @@ docs: Endpoints relating to Contact objects
               "method": "GET",
               "pagination": undefined,
               "path": "/ocean/shipment_containers/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the shipment to be retrieved.",
-                  "type": "string",
+              "request": {
+                "name": "ContainerShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the shipment to be retrieved.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -18343,8 +18168,8 @@ docs: Endpoints relating to Contact objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentContainer>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -18371,8 +18196,8 @@ types:
   ContainerListResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.ShipmentContainer>>
     source:
       openapi: ../openapi.yml
@@ -18411,13 +18236,13 @@ service:
         name: ContainerListRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -18426,15 +18251,15 @@ service:
               min: 1
               max: 100
           f.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Only return containers associated with the shipment specified by
               this id.
           f.container_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Only return containers associated with the given container number.
           f.metadata.YOUR_METADATA_KEY:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Only return containers that have a specific metadata key-value
               pair. Multiple metadata filters can be added to a single query. If
@@ -18522,11 +18347,13 @@ service:
       docs: Retrieves the details of a single container.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the shipment to be retrieved.
       display-name: Retrieve a container.
+      request:
+        name: ContainerShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the shipment to be retrieved.
       response:
         docs: Success
         type: ContainerShowResponse
@@ -18673,20 +18500,20 @@ docs: Endpoints relating to Container objects
                 "query-parameters": {
                   "f.leg.id": {
                     "docs": "Only return containers legs associated with the shipment leg specified by this id.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.shipment_container.container_number": {
                     "docs": "Only return containers legs associated with the given container number.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment_container.id": {
                     "docs": "Only return containers legs associated with the shipment container specified by this id.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18698,7 +18525,7 @@ docs: Endpoints relating to Container objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18763,10 +18590,13 @@ docs: Endpoints relating to Container objects
               "method": "GET",
               "pagination": undefined,
               "path": "/ocean/shipment_container_legs/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the ContainerLeg to be retrieved",
-                  "type": "integer",
+              "request": {
+                "name": "OceanContainerLegsShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the ContainerLeg to be retrieved",
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -18803,8 +18633,8 @@ docs: Endpoints relating to Container objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.OceanShipmentContainerLeg>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -18831,8 +18661,8 @@ types:
   OceanContainerLegsIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.OceanShipmentContainerLeg>>
     source:
       openapi: ../openapi.yml
@@ -18868,13 +18698,13 @@ service:
         name: OceanContainerLegsIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -18883,17 +18713,17 @@ service:
               min: 1
               max: 100
           f.leg.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Only return containers legs associated with the shipment leg
               specified by this id.
           f.shipment_container.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Only return containers legs associated with the shipment container
               specified by this id.
           f.shipment_container.container_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Only return containers legs associated with the given container
               number.
@@ -18937,11 +18767,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the ContainerLeg to be retrieved
       display-name: Retrieve a container leg on an Ocean shipment
+      request:
+        name: OceanContainerLegsShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the ContainerLeg to be retrieved
       response:
         docs: Success
         type: OceanContainerLegsShowResponse
@@ -19039,12 +18871,12 @@ docs: Endpoints relating to ContainerLeg objects
                 "query-parameters": {
                   "f.shipment.id": {
                     "docs": "The unique id for the shipment.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19056,7 +18888,7 @@ docs: Endpoints relating to ContainerLeg objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19114,10 +18946,13 @@ docs: Endpoints relating to ContainerLeg objects
               "method": "GET",
               "pagination": undefined,
               "path": "/customs_entries/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested customs entry",
-                  "type": "string",
+              "request": {
+                "name": "CustomsEntriesShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested customs entry",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -19167,8 +19002,8 @@ docs: Endpoints relating to ContainerLeg objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CustomsEntry>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -19182,8 +19017,8 @@ types:
   CustomsEntryIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.CustomsEntry>>
     source:
       openapi: ../openapi.yml
@@ -19220,13 +19055,13 @@ service:
         name: CustomsEntryIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -19235,7 +19070,7 @@ service:
               min: 1
               max: 100
           f.shipment.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The unique id for the shipment.
       response:
         docs: collection of customs entries
@@ -19274,11 +19109,13 @@ service:
       docs: Retrieves the details of a single customs entry.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested customs entry
       display-name: Retrieve a customs entry
+      request:
+        name: CustomsEntriesShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested customs entry
       response:
         docs: Success
         type: CustomsEntriesShowResponse
@@ -19384,10 +19221,13 @@ docs: Endpoints relating to Customs Entry objects
               "method": "GET",
               "pagination": undefined,
               "path": "/documents/{id}/download",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested document",
-                  "type": "string",
+              "request": {
+                "name": "DocumentsDownloadRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested document",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -19455,36 +19295,36 @@ docs: Endpoints relating to Customs Entry objects
                 "query-parameters": {
                   "f.archived_at.exists": {
                     "docs": "Filters the list for documents that have been archived",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.document_type": {
                     "docs": "Filters the list for documents that are the given type",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment.id": {
                     "docs": "Filters the list for documents that belong to the given shipment",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.uploaded_at.gt": {
                     "docs": "Filters the list for documents that where uploaded after the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.uploaded_at.gte": {
                     "docs": "Filters the list for documents that where uploaded on or after the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.uploaded_at.lt": {
                     "docs": "Filters the list for documents that where uploaded before the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.uploaded_at.lte": {
                     "docs": "Filters the list for documents that where uploaded on or before the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19496,7 +19336,7 @@ docs: Endpoints relating to Customs Entry objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19559,10 +19399,13 @@ docs: Endpoints relating to Customs Entry objects
               "method": "GET",
               "pagination": undefined,
               "path": "/documents/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested document",
-                  "type": "string",
+              "request": {
+                "name": "DocumentsShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested document",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -19612,8 +19455,8 @@ docs: Endpoints relating to Customs Entry objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Document>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -19641,8 +19484,8 @@ types:
   DocumentsIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<root.Document>>
     source:
@@ -19688,13 +19531,13 @@ service:
         name: DocumentsIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -19703,31 +19546,31 @@ service:
               min: 1
               max: 100
           f.shipment.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for documents that belong to the given shipment
           f.document_type:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for documents that are the given type
           f.archived_at.exists:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for documents that have been archived
           f.uploaded_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for documents that where uploaded after the given
               time
           f.uploaded_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for documents that where uploaded before the
               given time
           f.uploaded_at.gte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for documents that where uploaded on or after the
               given time
           f.uploaded_at.lte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for documents that where uploaded on or before
               the given time
@@ -19811,11 +19654,13 @@ service:
       docs: Retrieves the details of a single document.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested document
       display-name: Retrieve a document
+      request:
+        name: DocumentsShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested document
       response:
         docs: Success
         type: DocumentsShowResponse
@@ -19855,11 +19700,13 @@ service:
         of bytes.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested document
       display-name: Download a document
+      request:
+        name: DocumentsDownloadRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested document
       response:
         docs: Success
         type: file
@@ -19930,23 +19777,23 @@ docs: Endpoints relating to Document objects
                 "query-parameters": {
                   "f.data.resource._object": {
                     "docs": "Get all events which involved a resource of this type. The key for this filter will be the '_object' value for your target resource",
-                    "type": "optional<EventsIndexRequestFDataResourceObject>",
+                    "type": "optional<nullable<EventsIndexRequestFDataResourceObject>>",
                   },
                   "f.data.shipment.id": {
                     "docs": "Get all events which involved the shipment with this ID",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.occurred_at.gte": {
                     "docs": "Filter by events which occurred on or after this datetime",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.occurred_at.lte": {
                     "docs": "Filter by events which occurred on or before this datetime",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.type": {
                     "docs": "Filter by the type of the event",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -20069,10 +19916,13 @@ docs: Endpoints relating to Document objects
               "method": "GET",
               "pagination": undefined,
               "path": "/events/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the event object to be retrieved",
-                  "type": "integer",
+              "request": {
+                "name": "EventsShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the event object to be retrieved",
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -20141,8 +19991,8 @@ docs: Endpoints relating to Document objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.WebhookEvent>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -20183,8 +20033,8 @@ docs: Endpoints relating to Document objects
   EventsIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.WebhookEvent>>
     source:
       openapi: ../openapi.yml
@@ -20225,19 +20075,19 @@ service:
         name: EventsIndexRequest
         query-parameters:
           f.type:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter by the type of the event
           f.occurred_at.gte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter by events which occurred on or after this datetime
           f.occurred_at.lte:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter by events which occurred on or before this datetime
           f.data.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Get all events which involved the shipment with this ID
           f.data.resource._object:
-            type: optional<EventsIndexRequestFDataResourceObject>
+            type: optional<nullable<EventsIndexRequestFDataResourceObject>>
             docs: >-
               Get all events which involved a resource of this type. The key for
               this filter will be the '_object' value for your target resource
@@ -20275,11 +20125,13 @@ service:
       docs: Returns the webhook event with ID ":id"
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the event object to be retrieved
       display-name: Retrieve a single webhook event
+      request:
+        name: EventsShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the event object to be retrieved
       response:
         docs: Success
         type: EventsShowResponse
@@ -20651,64 +20503,64 @@ Other details about this invoice",
                   "direction": {
                     "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
-                    "type": "optional<InvoiceIndexRequestDirection>",
+                    "type": "optional<nullable<InvoiceIndexRequestDirection>>",
                   },
                   "f.billed_directly_to_client": {
                     "docs": "Filters for invoices that are billed directly to the client, rather than invoices that are billed to a shipment.
 This parameter is mutually exclusive with the f.shipment.id filter.
 ",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.client_id": {
                     "availability": "deprecated",
                     "docs": "[DEPRECATED] Filters the list for invoices billed directly to a client",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.entity.id": {
                     "docs": "Filters the list based on the ID of the company entity that receives the invoice",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.entity.ref": {
                     "docs": "Filters the list based on the ref of the company entity that receives the invoice",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.issued_at.gt": {
                     "docs": "Filters the list for invoices issued after the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.issued_at.lt": {
                     "docs": "Filters the list for invoices issued before the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.last_updated_at.gt": {
                     "docs": "Filters the list for invoices last updated after the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.last_updated_at.lt": {
                     "docs": "Filters the list for invoices last updated before the specified date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.name": {
                     "docs": "Filters the list based on the name of the invoice",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment.id": {
                     "docs": "Filters the list for invoices associated with a shipment",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.shipment_id": {
                     "availability": "deprecated",
                     "docs": "[DEPRECATED] Filters the list for invoices associated with a shipment",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.status": {
                     "docs": "Filters the list based on the status of the invoice",
-                    "type": "optional<InvoiceIndexRequestFStatus>",
+                    "type": "optional<nullable<InvoiceIndexRequestFStatus>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20719,7 +20571,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20730,7 +20582,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
-                    "type": "optional<literal<"due_date">>",
+                    "type": "optional<nullable<literal<"due_date">>>",
                   },
                 },
               },
@@ -20992,10 +20844,13 @@ Other details about this invoice",
               "method": "GET",
               "pagination": undefined,
               "path": "/invoices/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the invoice to be retrieved",
-                  "type": "string",
+              "request": {
+                "name": "InvoicesShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the invoice to be retrieved",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -21055,8 +20910,8 @@ Other details about this invoice",
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Invoice>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -21096,8 +20951,8 @@ Other details about this invoice",
   InvoiceIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.Invoice>>
     source:
       openapi: ../openapi.yml
@@ -21136,13 +20991,13 @@ service:
         name: InvoiceIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -21150,20 +21005,20 @@ service:
               min: 1
               max: 100
           sort:
-            type: optional<literal<"due_date">>
+            type: optional<nullable<literal<"due_date">>>
             docs: Sort results by the specified field.
           direction:
-            type: optional<InvoiceIndexRequestDirection>
+            type: optional<nullable<InvoiceIndexRequestDirection>>
             default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending).
           f.status:
-            type: optional<InvoiceIndexRequestFStatus>
+            type: optional<nullable<InvoiceIndexRequestFStatus>>
             docs: Filters the list based on the status of the invoice
           f.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Filters the list for invoices associated with a shipment
           f.billed_directly_to_client:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >
               Filters for invoices that are billed directly to the client,
               rather than invoices that are billed to a shipment.
@@ -21171,42 +21026,42 @@ service:
               This parameter is mutually exclusive with the f.shipment.id
               filter.
           f.entity.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Filters the list based on the ID of the company entity that
               receives the invoice
           f.entity.ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list based on the ref of the company entity that
               receives the invoice
           f.name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the name of the invoice
           f.issued_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for invoices issued after the specified date
           f.issued_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list for invoices issued before the specified date
           f.last_updated_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for invoices last updated after the specified
               date
           f.last_updated_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for invoices last updated before the specified
               date
           f.client_id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               [DEPRECATED] Filters the list for invoices billed directly to a
               client
             availability: deprecated
           f.shipment_id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               [DEPRECATED] Filters the list for invoices associated with a
               shipment
@@ -21422,11 +21277,13 @@ service:
       docs: Retrieves the details of a single invoice
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the invoice to be retrieved
       display-name: Retrieve an invoice
+      request:
+        name: InvoicesShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the invoice to be retrieved
       response:
         docs: Success
         type: InvoicesShowResponse
@@ -21705,28 +21562,28 @@ docs: Endpoints relating to Invoice objects
                 "query-parameters": {
                   "f.company.id": {
                     "docs": "The id for a company.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.company_ref": {
                     "docs": "The ref for a company.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.contact.id": {
                     "docs": "The id for a contact at this location.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
                     "docs": "Only return locations that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return locations matching any of the specified metadata values for that metadata key.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.ref": {
                     "docs": "The ref for the location.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21738,7 +21595,7 @@ docs: Endpoints relating to Invoice objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21921,10 +21778,13 @@ docs: Endpoints relating to Invoice objects
               "method": "GET",
               "pagination": undefined,
               "path": "/network/locations/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested location",
-                  "type": "string",
+              "request": {
+                "name": "NetworkLocationShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested location",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -21996,12 +21856,6 @@ docs: Endpoints relating to Invoice objects
               "method": "PATCH",
               "pagination": undefined,
               "path": "/network/locations/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the requested location",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -22027,7 +21881,12 @@ docs: Endpoints relating to Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateLocation",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the requested location",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -22064,8 +21923,8 @@ docs: Endpoints relating to Invoice objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Location>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -22119,8 +21978,8 @@ types:
   LocationIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<root.Location>>
     source:
@@ -22174,13 +22033,13 @@ service:
         name: LocationIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -22189,19 +22048,19 @@ service:
               min: 1
               max: 100
           f.ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for the location.
           f.company_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The ref for a company.
           f.company.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The id for a company.
           f.contact.id:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: The id for a contact at this location.
           f.metadata.YOUR_METADATA_KEY:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Only return locations that have a specific metadata key-value
               pair. Multiple metadata filters can be added to a single query. If
@@ -22342,11 +22201,13 @@ service:
       docs: Retrieves the details of a single location
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested location
       display-name: Retrieve a location by id
+      request:
+        name: NetworkLocationShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested location
       response:
         docs: Success
         type: NetworkLocationShowResponse
@@ -22399,13 +22260,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the requested location
       display-name: Update a network location
       request:
         name: UpdateLocation
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the requested location
         body:
           properties:
             name:
@@ -22590,16 +22451,16 @@ docs: Endpoints relating to Location objects
                 "query-parameters": {
                   "f.port_type": {
                     "docs": "Filter by the type of port. Ports can have more than one type",
-                    "type": "optional<PortsIndexRequestFPortType>",
+                    "type": "optional<nullable<PortsIndexRequestFPortType>>",
                   },
                   "f.unlocode": {
                     "docs": "Filter by unlocode.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22611,7 +22472,7 @@ docs: Endpoints relating to Location objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22668,8 +22529,8 @@ docs: Endpoints relating to Location objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<optional<root.Place>>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
               "total_count": "optional<integer>",
             },
             "source": {
@@ -22690,8 +22551,8 @@ docs: Endpoints relating to Location objects
   PortsIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       total_count: optional<integer>
       data: optional<list<optional<root.Place>>>
     source:
@@ -22722,13 +22583,13 @@ service:
         name: PortsIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -22737,10 +22598,10 @@ service:
               min: 1
               max: 100
           f.port_type:
-            type: optional<PortsIndexRequestFPortType>
+            type: optional<nullable<PortsIndexRequestFPortType>>
             docs: Filter by the type of port. Ports can have more than one type
           f.unlocode:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter by unlocode.
       response:
         docs: collection of ports
@@ -22996,15 +22857,15 @@ docs: Endpoints relating to Ports objects
                 "query-parameters": {
                   "f.archived_at.exists": {
                     "docs": "Filter out all archived products (f.archived_at.exists=false) or filter out all unarchived products (f.archived_at.exists=true)",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.product_properties.TYPE": {
                     "docs": "Search for product properties that are key-value pairs. The key (TYPE) is appended at the end of the parameter name. Multiple property filters can be added to the same query. E.G. f.product_properties.color=blue",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.sku": {
                     "docs": "Find the products having this SKU. SKUs are unique among active products, but there may be archived products that share the same sku.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -23068,10 +22929,13 @@ docs: Endpoints relating to Ports objects
               "method": "GET",
               "pagination": undefined,
               "path": "/products/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "Unique id for the product to be retrieved",
-                  "type": "string",
+              "request": {
+                "name": "ProductShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "Unique id for the product to be retrieved",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -23135,12 +22999,6 @@ docs: Endpoints relating to Ports objects
               "method": "PATCH",
               "pagination": undefined,
               "path": "/products/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "Unique id for the product to be updated",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -23185,7 +23043,12 @@ docs: Endpoints relating to Ports objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateProduct",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "Unique id for the product to be updated",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -23235,8 +23098,8 @@ docs: Endpoints relating to Ports objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Product>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -23276,8 +23139,8 @@ types:
   ProductIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.Product>>
     source:
       openapi: ../openapi.yml
@@ -23330,18 +23193,18 @@ service:
         name: ProductIndexRequest
         query-parameters:
           f.sku:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Find the products having this SKU. SKUs are unique among active
               products, but there may be archived products that share the same
               sku.
           f.archived_at.exists:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Filter out all archived products (f.archived_at.exists=false) or
               filter out all unarchived products (f.archived_at.exists=true)
           f.product_properties.TYPE:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Search for product properties that are key-value pairs. The key
               (TYPE) is appended at the end of the parameter name. Multiple
@@ -23473,11 +23336,13 @@ service:
       docs: Returns the client's product with this ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: Unique id for the product to be retrieved
       display-name: Retrieve a single product
+      request:
+        name: ProductShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: Unique id for the product to be retrieved
       response:
         docs: Success
         type: ProductShowResponse
@@ -23518,13 +23383,13 @@ service:
       docs: Update this product to represent the request payload
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: Unique id for the product to be updated
       display-name: Update a product
       request:
         name: UpdateProduct
+        path-parameters:
+          id:
+            type: string
+            docs: Unique id for the product to be updated
         body:
           properties:
             name:
@@ -23747,7 +23612,7 @@ docs: Endpoints relating to Product objects
                     "body": {
                       "_object": "/api/response",
                       "archived_at": "archived_at",
-                      "cargo_ready_date": "cargo_ready_date",
+                      "cargo_ready_date": "2023-01-15",
                       "created_at": "created_at",
                       "destination_addresses": [
                         {
@@ -23793,7 +23658,7 @@ docs: Endpoints relating to Product objects
                       "freight_paymnet_terms": "freight_collect",
                       "id": 2983,
                       "incoterm": "EXW",
-                      "issue_date": "issue_date",
+                      "issue_date": "2023-01-15",
                       "line_items": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -23808,7 +23673,7 @@ docs: Endpoints relating to Product objects
                           "abc123",
                         ],
                       },
-                      "must_arrive_date": "must_arrive_date",
+                      "must_arrive_date": "2023-01-15",
                       "name": "PO 12345 - "shipment"",
                       "order_class": "purchase_order",
                       "order_type": "Apparel",
@@ -24144,23 +24009,23 @@ docs: Endpoints relating to Product objects
                   "direction": {
                     "default": "asc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
-                    "type": "optional<PurchaseOrderIndexRequestDirection>",
+                    "type": "optional<nullable<PurchaseOrderIndexRequestDirection>>",
                   },
                   "f.archived_at.exists": {
                     "docs": "Filter out all archived purchase orders (f.archived_at.exists=false) or filter out all unarchived purchase orders (f.archived_at.exists=true)",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.buyer_entity_ref": {
                     "docs": "Filters the list based on the PO buyer entity",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.buyer_ref": {
                     "docs": "Filters the list based on PO buyer",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.name": {
                     "docs": "Filter the list based on PO name",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.roles": {
                     "allow-multiple": true,
@@ -24169,32 +24034,32 @@ docs: Endpoints relating to Product objects
                   },
                   "f.seller_entity_ref": {
                     "docs": "Filters the list based on the PO seller entity",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.seller_ref": {
                     "docs": "Filters the list based on the PO seller",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.shipment.id": {
                     "docs": "Filter the list based on whether a PO is on the shipment matching the provided ID",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.status": {
                     "docs": "Filters the list based on the PO status",
-                    "type": "optional<PurchaseOrderIndexRequestFStatus>",
+                    "type": "optional<nullable<PurchaseOrderIndexRequestFStatus>>",
                   },
                   "f.updated_at.gt": {
                     "docs": "Filter the list for POs last updated after the provided time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.updated_at.lt": {
                     "docs": "Filter the list for POs last updated before the provided time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -24206,7 +24071,7 @@ docs: Endpoints relating to Product objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -24217,7 +24082,7 @@ docs: Endpoints relating to Product objects
                   },
                   "sort": {
                     "docs": "Sort results by the specified field (only `id` is supported at this time)",
-                    "type": "optional<literal<"id">>",
+                    "type": "optional<nullable<literal<"id">>>",
                   },
                 },
               },
@@ -24250,7 +24115,7 @@ docs: Endpoints relating to Product objects
                       "data": {
                         "_object": "/booking",
                         "archived_at": "archived_at",
-                        "cargo_ready_date": "cargo_ready_date",
+                        "cargo_ready_date": "2023-01-15",
                         "created_at": "created_at",
                         "destination_addresses": [
                           {
@@ -24288,7 +24153,7 @@ docs: Endpoints relating to Product objects
                         "freight_paymnet_terms": "freight_collect",
                         "id": 2983,
                         "incoterm": "EXW",
-                        "issue_date": "issue_date",
+                        "issue_date": "2023-01-15",
                         "line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -24303,7 +24168,7 @@ docs: Endpoints relating to Product objects
                             "abc123",
                           ],
                         },
-                        "must_arrive_date": "must_arrive_date",
+                        "must_arrive_date": "2023-01-15",
                         "name": "PO 12345 - "shipment"",
                         "order_class": "purchase_order",
                         "order_type": "Apparel",
@@ -24359,18 +24224,18 @@ docs: Endpoints relating to Product objects
               "method": "GET",
               "pagination": undefined,
               "path": "/purchase_orders/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the purchase order to be retrieved",
-                  "type": "integer",
-                },
-              },
               "request": {
                 "name": "PurchaseOrderShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the purchase order to be retrieved",
+                    "type": "integer",
+                  },
+                },
                 "query-parameters": {
                   "f.purchase_order_version.id": {
                     "docs": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -24449,7 +24314,7 @@ docs: Endpoints relating to Product objects
                     "body": {
                       "_object": "/api/response",
                       "archived_at": "archived_at",
-                      "cargo_ready_date": "cargo_ready_date",
+                      "cargo_ready_date": "2023-01-15",
                       "created_at": "created_at",
                       "destination_addresses": [
                         {
@@ -24495,7 +24360,7 @@ docs: Endpoints relating to Product objects
                       "freight_paymnet_terms": "freight_collect",
                       "id": 2983,
                       "incoterm": "EXW",
-                      "issue_date": "issue_date",
+                      "issue_date": "2023-01-15",
                       "line_items": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -24510,7 +24375,7 @@ docs: Endpoints relating to Product objects
                           "abc123",
                         ],
                       },
-                      "must_arrive_date": "must_arrive_date",
+                      "must_arrive_date": "2023-01-15",
                       "name": "PO 12345 - "shipment"",
                       "order_class": "purchase_order",
                       "order_type": "Apparel",
@@ -24593,15 +24458,16 @@ docs: Endpoints relating to Product objects
               "method": "POST",
               "pagination": undefined,
               "path": "/purchase_orders/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the purchase order to be updated",
-                  "type": "integer",
-                },
-              },
               "request": {
                 "body": "root.CreateOrUpdatePurchaseOrder",
                 "content-type": "application/json",
+                "name": "PurchaseOrderUpdateRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the purchase order to be updated",
+                    "type": "integer",
+                  },
+                },
               },
               "response": {
                 "docs": "The update purchase order",
@@ -24775,13 +24641,13 @@ service:
         name: PurchaseOrderIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page Should be between 1 and 100
@@ -24790,34 +24656,34 @@ service:
               min: 1
               max: 100
           sort:
-            type: optional<literal<"id">>
+            type: optional<nullable<literal<"id">>>
             docs: >-
               Sort results by the specified field (only `id` is supported at
               this time)
           direction:
-            type: optional<PurchaseOrderIndexRequestDirection>
+            type: optional<nullable<PurchaseOrderIndexRequestDirection>>
             default: asc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
           f.archived_at.exists:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Filter out all archived purchase orders
               (f.archived_at.exists=false) or filter out all unarchived purchase
               orders (f.archived_at.exists=true)
           f.status:
-            type: optional<PurchaseOrderIndexRequestFStatus>
+            type: optional<nullable<PurchaseOrderIndexRequestFStatus>>
             docs: Filters the list based on the PO status
           f.buyer_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on PO buyer
           f.seller_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the PO seller
           f.seller_entity_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the PO seller entity
           f.buyer_entity_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on the PO buyer entity
           f.roles:
             type: optional<PurchaseOrderIndexRequestFRolesItem>
@@ -24826,18 +24692,18 @@ service:
               Filters the list based on which role you take in the PO. You can
               state multiple roles with a comma.
           f.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Filter the list based on whether a PO is on the shipment matching
               the provided ID
           f.name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter the list based on PO name
           f.updated_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter the list for POs last updated before the provided time
           f.updated_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter the list for POs last updated after the provided time
       response:
         docs: collection of purchase orders
@@ -25119,12 +24985,12 @@ service:
               incoterm: EXW
               order_type: Apparel
               order_class: purchase_order
-              issue_date: issue_date
+              issue_date: '2023-01-15'
               freight_paymnet_terms: freight_collect
               priority: standard
               transportation_mode: ocean
-              cargo_ready_date: cargo_ready_date
-              must_arrive_date: must_arrive_date
+              cargo_ready_date: '2023-01-15'
+              must_arrive_date: '2023-01-15'
               origin_port:
                 _object: /place
                 name: ORD - Chicago - IL
@@ -25234,16 +25100,16 @@ service:
         Retrieves the details of a single purchase order.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the purchase order to be retrieved
       display-name: Retrieve a purchase order
       request:
         name: PurchaseOrderShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the purchase order to be retrieved
         query-parameters:
           f.purchase_order_version.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               The id of the version of a purchase order. By default, the latest
               version of the purchase order is used.
@@ -25270,12 +25136,12 @@ service:
                 incoterm: EXW
                 order_type: Apparel
                 order_class: purchase_order
-                issue_date: issue_date
+                issue_date: '2023-01-15'
                 freight_paymnet_terms: freight_collect
                 priority: standard
                 transportation_mode: ocean
-                cargo_ready_date: cargo_ready_date
-                must_arrive_date: must_arrive_date
+                cargo_ready_date: '2023-01-15'
+                must_arrive_date: '2023-01-15'
                 origin_port:
                   _object: /place
                   name: ORD - Chicago - IL
@@ -25352,13 +25218,14 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the purchase order to be updated
       display-name: Update and return a purchase order
       request:
         body: root.CreateOrUpdatePurchaseOrder
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the purchase order to be updated
+        name: PurchaseOrderUpdateRequest
         content-type: application/json
       response:
         docs: The update purchase order
@@ -25415,12 +25282,12 @@ service:
               incoterm: EXW
               order_type: Apparel
               order_class: purchase_order
-              issue_date: issue_date
+              issue_date: '2023-01-15'
               freight_paymnet_terms: freight_collect
               priority: standard
               transportation_mode: ocean
-              cargo_ready_date: cargo_ready_date
-              must_arrive_date: must_arrive_date
+              cargo_ready_date: '2023-01-15'
+              must_arrive_date: '2023-01-15'
               origin_port:
                 _object: /place
                 name: ORD - Chicago - IL
@@ -25684,28 +25551,28 @@ docs: >-
                   "direction": {
                     "default": "desc",
                     "docs": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
-                    "type": "optional<PurchaseOrderLineItemIndexRequestDirection>",
+                    "type": "optional<nullable<PurchaseOrderLineItemIndexRequestDirection>>",
                   },
                   "f.item_key": {
                     "docs": "Filters the list based on item key",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.line_item_number": {
                     "docs": "Filters the list based on line item number",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.purchase_order.id": {
                     "docs": "Filters the list based on the purchase order id",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.purchase_order_version.id": {
                     "docs": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -25717,7 +25584,7 @@ docs: >-
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -25863,10 +25730,13 @@ docs: >-
               "method": "GET",
               "pagination": undefined,
               "path": "/purchase_order_line_items/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the PO line item to be retrieved",
-                  "type": "integer",
+              "request": {
+                "name": "PurchaseOrderLineItemShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the PO line item to be retrieved",
+                    "type": "integer",
+                  },
                 },
               },
               "response": {
@@ -25987,13 +25857,13 @@ service:
         name: PurchaseOrderLineItemIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -26002,20 +25872,20 @@ service:
               min: 1
               max: 100
           direction:
-            type: optional<PurchaseOrderLineItemIndexRequestDirection>
+            type: optional<nullable<PurchaseOrderLineItemIndexRequestDirection>>
             default: desc
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
           f.purchase_order.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Filters the list based on the purchase order id
           f.line_item_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on line item number
           f.item_key:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filters the list based on item key
           f.purchase_order_version.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               The id of the version of a purchase order. By default, the latest
               version of the purchase order is used.
@@ -26127,11 +25997,13 @@ service:
       docs: Returns the details of a purchase order line item
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the PO line item to be retrieved
       display-name: Retrieve a purchase order line item
+      request:
+        name: PurchaseOrderLineItemShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the PO line item to be retrieved
       response:
         docs: collection of purchase order line items
         type: PurchaseOrderLineItemShowResponse
@@ -26553,120 +26425,120 @@ docs: >-
                   "direction": {
                     "default": "desc",
                     "docs": "Set sort order. Allows "asc" (ascending) or "desc" (descending).",
-                    "type": "optional<ShipmentIndexRequestDirection>",
+                    "type": "optional<nullable<ShipmentIndexRequestDirection>>",
                   },
                   "f.archived_at.gt": {
                     "docs": "Filters the list for shipments that where archived after the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.archived_at.lt": {
                     "docs": "Filters the list for shipments that where archived before the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.belongs_to_a_buyers_consol": {
                     "docs": "Filters the list based on whether the shipment belongs to a buyer's consolidation",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.consignee_external_ref": {
                     "docs": "Filters the list for shipments that have the specified company entity (denoted by external ref) as a consignee",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.container_number": {
                     "docs": "Filters the list for shipments that are associated with a container specified by the given container number.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.destination_address_ref": {
                     "docs": "Filters the list for shipments that have a shipment leg with the same destination address ref",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.house_bill_number": {
                     "docs": "Filters the list for shipments that are associated with the given house bill number",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.master_bill_number": {
                     "docs": "Filters the list for shipments that are associated with the given master bill number",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.metadata.YOUR_METADATA_KEY": {
                     "docs": "Filters the list for shipments that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return shipments matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid. It should instead be `f.metadata.PO%20%23`
 ",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.origin_address_ref": {
                     "docs": "Filters the list for shipments that have a shipment leg with the same origin address ref",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.purchase_order": {
                     "docs": "Filters the list for shipments that are associated with the given purchase order number",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.sku": {
                     "docs": "Filters the list for shipments that are associated a product identified by the given SKU.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.status": {
                     "docs": "Filters the list based on the shipment's `status`. Cannot be used with `f.statuses.any`",
-                    "type": "optional<root.ShipmentStatus>",
+                    "type": "optional<nullable<root.ShipmentStatus>>",
                   },
                   "f.statuses.any": {
                     "docs": "Filters the list for all shipments whose `status` is one of the passed in statuses. Can pass in multiple comma-separated statuses.",
-                    "type": "optional<root.ShipmentStatus>",
+                    "type": "optional<nullable<root.ShipmentStatus>>",
                   },
                   "f.transportation_mode": {
                     "docs": "Filters the list based on the shipment's `transportation_mode`. One of `ocean` or `air`.",
-                    "type": "optional<root.TransportationMode>",
+                    "type": "optional<nullable<root.TransportationMode>>",
                   },
                   "f.updated_at.gt": {
                     "docs": "Filters the list for shipments that where updated after the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.updated_at.lt": {
                     "docs": "Filters the list for shipments that where updated before the given time",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "f.visibility_only": {
                     "docs": "Filters the list based on shipment's visibility_only flag",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_commercial_invoice_transcription": {
                     "docs": "Filters the list based on shipment's wants_commercial_invoice_transcription",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_delivery_service": {
                     "docs": "Filters the list based on shipment's wants_delivery_service flag",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_export_customs_service": {
                     "docs": "Filters the list based on shipment's wants_export_customs_service",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_flexport_freight": {
                     "docs": "Filters the list based on shipment's wants_flexport_freight",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_flexport_insurance": {
                     "docs": "Filters the list based on shipment's wants_flexport_insurance",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_freight_management_bco": {
                     "docs": "Filters the list based on shipment's wants_freight_management_bco",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_import_customs_service": {
                     "docs": "Filters the list based on shipment's wants_import_customs_service",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_pickup_service": {
                     "docs": "Filters the list based on shipment's wants_pickup_service",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.wants_trade_declaration_service": {
                     "docs": "Filters the list based on shipment's wants_trade_declaration_service",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "page": {
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -26677,7 +26549,7 @@ docs: >-
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -26689,7 +26561,7 @@ docs: >-
                   "sort": {
                     "default": "id",
                     "docs": "Sort results by the specified field.",
-                    "type": "optional<ShipmentIndexRequestSort>",
+                    "type": "optional<nullable<ShipmentIndexRequestSort>>",
                   },
                 },
               },
@@ -27038,7 +26910,7 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "target_delivery_date",
+                        "target_delivery_date": "2023-01-15",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
@@ -27061,10 +26933,13 @@ docs: >-
               "method": "GET",
               "pagination": undefined,
               "path": "/shipments/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the shipment to be retrieved.",
-                  "type": "string",
+              "request": {
+                "name": "ShipmentShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the shipment to be retrieved.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -27361,7 +27236,7 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "target_delivery_date",
+                        "target_delivery_date": "2023-01-15",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
@@ -27384,12 +27259,6 @@ docs: >-
               "method": "PATCH",
               "pagination": undefined,
               "path": "/shipments/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the shipment to be updated",
-                  "type": "integer",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -27402,7 +27271,12 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateShipment",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the shipment to be updated",
+                    "type": "integer",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -27464,8 +27338,8 @@ docs: >-
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Shipment>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -27556,8 +27430,8 @@ docs: >-
   ShipmentIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.Shipment>>
     source:
       openapi: ../openapi.yml
@@ -27627,12 +27501,12 @@ service:
         name: ShipmentIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
@@ -27640,90 +27514,90 @@ service:
               min: 1
               max: 100
           sort:
-            type: optional<ShipmentIndexRequestSort>
+            type: optional<nullable<ShipmentIndexRequestSort>>
             default: id
             docs: Sort results by the specified field.
           direction:
-            type: optional<ShipmentIndexRequestDirection>
+            type: optional<nullable<ShipmentIndexRequestDirection>>
             default: desc
             docs: Set sort order. Allows "asc" (ascending) or "desc" (descending).
           f.transportation_mode:
-            type: optional<root.TransportationMode>
+            type: optional<nullable<root.TransportationMode>>
             docs: >-
               Filters the list based on the shipment's `transportation_mode`.
               One of `ocean` or `air`.
           f.status:
-            type: optional<root.ShipmentStatus>
+            type: optional<nullable<root.ShipmentStatus>>
             docs: >-
               Filters the list based on the shipment's `status`. Cannot be used
               with `f.statuses.any`
           f.statuses.any:
-            type: optional<root.ShipmentStatus>
+            type: optional<nullable<root.ShipmentStatus>>
             docs: >-
               Filters the list for all shipments whose `status` is one of the
               passed in statuses. Can pass in multiple comma-separated statuses.
           f.container_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that are associated with a
               container specified by the given container number.
           f.purchase_order:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that are associated with the given
               purchase order number
           f.sku:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that are associated a product
               identified by the given SKU.
           f.updated_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that where updated after the given
               time
           f.updated_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that where updated before the given
               time
           f.archived_at.gt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that where archived after the given
               time
           f.archived_at.lt:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that where archived before the
               given time
           f.master_bill_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that are associated with the given
               master bill number
           f.house_bill_number:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that are associated with the given
               house bill number
           f.consignee_external_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that have the specified company
               entity (denoted by external ref) as a consignee
           f.origin_address_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that have a shipment leg with the
               same origin address ref
           f.destination_address_ref:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Filters the list for shipments that have a shipment leg with the
               same destination address ref
           f.metadata.YOUR_METADATA_KEY:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >
               Filters the list for shipments that have a specific metadata
               key-value pair. Multiple metadata filters can be added to a single
@@ -27733,41 +27607,41 @@ service:
               keys must be URL encoded; e.g.: `f.metadata.PO #=123` is invalid.
               It should instead be `f.metadata.PO%20%23`
           f.wants_freight_management_bco:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_freight_management_bco
           f.wants_flexport_freight:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_flexport_freight
           f.wants_import_customs_service:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_import_customs_service
           f.wants_export_customs_service:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_export_customs_service
           f.wants_commercial_invoice_transcription:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Filters the list based on shipment's
               wants_commercial_invoice_transcription
           f.wants_flexport_insurance:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_flexport_insurance
           f.wants_pickup_service:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_pickup_service
           f.wants_trade_declaration_service:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Filters the list based on shipment's
               wants_trade_declaration_service
           f.visibility_only:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's visibility_only flag
           f.wants_delivery_service:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Filters the list based on shipment's wants_delivery_service flag
           f.belongs_to_a_buyers_consol:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               Filters the list based on whether the shipment belongs to a
               buyer's consolidation
@@ -28015,11 +27889,13 @@ service:
         Retrieves the details of a single shipment.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique id for the shipment to be retrieved.
       display-name: Retrieve a shipment
+      request:
+        name: ShipmentShowRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique id for the shipment to be retrieved.
       response:
         docs: Success
         type: ShipmentShowResponse
@@ -28079,7 +27955,7 @@ service:
                 belongs_to_a_buyers_consol: false
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: target_delivery_date
+                target_delivery_date: '2023-01-15'
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -28255,13 +28131,13 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the shipment to be updated
       display-name: Update an existing shipment
       request:
         name: UpdateShipment
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the shipment to be updated
         body:
           properties:
             metadata:
@@ -28342,7 +28218,7 @@ service:
                   id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: target_delivery_date
+                target_delivery_date: '2023-01-15'
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -28739,20 +28615,20 @@ docs: Endpoints relating to Shipment objects
                   "f.include_deleted": {
                     "default": false,
                     "docs": "Returns legs including deleted legs",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "f.shipment.id": {
                     "docs": "Only return legs for the shipment specified by this id.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "f.transportation_mode": {
                     "docs": "Only return legs that match the given transportation mode",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the page to retrieve",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -28764,7 +28640,7 @@ docs: Endpoints relating to Shipment objects
                   "per": {
                     "default": 20,
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -28813,7 +28689,7 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
-                        "cargo_ready_date": "cargo_ready_date",
+                        "cargo_ready_date": "2023-01-15",
                         "carrier_name": "Liberty Carrier",
                         "deleted_at": "2024-01-15T09:30:00Z",
                         "destination": {
@@ -28937,19 +28813,19 @@ docs: Endpoints relating to Shipment objects
               "method": "GET",
               "pagination": undefined,
               "path": "/shipment_legs/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique id for the ShipmentLeg object to be retrieved",
-                  "type": "integer",
-                },
-              },
               "request": {
                 "name": "ShipmentLegShowRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique id for the ShipmentLeg object to be retrieved",
+                    "type": "integer",
+                  },
+                },
                 "query-parameters": {
                   "f.include_deleted": {
                     "default": false,
                     "docs": "Retrieves the leg even if it was deleted",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                 },
               },
@@ -28987,8 +28863,8 @@ docs: Endpoints relating to Shipment objects
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentLeg>>",
-              "next": "optional<string>",
-              "prev": "optional<string>",
+              "next": "optional<nullable<string>>",
+              "prev": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -29015,8 +28891,8 @@ types:
   ShipmentLegIndexResponseData:
     properties:
       _object: optional<string>
-      prev: optional<string>
-      next: optional<string>
+      prev: optional<nullable<string>>
+      next: optional<nullable<string>>
       data: optional<list<root.ShipmentLeg>>
     source:
       openapi: ../openapi.yml
@@ -29055,13 +28931,13 @@ service:
         name: ShipmentLegIndexRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 1
             docs: Page number of the page to retrieve
             validation:
               min: 1
           per:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 20
             docs: >-
               Count of items in each page. Should be between 1 and 100
@@ -29070,13 +28946,13 @@ service:
               min: 1
               max: 100
           f.shipment.id:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Only return legs for the shipment specified by this id.
           f.transportation_mode:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: Only return legs that match the given transportation mode
           f.include_deleted:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
             docs: Returns legs including deleted legs
       response:
@@ -29207,16 +29083,16 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: integer
-          docs: The unique id for the ShipmentLeg object to be retrieved
       display-name: Retrieve a shipment route leg
       request:
         name: ShipmentLegShowRequest
+        path-parameters:
+          id:
+            type: integer
+            docs: The unique id for the ShipmentLeg object to be retrieved
         query-parameters:
           f.include_deleted:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
             docs: Retrieves the leg even if it was deleted
       response:
@@ -29337,7 +29213,7 @@ service:
                     ref_type: /ocean/shipment_container_leg
                     link: >-
                       https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                cargo_ready_date: cargo_ready_date
+                cargo_ready_date: '2023-01-15'
   source:
     openapi: ../openapi.yml
   display-name: ShipmentLeg

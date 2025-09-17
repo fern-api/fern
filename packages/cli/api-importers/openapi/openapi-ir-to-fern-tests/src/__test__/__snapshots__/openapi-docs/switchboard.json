@@ -111,9 +111,9 @@
               "HttpStatus": "long",
               "Message": "string",
               "data": "unknown",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "unknown",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -176,9 +176,9 @@
             "inline": undefined,
             "properties": {
               "data": "ExtensionV1",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -231,11 +231,11 @@
             "properties": {
               "code": {
                 "docs": "Issue code",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "details": {
                 "docs": "Any associated details",
-                "type": "optional<map<string, unknown>>",
+                "type": "optional<nullable<map<string, unknown>>>",
               },
               "message": {
                 "docs": "Message describing the issue",
@@ -250,10 +250,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<list<ExtensionV1>>",
-              "errors": "optional<list<Issue>>",
+              "data": "optional<nullable<list<ExtensionV1>>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -263,10 +263,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<list<ProfileV1>>",
-              "errors": "optional<list<Issue>>",
+              "data": "optional<nullable<list<ProfileV1>>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -304,9 +304,9 @@
             "inline": undefined,
             "properties": {
               "data": "ModelResponse",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "ExternalSessionAiResponseMetadata",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -349,7 +349,7 @@
               },
               "tags": {
                 "docs": "a comma separated list of tags for this profile",
-                "type": "optional<list<string>>",
+                "type": "optional<nullable<list<string>>>",
               },
               "upload_uri": {
                 "docs": "URI to upload profile data to",
@@ -371,9 +371,9 @@
             "inline": undefined,
             "properties": {
               "data": "ProfileV1",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -394,9 +394,9 @@
             "inline": undefined,
             "properties": {
               "data": "ScrapeModelResponse",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "ExternalSessionAiResponseMetadata",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -454,7 +454,7 @@
               },
               "persist_profile_tags": {
                 "docs": "Profile tags",
-                "type": "optional<list<string>>",
+                "type": "optional<nullable<list<string>>>",
               },
               "profile_id": {
                 "docs": "Id of a profile to use with this session",
@@ -491,7 +491,7 @@
               },
               "persist_profile_tags": {
                 "docs": "Profile tags",
-                "type": "optional<list<string>>",
+                "type": "optional<nullable<list<string>>>",
               },
               "profile_id": {
                 "docs": "Id of a profile to use with this session",
@@ -578,9 +578,9 @@
             "inline": undefined,
             "properties": {
               "data": "SessionWithConnectionInfo",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -596,7 +596,7 @@
               },
               "sessions": {
                 "docs": "List of sessions",
-                "type": "optional<list<SessionWithConnectionInfo>>",
+                "type": "optional<nullable<list<SessionWithConnectionInfo>>>",
               },
             },
             "source": {
@@ -608,9 +608,9 @@
             "inline": undefined,
             "properties": {
               "data": "SessionsWithPagination",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -680,9 +680,9 @@
             "inline": undefined,
             "properties": {
               "data": "Window",
-              "errors": "optional<list<Issue>>",
+              "errors": "optional<nullable<list<Issue>>>",
               "meta": "DefaultMetaWrapper",
-              "warnings": "optional<list<Issue>>",
+              "warnings": "optional<nullable<list<Issue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -768,9 +768,9 @@ types:
       HttpStatus: long
       Message: string
       data: unknown
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: unknown
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   ErrorMessage:
@@ -807,9 +807,9 @@ types:
   ExtensionV1EnvelopeDefaultMetaWrapper:
     properties:
       data: ExtensionV1
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   ExternalSessionAiResponseMetadataStatus:
@@ -841,10 +841,10 @@ types:
   Issue:
     properties:
       code:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Issue code
       details:
-        type: optional<map<string, unknown>>
+        type: optional<nullable<map<string, unknown>>>
         docs: Any associated details
       message:
         type: string
@@ -853,18 +853,18 @@ types:
       openapi: ../openapi.yml
   ListExtensionV1EnvelopeDefaultMetaWrapper:
     properties:
-      data: optional<list<ExtensionV1>>
-      errors: optional<list<Issue>>
+      data: optional<nullable<list<ExtensionV1>>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   ListProfileV1EnvelopeDefaultMetaWrapper:
     properties:
-      data: optional<list<ProfileV1>>
-      errors: optional<list<Issue>>
+      data: optional<nullable<list<ProfileV1>>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   LiveViewConnectionInfo:
@@ -887,9 +887,9 @@ types:
   ModelResponseExternalSessionAiResponseMetadataWrapper:
     properties:
       data: ModelResponse
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: ExternalSessionAiResponseMetadata
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   Pagination:
@@ -916,7 +916,7 @@ types:
         type: optional<string>
         docs: Status of the profile
       tags:
-        type: optional<list<string>>
+        type: optional<nullable<list<string>>>
         docs: a comma separated list of tags for this profile
       upload_uri:
         type: optional<string>
@@ -928,9 +928,9 @@ types:
   ProfileV1EnvelopeDefaultMetaWrapper:
     properties:
       data: ProfileV1
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   ScrapeModelResponse:
@@ -941,9 +941,9 @@ types:
   ScrapeModelResponseExternalSessionAiResponseMetadataWrapper:
     properties:
       data: ScrapeModelResponse
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: ExternalSessionAiResponseMetadata
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   ScrapeResponseContent:
@@ -980,7 +980,7 @@ types:
           Profile name to persist resulting profile (required when
           persist_profile is true). Must contain A-Za-z0-9 only
       persist_profile_tags:
-        type: optional<list<string>>
+        type: optional<nullable<list<string>>>
         docs: Profile tags
       profile_id:
         type: optional<string>
@@ -1007,7 +1007,7 @@ types:
           Profile name to persist resulting profile (required when
           persist_profile is true). Must contain A-Za-z0-9 only
       persist_profile_tags:
-        type: optional<list<string>>
+        type: optional<nullable<list<string>>>
         docs: Profile tags
       profile_id:
         type: optional<string>
@@ -1071,9 +1071,9 @@ types:
   SessionWithConnectionInfoEnvelopeDefaultMetaWrapper:
     properties:
       data: SessionWithConnectionInfo
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   SessionsWithPagination:
@@ -1082,16 +1082,16 @@ types:
         type: Pagination
         docs: Pagination info
       sessions:
-        type: optional<list<SessionWithConnectionInfo>>
+        type: optional<nullable<list<SessionWithConnectionInfo>>>
         docs: List of sessions
     source:
       openapi: ../openapi.yml
   SessionsWithPaginationEnvelopeDefaultMetaWrapper:
     properties:
       data: SessionsWithPagination
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
   StatusMessageStatus:
@@ -1136,9 +1136,9 @@ types:
   WindowEnvelopeDefaultMetaWrapper:
     properties:
       data: Window
-      errors: optional<list<Issue>>
+      errors: optional<nullable<list<Issue>>>
       meta: DefaultMetaWrapper
-      warnings: optional<list<Issue>>
+      warnings: optional<nullable<list<Issue>>>
     source:
       openapi: ../openapi.yml
 ",
@@ -1165,12 +1165,12 @@ types:
                   "x-call-type": {
                     "docs": "call type, e.g. CHROMEDRIVER_EXTERNAL",
                     "name": "callType",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "x-session-id": {
                     "docs": "session id",
                     "name": "sessionId",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
                 "name": "AuthAndRedirectRequest",
@@ -1201,11 +1201,11 @@ types:
         name: AuthAndRedirectRequest
         headers:
           x-session-id:
-            type: optional<string>
+            type: optional<nullable<string>>
             name: sessionId
             docs: session id
           x-call-type:
-            type: optional<string>
+            type: optional<nullable<string>>
             name: callType
             docs: call type, e.g. CHROMEDRIVER_EXTERNAL
       examples:
@@ -1246,7 +1246,7 @@ types:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -1309,7 +1309,7 @@ types:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -1375,10 +1375,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/extensions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "UUID of the profile to get",
-                  "type": "string",
+              "request": {
+                "name": "ExtensionsGetByIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "UUID of the profile to get",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1486,7 +1489,7 @@ service:
         name: ExtensionsGetRequest
         query-parameters:
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Name to search for, supports regex, case insensitive
       response:
         docs: OK
@@ -1571,7 +1574,7 @@ service:
         name: ExtensionsDeleteRequest
         query-parameters:
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Name to search for, supports regex, case insensitive
       examples:
         - query-parameters:
@@ -1585,11 +1588,13 @@ service:
       docs: Get an extension by ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: UUID of the profile to get
       display-name: Get an extension
+      request:
+        name: ExtensionsGetByIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: UUID of the profile to get
       response:
         docs: OK
         type: root.ExtensionV1EnvelopeDefaultMetaWrapper
@@ -1658,7 +1663,7 @@ service:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "tags": {
                     "allow-multiple": true,
@@ -1729,7 +1734,7 @@ service:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "tags": {
                     "allow-multiple": true,
@@ -1803,10 +1808,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/profiles/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "name of the profile to get",
-                  "type": "string",
+              "request": {
+                "name": "ProfilesGetByIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "name of the profile to get",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1884,7 +1892,7 @@ service:
                     },
                     "tags": {
                       "docs": "a comma separated list of tags for this profile",
-                      "type": "optional<list<string>>",
+                      "type": "optional<nullable<list<string>>>",
                     },
                   },
                 },
@@ -1927,7 +1935,7 @@ service:
         name: ProfilesGetRequest
         query-parameters:
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Name to search for, supports regex, case insensitive
           tags:
             type: optional<string>
@@ -1983,7 +1991,7 @@ service:
                 minLength: 1
                 maxLength: 100
             tags:
-              type: optional<list<string>>
+              type: optional<nullable<list<string>>>
               docs: a comma separated list of tags for this profile
         content-type: application/json
       response:
@@ -2028,7 +2036,7 @@ service:
         name: ProfilesDeleteRequest
         query-parameters:
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Name to search for, supports regex, case insensitive
           tags:
             type: optional<string>
@@ -2048,11 +2056,13 @@ service:
       docs: Get a profile by ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: name of the profile to get
       display-name: Get a profile
+      request:
+        name: ProfilesGetByIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: name of the profile to get
       response:
         docs: OK
         type: root.ProfileV1EnvelopeDefaultMetaWrapper
@@ -2141,10 +2151,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/sessions/{id}/events",
-              "path-parameters": {
-                "id": {
-                  "docs": "UUID of the session to get status info for",
-                  "type": "string",
+              "request": {
+                "name": "SessionsEventsRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "UUID of the session to get status info for",
+                    "type": "string",
+                  },
                 },
               },
               "response-stream": {
@@ -2227,10 +2240,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/sessions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "UUID of the session to get",
-                  "type": "string",
+              "request": {
+                "name": "SessionsGetInfoRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "UUID of the session to get",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -2320,12 +2336,12 @@ service:
                   "limit": {
                     "default": 0,
                     "docs": "limit for pagination",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "offset": {
                     "default": -1,
                     "docs": "offset for pagination",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "sessionIds": {
                     "allow-multiple": true,
@@ -2334,7 +2350,7 @@ service:
                   },
                   "status": {
                     "docs": "status of the session to get",
-                    "type": "optional<SessionsListRequestStatus>",
+                    "type": "optional<nullable<SessionsListRequestStatus>>",
                   },
                 },
               },
@@ -2452,10 +2468,13 @@ service:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/sessions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "UUID of the session to delete",
-                  "type": "string",
+              "request": {
+                "name": "SessionsTerminateRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "UUID of the session to delete",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -2607,14 +2626,14 @@ service:
             allow-multiple: true
             docs: a comma separated list of UUIDs of the session to get
           status:
-            type: optional<SessionsListRequestStatus>
+            type: optional<nullable<SessionsListRequestStatus>>
             docs: status of the session to get
           offset:
-            type: optional<long>
+            type: optional<nullable<long>>
             default: -1
             docs: offset for pagination
           limit:
-            type: optional<long>
+            type: optional<nullable<long>>
             default: 0
             docs: limit for pagination
       response:
@@ -2727,11 +2746,13 @@ service:
       docs: Get a session by ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: UUID of the session to get
       display-name: Get info for a session
+      request:
+        name: SessionsGetInfoRequest
+        path-parameters:
+          id:
+            type: string
+            docs: UUID of the session to get
       response:
         docs: OK
         type: root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper
@@ -2788,11 +2809,13 @@ service:
         organization, it is ignored.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: UUID of the session to delete
       display-name: Ends a session
+      request:
+        name: SessionsTerminateRequest
+        path-parameters:
+          id:
+            type: string
+            docs: UUID of the session to delete
       examples:
         - path-parameters:
             id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
@@ -2805,11 +2828,13 @@ service:
       docs: Get a session event stream for a given session ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: UUID of the session to get status info for
       display-name: Get a session event stream
+      request:
+        name: SessionsEventsRequest
+        path-parameters:
+          id:
+            type: string
+            docs: UUID of the session to get status info for
       response-stream:
         docs: OK
         type: SessionsEventsResponse
@@ -2900,30 +2925,30 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/sessions/{sessionId}/windows/{windowId}/get-window-info",
-              "path-parameters": {
-                "sessionId": {
-                  "docs": "UUID of the session that owns the window",
-                  "type": "string",
-                },
-                "windowId": {
-                  "docs": "id of the browser window, either the windowId (uuid) or targetId (simple string)",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetWindowInfoRequest",
+                "path-parameters": {
+                  "sessionId": {
+                    "docs": "UUID of the session that owns the window",
+                    "type": "string",
+                  },
+                  "windowId": {
+                    "docs": "id of the browser window, either the windowId (uuid) or targetId (simple string)",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "Screen resolution": {
                     "docs": "Ex: Screen resolution of the live view in format wxh, e.g. 1920x1080. When this value is provided the live view won't adapt it's resolution to the live view window size",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "disableResize": {
                     "docs": "By default browsers will adapt its resolution to the live view window size. This flag disables that behavior",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "includeNavigationBar": {
                     "docs": "Renders a navigation bar as part of the live view session",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                 },
               },
@@ -2994,16 +3019,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/sessions/{sessionId}/windows/{windowId}/prompt-content",
-              "path-parameters": {
-                "sessionId": {
-                  "docs": "The session id to submit a prompt about",
-                  "type": "string",
-                },
-                "windowId": {
-                  "docs": "The window id to submit a prompt about",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -3024,7 +3039,16 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptContentRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "sessionId": {
+                    "docs": "The session id to submit a prompt about",
+                    "type": "string",
+                  },
+                  "windowId": {
+                    "docs": "The window id to submit a prompt about",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -3098,14 +3122,17 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/sessions/{sessionId}/windows/{windowId}/scrape-content",
-              "path-parameters": {
-                "sessionId": {
-                  "docs": "The session id to scrape",
-                  "type": "string",
-                },
-                "windowId": {
-                  "docs": "The window id to scrape",
-                  "type": "string",
+              "request": {
+                "name": "ScrapeContentRequest",
+                "path-parameters": {
+                  "sessionId": {
+                    "docs": "The session id to scrape",
+                    "type": "string",
+                  },
+                  "windowId": {
+                    "docs": "The window id to scrape",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -3173,16 +3200,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/sessions/{sessionId}/windows/{windowId}/summarize-content",
-              "path-parameters": {
-                "sessionId": {
-                  "docs": "The session id to summarize",
-                  "type": "string",
-                },
-                "windowId": {
-                  "docs": "The window id to summarize",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -3198,7 +3215,16 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SummarizeContentRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "sessionId": {
+                    "docs": "The session id to summarize",
+                    "type": "string",
+                  },
+                  "windowId": {
+                    "docs": "The window id to summarize",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -3228,29 +3254,29 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        sessionId:
-          type: string
-          docs: UUID of the session that owns the window
-        windowId:
-          type: string
-          docs: >-
-            id of the browser window, either the windowId (uuid) or targetId
-            (simple string)
       display-name: Get information about a browser window in a session
       request:
         name: GetWindowInfoRequest
+        path-parameters:
+          sessionId:
+            type: string
+            docs: UUID of the session that owns the window
+          windowId:
+            type: string
+            docs: >-
+              id of the browser window, either the windowId (uuid) or targetId
+              (simple string)
         query-parameters:
           includeNavigationBar:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Renders a navigation bar as part of the live view session
           disableResize:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               By default browsers will adapt its resolution to the live view
               window size. This flag disables that behavior
           Screen resolution:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Ex: Screen resolution of the live view in format wxh, e.g.
               1920x1080. When this value is provided the live view won't adapt
@@ -3291,16 +3317,16 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        sessionId:
-          type: string
-          docs: The session id to submit a prompt about
-        windowId:
-          type: string
-          docs: The window id to submit a prompt about
       display-name: Submit a prompt about the content in a specific browser window.
       request:
         name: PromptContentRequest
+        path-parameters:
+          sessionId:
+            type: string
+            docs: The session id to submit a prompt about
+          windowId:
+            type: string
+            docs: The window id to submit a prompt about
         body:
           properties:
             clientRequestId: optional<string>
@@ -3357,14 +3383,16 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        sessionId:
-          type: string
-          docs: The session id to scrape
-        windowId:
-          type: string
-          docs: The window id to scrape
       display-name: Scrape a window
+      request:
+        name: ScrapeContentRequest
+        path-parameters:
+          sessionId:
+            type: string
+            docs: The session id to scrape
+          windowId:
+            type: string
+            docs: The window id to scrape
       response:
         docs: Created
         type: root.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper
@@ -3409,16 +3437,16 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        sessionId:
-          type: string
-          docs: The session id to summarize
-        windowId:
-          type: string
-          docs: The window id to summarize
       display-name: Get a summary of content in a browser window
       request:
         name: SummarizeContentRequest
+        path-parameters:
+          sessionId:
+            type: string
+            docs: The session id to summarize
+          windowId:
+            type: string
+            docs: The window id to summarize
         body:
           properties:
             clientRequestId: optional<string>

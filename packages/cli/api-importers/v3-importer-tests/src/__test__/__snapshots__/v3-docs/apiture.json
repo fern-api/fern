@@ -7718,12 +7718,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE",
                 "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
+                  "type": "date"
                 }
               },
               "type": "primitive"
@@ -7761,12 +7758,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE",
                 "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
+                  "type": "date"
                 }
               },
               "type": "primitive"
@@ -8332,12 +8326,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -8521,12 +8512,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE",
                 "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
+                  "type": "date"
                 }
               },
               "type": "primitive"
@@ -8623,12 +8611,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -8672,12 +8657,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -9003,12 +8985,9 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE",
                 "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
+                  "type": "date"
                 }
               },
               "type": "primitive"
@@ -9049,12 +9028,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -9102,12 +9078,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -11358,12 +11331,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -11525,12 +11495,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -11743,12 +11710,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -11793,12 +11757,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -13420,12 +13381,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE_TIME",
                     "v2": {
-                      "validation": {
-                        "format": "date-time"
-                      },
-                      "type": "string"
+                      "type": "dateTime"
                     }
                   },
                   "type": "primitive"
@@ -15572,28 +15530,18 @@
       "shape": {
         "aliasOf": {
           "primitive": {
-            "v1": "STRING",
+            "v1": "DATE_TIME",
             "v2": {
-              "validation": {
-                "minLength": 20,
-                "maxLength": 30,
-                "format": "date-time"
-              },
-              "type": "string"
+              "type": "dateTime"
             }
           },
           "type": "primitive"
         },
         "resolvedType": {
           "primitive": {
-            "v1": "STRING",
+            "v1": "DATE_TIME",
             "v2": {
-              "validation": {
-                "minLength": 20,
-                "maxLength": 30,
-                "format": "date-time"
-              },
-              "type": "string"
+              "type": "dateTime"
             }
           },
           "type": "primitive"
@@ -16181,12 +16129,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE_TIME",
                     "v2": {
-                      "validation": {
-                        "format": "date-time"
-                      },
-                      "type": "string"
+                      "type": "dateTime"
                     }
                   },
                   "type": "primitive"
@@ -16231,12 +16176,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE_TIME",
                     "v2": {
-                      "validation": {
-                        "format": "date-time"
-                      },
-                      "type": "string"
+                      "type": "dateTime"
                     }
                   },
                   "type": "primitive"
@@ -24606,12 +24548,9 @@
               "docs": "The date to use to begin calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
               "valueType": {
                 "primitive": {
-                  "v1": "STRING",
+                  "v1": "DATE",
                   "v2": {
-                    "validation": {
-                      "format": "date"
-                    },
-                    "type": "string"
+                    "type": "date"
                   }
                 },
                 "type": "primitive"
@@ -24652,12 +24591,9 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
+                      "v1": "DATE",
                       "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
+                        "type": "date"
                       }
                     },
                     "type": "primitive"
@@ -26044,12 +25980,9 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
+                      "v1": "DATE",
                       "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
+                        "type": "date"
                       }
                     },
                     "type": "primitive"
@@ -26094,12 +26027,9 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
+                      "v1": "DATE",
                       "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
+                        "type": "date"
                       }
                     },
                     "type": "primitive"

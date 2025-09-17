@@ -32,31 +32,31 @@
                 "query-parameters": {
                   "boolParam1": {
                     "default": true,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "boolParam2": {
                     "default": true,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "boolParam3": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "boolParam4": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "integerParam": {
                     "default": 100,
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                   "numberParam": {
                     "default": 42,
-                    "type": "optional<double>",
+                    "type": "optional<nullable<double>>",
                   },
                   "stringParam": {
                     "default": "defaultString",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -133,25 +133,25 @@ service:
         name: GetTestRequest
         query-parameters:
           boolParam1:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: true
           boolParam2:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: true
           boolParam3:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
           boolParam4:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
           stringParam:
-            type: optional<string>
+            type: optional<nullable<string>>
             default: defaultString
           numberParam:
-            type: optional<double>
+            type: optional<nullable<double>>
             default: 42
           integerParam:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 100
       response:
         docs: Successful response

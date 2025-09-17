@@ -15,15 +15,7 @@
                 "type": "optional<datetime>",
               },
               "complete": "GameComplete",
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "extra_fields": "list<GameExtraFieldsItem>",
               "group": {
                 "access": "read-only",
@@ -69,10 +61,10 @@
             "inline": true,
             "properties": {
               "completed_at": "datetime",
-              "completion_time": "optional<integer>",
-              "did_win": "optional<boolean>",
-              "hints": "optional<integer>",
-              "score": "optional<integer>",
+              "completion_time": "optional<nullable<integer>>",
+              "did_win": "optional<nullable<boolean>>",
+              "hints": "optional<nullable<integer>>",
+              "score": "optional<nullable<integer>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -88,7 +80,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<map<string, unknown>>",
+              "value": "optional<nullable<map<string, unknown>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -130,15 +122,7 @@
                 "access": "read-only",
                 "type": "optional<datetime>",
               },
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "games": {
                 "access": "read-only",
                 "type": "optional<list<GroupGamesItem>>",
@@ -185,15 +169,7 @@
                 "type": "optional<datetime>",
               },
               "complete": "GroupGamesItemComplete",
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
               "id": {
                 "access": "read-only",
@@ -231,10 +207,10 @@
             "inline": true,
             "properties": {
               "completed_at": "datetime",
-              "completion_time": "optional<integer>",
-              "did_win": "optional<boolean>",
-              "hints": "optional<integer>",
-              "score": "optional<integer>",
+              "completion_time": "optional<nullable<integer>>",
+              "did_win": "optional<nullable<boolean>>",
+              "hints": "optional<nullable<integer>>",
+              "score": "optional<nullable<integer>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -250,7 +226,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<map<string, unknown>>",
+              "value": "optional<nullable<map<string, unknown>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -352,7 +328,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<map<string, unknown>>",
+              "value": "optional<nullable<map<string, unknown>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -485,7 +461,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<map<string, unknown>>",
+              "value": "optional<nullable<map<string, unknown>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -552,7 +528,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<map<string, unknown>>
+      value: optional<nullable<map<string, unknown>>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -560,10 +536,10 @@
   GameComplete:
     properties:
       completed_at: datetime
-      did_win: optional<boolean>
-      hints: optional<integer>
-      score: optional<integer>
-      completion_time: optional<integer>
+      did_win: optional<nullable<boolean>>
+      hints: optional<nullable<integer>>
+      score: optional<nullable<integer>>
+      completion_time: optional<nullable<integer>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -582,10 +558,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -609,7 +582,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<map<string, unknown>>
+      value: optional<nullable<map<string, unknown>>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -617,10 +590,10 @@
   GroupGamesItemComplete:
     properties:
       completed_at: datetime
-      did_win: optional<boolean>
-      hints: optional<integer>
-      score: optional<integer>
-      completion_time: optional<integer>
+      did_win: optional<nullable<boolean>>
+      hints: optional<nullable<integer>>
+      score: optional<nullable<integer>>
+      completion_time: optional<nullable<integer>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -639,10 +612,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -661,7 +631,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<map<string, unknown>>
+      value: optional<nullable<map<string, unknown>>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -733,10 +703,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -756,7 +723,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<map<string, unknown>>
+      value: optional<nullable<map<string, unknown>>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -867,7 +834,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -896,7 +863,7 @@
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
                           },
-                          "date": "date",
+                          "date": "2023-01-15",
                           "extra_fields": [
                             {
                               "key": "key",
@@ -929,23 +896,23 @@
                 "query-parameters": {
                   "after": {
                     "docs": "After",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "before": {
                     "docs": "Before",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "date": {
                     "docs": "Date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -971,13 +938,13 @@
                       "results": [
                         {
                           "added_at": "2024-01-15T09:30:00Z",
-                          "date": "date",
+                          "date": "2023-01-15",
                           "games": [
                             {
                               "complete": {
                                 "completed_at": "2024-01-15T09:30:00Z",
                               },
-                              "date": "date",
+                              "date": "2023-01-15",
                               "extra_fields": [
                                 {
                                   "key": "key",
@@ -1024,15 +991,15 @@
                 "query-parameters": {
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "is_event": {
                     "docs": "is_event",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -1074,7 +1041,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -1121,7 +1088,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -1174,7 +1141,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -1207,10 +1174,13 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/accounts/{id}/",
-              "path-parameters": {
-                "id": {
-                  "docs": "A unique integer value identifying this account.",
-                  "type": "string",
+              "request": {
+                "name": "RetrieveAccountRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A unique integer value identifying this account.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1240,7 +1210,7 @@
                         "hints": 1,
                         "score": 1,
                       },
-                      "date": "date",
+                      "date": "2023-01-15",
                       "extra_fields": [
                         {
                           "key": "key",
@@ -1273,30 +1243,30 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/games/{id}/",
-              "path-parameters": {
-                "id": {
-                  "docs": "A unique integer value identifying this group.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "retrieveGameRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A unique integer value identifying this group.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "after": {
                     "docs": "After",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "before": {
                     "docs": "Before",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "date": {
                     "docs": "Date",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -1320,14 +1290,14 @@
                   "response": {
                     "body": {
                       "added_at": "2024-01-15T09:30:00Z",
-                      "date": "date",
+                      "date": "2023-01-15",
                       "games": [
                         {
                           "added_at": "2024-01-15T09:30:00Z",
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
                           },
-                          "date": "date",
+                          "date": "2023-01-15",
                           "extra_fields": [
                             {
                               "key": "key",
@@ -1382,22 +1352,22 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/groups/{id}/",
-              "path-parameters": {
-                "id": {
-                  "docs": "A unique integer value identifying this group.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "retrieveGroupRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A unique integer value identifying this group.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "is_event": {
                     "docs": "is_event",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -1430,10 +1400,13 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/rooms/{id}/",
-              "path-parameters": {
-                "id": {
-                  "docs": "A unique integer value identifying this location.",
-                  "type": "string",
+              "request": {
+                "name": "RetrieveLocationRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A unique integer value identifying this location.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1475,10 +1448,13 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/photos/{photo_id}/",
-              "path-parameters": {
-                "photo_id": {
-                  "docs": "",
-                  "type": "string",
+              "request": {
+                "name": "RetrievePhotoRequest",
+                "path-parameters": {
+                  "photo_id": {
+                    "docs": "",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1525,10 +1501,13 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v2/players/{id}/",
-              "path-parameters": {
-                "id": {
-                  "docs": "A unique integer value identifying this player.",
-                  "type": "string",
+              "request": {
+                "name": "RetrievePlayerRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A unique integer value identifying this player.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1561,7 +1540,7 @@
         name: listAccountsRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
       response:
         docs: ''
@@ -1584,10 +1563,12 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A unique integer value identifying this account.
+      request:
+        name: RetrieveAccountRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A unique integer value identifying this account.
       response:
         docs: ''
         type: root.Room
@@ -1611,19 +1592,19 @@
         name: listGamesRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
           complete:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: complete
           date:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Date
           before:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Before
           after:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: After
       response:
         docs: ''
@@ -1640,7 +1621,7 @@
                   added_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   group: group
@@ -1659,24 +1640,24 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A unique integer value identifying this group.
       request:
         name: retrieveGameRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A unique integer value identifying this group.
         query-parameters:
           complete:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: complete
           date:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Date
           before:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Before
           after:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: After
       response:
         docs: ''
@@ -1691,7 +1672,7 @@
               added_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              date: date
+              date: '2023-01-15'
               time: time
               start_at: '2024-01-15T09:30:00Z'
               group: group
@@ -1724,13 +1705,13 @@
         name: listGroupsRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
           is_event:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: is_event
           complete:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: complete
       response:
         docs: ''
@@ -1748,11 +1729,11 @@
                   updated_at: '2024-01-15T09:30:00Z'
                   is_event: true
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   games:
-                    - date: date
+                    - date: '2023-01-15'
                       time: time
                       extra_fields:
                         - key: key
@@ -1774,18 +1755,18 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A unique integer value identifying this group.
       request:
         name: retrieveGroupRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A unique integer value identifying this group.
         query-parameters:
           is_event:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: is_event
           complete:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: complete
       response:
         docs: ''
@@ -1801,7 +1782,7 @@
               updated_at: '2024-01-15T09:30:00Z'
               is_event: true
               name: name
-              date: date
+              date: '2023-01-15'
               time: time
               start_at: '2024-01-15T09:30:00Z'
               games:
@@ -1809,7 +1790,7 @@
                   added_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   room: room
@@ -1847,7 +1828,7 @@
         name: listPlayersRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
       response:
         docs: ''
@@ -1878,10 +1859,12 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A unique integer value identifying this player.
+      request:
+        name: RetrievePlayerRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A unique integer value identifying this player.
       response:
         docs: ''
         type: root.Player
@@ -1916,7 +1899,7 @@
         name: listLocationsRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
       response:
         docs: ''
@@ -1939,10 +1922,12 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A unique integer value identifying this location.
+      request:
+        name: RetrieveLocationRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A unique integer value identifying this location.
       response:
         docs: ''
         type: root.Room
@@ -1966,7 +1951,7 @@
         name: listPhotosRequest
         query-parameters:
           page:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             docs: A page number within the paginated result set.
       response:
         docs: ''
@@ -1991,10 +1976,12 @@
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        photo_id:
-          type: string
-          docs: ''
+      request:
+        name: RetrievePhotoRequest
+        path-parameters:
+          photo_id:
+            type: string
+            docs: ''
       response:
         docs: ''
         type: root.Photo

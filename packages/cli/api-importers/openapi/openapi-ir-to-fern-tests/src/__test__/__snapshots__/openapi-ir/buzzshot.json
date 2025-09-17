@@ -654,8 +654,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -947,8 +947,8 @@
                 },
                 "date": {
                   "value": {
-                    "value": "date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -1396,8 +1396,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -1421,8 +1421,8 @@
                               "properties": {
                                 "date": {
                                   "value": {
-                                    "value": "date",
-                                    "type": "string"
+                                    "value": "2023-01-15",
+                                    "type": "date"
                                   },
                                   "type": "primitive"
                                 },
@@ -1712,8 +1712,8 @@
                 },
                 "date": {
                   "value": {
-                    "value": "date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -1765,8 +1765,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -3379,8 +3379,7 @@
             "key": "date",
             "schema": {
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "GameDate",
               "groupName": [],
@@ -3898,8 +3897,7 @@
             "key": "date",
             "schema": {
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "GroupDate",
               "groupName": [],
@@ -4037,8 +4035,7 @@
                       "key": "date",
                       "schema": {
                         "schema": {
-                          "format": "date",
-                          "type": "string"
+                          "type": "date"
                         },
                         "generatedName": "GroupGamesItemDate",
                         "groupName": [],

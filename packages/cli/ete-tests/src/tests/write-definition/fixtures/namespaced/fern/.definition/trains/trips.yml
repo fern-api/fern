@@ -76,7 +76,7 @@ service:
           bicycles:
             default: false
             docs: Only return trips where bicycles are known to be allowed
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
           date:
             docs: >-
               The date and time of the trip in ISO 8601 format in origin
@@ -90,7 +90,7 @@ service:
           dogs:
             default: false
             docs: Only return trips where dogs are known to be allowed
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
           origin:
             docs: The ID of the origin station
             type: string

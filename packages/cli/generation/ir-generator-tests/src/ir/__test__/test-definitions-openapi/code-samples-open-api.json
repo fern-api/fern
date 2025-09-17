@@ -544,12 +544,18 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "BOOLEAN",
-                                            "v2": {
-                                                "type": "boolean",
-                                                "default": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "BOOLEAN",
+                                                    "v2": {
+                                                        "type": "boolean",
+                                                        "default": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -2349,8 +2355,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "BOOLEAN"
+                                    }
                                 }
                             },
                             "propertyAccess": null

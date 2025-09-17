@@ -349,13 +349,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "DOUBLE",
-                      "v2": {
-                        "type": "double"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "DOUBLE",
+                          "v2": {
+                            "type": "double"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -806,8 +812,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }

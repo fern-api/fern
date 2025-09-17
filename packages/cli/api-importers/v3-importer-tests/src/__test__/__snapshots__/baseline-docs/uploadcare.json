@@ -6502,13 +6502,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6720,13 +6726,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7593,13 +7605,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8681,13 +8699,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8988,10 +9012,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DATE_TIME"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DATE_TIME"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -9168,10 +9198,16 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "type": "unknown"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "type": "unknown"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -13150,17 +13186,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "validation": {
-                        "min": 0,
-                        "max": 8
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "validation": {
+                            "min": 0,
+                            "max": 8
+                          },
+                          "type": "integer"
+                        }
                       },
-                      "type": "integer"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13350,31 +13392,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "ImageInfoGeoLocation",
-                    "camelCase": {
-                      "unsafeName": "imageInfoGeoLocation",
-                      "safeName": "imageInfoGeoLocation"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "ImageInfoGeoLocation",
+                        "camelCase": {
+                          "unsafeName": "imageInfoGeoLocation",
+                          "safeName": "imageInfoGeoLocation"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "image_info_geo_location",
+                          "safeName": "image_info_geo_location"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "IMAGE_INFO_GEO_LOCATION",
+                          "safeName": "IMAGE_INFO_GEO_LOCATION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ImageInfoGeoLocation",
+                          "safeName": "ImageInfoGeoLocation"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:ImageInfoGeoLocation",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "image_info_geo_location",
-                      "safeName": "image_info_geo_location"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "IMAGE_INFO_GEO_LOCATION",
-                      "safeName": "IMAGE_INFO_GEO_LOCATION"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ImageInfoGeoLocation",
-                      "safeName": "ImageInfoGeoLocation"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:ImageInfoGeoLocation",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13412,10 +13460,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DATE_TIME"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DATE_TIME"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13454,16 +13508,22 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "DOUBLE",
+                            "v2": {
+                              "type": "double"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -13547,13 +13607,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13591,13 +13657,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13635,13 +13707,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13679,13 +13757,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14162,31 +14246,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "LegacyVideoInfoAudio",
-                    "camelCase": {
-                      "unsafeName": "legacyVideoInfoAudio",
-                      "safeName": "legacyVideoInfoAudio"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "LegacyVideoInfoAudio",
+                        "camelCase": {
+                          "unsafeName": "legacyVideoInfoAudio",
+                          "safeName": "legacyVideoInfoAudio"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "legacy_video_info_audio",
+                          "safeName": "legacy_video_info_audio"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
+                          "safeName": "LEGACY_VIDEO_INFO_AUDIO"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "LegacyVideoInfoAudio",
+                          "safeName": "LegacyVideoInfoAudio"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:LegacyVideoInfoAudio",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "legacy_video_info_audio",
-                      "safeName": "legacy_video_info_audio"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
-                      "safeName": "LEGACY_VIDEO_INFO_AUDIO"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "LegacyVideoInfoAudio",
-                      "safeName": "LegacyVideoInfoAudio"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:LegacyVideoInfoAudio",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14810,17 +14900,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "validation": {
-                        "min": 0,
-                        "max": 8
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "validation": {
+                            "min": 0,
+                            "max": 8
+                          },
+                          "type": "integer"
+                        }
                       },
-                      "type": "integer"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15010,31 +15106,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "SchemasImageInfoGeoLocation",
-                    "camelCase": {
-                      "unsafeName": "schemasImageInfoGeoLocation",
-                      "safeName": "schemasImageInfoGeoLocation"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "SchemasImageInfoGeoLocation",
+                        "camelCase": {
+                          "unsafeName": "schemasImageInfoGeoLocation",
+                          "safeName": "schemasImageInfoGeoLocation"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "schemas_image_info_geo_location",
+                          "safeName": "schemas_image_info_geo_location"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
+                          "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "SchemasImageInfoGeoLocation",
+                          "safeName": "SchemasImageInfoGeoLocation"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:SchemasImageInfoGeoLocation",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "schemas_image_info_geo_location",
-                      "safeName": "schemas_image_info_geo_location"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
-                      "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SchemasImageInfoGeoLocation",
-                      "safeName": "SchemasImageInfoGeoLocation"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:SchemasImageInfoGeoLocation",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15072,10 +15174,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DATE_TIME"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DATE_TIME"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15114,16 +15222,22 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "DOUBLE",
+                            "v2": {
+                              "type": "double"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -15207,13 +15321,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15251,13 +15371,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15295,13 +15421,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15339,13 +15471,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15541,13 +15679,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15585,13 +15729,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15672,13 +15822,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -15754,13 +15910,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -16323,19 +16485,25 @@
           "container": {
             "optional": {
               "container": {
-                "keyType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                "nullable": {
+                  "container": {
+                    "keyType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "valueType": {
-                  "type": "unknown"
-                },
-                "type": "map"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -16347,19 +16515,25 @@
           "container": {
             "optional": {
               "container": {
-                "keyType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                "nullable": {
+                  "container": {
+                    "keyType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "valueType": {
-                  "type": "unknown"
-                },
-                "type": "map"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -38928,8 +39102,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -39089,8 +39266,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -39614,8 +39794,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40334,8 +40517,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40588,8 +40774,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DATE_TIME",
-                "type": "primitive"
+                "value": {
+                  "value": "DATE_TIME",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40713,9 +40902,12 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "type": "unknown"
+                  "value": {
+                    "type": "unknown"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43147,8 +43339,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43290,8 +43485,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:ImageInfoGeoLocation",
-                "type": "named"
+                "value": {
+                  "value": "type_:ImageInfoGeoLocation",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43321,8 +43519,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DATE_TIME",
-                "type": "primitive"
+                "value": {
+                  "value": "DATE_TIME",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43353,10 +43554,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43417,8 +43621,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43448,8 +43655,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43479,8 +43689,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43510,8 +43723,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43851,8 +44067,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:LegacyVideoInfoAudio",
-                "type": "named"
+                "value": {
+                  "value": "type_:LegacyVideoInfoAudio",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44331,8 +44550,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44474,8 +44696,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:SchemasImageInfoGeoLocation",
-                "type": "named"
+                "value": {
+                  "value": "type_:SchemasImageInfoGeoLocation",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44505,8 +44730,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DATE_TIME",
-                "type": "primitive"
+                "value": {
+                  "value": "DATE_TIME",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44537,10 +44765,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44601,8 +44832,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44632,8 +44866,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44663,8 +44900,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44694,8 +44934,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44840,8 +45083,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44871,8 +45117,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44933,8 +45182,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44992,8 +45244,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -45331,14 +45586,17 @@
         },
         "typeReference": {
           "value": {
-            "key": {
-              "value": "STRING",
-              "type": "primitive"
-            },
             "value": {
-              "type": "unknown"
+              "key": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "value": {
+                "type": "unknown"
+              },
+              "type": "map"
             },
-            "type": "map"
+            "type": "nullable"
           },
           "type": "optional"
         },

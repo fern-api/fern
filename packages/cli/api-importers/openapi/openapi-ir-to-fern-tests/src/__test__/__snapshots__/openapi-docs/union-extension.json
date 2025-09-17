@@ -11,7 +11,7 @@
             "inline": undefined,
             "properties": {
               "currency": "optional<string>",
-              "iban": "optional<string>",
+              "iban": "optional<nullable<string>>",
               "other": "optional<Other>",
             },
             "source": {
@@ -22,7 +22,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "iban": "optional<string>",
+              "iban": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -75,7 +75,7 @@
       openapi: ../openapi.yml
   IbanField:
     properties:
-      iban: optional<string>
+      iban: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   OtherField:
@@ -92,7 +92,7 @@
   CounterPartyAccount:
     properties:
       currency: optional<string>
-      iban: optional<string>
+      iban: optional<nullable<string>>
       other: optional<Other>
     source:
       openapi: ../openapi.yml

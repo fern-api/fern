@@ -993,13 +993,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -2444,13 +2450,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -3109,24 +3121,50 @@
                                                                                                                                 "type": "optional",
                                                                                                                                 "optional": {
                                                                                                                                     "shape": {
-                                                                                                                                        "type": "primitive",
-                                                                                                                                        "primitive": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "string": {
-                                                                                                                                                "original": "value"
+                                                                                                                                        "type": "container",
+                                                                                                                                        "container": {
+                                                                                                                                            "type": "nullable",
+                                                                                                                                            "nullable": {
+                                                                                                                                                "shape": {
+                                                                                                                                                    "type": "primitive",
+                                                                                                                                                    "primitive": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "string": {
+                                                                                                                                                            "original": "value"
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                "jsonExample": "value"
+                                                                                                                                            },
+                                                                                                                                            "valueType": {
+                                                                                                                                                "_type": "primitive",
+                                                                                                                                                "primitive": {
+                                                                                                                                                    "v1": "STRING",
+                                                                                                                                                    "v2": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "default": null,
+                                                                                                                                                        "validation": null
+                                                                                                                                                    }
+                                                                                                                                                }
                                                                                                                                             }
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "jsonExample": "value"
                                                                                                                                 },
                                                                                                                                 "valueType": {
-                                                                                                                                    "_type": "primitive",
-                                                                                                                                    "primitive": {
-                                                                                                                                        "v1": "STRING",
-                                                                                                                                        "v2": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "default": null,
-                                                                                                                                            "validation": null
+                                                                                                                                    "_type": "container",
+                                                                                                                                    "container": {
+                                                                                                                                        "_type": "nullable",
+                                                                                                                                        "nullable": {
+                                                                                                                                            "_type": "primitive",
+                                                                                                                                            "primitive": {
+                                                                                                                                                "v1": "STRING",
+                                                                                                                                                "v2": {
+                                                                                                                                                    "type": "string",
+                                                                                                                                                    "default": null,
+                                                                                                                                                    "validation": null
+                                                                                                                                                }
+                                                                                                                                            }
                                                                                                                                         }
                                                                                                                                     }
                                                                                                                                 }
@@ -3303,7 +3341,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b817413",
+                                "id": "808f01f9",
                                 "url": "/example",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3585,24 +3623,50 @@
                                                                                                                                 "type": "optional",
                                                                                                                                 "optional": {
                                                                                                                                     "shape": {
-                                                                                                                                        "type": "primitive",
-                                                                                                                                        "primitive": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "string": {
-                                                                                                                                                "original": "inline_union_map"
+                                                                                                                                        "type": "container",
+                                                                                                                                        "container": {
+                                                                                                                                            "type": "nullable",
+                                                                                                                                            "nullable": {
+                                                                                                                                                "shape": {
+                                                                                                                                                    "type": "primitive",
+                                                                                                                                                    "primitive": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "string": {
+                                                                                                                                                            "original": "inline_union_map"
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                "jsonExample": "inline_union_map"
+                                                                                                                                            },
+                                                                                                                                            "valueType": {
+                                                                                                                                                "_type": "primitive",
+                                                                                                                                                "primitive": {
+                                                                                                                                                    "v1": "STRING",
+                                                                                                                                                    "v2": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "default": null,
+                                                                                                                                                        "validation": null
+                                                                                                                                                    }
+                                                                                                                                                }
                                                                                                                                             }
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "jsonExample": "inline_union_map"
                                                                                                                                 },
                                                                                                                                 "valueType": {
-                                                                                                                                    "_type": "primitive",
-                                                                                                                                    "primitive": {
-                                                                                                                                        "v1": "STRING",
-                                                                                                                                        "v2": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "default": null,
-                                                                                                                                            "validation": null
+                                                                                                                                    "_type": "container",
+                                                                                                                                    "container": {
+                                                                                                                                        "_type": "nullable",
+                                                                                                                                        "nullable": {
+                                                                                                                                            "_type": "primitive",
+                                                                                                                                            "primitive": {
+                                                                                                                                                "v1": "STRING",
+                                                                                                                                                "v2": {
+                                                                                                                                                    "type": "string",
+                                                                                                                                                    "default": null,
+                                                                                                                                                    "validation": null
+                                                                                                                                                }
+                                                                                                                                            }
                                                                                                                                         }
                                                                                                                                     }
                                                                                                                                 }
@@ -6269,8 +6333,11 @@
                     {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     {
@@ -7079,8 +7146,11 @@
                     {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     {

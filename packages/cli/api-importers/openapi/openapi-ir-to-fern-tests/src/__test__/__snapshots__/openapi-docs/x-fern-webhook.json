@@ -35,7 +35,7 @@
           "root": "__package__.yml",
         },
         "types": {
-          "StatusUpdateInlinedPayload": {
+          "UpdateInlinedStatusPayload": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -76,7 +76,7 @@
             ],
             "headers": {},
             "method": "POST",
-            "payload": "StatusUpdateInlinedPayload",
+            "payload": "UpdateInlinedStatusPayload",
           },
         },
       },
@@ -95,11 +95,11 @@ webhooks:
     audiences: []
     method: POST
     headers: {}
-    payload: StatusUpdateInlinedPayload
+    payload: UpdateInlinedStatusPayload
     examples:
       - payload: {}
 types:
-  StatusUpdateInlinedPayload:
+  UpdateInlinedStatusPayload:
     properties:
       stream-inlined: optional<boolean>
       message-inlined: optional<string>

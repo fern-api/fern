@@ -801,6 +801,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetUsersUserIdRequest",
+                "camelCase": {
+                  "unsafeName": "getUsersUserIDRequest",
+                  "safeName": "getUsersUserIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_users_user_id_request",
+                  "safeName": "get_users_user_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_USERS_USER_ID_REQUEST",
+                  "safeName": "GET_USERS_USER_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetUsersUserIDRequest",
+                  "safeName": "GetUsersUserIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -1436,6 +1500,31 @@
           "path": "/users/{userId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetUsersUserIdRequest",
+              "camelCase": {
+                "unsafeName": "getUsersUserIDRequest",
+                "safeName": "getUsersUserIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_users_user_id_request",
+                "safeName": "get_users_user_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_USERS_USER_ID_REQUEST",
+                "safeName": "GET_USERS_USER_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetUsersUserIDRequest",
+                "safeName": "GetUsersUserIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -1466,7 +1555,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"

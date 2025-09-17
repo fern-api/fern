@@ -29,10 +29,10 @@
               "request": {
                 "name": "SearchRequest",
                 "query-parameters": {
-                  "after": "optional<SearchRequestAfter>",
-                  "filter": "optional<SearchRequestFilter>",
+                  "after": "optional<nullable<SearchRequestAfter>>",
+                  "filter": "optional<nullable<SearchRequestFilter>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -41,7 +41,7 @@
                       "multipleOf": undefined,
                     },
                   },
-                  "sort": "optional<SearchRequestSort>",
+                  "sort": "optional<nullable<SearchRequestSort>>",
                   "tags": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -73,15 +73,7 @@
             },
             "union": [
               "integer",
-              {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date",
             ],
           },
           "SearchRequestFilter": {
@@ -174,9 +166,7 @@
     discriminated: false
     union:
       - integer
-      - type: string
-        validation:
-          format: date
+      - date
     source:
       openapi: ../openapi.yml
   SearchResponse:
@@ -197,14 +187,14 @@ service:
       request:
         name: SearchRequest
         query-parameters:
-          filter: optional<SearchRequestFilter>
-          sort: optional<SearchRequestSort>
+          filter: optional<nullable<SearchRequestFilter>>
+          sort: optional<nullable<SearchRequestSort>>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 1
               max: 100
-          after: optional<SearchRequestAfter>
+          after: optional<nullable<SearchRequestAfter>>
           tags:
             type: optional<string>
             allow-multiple: true

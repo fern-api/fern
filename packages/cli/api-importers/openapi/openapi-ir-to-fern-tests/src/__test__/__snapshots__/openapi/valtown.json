@@ -76,11 +76,11 @@
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<BasicValAuthor>",
+                "type": "optional<nullable<BasicValAuthor>>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "createdAt": "datetime",
               "id": {
@@ -149,7 +149,7 @@
                   "pattern": undefined,
                 },
               },
-              "username": "optional<string>",
+              "username": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -228,11 +228,11 @@
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<ExtendedValAuthor>",
+                "type": "optional<nullable<ExtendedValAuthor>>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "createdAt": "datetime",
               "id": {
@@ -271,7 +271,7 @@
               },
               "readme": {
                 "docs": "This val’s readme, as Markdown",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "referenceCount": {
                 "type": "integer",
@@ -326,7 +326,7 @@
                   "pattern": undefined,
                 },
               },
-              "username": "optional<string>",
+              "username": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -472,7 +472,7 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
                 "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
-                "type": "optional<ResultSetLastInsertRowid>",
+                "type": "optional<nullable<ResultSetLastInsertRowid>>",
               },
               "rows": {
                 "docs": "Rows produced by the statement.",
@@ -510,7 +510,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "id": {
                 "docs": "The ID of this user",
@@ -525,7 +525,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "links": "UserLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -545,7 +545,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               },
               "username": {
                 "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -605,15 +605,15 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           format: uuid
       bio:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The user’s biography, if they have provided one
       username:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The user’s handle that they chose for themselves. Does not include the
           @ symbol
       profileImageUrl:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: URL that points to the user’s profile image, if one exists
         validation:
           format: uri
@@ -673,7 +673,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
 
           This value is not specified for other SQL statements.
       lastInsertRowid:
-        type: optional<ResultSetLastInsertRowid>
+        type: optional<nullable<ResultSetLastInsertRowid>>
         docs: >-
           ROWID of the last inserted row.
 
@@ -736,7 +736,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         type: string
         validation:
           format: uuid
-      username: optional<string>
+      username: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -757,7 +757,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       code:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -781,7 +781,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
       links: ExtendedValLinks
       author:
-        type: optional<ExtendedValAuthor>
+        type: optional<nullable<ExtendedValAuthor>>
         docs: The user who created this val
       likeCount:
         type: integer
@@ -793,7 +793,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       readme:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: This val’s readme, as Markdown
     source:
       openapi: ../openapi.yml
@@ -851,7 +851,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         type: string
         validation:
           format: uuid
-      username: optional<string>
+      username: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -872,7 +872,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       code:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -896,7 +896,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
       links: BasicValLinks
       author:
-        type: optional<BasicValAuthor>
+        type: optional<nullable<BasicValAuthor>>
         docs: The user who created this val
     source:
       openapi: ../openapi.yml
@@ -994,10 +994,13 @@ API endpoints",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/alias/{username}",
-              "path-parameters": {
-                "username": {
-                  "docs": "Username of the user who you are looking for",
-                  "type": "string",
+              "request": {
+                "name": "AliasUsernameRequest",
+                "path-parameters": {
+                  "username": {
+                    "docs": "Username of the user who you are looking for",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1048,14 +1051,17 @@ API endpoints",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/alias/{username}/{val_name}",
-              "path-parameters": {
-                "username": {
-                  "docs": "Username of the user whose val you are looking for",
-                  "type": "string",
-                },
-                "val_name": {
-                  "docs": "Name of the val you’re looking for",
-                  "type": "string",
+              "request": {
+                "name": "AliasValRequest",
+                "path-parameters": {
+                  "username": {
+                    "docs": "Username of the user whose val you are looking for",
+                    "type": "string",
+                  },
+                  "val_name": {
+                    "docs": "Name of the val you’re looking for",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1079,11 +1085,11 @@ API endpoints",
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<AliasValResponseAuthor>",
+                "type": "optional<nullable<AliasValResponseAuthor>>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "createdAt": "datetime",
               "id": {
@@ -1122,7 +1128,7 @@ API endpoints",
               },
               "readme": {
                 "docs": "This val’s readme, as Markdown",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "referenceCount": {
                 "type": "integer",
@@ -1177,7 +1183,7 @@ API endpoints",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<string>",
+              "username": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1265,10 +1271,12 @@ service:
       docs: Get basic details about a user, given their username
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        username:
-          type: string
-          docs: Username of the user who you are looking for
+      request:
+        name: AliasUsernameRequest
+        path-parameters:
+          username:
+            type: string
+            docs: Username of the user who you are looking for
       response:
         docs: Default Response
         type: root.User
@@ -1292,13 +1300,15 @@ service:
       docs: Get a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        username:
-          type: string
-          docs: Username of the user whose val you are looking for
-        val_name:
-          type: string
-          docs: Name of the val you’re looking for
+      request:
+        name: AliasValRequest
+        path-parameters:
+          username:
+            type: string
+            docs: Username of the user whose val you are looking for
+          val_name:
+            type: string
+            docs: Name of the val you’re looking for
       response:
         docs: A Val
         type: AliasValResponse
@@ -1392,7 +1402,7 @@ types:
         type: string
         validation:
           format: uuid
-      username: optional<string>
+      username: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -1413,7 +1423,7 @@ types:
         validation:
           min: 0
       code:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -1437,7 +1447,7 @@ types:
           format: uri
       links: AliasValResponseLinks
       author:
-        type: optional<AliasValResponseAuthor>
+        type: optional<nullable<AliasValResponseAuthor>>
         docs: The user who created this val
       likeCount:
         type: integer
@@ -1449,7 +1459,7 @@ types:
         validation:
           min: 0
       readme:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: This val’s readme, as Markdown
     source:
       openapi: ../openapi.yml
@@ -1477,10 +1487,13 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/blob/{key}",
-              "path-parameters": {
-                "key": {
-                  "docs": "Key that uniquely identifies this blob",
-                  "type": "string",
+              "request": {
+                "name": "BlobsDeleteRequest",
+                "path-parameters": {
+                  "key": {
+                    "docs": "Key that uniquely identifies this blob",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -1493,10 +1506,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/blob/{key}",
-              "path-parameters": {
-                "key": {
-                  "docs": "Key that uniquely identifies this blob",
-                  "type": "string",
+              "request": {
+                "name": "BlobsGetRequest",
+                "path-parameters": {
+                  "key": {
+                    "docs": "Key that uniquely identifies this blob",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1532,14 +1548,14 @@ types:
                 "query-parameters": {
                   "prefix": {
                     "docs": "If specified, only include blobs that start with this string",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
               "response": {
                 "docs": "List of blobs that you’ve stored",
                 "status-code": 200,
-                "type": "list<BlobListingItem>",
+                "type": "list<BlobsListResponseItem>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1559,12 +1575,6 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/blob/{key}",
-              "path-parameters": {
-                "key": {
-                  "docs": "Key that uniquely identifies this blob",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "docs": "Binary input data",
@@ -1577,6 +1587,13 @@ types:
                   },
                 },
                 "content-type": "application/json",
+                "name": "BlobsStoreRequest",
+                "path-parameters": {
+                  "key": {
+                    "docs": "Key that uniquely identifies this blob",
+                    "type": "string",
+                  },
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1588,7 +1605,7 @@ types:
           },
         },
         "types": {
-          "BlobListingItem": {
+          "BlobsListResponseItem": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -1609,7 +1626,7 @@ types:
         },
       },
       "rawContents": "types:
-  BlobListingItem:
+  BlobsListResponseItem:
     properties:
       key: string
       size:
@@ -1635,11 +1652,11 @@ service:
         name: BlobsListRequest
         query-parameters:
           prefix:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: If specified, only include blobs that start with this string
       response:
         docs: List of blobs that you’ve stored
-        type: list<BlobListingItem>
+        type: list<BlobsListResponseItem>
         status-code: 200
       examples:
         - response:
@@ -1654,10 +1671,12 @@ service:
       docs: Get a blob’s contents.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        key:
-          type: string
-          docs: Key that uniquely identifies this blob
+      request:
+        name: BlobsGetRequest
+        path-parameters:
+          key:
+            type: string
+            docs: Key that uniquely identifies this blob
       response:
         docs: Binary contents of the returned file
         type: file
@@ -1669,16 +1688,17 @@ service:
       docs: Store data in blob storage
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        key:
-          type: string
-          docs: Key that uniquely identifies this blob
       request:
         body:
           type: string
           docs: Binary input data
           validation:
             format: binary
+        path-parameters:
+          key:
+            type: string
+            docs: Key that uniquely identifies this blob
+        name: BlobsStoreRequest
         content-type: application/json
       examples:
         - path-parameters:
@@ -1691,10 +1711,12 @@ service:
       docs: Delete a blob
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        key:
-          type: string
-          docs: Key that uniquely identifies this blob
+      request:
+        name: BlobsDeleteRequest
+        path-parameters:
+          key:
+            type: string
+            docs: Key that uniquely identifies this blob
       examples:
         - path-parameters:
             key: key
@@ -1744,24 +1766,24 @@ docs: Blobs
                   "properties": {
                     "attachments": {
                       "docs": "A list of attachments to add to the email",
-                      "type": "optional<list<AttachmentObject>>",
+                      "type": "optional<list<EmailsSendRequestAttachmentsItem>>",
                     },
                     "bcc": {
                       "docs": "A single email or list of emails for one of the address fields",
-                      "type": "optional<EmailDataInput>",
+                      "type": "optional<EmailsSendRequestBcc>",
                     },
                     "cc": {
                       "docs": "A single email or list of emails for one of the address fields",
-                      "type": "optional<EmailDataInput>",
+                      "type": "optional<EmailsSendRequestCc>",
                     },
-                    "from": "optional<EmailData>",
+                    "from": "optional<EmailsSendRequestFrom>",
                     "html": {
                       "docs": "HTML content of the email. Can be specified alongside text",
                       "type": "optional<string>",
                     },
                     "replyToList": {
                       "docs": "A reply-to list of email addresses",
-                      "type": "optional<ReplyToList>",
+                      "type": "optional<EmailsSendRequestReplyToList>",
                     },
                     "subject": {
                       "docs": "The subject line of the email",
@@ -1773,7 +1795,7 @@ docs: Blobs
                     },
                     "to": {
                       "docs": "A single email or list of emails for one of the address fields",
-                      "type": "optional<EmailDataInput>",
+                      "type": "optional<EmailsSendRequestTo>",
                     },
                   },
                 },
@@ -1798,7 +1820,7 @@ docs: Blobs
           },
         },
         "types": {
-          "AttachmentObject": {
+          "EmailsSendRequestAttachmentsItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -1818,7 +1840,25 @@ docs: Blobs
               "openapi": "../openapi.yml",
             },
           },
-          "EmailData": {
+          "EmailsSendRequestBcc": {
+            "discriminated": false,
+            "docs": "A single email or list of emails for one of the address fields",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "display-name": "EmailData",
+                "type": "EmailsSendRequestBccZero",
+              },
+              {
+                "type": "list<EmailsSendRequestBccItem>",
+              },
+            ],
+          },
+          "EmailsSendRequestBccItem": {
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1830,11 +1870,53 @@ docs: Blobs
               "string",
               {
                 "docs": "An email address and name",
-                "type": "EmailNameAndAddress",
+                "type": "EmailsSendRequestBccItemEmail",
               },
             ],
           },
-          "EmailDataInput": {
+          "EmailsSendRequestBccItemEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestBccZero": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestBccZeroEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestBccZeroEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestCc": {
             "discriminated": false,
             "docs": "A single email or list of emails for one of the address fields",
             "encoding": undefined,
@@ -1845,14 +1927,208 @@ docs: Blobs
             "union": [
               {
                 "display-name": "EmailData",
-                "type": "EmailData",
+                "type": "EmailsSendRequestCcZero",
               },
               {
-                "type": "list<EmailData>",
+                "type": "list<EmailsSendRequestCcItem>",
               },
             ],
           },
-          "EmailNameAndAddress": {
+          "EmailsSendRequestCcItem": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestCcItemEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestCcItemEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestCcZero": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestCcZeroEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestCcZeroEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestFrom": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestFromEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestFromEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestReplyToList": {
+            "discriminated": false,
+            "docs": "A reply-to list of email addresses",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestReplyToListEmail",
+              },
+              {
+                "type": "list<EmailsSendRequestReplyToListItem>",
+              },
+            ],
+          },
+          "EmailsSendRequestReplyToListEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestReplyToListItem": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestTo": {
+            "discriminated": false,
+            "docs": "A single email or list of emails for one of the address fields",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "display-name": "EmailData",
+                "type": "EmailsSendRequestToZero",
+              },
+              {
+                "type": "list<EmailsSendRequestToItem>",
+              },
+            ],
+          },
+          "EmailsSendRequestToItem": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestToItemEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestToItemEmail": {
+            "docs": "An email address and name",
+            "inline": true,
+            "properties": {
+              "email": "string",
+              "name": {
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmailsSendRequestToZero": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              {
+                "docs": "An email address and name",
+                "type": "EmailsSendRequestToZeroEmail",
+              },
+            ],
+          },
+          "EmailsSendRequestToZeroEmail": {
             "docs": "An email address and name",
             "inline": true,
             "properties": {
@@ -1875,28 +2151,10 @@ docs: Blobs
               "openapi": "../openapi.yml",
             },
           },
-          "ReplyToList": {
-            "discriminated": false,
-            "docs": "A reply-to list of email addresses",
-            "encoding": undefined,
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "docs": "An email address and name",
-                "type": "EmailNameAndAddress",
-              },
-              {
-                "type": "list<EmailNameAndAddress>",
-              },
-            ],
-          },
         },
       },
       "rawContents": "types:
-  EmailNameAndAddress:
+  EmailsSendRequestFromEmail:
     docs: An email address and name
     properties:
       name:
@@ -1905,26 +2163,154 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailData:
+  EmailsSendRequestFrom:
     discriminated: false
     union:
       - string
-      - type: EmailNameAndAddress
+      - type: EmailsSendRequestFromEmail
         docs: An email address and name
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailDataInput:
+  EmailsSendRequestToZeroEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestToZero:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestToZeroEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestToItemEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestToItem:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestToItemEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestTo:
     discriminated: false
     docs: A single email or list of emails for one of the address fields
     union:
       - display-name: EmailData
-        type: EmailData
-      - type: list<EmailData>
+        type: EmailsSendRequestToZero
+      - type: list<EmailsSendRequestToItem>
     source:
       openapi: ../openapi.yml
     inline: true
-  AttachmentObject:
+  EmailsSendRequestCcZeroEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestCcZero:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestCcZeroEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestCcItemEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestCcItem:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestCcItemEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestCc:
+    discriminated: false
+    docs: A single email or list of emails for one of the address fields
+    union:
+      - display-name: EmailData
+        type: EmailsSendRequestCcZero
+      - type: list<EmailsSendRequestCcItem>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestBccZeroEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestBccZero:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestBccZeroEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestBccItemEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestBccItem:
+    discriminated: false
+    union:
+      - string
+      - type: EmailsSendRequestBccItemEmail
+        docs: An email address and name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestBcc:
+    discriminated: false
+    docs: A single email or list of emails for one of the address fields
+    union:
+      - display-name: EmailData
+        type: EmailsSendRequestBccZero
+      - type: list<EmailsSendRequestBccItem>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestAttachmentsItem:
     properties:
       content: string
       filename: string
@@ -1937,13 +2323,31 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  ReplyToList:
+  EmailsSendRequestReplyToListEmail:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestReplyToListItem:
+    docs: An email address and name
+    properties:
+      name:
+        type: optional<string>
+      email: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  EmailsSendRequestReplyToList:
     discriminated: false
     docs: A reply-to list of email addresses
     union:
-      - type: EmailNameAndAddress
+      - type: EmailsSendRequestReplyToListEmail
         docs: An email address and name
-      - type: list<EmailNameAndAddress>
+      - type: list<EmailsSendRequestReplyToListItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -1973,15 +2377,15 @@ service:
             subject:
               type: optional<string>
               docs: The subject line of the email
-            from: optional<EmailData>
+            from: optional<EmailsSendRequestFrom>
             to:
-              type: optional<EmailDataInput>
+              type: optional<EmailsSendRequestTo>
               docs: A single email or list of emails for one of the address fields
             cc:
-              type: optional<EmailDataInput>
+              type: optional<EmailsSendRequestCc>
               docs: A single email or list of emails for one of the address fields
             bcc:
-              type: optional<EmailDataInput>
+              type: optional<EmailsSendRequestBcc>
               docs: A single email or list of emails for one of the address fields
             text:
               type: optional<string>
@@ -1992,10 +2396,10 @@ service:
               type: optional<string>
               docs: HTML content of the email. Can be specified alongside text
             attachments:
-              type: optional<list<AttachmentObject>>
+              type: optional<list<EmailsSendRequestAttachmentsItem>>
               docs: A list of attachments to add to the email
             replyToList:
-              type: optional<ReplyToList>
+              type: optional<EmailsSendRequestReplyToList>
               docs: A reply-to list of email addresses
         content-type: application/json
       response:
@@ -2105,11 +2509,11 @@ give access to details and data from the requesting user.",
                   },
                   "since": {
                     "docs": "Include items created after this date",
-                    "type": "optional<datetime>",
+                    "type": "optional<nullable<datetime>>",
                   },
                   "until": {
                     "docs": "Include items created before this date",
-                    "type": "optional<datetime>",
+                    "type": "optional<nullable<datetime>>",
                   },
                 },
               },
@@ -2303,11 +2707,11 @@ give access to details and data from the requesting user.",
                   },
                   "since": {
                     "docs": "Include items created after this date",
-                    "type": "optional<datetime>",
+                    "type": "optional<nullable<datetime>>",
                   },
                   "until": {
                     "docs": "Include items created before this date",
-                    "type": "optional<datetime>",
+                    "type": "optional<nullable<datetime>>",
                   },
                 },
               },
@@ -2388,7 +2792,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<string>",
+              "username": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2400,7 +2804,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<MeCommentsResponseDataItemValAuthor>",
+                "type": "optional<nullable<MeCommentsResponseDataItemValAuthor>>",
               },
               "id": {
                 "type": "string",
@@ -2447,7 +2851,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<string>",
+              "username": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2471,7 +2875,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "email": {
                 "docs": "Your email address",
@@ -2490,7 +2894,7 @@ give access to details and data from the requesting user.",
               "links": "MeGetResponseLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -2500,7 +2904,7 @@ give access to details and data from the requesting user.",
               },
               "tier": {
                 "docs": "Your account tier",
-                "type": "optional<MeGetResponseTier>",
+                "type": "optional<nullable<MeGetResponseTier>>",
               },
               "url": {
                 "docs": "URL of this user’s profile on Val Town’s website",
@@ -2514,7 +2918,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -2597,7 +3001,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2621,7 +3025,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The username of the person who authored this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -2634,7 +3038,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2658,7 +3062,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The username of the person who authored this val",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -2695,15 +3099,15 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       bio:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The user’s biography, if they have provided one
       username:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The user’s handle that they chose for themselves. Does not include the
           @ symbol
       profileImageUrl:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: URL that points to the user’s profile image, if one exists
         validation:
           format: uri
@@ -2714,7 +3118,7 @@ give access to details and data from the requesting user.",
           format: uri
       links: MeGetResponseLinks
       tier:
-        type: optional<MeGetResponseTier>
+        type: optional<nullable<MeGetResponseTier>>
         docs: Your account tier
       email:
         type: string
@@ -2742,7 +3146,7 @@ give access to details and data from the requesting user.",
         type: string
         validation:
           format: uuid
-      username: optional<string>
+      username: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2764,7 +3168,7 @@ give access to details and data from the requesting user.",
         type: string
         validation:
           format: uuid
-      username: optional<string>
+      username: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2787,7 +3191,7 @@ give access to details and data from the requesting user.",
           This val’s privacy setting. Unlisted vals do not appear on profile
           pages or elsewhere, but you can link to them.
       author:
-        type: optional<MeCommentsResponseDataItemValAuthor>
+        type: optional<nullable<MeCommentsResponseDataItemValAuthor>>
         docs: The user who created this val
     source:
       openapi: ../openapi.yml
@@ -2824,10 +3228,10 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       username:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The username of the person who authored this val
       author_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The ID of the person who authored this val
         validation:
           format: uuid
@@ -2846,10 +3250,10 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       username:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The username of the person who authored this val
       author_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The ID of the person who authored this val
         validation:
           format: uuid
@@ -2986,10 +3390,10 @@ service:
               min: 1
               max: 100
           since:
-            type: optional<datetime>
+            type: optional<nullable<datetime>>
             docs: Include items created after this date
           until:
-            type: optional<datetime>
+            type: optional<nullable<datetime>>
             docs: Include items created before this date
           relationship:
             type: MeCommentsRequestRelationship
@@ -3045,10 +3449,10 @@ service:
               min: 1
               max: 100
           since:
-            type: optional<datetime>
+            type: optional<nullable<datetime>>
             docs: Include items created after this date
           until:
-            type: optional<datetime>
+            type: optional<nullable<datetime>>
             docs: Include items created before this date
       response:
         docs: A paginated result set
@@ -3446,24 +3850,6 @@ docs: Search
           },
         },
         "types": {
-          "ParameterizedQuery": {
-            "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-            "inline": true,
-            "properties": {
-              "args": {
-                "display-name": "StatementArg",
-                "docs": "List of arguments to be used in the given statement",
-                "type": "StatementArg",
-              },
-              "sql": {
-                "docs": "SQL statement, with ? placeholders for arguments",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "SqliteBatchRequestMode": {
             "enum": [
               "write",
@@ -3490,8 +3876,67 @@ docs: Search
               },
               {
                 "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-                "type": "ParameterizedQuery",
+                "type": "SqliteBatchRequestStatementsItemArgs",
               },
+            ],
+          },
+          "SqliteBatchRequestStatementsItemArgs": {
+            "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
+            "inline": true,
+            "properties": {
+              "args": {
+                "display-name": "StatementArg",
+                "docs": "List of arguments to be used in the given statement",
+                "type": "SqliteBatchRequestStatementsItemArgsArgs",
+              },
+              "sql": {
+                "docs": "SQL statement, with ? placeholders for arguments",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SqliteBatchRequestStatementsItemArgsArgs": {
+            "discriminated": false,
+            "docs": "List of arguments to be used in the given statement",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "list<optional<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>>",
+              "map<string, optional<nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>>",
+            ],
+          },
+          "SqliteBatchRequestStatementsItemArgsArgsItem": {
+            "discriminated": false,
+            "docs": "A value to be used as a parameter",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "double",
+              "boolean",
+            ],
+          },
+          "SqliteBatchRequestStatementsItemArgsArgsOneValue": {
+            "discriminated": false,
+            "docs": "A value to be used as a parameter",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "double",
+              "boolean",
             ],
           },
           "SqliteExecuteRequestStatement": {
@@ -3509,11 +3954,29 @@ docs: Search
               },
               {
                 "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-                "type": "ParameterizedQuery",
+                "type": "SqliteExecuteRequestStatementArgs",
               },
             ],
           },
-          "StatementArg": {
+          "SqliteExecuteRequestStatementArgs": {
+            "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
+            "inline": true,
+            "properties": {
+              "args": {
+                "display-name": "StatementArg",
+                "docs": "List of arguments to be used in the given statement",
+                "type": "SqliteExecuteRequestStatementArgsArgs",
+              },
+              "sql": {
+                "docs": "SQL statement, with ? placeholders for arguments",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SqliteExecuteRequestStatementArgsArgs": {
             "discriminated": false,
             "docs": "List of arguments to be used in the given statement",
             "encoding": undefined,
@@ -3522,11 +3985,25 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<optional<TursoValue>>",
-              "map<string, optional<TursoValue>>",
+              "list<optional<nullable<SqliteExecuteRequestStatementArgsArgsItem>>>",
+              "map<string, optional<nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>>",
             ],
           },
-          "TursoValue": {
+          "SqliteExecuteRequestStatementArgsArgsItem": {
+            "discriminated": false,
+            "docs": "A value to be used as a parameter",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "double",
+              "boolean",
+            ],
+          },
+          "SqliteExecuteRequestStatementArgsArgsOneValue": {
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -3543,7 +4020,7 @@ docs: Search
         },
       },
       "rawContents": "types:
-  TursoValue:
+  SqliteExecuteRequestStatementArgsArgsItem:
     discriminated: false
     docs: A value to be used as a parameter
     union:
@@ -3553,16 +4030,28 @@ docs: Search
     source:
       openapi: ../openapi.yml
     inline: true
-  StatementArg:
+  SqliteExecuteRequestStatementArgsArgsOneValue:
     discriminated: false
-    docs: List of arguments to be used in the given statement
+    docs: A value to be used as a parameter
     union:
-      - list<optional<TursoValue>>
-      - map<string, optional<TursoValue>>
+      - string
+      - double
+      - boolean
     source:
       openapi: ../openapi.yml
     inline: true
-  ParameterizedQuery:
+  SqliteExecuteRequestStatementArgsArgs:
+    discriminated: false
+    docs: List of arguments to be used in the given statement
+    union:
+      - list<optional<nullable<SqliteExecuteRequestStatementArgsArgsItem>>>
+      - >-
+        map<string,
+        optional<nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  SqliteExecuteRequestStatementArgs:
     docs: >-
       A parameterized SQL query. See
       https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference
@@ -3572,7 +4061,7 @@ docs: Search
         docs: SQL statement, with ? placeholders for arguments
       args:
         display-name: StatementArg
-        type: StatementArg
+        type: SqliteExecuteRequestStatementArgsArgs
         docs: List of arguments to be used in the given statement
     source:
       openapi: ../openapi.yml
@@ -3582,11 +4071,57 @@ docs: Search
     union:
       - type: string
         docs: Simple SQL statement to run in SQLite
-      - type: ParameterizedQuery
+      - type: SqliteExecuteRequestStatementArgs
         docs: >-
           A parameterized SQL query. See
           https://docs.turso.tech/sdk/ts/reference#batch-transactions for
           reference
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  SqliteBatchRequestStatementsItemArgsArgsItem:
+    discriminated: false
+    docs: A value to be used as a parameter
+    union:
+      - string
+      - double
+      - boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  SqliteBatchRequestStatementsItemArgsArgsOneValue:
+    discriminated: false
+    docs: A value to be used as a parameter
+    union:
+      - string
+      - double
+      - boolean
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  SqliteBatchRequestStatementsItemArgsArgs:
+    discriminated: false
+    docs: List of arguments to be used in the given statement
+    union:
+      - list<optional<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>>
+      - >-
+        map<string,
+        optional<nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  SqliteBatchRequestStatementsItemArgs:
+    docs: >-
+      A parameterized SQL query. See
+      https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference
+    properties:
+      sql:
+        type: string
+        docs: SQL statement, with ? placeholders for arguments
+      args:
+        display-name: StatementArg
+        type: SqliteBatchRequestStatementsItemArgsArgs
+        docs: List of arguments to be used in the given statement
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3595,7 +4130,7 @@ docs: Search
     union:
       - type: string
         docs: Simple SQL statement to run in SQLite
-      - type: ParameterizedQuery
+      - type: SqliteBatchRequestStatementsItemArgs
         docs: >-
           A parameterized SQL query. See
           https://docs.turso.tech/sdk/ts/reference#batch-transactions for
@@ -3739,10 +4274,13 @@ docs: SQLite
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/users/{user_id}",
-              "path-parameters": {
-                "user_id": {
-                  "docs": "User Id",
-                  "type": "string",
+              "request": {
+                "name": "UsersGetRequest",
+                "path-parameters": {
+                  "user_id": {
+                    "docs": "User Id",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -3802,14 +4340,14 @@ docs: SQLite
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/users/{user_id}/vals",
-              "path-parameters": {
-                "user_id": {
-                  "docs": "User Id",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "UsersValsRequest",
+                "path-parameters": {
+                  "user_id": {
+                    "docs": "User Id",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "limit": {
                     "default": 20,
@@ -3878,10 +4416,12 @@ service:
       docs: Get basic information about a user
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        user_id:
-          type: string
-          docs: User Id
+      request:
+        name: UsersGetRequest
+        path-parameters:
+          user_id:
+            type: string
+            docs: User Id
       response:
         docs: Default Response
         type: root.User
@@ -3905,12 +4445,12 @@ service:
       docs: List a user's vals
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        user_id:
-          type: string
-          docs: User Id
       request:
         name: UsersValsRequest
+        path-parameters:
+          user_id:
+            type: string
+            docs: User Id
         query-parameters:
           offset:
             type: integer
@@ -4007,14 +4547,17 @@ let you get, create, and run vals.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}/evaluations/{evaluation_id}/cancel",
-              "path-parameters": {
-                "evaluation_id": {
-                  "docs": "The ID of the evaluation - the specific time that a val was run - that you want to cancel",
-                  "type": "string",
-                },
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
+              "request": {
+                "name": "ValsCancelRequest",
+                "path-parameters": {
+                  "evaluation_id": {
+                    "docs": "The ID of the evaluation - the specific time that a val was run - that you want to cancel",
+                    "type": "string",
+                  },
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4172,12 +4715,6 @@ let you get, create, and run vals.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}/versions",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4225,7 +4762,12 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsCreateVersionRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4253,10 +4795,13 @@ let you get, create, and run vals.",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
+              "request": {
+                "name": "ValsDeleteRequest",
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -4280,14 +4825,17 @@ let you get, create, and run vals.",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}/versions/{version}",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
-                },
-                "version": {
-                  "docs": "The val version",
-                  "type": "integer",
+              "request": {
+                "name": "ValsDeleteVersionRequest",
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
+                  "version": {
+                    "docs": "The val version",
+                    "type": "integer",
+                  },
                 },
               },
               "source": {
@@ -4313,22 +4861,22 @@ let you get, create, and run vals.",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/eval/{code}",
-              "path-parameters": {
-                "code": {
-                  "docs": "TypeScript source code",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "EvalGetRequest",
+                "path-parameters": {
+                  "code": {
+                    "docs": "TypeScript source code",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
-                  "args": "optional<string>",
+                  "args": "optional<nullable<string>>",
                 },
               },
               "response": {
                 "docs": "Default Response",
                 "status-code": 200,
-                "type": "optional<EvalGetResponse>",
+                "type": "optional<nullable<EvalGetResponse>>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -4394,7 +4942,7 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "status-code": 200,
-                "type": "optional<EvalPostResponse>",
+                "type": "optional<nullable<EvalPostResponse>>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -4438,10 +4986,13 @@ let you get, create, and run vals.",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
+              "request": {
+                "name": "ValsGetRequest",
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4496,18 +5047,18 @@ let you get, create, and run vals.",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}/versions/{version}",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
-                },
-                "version": {
-                  "docs": "The val version",
-                  "type": "integer",
-                },
-              },
               "request": {
                 "name": "ValsGetVersionRequest",
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
+                  "version": {
+                    "docs": "The val version",
+                    "type": "integer",
+                  },
+                },
                 "query-parameters": {
                   "limit": {
                     "default": 20,
@@ -4577,14 +5128,14 @@ let you get, create, and run vals.",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}/versions",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "ValsListRequest",
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "limit": {
                     "default": 20,
@@ -4684,18 +5235,18 @@ let you get, create, and run vals.",
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/run/{valname}",
-              "path-parameters": {
-                "valname": {
-                  "docs": "Name of the val, in concatenated style, like username.valname",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "RunGetRequest",
+                "path-parameters": {
+                  "valname": {
+                    "docs": "Name of the val, in concatenated style, like username.valname",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "args": {
                     "docs": "An argument that will be passed to the function as a JavaScript value",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -4722,12 +5273,6 @@ let you get, create, and run vals.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/run/{valname}",
-              "path-parameters": {
-                "valname": {
-                  "docs": "Name of the val, in concatenated style, like username.valname",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4737,7 +5282,12 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RunPostRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "valname": {
+                    "docs": "Name of the val, in concatenated style, like username.valname",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "source": {
@@ -4771,12 +5321,6 @@ let you get, create, and run vals.",
               "method": "PUT",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}",
-              "path-parameters": {
-                "val_id": {
-                  "docs": "Id of a val",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4813,7 +5357,12 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsUpdateRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "val_id": {
+                    "docs": "Id of a val",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "source": {
@@ -5145,7 +5694,7 @@ service:
         content-type: application/json
       response:
         docs: Default Response
-        type: optional<EvalPostResponse>
+        type: optional<nullable<EvalPostResponse>>
         status-code: 200
       errors:
         - root.BadRequestError
@@ -5169,17 +5718,17 @@ service:
       docs: Run JavaScript or TypeScript without saving it permanently as a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        code:
-          type: string
-          docs: TypeScript source code
       request:
         name: EvalGetRequest
+        path-parameters:
+          code:
+            type: string
+            docs: TypeScript source code
         query-parameters:
-          args: optional<string>
+          args: optional<nullable<string>>
       response:
         docs: Default Response
-        type: optional<EvalGetResponse>
+        type: optional<nullable<EvalGetResponse>>
         status-code: 200
       errors:
         - root.BadRequestError
@@ -5195,15 +5744,15 @@ service:
       docs: Run a val, specify any parameters in a querystring
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        valname:
-          type: string
-          docs: Name of the val, in concatenated style, like username.valname
       request:
         name: RunGetRequest
+        path-parameters:
+          valname:
+            type: string
+            docs: Name of the val, in concatenated style, like username.valname
         query-parameters:
           args:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               An argument that will be passed to the function as a JavaScript
               value
@@ -5218,12 +5767,12 @@ service:
       docs: Run a val, with arguments in the request body
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        valname:
-          type: string
-          docs: Name of the val, in concatenated style, like username.valname
       request:
         name: RunPostRequest
+        path-parameters:
+          valname:
+            type: string
+            docs: Name of the val, in concatenated style, like username.valname
         body:
           properties:
             args: optional<list<unknown>>
@@ -5343,10 +5892,12 @@ service:
       docs: Get a val by id
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
+      request:
+        name: ValsGetRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
       response:
         docs: Default Response
         type: root.ExtendedVal
@@ -5382,12 +5933,12 @@ service:
       docs: Update an existing val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
       request:
         name: ValsUpdateRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
         body:
           properties:
             name:
@@ -5432,10 +5983,12 @@ service:
       docs: Delete a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
+      request:
+        name: ValsDeleteRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
       errors:
         - root.NotFoundError
       examples:
@@ -5448,12 +6001,12 @@ service:
       docs: List versions of a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
       request:
         name: ValsListRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
         query-parameters:
           offset:
             type: integer
@@ -5495,12 +6048,12 @@ service:
       docs: Create a new version of a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
       request:
         name: ValsCreateVersionRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
         body:
           properties:
             code:
@@ -5574,15 +6127,15 @@ service:
       docs: Get a specific version of a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
-        version:
-          type: integer
-          docs: The val version
       request:
         name: ValsGetVersionRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
+          version:
+            type: integer
+            docs: The val version
         query-parameters:
           offset:
             type: integer
@@ -5636,13 +6189,15 @@ service:
       docs: Delete a specific version of a val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
-        version:
-          type: integer
-          docs: The val version
+      request:
+        name: ValsDeleteVersionRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
+          version:
+            type: integer
+            docs: The val version
       errors:
         - root.NotFoundError
       examples:
@@ -5656,15 +6211,17 @@ service:
       docs: Cancel a running val
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        val_id:
-          type: string
-          docs: Id of a val
-        evaluation_id:
-          type: string
-          docs: >-
-            The ID of the evaluation - the specific time that a val was run -
-            that you want to cancel
+      request:
+        name: ValsCancelRequest
+        path-parameters:
+          val_id:
+            type: string
+            docs: Id of a val
+          evaluation_id:
+            type: string
+            docs: >-
+              The ID of the evaluation - the specific time that a val was run -
+              that you want to cancel
       response:
         docs: >-
           The evaluation_id was successfully searched for and the evaluation was

@@ -26,7 +26,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               max: 100
       response:
@@ -48,10 +48,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
