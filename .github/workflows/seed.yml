@@ -280,11 +280,11 @@ jobs:
         run: |
           TEST_FIXTURES_1="accept-header alias alias-extends any-auth api-wide-base-path audiences"
           TEST_FIXTURES_2="auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload"
-          TEST_STRING=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2")
+          matrix_of_tests=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2")
 
           echo "test_string=$TEST_STRING" >> $GITHUB_OUTPUT
           echo "Built test matrix string as: "
-          echo "$TEST_STRING"
+          echo "$matrix_of_tests"
 
           echo "Test string 1 as: "
           echo "$TEST_FIXTURES_1"
