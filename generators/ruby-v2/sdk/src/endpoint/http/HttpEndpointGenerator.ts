@@ -86,7 +86,7 @@ export class HttpEndpointGenerator {
                         body: ruby.raise({
                             errorClass: ruby.classReference({
                                 name: "TimeoutError",
-                                modules: [this.context.getRootModule().name, "Errors"]
+                                modules: [this.context.getRootModuleName(), "Errors"]
                             })
                         })
                     }
@@ -120,7 +120,7 @@ export class HttpEndpointGenerator {
                     ]
                 },
                 elseBody: ruby.codeblock((writer) => {
-                    const rootModuleName = this.context.getRootModule().name;
+                    const rootModuleName = this.context.getRootModuleName();
                     writer.writeLine(
                         `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
                     );

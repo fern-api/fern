@@ -43,7 +43,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.context.getRootFolderName();
-        this.rootPackageClientName = this.context.getRootModule().name;
+        this.rootPackageClientName = this.context.getRootModuleName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
