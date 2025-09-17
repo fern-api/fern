@@ -1,8 +1,8 @@
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { rust } from "@fern-api/rust-codegen";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
+import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 
