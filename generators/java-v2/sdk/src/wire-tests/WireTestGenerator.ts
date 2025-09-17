@@ -1081,7 +1081,15 @@ export class WireTestGenerator {
               }
             | unknown
     ): string | undefined {
-        const item = pathItem as any; // Safe because we check properties exist
+        const item = pathItem as {
+            name?: {
+                originalName?: string;
+                camelCase?: {
+                    unsafeName?: string;
+                    safeName?: string;
+                };
+            };
+        };
 
         if (item?.name?.originalName) {
             return item.name.originalName;
