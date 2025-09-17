@@ -297,7 +297,7 @@ jobs:
     needs: create-ts-test-matrix
     strategy:
       matrix: 
-        fixtures: ["accept-header alias alias-extends any-auth api-wide-base-path audiences", "auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload"]
+        fixtures: ["accept-header", "alias", "alias-extends","any-auth", "api-wide-base-path", "audiences"]
         # fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
     # CHRISM - add something like this back at the end
     # if: >-
