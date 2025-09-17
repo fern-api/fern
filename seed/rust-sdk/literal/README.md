@@ -35,7 +35,7 @@ async fn main() {
         .headers_send(SendLiteralsInHeadersRequest {
             endpoint_version: "02-12-2024",
             async_: true,
-            query: "query",
+            query: "What is the weather today",
         })
         .await;
 }

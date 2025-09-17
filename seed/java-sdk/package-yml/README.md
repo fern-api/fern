@@ -50,11 +50,11 @@ public class Example {
             .build();
 
         client.echo(
-            "id",
+            "id-ksfd9c1",
             EchoRequest
                 .builder()
-                .name("name")
-                .size(1)
+                .name("Hello world!")
+                .size(20)
                 .build()
         );
     }

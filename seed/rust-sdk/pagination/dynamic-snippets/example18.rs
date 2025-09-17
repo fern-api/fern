@@ -7,10 +7,6 @@ async fn main() {
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .inline_users_inline_users_list_with_mixed_type_cursor_pagination(
-            ListUsersMixedTypeCursorPaginationRequest {
-                cursor: Some("cursor"),
-            },
-        )
+        .users_list_with_mixed_type_cursor_pagination(ListUsersMixedTypeCursorPaginationRequest {})
         .await;
 }
