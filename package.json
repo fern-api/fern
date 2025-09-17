@@ -80,7 +80,6 @@
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
     "@nx/js": "^21.3.8",
-    "ajv-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "cspell": "^8.17.2",
     "depcheck": "^1.4.7",
