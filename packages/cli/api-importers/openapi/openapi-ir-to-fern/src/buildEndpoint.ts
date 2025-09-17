@@ -367,6 +367,12 @@ export function buildEndpoint({
         });
     }
 
+    if (endpoint.retries != null) {
+        convertedEndpoint.retries = {
+            disabled: endpoint.retries.type === "disabled"
+        };
+    }
+
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
     if (context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
         convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences];
