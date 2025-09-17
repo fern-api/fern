@@ -243,6 +243,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 
+            // Iterators
+            AsIsFiles.ItemIterator,
+            AsIsFiles.PageIterator,
+
             // HTTP
             AsIsFiles.HttpBaseRequest,
             AsIsFiles.HttpRawClient,
