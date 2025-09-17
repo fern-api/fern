@@ -318,7 +318,7 @@ jobs:
         #   echo "other struct: "
         #   echo "${fixture_list}"
         run: |
-          echo "fixture_list=$(echo "\"alias\"","\"alias-extends\"")" >> $GITHUB_OUTPUT
+          echo "fixture_list=$(echo "[\"alias\"","\"alias-extends\"]")" >> $GITHUB_OUTPUT
           echo "other struct: "
           echo "${fixture_list}"
 
