@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/make-CI-go-brrrr
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -21,6 +21,7 @@ concurrency:
 
 jobs:
   changes:
+    if: false # CHRISM - undo
     runs-on: ubuntu-latest
     outputs:
       seed: ${{ steps.get-generator-changes.outputs.seed }}
@@ -245,12 +246,13 @@ jobs:
   typescript-sdk:
     runs-on: Seed
     needs: changes
-    if: >-
-      ${{
-        (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
-        && github.repository == 'fern-api/fern'
-      }}
+    #  CHRISM - add something like this back at the end
+    # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -260,6 +262,82 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
+
+  create-ts-test-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      fixture_list: ${{ steps.create-test-matrix.outputs.fixture_list }}
+    # CHRISM - add something like this back at the end
+      # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+  
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+  
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+  
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Build seed 
+        run: |
+          pnpm seed:build
+
+      - name: Create Test Matrix
+        id: create-test-matrix    
+        run: |
+          # Get starting point from output of get-available-fixtures command
+          MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
+          
+          # Remove newlines and spaces so next portion of filtering is easier
+          PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+
+          # Extract just the fixtures
+          FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+
+          MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+
+          echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
+          echo "${fixture_list}"
+
+  typescript-sdk-as-matrix:
+    runs-on: ubuntu-latest
+    needs: create-ts-test-matrix
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      matrix: 
+        fixtures: ${{ fromJSON(needs.create-ts-test-matrix.outputs.fixture_list) }}
+        # fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
+    # CHRISM - add something like this back at the end
+    # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-sdk
+          generator-path: generators/typescript
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-express:
     runs-on: Seed
