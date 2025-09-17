@@ -25,12 +25,12 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         this.symbolRegistry = ProjectSymbolRegistry.create();
     }
 
-    private get srcDirectory(): RelativeFilePath {
+    public get sourcesDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Sources");
     }
 
-    public get absolutePathToSrcDirectory(): AbsoluteFilePath {
-        return join(this.absolutePathToOutputDirectory, this.srcDirectory);
+    public get absolutePathToSourcesDirectory(): AbsoluteFilePath {
+        return join(this.absolutePathToOutputDirectory, this.sourcesDirectory);
     }
 
     public addRootFiles(...files: File[]): void {
@@ -87,9 +87,9 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     public async persist(): Promise<void> {
-        const { context, absolutePathToSrcDirectory } = this;
-        context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
-        await mkdir(absolutePathToSrcDirectory, { recursive: true });
+        const { context, absolutePathToSourcesDirectory } = this;
+        context.logger.debug(`mkdir ${absolutePathToSourcesDirectory}`);
+        await mkdir(absolutePathToSourcesDirectory, { recursive: true });
         await Promise.all([this.persistRootFiles(), this.persistSourceFiles()]);
     }
 
@@ -99,7 +99,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     private async persistSourceFiles(): Promise<void> {
-        const { absolutePathToSrcDirectory, srcFiles } = this;
-        await Promise.all(srcFiles.map((file) => file.write(absolutePathToSrcDirectory)));
+        const { absolutePathToSourcesDirectory, srcFiles } = this;
+        await Promise.all(srcFiles.map((file) => file.write(absolutePathToSourcesDirectory)));
     }
 }
