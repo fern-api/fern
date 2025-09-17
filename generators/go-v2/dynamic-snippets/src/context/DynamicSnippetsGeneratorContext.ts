@@ -60,6 +60,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return [this.rootImportPath, ...parts].join("/");
     }
 
+    public getImportPathForRequest(fernFilepath: FernIr.FernFilepath): string {
+        if (this.customConfig?.exportAllRequestsAtRoot) {
+            return this.rootImportPath;
+        }
+        return this.getImportPath(fernFilepath);
+    }
+
     public getContextTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "Context",

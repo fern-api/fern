@@ -670,7 +670,7 @@ export class EndpointSnippetGenerator {
         return go.TypeInstantiation.structPointer({
             typeReference: go.typeReference({
                 name: this.context.getMethodName(request.declaration.name),
-                importPath: this.context.getImportPath(request.declaration.fernFilepath)
+                importPath: this.context.getImportPathForRequest(request.declaration.fernFilepath)
             }),
             fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
         });

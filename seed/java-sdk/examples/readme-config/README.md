@@ -44,6 +44,14 @@ A full reference for this library is available [here](./reference.md).
 This is a custom section. Latest package info is com.fern:examples:0.0.1
 
 
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for com.fern:examples:0.0.1
+
+## Override Section
+
+Override Content
+
 ## Usage
 
 Instantiate and use the client with the following:

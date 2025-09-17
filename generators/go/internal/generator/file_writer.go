@@ -37,6 +37,7 @@ type fileWriter struct {
 	inlineFileProperties         bool
 	useReaderForBytesRequest     bool
 	gettersPassByValue           bool
+	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
@@ -57,6 +58,7 @@ func newFileWriter(
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
+	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -102,6 +104,7 @@ func newFileWriter(
 		inlineFileProperties:         inlineFileProperties,
 		useReaderForBytesRequest:     useReaderForBytesRequest,
 		gettersPassByValue:           gettersPassByValue,
+		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
@@ -246,6 +249,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
+		f.exportAllRequestsAtRoot,
 		f.unionVersion,
 		f.types,
 		f.errors,
