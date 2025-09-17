@@ -44,6 +44,14 @@ A full reference for this library is available [here](./reference.md).
 This is a custom section. Latest package info is com.fern:examples:0.0.1
 
 
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for com.fern:examples:0.0.1
+
+## Override Section
+
+Override Content
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -53,6 +61,8 @@ package com.example.usage;
 
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.types.types.Movie;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Example {
@@ -65,22 +75,24 @@ public class Example {
         client.service().createMovie(
             Movie
                 .builder()
-                .id("id")
-                .title("title")
-                .from("from")
-                .rating(1.1)
+                .id("movie-c06a4ad7")
+                .title("The Boy and the Heron")
+                .from("Hayao Miyazaki")
+                .rating(8)
                 .type("movie")
-                .tag("tag")
+                .tag("tag-wf9as23d")
                 .metadata(
                     new HashMap<String, Object>() {{
-                        put("metadata", new 
-                        HashMap<String, Object>() {{put("key", "value");
+                        put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
+                        put("releaseDate", "2023-12-08");
+                        put("ratings", new 
+                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
+                            put("imdb", 7.6);
                         }});
                     }}
                 )
                 .revenue(1000000L)
-                .prequel("prequel")
-                .book("book")
+                .prequel("movie-cv9b914f")
                 .build()
         );
     }

@@ -26,7 +26,7 @@ func do() {
     client.Completions.Stream(
         context.TODO(),
         &fern.StreamCompletionRequest{
-            Query: "query",
+            Query: "foo",
         },
     )
 }
