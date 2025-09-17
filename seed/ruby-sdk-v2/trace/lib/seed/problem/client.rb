@@ -18,12 +18,18 @@ module Seed
           path: "/problem-crud/create",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Problem::Types::CreateProblemResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-
-        raise _response.body
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Problem::Types::CreateProblemResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
 
       # Updates a problem
@@ -36,12 +42,18 @@ module Seed
           path: "/problem-crud/update/#{params[:problemId]}",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Problem::Types::UpdateProblemResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-
-        raise _response.body
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Problem::Types::UpdateProblemResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
 
       # Soft deletes a problem
@@ -53,10 +65,16 @@ module Seed
           method: "DELETE",
           path: "/problem-crud/delete/#{params[:problemId]}"
         )
-        _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-        raise _response.body
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Returns default starter files for problem
@@ -69,12 +87,18 @@ module Seed
           path: "/problem-crud/default-starter-files",
           body: params
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Problem::Types::GetDefaultStarterFilesResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-
-        raise _response.body
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Problem::Types::GetDefaultStarterFilesResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
     end
   end

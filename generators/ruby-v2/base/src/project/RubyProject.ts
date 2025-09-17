@@ -135,7 +135,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public getAsIsOutputDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`);
+        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
     }
 
     public getAsIsOutputFilename(templateFileName: string): string {
