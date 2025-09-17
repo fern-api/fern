@@ -20,8 +20,7 @@ public class NestedApiWireTest {
         server.start();
         client = SeedOauthClientCredentialsClient.builder()
             .url(server.url("/").toString())
-            .clientId("test-client-id")
-                        .clientSecret("test-client-secret")
+            .token("oauth-test-token")
             .build();
     }
     @AfterEach
