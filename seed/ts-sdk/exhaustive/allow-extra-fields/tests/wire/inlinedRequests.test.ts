@@ -147,10 +147,6 @@ describe("InlinedRequests", () => {
                     bigint: "1000000",
                 },
             });
-        }).rejects.toThrow(
-            new SeedExhaustive.BadRequestBody({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedExhaustive.BadRequestBody);
     });
 });

@@ -25,6 +25,6 @@ describe("Service", () => {
             return await client.file.service.getFile("file.txt", {
                 "X-File-API-Version": "0.0.2",
             });
-        }).rejects.toThrow(new SeedExamples.NotFoundError("A file with that name was not found!"));
+        }).rejects.toThrow(SeedExamples.NotFoundError);
     });
 });
