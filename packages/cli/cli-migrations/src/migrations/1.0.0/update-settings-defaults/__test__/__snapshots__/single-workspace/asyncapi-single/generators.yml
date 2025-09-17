@@ -8,4 +8,7 @@ api:
   settings:
     message-naming: v2
     use-title: true
+    respect-nullable-schemas: false
+    idiomatic-request-names: false
+    inline-path-parameters: false
 groups: {}

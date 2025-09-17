@@ -4,20 +4,32 @@ api:
     - openapi: ./openapi.yml
       settings:
         title-as-schema-name: true
+        type-dates-as-strings: true
+        respect-nullable-schemas: false
+        idiomatic-request-names: false
+        inline-path-parameters: false
     - openapi: ./openapi2.yml
       overrides: ./openapi2.overrides.yml
       origin: dummy2
       settings:
-        title-as-schema-name: true
+        title-as-schema-name: false
+        type-dates-as-strings: true
+        respect-nullable-schemas: false
+        idiomatic-request-names: false
+        inline-path-parameters: false
     - asyncapi: ./asyncapi.yml
       settings:
         title-as-schema-name: true
+        respect-nullable-schemas: false
+        idiomatic-request-names: false
     - asyncapi: ./asyncapi2.yml
       overrides: ./asyncapi2.overrides.yml
       origin: dummy2
       settings:
         message-naming: v2
         title-as-schema-name: true
+        respect-nullable-schemas: false
+        idiomatic-request-names: false
     - proto:
         root: ./proto
         overrides: ./proto/overrides.yml

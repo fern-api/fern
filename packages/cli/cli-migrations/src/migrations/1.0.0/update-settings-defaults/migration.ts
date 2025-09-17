@@ -150,7 +150,14 @@ async function updateGeneratorsYml({ context, files }: { context: TaskContext; f
                         if (spec.settings == null) {
                             spec.settings = {} as Record<string, unknown>;
                         }
-                        setNewSpecSettingsDefaults(spec.settings, context);
+                        if ("asyncapi" in spec) {
+                            setNewAsyncApiSpecSettingsDefaults(spec.settings, context);
+                            continue;
+                        }
+                        if ("openapi" in spec) {
+                            setNewOpenApiSpecSettingsDefaults(spec.settings, context);
+                            continue;
+                        }
                     }
                 }
             } else {
@@ -218,19 +225,43 @@ type NewSettingsDefaults = {
     [key: string]: [unknown, unknown];
 };
 
-const NEW_DEPRECATED_SETTINGS_DEFAULTS: NewSettingsDefaults = {
-    "use-title": [true, false]
+const COMMON_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "respect-nullable-schemas": [false, true],
+    "idiomatic-request-names": [false, true]
 };
-const NEW_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
-    "title-as-schema-name": [true, false]
+
+const OPENAPI_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "inline-path-parameters": [false, true]
+};
+
+const NEW_DEPRECATED_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "use-title": [true, false],
+    ...COMMON_SETTINGS_DEFAULTS,
+    ...OPENAPI_SETTINGS_DEFAULTS
+};
+
+const NEW_OPENAPI_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "title-as-schema-name": [true, false],
+    "type-dates-as-strings": [true, false],
+    ...COMMON_SETTINGS_DEFAULTS,
+    ...OPENAPI_SETTINGS_DEFAULTS
+};
+
+const NEW_ASYNCAPI_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "title-as-schema-name": [true, false],
+    ...COMMON_SETTINGS_DEFAULTS
 };
 
 function setNewSettingsDefaultsDeprecated(settings: Record<string, unknown>, context: TaskContext): void {
     return setNewSettingsDefaultsInternal(settings, NEW_DEPRECATED_SETTINGS_DEFAULTS, context);
 }
 
-function setNewSpecSettingsDefaults(settings: Record<string, unknown>, context: TaskContext): void {
-    return setNewSettingsDefaultsInternal(settings, NEW_SPEC_SETTINGS_DEFAULTS, context);
+function setNewAsyncApiSpecSettingsDefaults(settings: Record<string, unknown>, context: TaskContext): void {
+    return setNewSettingsDefaultsInternal(settings, NEW_ASYNCAPI_SPEC_SETTINGS_DEFAULTS, context);
+}
+
+function setNewOpenApiSpecSettingsDefaults(settings: Record<string, unknown>, context: TaskContext): void {
+    return setNewSettingsDefaultsInternal(settings, NEW_OPENAPI_SPEC_SETTINGS_DEFAULTS, context);
 }
 
 function setNewSettingsDefaultsInternal(
@@ -239,18 +270,12 @@ function setNewSettingsDefaultsInternal(
     context: TaskContext
 ): void {
     for (const settingKey in newDefaults) {
-        const [oldDefault, newDefault] = newDefaults[settingKey] as [unknown, unknown];
+        const [oldDefault] = newDefaults[settingKey] as [unknown, unknown];
         if (settingKey in settings) {
-            if (settings[settingKey] === newDefault) {
-                context.logger.info(
-                    `Setting '${settingKey}' is set to '${newDefault}' and now defaults to '${newDefault}'. Removing explicit setting.`
-                );
-                delete settings[settingKey];
-            } else {
-                // Setting is explicitly set to old value, do not touch
-                continue;
-            }
+            // if explicitly set, keep as is
+            continue;
         }
+
         context.logger.info(`Setting '${settingKey}' to '${oldDefault}' to maintain backwards compatibility.`);
         settings[settingKey] = oldDefault;
     }

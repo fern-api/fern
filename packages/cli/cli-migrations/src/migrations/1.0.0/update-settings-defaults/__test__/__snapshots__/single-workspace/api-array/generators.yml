@@ -3,16 +3,25 @@ api:
   - path: ./openapi.yml
     settings:
       use-title: true
+      respect-nullable-schemas: false
+      idiomatic-request-names: false
+      inline-path-parameters: false
   - path: ./openapi2.yml
     overrides: ./openapi2.overrides.yml
     audiences:
       - test
     origin: dummy2
     settings:
-      use-title: true
+      use-title: false
+      respect-nullable-schemas: false
+      idiomatic-request-names: false
+      inline-path-parameters: false
   - path: ./asyncapi.yml
     settings:
       use-title: true
+      respect-nullable-schemas: false
+      idiomatic-request-names: false
+      inline-path-parameters: false
   - path: ./asyncapi2.yml
     overrides: ./asyncapi2.overrides.yml
     audiences:
@@ -21,6 +30,9 @@ api:
     settings:
       message-naming: v2
       use-title: true
+      respect-nullable-schemas: false
+      idiomatic-request-names: false
+      inline-path-parameters: false
   - proto:
       root: ./proto
       overrides: ./proto/overrides.yml

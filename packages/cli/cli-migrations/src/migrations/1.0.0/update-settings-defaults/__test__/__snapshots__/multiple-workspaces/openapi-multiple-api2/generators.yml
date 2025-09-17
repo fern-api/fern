@@ -3,4 +3,7 @@ api:
   path: ./openapi2.yml
   settings:
     use-title: true
+    respect-nullable-schemas: false
+    idiomatic-request-names: false
+    inline-path-parameters: false
 groups: {}

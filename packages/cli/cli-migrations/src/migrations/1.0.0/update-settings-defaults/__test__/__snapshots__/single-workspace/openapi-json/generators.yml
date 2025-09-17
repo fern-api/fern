@@ -6,5 +6,8 @@ api:
   origin: dummy
   overrides: ./openapi.overrides.yml
   settings:
-    use-title: true
+    use-title: false
+    respect-nullable-schemas: false
+    idiomatic-request-names: false
+    inline-path-parameters: false
 groups: {}
