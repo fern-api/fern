@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code><a href="path/to/service">endpoint</a>() -> String</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">endpoint</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,32 @@
 <dd>
 
 ```swift
-doSomething()
+import Foundation
+import Accept
+
+private func main() async throws {
+    let client = AcceptClient(token: "<token>")
+
+    try await client.service.endpoint()
+}
+
+try await main()
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
 </dd>
 </dl>
 </dd>
