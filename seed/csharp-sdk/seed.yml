@@ -58,7 +58,12 @@ fixtures:
   examples:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: null
+    - customConfig:
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -66,6 +71,13 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: typescript
+            content: "Base Readme Custom Content for {{ packageName }}"
+          - title: "Override Section"
+            language: typescript
+            content: "Base Content"
         features:
           timeouts:
             - GET /movie/{movieId}

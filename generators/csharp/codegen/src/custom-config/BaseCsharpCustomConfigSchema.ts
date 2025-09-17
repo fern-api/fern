@@ -1,3 +1,4 @@
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 import { z } from "zod";
 
 export const BaseCsharpCustomConfigSchema = z.object({
@@ -36,7 +37,8 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "pascal-case-environments": z.boolean().optional(),
     "simplify-object-dictionaries": z.boolean().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
-    "experimental-additional-properties": z.boolean().optional()
+    "experimental-additional-properties": z.boolean().optional(),
+    "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional()
 });
 
 export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>;
