@@ -84,7 +84,9 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
-        # Check if a fixture set was provided
+        # Check if a fixture set was provided, set defaults to empty strings
+        FIXTURE=""
+        SUBFOLDER=""
         if [ -z "${{ inputs.fixtures-to-run }}" ]; then
           echo "Set to run: ${{ inputs.fixtures-to-run }}"
           SET_TO_RUN = ${{ inputs.fixtures-to-run }}
@@ -100,13 +102,13 @@ runs:
             fi
           fi
 
-          echo "Fixture: ${{ FIXTURE }}"
-          echo "Subfolder: ${{ SUBFOLDER }}"
+          echo "Fixture: ${ FIXTURE }"
+          echo "Subfolder: ${ SUBFOLDER }"
           
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${{ FIXTURE }} \
+          --fixture ${ FIXTURE } \
           ${{ SUBFOLDER != "" && format('--outputFolder {0}', SUBFOLDER) || '' }} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
