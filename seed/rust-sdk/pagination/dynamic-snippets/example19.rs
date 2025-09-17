@@ -7,12 +7,10 @@ async fn main() {
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .inline_users_inline_users_list_with_offset_step_pagination(
-            ListUsersOffsetStepPaginationRequest {
-                page: Some(1),
-                limit: Some(1),
-                order: Some("asc"),
-            },
-        )
+        .users_list_with_offset_step_pagination(ListUsersOffsetStepPaginationRequest {
+            page: Some(1),
+            limit: Some(1),
+            order: Some("asc"),
+        })
         .await;
 }
