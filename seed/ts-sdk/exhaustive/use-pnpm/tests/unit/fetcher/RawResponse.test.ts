@@ -1,5 +1,3 @@
-import { describe, expect, it } from "@jest/globals";
-
 import { toRawResponse } from "../../../src/core/fetcher/RawResponse";
 
 describe("RawResponse", () => {
