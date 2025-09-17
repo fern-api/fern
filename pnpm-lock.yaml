@@ -4794,8 +4794,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       axios:
-        specifier: ^1.12.0
-        version: 1.12.0
+        specifier: ^1.12.2
+        version: 1.12.2
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -6407,8 +6407,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       axios:
-        specifier: ^1.12.0
-        version: 1.12.0
+        specifier: ^1.12.2
+        version: 1.12.2
       chalk:
         specifier: ^5.3.0
         version: 5.6.0
@@ -6535,8 +6535,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^1.12.0
-        version: 1.12.0
+        specifier: ^1.12.2
+        version: 1.12.2
       chalk:
         specifier: ^5.3.0
         version: 5.6.0
@@ -6615,8 +6615,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^1.12.0
-        version: 1.12.0
+        specifier: ^1.12.2
+        version: 1.12.2
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -7071,8 +7071,8 @@ importers:
         specifier: ^9.0.8
         version: 9.0.8
       axios:
-        specifier: ^1.12.0
-        version: 1.12.0
+        specifier: ^1.12.2
+        version: 1.12.2
       chalk:
         specifier: ^5.3.0
         version: 5.6.0
@@ -10615,8 +10615,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.12.0:
-    resolution: {integrity: sha512-oXTDccv8PcfjZmPGlWsPSwtOJCZ/b6W5jAMCNcfwJbCzDckwG0jrYJFaWH1yvivfCXjVzV/SPDEhMB3Q+DSurg==}
+  axios@1.12.2:
+    resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
 
   b4a@1.7.1:
     resolution: {integrity: sha512-ZovbrBV0g6JxK5cGUF1Suby1vLfKjv4RWi8IxoaO/Mon8BDD9I21RxjHFtgQ+kskJqLAVyQZly3uMBui+vhc8Q==}
@@ -17016,7 +17016,7 @@ snapshots:
 
   '@types/axios@0.14.4':
     dependencies:
-      axios: 1.12.0
+      axios: 1.12.2
     transitivePeerDependencies:
       - debug
 
@@ -17570,7 +17570,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.12.0:
+  axios@1.12.2:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.4
@@ -20549,7 +20549,7 @@ snapshots:
       '@yarnpkg/lockfile': 1.1.0
       '@yarnpkg/parsers': 3.0.2
       '@zkochan/js-yaml': 0.0.7
-      axios: 1.12.0
+      axios: 1.12.2
       chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
@@ -20922,7 +20922,7 @@ snapshots:
 
   posthog-node@4.18.0:
     dependencies:
-      axios: 1.12.0
+      axios: 1.12.2
     transitivePeerDependencies:
       - debug
 
