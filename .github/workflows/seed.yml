@@ -311,7 +311,8 @@ jobs:
 
           MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
 
-          echo "fixture_list=${MATRIX_FORMATTED}" >> "$GITHUB_OUTPUT"
+          echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
+          echo "${fixture_list}"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
