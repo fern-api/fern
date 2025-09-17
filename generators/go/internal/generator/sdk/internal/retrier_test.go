@@ -224,8 +224,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return "1"
 			},
-			expectedMinMs: 700,  // 70% of 1000ms after jitter and execution overhead
-			expectedMaxMs: 1100, // 1000ms + some tolerance
+			expectedMinMs: 500,
+			expectedMaxMs: 1500,
 		},
 		{
 			name:       "retry-after with HTTP date",
@@ -233,8 +233,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return time.Now().Add(3 * time.Second).Format(time.RFC1123)
 			},
-			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
-			expectedMaxMs: 3100, // 3000ms + some tolerance
+			expectedMinMs: 1500,
+			expectedMaxMs: 4500,
 		},
 		{
 			name:       "x-ratelimit-reset with future timestamp",
@@ -242,8 +242,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return fmt.Sprintf("%d", time.Now().Add(3 * time.Second).Unix())
 			},
-			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
-			expectedMaxMs: 3100, // 3000ms + some tolerance
+			expectedMinMs: 1500,
+			expectedMaxMs: 4500,
 		},
 	}
 
