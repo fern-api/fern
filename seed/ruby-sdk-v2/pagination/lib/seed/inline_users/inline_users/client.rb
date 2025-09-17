@@ -24,12 +24,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse]
@@ -47,12 +53,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -63,12 +75,18 @@ module Seed
             path: "/inline-users",
             body: params
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -86,12 +104,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -109,12 +133,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -125,12 +155,18 @@ module Seed
             path: "/inline-users",
             body: params
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -148,12 +184,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
@@ -171,12 +213,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse]
@@ -194,12 +242,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse]
@@ -217,12 +271,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::Types::UsernameCursor]
@@ -240,10 +300,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          return Seed::Types::UsernameCursor.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-          raise _response.body
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::UsernameCursor.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
 
         # @return [Seed::InlineUsers::InlineUsers::Types::UsernameContainer]
@@ -261,12 +329,18 @@ module Seed
             path: "/inline-users",
             query: _query
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::InlineUsers::InlineUsers::Types::UsernameContainer.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
-
-          raise _response.body
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::InlineUsers::InlineUsers::Types::UsernameContainer.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
     end
