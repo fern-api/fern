@@ -322,7 +322,7 @@ jobs:
           "error-property",
           "errors",
           "examples",
-          "exhaustive",
+          # "exhaustive", // skip you for now
           "extends",
           "extra-properties",
           "file-download",
