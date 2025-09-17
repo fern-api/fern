@@ -3,6 +3,7 @@ export * from "./DeclaredServiceName";
 export * from "./Transport";
 export * from "./GrpcTransport";
 export * from "./HttpEndpoint";
+export * from "./RetriesConfiguration";
 export * from "./HttpEndpointSource";
 export * from "./ProtoSourceInfo";
 export * from "./EndpointName";

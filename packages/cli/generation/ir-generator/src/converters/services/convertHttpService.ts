@@ -10,6 +10,7 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
+    RetriesConfiguration,
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -200,7 +201,8 @@ export function convertHttpService({
                 }),
                 v2Examples: undefined,
                 source: undefined,
-                audiences: endpoint.audiences
+                audiences: endpoint.audiences,
+                retries: endpoint.retries?.disabled === true ? RetriesConfiguration.disabled() : undefined
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
