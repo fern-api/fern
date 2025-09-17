@@ -654,7 +654,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "queryParameters": [
@@ -687,7 +688,8 @@
                                     "type": "primitive",
                                     "value": "BOOLEAN"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],

@@ -1,12 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedExhaustive;
-using SeedExhaustive.ReqWithHeaders;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example48
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -14,13 +13,7 @@ public class Example48
             }
         );
 
-        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-            new ReqWithHeaders{
-                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-                Body = "string"
-            }
-        );
+        await client.NoReqBody.GetWithNoRequestBodyAsync();
     }
 
 }

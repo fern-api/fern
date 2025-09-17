@@ -5,7 +5,7 @@ namespace SeedClientSideParams.Test.Unit.MockServer;
 [TestFixture]
 public class DeleteUserTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

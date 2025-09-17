@@ -13,7 +13,7 @@ export declare namespace Urls {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace Urls {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -48,7 +48,7 @@ export class Urls {
     }
 
     private async __withMixedCase(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -106,7 +106,7 @@ export class Urls {
     }
 
     private async __noEndingSlash(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -164,7 +164,7 @@ export class Urls {
     }
 
     private async __withEndingSlash(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -224,7 +224,7 @@ export class Urls {
     }
 
     private async __withUnderscores(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

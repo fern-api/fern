@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedTrace;
+using System.Threading.Tasks;
 using System.Globalization;
 
 namespace Usage;
 
 public class Example2
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -19,7 +19,7 @@ public class Example2
             new TestSubmissionUpdate{
                 UpdateTime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 UpdateInfo = new TestSubmissionUpdateInfo(
-
+                    new TestSubmissionUpdateInfo.Running()
                 )
             }
         );

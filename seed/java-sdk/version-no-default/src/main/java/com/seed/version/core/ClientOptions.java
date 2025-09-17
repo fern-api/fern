@@ -199,7 +199,9 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
-            if (clientOptions.version != null) builder.version = clientOptions.version;
+            if (clientOptions.version != null) {
+                builder.version = clientOptions.version;
+            }
             return builder;
         }
     }

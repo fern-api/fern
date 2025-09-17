@@ -5,7 +5,7 @@ package service
 import (
 	context "context"
 	fmt "fmt"
-	file "github.com/fern-api/file-upload-go"
+	fileuploadgo "github.com/fern-api/file-upload-go"
 	core "github.com/fern-api/file-upload-go/core"
 	internal "github.com/fern-api/file-upload-go/internal"
 	option "github.com/fern-api/file-upload-go/option"
@@ -15,11 +15,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -27,13 +28,12 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	request *file.MyRequest,
+	request *fileuploadgo.MyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) Post(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -73,7 +73,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
@@ -145,7 +145,7 @@ func (r *RawClient) Post(
 
 func (r *RawClient) JustFile(
 	ctx context.Context,
-	request *file.JustFileRequest,
+	request *fileuploadgo.JustFileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -156,7 +156,7 @@ func (r *RawClient) JustFile(
 	)
 	endpointURL := baseURL + "/just-file"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -193,7 +193,7 @@ func (r *RawClient) JustFile(
 
 func (r *RawClient) JustFileWithQueryParams(
 	ctx context.Context,
-	request *file.JustFileWithQueryParamsRequest,
+	request *fileuploadgo.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -211,7 +211,7 @@ func (r *RawClient) JustFileWithQueryParams(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -248,7 +248,7 @@ func (r *RawClient) JustFileWithQueryParams(
 
 func (r *RawClient) WithContentType(
 	ctx context.Context,
-	request *file.WithContentTypeRequest,
+	request *fileuploadgo.WithContentTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -259,7 +259,7 @@ func (r *RawClient) WithContentType(
 	)
 	endpointURL := baseURL + "/with-content-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -307,7 +307,7 @@ func (r *RawClient) WithContentType(
 
 func (r *RawClient) WithFormEncoding(
 	ctx context.Context,
-	request *file.WithFormEncodingRequest,
+	request *fileuploadgo.WithFormEncodingRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -318,7 +318,7 @@ func (r *RawClient) WithFormEncoding(
 	)
 	endpointURL := baseURL + "/with-form-encoding"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -361,7 +361,7 @@ func (r *RawClient) WithFormEncoding(
 
 func (r *RawClient) WithFormEncodedContainers(
 	ctx context.Context,
-	request *file.MyOtherRequest,
+	request *fileuploadgo.MyOtherRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -372,7 +372,7 @@ func (r *RawClient) WithFormEncodedContainers(
 	)
 	endpointURL := baseURL
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -401,7 +401,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.MaybeInteger != nil {
-		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", request.MaybeInteger)); err != nil {
+		if err := writer.WriteField("maybe_integer", fmt.Sprintf("%v", *request.MaybeInteger)); err != nil {
 			return nil, err
 		}
 	}
@@ -478,7 +478,7 @@ func (r *RawClient) WithFormEncodedContainers(
 
 func (r *RawClient) OptionalArgs(
 	ctx context.Context,
-	request *file.OptionalArgsRequest,
+	request *fileuploadgo.OptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -489,7 +489,7 @@ func (r *RawClient) OptionalArgs(
 	)
 	endpointURL := baseURL + "/optional-args"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -533,7 +533,7 @@ func (r *RawClient) OptionalArgs(
 
 func (r *RawClient) WithInlineType(
 	ctx context.Context,
-	request *file.InlineTypeRequest,
+	request *fileuploadgo.InlineTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -544,7 +544,7 @@ func (r *RawClient) WithInlineType(
 	)
 	endpointURL := baseURL + "/inline-type"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
@@ -596,7 +596,7 @@ func (r *RawClient) Simple(
 	)
 	endpointURL := baseURL + "/snippet"
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(

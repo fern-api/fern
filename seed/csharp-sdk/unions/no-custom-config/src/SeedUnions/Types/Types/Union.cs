@@ -178,9 +178,9 @@ public record Union
             var value = discriminator switch
             {
                 "foo" => json.GetProperty("foo").Deserialize<SeedUnions.Foo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 "bar" => json.GetProperty("bar").Deserialize<SeedUnions.Bar>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
+                ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
                 _ => json.Deserialize<object?>(options),
             };
             return new Union(discriminator, value);
@@ -225,7 +225,7 @@ public record Union
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator Union.Foo(SeedUnions.Foo value) => new(value);
     }
 
     /// <summary>
@@ -243,6 +243,6 @@ public record Union
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Bar(SeedUnions.Bar value) => new(value);
+        public static implicit operator Union.Bar(SeedUnions.Bar value) => new(value);
     }
 }

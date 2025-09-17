@@ -2,40 +2,102 @@
 
 # isort: skip_file
 
-from .types import SendResponse
-from . import headers, inlined, path, query, reference
-from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import (
-    ANestedLiteral,
-    ANestedLiteralParams,
-    ATopLevelLiteral,
-    ATopLevelLiteralParams,
-    DiscriminatedLiteral,
-    DiscriminatedLiteralParams,
-    DiscriminatedLiteral_CustomName,
-    DiscriminatedLiteral_CustomNameParams,
-    DiscriminatedLiteral_DefaultName,
-    DiscriminatedLiteral_DefaultNameParams,
-    DiscriminatedLiteral_George,
-    DiscriminatedLiteral_GeorgeParams,
-    DiscriminatedLiteral_LiteralGeorge,
-    DiscriminatedLiteral_LiteralGeorgeParams,
-    SomeAliasedLiteral,
-    UndiscriminatedLiteral,
-    UndiscriminatedLiteralParams,
-)
-from .query import AliasToPrompt, AliasToStream
-from .reference import (
-    ContainerObject,
-    ContainerObjectParams,
-    NestedObjectWithLiterals,
-    NestedObjectWithLiteralsParams,
-    SendRequest,
-    SendRequestParams,
-    SomeLiteral,
-)
-from .requests import SendResponseParams
-from .version import __version__
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import SendResponse
+    from . import headers, inlined, path, query, reference
+    from .client import AsyncSeedLiteral, SeedLiteral
+    from .inlined import (
+        ANestedLiteral,
+        ANestedLiteralParams,
+        ATopLevelLiteral,
+        ATopLevelLiteralParams,
+        DiscriminatedLiteral,
+        DiscriminatedLiteralParams,
+        DiscriminatedLiteral_CustomName,
+        DiscriminatedLiteral_CustomNameParams,
+        DiscriminatedLiteral_DefaultName,
+        DiscriminatedLiteral_DefaultNameParams,
+        DiscriminatedLiteral_George,
+        DiscriminatedLiteral_GeorgeParams,
+        DiscriminatedLiteral_LiteralGeorge,
+        DiscriminatedLiteral_LiteralGeorgeParams,
+        SomeAliasedLiteral,
+        UndiscriminatedLiteral,
+        UndiscriminatedLiteralParams,
+    )
+    from .query import AliasToPrompt, AliasToStream
+    from .reference import (
+        ContainerObject,
+        ContainerObjectParams,
+        NestedObjectWithLiterals,
+        NestedObjectWithLiteralsParams,
+        SendRequest,
+        SendRequestParams,
+        SomeLiteral,
+    )
+    from .requests import SendResponseParams
+    from .version import __version__
+_dynamic_imports: typing.Dict[str, str] = {
+    "ANestedLiteral": ".inlined",
+    "ANestedLiteralParams": ".inlined",
+    "ATopLevelLiteral": ".inlined",
+    "ATopLevelLiteralParams": ".inlined",
+    "AliasToPrompt": ".query",
+    "AliasToStream": ".query",
+    "AsyncSeedLiteral": ".client",
+    "ContainerObject": ".reference",
+    "ContainerObjectParams": ".reference",
+    "DiscriminatedLiteral": ".inlined",
+    "DiscriminatedLiteralParams": ".inlined",
+    "DiscriminatedLiteral_CustomName": ".inlined",
+    "DiscriminatedLiteral_CustomNameParams": ".inlined",
+    "DiscriminatedLiteral_DefaultName": ".inlined",
+    "DiscriminatedLiteral_DefaultNameParams": ".inlined",
+    "DiscriminatedLiteral_George": ".inlined",
+    "DiscriminatedLiteral_GeorgeParams": ".inlined",
+    "DiscriminatedLiteral_LiteralGeorge": ".inlined",
+    "DiscriminatedLiteral_LiteralGeorgeParams": ".inlined",
+    "NestedObjectWithLiterals": ".reference",
+    "NestedObjectWithLiteralsParams": ".reference",
+    "SeedLiteral": ".client",
+    "SendRequest": ".reference",
+    "SendRequestParams": ".reference",
+    "SendResponse": ".types",
+    "SendResponseParams": ".requests",
+    "SomeAliasedLiteral": ".inlined",
+    "SomeLiteral": ".reference",
+    "UndiscriminatedLiteral": ".inlined",
+    "UndiscriminatedLiteralParams": ".inlined",
+    "__version__": ".version",
+    "headers": ".",
+    "inlined": ".",
+    "path": ".",
+    "query": ".",
+    "reference": ".",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ANestedLiteral",

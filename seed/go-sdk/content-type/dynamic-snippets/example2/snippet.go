@@ -13,15 +13,18 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.RegularPatch(
+    client.Service.NamedPatchWithMixed(
         context.TODO(),
         "id",
-        &fern.RegularPatchRequest{
-            Field1: fern.String(
-                "field1",
+        &fern.NamedMixedPatchRequest{
+            AppId: fern.String(
+                "appId",
             ),
-            Field2: fern.Int(
-                1,
+            Instructions: fern.String(
+                "instructions",
+            ),
+            Active: fern.Bool(
+                true,
             ),
         },
     )

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "3b34f9f0",
+            "example_identifier": "ae8a929c",
             "id": {
                 "method": "POST",
                 "path": "/movies/create-movie",
@@ -14,7 +14,20 @@
             }
         },
         {
-            "example_identifier": "cedc5a8a",
+            "example_identifier": "76cc5edf",
+            "id": {
+                "method": "GET",
+                "path": "/movies/{movieId}",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "55e58aac",
             "id": {
                 "method": "GET",
                 "path": "/movies/{movieId}",

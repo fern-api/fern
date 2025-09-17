@@ -181,12 +181,10 @@ public record CreateProblemResponse
             var value = discriminator switch
             {
                 "success" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "error" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CreateProblemError>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.CreateProblemError"
-                    ),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.CreateProblemError"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CreateProblemResponse(discriminator, value);
@@ -231,7 +229,7 @@ public record CreateProblemResponse
 
         public override string ToString() => Value;
 
-        public static implicit operator Success(string value) => new(value);
+        public static implicit operator CreateProblemResponse.Success(string value) => new(value);
     }
 
     /// <summary>
@@ -249,6 +247,8 @@ public record CreateProblemResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Error(SeedTrace.CreateProblemError value) => new(value);
+        public static implicit operator CreateProblemResponse.Error(
+            SeedTrace.CreateProblemError value
+        ) => new(value);
     }
 }

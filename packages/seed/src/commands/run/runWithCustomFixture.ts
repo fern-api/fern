@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
+import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
@@ -37,10 +38,6 @@ export async function runWithCustomFixture({
 
     const taskContext = taskContextFactory.create(
         `${workspace.workspaceName}:${"custom"} - ${customFixtureConfig?.outputFolder ?? ""}`
-    );
-    console.log(
-        `Running custom fixture for ${workspace.workspaceName} with config:`,
-        JSON.stringify(customFixtureConfig)
     );
 
     let testRunner: TestRunner;
@@ -104,11 +101,24 @@ export async function runWithCustomFixture({
             return;
         }
 
+        const runFixtureConfig: FixtureConfigurations = {
+            ...customFixtureConfig,
+            customConfig: {
+                ...(customFixtureConfig?.customConfig as Record<string, unknown>),
+                ...(generatorGroup.invocation.config as Record<string, unknown>)
+            },
+            outputFolder: ""
+        };
+        console.log(
+            `Running custom fixture for ${workspace.workspaceName} with config:`,
+            JSON.stringify(runFixtureConfig)
+        );
+
         await testRunner.build();
 
         await testRunner.run({
             fixture: "custom",
-            configuration: customFixtureConfig,
+            configuration: runFixtureConfig,
             inspect,
             absolutePathToApiDefinition: pathToFixture,
             outputDir: absolutePathToOutput

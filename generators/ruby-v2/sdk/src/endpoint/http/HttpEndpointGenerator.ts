@@ -12,7 +12,10 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
-export const HTTP_RESPONSE_VARIABLE_NAME = "_response";
+export const HTTP_RESPONSE_VN = "_response";
+export const PARAMS_VN = "params";
+export const CODE_VN = "code";
+export const ERROR_CLASS_VN = "error_class";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -44,13 +47,24 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            statements.push(requestBodyCodeBlock.code);
+        }
 
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock?.code != null) {
+            statements.push(queryParameterCodeBlock.code);
+        }
+
+        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
-            requestType: request?.getRequestType()
+            requestType: request?.getRequestType(),
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
 
         if (sendRequestCodeBlock != null) {
@@ -58,18 +72,34 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.write(`_request = params`);
+                    writer.write(`_request = ${PARAMS_VN}`);
                 })
             );
         }
 
         statements.push(
-            ruby.codeblock(`${HTTP_RESPONSE_VARIABLE_NAME} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+            ruby.begin({
+                body: ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
+                rescues: [
+                    {
+                        errorClass: ruby.classReference({ name: "HTTPRequestTimeout", modules: ["Net"] }),
+                        body: ruby.raise({
+                            errorClass: ruby.classReference({
+                                name: "TimeoutError",
+                                modules: [this.context.getRootModuleName(), "Errors"]
+                            })
+                        })
+                    }
+                ]
+            })
+        );
+
+        statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
+
+        statements.push(
             ruby.ifElse({
                 if: {
-                    condition: ruby.codeblock(
-                        `${HTTP_RESPONSE_VARIABLE_NAME}.code >= "200" && ${HTTP_RESPONSE_VARIABLE_NAME}.code < "300"`
-                    ),
+                    condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
                     thenBody: [
                         ruby.codeblock((writer) => {
                             if (endpoint.response?.body == null) {
@@ -77,7 +107,6 @@ export class HttpEndpointGenerator {
                             } else {
                                 switch (endpoint.response.body.type) {
                                     case "json":
-                                        writer.write(`return `);
                                         this.loadResponseBodyFromJson({
                                             writer,
                                             typeReference: endpoint.response.body.value.responseBodyType
@@ -91,7 +120,14 @@ export class HttpEndpointGenerator {
                     ]
                 },
                 elseBody: ruby.codeblock((writer) => {
-                    writer.writeLine(`raise ${HTTP_RESPONSE_VARIABLE_NAME}.body`);
+                    const rootModuleName = this.context.getRootModuleName();
+                    writer.writeLine(
+                        `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
+                    );
+
+                    ruby.raise({
+                        errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                    }).write(writer);
                 })
             })
         );
@@ -108,7 +144,7 @@ export class HttpEndpointGenerator {
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: "params"
+                    name: PARAMS_VN
                 })
             },
             statements
@@ -121,7 +157,7 @@ export class HttpEndpointGenerator {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[pathParam.name.originalName] = `params[:${parameterName}]`;
+            pathParameterReferences[pathParam.name.originalName] = `${PARAMS_VN}[:${parameterName}]`;
         }
         return pathParameterReferences;
     }
@@ -140,7 +176,7 @@ export class HttpEndpointGenerator {
         switch (typeReference.type) {
             case "named":
                 writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VARIABLE_NAME}.body)`
+                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
                 );
                 break;
             default:

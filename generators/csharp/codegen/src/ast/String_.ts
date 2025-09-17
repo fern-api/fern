@@ -1,4 +1,5 @@
 import { escapeForCSharpString } from "..";
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -11,8 +12,8 @@ export declare namespace String_ {
 export class String_ extends AstNode {
     private string: string;
 
-    constructor(args: String_.Args) {
-        super();
+    constructor(args: String_.Args, csharp: CSharp) {
+        super(csharp);
         this.string = args.string;
     }
 

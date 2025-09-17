@@ -31,7 +31,7 @@ import {
     getUnionDiscriminantName
 } from "./convertDiscriminatedUnionTypeDeclaration";
 import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
-import { getPropertyName } from "./convertObjectTypeDeclaration";
+import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
 
 export function convertTypeExample({
     typeName,
@@ -573,7 +573,8 @@ function convertObject({
                                   wireValue: wireKey
                               }),
                               value: valueExample,
-                              originalTypeDeclaration: originalTypeDeclaration.typeName
+                              originalTypeDeclaration: originalTypeDeclaration.typeName,
+                              propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
                           });
 
                           return exampleProperties;

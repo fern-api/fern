@@ -1,11 +1,11 @@
-# Seed TypeScript Library
+# CustomName TypeScript Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
 [![npm shield](https://img.shields.io/npm/v/@fern/examples)](https://www.npmjs.com/package/@fern/examples)
 
-The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
+The CustomName TypeScript library provides convenient access to the CustomName APIs from TypeScript.
 
 ## Documentation
 
@@ -20,6 +20,18 @@ npm i -s @fern/examples
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
+
+## Base Readme Custom Section
+
+Base Readme Custom Content for @fern/examples
+
+## Override Section
+
+Override Content
+
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for @fern/examples
 
 ## Usage
 
@@ -192,13 +204,3 @@ const client = new SeedExamplesClient({
     fetcher: // provide your implementation here
 });
 ```
-
-## Contributing
-
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
-
-On the other hand, contributions to the README are always very welcome!

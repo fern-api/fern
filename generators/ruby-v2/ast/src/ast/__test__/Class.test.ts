@@ -1,6 +1,5 @@
 import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
-import { ClassReference } from "../ClassReference";
 import { Writer } from "../core/Writer";
 import { MethodKind } from "../Method";
 import { Type } from "../Type";

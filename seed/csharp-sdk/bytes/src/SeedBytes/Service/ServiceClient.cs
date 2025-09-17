@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedBytes.Core;
 
 namespace SeedBytes;
@@ -14,7 +14,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async global::System.Threading.Tasks.Task UploadAsync(
+    public async System.Threading.Tasks.Task UploadAsync(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -48,7 +48,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task DownloadAsync(
+    public async System.Threading.Tasks.Task DownloadAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -1,4 +1,4 @@
-import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";

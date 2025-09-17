@@ -33,7 +33,7 @@ import javax.lang.model.element.Modifier;
 public final class OptionalNullableGenerator extends AbstractFileGenerator {
 
     public OptionalNullableGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
-        super(ClassName.get("core", "OptionalNullable"), generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getCoreClassName("OptionalNullable"), generatorContext);
     }
 
     @Override

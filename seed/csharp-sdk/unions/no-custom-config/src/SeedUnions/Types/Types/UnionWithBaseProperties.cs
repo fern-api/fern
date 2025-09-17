@@ -232,7 +232,7 @@ public record UnionWithBaseProperties
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
                 "string" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "foo" => json.Deserialize<SeedUnions.Foo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
@@ -297,7 +297,7 @@ public record UnionWithBaseProperties
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Integer(int value) => new(value);
+        public static implicit operator UnionWithBaseProperties.Integer(int value) => new(value);
     }
 
     /// <summary>
@@ -315,7 +315,7 @@ public record UnionWithBaseProperties
 
         public override string ToString() => Value;
 
-        public static implicit operator String(string value) => new(value);
+        public static implicit operator UnionWithBaseProperties.String(string value) => new(value);
     }
 
     /// <summary>
@@ -333,6 +333,7 @@ public record UnionWithBaseProperties
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Foo(SeedUnions.Foo value) => new(value);
+        public static implicit operator UnionWithBaseProperties.Foo(SeedUnions.Foo value) =>
+            new(value);
     }
 }

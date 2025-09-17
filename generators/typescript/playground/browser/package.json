@@ -21,9 +21,7 @@
   "main": "src/index.ts",
   "module": "src/index.ts",
   "source": "src/index.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "build": "pnpm compile && vite build",
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -36,7 +34,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "form-data": "4.0.1",
+    "form-data": "4.0.4",
     "js-base64": "^3.7.6",
     "node-fetch": "2.7.0",
     "qs": "6.12.1",

@@ -86,6 +86,11 @@ type Optional = {
     valueType: Type;
 };
 
+type Nullable = {
+    type: "nullable";
+    valueType: Type;
+};
+
 /**
  * A reference to a custom type.
  */
@@ -104,6 +109,10 @@ type ExistentialAny = {
     protocolName: string;
 };
 
+type CalendarDate = {
+    type: "calendar-date";
+};
+
 /**
  * Represents our custom `JSONValue` type.
  */
@@ -118,8 +127,10 @@ type InternalType =
     | Array_
     | Dictionary
     | Optional
+    | Nullable
     | Custom
     | ExistentialAny
+    | CalendarDate
     | JsonValue;
 
 export class Type extends AstNode {
@@ -137,14 +148,36 @@ export class Type extends AstNode {
     /**
      * This is the type of the value, without any optional wrapping.
      */
-    public get unwrappedType(): Exclude<InternalType["type"], "optional"> {
+    public get nonOptionalType(): Exclude<InternalType["type"], "optional"> {
         return this.internalType.type === "optional"
-            ? this.internalType.valueType.unwrappedType
+            ? this.internalType.valueType.nonOptionalType
+            : this.internalType.type;
+    }
+
+    public get nonNullableType(): Exclude<InternalType["type"], "nullable"> {
+        return this.internalType.type === "nullable"
+            ? this.internalType.valueType.nonNullableType
             : this.internalType.type;
     }
 
     public get isOptional(): boolean {
         return this.internalType.type === "optional";
+    }
+
+    public get isNullable(): boolean {
+        return this.internalType.type === "nullable";
+    }
+
+    public get isOptionalNullable(): boolean {
+        return this.isOptional && this.nonOptional().isNullable;
+    }
+
+    public nonOptional(): Type {
+        return Type.nonOptional(this);
+    }
+
+    public nonNullable(): Type {
+        return Type.nonNullable(this);
     }
 
     public equals(that: Type): boolean {
@@ -196,6 +229,11 @@ export class Type extends AstNode {
                     that.internalType.type == "optional" &&
                     this.internalType.valueType.equals(that.internalType.valueType)
                 );
+            case "nullable":
+                return (
+                    that.internalType.type === "nullable" &&
+                    this.internalType.valueType.equals(that.internalType.valueType)
+                );
             case "custom":
                 return that.internalType.type === "custom" && this.internalType.name === that.internalType.name;
             case "existential-any":
@@ -203,6 +241,8 @@ export class Type extends AstNode {
                     that.internalType.type === "existential-any" &&
                     this.internalType.protocolName === that.internalType.protocolName
                 );
+            case "calendar-date":
+                return that.internalType.type === "calendar-date";
             default:
                 assertNever(this.internalType);
         }
@@ -269,10 +309,14 @@ export class Type extends AstNode {
             }
             case "optional":
                 return `optional${upperFirst(Type.toCaseName(type.internalType.valueType))}`;
+            case "nullable":
+                return `nullable${upperFirst(Type.toCaseName(type.internalType.valueType))}`;
             case "custom":
                 return camelCase(type.internalType.name);
             case "existential-any":
                 return `any${upperFirst(type.internalType.protocolName)}`;
+            case "calendar-date":
+                return "calendarDate";
             case "json-value":
                 return "json";
             default:
@@ -347,12 +391,20 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("?");
                 break;
+            case "nullable":
+                writer.write("Nullable<");
+                this.internalType.valueType.write(writer);
+                writer.write(">");
+                break;
             case "custom":
                 writer.write(this.internalType.name);
                 break;
             case "existential-any":
                 writer.write("any ");
                 writer.write(this.internalType.protocolName);
+                break;
+            case "calendar-date":
+                writer.write("CalendarDate");
                 break;
             case "json-value":
                 writer.write("JSONValue");
@@ -435,11 +487,26 @@ export class Type extends AstNode {
     }
 
     public static optional(valueType: Type): Type {
+        if (valueType.internalType.type === "optional") {
+            return valueType;
+        }
         return new this({ type: "optional", valueType });
     }
 
-    public static required(valueType: Type): Type {
-        return valueType.internalType.type === "optional" ? Type.required(valueType.internalType.valueType) : valueType;
+    public static nullable(valueType: Type): Type {
+        return new this({ type: "nullable", valueType });
+    }
+
+    public static nonOptional(valueType: Type): Type {
+        return valueType.internalType.type === "optional"
+            ? Type.nonOptional(valueType.internalType.valueType)
+            : valueType;
+    }
+
+    public static nonNullable(valueType: Type): Type {
+        return valueType.internalType.type === "nullable"
+            ? Type.nonNullable(valueType.internalType.valueType)
+            : valueType;
     }
 
     public static custom(name: string): Type {
@@ -448,6 +515,10 @@ export class Type extends AstNode {
 
     public static existentialAny(protocolName: string): Type {
         return new this({ type: "existential-any", protocolName });
+    }
+
+    public static calendarDate(): Type {
+        return new this({ type: "calendar-date" });
     }
 
     /**

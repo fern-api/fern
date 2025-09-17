@@ -9,7 +9,7 @@ inputs:
   manual-trigger:
     description: Whether this action was triggered manually via 'workflow_dispatch'
     required: false
-    default: 'false'
+    default: "false"
   version-file:
     description: Path to the version file describing this generator (i.e. 'generators/csharp/model/versions.yml')
     required: false
@@ -36,7 +36,7 @@ runs:
       uses: docker/login-action@v3
       with:
         username: fernapi
-        password: ${{ inputs.docker-pwd }}  
+        password: ${{ inputs.docker-pwd }}
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
@@ -50,20 +50,20 @@ runs:
       run: |
         echo $VERSIONS_FILE
         echo ${{ inputs.generator-name }}
-        
+
         previous_commit=$(git log -n 2 --pretty=format:"%h" -- ${VERSIONS_FILE} | tail -n 1)
         current_commit=$(git log -n 1 --pretty=format:"%h" -- ${VERSIONS_FILE})
-        
+
         # Get the previous version of the file using the specific commit that last changed it
         git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
         GIT_SHOW_STATUS=$?
-        
+
         echo "Preview of the previous file (${previous_commit})"
         head tmp_previous_versions.yml
 
         echo "Preview of the current file (${current_commit})"
         head ${VERSIONS_FILE}
-        
+
         if [ $GIT_SHOW_STATUS -eq 0 ]; then
           pnpm seed:local publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
         else

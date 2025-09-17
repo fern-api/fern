@@ -6,7 +6,7 @@ namespace SeedApi.Test.Unit.MockServer.Folder;
 [TestFixture]
 public class UnknownRequestTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

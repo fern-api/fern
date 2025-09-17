@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "generators/ruby/sdk/versions.yml"
+      - "generators/ruby-v2/sdk/versions.yml"
   workflow_dispatch:
     inputs:
       version:

@@ -1,6 +1,4 @@
-import { DocsLinks } from "@fern-api/configuration-loader";
 import { constructRootApiFileContext, EndpointResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
-import terminalLink from "terminal-link";
 
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";

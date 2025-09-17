@@ -44,6 +44,7 @@ await client.Service.GetMetadataAsync(
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "using Acme;
 using Acme.Types;
+using Acme.Commons.Types;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
@@ -66,6 +67,7 @@ await client.Service.CreateBigEntityAsync(
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
             Rating = 8.5,
+            Type = "movie",
             Tag = "tag-12efs9dv",
             Metadata = new Dictionary<string, object>(){
                 ["academyAward"] = true,
@@ -75,7 +77,21 @@ await client.Service.CreateBigEntityAsync(
                     ["imdb"] = 7.6,
                 },
             },
-            Revenue = 1000000l
+            Revenue = 1000000L
+        },
+        EventInfo = new EventInfo(
+            new Metadata{
+                ID = "event-12345",
+                Data = new Dictionary<string, string>(){
+                    ["key1"] = "val1",
+                    ["key2"] = "val2",
+                },
+                JSONString = "abc"
+            }
+        ),
+        Migration = new Migration{
+            Name = "Migration 31 Aug",
+            Status = MigrationStatus.Running
         }
     }
 );
@@ -110,6 +126,7 @@ await client.Service.CreateMovieAsync(
         Title = "The Boy and the Heron",
         From = "Hayao Miyazaki",
         Rating = 8,
+        Type = "movie",
         Tag = "development",
         Metadata = new Dictionary<string, object>(){
             ["actors"] = new List<object>() {
@@ -123,7 +140,7 @@ await client.Service.CreateMovieAsync(
                 ["imdb"] = 7.6,
             },
         },
-        Revenue = 1000000l
+        Revenue = 1000000L
     }
 );
 "
@@ -142,7 +159,7 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     new ObjectWithOptionalField{
         String = "string",
         Integer = 1,
-        Long = 1000000l,
+        Long = 1000000L,
         Double = 1.1,
         Bool = true,
         Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
@@ -470,6 +487,51 @@ await client.Nullable.GetUsersAsync(
             null,
         },
         Extra = null
+    }
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User{
+        Password = "password",
+        Profile = new UserProfile{
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
+    }
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions{
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User{
+        ID = "id",
+        Password = "password",
+        Profile = new UserProfile{
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
     }
 );
 "

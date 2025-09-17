@@ -1,7 +1,6 @@
 import { AstNode } from "./AstNode";
 import { Expression } from "./Expression";
 import { MatchArm } from "./MatchArm";
-import { Pattern } from "./Pattern";
 import { Type } from "./Type";
 import { Writer } from "./Writer";
 

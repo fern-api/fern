@@ -1,5 +1,5 @@
 import { runMigrations } from "@fern-api/cli-migrations";
-import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import chalk from "chalk";
@@ -105,6 +105,7 @@ export async function upgrade({
             )}`
         );
 
+        cliContext.environment.packageVersion = fernCliUpgradeInfo.targetVersion;
         // special case: if we're running the local-dev version of the CLI, simulate a re-run
         if (cliContext.environment.packageVersion === "0.0.0") {
             await runPostUpgradeSteps({

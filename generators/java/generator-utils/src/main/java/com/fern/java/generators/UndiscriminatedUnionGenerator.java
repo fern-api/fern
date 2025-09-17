@@ -55,6 +55,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -88,6 +89,11 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
      * deconflict due to Java's type erasure.
      */
     private final Set<ContainerTypeEnum> duplicatedOuterContainerTypes;
+    /**
+     * Map from member to a unique identifier for disambiguation. This is used when multiple members resolve to the same
+     * Java type (e.g., two string types with different formats).
+     */
+    private final Map<UndiscriminatedUnionMember, Integer> memberIndexMap;
 
     private final ClassName visitorClassName;
     private final ClassName deserializerClassName;
@@ -169,6 +175,12 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
         this.membersWithoutLiterals = membersWithoutLiterals;
 
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
+
+        Map<UndiscriminatedUnionMember, Integer> tempIndexMap = new HashMap<>();
+        for (int i = 0; i < membersWithoutLiterals.size(); i++) {
+            tempIndexMap.put(membersWithoutLiterals.get(i), i);
+        }
+        this.memberIndexMap = Collections.unmodifiableMap(tempIndexMap);
         this.visitorName = visitorName(
                 // We need to take into consideration all ancestor types as well as all sibling types so that
                 // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
@@ -189,7 +201,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                                 .map(Name::getPascalCase)
                                                 .map(SafeAndUnsafeString::getSafeName)
                                                 .collect(Collectors.toList())
-                                        : List.of())
+                                        : Collections.emptyList())
                         .build());
         this.visitorClassName = className.nestedClass(visitorName);
         this.deserializerClassName = className.nestedClass("Deserializer");
@@ -207,6 +219,35 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns true if there are multiple members that resolve to the same Java type. This is needed to detect conflicts
+     * beyond just container types, including cases where different IR types map to the same Java type (e.g., string vs
+     * string enum).
+     */
+    private boolean hasDuplicatedJavaTypes() {
+        Set<TypeName> seen = new HashSet<>();
+        Set<TypeName> erasedSeen = new HashSet<>();
+        for (TypeName typeName : memberTypeNames.values()) {
+            TypeName erasedType = getErasedType(typeName);
+            // Check both exact type match and erased type match
+            if (!seen.add(typeName) || !erasedSeen.add(erasedType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns the erased type for a given TypeName. For parameterized types like List<String>, this returns the raw
+     * type List. For non-generic types, returns the type itself.
+     */
+    private TypeName getErasedType(TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName) {
+            return ((ParameterizedTypeName) typeName).rawType;
+        }
+        return typeName;
     }
 
     @Override
@@ -491,11 +532,37 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     }
 
     private String getDeConflictedMemberName(UndiscriminatedUnionMember member, String prefix) {
-        Optional<ContainerTypeEnum> containerTypeEnum = TypeReferenceUtils.toContainerType(member.getType());
-        if (containerTypeEnum.isEmpty() || !duplicatedOuterContainerTypes.contains(containerTypeEnum.get())) {
+        if (!hasDuplicatedJavaTypes()) {
             return prefix;
         }
-        return prefix + member.getType().visit(new TypeReferenceToName());
+
+        TypeName memberType = memberTypeNames.get(member);
+        TypeName erasedMemberType = getErasedType(memberType);
+
+        long exactTypeCount = memberTypeNames.values().stream()
+                .filter(type -> type.equals(memberType))
+                .count();
+
+        long erasedTypeCount = memberTypeNames.values().stream()
+                .filter(type -> getErasedType(type).equals(erasedMemberType))
+                .count();
+
+        if (exactTypeCount <= 1 && erasedTypeCount <= 1) {
+            return prefix;
+        }
+
+        Optional<ContainerTypeEnum> containerTypeEnum = TypeReferenceUtils.toContainerType(member.getType());
+        if (containerTypeEnum.isPresent() && duplicatedOuterContainerTypes.contains(containerTypeEnum.get())) {
+            String suffix = member.getType().visit(new TypeReferenceToName());
+            return prefix + suffix;
+        }
+
+        Integer memberIndex = memberIndexMap.get(member);
+        if (memberIndex != null && memberIndex > 0) {
+            return prefix + (memberIndex + 1);
+        }
+
+        return prefix;
     }
 
     private TypeSpec getDeserializer() {

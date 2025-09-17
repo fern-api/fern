@@ -59,6 +59,33 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "username: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
@@ -98,6 +125,161 @@
                                                 "location": "BODY",
                                                 "path": "name",
                                                 "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/request-parameters",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/user/username-referenced",
+            "method": "POST",
+            "identifierOverride": "endpoint_user.createUsernameWithReferencedType"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedRequestParametersClient } from \"@fern/request-parameters\";"
+                ],
+                "templateString": "const client = new SeedRequestParametersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.user.createUsernameWithReferencedType(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "username: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "username",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "password: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "password",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"

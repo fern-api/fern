@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedExamples;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example21
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -15,7 +15,7 @@ public class Example21
 
         await client.Service.RefreshTokenAsync(
             new RefreshTokenRequest{
-                Ttl = 1
+                Ttl = 420
             }
         );
     }

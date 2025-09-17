@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: local
 groups:
   local:
@@ -22,7 +23,7 @@ groups:
           package-name: "@fern-api/dynamic-ir-sdk"
           token: ${NPM_TOKEN}
         config:
-          noOptionalProperties: true
+          noOptionalProperties: false
           noSerdeLayer: true
   node:
     generators:
@@ -42,7 +43,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV58
+          coordinate: com.fern.fern:irV59
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -53,7 +54,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v58
+          package-name: fern_fern_ir_v59
         config:
           # wrapped_aliases: true
           include_union_utils: true
@@ -64,5 +65,6 @@ groups:
     generators:
       - name: fernapi/fern-go-model
         version: 0.9.3
+        config: {}
         github:
           repository: fern-api/ir-go

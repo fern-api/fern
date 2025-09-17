@@ -13,7 +13,6 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { PaginationInfo } from "../PaginationInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
 
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;
@@ -457,7 +456,7 @@ function getResponsePropertySetter({
         writer.writeNode(
             getResponsePropertyReference({
                 results: responseProperty,
-                withGetter: true
+                withGetter: context.customConfig.gettersPassByValue !== true
             })
         );
         writer.newLine();
@@ -525,23 +524,29 @@ function getPagePropertyInitializer({
                     writer.newLine();
                     writer.write("if ");
                     writer.writeNode(
-                        getPropertyNilCheckCondition({
-                            variableName: "request",
-                            propertyPath: [...(pagination.page.propertyPath ?? []), pagination.page.property.name.name]
+                        hasQueryParameter({
+                            key: pagination.page.property.name.wireValue
                         })
                     );
                     writer.writeLine(" {");
                     writer.indent();
-                    writer.write("next = ");
+                    writer.writeLine("var err error");
+                    writer.write("if next, err = ");
                     writer.writeNode(
-                        getPropertyReference({
-                            variableName: "request",
-                            propertyPath: pagination.page.propertyPath,
-                            name: pagination.page.property.name.name,
-                            dereference: true
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "Atoi",
+                                importPath: "strconv"
+                            }),
+                            arguments_: [getQueryParameter({ key: pagination.page.property.name.wireValue })],
+                            multiline: false
                         })
                     );
-                    writer.newLine();
+                    writer.writeLine("; err != nil {");
+                    writer.indent();
+                    writer.writeLine("return nil, err");
+                    writer.dedent();
+                    writer.writeLine("}");
                     writer.dedent();
                     writer.writeLine("}");
                     return;
@@ -769,6 +774,22 @@ function setQueryParameter({ key, value }: { key: string; value: go.AstNode }): 
         writer.writeNode(go.TypeInstantiation.string(key));
         writer.write(", ");
         writer.writeNode(value);
+        writer.write(")");
+    });
+}
+
+function hasQueryParameter({ key }: { key: string }): go.AstNode {
+    return go.codeblock((writer) => {
+        writer.write("queryParams.Has(");
+        writer.writeNode(go.TypeInstantiation.string(key));
+        writer.write(")");
+    });
+}
+
+function getQueryParameter({ key }: { key: string }): go.AstNode {
+    return go.codeblock((writer) => {
+        writer.write("queryParams.Get(");
+        writer.writeNode(go.TypeInstantiation.string(key));
         writer.write(")");
     });
 }

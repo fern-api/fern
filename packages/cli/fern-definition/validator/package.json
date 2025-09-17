@@ -21,9 +21,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -49,7 +47,6 @@
     "chalk": "^5.3.0",
     "lodash-es": "^4.17.21",
     "strip-ansi": "^7.1.0",
-    "terminal-link": "^3.0.0",
     "url-join": "^5.0.0"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_oauth-client-credentials)](https://pypi.python.org/pypi/fern_oauth-client-credentials)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -28,9 +28,9 @@ client = SeedOauthClientCredentials(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
-    client_id="client_id",
-    client_secret="client_secret",
-    scope="scope",
+    client_id="my_oauth_app_123",
+    client_secret="sk_live_abcdef123456789",
+    scope="read:users",
 )
 ```
 
@@ -52,9 +52,9 @@ client = AsyncSeedOauthClientCredentials(
 
 async def main() -> None:
     await client.auth.get_token_with_client_credentials(
-        client_id="client_id",
-        client_secret="client_secret",
-        scope="scope",
+        client_id="my_oauth_app_123",
+        client_secret="sk_live_abcdef123456789",
+        scope="read:users",
     )
 
 
@@ -146,7 +146,7 @@ from seed import SeedOauthClientCredentials
 client = SeedOauthClientCredentials(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )

@@ -9,4 +9,6 @@ export interface ReadmeConfig {
     bannerLink?: string;
     apiReferenceLink?: string;
     features?: Record<string, FernSeedConfig.ReadmeEndpoint[]>;
+    apiName?: string;
+    disabledSections?: string[];
 }

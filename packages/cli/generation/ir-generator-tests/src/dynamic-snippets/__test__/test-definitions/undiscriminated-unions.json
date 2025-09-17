@@ -97,7 +97,8 @@
                             "type": "named",
                             "value": "type_union:MetadataUnion"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -198,7 +199,8 @@
                             "type": "named",
                             "value": "type_union:MyUnion"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -834,7 +836,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -868,7 +871,8 @@
                         "value": {
                             "type": "unknown"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1221,6 +1225,160 @@
                         }
                     },
                     "wireValue": "value"
+                }
+            ]
+        },
+        "type_union:UnionWithIdenticalStrings": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionWithIdenticalStrings",
+                    "camelCase": {
+                        "unsafeName": "unionWithIdenticalStrings",
+                        "safeName": "unionWithIdenticalStrings"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_identical_strings",
+                        "safeName": "union_with_identical_strings"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_IDENTICAL_STRINGS",
+                        "safeName": "UNION_WITH_IDENTICAL_STRINGS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithIdenticalStrings",
+                        "safeName": "UnionWithIdenticalStrings"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            ]
+        },
+        "type_union:UnionWithIdenticalPrimitives": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionWithIdenticalPrimitives",
+                    "camelCase": {
+                        "unsafeName": "unionWithIdenticalPrimitives",
+                        "safeName": "unionWithIdenticalPrimitives"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_identical_primitives",
+                        "safeName": "union_with_identical_primitives"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_IDENTICAL_PRIMITIVES",
+                        "safeName": "UNION_WITH_IDENTICAL_PRIMITIVES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithIdenticalPrimitives",
+                        "safeName": "UnionWithIdenticalPrimitives"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "INTEGER"
+                },
+                {
+                    "type": "primitive",
+                    "value": "DOUBLE"
+                },
+                {
+                    "type": "primitive",
+                    "value": "STRING"
                 }
             ]
         }

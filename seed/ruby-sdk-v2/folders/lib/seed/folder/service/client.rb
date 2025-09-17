@@ -1,42 +1,53 @@
+# frozen_string_literal: true
 
 module Seed
-    module Folder
-        module Service
-            class Client
-                # @option client [Seed::Internal::Http::RawClient]
-                #
-                # @return [Seed::Folder::Service::Client]
-                def initialize(client)
-                    @client = client
-                end
-
-                # @return [untyped]
-                def endpoint(request_options: {}, **params)
-                    _request = params
-
-                    _response = @client.send(_request)
-                    if _response.code >= "200" && _response.code < "300"
-                        return
-
-                    else
-                        raise _response.body
-                end
-
-                # @return [untyped]
-                def unknown_request(request_options: {}, **params)
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: POST,
-                        path: "/service"
-                    )
-
-                    _response = @client.send(_request)
-                    if _response.code >= "200" && _response.code < "300"
-                        return
-
-                    else
-                        raise _response.body
-                end
-
+  module Folder
+    module Service
+      class Client
+        # @return [Seed::Folder::Service::Client]
+        def initialize(client:)
+          @client = client
         end
+
+        # @return [untyped]
+        def endpoint(request_options: {}, **_params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/service"
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
+
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+
+        # @return [untyped]
+        def unknown_request(request_options: {}, **params)
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/service",
+            body: params
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
+
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
     end
+  end
 end

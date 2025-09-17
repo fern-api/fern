@@ -16,7 +16,7 @@ export declare namespace Admin {
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -31,7 +31,7 @@ export declare namespace Admin {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -67,11 +67,11 @@ export class Admin {
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -144,11 +144,11 @@ export class Admin {
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -217,11 +217,11 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -294,11 +294,11 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -455,11 +455,11 @@ export class Admin {
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -605,11 +605,11 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -758,11 +758,11 @@ export class Admin {
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );
@@ -905,11 +905,11 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
         );

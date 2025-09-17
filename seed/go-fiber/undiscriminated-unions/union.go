@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/undiscriminated-unions/fern/internal"
+	big "math/big"
 )
 
 type Key struct {
@@ -306,9 +307,17 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+var (
+	namedMetadataFieldName  = big.NewInt(1 << 0)
+	namedMetadataFieldValue = big.NewInt(1 << 1)
+)
+
 type NamedMetadata struct {
 	Name  string                 `json:"name" url:"name"`
 	Value map[string]interface{} `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -331,6 +340,27 @@ func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NamedMetadata) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NamedMetadata) SetName(name string) {
+	n.Name = name
+	n.require(namedMetadataFieldName)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NamedMetadata) SetValue(value map[string]interface{}) {
+	n.Value = value
+	n.require(namedMetadataFieldValue)
+}
+
 func (n *NamedMetadata) UnmarshalJSON(data []byte) error {
 	type unmarshaler NamedMetadata
 	var value unmarshaler
@@ -344,6 +374,17 @@ func (n *NamedMetadata) UnmarshalJSON(data []byte) error {
 	}
 	n.extraProperties = extraProperties
 	return nil
+}
+
+func (n *NamedMetadata) MarshalJSON() ([]byte, error) {
+	type embed NamedMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (n *NamedMetadata) String() string {
@@ -628,8 +669,15 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 
 type OptionalMetadata = map[string]interface{}
 
+var (
+	requestFieldUnion = big.NewInt(1 << 0)
+)
+
 type Request struct {
 	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -643,6 +691,20 @@ func (r *Request) GetUnion() *MetadataUnion {
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *Request) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetUnion sets the Union field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Request) SetUnion(union *MetadataUnion) {
+	r.Union = union
+	r.require(requestFieldUnion)
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -660,6 +722,17 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Request) MarshalJSON() ([]byte, error) {
+	type embed Request
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Request) String() string {
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
@@ -667,8 +740,15 @@ func (r *Request) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	typeWithOptionalUnionFieldMyUnion = big.NewInt(1 << 0)
+)
+
 type TypeWithOptionalUnion struct {
 	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -684,6 +764,20 @@ func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TypeWithOptionalUnion) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetMyUnion sets the MyUnion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalUnion) SetMyUnion(myUnion *MyUnion) {
+	t.MyUnion = myUnion
+	t.require(typeWithOptionalUnionFieldMyUnion)
+}
+
 func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
 	type unmarshaler TypeWithOptionalUnion
 	var value unmarshaler
@@ -697,6 +791,17 @@ func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *TypeWithOptionalUnion) MarshalJSON() ([]byte, error) {
+	type embed TypeWithOptionalUnion
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TypeWithOptionalUnion) String() string {
@@ -807,6 +912,133 @@ func (u *UnionWithDuplicateTypes) Accept(visitor UnionWithDuplicateTypesVisitor)
 	}
 	if u.typ == "StringSet" || u.StringSet != nil {
 		return visitor.VisitStringSet(u.StringSet)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// Mix of primitives where some resolve to the same Java type.
+type UnionWithIdenticalPrimitives struct {
+	Integer int
+	Double  float64
+	String  string
+
+	typ string
+}
+
+func (u *UnionWithIdenticalPrimitives) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithIdenticalPrimitives) GetDouble() float64 {
+	if u == nil {
+		return 0
+	}
+	return u.Double
+}
+
+func (u *UnionWithIdenticalPrimitives) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithIdenticalPrimitives) UnmarshalJSON(data []byte) error {
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		u.typ = "Integer"
+		u.Integer = valueInteger
+		return nil
+	}
+	var valueDouble float64
+	if err := json.Unmarshal(data, &valueDouble); err == nil {
+		u.typ = "Double"
+		u.Double = valueDouble
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithIdenticalPrimitives) MarshalJSON() ([]byte, error) {
+	if u.typ == "Integer" || u.Integer != 0 {
+		return json.Marshal(u.Integer)
+	}
+	if u.typ == "Double" || u.Double != 0 {
+		return json.Marshal(u.Double)
+	}
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithIdenticalPrimitivesVisitor interface {
+	VisitInteger(int) error
+	VisitDouble(float64) error
+	VisitString(string) error
+}
+
+func (u *UnionWithIdenticalPrimitives) Accept(visitor UnionWithIdenticalPrimitivesVisitor) error {
+	if u.typ == "Integer" || u.Integer != 0 {
+		return visitor.VisitInteger(u.Integer)
+	}
+	if u.typ == "Double" || u.Double != 0 {
+		return visitor.VisitDouble(u.Double)
+	}
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// Multiple string types that all resolve to String in Java.
+// This tests the fix for duplicate method signatures.
+type UnionWithIdenticalStrings struct {
+	String string
+
+	typ string
+}
+
+func (u *UnionWithIdenticalStrings) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithIdenticalStrings) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithIdenticalStrings) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithIdenticalStringsVisitor interface {
+	VisitString(string) error
+}
+
+func (u *UnionWithIdenticalStrings) Accept(visitor UnionWithIdenticalStringsVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }

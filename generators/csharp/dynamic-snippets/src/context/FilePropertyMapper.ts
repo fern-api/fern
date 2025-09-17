@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
 export interface FilePropertyInfo {
-    fileFields: csharp.ConstructorField[];
-    bodyPropertyFields: csharp.ConstructorField[];
+    fileFields: ast.ConstructorField[];
+    bodyPropertyFields: ast.ConstructorField[];
 }
 
 export class FilePropertyMapper {
@@ -14,6 +14,10 @@ export class FilePropertyMapper {
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
+    }
+
+    private get csharp() {
+        return this.context.csharp;
     }
 
     public getFilePropertyInfo({
@@ -61,10 +65,10 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return csharp.TypeLiteral.nop();
+            return this.csharp.TypeLiteral.nop();
         }
         return this.context.getFileParameterForString(fileValue);
     }
@@ -75,13 +79,13 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return csharp.TypeLiteral.nop();
+            return this.csharp.TypeLiteral.nop();
         }
-        return csharp.TypeLiteral.list({
-            valueType: csharp.Type.reference(this.context.getFileParameterClassReference()),
+        return this.csharp.TypeLiteral.list({
+            valueType: this.csharp.Type.reference(this.context.getFileParameterClassReference()),
             values: fileValues.map((value) => this.context.getFileParameterForString(value))
         });
     }
@@ -92,10 +96,10 @@ export class FilePropertyMapper {
     }: {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
-    }): csharp.TypeLiteral {
+    }): ast.TypeLiteral {
         const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
-            return csharp.TypeLiteral.nop();
+            return this.csharp.TypeLiteral.nop();
         }
         return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,

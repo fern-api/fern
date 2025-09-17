@@ -99,6 +99,14 @@ from .types import (
     UnionWithPrimitive,
     UnionWithPrimitive_Integer,
     UnionWithPrimitive_String,
+    UnionWithSameNumberTypes,
+    UnionWithSameNumberTypes_AnyNumber,
+    UnionWithSameNumberTypes_NegativeInt,
+    UnionWithSameNumberTypes_PositiveInt,
+    UnionWithSameStringTypes,
+    UnionWithSameStringTypes_CustomFormat,
+    UnionWithSameStringTypes_PatternString,
+    UnionWithSameStringTypes_RegularString,
     UnionWithSingleElement,
     UnionWithSingleElement_Foo,
     UnionWithSubTypes,
@@ -114,7 +122,7 @@ from .types import (
     Union_Bar,
     Union_Foo,
 )
-from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square
+from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
 
 __all__ = [
     "ActiveDiamond",
@@ -213,6 +221,14 @@ __all__ = [
     "UnionWithPrimitive",
     "UnionWithPrimitive_Integer",
     "UnionWithPrimitive_String",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameNumberTypes_AnyNumber",
+    "UnionWithSameNumberTypes_NegativeInt",
+    "UnionWithSameNumberTypes_PositiveInt",
+    "UnionWithSameStringTypes",
+    "UnionWithSameStringTypes_CustomFormat",
+    "UnionWithSameStringTypes_PatternString",
+    "UnionWithSameStringTypes_RegularString",
     "UnionWithSingleElement",
     "UnionWithSingleElement_Foo",
     "UnionWithSubTypes",
@@ -230,6 +246,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "bigunion",
     "types",
     "union",

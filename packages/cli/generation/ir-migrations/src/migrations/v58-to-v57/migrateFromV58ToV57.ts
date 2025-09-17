@@ -31,8 +31,8 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "4.21.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "1.1.0",
-        [GeneratorName.GO_MODEL]: "1.1.0",
+        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: "1.1.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -43,7 +43,7 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: "1.15.1",
         [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.RUST_SDK]: "0.0.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V57.IntermediateRepresentation.jsonOrThrow(ir, {

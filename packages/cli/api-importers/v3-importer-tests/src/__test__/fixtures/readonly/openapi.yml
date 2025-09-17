@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              $ref: "#/components/schemas/UserCreate"
       responses:
-        '200':
+        "200":
           description: User created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 
   /users/{userId}:
     get:
@@ -31,13 +31,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: User retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  
+                $ref: "#/components/schemas/User"
+
   /users/validate:
     post:
       summary: Validate a user object
@@ -46,9 +46,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        '200':
+        "200":
           description: User object validated successfully
           content:
             application/json:
@@ -58,7 +58,7 @@ paths:
                   success:
                     type: boolean
                     example: true
-        '400':
+        "400":
           description: Invalid user object
           content:
             application/json:
@@ -89,7 +89,7 @@ components:
           type: string
           writeOnly: true
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
 
     User:
       type: object
@@ -117,9 +117,9 @@ components:
           format: date-time
           readOnly: true
         settings:
-          $ref: '#/components/schemas/UserSettings'
+          $ref: "#/components/schemas/UserSettings"
         stats:
-          $ref: '#/components/schemas/UserStats'
+          $ref: "#/components/schemas/UserStats"
 
     UserSettings:
       type: object
@@ -162,4 +162,3 @@ components:
         securityScore:
           type: integer
           writeOnly: true
-

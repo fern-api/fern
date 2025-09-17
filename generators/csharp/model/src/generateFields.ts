@@ -1,4 +1,4 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -12,7 +12,7 @@ export function generateFields({
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
     className: string;
     context: ModelGeneratorContext;
-}): csharp.Field[] {
+}): ast.Field[] {
     return properties.map((property) => generateField({ property, className, context }));
 }
 
@@ -26,7 +26,7 @@ export function generateField({
     className: string;
     context: ModelGeneratorContext;
     jsonProperty?: boolean;
-}): csharp.Field {
+}): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
     const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
         typeReference: property.valueType
@@ -39,10 +39,10 @@ export function generateField({
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
     }
 
-    return csharp.field({
+    return context.csharp.field({
         name: getPropertyName({ className, objectProperty: property.name, context }),
         type: fieldType,
-        access: csharp.Access.Public,
+        access: ast.Access.Public,
         get: true,
         set: true,
         summary: property.docs,
@@ -60,13 +60,13 @@ export function generateFieldForFileProperty({
     property: FernIr.FileProperty;
     className: string;
     context: ModelGeneratorContext;
-}): csharp.Field {
+}): ast.Field {
     const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
 
-    return csharp.field({
+    return context.csharp.field({
         name: getPropertyName({ className, objectProperty: property.key, context }),
         type: fieldType,
-        access: csharp.Access.Public,
+        access: ast.Access.Public,
         get: true,
         set: true,
         useRequired: !property.isOptional

@@ -1,4 +1,3 @@
-pub mod currency;
+pub mod payment_currency;
 
-pub use currency::{*};
-
+pub use payment_currency::*;

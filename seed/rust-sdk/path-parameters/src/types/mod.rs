@@ -1,6 +1,5 @@
-pub mod organization;
-pub mod user;
+pub mod organizations_organization;
+pub mod user_user;
 
-pub use organization::{*};
-pub use user::{*};
-
+pub use organizations_organization::*;
+pub use user_user::*;

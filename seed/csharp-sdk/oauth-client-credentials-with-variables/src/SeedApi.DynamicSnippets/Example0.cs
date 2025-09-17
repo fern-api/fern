@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedOauthClientCredentialsWithVariables;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedOauthClientCredentialsWithVariablesClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
@@ -18,6 +18,8 @@ public class Example0
             new GetTokenRequest{
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
                 Scope = "scope"
             }
         );

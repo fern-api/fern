@@ -9,18 +9,17 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-
+import { getExtension } from "../../../../getExtension";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import {
     findApplicationJsonRequest,
     getApplicationJsonSchemaMediaObject,
     getExamples
 } from "./getApplicationJsonSchema";
-import { getExtension } from "../../../../getExtension";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 
 function findApplicationUrlFormEncodedRequest({
     content,

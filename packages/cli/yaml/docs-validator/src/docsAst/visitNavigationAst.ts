@@ -4,7 +4,7 @@ import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir, readFile } from "fs/promises";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
@@ -152,7 +152,8 @@ async function visitNavigationItem({
                 await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
             }
         },
-        orphaned: noop
+        orphaned: noop,
+        availability: noop
     });
 
     if (navigationItemIsPage(navigationItem)) {

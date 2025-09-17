@@ -1,5 +1,10 @@
 package com.fern.java;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -48,6 +53,22 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
+    /**
+     * Result object for publish configuration extraction, replacing AtomicReference pattern. This provides a cleaner
+     * approach to returning multiple values from the visitor pattern.
+     */
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    public interface PublishConfigResult {
+        boolean generateFullProject();
+
+        Optional<MavenCoordinate> mavenCoordinate();
+
+        static ImmutablePublishConfigResult.GenerateFullProjectBuildStage builder() {
+            return ImmutablePublishConfigResult.builder();
+        }
+    }
+
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface MavenPackageCoordinate {
@@ -72,10 +93,149 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
-            return ObjectMappers.JSON_MAPPER.readValue(
-                    new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
+            File irFile = new File(generatorConfig.getIrFilepath());
+
+            String irJson = java.nio.file.Files.readString(irFile.toPath());
+
+            String processedJson = preprocessIntegerOverflow(irJson);
+
+            return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
+        }
+    }
+
+    /**
+     * Preprocesses the IR JSON to handle integer overflow in example values.
+     *
+     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
+     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
+     * "long" type to preserve the original value while preventing Jackson deserialization failures.
+     *
+     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
+     * definitions.
+     */
+    private static String preprocessIntegerOverflow(String json) {
+        if (json == null || json.trim().isEmpty()) {
+            return json;
+        }
+
+        try {
+            return processJsonForIntegerOverflow(json);
+        } catch (Exception e) {
+            log.warn("Failed to preprocess integer overflow, using original JSON", e);
+            return json;
+        }
+    }
+
+    private static String processJsonForIntegerOverflow(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(json);
+
+        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+        JsonNode processedNode = processor.processNode(rootNode);
+
+        if (processor.getConversions() > 0) {
+            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+        }
+
+        return mapper.writeValueAsString(processedNode);
+    }
+
+    private static class IntegerOverflowProcessor {
+        private int conversions = 0;
+
+        public int getConversions() {
+            return conversions;
+        }
+
+        public JsonNode processNode(JsonNode node) {
+            if (node == null) {
+                return node;
+            }
+
+            if (node.isObject()) {
+                return processObjectNode((ObjectNode) node);
+            } else if (node.isArray()) {
+                return processArrayNode((ArrayNode) node);
+            } else if (node.isNumber()) {
+                return processNumberNode(node);
+            } else {
+                return node;
+            }
+        }
+
+        private JsonNode processObjectNode(ObjectNode objectNode) {
+            ObjectNode result = objectNode.deepCopy();
+
+            if (result.has("integer")) {
+                JsonNode integerNode = result.get("integer");
+                if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
+                    long value = integerNode.asLong();
+                    log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
+                    result.remove("integer");
+                    result.put("long", value);
+                    conversions++;
+                }
+            }
+
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
+            while (fields.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> field = fields.next();
+                String fieldName = field.getKey();
+                JsonNode fieldValue = field.getValue();
+
+                if ("integer".equals(fieldName) || "long".equals(fieldName)) {
+                    continue;
+                }
+
+                JsonNode processedValue = processNode(fieldValue);
+                if (processedValue != fieldValue) {
+                    result.set(fieldName, processedValue);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processArrayNode(ArrayNode arrayNode) {
+            ArrayNode result = arrayNode.deepCopy();
+
+            for (int i = 0; i < result.size(); i++) {
+                JsonNode element = result.get(i);
+                JsonNode processedElement = processNode(element);
+                if (processedElement != element) {
+                    result.set(i, processedElement);
+                }
+            }
+
+            return result;
+        }
+
+        private JsonNode processNumberNode(JsonNode numberNode) {
+            if (isIntegerOverflow(numberNode)) {
+                log.debug("Converting overflow integer {} to long", numberNode.asLong());
+                conversions++;
+                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
+            }
+            return numberNode;
+        }
+
+        private boolean isIntegerOverflow(JsonNode numberNode) {
+            if (!numberNode.isNumber()) {
+                return false;
+            }
+
+            try {
+                if (numberNode.isIntegralNumber()) {
+                    long value = numberNode.asLong();
+                    return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
+                }
+            } catch (Exception e) {
+                log.debug("Failed to check integer overflow for value: {}", numberNode);
+            }
+
+            return false;
         }
     }
 
@@ -170,36 +330,108 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             IntermediateRepresentation ir,
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
-        Boolean generateFullProject = ir.getPublishConfig()
-                .map(publishConfig ->
-                        publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
+
+        // Extract publish configuration using a cleaner object-based approach
+        PublishConfigResult publishResult = ir.getPublishConfig()
+                .map(publishConfig -> publishConfig.visit(
+                        new com.fern.ir.model.publish.PublishingConfig.Visitor<PublishConfigResult>() {
                             @Override
-                            public Boolean visitDirect(DirectPublish value) {
-                                return false;
+                            public PublishConfigResult visitDirect(DirectPublish value) {
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(false)
+                                        .mavenCoordinate(Optional.empty())
+                                        .build();
                             }
 
                             @Override
-                            public Boolean visitGithub(GithubPublish value) {
-                                return false;
+                            public PublishConfigResult visitGithub(GithubPublish value) {
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(false)
+                                        .mavenCoordinate(Optional.empty())
+                                        .build();
                             }
 
                             @Override
-                            public Boolean visitFilesystem(Filesystem value) {
-                                return value.getGenerateFullProject();
+                            public PublishConfigResult visitFilesystem(Filesystem value) {
+                                Optional<MavenCoordinate> mavenCoordinate = Optional.empty();
+
+                                if (value.getGenerateFullProject()
+                                        && value.getPublishTarget().isPresent()) {
+                                    com.fern.ir.model.publish.PublishTarget target =
+                                            value.getPublishTarget().get();
+                                    mavenCoordinate = target.visit(
+                                            new com.fern.ir.model.publish.PublishTarget.Visitor<
+                                                    Optional<MavenCoordinate>>() {
+                                                @Override
+                                                public Optional<MavenCoordinate> visitPostman(
+                                                        com.fern.ir.model.publish.PostmanPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitNpm(
+                                                        com.fern.ir.model.publish.NpmPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitMaven(
+                                                        com.fern.ir.model.publish.MavenPublishTarget mavenTarget) {
+                                                    if (mavenTarget
+                                                            .getCoordinate()
+                                                            .isPresent()) {
+                                                        String coordinateStr = mavenTarget
+                                                                .getCoordinate()
+                                                                .get();
+                                                        MavenArtifactAndGroup parsed =
+                                                                MavenCoordinateParser.parse(coordinateStr);
+                                                        MavenCoordinate coord = MavenCoordinate.builder()
+                                                                .group(parsed.group())
+                                                                .artifact(parsed.artifact())
+                                                                .version(mavenTarget
+                                                                        .getVersion()
+                                                                        .orElse("0.0.0"))
+                                                                .build();
+                                                        return Optional.of(coord);
+                                                    }
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> visitPypi(
+                                                        com.fern.ir.model.publish.PypiPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
+                                                public Optional<MavenCoordinate> _visitUnknown(Object value) {
+                                                    return Optional.empty();
+                                                }
+                                            });
+                                }
+
+                                return PublishConfigResult.builder()
+                                        .generateFullProject(value.getGenerateFullProject())
+                                        .mavenCoordinate(mavenCoordinate)
+                                        .build();
                             }
 
                             @Override
-                            public Boolean _visitUnknown(Object value) {
+                            public PublishConfigResult _visitUnknown(Object value) {
                                 throw new RuntimeException("Encountered unknown publish config: " + value);
                             }
                         }))
-                .orElse(false);
-        if (generateFullProject) {
-            addRootProjectFiles(Optional.empty(), true, false, generatorConfig);
+                .orElse(PublishConfigResult.builder()
+                        .generateFullProject(false)
+                        .mavenCoordinate(Optional.empty())
+                        .build());
+
+        if (publishResult.generateFullProject()) {
+            addRootProjectFiles(publishResult.mavenCoordinate(), true, false, generatorConfig);
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
-        if (generateFullProject) {
+        if (publishResult.generateFullProject()) {
             runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
             runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
         }

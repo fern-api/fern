@@ -27,7 +27,9 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     defaultFormParameterEncoding: undefined,
     additionalPropertiesDefaultsTo: undefined,
     typeDatesAsStrings: undefined,
-    preserveSingleSchemaOneOf: undefined
+    preserveSingleSchemaOneOf: undefined,
+    inlineAllOfSchemas: undefined,
+    groupMultiApiEnvironments: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -105,7 +107,9 @@ function parseOpenApiDefinitionSettingsSchema(
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
-        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
+        inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
+        groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
     };
 }
 

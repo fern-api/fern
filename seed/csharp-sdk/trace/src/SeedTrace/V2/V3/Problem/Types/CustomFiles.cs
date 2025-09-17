@@ -185,7 +185,7 @@ public record CustomFiles
                     ),
                 "custom" => json.GetProperty("value")
                     .Deserialize<Dictionary<Language, Files>>(options)
-                    ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
+                ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CustomFiles(discriminator, value);
@@ -227,7 +227,8 @@ public record CustomFiles
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Basic(SeedTrace.V2.V3.BasicCustomFiles value) => new(value);
+        public static implicit operator CustomFiles.Basic(SeedTrace.V2.V3.BasicCustomFiles value) =>
+            new(value);
     }
 
     /// <summary>
@@ -246,6 +247,7 @@ public record CustomFiles
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Custom(Dictionary<Language, Files> value) => new(value);
+        public static implicit operator CustomFiles.Custom(Dictionary<Language, Files> value) =>
+            new(value);
     }
 }

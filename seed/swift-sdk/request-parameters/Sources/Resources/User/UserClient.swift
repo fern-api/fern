@@ -7,23 +7,38 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createUsername(request: CreateUsernameRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func createUsername(tags: [String], request: Requests.CreateUsernameRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/user/username",
+            queryParams: [
+                "tags": .stringArray(tags)
+            ],
             body: request,
             requestOptions: requestOptions
         )
     }
 
-    public func getUsername(limit: Int, id: UUID, date: Date, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func createUsernameWithReferencedType(tags: [String], request: CreateUsernameBody, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/user/username-referenced",
+            queryParams: [
+                "tags": .stringArray(tags)
+            ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
+    public func getUsername(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user",
             queryParams: [
                 "limit": .int(limit), 
                 "id": .uuid(id), 
-                "date": .date(date), 
+                "date": .calendarDate(date), 
                 "deadline": .date(deadline), 
                 "bytes": .string(bytes), 
                 "user": .string(user.rawValue), 

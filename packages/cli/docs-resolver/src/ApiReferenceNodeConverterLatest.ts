@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
@@ -46,8 +46,10 @@ export class ApiReferenceNodeConverterLatest {
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
+        private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
-        private hideChildren?: boolean
+        private hideChildren?: boolean,
+        private parentAvailability?: docsYml.RawSchemas.Availability
     ) {
         this.#api = api;
         this.#apiDefinitionHolder = new ApiDefinitionHolderLatest(api);
@@ -91,6 +93,7 @@ export class ApiReferenceNodeConverterLatest {
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
@@ -113,7 +116,7 @@ export class ApiReferenceNodeConverterLatest {
                 hidden: this.hideChildren
             }),
             children: this.#children,
-            availability: undefined,
+            availability: this.parentAvailability,
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
@@ -207,7 +210,7 @@ export class ApiReferenceNodeConverterLatest {
                 icon: pkg.icon,
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -240,7 +243,7 @@ export class ApiReferenceNodeConverterLatest {
                 icon: pkg.icon,
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -311,7 +314,7 @@ export class ApiReferenceNodeConverterLatest {
             icon: section.icon,
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
-            availability: undefined,
+            availability: this.parentAvailability,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex: undefined,
@@ -363,7 +366,7 @@ export class ApiReferenceNodeConverterLatest {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: undefined,
-                availability: undefined,
+                availability: this.parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -427,7 +430,8 @@ export class ApiReferenceNodeConverterLatest {
                     method: endpoint.method,
                     endpointId: endpoint.id,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: FernNavigation.V1.convertAvailability(endpoint.availability),
+                    availability:
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
                     isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
                     title: endpointItem.title ?? endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
                     slug: endpointSlug,
@@ -470,7 +474,8 @@ export class ApiReferenceNodeConverterLatest {
                     icon: endpointItem.icon,
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: FernNavigation.V1.convertAvailability(webSocket.availability),
+                    availability:
+                        FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
                     viewers: endpointItem.viewers,
@@ -503,7 +508,7 @@ export class ApiReferenceNodeConverterLatest {
                     icon: endpointItem.icon,
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: undefined,
+                    availability: this.parentAvailability,
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -635,7 +640,7 @@ export class ApiReferenceNodeConverterLatest {
             icon: undefined,
             hidden: this.hideChildren,
             overviewPageId: undefined,
-            availability: undefined,
+            availability: this.parentAvailability,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex: undefined,
@@ -681,7 +686,7 @@ export class ApiReferenceNodeConverterLatest {
             method: endpoint.method,
             endpointId: FdrAPI.EndpointId(endpointId),
             apiDefinitionId: this.apiDefinitionId,
-            availability: FernNavigation.V1.convertAvailability(endpoint.availability),
+            availability: FernNavigation.V1.convertAvailability(endpoint.availability) ?? this.parentAvailability,
             isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
             title: endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
             slug: parentSlug.get(),
@@ -712,7 +717,7 @@ export class ApiReferenceNodeConverterLatest {
             icon: undefined,
             hidden: this.hideChildren,
             apiDefinitionId: this.apiDefinitionId,
-            availability: FernNavigation.V1.convertAvailability(webSocket.availability),
+            availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? this.parentAvailability,
             playground: undefined,
             authed: undefined,
             viewers: undefined,
@@ -739,7 +744,7 @@ export class ApiReferenceNodeConverterLatest {
             icon: undefined,
             hidden: this.hideChildren,
             apiDefinitionId: this.apiDefinitionId,
-            availability: undefined,
+            availability: this.parentAvailability,
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,

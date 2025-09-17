@@ -1,10 +1,14 @@
+import { Logger } from "@fern-api/logger";
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
-
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+
+const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema;
+type SdkCustomConfigSchema = TypescriptCustomConfigSchema;
 
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
@@ -70,6 +74,12 @@ export class ReadmeConfigBuilder {
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
             referenceMarkdownPath: "./reference.md",
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures
+                ? Array.from(context.ir.readmeConfig.disabledFeatures)
+                : undefined,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
+            customSections: getCustomSections(context),
             features
         };
     }
@@ -96,5 +106,41 @@ export class ReadmeConfigBuilder {
         return {
             fetchSupport: this.fetchSupport
         };
+    }
+}
+
+function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
+    const irCustomSections = context.ir.readmeConfig?.customSections;
+    const customConfigSections = parseCustomConfigOrUndefined(
+        context.logger,
+        context.config.customConfig
+    )?.customReadmeSections;
+
+    let sections: FernGeneratorCli.CustomSection[] = [];
+    for (const section of irCustomSections ?? []) {
+        if (section.language === "typescript" && !customConfigSections?.some((s) => s.title === section.title)) {
+            sections.push({
+                name: section.title,
+                language: FernGeneratorCli.Language.Typescript,
+                content: section.content
+            });
+        }
+    }
+    for (const section of customConfigSections ?? []) {
+        sections.push({
+            name: section.title,
+            language: FernGeneratorCli.Language.Typescript,
+            content: section.content
+        });
+    }
+    return sections.length > 0 ? sections : undefined;
+}
+
+function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    try {
+        return SdkCustomConfigSchema.parse(customConfig);
+    } catch (error) {
+        logger.error(`Error parsing custom config during readme generation: ${error}`);
+        return undefined;
     }
 }

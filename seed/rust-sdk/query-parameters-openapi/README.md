@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
 
-The Seed Rust library provides convenient access to the Seed API from Rust.
+The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
 ## Installation
 
@@ -25,12 +25,38 @@ cargo add seed_api
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::{ApiClient, ClientConfig, SearchRequest};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .search(SearchRequest {
+            limit: 1,
+            id: "id",
+            date: "date",
+            deadline: todo!("Unhandled primitive: DATE_TIME"),
+            bytes: "bytes",
+            user: serde_json::json!({"name":"name","tags":["tags","tags"]}),
+            user_list: vec![Some(
+                serde_json::json!({"name":"name","tags":["tags","tags"]}),
+            )],
+            optional_deadline: Some(todo!("Unhandled primitive: DATE_TIME")),
+            key_value: Some(todo!("Unhandled type reference")),
+            optional_string: Some("optionalString"),
+            nested_user: Some(
+                serde_json::json!({"name":"name","user":{"name":"name","tags":["tags","tags"]}}),
+            ),
+            optional_user: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})),
+            exclude_user: vec![Some(
+                serde_json::json!({"name":"name","tags":["tags","tags"]}),
+            )],
+            filter: vec![Some("filter")],
+            neighbor: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})),
+            neighbor_required: serde_json::json!({"name":"name","tags":["tags","tags"]}),
+        })
+        .await;
 }
 ```
 
@@ -39,10 +65,10 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_api::{ClientError, ClientConfig, ApiClient};
+use seed_api::{ApiError, ClientConfig, ApiClient};
 
 #[tokio::main]
-async fn main() -> Result<(), ClientError> {
+async fn main() -> Result<(), ApiError> {
     let config = ClientConfig {
         base_url: " ".to_string(),
         api_key: Some("your-api-key".to_string())
@@ -52,14 +78,39 @@ async fn main() -> Result<(), ClientError> {
         Ok(response) => {
             println!("Success: {:?}", response);
         },
-        Err(ClientError::ApiError { status_code, body, .. }) => {
-            println!("API Error {}: {:?}", status_code, body);
+        Err(ApiError::HTTP { status, message }) => {
+            println!("API Error {}: {:?}", status, message);
         },
         Err(e) => {
             println!("Other error: {:?}", e);
         }
     }
     return Ok(());
+}
+```
+
+## Pagination
+
+For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
+
+```rust
+use seed_api::{ClientConfig, ApiClient};
+use futures::{StreamExt};
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        base_url: " ".to_string(),
+        api_key: Some("your-api-key".to_string())
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    let mut paginated_stream = client.search().await?;
+    while let Some(item) = paginated_stream.next().await {
+            match item {
+                Ok(data) => println!("Received item: {:?}", data),
+                Err(e) => eprintln!("Error fetching page: {}", e),
+            }
+        }
 }
 ```
 

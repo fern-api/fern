@@ -4,7 +4,9 @@ import { swift } from "@fern-api/swift-codegen";
 export function getQueryParamCaseName(swiftType: swift.Type): string {
     switch (swiftType.type) {
         case "optional":
-            return getQueryParamCaseName(swift.Type.required(swiftType));
+            return getQueryParamCaseName(swift.Type.nonOptional(swiftType));
+        case "nullable":
+            return getQueryParamCaseName(swift.Type.nonNullable(swiftType));
         case "custom":
             // TODO(kafkas): We are currently assuming that this refers to a string enum.
             // Need to handle other cases.
@@ -27,6 +29,8 @@ export function getQueryParamCaseName(swiftType: swift.Type): string {
             return "double";
         case "date":
             return "date";
+        case "calendar-date":
+            return "calendarDate";
         case "array":
             // TODO(kafkas): We are assuming string array for now.
             // Revise this to support more complex query param types.

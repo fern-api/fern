@@ -2,23 +2,70 @@
 
 # isort: skip_file
 
-from .bar import Bar
-from .foo import Foo
-from .foo_extended import FooExtended
-from .union import Union
-from .union_with_base_properties import UnionWithBaseProperties
-from .union_with_discriminant import UnionWithDiscriminant
-from .union_with_duplicate_primitive import UnionWithDuplicatePrimitive
-from .union_with_duplicate_types import UnionWithDuplicateTypes
-from .union_with_literal import UnionWithLiteral
-from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
-from .union_with_no_properties import UnionWithNoProperties
-from .union_with_optional_time import UnionWithOptionalTime
-from .union_with_primitive import UnionWithPrimitive
-from .union_with_single_element import UnionWithSingleElement
-from .union_with_sub_types import UnionWithSubTypes
-from .union_with_time import UnionWithTime
-from .union_without_key import UnionWithoutKey
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .bar import Bar
+    from .foo import Foo
+    from .foo_extended import FooExtended
+    from .union import Union
+    from .union_with_base_properties import UnionWithBaseProperties
+    from .union_with_discriminant import UnionWithDiscriminant
+    from .union_with_duplicate_primitive import UnionWithDuplicatePrimitive
+    from .union_with_duplicate_types import UnionWithDuplicateTypes
+    from .union_with_literal import UnionWithLiteral
+    from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
+    from .union_with_no_properties import UnionWithNoProperties
+    from .union_with_optional_time import UnionWithOptionalTime
+    from .union_with_primitive import UnionWithPrimitive
+    from .union_with_same_number_types import UnionWithSameNumberTypes
+    from .union_with_same_string_types import UnionWithSameStringTypes
+    from .union_with_single_element import UnionWithSingleElement
+    from .union_with_sub_types import UnionWithSubTypes
+    from .union_with_time import UnionWithTime
+    from .union_without_key import UnionWithoutKey
+_dynamic_imports: typing.Dict[str, str] = {
+    "Bar": ".bar",
+    "Foo": ".foo",
+    "FooExtended": ".foo_extended",
+    "Union": ".union",
+    "UnionWithBaseProperties": ".union_with_base_properties",
+    "UnionWithDiscriminant": ".union_with_discriminant",
+    "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
+    "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+    "UnionWithLiteral": ".union_with_literal",
+    "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
+    "UnionWithNoProperties": ".union_with_no_properties",
+    "UnionWithOptionalTime": ".union_with_optional_time",
+    "UnionWithPrimitive": ".union_with_primitive",
+    "UnionWithSameNumberTypes": ".union_with_same_number_types",
+    "UnionWithSameStringTypes": ".union_with_same_string_types",
+    "UnionWithSingleElement": ".union_with_single_element",
+    "UnionWithSubTypes": ".union_with_sub_types",
+    "UnionWithTime": ".union_with_time",
+    "UnionWithoutKey": ".union_without_key",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Bar",
@@ -34,6 +81,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",

@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedAcceptClient } from "../../src/Client";
+import * as SeedAccept from "../../src/api/index";
 
 describe("Service", () => {
-    test("endpoint", async () => {
+    test("endpoint (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAcceptClient({ token: "test", environment: server.baseUrl });
 
@@ -14,5 +15,21 @@ describe("Service", () => {
 
         const response = await client.service.endpoint();
         expect(response).toEqual(undefined);
+    });
+
+    test("endpoint (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedAcceptClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+        server.mockEndpoint().delete("/container/").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.service.endpoint();
+        }).rejects.toThrow(
+            new SeedAccept.NotFoundError({
+                key: "value",
+            }),
+        );
     });
 });

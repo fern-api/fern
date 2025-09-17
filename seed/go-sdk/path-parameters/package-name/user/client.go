@@ -4,25 +4,24 @@ package user
 
 import (
 	context "context"
-	path "github.com/fern-api/path-parameters-go"
+	pathparametersgo "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -30,15 +29,14 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	request *path.GetUsersRequest,
+	request *pathparametersgo.GetUsersRequest,
 	opts ...option.RequestOption,
-) (*path.User, error) {
+) (*pathparametersgo.User, error) {
 	response, err := c.WithRawResponse.GetUser(
 		ctx,
 		request,
@@ -53,9 +51,9 @@ func (c *Client) GetUser(
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantId string,
-	request *path.User,
+	request *pathparametersgo.User,
 	opts ...option.RequestOption,
-) (*path.User, error) {
+) (*pathparametersgo.User, error) {
 	response, err := c.WithRawResponse.CreateUser(
 		ctx,
 		tenantId,
@@ -70,9 +68,9 @@ func (c *Client) CreateUser(
 
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	request *path.UpdateUserRequest,
+	request *pathparametersgo.UpdateUserRequest,
 	opts ...option.RequestOption,
-) (*path.User, error) {
+) (*pathparametersgo.User, error) {
 	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
 		request,
@@ -86,9 +84,9 @@ func (c *Client) UpdateUser(
 
 func (c *Client) SearchUsers(
 	ctx context.Context,
-	request *path.SearchUsersRequest,
+	request *pathparametersgo.SearchUsersRequest,
 	opts ...option.RequestOption,
-) ([]*path.User, error) {
+) ([]*pathparametersgo.User, error) {
 	response, err := c.WithRawResponse.SearchUsers(
 		ctx,
 		request,

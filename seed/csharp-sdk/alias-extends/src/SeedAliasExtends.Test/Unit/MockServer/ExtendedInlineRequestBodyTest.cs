@@ -6,7 +6,7 @@ namespace SeedAliasExtends.Test.Unit.MockServer;
 [TestFixture]
 public class ExtendedInlineRequestBodyTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

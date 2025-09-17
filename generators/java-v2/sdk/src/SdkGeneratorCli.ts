@@ -10,6 +10,7 @@ import { writeFile } from "fs/promises";
 import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 
@@ -89,6 +90,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 context.logger.warn("Failed to generate snippets.json, this is OK");
             }
         }
+
+        const wireTestGenerator = new SdkWireTestGenerator(context);
+        await wireTestGenerator.generate();
 
         await context.project.persist();
     }

@@ -1,6 +1,5 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import path from "path";
 

@@ -5,7 +5,7 @@ namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer;
 [TestFixture]
 public class HelloTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

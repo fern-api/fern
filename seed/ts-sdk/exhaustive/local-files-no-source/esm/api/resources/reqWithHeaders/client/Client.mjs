@@ -35,7 +35,7 @@ export class ReqWithHeaders {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
-            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
                 Authorization: yield this._getAuthorizationHeader(),
                 "X-TEST-SERVICE-HEADER": xTestServiceHeader,
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,

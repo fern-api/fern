@@ -3,7 +3,7 @@ info:
   description: Tests for inlined oneOf with 'title' specified
   version: 0.0.0
 paths:
-  '/test-one-of-display-name':
+  "/test-one-of-display-name":
     post:
       requestBody:
         required: true
@@ -24,12 +24,11 @@ paths:
                       - type: object
                         title: Field 2
                         properties:
-                          name: 
-                            type: 
-                              string
-                              
+                          name:
+                            type: string
+
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:

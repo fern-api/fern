@@ -5,20 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { Name } from "../../commons/types/Name";
+import { PropertyPathItem } from "./PropertyPathItem";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
 
 export const ResponseProperty: core.serialization.ObjectSchema<
     serializers.ResponseProperty.Raw,
     FernIr.ResponseProperty
 > = core.serialization.objectWithoutOptionalProperties({
-    propertyPath: core.serialization.list(Name).optional(),
+    propertyPath: core.serialization.list(PropertyPathItem).optional(),
     property: ObjectProperty,
 });
 
 export declare namespace ResponseProperty {
     export interface Raw {
-        propertyPath?: Name.Raw[] | null;
+        propertyPath?: PropertyPathItem.Raw[] | null;
         property: ObjectProperty.Raw;
     }
 }

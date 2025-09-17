@@ -13,7 +13,7 @@ export declare namespace HttpMethods {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace HttpMethods {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -55,7 +55,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -121,7 +121,7 @@ export class HttpMethods {
             core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -193,7 +193,7 @@ export class HttpMethods {
             core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -279,7 +279,7 @@ export class HttpMethods {
             core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>
         >
     > {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -340,7 +340,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

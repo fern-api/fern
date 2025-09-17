@@ -5,6 +5,7 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Complex } from "./api/resources/complex/client/Client.js";
+import { InlineUsers } from "./api/resources/inlineUsers/client/Client.js";
 import { Users } from "./api/resources/users/client/Client.js";
 
 export declare namespace SeedPaginationClient {
@@ -14,7 +15,7 @@ export declare namespace SeedPaginationClient {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -27,13 +28,14 @@ export declare namespace SeedPaginationClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
 export class SeedPaginationClient {
     protected readonly _options: SeedPaginationClient.Options;
     protected _complex: Complex | undefined;
+    protected _inlineUsers: InlineUsers | undefined;
     protected _users: Users | undefined;
 
     constructor(_options: SeedPaginationClient.Options) {
@@ -55,6 +57,10 @@ export class SeedPaginationClient {
 
     public get complex(): Complex {
         return (this._complex ??= new Complex(this._options));
+    }
+
+    public get inlineUsers(): InlineUsers {
+        return (this._inlineUsers ??= new InlineUsers(this._options));
     }
 
     public get users(): Users {

@@ -7,15 +7,45 @@ import (
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
 	internal "github.com/mixed-file-directory/fern/internal"
+	big "math/big"
+)
+
+var (
+	getEventMetadataRequestFieldId = big.NewInt(1 << 0)
 )
 
 type GetEventMetadataRequest struct {
 	Id fern.Id `json:"-" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetEventMetadataRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventMetadataRequest) SetId(id fern.Id) {
+	g.Id = id
+	g.require(getEventMetadataRequestFieldId)
+}
+
+var (
+	metadataFieldId    = big.NewInt(1 << 0)
+	metadataFieldValue = big.NewInt(1 << 1)
+)
 
 type Metadata struct {
 	Id    fern.Id     `json:"id" url:"id"`
 	Value interface{} `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -39,6 +69,27 @@ func (m *Metadata) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Metadata) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetId(id fern.Id) {
+	m.Id = id
+	m.require(metadataFieldId)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetValue(value interface{}) {
+	m.Value = value
+	m.require(metadataFieldValue)
+}
+
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	type unmarshaler Metadata
 	var value unmarshaler
@@ -53,6 +104,17 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	m.extraProperties = extraProperties
 	m.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (m *Metadata) MarshalJSON() ([]byte, error) {
+	type embed Metadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Metadata) String() string {

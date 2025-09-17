@@ -407,7 +407,7 @@ public record WorkspaceSubmissionUpdateInfo
             {
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
+                ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
@@ -421,7 +421,7 @@ public record WorkspaceSubmissionUpdateInfo
                         "Failed to deserialize SeedTrace.WorkspaceTracedUpdate"
                     ),
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "finished" => new { },
                 _ => json.Deserialize<object?>(options),
             };
@@ -472,8 +472,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -491,7 +492,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Ran(SeedTrace.WorkspaceRunDetails value) => new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Ran(
+            SeedTrace.WorkspaceRunDetails value
+        ) => new(value);
     }
 
     /// <summary>
@@ -531,8 +534,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator TracedV2(SeedTrace.WorkspaceTracedUpdate value) =>
-            new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.TracedV2(
+            SeedTrace.WorkspaceTracedUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -550,7 +554,9 @@ public record WorkspaceSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator WorkspaceSubmissionUpdateInfo.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>

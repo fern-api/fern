@@ -14101,8 +14101,8 @@
                 "value": "SessionBegins",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of the message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14175,8 +14175,8 @@
                 "value": "SessionTerminated",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of the message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14332,8 +14332,8 @@
                 "value": "PartialTranscript",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],
@@ -14373,8 +14373,8 @@
                 "value": "FinalTranscript",
                 "type": "string"
               },
-              "groupName": [],
               "description": "Describes the type of message.",
+              "groupName": [],
               "type": "literal"
             },
             "audiences": [],

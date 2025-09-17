@@ -8,8 +8,12 @@ export interface ReadmeSchema {
     bannerLink?: string;
     introduction?: string;
     apiReferenceLink?: string;
+    apiName?: string;
+    disabledSections?: string[];
     /** If set, use this endpoint's snippet as the default whenever possible */
     defaultEndpoint?: FernDefinition.ReadmeEndpointSchema;
     /** Specifies a list of endpoints associated with the feature */
     features?: Record<string, FernDefinition.ReadmeEndpointSchema[]>;
+    /** Supply custom sections as markdown to be included in the readme */
+    customSections?: FernDefinition.ReadmeCustomSectionSchema[];
 }

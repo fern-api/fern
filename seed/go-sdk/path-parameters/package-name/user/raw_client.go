@@ -4,7 +4,7 @@ package user
 
 import (
 	context "context"
-	path "github.com/fern-api/path-parameters-go"
+	pathparametersgo "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -14,11 +14,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -26,15 +27,14 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
 func (r *RawClient) GetUser(
 	ctx context.Context,
-	request *path.GetUsersRequest,
+	request *pathparametersgo.GetUsersRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*path.User], error) {
+) (*core.Response[*pathparametersgo.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,10 +47,10 @@ func (r *RawClient) GetUser(
 		request.UserId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *path.User
+	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -67,7 +67,7 @@ func (r *RawClient) GetUser(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*path.User]{
+	return &core.Response[*pathparametersgo.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -77,9 +77,9 @@ func (r *RawClient) GetUser(
 func (r *RawClient) CreateUser(
 	ctx context.Context,
 	tenantId string,
-	request *path.User,
+	request *pathparametersgo.User,
 	opts ...option.RequestOption,
-) (*core.Response[*path.User], error) {
+) (*core.Response[*pathparametersgo.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -91,10 +91,10 @@ func (r *RawClient) CreateUser(
 		tenantId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *path.User
+	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -112,7 +112,7 @@ func (r *RawClient) CreateUser(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*path.User]{
+	return &core.Response[*pathparametersgo.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -121,9 +121,9 @@ func (r *RawClient) CreateUser(
 
 func (r *RawClient) UpdateUser(
 	ctx context.Context,
-	request *path.UpdateUserRequest,
+	request *pathparametersgo.UpdateUserRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*path.User], error) {
+) (*core.Response[*pathparametersgo.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -136,10 +136,10 @@ func (r *RawClient) UpdateUser(
 		request.UserId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *path.User
+	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -157,7 +157,7 @@ func (r *RawClient) UpdateUser(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*path.User]{
+	return &core.Response[*pathparametersgo.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -166,9 +166,9 @@ func (r *RawClient) UpdateUser(
 
 func (r *RawClient) SearchUsers(
 	ctx context.Context,
-	request *path.SearchUsersRequest,
+	request *pathparametersgo.SearchUsersRequest,
 	opts ...option.RequestOption,
-) (*core.Response[[]*path.User], error) {
+) (*core.Response[[]*pathparametersgo.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -188,10 +188,10 @@ func (r *RawClient) SearchUsers(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []*path.User
+	var response []*pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -208,7 +208,7 @@ func (r *RawClient) SearchUsers(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*path.User]{
+	return &core.Response[[]*pathparametersgo.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

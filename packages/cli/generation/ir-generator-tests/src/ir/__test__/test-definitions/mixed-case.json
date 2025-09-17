@@ -279,7 +279,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:Organization"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -649,7 +650,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:User"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -788,7 +790,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:User"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -966,7 +969,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:User"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -1339,7 +1343,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:NestedUser"
-                                }
+                                },
+                                "propertyAccess": null
                             },
                             {
                                 "name": {
@@ -1536,7 +1541,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -1675,7 +1681,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
@@ -1853,7 +1860,8 @@
                                                             }
                                                         },
                                                         "displayName": null
-                                                    }
+                                                    },
+                                                    "propertyAccess": null
                                                 }
                                             ]
                                         }
@@ -1935,7 +1943,8 @@
                                     },
                                     "displayName": null,
                                     "typeId": "type_service:NestedUser"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -2650,7 +2659,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -2789,7 +2799,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         },
                                         {
                                             "name": {
@@ -2967,7 +2978,8 @@
                                                     }
                                                 },
                                                 "displayName": null
-                                            }
+                                            },
+                                            "propertyAccess": null
                                         }
                                     ]
                                 }
@@ -3547,7 +3559,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -3686,7 +3699,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -3864,7 +3878,8 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     }
                                                                 ]
                                                             }
@@ -3896,7 +3911,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "30319e67",
+                                "id": "a4fb1384",
                                 "url": "/resource/ResourceID",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -4099,7 +4114,8 @@
                                                                                 }
                                                                             },
                                                                             "jsonExample": "userName"
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -4238,7 +4254,8 @@
                                                                                 "metadata_tags",
                                                                                 "metadata_tags"
                                                                             ]
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
@@ -4389,7 +4406,8 @@
                                                                             "jsonExample": {
                                                                                 "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "propertyAccess": null
                                                                     }
                                                                 ]
                                                             }
@@ -5103,7 +5121,8 @@
                                                                                                 }
                                                                                             },
                                                                                             "displayName": null
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -5242,7 +5261,8 @@
                                                                                                 }
                                                                                             },
                                                                                             "displayName": null
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -5420,7 +5440,8 @@
                                                                                                 }
                                                                                             },
                                                                                             "displayName": null
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     }
                                                                                 ]
                                                                             }
@@ -5540,7 +5561,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8f04ebd6",
+                                "id": "48247d50",
                                 "url": "/resource",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -5790,7 +5811,8 @@
                                                                                                 }
                                                                                             },
                                                                                             "jsonExample": "userName"
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -5929,7 +5951,8 @@
                                                                                                 "metadata_tags",
                                                                                                 "metadata_tags"
                                                                                             ]
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -6080,7 +6103,8 @@
                                                                                             "jsonExample": {
                                                                                                 "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
                                                                                             }
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     }
                                                                                 ]
                                                                             }
@@ -6322,7 +6346,8 @@
                                                                                                 }
                                                                                             },
                                                                                             "jsonExample": "userName"
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -6461,7 +6486,8 @@
                                                                                                 "metadata_tags",
                                                                                                 "metadata_tags"
                                                                                             ]
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     },
                                                                                     {
                                                                                         "name": {
@@ -6612,7 +6638,8 @@
                                                                                             "jsonExample": {
                                                                                                 "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
                                                                                             }
-                                                                                        }
+                                                                                        },
+                                                                                        "propertyAccess": null
                                                                                     }
                                                                                 ]
                                                                             }
@@ -6961,7 +6988,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -7059,7 +7087,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -7090,7 +7119,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -7125,7 +7155,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -7223,7 +7254,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -7251,7 +7283,8 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_service:User"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "additionalProperties": false
@@ -7510,7 +7543,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_service:ResourceStatus"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     },
@@ -7566,7 +7600,8 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_service:ResourceStatus"
-                                }
+                                },
+                                "propertyAccess": null
                             }
                         ]
                     }
@@ -7674,7 +7709,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "body": null
@@ -7848,7 +7884,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "INTEGER"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -7876,7 +7913,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "DATE"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ],
                     "headers": [],

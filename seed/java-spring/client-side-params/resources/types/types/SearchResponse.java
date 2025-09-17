@@ -112,7 +112,9 @@ public final class SearchResponse {
     }
 
     public Builder addAllResults(List<Resource> results) {
-      this.results.addAll(results);
+      if (results != null) {
+        this.results.addAll(results);
+      }
       return this;
     }
 

@@ -362,12 +362,12 @@ public record TestSubmissionUpdateInfo
             {
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
+                ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "gradedTestCase" => json.Deserialize<SeedTrace.GradedTestCaseUpdate>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.GradedTestCaseUpdate"
@@ -425,8 +425,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Running(SeedTrace.RunningSubmissionState value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.Running(
+            SeedTrace.RunningSubmissionState value
+        ) => new(value);
     }
 
     /// <summary>
@@ -455,7 +456,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Errored(SeedTrace.ErrorInfo value) => new(value);
+        public static implicit operator TestSubmissionUpdateInfo.Errored(
+            SeedTrace.ErrorInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -473,8 +476,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedTestCase(SeedTrace.GradedTestCaseUpdate value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.GradedTestCase(
+            SeedTrace.GradedTestCaseUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -492,8 +496,9 @@ public record TestSubmissionUpdateInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator RecordedTestCase(SeedTrace.RecordedTestCaseUpdate value) =>
-            new(value);
+        public static implicit operator TestSubmissionUpdateInfo.RecordedTestCase(
+            SeedTrace.RecordedTestCaseUpdate value
+        ) => new(value);
     }
 
     /// <summary>

@@ -31,20 +31,9 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         const properties: ObjectProperty[] = [];
 
         const class_ = ruby.class_({
-            name: this.wrapper.wrapperName.pascalCase.safeName
+            name: this.wrapper.wrapperName.pascalCase.safeName,
+            superclass: this.context.getModelClassReference()
         });
-
-        const rootModule = this.context.getRootModule();
-
-        let nestedModule = rootModule;
-        for (const filepath of this.context.getSubpackageForServiceId(this.serviceId).fernFilepath.allParts) {
-            const module = ruby.module({
-                name: filepath.pascalCase.safeName
-            });
-            nestedModule.addStatement(module);
-            nestedModule = module;
-        }
-        nestedModule.addStatement(class_);
 
         for (const pathParameter of this.endpoint.allPathParameters) {
             properties.push({
@@ -74,11 +63,6 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             });
         }
 
-        const statements = generateFields({
-            properties,
-            context: this.context
-        });
-
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 properties.push({
@@ -106,13 +90,18 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             _other: () => undefined
         });
 
+        const statements = generateFields({
+            properties,
+            context: this.context
+        });
+
         class_.addStatements(statements);
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                rootModule.write(writer);
+                ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.wrapper.wrapperName.snakeCase.safeName}.rb`,

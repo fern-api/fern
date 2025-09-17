@@ -6,7 +6,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.ReqWithHeaders;
 [TestFixture]
 public class GetWithCustomHeaderTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

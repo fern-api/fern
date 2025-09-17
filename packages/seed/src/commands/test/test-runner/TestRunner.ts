@@ -55,6 +55,7 @@ export declare namespace TestRunner {
         readme: generatorsYml.ReadmeSchema | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         inspect: boolean | undefined;
+        license?: unknown;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -82,6 +83,21 @@ export declare namespace TestRunner {
         compileTime?: string;
     }
 }
+
+const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: AbsoluteFilePath) => {
+    if (license != null && typeof license === "object" && "custom" in license) {
+        const licenseObj = license as { custom: string };
+        const licensePath = licenseObj.custom;
+
+        // Make the license path absolute
+        return {
+            custom: path.isAbsolute(licensePath)
+                ? licensePath
+                : path.join(absolutePathToApiDefinition.toString(), licensePath)
+        };
+    }
+    return undefined;
+};
 
 export abstract class TestRunner {
     private buildInvocation: Promise<void> | undefined;
@@ -141,8 +157,8 @@ export abstract class TestRunner {
             const customConfig =
                 this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                     ? {
-                          ...(this.generator.workspaceConfig.defaultCustomConfig ?? {}),
-                          ...((configuration?.customConfig as Record<string, unknown>) ?? {})
+                          ...this.generator.workspaceConfig.defaultCustomConfig,
+                          ...(configuration?.customConfig as Record<string, unknown>)
                       }
                     : undefined;
             const publishConfig = configuration?.publishConfig;
@@ -150,6 +166,8 @@ export abstract class TestRunner {
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
+            const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
+
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
@@ -195,7 +213,8 @@ export abstract class TestRunner {
                     publishMetadata,
                     readme,
                     shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
-                    inspect
+                    inspect,
+                    license
                 });
 
                 generationStopwatch.stop();
@@ -224,7 +243,11 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({ taskContext, outputDir, id });
+            const scriptResponse = await this.scriptRunner.run({
+                taskContext,
+                outputDir,
+                id
+            });
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();

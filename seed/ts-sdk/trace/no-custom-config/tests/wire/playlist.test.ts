@@ -4,6 +4,7 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedTraceClient } from "../../src/Client";
+import * as SeedTrace from "../../src/api/index";
 
 describe("Playlist", () => {
     test("createPlaylist", async () => {
@@ -74,7 +75,7 @@ describe("Playlist", () => {
         ]);
     });
 
-    test("getPlaylist", async () => {
+    test("getPlaylist (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
@@ -101,7 +102,41 @@ describe("Playlist", () => {
         });
     });
 
-    test("updatePlaylist", async () => {
+    test("getPlaylist (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { type: "playlistId", value: "string" };
+        server
+            .mockEndpoint()
+            .get("/v2/playlist/1/playlistId")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.playlist.getPlaylist(1, "playlistId");
+        }).rejects.toThrow(
+            new SeedTrace.PlaylistIdNotFoundError({
+                type: "playlistId",
+                value: "string",
+            }),
+        );
+    });
+
+    test("getPlaylist (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().get("/v2/playlist/1/playlistId").respondWith().statusCode(401).build();
+
+        await expect(async () => {
+            return await client.playlist.getPlaylist(1, "playlistId");
+        }).rejects.toThrow(new SeedTrace.UnauthorizedError());
+    });
+
+    test("updatePlaylist (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
@@ -130,6 +165,33 @@ describe("Playlist", () => {
             name: "name",
             problems: ["problems", "problems"],
         });
+    });
+
+    test("updatePlaylist (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
+        const rawResponseBody = { type: "playlistId", value: "string" };
+        server
+            .mockEndpoint()
+            .put("/v2/playlist/1/playlistId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.playlist.updatePlaylist(1, "playlistId", {
+                name: "name",
+                problems: ["problems", "problems"],
+            });
+        }).rejects.toThrow(
+            new SeedTrace.PlaylistIdNotFoundError({
+                type: "playlistId",
+                value: "string",
+            }),
+        );
     });
 
     test("deletePlaylist", async () => {

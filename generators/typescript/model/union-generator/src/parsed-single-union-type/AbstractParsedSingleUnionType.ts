@@ -1,6 +1,6 @@
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import { StructureKind, ts } from "ts-morph";
 
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
@@ -31,12 +31,19 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         generatedUnion: GeneratedUnionImpl<Context>
     ): ParsedSingleUnionType.InterfaceDeclaration {
         return {
-            name: this.getInterfaceName(),
-            extends: this.singleUnionType.getExtendsForInterface(context),
+            name: this.getTypeName(),
+            extends: this.singleUnionType.getExtendsForInterface(context).map((ref) => ref),
             properties: [
                 {
-                    name: getPropertyKey(generatedUnion.discriminant),
-                    type: getTextOfTsNode(this.getDiscriminantValueType())
+                    property: {
+                        kind: StructureKind.PropertySignature,
+                        name: getPropertyKey(generatedUnion.discriminant),
+                        type: getTextOfTsNode(this.getDiscriminantValueType())
+                    },
+                    requestProperty: undefined,
+                    responseProperty: undefined,
+                    isReadonly: false,
+                    isWriteonly: false
                 },
                 ...this.singleUnionType.getDiscriminantPropertiesForInterface(context),
                 ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
@@ -45,7 +52,14 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         };
     }
 
-    public generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode {
+    public generateForInlineUnion(
+        context: Context,
+        generatedUnion: GeneratedUnionImpl<Context>
+    ): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         return this.singleUnionType.generateForInlineUnion(context);
     }
 
@@ -222,7 +236,8 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
     public abstract getDocs(): string | null | undefined;
     public abstract getDiscriminantValue(): string | number | undefined;
     public abstract getDiscriminantValueAsExpression(): ts.Expression;
-    public abstract getInterfaceName(): string;
+    public abstract getTypeName(): string;
+    public abstract needsRequestResponse(context: Context): { request: boolean; response: boolean };
     public abstract getBuilderName(): string;
     public abstract getVisitorKey(): string;
 }

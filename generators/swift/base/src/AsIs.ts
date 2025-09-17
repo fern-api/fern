@@ -48,6 +48,14 @@ const AsIsFileSpecs = {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Encoder+AdditionalProperties"
     },
+    KeyedDecodingContainerPlusNullable: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "KeyedDecodingContainer+Nullable"
+    },
+    KeyedEncodingContainerPlusNullable: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "KeyedEncodingContainer+Nullable"
+    },
     Serde: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Serde",
@@ -60,6 +68,11 @@ const AsIsFileSpecs = {
     },
 
     // Core
+    CalendarDate: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "CalendarDate",
+        symbolNames: ["CalendarDate"]
+    },
     StringPlusUrlEncoding: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "String+URLEncoding"
@@ -85,6 +98,11 @@ const AsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "JSONValue",
         symbolNames: ["JSONValue"]
+    },
+    Nullable: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "Nullable",
+        symbolNames: ["Nullable"]
     },
     RequestOptions: {
         relativePathToDir: "Public",

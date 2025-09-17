@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod bigunion;
 pub mod union_;
@@ -9,14 +9,13 @@ pub struct UnionsClient {
 }
 
 impl UnionsClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             bigunion: BigunionClient::new(config.clone())?,
-            union_: UnionClient::new(config.clone())?
+            union_: UnionClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use bigunion::BigunionClient;

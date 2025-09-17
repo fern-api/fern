@@ -1,5 +1,5 @@
-import typing
 import inspect
+import typing
 from enum import Enum
 
 

@@ -4,7 +4,7 @@ package organizations
 
 import (
 	context "context"
-	path "github.com/fern-api/path-parameters-go"
+	pathparametersgo "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -14,11 +14,12 @@ import (
 type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
+	options *core.RequestOptions
 }
 
 func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
+		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -26,7 +27,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -35,7 +35,7 @@ func (r *RawClient) GetOrganization(
 	tenantId string,
 	organizationId string,
 	opts ...option.RequestOption,
-) (*core.Response[*path.Organization], error) {
+) (*core.Response[*pathparametersgo.Organization], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -48,10 +48,10 @@ func (r *RawClient) GetOrganization(
 		organizationId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *path.Organization
+	var response *pathparametersgo.Organization
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -68,7 +68,7 @@ func (r *RawClient) GetOrganization(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*path.Organization]{
+	return &core.Response[*pathparametersgo.Organization]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -77,9 +77,9 @@ func (r *RawClient) GetOrganization(
 
 func (r *RawClient) GetOrganizationUser(
 	ctx context.Context,
-	request *path.GetOrganizationUserRequest,
+	request *pathparametersgo.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*path.User], error) {
+) (*core.Response[*pathparametersgo.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -93,10 +93,10 @@ func (r *RawClient) GetOrganizationUser(
 		request.UserId,
 	)
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *path.User
+	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -113,7 +113,7 @@ func (r *RawClient) GetOrganizationUser(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*path.User]{
+	return &core.Response[*pathparametersgo.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -124,9 +124,9 @@ func (r *RawClient) SearchOrganizations(
 	ctx context.Context,
 	tenantId string,
 	organizationId string,
-	request *path.SearchOrganizationsRequest,
+	request *pathparametersgo.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[[]*path.Organization], error) {
+) (*core.Response[[]*pathparametersgo.Organization], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -146,10 +146,10 @@ func (r *RawClient) SearchOrganizations(
 		endpointURL += "?" + queryParams.Encode()
 	}
 	headers := internal.MergeHeaders(
-		r.header.Clone(),
+		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []*path.Organization
+	var response []*pathparametersgo.Organization
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -166,7 +166,7 @@ func (r *RawClient) SearchOrganizations(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*path.Organization]{
+	return &core.Response[[]*pathparametersgo.Organization]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

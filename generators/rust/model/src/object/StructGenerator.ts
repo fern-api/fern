@@ -2,19 +2,19 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
     isCollectionType,
-    isDateTimeOnlyType,
     isDateTimeType,
-    isDateType,
     isOptionalType,
     isUnknownType,
-    isUuidType
+    isUuidType,
+    typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
 export class StructGenerator {
@@ -43,7 +43,7 @@ export class StructGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -67,7 +67,8 @@ export class StructGenerator {
         // Add imports for custom named types referenced in fields FIRST
         const customTypes = this.getCustomTypesUsedInFields();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -75,7 +76,8 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
-                const moduleNameEscaped = this.context.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
+                const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
+                const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
             });
         }
@@ -126,8 +128,14 @@ export class StructGenerator {
     private generateStructAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Basic derives - start with essential ones
+        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Hash and Eq if all field types support them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         return attributes;
@@ -184,23 +192,11 @@ export class StructGenerator {
             attributes.push(Attribute.serde.rename(property.name.wireValue));
         }
 
-        // Add special serde handling for datetime fields
-        const isOptional = isOptionalType(property.valueType);
-        const innerType = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
-
-        if (isDateTimeOnlyType(innerType)) {
-            // DateTime<Utc> fields need chrono serializers
-            if (isOptional) {
-                // Optional DateTime<Utc> needs ts_seconds_option
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds_option"));
-            } else {
-                // Non-optional DateTime<Utc> needs ts_seconds
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
-            }
-        }
-        // Note: NaiveDate (date type) fields don't need any special serializer
+        // DateTime fields will use default RFC 3339 string serialization
+        // No special serde handling needed for datetime fields
 
         // Add skip_serializing_if for optional fields to omit null values
+        const isOptional = isOptionalType(property.valueType);
         if (isOptional) {
             attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }
@@ -244,44 +240,27 @@ export class StructGenerator {
         });
     }
 
-    private getCustomTypesUsedInFields(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getCustomTypesUsedInFields(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const customTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
-        const extractNamedTypesRecursively = (typeRef: TypeReference) => {
-            if (typeRef.type === "named") {
-                const typeName = typeRef.name.originalName;
-                if (!visited.has(typeName)) {
-                    visited.add(typeName);
-                    customTypeNames.push({
-                        snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
-                        pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
-                    });
-                }
-            } else if (typeRef.type === "container") {
-                typeRef.container._visit({
-                    list: (listType) => extractNamedTypesRecursively(listType),
-                    set: (setType) => extractNamedTypesRecursively(setType),
-                    optional: (optionalType) => extractNamedTypesRecursively(optionalType),
-                    nullable: (nullableType) => extractNamedTypesRecursively(nullableType),
-                    map: (mapType) => {
-                        extractNamedTypesRecursively(mapType.keyType);
-                        extractNamedTypesRecursively(mapType.valueType);
-                    },
-                    literal: () => {
-                        // No named types in literals
-                    },
-                    _other: () => {
-                        // Unknown container type
-                    }
-                });
-            }
-        };
-
         this.objectTypeDeclaration.properties.forEach((property) => {
-            extractNamedTypesRecursively(property.valueType);
+            extractNamedTypesFromTypeReference(property.valueType, customTypeNames, visited);
         });
 
         return customTypeNames;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if all field types can support Hash and Eq derives
+        return this.objectTypeDeclaration.properties.every((property) => {
+            return typeSupportsHashAndEq(property.valueType, this.context);
+        });
     }
 }

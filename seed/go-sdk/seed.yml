@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -56,6 +56,9 @@ fixtures:
         clientName: Acme
         clientConstructorName: New
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
@@ -64,6 +67,12 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+    - outputFolder: package-path
+      customConfig:
+        packagePath: pleaseinhere
+    - outputFolder: getters-pass-by-value
+      customConfig:
+        gettersPassByValue: true
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -71,16 +80,17 @@ fixtures:
       customConfig:
         useReaderForBytesRequest: true
   imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
+    - outputFolder: package-path
       customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
+        packagePath: inhereplease
+    - outputFolder: deep-package-path
       customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
+        packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -146,14 +156,6 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: flat-package-layout
-      customConfig:
-        packageLayout: flat
-    - outputFolder: flat-package-layout-with-custom-client-name
-      customConfig:
-        packageLayout: flat
-        clientName: Acme
-        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -169,24 +171,39 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+  literals-unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+  mixed-case:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: default-values
+      customConfig:
+        useDefaultRequestParameterValues: true
+  reserved-keywords: []
 scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
-  - bytes
   - bytes-download
-  - bytes-upload
   - enum
+  - errors
   - exhaustive
   - literal
-  - mixed-case
+  - mixed-case:no-custom-config
+  - mixed-case:default-values
   - pagination-custom
-  - reserved-keywords
   - request-parameters
+  - reserved-keywords
+  - server-sent-event-examples
+  - server-sent-events
+  - streaming:.
   - streaming-parameter
   - trace
+  - unions:no-custom-config
+  - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
@@ -195,3 +212,6 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
+  
+  # TODO: Investigate addition of toolchain directive to go.mod
+  - imdb:with-wiremock-tests

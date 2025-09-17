@@ -6,6 +6,7 @@ import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
+import { FunctionParameter } from "./FunctionParameter";
 import { Pattern } from "./Pattern";
 import { escapeReservedKeyword } from "./syntax";
 import { Type } from "./Type";
@@ -30,6 +31,18 @@ type VariableDeclaration = {
     unsafeName: string;
     value: Expression;
     noTrailingNewline?: true;
+};
+
+type FunctionDeclaration = {
+    type: "function-declaration";
+    unsafeName: string;
+    accessLevel?: AccessLevel;
+    parameters?: FunctionParameter[];
+    async?: true;
+    throws?: true;
+    returnType?: Type;
+    body?: CodeBlock;
+    docs?: DocComment;
 };
 
 type VariableAssignment = {
@@ -99,6 +112,7 @@ type InternalStatement =
     | TypealiasDeclaration
     | ConstantDeclaration
     | VariableDeclaration
+    | FunctionDeclaration
     | VariableAssignment
     | SelfAssignment
     | PropertyAssignment
@@ -153,6 +167,38 @@ export class Statement extends AstNode {
                 if (!this.internalStatement.noTrailingNewline) {
                     writer.newLine();
                 }
+                break;
+            case "function-declaration":
+                if (this.internalStatement.docs != null) {
+                    this.internalStatement.docs.write(writer);
+                }
+                if (this.internalStatement.accessLevel != null) {
+                    writer.write(this.internalStatement.accessLevel);
+                    writer.write(" ");
+                }
+                writer.write("func ");
+                writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
+                writer.write("(");
+                this.internalStatement.parameters?.forEach((parameter, parameterIdx) => {
+                    if (parameterIdx > 0) {
+                        writer.write(", ");
+                    }
+                    parameter.write(writer);
+                });
+                writer.write(")");
+                if (this.internalStatement.async) {
+                    writer.write(" async");
+                }
+                if (this.internalStatement.throws) {
+                    writer.write(" throws");
+                }
+                if (this.internalStatement.returnType) {
+                    writer.write(" -> ");
+                    this.internalStatement.returnType.write(writer);
+                }
+                writer.write(" ");
+                (this.internalStatement.body ?? CodeBlock.empty()).write(writer);
+                writer.newLine();
                 break;
             case "variable-assignment":
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
@@ -260,6 +306,10 @@ export class Statement extends AstNode {
 
     public static variableDeclaration(params: Omit<VariableDeclaration, "type">): Statement {
         return new this({ type: "variable-declaration", ...params });
+    }
+
+    public static functionDeclaration(params: Omit<FunctionDeclaration, "type">): Statement {
+        return new this({ type: "function-declaration", ...params });
     }
 
     public static variableAssignment(unsafeName: string, value: Expression): Statement {

@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedExamples;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example9
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -14,7 +14,7 @@ public class Example9
         );
 
         await client.Health.Service.CheckAsync(
-            "id"
+            "id-3tey93i"
         );
     }
 

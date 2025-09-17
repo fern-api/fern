@@ -8974,13 +8974,13 @@
             "headers": {},
             "requestBody": {
               "userId": "string",
-              "createdTimestamp": 1.1
+              "createdTimestamp": 2700000000000
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "userId": "string",
-                "createdTimestamp": 1.1
+                "createdTimestamp": 2700000000000
               }
             },
             "responseStatusCode": 201,
@@ -9609,13 +9609,13 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "timestamp": 1.1,
+              "timestamp": 2700000000000,
               "userId": "string"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "timestamp": 1.1,
+                "timestamp": 2700000000000,
                 "userId": "string"
               }
             },
@@ -9633,7 +9633,7 @@
                 "countryOfNationality": "AF",
                 "gender": "M"
               },
-              "createdTimestamp": 1.1,
+              "createdTimestamp": 2700000000000,
               "userStateDetails": {
                 "userId": "string",
                 "reason": "string",
@@ -10211,7 +10211,7 @@
                   "countryOfNationality": "AF",
                   "gender": "M"
                 },
-                "createdTimestamp": 1.1,
+                "createdTimestamp": 2700000000000,
                 "userStateDetails": {
                   "userId": "string",
                   "reason": "string",
@@ -10892,20 +10892,20 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "timestamp": 1.1,
+              "timestamp": 2700000000000,
               "userId": "string"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "timestamp": 1.1,
+                "timestamp": 2700000000000,
                 "userId": "string"
               }
             },
             "responseStatusCode": 201,
             "responseBody": {
               "userId": "string",
-              "createdTimestamp": 1.1,
+              "createdTimestamp": 2700000000000,
               "userStateDetails": {
                 "userId": "string",
                 "reason": "string",
@@ -11695,7 +11695,7 @@
               "type": "json",
               "value": {
                 "userId": "string",
-                "createdTimestamp": 1.1,
+                "createdTimestamp": 2700000000000,
                 "userStateDetails": {
                   "userId": "string",
                   "reason": "string",

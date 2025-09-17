@@ -17,6 +17,9 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
         '401':
           description: ''
           content:
@@ -38,6 +41,9 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
         '400':
           description: ''
         '401':
@@ -53,6 +59,10 @@ paths:
         content:
           application/json:
             schema: {}
+            examples:
+              Example1:
+                value:
+                  key: value
 components:
   schemas:
     UnauthorizedRequestErrorBody:

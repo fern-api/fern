@@ -9,4 +9,4 @@ types:
       age: optional<integer>
       is_active: boolean
       balance: double
-      tags: list<string> 
+      tags: list<string>

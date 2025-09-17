@@ -15,7 +15,7 @@ export declare namespace Service {
         /** Override the X-API-Version header */
         version?: "1.0.0";
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -30,7 +30,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -54,7 +54,7 @@ export class Service {
     }
 
     private async __getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

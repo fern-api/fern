@@ -2,6 +2,138 @@
     "endpoints": [
         {
             "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithExtendedResults(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersExtendedRequest{\n\t\tCursor: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersExtendedRequestForOptionalData{\n\t\tCursor: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listUsernames"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListUsernames(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsernamesRequest{\n\t\tStartingAfter: fern.String(\n\t\t\t\"starting_after\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersCursorPaginationRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tPerPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOrder: inlineusers.OrderAsc,\n\t\tStartingAfter: fern.String(\n\t\t\t\"starting_after\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersDoubleOffsetPaginationRequest{\n\t\tPage: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tPerPage: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tOrder: inlineusers.OrderAsc,\n\t\tStartingAfter: fern.String(\n\t\t\t\"starting_after\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithGlobalConfig(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListWithGlobalConfigRequest{\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithOffsetPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersOffsetPaginationRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tPerPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOrder: inlineusers.OrderAsc,\n\t\tStartingAfter: fern.String(\n\t\t\t\"starting_after\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListWithOffsetPaginationHasNextPageRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOrder: inlineusers.OrderAsc,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersOffsetStepPaginationRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOrder: inlineusers.OrderAsc,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersBodyCursorPaginationRequest{\n\t\tPagination: \u0026inlineusers.WithCursor{\n\t\t\tCursor: fern.String(\n\t\t\t\t\"cursor\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersBodyOffsetPaginationRequest{\n\t\tPagination: \u0026inlineusers.WithPage{\n\t\t\tPage: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\tinlineusers \"github.com/pagination/fern/inlineusers\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(\n\tcontext.TODO(),\n\t\u0026inlineusers.ListUsersMixedTypeCursorPaginationRequest{\n\t\tCursor: fern.String(\n\t\t\t\"cursor\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithExtendedResults"

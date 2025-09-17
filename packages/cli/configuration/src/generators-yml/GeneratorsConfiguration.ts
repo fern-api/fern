@@ -11,7 +11,6 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
-    OpenRpcSpecSchema,
     ReadmeSchema
 } from "./schemas";
 
@@ -73,6 +72,8 @@ export interface APIDefinitionSettings {
     additionalPropertiesDefaultsTo: boolean | undefined;
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
+    inlineAllOfSchemas: boolean | undefined;
+    groupMultiApiEnvironments: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

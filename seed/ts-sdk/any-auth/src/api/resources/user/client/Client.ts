@@ -15,7 +15,7 @@ export declare namespace User {
         token?: core.Supplier<core.BearerToken | undefined>;
         apiKey?: core.Supplier<string | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -28,7 +28,7 @@ export declare namespace User {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -50,7 +50,7 @@ export class User {
     }
 
     private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 Authorization: await this._getAuthorizationHeader(),

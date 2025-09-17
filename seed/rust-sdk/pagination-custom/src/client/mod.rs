@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod users;
 pub use users::UsersClient;

@@ -38,6 +38,7 @@ export class DynamicSnippetsTestRunner {
         this.runImdbTests(args);
         this.runMultiUrlEnvironmentTests(args);
         this.runNullableTests(args);
+        this.runReadWriteOnlyTests(args);
         this.runSingleUrlEnvironmentDefaultTests(args);
     }
 
@@ -171,6 +172,19 @@ export class DynamicSnippetsTestRunner {
                                     }
                                 },
                                 revenue: 1000000
+                            },
+                            eventInfo: {
+                                type: "metadata",
+                                id: "event-12345",
+                                data: {
+                                    key1: "val1",
+                                    key2: "val2"
+                                },
+                                jsonString: "abc"
+                            },
+                            migration: {
+                                name: "Migration 31 Aug",
+                                status: "RUNNING"
                             }
                         }
                     }
@@ -579,6 +593,65 @@ export class DynamicSnippetsTestRunner {
                         headers: undefined,
                         requestBody: {
                             s3Key: "xyz"
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+    private runReadWriteOnlyTests(args: DynamicSnippetsTestRunner.Args): void {
+        const generator = args.buildGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "property-access.json"))
+        });
+        this.runDynamicSnippetTests({
+            fixture: "read-write-only",
+            generator,
+            testCases: [
+                {
+                    description: "Body properties",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            password: "password",
+                            profile: {
+                                name: "name",
+                                verification: {},
+                                ssn: "ssn"
+                            }
+                        }
+                    }
+                },
+                {
+                    description: "Readonly value in request",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/users"
+                        },
+                        auth: undefined,
+                        baseURL: "https://api.example.com",
+                        environment: undefined,
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            id: "id",
+                            password: "password",
+                            profile: {
+                                name: "name",
+                                verification: {},
+                                ssn: "ssn"
+                            }
                         }
                     }
                 }

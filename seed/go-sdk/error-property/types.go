@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/error-property/fern/internal"
+	big "math/big"
+)
+
+var (
+	propertyBasedErrorTestBodyFieldMessage = big.NewInt(1 << 0)
 )
 
 type PropertyBasedErrorTestBody struct {
 	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,20 @@ func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{}
 	return p.extraProperties
 }
 
+func (p *PropertyBasedErrorTestBody) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PropertyBasedErrorTestBody) SetMessage(message string) {
+	p.Message = message
+	p.require(propertyBasedErrorTestBodyFieldMessage)
+}
+
 func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
 	type unmarshaler PropertyBasedErrorTestBody
 	var value unmarshaler
@@ -40,6 +62,17 @@ func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
 	p.extraProperties = extraProperties
 	p.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (p *PropertyBasedErrorTestBody) MarshalJSON() ([]byte, error) {
+	type embed PropertyBasedErrorTestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *PropertyBasedErrorTestBody) String() string {

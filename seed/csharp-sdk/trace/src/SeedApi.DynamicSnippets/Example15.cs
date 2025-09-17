@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedTrace;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example15
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -13,16 +13,9 @@ public class Example15
             }
         );
 
-        await client.Playlist.UpdatePlaylistAsync(
+        await client.Playlist.GetPlaylistAsync(
             1,
-            "playlistId",
-            new UpdatePlaylistRequest{
-                Name = "name",
-                Problems = new List<string>(){
-                    "problems",
-                    "problems",
-                }
-            }
+            "playlistId"
         );
     }
 

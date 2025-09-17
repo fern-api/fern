@@ -77,7 +77,6 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     /**
      * Runs the GitHub action using the given generator context.
-     * TODO: Maybe rename to `triggerGitHub` since nothing is generated per se?
      */
     public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
         const githubConfig = this.getGitHubConfig({ context });
@@ -113,7 +112,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
-        return yaml.load(await this.getFeaturesConfig()) as FernGeneratorCli.FeatureConfig;
+        const rawYaml = await this.getFeaturesConfig();
+        const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
+        return loaded;
     }
 
     private getRemote(): FernGeneratorCli.Remote | undefined {

@@ -333,7 +333,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -361,7 +362,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:UserId"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -395,7 +397,8 @@
                                 "value": "STRING"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -429,7 +432,8 @@
                                 "value": "type_nullable:Metadata"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -457,7 +461,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:Email"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -485,7 +490,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:WeirdNumber"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -522,7 +528,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -562,7 +569,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -843,7 +851,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE_TIME"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -871,7 +880,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE_TIME"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -902,7 +912,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -936,7 +947,8 @@
                                 "value": "BOOLEAN"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -964,7 +976,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:Status"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -1008,7 +1021,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -1186,7 +1200,8 @@
                                     "value": "STRING"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1217,7 +1232,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1251,7 +1267,8 @@
                                     "value": "BOOLEAN"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1288,7 +1305,8 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1322,7 +1340,8 @@
                                     "value": "BOOLEAN"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],
@@ -1505,7 +1524,8 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1539,7 +1559,8 @@
                                         "value": "STRING"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1570,7 +1591,8 @@
                                     "type": "named",
                                     "value": "type_nullable:Metadata"
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         },
                         {
                             "name": {
@@ -1604,7 +1626,8 @@
                                         "value": "STRING"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },
@@ -1792,7 +1815,8 @@
                                         "value": "STRING"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },

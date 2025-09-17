@@ -79,7 +79,9 @@ describe("fdr", async () => {
                     javaSdk: undefined,
                     rubySdk: undefined,
                     goSdk: undefined,
-                    csharpSdk: undefined
+                    csharpSdk: undefined,
+                    phpSdk: undefined,
+                    swiftSdk: undefined
                 },
                 playgroundConfig: {
                     oauth: true
@@ -87,8 +89,8 @@ describe("fdr", async () => {
                 context: createMockTaskContext()
             });
 
-            it(workspace.workspaceName ?? "", () => {
-                expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
+            it(workspace.workspaceName ?? "", async () => {
+                await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
                     `./__snapshots__/fdr/${
                         workspace.workspaceName ?? workspace.absoluteFilePath.split("/").reverse()[1]
                     }.json`
@@ -144,7 +146,9 @@ describe("oas-ir-fdr", async () => {
                         javaSdk: undefined,
                         rubySdk: undefined,
                         goSdk: undefined,
-                        csharpSdk: undefined
+                        csharpSdk: undefined,
+                        phpSdk: undefined,
+                        swiftSdk: undefined
                     },
                     playgroundConfig: {
                         oauth: true

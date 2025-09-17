@@ -2,14 +2,21 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class EnumGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, enumTypeDeclaration: EnumTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        enumTypeDeclaration: EnumTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.enumTypeDeclaration = enumTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -23,7 +30,7 @@ export class EnumGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -64,8 +71,9 @@ export class EnumGenerator {
     private generateEnumAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Always add basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Always add basic derives including Hash and Eq for maximum compatibility
+        // Hash and Eq are needed when enums are used as HashMap keys
+        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq", "Eq", "Hash"];
         attributes.push(Attribute.derive(derives));
 
         return attributes;

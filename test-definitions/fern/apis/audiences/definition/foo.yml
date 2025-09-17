@@ -20,11 +20,11 @@ service:
             type: OptionalString
             audiences:
               - private
-        body: 
-          properties: 
-            publicProperty: 
+        body:
+          properties:
+            publicProperty:
               type: optional<string>
-              audiences: 
+              audiences:
                 - public
             privateProperty: optional<integer>
       response: ImportingType
@@ -35,12 +35,12 @@ types:
       imported: commons.Imported
   OptionalString: optional<string>
 
-  FilteredType: 
-    audiences: 
+  FilteredType:
+    audiences:
       - public
-    properties: 
+    properties:
       public_property:
         type: optional<string>
-        audiences: 
+        audiences:
           - public
       private_property: integer

@@ -94,7 +94,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -192,7 +193,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -223,7 +225,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -258,7 +261,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -356,7 +360,8 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null
                 },
                 {
                     "name": {
@@ -384,7 +389,8 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_service:User"
-                    }
+                    },
+                    "propertyAccess": null
                 }
             ],
             "additionalProperties": false
@@ -643,7 +649,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_service:ResourceStatus"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 },
@@ -699,7 +706,8 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_service:ResourceStatus"
-                            }
+                            },
+                            "propertyAccess": null
                         }
                     ]
                 }
@@ -807,7 +815,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "body": null
@@ -981,7 +990,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null
                     },
                     {
                         "name": {
@@ -1009,7 +1019,8 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DATE"
-                        }
+                        },
+                        "propertyAccess": null
                     }
                 ],
                 "headers": [],

@@ -62,14 +62,14 @@ public record Data
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value! : throw new Exception("Data.Type is not 'string'");
+        IsString ? (string)Value! : throw new System.Exception("Data.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'base64', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'base64'.</exception>
     public string AsBase64() =>
-        IsBase64 ? (string)Value! : throw new Exception("Data.Type is not 'base64'");
+        IsBase64 ? (string)Value! : throw new System.Exception("Data.Type is not 'base64'");
 
     public T Match<T>(
         Func<string, T> onString,
@@ -175,9 +175,9 @@ public record Data
             var value = discriminator switch
             {
                 "string" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "base64" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new Data(discriminator, value);
@@ -218,7 +218,7 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator String(string value) => new(value);
+        public static implicit operator Data.String(string value) => new(value);
     }
 
     /// <summary>
@@ -236,6 +236,6 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator Base64(string value) => new(value);
+        public static implicit operator Data.Base64(string value) => new(value);
     }
 }

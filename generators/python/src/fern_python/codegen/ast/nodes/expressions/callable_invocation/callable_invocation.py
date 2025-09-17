@@ -35,7 +35,11 @@ class CallableInvocation(AstNode):
                 writer.write(", ")
             arg.write(writer=writer, should_write_as_snippet=should_write_as_snippet)
             just_wrote_argument = True
+        written_params = set()
         for i, (name, value) in enumerate(self.kwargs):
+            if name in written_params:
+                continue
+            written_params.add(name)
             if just_wrote_argument:
                 writer.write(", ")
             writer.write(f"{name}=")

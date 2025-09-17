@@ -13,7 +13,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -52,7 +52,7 @@ export class Service {
     private async __getDirectThread(
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.folderD.Response>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??

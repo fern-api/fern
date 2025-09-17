@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
@@ -6,13 +7,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
-import {
-    BaseContext,
-    GeneratedType,
-    GeneratedTypeReferenceExample,
-    TypeContext,
-    TypeSchemaContext
-} from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -21,7 +16,6 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
-
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextImpl {
@@ -41,6 +35,7 @@ export declare namespace TypeContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -73,7 +68,8 @@ export class TypeContextImpl implements TypeContext {
         enableInlineTypes,
         allowExtraFields,
         omitUndefined,
-        context
+        context,
+        generateReadWriteOnlyTypes
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -95,7 +91,8 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined
+            omitUndefined,
+            generateReadWriteOnlyTypes
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             context,
@@ -104,7 +101,8 @@ export class TypeContextImpl implements TypeContext {
             useBigInt,
             enableInlineTypes,
             allowExtraFields,
-            omitUndefined
+            omitUndefined,
+            generateReadWriteOnlyTypes
         });
     }
 
@@ -133,9 +131,24 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+    public generateForInlineUnion(typeName: DeclaredTypeName): {
+        typeNode: ts.TypeNode;
+        requestTypeNode: ts.TypeNode | undefined;
+        responseTypeNode: ts.TypeNode | undefined;
+    } {
         const generatedType = this.getGeneratedType(typeName);
         return generatedType.generateForInlineUnion(this.context);
+    }
+
+    public typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference {
+        return TypeReference.named({
+            default: undefined,
+            displayName: typeName.displayName,
+            fernFilepath: typeName.fernFilepath,
+            inline: undefined,
+            name: typeName.name,
+            typeId: typeName.typeId
+        });
     }
 
     public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
@@ -295,5 +308,45 @@ export class TypeContextImpl implements TypeContext {
             default:
                 return false;
         }
+    }
+
+    public needsRequestResponseTypeVariant(): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
+
+    public needsRequestResponseTypeVariantById(): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
+
+    public needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean } {
+        return {
+            request: false,
+            response: false
+        };
+    }
+
+    generateGetterForResponsePropertyAsString(): string {
+        throw new Error("Method not implemented.");
+    }
+    generateGetterForResponseProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    generateGetterForRequestProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    generateSetterForRequestPropertyAsString(): string {
+        throw new Error("Method not implemented.");
+    }
+    generateSetterForRequestProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    getReferenceToResponsePropertyType(): ts.TypeNode {
+        throw new Error("Method not implemented.");
     }
 }

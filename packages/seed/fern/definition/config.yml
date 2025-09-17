@@ -163,6 +163,7 @@ types:
       outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
+      license: optional<unknown>
 
   ReadmeConfig:
     properties:
@@ -170,6 +171,8 @@ types:
       bannerLink: optional<string>
       apiReferenceLink: optional<string>
       features: optional<map<string, list<ReadmeEndpoint>>>
+      apiName: optional<string>
+      disabledSections: optional<list<string>>
 
   ReadmeEndpoint:
     discriminated: false

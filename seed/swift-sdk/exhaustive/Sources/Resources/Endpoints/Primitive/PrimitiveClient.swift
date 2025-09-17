@@ -67,13 +67,13 @@ public final class PrimitiveClient: Sendable {
         )
     }
 
-    public func getAndReturnDate(request: Date, requestOptions: RequestOptions? = nil) async throws -> Date {
+    public func getAndReturnDate(request: CalendarDate, requestOptions: RequestOptions? = nil) async throws -> CalendarDate {
         return try await httpClient.performRequest(
             method: .post,
             path: "/primitive/date",
             body: request,
             requestOptions: requestOptions,
-            responseType: Date.self
+            responseType: CalendarDate.self
         )
     }
 

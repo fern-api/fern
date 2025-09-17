@@ -239,7 +239,8 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "long",
         // the following aren't actually reserved, but we treat them as unavailable
         "self",
-        "all"
+        "all",
+        "kwargs"
     ]),
     [generatorsYml.GenerationLanguage.GO]: new Set([
         // Keywords - these are not allowed. https://go.dev/ref/spec#Keywords
@@ -338,7 +339,30 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "Object",
         "JSON",
         "Date",
-        "DateTime"
+        "DateTime",
+        // Core Ruby base object methods that should not be overridden (cause serious problems)
+        "object_id",
+        "hash",
+        "eql?",
+        "equal?",
+        "method",
+        "send",
+        "respond_to?",
+        "respond_to_missing?",
+        "instance_of?",
+        "kind_of?",
+        "is_a?",
+        "extend",
+        "singleton_class",
+        "instance_variables",
+        "instance_variable_get",
+        "instance_variable_set",
+        "instance_variable_defined?",
+        "remove_instance_variable",
+        "public_methods",
+        "private_methods",
+        "protected_methods",
+        "singleton_methods"
     ]),
     [generatorsYml.GenerationLanguage.CSHARP]: new Set([
         "abstract",

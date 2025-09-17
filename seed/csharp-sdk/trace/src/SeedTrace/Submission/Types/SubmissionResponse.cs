@@ -362,15 +362,13 @@ public record SubmissionResponse
             {
                 "serverInitialized" => new { },
                 "problemInitialized" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "workspaceInitialized" => new { },
                 "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "codeExecutionUpdate" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CodeExecutionUpdate>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.CodeExecutionUpdate"
-                    ),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.CodeExecutionUpdate"),
                 "terminated" => json.Deserialize<SeedTrace.TerminatedResponse>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TerminatedResponse"
@@ -434,7 +432,8 @@ public record SubmissionResponse
 
         public override string ToString() => Value;
 
-        public static implicit operator ProblemInitialized(string value) => new(value);
+        public static implicit operator SubmissionResponse.ProblemInitialized(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -463,7 +462,9 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ServerErrored(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator SubmissionResponse.ServerErrored(
+            SeedTrace.ExceptionInfo value
+        ) => new(value);
     }
 
     /// <summary>
@@ -481,8 +482,9 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CodeExecutionUpdate(SeedTrace.CodeExecutionUpdate value) =>
-            new(value);
+        public static implicit operator SubmissionResponse.CodeExecutionUpdate(
+            SeedTrace.CodeExecutionUpdate value
+        ) => new(value);
     }
 
     /// <summary>
@@ -500,7 +502,8 @@ public record SubmissionResponse
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Terminated(SeedTrace.TerminatedResponse value) =>
-            new(value);
+        public static implicit operator SubmissionResponse.Terminated(
+            SeedTrace.TerminatedResponse value
+        ) => new(value);
     }
 }

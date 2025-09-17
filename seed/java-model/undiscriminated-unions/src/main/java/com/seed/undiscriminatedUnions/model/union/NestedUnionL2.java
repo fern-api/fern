@@ -97,11 +97,11 @@ public final class NestedUnionL2 {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<String>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

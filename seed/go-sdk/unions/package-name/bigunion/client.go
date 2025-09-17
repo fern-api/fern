@@ -4,25 +4,24 @@ package bigunion
 
 import (
 	context "context"
-	unions "github.com/fern-api/unions-go"
+	unionsgo "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
 	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -30,7 +29,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -38,7 +36,7 @@ func (c *Client) Get(
 	ctx context.Context,
 	id string,
 	opts ...option.RequestOption,
-) (*unions.BigUnion, error) {
+) (*unionsgo.BigUnion, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -52,7 +50,7 @@ func (c *Client) Get(
 
 func (c *Client) Update(
 	ctx context.Context,
-	request *unions.BigUnion,
+	request *unionsgo.BigUnion,
 	opts ...option.RequestOption,
 ) (bool, error) {
 	response, err := c.WithRawResponse.Update(
@@ -68,7 +66,7 @@ func (c *Client) Update(
 
 func (c *Client) UpdateMany(
 	ctx context.Context,
-	request []*unions.BigUnion,
+	request []*unionsgo.BigUnion,
 	opts ...option.RequestOption,
 ) (map[string]bool, error) {
 	response, err := c.WithRawResponse.UpdateMany(

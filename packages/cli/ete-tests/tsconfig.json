@@ -5,13 +5,8 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./src/**/__test__/**/generated",
-    "./src/tests/generate/fixtures/**",
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated", "./src/tests/generate/fixtures/**"],
   "references": [
     {
       "path": "../../commons/fs-utils"

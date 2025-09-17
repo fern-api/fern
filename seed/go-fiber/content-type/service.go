@@ -2,6 +2,20 @@
 
 package contenttypes
 
+type NamedMixedPatchRequest struct {
+	AppId        *string `json:"appId,omitempty" url:"-"`
+	Instructions *string `json:"instructions,omitempty" url:"-"`
+	Active       *bool   `json:"active,omitempty" url:"-"`
+}
+
+type OptionalMergePatchRequest struct {
+	RequiredField   string  `json:"requiredField" url:"-"`
+	OptionalString  *string `json:"optionalString,omitempty" url:"-"`
+	OptionalInteger *int    `json:"optionalInteger,omitempty" url:"-"`
+	OptionalBoolean *bool   `json:"optionalBoolean,omitempty" url:"-"`
+	NullableString  *string `json:"nullableString,omitempty" url:"-"`
+}
+
 type PatchProxyRequest struct {
 	Application *string `json:"application,omitempty" url:"-"`
 	RequireAuth *bool   `json:"require_auth,omitempty" url:"-"`

@@ -28,10 +28,27 @@ publish:
     context: .
 
 scripts:
-  - docker: ruby:2.7
+  - docker: ruby:3.3
     commands:
       - bundle install
       - bundle exec rake test
 
 fixtures: {}
 allowedFailures: []
+features:
+  requestOptions: true
+  idempotency: false
+  autoPagination: false
+  oauth: false
+  authEnvVarScanning: true
+  websocket: false
+  streamingJson: false
+  fileUpload: true
+  fileDownload: true
+  snippets: true
+  snippetTests: true
+  errors: false
+  forwardCompatibleEnums: true
+  additionalProperties: true
+  whitelabel: false
+  apiReferenceGeneration: false

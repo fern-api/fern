@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_auth_environment_variables)](https://crates.io/crates/seed_auth_environment_variables)
 
-The Seed Rust library provides convenient access to the Seed API from Rust.
+The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
 ## Installation
 
@@ -25,14 +25,15 @@ cargo add seed_auth_environment_variables
 Instantiate and use the client with the following:
 
 ```rust
-use seed_auth_environment_variables::{ClientConfig, AuthEnvironmentVariablesClient};
+use seed_auth_environment_variables::{AuthEnvironmentVariablesClient, ClientConfig};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<value>".to_string())
+        api_key: Some("<value>".to_string()),
     };
     let client = AuthEnvironmentVariablesClient::new(config).expect("Failed to build client");
+    client.service_get_with_api_key().await;
 }
 ```
 
@@ -41,10 +42,10 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_auth_environment_variables::{ClientError, ClientConfig, AuthEnvironmentVariablesClient};
+use seed_auth_environment_variables::{ApiError, ClientConfig, AuthEnvironmentVariablesClient};
 
 #[tokio::main]
-async fn main() -> Result<(), ClientError> {
+async fn main() -> Result<(), ApiError> {
     let config = ClientConfig {
         base_url: " ".to_string(),
         api_key: Some("your-api-key".to_string())
@@ -54,14 +55,39 @@ async fn main() -> Result<(), ClientError> {
         Ok(response) => {
             println!("Success: {:?}", response);
         },
-        Err(ClientError::ApiError { status_code, body, .. }) => {
-            println!("API Error {}: {:?}", status_code, body);
+        Err(ApiError::HTTP { status, message }) => {
+            println!("API Error {}: {:?}", status, message);
         },
         Err(e) => {
             println!("Other error: {:?}", e);
         }
     }
     return Ok(());
+}
+```
+
+## Pagination
+
+For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
+
+```rust
+use seed_auth_environment_variables::{ClientConfig, AuthEnvironmentVariablesClient};
+use futures::{StreamExt};
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        base_url: " ".to_string(),
+        api_key: Some("your-api-key".to_string())
+    };
+    let client = AuthEnvironmentVariablesClient::new(config).expect("Failed to build client");
+    let mut paginated_stream = client.service.get_with_api_key().await?;
+    while let Some(item) = paginated_stream.next().await {
+            match item {
+                Ok(data) => println!("Received item: {:?}", data),
+                Err(e) => eprintln!("Error fetching page: {}", e),
+            }
+        }
 }
 ```
 

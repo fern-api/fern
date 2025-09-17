@@ -143,43 +143,43 @@ public final class UndiscriminatedUnion1 {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType1.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType2.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(
                         ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1DiscriminatedUnion1.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineEnum1.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<List<UndiscriminatedUnion1InlineListItem1>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Set<UndiscriminatedUnion1InlineSetItem1>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Map<String, UndiscriminatedUnion1InlineMapItem1>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

@@ -66,7 +66,7 @@ class Primitive {
     __getAndReturnString(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/string"),
                 method: "POST",
@@ -119,7 +119,7 @@ class Primitive {
     __getAndReturnInt(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/integer"),
                 method: "POST",
@@ -172,7 +172,7 @@ class Primitive {
     __getAndReturnLong(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/long"),
                 method: "POST",
@@ -225,7 +225,7 @@ class Primitive {
     __getAndReturnDouble(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/double"),
                 method: "POST",
@@ -278,7 +278,7 @@ class Primitive {
     __getAndReturnBool(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/boolean"),
                 method: "POST",
@@ -331,7 +331,7 @@ class Primitive {
     __getAndReturnDatetime(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/datetime"),
                 method: "POST",
@@ -384,7 +384,7 @@ class Primitive {
     __getAndReturnDate(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/date"),
                 method: "POST",
@@ -437,7 +437,7 @@ class Primitive {
     __getAndReturnUuid(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/uuid"),
                 method: "POST",
@@ -490,7 +490,7 @@ class Primitive {
     __getAndReturnBase64(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            var _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/base64"),
                 method: "POST",

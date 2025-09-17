@@ -27,7 +27,6 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-import urlJoin from "url-join";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -113,6 +112,8 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
+    private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
+    private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -120,6 +121,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Store raw markdown content before any processing
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
+        }
 
         // track all changelog markdown files in parsedDocsConfig.pages
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
@@ -143,6 +149,8 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
+                            // Also store the raw content for changelog files
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = file.contents;
                         });
                     }
                 },
@@ -157,6 +165,9 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their noindex values
         this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their tags
+        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -244,9 +255,11 @@ export class DocsDefinitionResolver {
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
             const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined
+                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                rawMarkdown: rawMarkdown
             };
         });
 
@@ -343,6 +356,33 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToNoIndex;
+    }
+
+    /**
+     * Creates a map of markdown files to their tags specified in the frontmatter
+     * @param pages - the pages to check
+     * @returns a map of markdown files to their tags
+     */
+    private async getMarkdownFilesToTags(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string[]>> {
+        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const tags = frontmatter.data.tags;
+            if (typeof tags === "string") {
+                mdxFilePathToTags.set(
+                    this.resolveFilepath(relativePath),
+                    tags
+                        .split(",")
+                        .map((item) => item.trim())
+                        .filter((item) => item.length > 0)
+                );
+            } else if (Array.isArray(tags)) {
+                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+            }
+        }
+        return mdxFilePathToTags;
     }
 
     /**
@@ -724,7 +764,9 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(items.map((item) => this.toNavigationChild(id, item, parentSlug)));
+        const children = await Promise.all(
+            items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug }))
+        );
 
         const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -761,26 +803,41 @@ export class DocsDefinitionResolver {
         };
     }
 
-    private async toNavigationChild(
-        prefix: string,
-        item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        hideChildren?: boolean
-    ): Promise<FernNavigation.V1.NavigationChild> {
+    private async toNavigationChild({
+        prefix,
+        item,
+        parentSlug,
+        hideChildren,
+        parentAvailability
+    }: {
+        prefix: string;
+        item: docsYml.DocsNavigationItem;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        hideChildren?: boolean;
+        parentAvailability?: docsYml.RawSchemas.Availability;
+    }): Promise<FernNavigation.V1.NavigationChild> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
-            page: async (value) => this.toPageNode(value, parentSlug, hideChildren),
-            apiSection: async (value) => this.toApiSectionNode(value, parentSlug, hideChildren),
-            section: async (value) => this.toSectionNode(prefix, value, parentSlug, hideChildren),
+            page: async (value) => this.toPageNode({ item: value, parentSlug, hideChildren, parentAvailability }),
+            apiSection: async (value) =>
+                this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability }),
+            section: async (value) =>
+                this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
         });
     }
 
-    private async toApiSectionNode(
-        item: docsYml.DocsNavigationItem.ApiSection,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        hideChildren?: boolean
-    ): Promise<FernNavigation.V1.ApiReferenceNode> {
+    private async toApiSectionNode({
+        item,
+        parentSlug,
+        hideChildren,
+        parentAvailability
+    }: {
+        item: docsYml.DocsNavigationItem.ApiSection;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        hideChildren?: boolean;
+        parentAvailability?: docsYml.RawSchemas.Availability;
+    }): Promise<FernNavigation.V1.ApiReferenceNode> {
         if (item.openrpc != null) {
             const absoluteFilepathToOpenrpc = resolve(
                 this.docsWorkspace.absoluteFilePath,
@@ -809,8 +866,10 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
-                hideChildren
+                hideChildren,
+                parentAvailability ?? item.availability
             );
             return node.get();
         }
@@ -838,8 +897,10 @@ export class DocsDefinitionResolver {
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
                 this.#idgen,
-                hideChildren
+                hideChildren,
+                parentAvailability ?? item.availability
             );
             return node.get();
         }
@@ -880,7 +941,11 @@ export class DocsDefinitionResolver {
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,
-                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                exampleGeneration: {
+                    disabled: false,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
                 readme: undefined,
                 version: undefined,
                 packageName: undefined,
@@ -911,9 +976,11 @@ export class DocsDefinitionResolver {
             this.taskContext,
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             this.#idgen,
             workspace,
-            hideChildren
+            hideChildren,
+            parentAvailability ?? item.availability
         );
         return node.get();
     }
@@ -926,6 +993,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             item.changelog,
             this.docsWorkspace,
             this.#idgen
@@ -951,11 +1019,17 @@ export class DocsDefinitionResolver {
         };
     }
 
-    private async toPageNode(
-        item: docsYml.DocsNavigationItem.Page,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        hideChildren?: boolean
-    ): Promise<FernNavigation.V1.PageNode> {
+    private async toPageNode({
+        item,
+        parentSlug,
+        hideChildren,
+        parentAvailability
+    }: {
+        item: docsYml.DocsNavigationItem.Page;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        hideChildren?: boolean;
+        parentAvailability?: docsYml.RawSchemas.Availability;
+    }): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -974,16 +1048,24 @@ export class DocsDefinitionResolver {
             pageId,
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            availability: item.availability ?? parentAvailability
         };
     }
 
-    private async toSectionNode(
-        prefix: string,
-        item: docsYml.DocsNavigationItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        hideChildren?: boolean
-    ): Promise<FernNavigation.V1.SectionNode> {
+    private async toSectionNode({
+        prefix,
+        item,
+        parentSlug,
+        hideChildren,
+        parentAvailability
+    }: {
+        prefix: string;
+        item: docsYml.DocsNavigationItem.Section;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        hideChildren?: boolean;
+        parentAvailability?: docsYml.RawSchemas.Availability;
+    }): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
@@ -1009,12 +1091,21 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             children: await Promise.all(
-                item.contents.map((child) => this.toNavigationChild(id, child, slug, hiddenSection))
+                item.contents.map((child) =>
+                    this.toNavigationChild({
+                        prefix: id,
+                        item: child,
+                        parentSlug: slug,
+                        hideChildren: hiddenSection,
+                        parentAvailability: item.availability ?? parentAvailability
+                    })
+                )
             ),
             authed: undefined,
             pointsTo: undefined,
             noindex,
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            availability: item.availability ?? parentAvailability
         };
     }
 
@@ -1051,6 +1142,7 @@ export class DocsDefinitionResolver {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
             changelog,
             this.docsWorkspace,
             this.#idgen

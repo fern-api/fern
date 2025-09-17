@@ -55,8 +55,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             : new GeneratorNotificationService(config.environment);
 
         try {
-            const customConfig = this.parseCustomConfig(config.customConfig);
-
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -68,6 +66,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 );
             });
+            const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
             const npmPackage = constructNpmPackage({
                 generatorConfig: config,
@@ -109,6 +108,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
+            await Promise.all([typescriptProject.generateLockfile(logger), typescriptProject.format(logger)]);
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -127,7 +127,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.format(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
@@ -148,7 +147,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 },
                 downloadFiles: async () => {
                     if (this.shouldGenerateFullProject(ir)) {
-                        await typescriptProject.format(logger);
                         await typescriptProject.copyProjectTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
@@ -204,7 +202,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    protected abstract parseCustomConfig(customConfig: unknown): CustomConfig;
+    protected abstract parseCustomConfig(customConfig: unknown, logger: Logger): CustomConfig;
     protected abstract generateTypescriptProject(args: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: CustomConfig;

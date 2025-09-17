@@ -2,14 +2,15 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { entries } from "@fern-api/core-utils";
-import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export const AsIsFileNames = {
     // Core infrastructure templates
     ApiClientBuilder: "api_client_builder.rs",
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
-    ClientError: "client_error.rs",
+    Pagination: "pagination.rs",
+    QueryParameterBuilder: "query_parameter_builder.rs",
     // Project-level configuration files
     CargoToml: "Cargo.toml",
     Gitignore: ".gitignore",

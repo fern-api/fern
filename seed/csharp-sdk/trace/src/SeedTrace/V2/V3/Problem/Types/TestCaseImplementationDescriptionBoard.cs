@@ -185,9 +185,9 @@ public record TestCaseImplementationDescriptionBoard
             var value = discriminator switch
             {
                 "html" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "paramId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new TestCaseImplementationDescriptionBoard(discriminator, value);
@@ -232,7 +232,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.Html(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -250,6 +251,8 @@ public record TestCaseImplementationDescriptionBoard
 
         public override string ToString() => Value;
 
-        public static implicit operator ParamId(string value) => new(value);
+        public static implicit operator TestCaseImplementationDescriptionBoard.ParamId(
+            string value
+        ) => new(value);
     }
 }

@@ -8,21 +8,20 @@ import (
 	core "github.com/content-type/fern/core"
 	internal "github.com/content-type/fern/internal"
 	option "github.com/content-type/fern/option"
-	http "net/http"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
 
+	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
-	header  http.Header
 }
 
-func NewClient(opts ...option.RequestOption) *Client {
-	options := core.NewRequestOptions(opts...)
+func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		WithRawResponse: NewRawClient(options),
+		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -30,7 +29,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
 	}
 }
 
@@ -63,6 +61,46 @@ func (c *Client) PatchComplex(
 	_, err := c.WithRawResponse.PatchComplex(
 		ctx,
 		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Named request with mixed optional/nullable fields and merge-patch content type.
+// This should trigger the NPE issue when optional fields aren't initialized.
+func (c *Client) NamedPatchWithMixed(
+	ctx context.Context,
+	id string,
+	request *fern.NamedMixedPatchRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.NamedPatchWithMixed(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+// This endpoint should:
+// 1. Not NPE when fields are not provided (tests initialization)
+// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+func (c *Client) OptionalMergePatchTest(
+	ctx context.Context,
+	request *fern.OptionalMergePatchRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.OptionalMergePatchTest(
+		ctx,
 		request,
 		opts...,
 	)

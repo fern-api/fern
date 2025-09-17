@@ -486,13 +486,26 @@ describe("Service", () => {
         });
     });
 
-    test("refreshToken", async () => {
+    test("refreshToken (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().post("/refresh-token").respondWith().statusCode(200).build();
 
         const response = await client.service.refreshToken(undefined);
+        expect(response).toEqual(undefined);
+    });
+
+    test("refreshToken (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const rawRequestBody = { ttl: 420 };
+
+        server.mockEndpoint().post("/refresh-token").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.refreshToken({
+            ttl: 420,
+        });
         expect(response).toEqual(undefined);
     });
 });

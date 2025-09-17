@@ -213,43 +213,49 @@ export class EndpointSnippetGenerator {
         switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
                 if (values.type !== "bearer") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorBearerAuthArgs({ auth, values });
             case "header":
                 if (values.type !== "header") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values });
             case "oauth":
                 if (values.type !== "oauth") {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: this.context.newAuthMismatchError({ auth, values }).message
-                    });
+                    this.addAuthMismatchError(auth, values);
                     return [];
                 }
                 return this.getConstructorOAuthArgs({ auth, values });
+            case "inferred":
+                if (values.type !== "inferred") {
+                    this.addAuthMismatchError(auth, values);
+                    return [];
+                }
+                this.addWarning("The TypeScript SDK v2 Generator does not support Inferred auth scheme yet");
+                return [];
             default:
                 assertNever(auth);
         }
+    }
+
+    private addAuthMismatchError(auth: FernIr.dynamic.Auth, values: FernIr.dynamic.AuthValues): void {
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: this.context.newAuthMismatchError({ auth, values }).message
+        });
+    }
+
+    private addWarning(message: string): void {
+        this.context.errors.add({ severity: Severity.Warning, message });
     }
 
     private getConstructorBasicAuthArg({
@@ -432,7 +438,13 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    convertOpts: {
+                        isForRequest: true
+                    }
+                });
             default:
                 assertNever(body);
         }
@@ -548,7 +560,10 @@ export class EndpointSnippetGenerator {
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
             name: this.context.getPropertyName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                ...queryParameter,
+                convertOpts: { isForRequest: true }
+            })
         }));
         this.context.errors.unscope();
 
@@ -559,7 +574,7 @@ export class EndpointSnippetGenerator {
         });
         const headerFields = headers.map((header) => ({
             name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
+            value: this.context.dynamicTypeLiteralMapper.convert({ ...header, convertOpts: { isForRequest: true } })
         }));
         this.context.errors.unscope();
 
@@ -635,7 +650,11 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    convertOpts: { isForRequest: true }
+                });
             default:
                 assertNever(body);
         }
@@ -657,7 +676,10 @@ export class EndpointSnippetGenerator {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert({
+                    ...parameter,
+                    convertOpts: { isForRequest: true }
+                })
             });
         }
 
@@ -684,7 +706,10 @@ export class EndpointSnippetGenerator {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert({
+                    ...parameter,
+                    convertOpts: { isForRequest: true }
+                })
             });
         }
 

@@ -4,7 +4,6 @@ import {
     ASYNCAPI_DIRECTORY,
     DEFINITION_DIRECTORY,
     FERN_DIRECTORY,
-    fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,

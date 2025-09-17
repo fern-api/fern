@@ -1,16 +1,16 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.Test.Unit.MockServer;
-using SeedMixedFileDirectory.User.Events;
+using SeedMixedFileDirectory.User_.Events;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User.Events;
 
 [TestFixture]
 public class GetMetadataTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

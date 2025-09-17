@@ -1,7 +1,8 @@
+import { type CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -21,8 +22,7 @@ export class Class extends AstNode {
         RecordStruct: "record struct"
     } as const;
     public static readonly Access = Access;
-    public readonly name: string;
-    public readonly namespace: string;
+
     public readonly access: Access;
     public readonly static_: boolean;
     public readonly abstract_: boolean;
@@ -32,12 +32,12 @@ export class Class extends AstNode {
     public readonly reference: ClassReference;
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
-    public readonly isNestedClass: boolean;
     public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
     private readonly doc: XmlDocBlock;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
+    public readonly namespaceReferences: string[] = [];
 
     private fields: Field[] = [];
     private constructors: Class.Constructor[] = [];
@@ -46,45 +46,61 @@ export class Class extends AstNode {
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
 
-    constructor({
-        name,
-        namespace,
-        access,
-        static_,
-        abstract_,
-        sealed,
-        partial,
-        readonly,
-        parentClassReference,
-        interfaceReferences,
-        isNestedClass,
-        type,
-        summary,
-        doc,
-        annotations,
-        primaryConstructor
-    }: Class.Args) {
-        super();
-        this.name = name;
-        this.namespace = namespace;
+    constructor(
+        {
+            name,
+            namespace,
+            access,
+            static_,
+            abstract_,
+            sealed,
+            partial,
+            readonly,
+            parentClassReference,
+            interfaceReferences,
+            enclosingType,
+            type,
+            summary,
+            doc,
+            annotations,
+            primaryConstructor
+        }: Class.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
+        this.reference = this.csharp.classReference({
+            name: name,
+            namespace: namespace,
+            enclosingType: enclosingType
+        });
+
         this.access = access;
         this.static_ = static_ ?? false;
         this.abstract_ = abstract_ ?? false;
         this.sealed = sealed ?? false;
         this.readonly = readonly ?? false;
         this.partial = partial ?? false;
-        this.isNestedClass = isNestedClass ?? false;
         this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
-        this.doc = XmlDocBlock.of(doc ?? { summary });
+        this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary });
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
         this.annotations = annotations ?? [];
-        this.reference = new ClassReference({
-            name: this.name,
-            namespace: this.namespace
-        });
         this.primaryConstructor = primaryConstructor;
+    }
+
+    public get name() {
+        return this.reference.name;
+    }
+    public get namespace() {
+        return this.reference.namespace;
+    }
+    public get enclosingType() {
+        return this.reference.enclosingType;
+    }
+
+    public get isNestedClass(): boolean {
+        return this.enclosingType != null;
     }
 
     public addField(field: Field): void {
@@ -112,6 +128,11 @@ export class Class extends AstNode {
     }
 
     public addNestedClass(subClass: Class): void {
+        if (!subClass.isNestedClass) {
+            throw new Error(
+                `Set the enclosingType of the class ${this.name} to add the nested class ${subClass.name}.`
+            );
+        }
         this.nestedClasses.push(subClass);
     }
 
@@ -140,6 +161,11 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
+        // tell the writer of any namespaces that this class references
+        this.namespaceReferences.forEach((namespace) => {
+            writer.addNamespace(namespace);
+        });
+
         if (!this.isNestedClass) {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
@@ -241,7 +267,7 @@ export class Class extends AstNode {
 
     private writeConstructors(writer: Writer): void {
         this.constructors.forEach((constructor) => {
-            writer.writeNode(XmlDocBlock.of(constructor.doc));
+            writer.writeNode(this.csharp.xmlDocBlockOf(constructor.doc));
             writer.write(`${constructor.access} ${this.name} (`);
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer);
@@ -382,6 +408,10 @@ export class Class extends AstNode {
             writer.writeLine("}");
         }
     }
+
+    public addNamespaceReference(namespace: string) {
+        this.namespaceReferences.push(namespace);
+    }
 }
 
 export namespace Class {
@@ -412,8 +442,8 @@ export namespace Class {
         parentClassReference?: AstNode;
         /* Any interfaces the class extends */
         interfaceReferences?: ClassReference[];
-        /* Defaults to false */
-        isNestedClass?: boolean;
+        /* The type that this class is nested in */
+        enclosingType?: ClassReference;
         /* Any annotations to add to the class */
         annotations?: Annotation[];
         /* Any annotations to add to the class */

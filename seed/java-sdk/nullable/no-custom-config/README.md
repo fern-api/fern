@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
 [![Maven Central](https://img.shields.io/maven-central/v/com.fern/nullable)](https://central.sonatype.com/artifact/com.fern/nullable)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
 
 ## Installation
 
@@ -29,6 +29,10 @@ Add the dependency in your `pom.xml` file:
 </dependency>
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -41,7 +45,6 @@ import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
 import com.seed.nullable.resources.nullable.types.Metadata;
 import com.seed.nullable.resources.nullable.types.Status;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -57,7 +60,7 @@ public class Example {
                 .builder()
                 .username("username")
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )
@@ -174,6 +177,32 @@ client.nullable().createUser(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.nullable.SeedNullableClient;
+import com.seed.nullable.core.RequestOptions;
+
+// Client level
+SeedNullableClient client = SeedNullableClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.nullable().createUser(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

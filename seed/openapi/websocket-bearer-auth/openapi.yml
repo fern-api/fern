@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: websocket-bearer-auth
+  version: ''
+paths: {}
+components:
+  schemas:
+    SendEvent:
+      title: SendEvent
+      type: object
+      properties:
+        sendText:
+          type: string
+        sendParam:
+          type: integer
+      required:
+        - sendText
+        - sendParam
+    send_snake_case:
+      title: send_snake_case
+      type: object
+      properties:
+        send_text:
+          type: string
+        send_param:
+          type: integer
+      required:
+        - send_text
+        - send_param
+    ReceiveEvent:
+      title: ReceiveEvent
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+      required:
+        - alpha
+        - beta
+    receive_snake_case:
+      title: receive_snake_case
+      type: object
+      properties:
+        receive_text:
+          type: string
+        receive_int:
+          type: integer
+      required:
+        - receive_text
+        - receive_int
+    SendEvent2:
+      title: SendEvent2
+      type: object
+      properties:
+        sendText2:
+          type: string
+        sendParam2:
+          type: boolean
+      required:
+        - sendText2
+        - sendParam2
+    ReceiveEvent2:
+      title: ReceiveEvent2
+      type: object
+      properties:
+        gamma:
+          type: string
+        delta:
+          type: integer
+        epsilon:
+          type: boolean
+      required:
+        - gamma
+        - delta
+        - epsilon
+    ReceiveEvent3:
+      title: ReceiveEvent3
+      type: object
+      properties:
+        receiveText3:
+          type: string
+      required:
+        - receiveText3
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

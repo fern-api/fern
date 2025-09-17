@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedBasicAuth;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedBasicAuthClient(
             username: "<username>",
             password: "<password>",
@@ -14,11 +14,7 @@ public class Example1
             }
         );
 
-        await client.BasicAuth.PostWithBasicAuthAsync(
-            new Dictionary<string, object>() {
-                ["key"] = "value",
-            }
-        );
+        await client.BasicAuth.GetWithBasicAuthAsync();
     }
 
 }

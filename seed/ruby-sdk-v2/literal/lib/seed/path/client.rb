@@ -1,25 +1,33 @@
+# frozen_string_literal: true
 
 module Seed
-    module Path
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Path::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Path
+    class Client
+      # @return [Seed::Path::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # @return [Seed::SendResponse]
-            def send(request_options: {}, **params)
-                _request = params
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Types::SendResponse.load(_response.body)
-
-                else
-                    raise _response.body
-            end
-
+      # @return [Seed::Types::SendResponse]
+      def send_(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "path/#{params[:id]}"
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::SendResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
     end
+  end
 end

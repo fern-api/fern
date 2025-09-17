@@ -1,4 +1,3 @@
-pub mod token_response;
+pub mod auth_token_response;
 
-pub use token_response::{*};
-
+pub use auth_token_response::*;

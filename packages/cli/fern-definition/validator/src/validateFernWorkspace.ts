@@ -1,5 +1,5 @@
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
-import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";

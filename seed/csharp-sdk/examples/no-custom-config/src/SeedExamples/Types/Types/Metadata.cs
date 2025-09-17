@@ -68,14 +68,14 @@ public record Metadata
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new Exception("Metadata.Type is not 'html'");
+        IsHtml ? (string)Value! : throw new System.Exception("Metadata.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'markdown', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'markdown'.</exception>
     public string AsMarkdown() =>
-        IsMarkdown ? (string)Value! : throw new Exception("Metadata.Type is not 'markdown'");
+        IsMarkdown ? (string)Value! : throw new System.Exception("Metadata.Type is not 'markdown'");
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -190,9 +190,9 @@ public record Metadata
             var value = discriminator switch
             {
                 "html" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "markdown" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
@@ -253,7 +253,7 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator Metadata.Html(string value) => new(value);
     }
 
     /// <summary>
@@ -271,6 +271,6 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator Markdown(string value) => new(value);
+        public static implicit operator Metadata.Markdown(string value) => new(value);
     }
 }

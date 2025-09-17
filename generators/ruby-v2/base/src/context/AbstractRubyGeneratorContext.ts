@@ -15,6 +15,8 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly ir: IntermediateRepresentation;
     public readonly customConfig: CustomConfig;
     public readonly typeMapper: RubyTypeMapper;
+    public readonly typesDirName: string = "types";
+    public readonly typesModuleName: string = "Types";
 
     public constructor(
         ir: IntermediateRepresentation,
@@ -44,10 +46,34 @@ export abstract class AbstractRubyGeneratorContext<
         return this.customConfig.module ?? snakeCase(this.config.organization);
     }
 
+    public getRootPackageName(): string {
+        return this.ir.apiName.camelCase.safeName.toLowerCase();
+    }
+
+    public getVersionFromConfig(): string | undefined {
+        return this.config.output.mode._visit<string | undefined>({
+            publish: (generatorPublishConfig) => generatorPublishConfig.version || undefined,
+            downloadFiles: () => undefined,
+            github: (githubOutputMode) => githubOutputMode.version || undefined,
+            _other: () => undefined
+        });
+    }
+
+    public getRootModuleName(): string {
+        return capitalize(this.getRootFolderName());
+    }
+
     public getRootModule(): ruby.Module_ {
         return ruby.module({
-            name: capitalize(this.getRootFolderName()),
+            name: this.getRootModuleName(),
             statements: []
+        });
+    }
+
+    public getModelClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Model",
+            modules: ["Internal", "Types"]
         });
     }
 
@@ -58,7 +84,25 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    protected snakeNames(typeDeclaration: TypeDeclaration): string[] {
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName);
+    }
+
+    protected pascalNames(typeDeclaration: TypeDeclaration): string[] {
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
+    }
+
+    public abstract getAllTypeDeclarations(): TypeDeclaration[];
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+
+    public abstract getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference;
+
+    public abstract getFileNameForTypeId(typeId: TypeId): string;
+
+    public abstract getModuleNamesForTypeId(typeId: TypeId): string[];
+
+    public abstract getModulesForTypeId(typeId: TypeId): ruby.Module_[];
 }

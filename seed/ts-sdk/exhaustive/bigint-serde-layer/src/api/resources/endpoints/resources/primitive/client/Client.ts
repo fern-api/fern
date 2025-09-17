@@ -14,7 +14,7 @@ export declare namespace Primitive {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -27,7 +27,7 @@ export declare namespace Primitive {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -56,7 +56,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -136,7 +136,7 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -216,7 +216,7 @@ export class Primitive {
         request: bigint,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<bigint>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -296,7 +296,7 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -376,7 +376,7 @@ export class Primitive {
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -456,7 +456,7 @@ export class Primitive {
         request: Date,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<Date>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -536,7 +536,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -616,7 +616,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -696,7 +696,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

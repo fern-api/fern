@@ -93,8 +93,16 @@ export async function runLocalGenerationForWorkspace({
                     return;
                 }
 
-                if (organization.ok && organization.body.selfHostedSdKs) {
-                    intermediateRepresentation.selfHosted = true;
+                if (organization.ok) {
+                    if (organization.body.selfHostedSdKs) {
+                        intermediateRepresentation.selfHosted = true;
+                    }
+                    if (organization.body.isWhitelabled) {
+                        if (intermediateRepresentation.readmeConfig == null) {
+                            intermediateRepresentation.readmeConfig = emptyReadmeConfig;
+                        }
+                        intermediateRepresentation.readmeConfig.whiteLabel = true;
+                    }
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
@@ -107,7 +115,7 @@ export async function runLocalGenerationForWorkspace({
                     org: organization.ok ? organization.body : undefined,
                     version,
                     packageName,
-                    context
+                    context: interactiveTaskContext
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -216,6 +224,59 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "java") {
+            const config = generatorInvocation.raw?.config;
+
+            interface JavaGeneratorConfig {
+                group?: unknown;
+                artifact?: unknown;
+                "package-prefix"?: unknown;
+                [key: string]: unknown;
+            }
+
+            // Support both styles: package-prefix/package_name and group/artifact
+            const mavenCoordinate = (() => {
+                if (!config || typeof config !== "object" || config === null) {
+                    return undefined;
+                }
+
+                const configObj = config as JavaGeneratorConfig;
+
+                if (typeof configObj.group === "string" && typeof configObj.artifact === "string") {
+                    return {
+                        groupId: configObj.group,
+                        artifactId: configObj.artifact
+                    };
+                } else if (typeof configObj["package-prefix"] === "string" && packageName) {
+                    return {
+                        groupId: configObj["package-prefix"],
+                        artifactId: packageName
+                    };
+                } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
+                    context.logger.warn("Java generator has package-prefix configured but packageName is missing");
+                }
+
+                return undefined;
+            })();
+
+            const coordinate = mavenCoordinate ? `${mavenCoordinate.groupId}:${mavenCoordinate.artifactId}` : undefined;
+
+            if (coordinate) {
+                const mavenVersion = version ?? "0.0.0";
+                publishTarget = PublishTarget.maven({
+                    coordinate,
+                    version: mavenVersion,
+                    usernameEnvironmentVariable: "MAVEN_USERNAME",
+                    passwordEnvironmentVariable: "MAVEN_PASSWORD",
+                    mavenUrlEnvironmentVariable: "MAVEN_PUBLISH_REGISTRY_URL"
+                });
+                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${mavenVersion}`);
+            } else if (config && typeof config === "object") {
+                context.logger.debug(
+                    "Java generator config provided but could not construct Maven coordinate. " +
+                        "Expected either 'group' and 'artifact' or 'package-prefix' with packageName."
+                );
+            }
         }
 
         return FernIr.PublishingConfig.filesystem({
@@ -225,7 +286,12 @@ function getPublishConfig({
     }
 
     return generatorInvocation.outputMode._visit({
-        downloadFiles: () => undefined,
+        downloadFiles: () => {
+            return FernIr.PublishingConfig.filesystem({
+                generateFullProject: org?.selfHostedSdKs ?? false,
+                publishTarget: undefined
+            });
+        },
         github: () => undefined,
         githubV2: () => undefined,
         publish: () => undefined,
@@ -245,3 +311,15 @@ function isGithubSelfhosted(
     }
     return "uri" in github && "token" in github;
 }
+
+const emptyReadmeConfig: FernIr.ReadmeConfig = {
+    defaultEndpoint: undefined,
+    bannerLink: undefined,
+    introduction: undefined,
+    apiReferenceLink: undefined,
+    apiName: undefined,
+    disabledFeatures: undefined,
+    whiteLabel: undefined,
+    customSections: undefined,
+    features: undefined
+};

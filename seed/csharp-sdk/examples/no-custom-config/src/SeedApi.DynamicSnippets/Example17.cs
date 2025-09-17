@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedExamples;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example17
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -15,11 +15,11 @@ public class Example17
 
         await client.Service.GetMetadataAsync(
             new GetMetadataRequest{
-                Shallow = true,
+                Shallow = false,
                 Tag = new List<string>(){
-                    "tag",
+                    "development",
                 },
-                XApiVersion = "X-API-Version"
+                XApiVersion = "0.0.1"
             }
         );
     }

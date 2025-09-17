@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { SeedExhaustiveClient } from "../../Client.js";
+import * as SeedExhaustive from "../../api/index.js";
 
 describe("NoAuth", () => {
-    test("postWithNoAuth", async () => {
+    test("postWithNoAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -24,5 +25,30 @@ describe("NoAuth", () => {
             key: "value",
         });
         expect(response).toEqual(true);
+    });
+
+    test("postWithNoAuth (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = { message: "message" };
+        server
+            .mockEndpoint()
+            .post("/no-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.noAuth.postWithNoAuth({
+                key: "value",
+            });
+        }).rejects.toThrow(
+            new SeedExhaustive.BadRequestBody({
+                message: "message",
+            }),
+        );
     });
 });

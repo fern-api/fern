@@ -3,27 +3,32 @@ types:
     properties:
       id: string
     examples:
-    - name: example
-      value:
-        id: example
+      - name: example
+        value:
+          id: example
+
+  WithName:
+    properties:
+      name: string
 
   Shape:
+    extends: WithName
     base-properties:
       id: string
     union:
       circle: Circle
       square: Square
     examples:
-    - name: circle
-      value:
-        type: circle
-        id: example
-        radius: 5.0
-    - name: square
-      value:
-        type: square
-        id: example
-        length: 5.0
+      - name: circle
+        value:
+          type: circle
+          id: example
+          radius: 5.0
+      - name: square
+        value:
+          type: square
+          id: example
+          length: 5.0
 
   Circle:
     properties:

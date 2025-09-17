@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
 [![Maven Central](https://img.shields.io/maven-central/v/com.fern/query-parameters-openapi)](https://central.sonatype.com/artifact/com.fern/query-parameters-openapi)
 
-The Seed Java library provides convenient access to the Seed API from Java.
+The Seed Java library provides convenient access to the Seed APIs from Java.
 
 ## Installation
 
@@ -29,6 +29,10 @@ Add the dependency in your `pom.xml` file:
 </dependency>
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -42,7 +46,6 @@ import com.seed.api.types.NestedUser;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -66,20 +69,20 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -88,13 +91,13 @@ public class Example {
                     )
                 )
                 .excludeUser(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -103,9 +106,7 @@ public class Example {
                     )
                 )
                 .filter(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList(Optional.of("filter"))
                 )
                 .neighborRequired(
                     SearchRequestNeighborRequired.ofUser(
@@ -113,7 +114,7 @@ public class Example {
                             .builder()
                             .name("name")
                             .tags(
-                                new ArrayList<String>(
+                                Optional.of(
                                     Arrays.asList("tags", "tags")
                                 )
                             )
@@ -136,7 +137,7 @@ public class Example {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -149,7 +150,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -160,7 +161,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -261,6 +262,32 @@ client.search(
     RequestOptions
         .builder()
         .timeout(10)
+        .build()
+);
+```
+
+### Custom Headers
+
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+
+```java
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
+
+// Client level
+SeedApiClient client = SeedApiClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
+
+// Request level
+client.search(
+    ...,
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
         .build()
 );
 ```

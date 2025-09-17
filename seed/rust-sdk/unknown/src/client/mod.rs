@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod unknown;
 pub use unknown::UnknownClient;

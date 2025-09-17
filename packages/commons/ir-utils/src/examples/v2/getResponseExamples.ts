@@ -1,11 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpResponse,
-    V2HttpEndpointResponse,
-    V2HttpEndpointResponseBody,
-    V2SchemaExample
-} from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpResponse, V2HttpEndpointResponse, V2HttpEndpointResponseBody } from "@fern-api/ir-sdk";
 
 import { getV2Examples } from "./getV2Examples";
 

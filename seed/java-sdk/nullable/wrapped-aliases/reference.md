@@ -17,19 +17,13 @@ client.nullable().getUsers(
     GetUsersRequest
         .builder()
         .usernames(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("usernames")
-            )
+            Arrays.asList(Optional.of("usernames"))
         )
         .activated(
-            new ArrayList<Optional<Boolean>>(
-                Arrays.asList(true)
-            )
+            Arrays.asList(Optional.of(true))
         )
         .tags(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("tags")
-            )
+            Arrays.asList("tags")
         )
         .avatar("avatar")
         .extra(true)
@@ -111,7 +105,7 @@ client.nullable().createUser(
         .builder()
         .username("username")
         .tags(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("tags", "tags")
             )
         )

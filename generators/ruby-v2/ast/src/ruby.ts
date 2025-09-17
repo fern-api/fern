@@ -1,4 +1,5 @@
 import {
+    AstNode,
     Class_,
     ClassInstantiation,
     ClassReference,
@@ -9,18 +10,16 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
-    MethodKind,
     Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
-    Writer,
     YieldParameter
 } from "./ast";
+import { Begin } from "./ast/Begin";
 import { IfElse } from "./ast/IfElse";
-
-import * as TypeLiteral from "./ast/TypeLiteral";
+import { Raise } from "./ast/Raise";
 
 export {
     Class_,
@@ -110,4 +109,21 @@ export function positionalArgument(args: PositionalArgument.Args): PositionalArg
 
 export function ifElse(args: IfElse.Args): IfElse {
     return new IfElse(args);
+}
+
+export function begin(args: Begin.Args): Begin {
+    return new Begin(args);
+}
+
+export function raise(args: Raise.Args): Raise {
+    return new Raise(args);
+}
+
+export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {
+    let topLevelNode: AstNode = node;
+    for (const module of modules.toReversed()) {
+        module.addStatement(topLevelNode);
+        topLevelNode = module;
+    }
+    return topLevelNode;
 }

@@ -29,7 +29,7 @@ export class UnionGenerator {
 
     public generate(): RustFile {
         const typeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
-        const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
+        const filename = this.context.getUniqueFilenameForType(this.typeDeclaration);
 
         const writer = new rust.Writer();
 
@@ -51,7 +51,8 @@ export class UnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -269,8 +270,14 @@ export class UnionGenerator {
         });
     }
 
-    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
-        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+    private getVariantTypesUsedInUnion(): {
+        snakeCase: { unsafeName: string };
+        pascalCase: { unsafeName: string };
+    }[] {
+        const variantTypeNames: {
+            snakeCase: { unsafeName: string };
+            pascalCase: { unsafeName: string };
+        }[] = [];
         const visited = new Set<string>();
 
         this.unionTypeDeclaration.types.forEach((unionType) => {
@@ -285,8 +292,12 @@ export class UnionGenerator {
                         if (!visited.has(typeName)) {
                             visited.add(typeName);
                             variantTypeNames.push({
-                                snakeCase: { unsafeName: singleProperty.type.name.snakeCase.unsafeName },
-                                pascalCase: { unsafeName: singleProperty.type.name.pascalCase.unsafeName }
+                                snakeCase: {
+                                    unsafeName: singleProperty.type.name.snakeCase.unsafeName
+                                },
+                                pascalCase: {
+                                    unsafeName: singleProperty.type.name.pascalCase.unsafeName
+                                }
                             });
                         }
                     }
@@ -297,8 +308,12 @@ export class UnionGenerator {
                     if (!visited.has(typeName)) {
                         visited.add(typeName);
                         variantTypeNames.push({
-                            snakeCase: { unsafeName: declaredTypeName.name.snakeCase.unsafeName },
-                            pascalCase: { unsafeName: declaredTypeName.name.pascalCase.unsafeName }
+                            snakeCase: {
+                                unsafeName: declaredTypeName.name.snakeCase.unsafeName
+                            },
+                            pascalCase: {
+                                unsafeName: declaredTypeName.name.pascalCase.unsafeName
+                            }
                         });
                     }
                 },

@@ -30,6 +30,32 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/named-mixed/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedContentTypes\n\nclient = SeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.named_patch_with_mixed(\n    id=\"id\",\n    app_id=\"appId\",\n    instructions=\"instructions\",\n    active=True,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedContentTypes\n\nclient = AsyncSeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.named_patch_with_mixed(\n        id=\"id\",\n        app_id=\"appId\",\n        instructions=\"instructions\",\n        active=True,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/optional-merge-patch-test",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedContentTypes\n\nclient = SeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.optional_merge_patch_test(\n    required_field=\"requiredField\",\n    optional_string=\"optionalString\",\n    optional_integer=1,\n    optional_boolean=True,\n    nullable_string=\"nullableString\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedContentTypes\n\nclient = AsyncSeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.optional_merge_patch_test(\n        required_field=\"requiredField\",\n        optional_string=\"optionalString\",\n        optional_integer=1,\n        optional_boolean=True,\n        nullable_string=\"nullableString\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/regular/{id}",
                 "method": "PATCH",
                 "identifier_override": "endpoint_service.regularPatch"

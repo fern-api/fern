@@ -200,13 +200,7 @@ public final class User {
     }
 
     public interface IdStage {
-        EmailStage id(@NotNull UserId id);
-    }
-
-    public interface EmailStage {
-        FavoriteNumberStage email(@NotNull Email email);
-
-        FavoriteNumberStage email(Nullable<Email> email);
+        FavoriteNumberStage id(@NotNull UserId id);
     }
 
     public interface FavoriteNumberStage {
@@ -228,6 +222,8 @@ public final class User {
 
         _FinalStage metadata(Nullable<Metadata> metadata);
 
+        _FinalStage email(Nullable<Email> email);
+
         _FinalStage numbers(Optional<List<Integer>> numbers);
 
         _FinalStage numbers(List<Integer> numbers);
@@ -242,12 +238,10 @@ public final class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, IdStage, EmailStage, FavoriteNumberStage, _FinalStage {
+    public static final class Builder implements NameStage, IdStage, FavoriteNumberStage, _FinalStage {
         private String name;
 
         private UserId id;
-
-        private Email email;
 
         private WeirdNumber favoriteNumber;
 
@@ -286,26 +280,8 @@ public final class User {
 
         @java.lang.Override
         @JsonSetter("id")
-        public EmailStage id(@NotNull UserId id) {
+        public FavoriteNumberStage id(@NotNull UserId id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
-            return this;
-        }
-
-        public FavoriteNumberStage email(Nullable<Email> email) {
-            if (email.isNull()) {
-                this.email = null;
-            } else if (email.isEmpty()) {
-                this.email = Email.of(Optional.empty());
-            } else {
-                this.email = email.get();
-            }
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("email")
-        public FavoriteNumberStage email(@NotNull Email email) {
-            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
@@ -363,6 +339,17 @@ public final class User {
         @JsonSetter(value = "numbers", nulls = Nulls.SKIP)
         public _FinalStage numbers(Optional<List<Integer>> numbers) {
             this.numbers = numbers;
+            return this;
+        }
+
+        public _FinalStage email(Nullable<Email> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Email.of(Optional.empty());
+            } else {
+                this.email = email.get();
+            }
             return this;
         }
 

@@ -312,7 +312,9 @@ function convertLayoutConfig(
             layout.headerPosition === "static"
                 ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
-        disableHeader: layout.disableHeader ?? false
+        disableHeader: layout.disableHeader ?? false,
+        hideNavLinks: layout.hideNavLinks ?? false,
+        hideFeedback: layout.hideFeedback ?? false
     };
 }
 
@@ -746,7 +748,8 @@ async function convertNavigationItem({
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag),
+            availability: rawConfig.availability
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -758,6 +761,7 @@ async function convertNavigationItem({
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
+            availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
                 rawConfig.snippets != null
@@ -827,7 +831,8 @@ function parsePageConfig(
         noindex: item.noindex,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned,
-        featureFlags: convertFeatureFlag(item.featureFlag)
+        featureFlags: convertFeatureFlag(item.featureFlag),
+        availability: item.availability
     };
 }
 
@@ -933,7 +938,9 @@ function convertSnippetsConfiguration({
         go: rawConfig.go,
         java: rawConfig.java,
         ruby: rawConfig.ruby,
-        csharp: rawConfig.csharp
+        csharp: rawConfig.csharp,
+        php: rawConfig.php,
+        swift: rawConfig.swift
     };
 }
 

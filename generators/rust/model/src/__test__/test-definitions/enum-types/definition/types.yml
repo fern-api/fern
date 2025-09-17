@@ -4,11 +4,11 @@ types:
   Color:
     enum:
       - RED
-      - GREEN  
+      - GREEN
       - BLUE
-  
+
   Status:
     enum:
       - ACTIVE
       - INACTIVE
-      - PENDING 
+      - PENDING

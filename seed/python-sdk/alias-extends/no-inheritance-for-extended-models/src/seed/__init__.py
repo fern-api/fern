@@ -2,8 +2,40 @@
 
 # isort: skip_file
 
-from .types import AliasType, Child, Parent
-from .client import AsyncSeedAliasExtends, SeedAliasExtends
-from .version import __version__
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import AliasType, Child, Parent
+    from .client import AsyncSeedAliasExtends, SeedAliasExtends
+    from .version import __version__
+_dynamic_imports: typing.Dict[str, str] = {
+    "AliasType": ".types",
+    "AsyncSeedAliasExtends": ".client",
+    "Child": ".types",
+    "Parent": ".types",
+    "SeedAliasExtends": ".client",
+    "__version__": ".version",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = ["AliasType", "AsyncSeedAliasExtends", "Child", "Parent", "SeedAliasExtends", "__version__"]

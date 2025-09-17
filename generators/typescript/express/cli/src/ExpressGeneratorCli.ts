@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
@@ -5,12 +6,11 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
-
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
 
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
-    protected parseCustomConfig(customConfig: unknown): ExpressCustomConfig {
+    protected parseCustomConfig(customConfig: unknown, _logger: Logger): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
         const noSerdeLayer = parsed?.noSerdeLayer ?? false;
         const enableInlineTypes = false; // hardcode, not supported in Express
@@ -96,11 +96,11 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return customConfig.outputSourceFiles;
     }
 
-    protected shouldTolerateRepublish(customConfig: ExpressCustomConfig): boolean {
+    protected shouldTolerateRepublish(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }
 
-    protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
+    protected publishToJsr(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }
 

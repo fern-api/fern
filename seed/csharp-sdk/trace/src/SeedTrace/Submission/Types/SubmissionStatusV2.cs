@@ -225,7 +225,9 @@ public record SubmissionStatusV2
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Test(SeedTrace.TestSubmissionStatusV2 value) => new(value);
+        public static implicit operator SubmissionStatusV2.Test(
+            SeedTrace.TestSubmissionStatusV2 value
+        ) => new(value);
     }
 
     /// <summary>
@@ -243,7 +245,8 @@ public record SubmissionStatusV2
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Workspace(SeedTrace.WorkspaceSubmissionStatusV2 value) =>
-            new(value);
+        public static implicit operator SubmissionStatusV2.Workspace(
+            SeedTrace.WorkspaceSubmissionStatusV2 value
+        ) => new(value);
     }
 }

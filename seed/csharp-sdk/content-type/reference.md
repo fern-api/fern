@@ -134,6 +134,143 @@ await client.Service.PatchComplexAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">NamedPatchWithMixedAsync</a>(id, NamedMixedPatchRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Named request with mixed optional/nullable fields and merge-patch content type.
+This should trigger the NPE issue when optional fields aren't initialized.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.NamedPatchWithMixedAsync(
+    "id",
+    new NamedMixedPatchRequest
+    {
+        AppId = "appId",
+        Instructions = "instructions",
+        Active = true,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `NamedMixedPatchRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">OptionalMergePatchTestAsync</a>(OptionalMergePatchRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+This endpoint should:
+1. Not NPE when fields are not provided (tests initialization)
+2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.OptionalMergePatchTestAsync(
+    new OptionalMergePatchRequest
+    {
+        RequiredField = "requiredField",
+        OptionalString = "optionalString",
+        OptionalInteger = 1,
+        OptionalBoolean = true,
+        NullableString = "nullableString",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OptionalMergePatchRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... })</code></summary>
 <dl>
 <dd>

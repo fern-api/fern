@@ -9,18 +9,17 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login } from "@fern-api/login";
+import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -72,6 +71,12 @@ async function runCli() {
         setGlobalDispatcher(
             new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
         );
+    }
+
+    if (process.env.HTTP_PROXY != null) {
+        const { setGlobalDispatcher, ProxyAgent } = await import("undici");
+        const proxyAgent = new ProxyAgent(process.env.HTTP_PROXY);
+        setGlobalDispatcher(proxyAgent);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -170,6 +175,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
+    addLogoutCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
@@ -355,19 +361,40 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     description: "The previous version of the API (e.g. 1.1.0)"
                 })
+                .option("from-generator-version", {
+                    string: true,
+                    description: "The previous version of the generator (e.g. 1.1.0)"
+                })
+                .option("to-generator-version", {
+                    string: true,
+                    description: "The next version of the generator (e.g. 1.1.0)"
+                })
                 .option("quiet", {
                     boolean: true,
                     default: false,
                     alias: "q",
                     description: "Whether to suppress output written to stderr"
+                })
+                .middleware((argv) => {
+                    if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
+                        throw new Error(
+                            "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
+                        );
+                    }
                 }),
         async (argv) => {
-            const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
+            const fromVersion = undefinedIfNullish(argv.fromVersion);
+            const generatorVersions = undefinedIfSomeNullish({
+                from: argv.fromGeneratorVersion,
+                to: argv.toGeneratorVersion
+            });
+
             const result = await diff({
                 context: cliContext,
                 from: argv.from,
                 to: argv.to,
-                fromVersion
+                fromVersion,
+                generatorVersions
             });
             if (fromVersion != null) {
                 // If the user specified the --from-version flag, we write the full
@@ -525,9 +552,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
                 })
-                .option("dynamic-snippets", {
+                .option("disable-dynamic-snippets", {
                     boolean: true,
-                    description: "Use dynamic SDK snippets in docs generation",
+                    description: "Disable dynamic SDK snippets in docs generation",
                     default: false
                 }),
         async (argv) => {
@@ -579,7 +606,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
-                    dynamicSnippets: argv.dynamicSnippets
+                    disableDynamicSnippets: argv.disableDynamicSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1016,6 +1043,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
+            });
+        }
+    );
+}
+
+function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "logout",
+        "Log out of Fern",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.runTask(async (context) => {
+                await cliContext.instrumentPostHogEvent({
+                    command: "fern logout"
+                });
+                await logout(context);
             });
         }
     );

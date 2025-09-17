@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { type CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -35,27 +35,30 @@ export class Method extends AstNode {
     private readonly annotations: Annotation[];
     private readonly interfaceReference?: ClassReference;
 
-    constructor({
-        name,
-        isAsync,
-        isAsyncEnumerable,
-        override,
-        access,
-        return_,
-        body,
-        noBody,
-        bodyType,
-        summary,
-        doc,
-        type,
-        classReference,
-        parameters,
-        typeParameters,
-        annotations,
-        codeExample,
-        interfaceReference
-    }: Method.Args) {
-        super();
+    constructor(
+        {
+            name,
+            isAsync,
+            isAsyncEnumerable,
+            override,
+            access,
+            return_,
+            body,
+            noBody,
+            bodyType,
+            summary,
+            doc,
+            type,
+            classReference,
+            parameters,
+            typeParameters,
+            annotations,
+            codeExample,
+            interfaceReference
+        }: Method.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
         this.name = name;
         this.isAsync = isAsync ?? false;
         this.isAsyncEnumerable = isAsyncEnumerable ?? false;
@@ -66,7 +69,7 @@ export class Method extends AstNode {
         this.body = body;
         this.bodyType = bodyType ?? Method.BodyType.Statement;
         this.summary = summary;
-        this.doc = XmlDocBlock.of(doc ?? { summary, codeExample });
+        this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary, codeExample });
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
@@ -101,13 +104,7 @@ export class Method extends AstNode {
         }
         if (this.return == null) {
             if (this.isAsync) {
-                writer.writeNode(
-                    new ClassReference({
-                        name: "Task",
-                        namespace: "global::System.Threading.Tasks",
-                        fullyQualified: true
-                    })
-                );
+                writer.writeNode(this.csharp.System.Threading.Tasks.Task());
                 writer.write(" ");
             } else {
                 writer.write("void ");
@@ -118,11 +115,7 @@ export class Method extends AstNode {
                     // if the return type is an async enumerable, we don't want to add a class reference for Task<T>
                     this.return.write(writer);
                 } else {
-                    // Don't add a class reference for Task<T> since we don't want the writer
-                    // to detect a conflict between Task<T> and Task and add a fully qualified name
-                    writer.write("Task<");
-                    this.return.write(writer);
-                    writer.write(">");
+                    writer.writeNode(this.csharp.System.Threading.Tasks.Task(this.return));
                 }
             } else {
                 this.return.write(writer);

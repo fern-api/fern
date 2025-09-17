@@ -1,0 +1,11 @@
+types:
+  LiteralString:
+    docs: A string literal.
+    type: literal<"literally">
+
+  UnionOverLiteral:
+    docs: An undiscriminated union over a literal.
+    union:
+      - type: string
+      - type: LiteralString
+    discriminated: false

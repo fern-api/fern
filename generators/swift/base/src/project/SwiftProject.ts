@@ -1,20 +1,20 @@
 import { mkdir } from "node:fs/promises";
-import { AbstractProject } from "@fern-api/base-generator";
+import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 
 import { AbstractSwiftGeneratorContext } from "../context";
+import { ProjectSymbolRegistry } from "./ProjectSymbolRegistry";
 import { SwiftFile } from "./SwiftFile";
-import { SymbolRegistry } from "./SymbolRegistry";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     /** Files stored in the the project root. */
-    private readonly rootFiles: SwiftFile[] = [];
+    private readonly rootFiles: File[] = [];
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
     private readonly srcFileNamesWithoutExtension = new Set<string>();
 
-    public readonly symbolRegistry: SymbolRegistry;
+    public readonly symbolRegistry: ProjectSymbolRegistry;
 
     public constructor({
         context
@@ -22,18 +22,18 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
-        this.symbolRegistry = SymbolRegistry.create();
+        this.symbolRegistry = ProjectSymbolRegistry.create();
     }
 
-    private get srcDirectory(): RelativeFilePath {
+    public get sourcesDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Sources");
     }
 
-    public get absolutePathToSrcDirectory(): AbsoluteFilePath {
-        return join(this.absolutePathToOutputDirectory, this.srcDirectory);
+    public get absolutePathToSourcesDirectory(): AbsoluteFilePath {
+        return join(this.absolutePathToOutputDirectory, this.sourcesDirectory);
     }
 
-    public addRootFiles(...files: SwiftFile[]): void {
+    public addRootFiles(...files: File[]): void {
         this.rootFiles.push(...files);
     }
 
@@ -87,9 +87,9 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     public async persist(): Promise<void> {
-        const { context, absolutePathToSrcDirectory } = this;
-        context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
-        await mkdir(absolutePathToSrcDirectory, { recursive: true });
+        const { context, absolutePathToSourcesDirectory } = this;
+        context.logger.debug(`mkdir ${absolutePathToSourcesDirectory}`);
+        await mkdir(absolutePathToSourcesDirectory, { recursive: true });
         await Promise.all([this.persistRootFiles(), this.persistSourceFiles()]);
     }
 
@@ -99,7 +99,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     private async persistSourceFiles(): Promise<void> {
-        const { absolutePathToSrcDirectory, srcFiles } = this;
-        await Promise.all(srcFiles.map((file) => file.write(absolutePathToSrcDirectory)));
+        const { absolutePathToSourcesDirectory, srcFiles } = this;
+        await Promise.all(srcFiles.map((file) => file.write(absolutePathToSourcesDirectory)));
     }
 }

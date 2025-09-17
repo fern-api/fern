@@ -123,8 +123,18 @@ class GeneratorCli:
         )
 
     def _install(self) -> None:
-        self._run_command(command=["npm", "install", "-f", "-g", GENERATOR_CLI_NPM_PACKAGE])
-        version = self._run_command([GENERATOR_CLI, "--version"])
+        try:
+            self._run_command(command=["npm", "install", "-f", "-g", GENERATOR_CLI_NPM_PACKAGE])
+        except Exception as e:
+            self._debug_log(message=f"Failed to install {GENERATOR_CLI_NPM_PACKAGE} due to error: {e}")
+
+        try:
+            version = self._run_command([GENERATOR_CLI, "--version"])
+        except Exception as e:
+            _err_msg = f"Failed to get version of {GENERATOR_CLI_NPM_PACKAGE} due to error: {e}"
+            self._debug_log(message=_err_msg)
+            raise Exception(_err_msg)
+
         self._debug_log(message=f"Successfully installed {GENERATOR_CLI_NPM_PACKAGE} version {version}")
         self._installed = True
 
@@ -186,6 +196,9 @@ class GeneratorCli:
             banner_link=self._ir.readme_config.banner_link if self._ir.readme_config else None,
             features=features,
             reference_markdown_path=f"./{REFERENCE_FILENAME}",
+            api_name=self._ir.readme_config.api_name if self._ir.readme_config else None,
+            disabled_features=self._ir.readme_config.disabled_features if self._ir.readme_config else None,
+            white_label=self._ir.readme_config.white_label if self._ir.readme_config else None,
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:

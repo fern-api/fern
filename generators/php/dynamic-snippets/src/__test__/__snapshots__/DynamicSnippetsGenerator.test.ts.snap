@@ -56,6 +56,10 @@ use Acme\\AcmeClient;
 use Acme\\Types\\Types\\BigEntity;
 use Acme\\Types\\Types\\Actor;
 use Acme\\Types\\Types\\ExtendedMovie;
+use Acme\\Commons\\Types\\Types\\EventInfo;
+use Acme\\Commons\\Types\\Types\\Metadata;
+use Acme\\Types\\Types\\Migration;
+use Acme\\Types\\Types\\MigrationStatus;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
@@ -88,6 +92,18 @@ $client->service->createBigEntity(
                 ],
             ],
             'revenue' => 1000000,
+        ]),
+        'eventInfo' => EventInfo::metadata(new Metadata([
+            'id' => 'event-12345',
+            'data' => [
+                'key1' => 'val1',
+                'key2' => 'val2',
+            ],
+            'jsonString' => 'abc',
+        ])),
+        'migration' => new Migration([
+            'name' => 'Migration 31 Aug',
+            'status' => MigrationStatus::Running->value,
         ]),
     ]),
 );
@@ -500,6 +516,63 @@ $client->nullable->getUsers(
             null,
         ],
         'extra' => null,
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->createUser(
+    new User([
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->createUser(
+    new User([
+        'id' => 'id',
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
     ]),
 );
 "

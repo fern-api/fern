@@ -20,6 +20,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export declare namespace ClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
+        isRootClient?: boolean;
         fernFilepath: FernFilepath;
         subpackage: Subpackage | undefined;
         nestedSubpackages: SubpackageId[];
@@ -29,14 +30,24 @@ export declare namespace ClientGenerator {
 }
 
 export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private isRootClient: boolean = false;
     private fernFilepath: FernFilepath;
     private nestedSubpackages: SubpackageId[] = [];
     private subpackage: Subpackage | undefined;
     private serviceId: ServiceId | undefined;
     private service: HttpService | undefined;
 
-    constructor({ fernFilepath, subpackage, nestedSubpackages, context, serviceId, service }: ClientGenerator.Args) {
+    constructor({
+        fernFilepath,
+        isRootClient = false,
+        subpackage,
+        nestedSubpackages,
+        context,
+        serviceId,
+        service
+    }: ClientGenerator.Args) {
         super(context);
+        this.isRootClient = isRootClient;
         this.fernFilepath = fernFilepath;
         this.subpackage = subpackage;
         this.nestedSubpackages = nestedSubpackages;
@@ -53,6 +64,13 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         });
 
         struct.addConstructor(this.getConstructor());
+
+        struct.addField(
+            go.field({
+                name: "options",
+                type: this.context.getRequestOptionsType()
+            })
+        );
 
         if (this.serviceId != null && this.service != null) {
             for (const endpoint of this.service.endpoints) {
@@ -105,11 +123,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 name: "baseURL",
                 type: go.Type.string()
             }),
-            this.context.caller.getField(),
-            go.field({
-                name: "header",
-                type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
-            })
+            this.context.caller.getField()
         );
 
         return new GoFile({
@@ -136,7 +150,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             fields.push({
                 name: this.context.getClassName(subpackage.name),
-                value: this.instantiateClient({ subpackage })
+                value: this.instantiateSubClient({ subpackage })
             });
         }
         if (this.service != null && this.service.endpoints.length > 0) {
@@ -146,6 +160,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             });
         }
         fields.push(
+            {
+                name: "options",
+                value: go.TypeInstantiation.reference(go.codeblock("options"))
+            },
             {
                 name: "baseURL",
                 value: go.TypeInstantiation.reference(
@@ -173,24 +191,21 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                         )
                     })
                 )
-            },
-            {
-                name: "header",
-                value: go.TypeInstantiation.reference(
-                    go.selector({
-                        on: go.codeblock("options"),
-                        selector: go.codeblock("ToHeader()")
-                    })
-                )
             }
         );
         return {
             name: this.context.getClientConstructorName(this.subpackage),
-            parameters: [this.context.getVariadicRequestOptionParameter()],
+            parameters: [
+                this.isRootClient
+                    ? this.context.getVariadicRequestOptionParameter()
+                    : this.context.getRequestOptionsParameter()
+            ],
             body: go.codeblock((writer) => {
-                writer.write("options := ");
-                writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
-                writer.newLine();
+                if (this.isRootClient) {
+                    writer.write("options := ");
+                    writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
+                    writer.newLine();
+                }
                 this.writeEnvironmentVariables({ writer });
                 writer.write("return ");
                 writer.writeNode(
@@ -326,11 +341,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
     }
 
-    private instantiateClient({ subpackage }: { subpackage: Subpackage }): go.TypeInstantiation {
+    private instantiateSubClient({ subpackage }: { subpackage: Subpackage }): go.TypeInstantiation {
         return go.TypeInstantiation.reference(
             go.invokeFunc({
                 func: this.getClientConstructor({ subpackage }),
-                arguments_: [go.codeblock("opts...")],
+                arguments_: [go.codeblock("options")],
                 multiline: false
             })
         );

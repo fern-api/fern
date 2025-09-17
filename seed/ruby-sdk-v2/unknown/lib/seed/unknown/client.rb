@@ -1,43 +1,52 @@
+# frozen_string_literal: true
 
 module Seed
-    module Unknown
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Unknown::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Unknown
+    class Client
+      # @return [Seed::Unknown::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # @return [Array[Hash[String, untyped]]]
-            def post(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: ""
-                )
-
-                _response = @client.send(_request)
-                if if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-                end
-            end
-
-            # @return [Array[Hash[String, untyped]]]
-            def post_object(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/with-object"
-                )
-
-                _response = @client.send(_request)
-                if if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-                end
-            end
+      # @return [Array[Hash[String, Object]]]
+      def post(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "",
+          body: params
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
+
+      # @return [Array[Hash[String, Object]]]
+      def post_object(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/with-object",
+          body: Seed::Unknown::Types::MyObject.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
+  end
 end

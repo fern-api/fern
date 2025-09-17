@@ -1,9 +1,9 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { Rules } from "@fern-api/docs-validator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
-import { FernWorkspace } from "@fern-api/workspace-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
@@ -16,7 +16,7 @@ export async function generateDocsWorkspace({
     brokenLinks,
     strictBrokenLinks,
     disableTemplates,
-    dynamicSnippets
+    disableDynamicSnippets
 }: {
     project: Project;
     cliContext: CliContext;
@@ -25,7 +25,7 @@ export async function generateDocsWorkspace({
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
-    dynamicSnippets: boolean | undefined;
+    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -76,7 +76,7 @@ export async function generateDocsWorkspace({
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
             errorOnBrokenLinks: strictBrokenLinks,
-            excludeRules: brokenLinks || strictBrokenLinks ? [] : ["valid-markdown-links"]
+            excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks, isRunningOnSelfHosted)
         });
 
         const ossWorkspaces = await filterOssWorkspaces(project);
@@ -91,7 +91,18 @@ export async function generateDocsWorkspace({
             instanceUrl: instance,
             preview,
             disableTemplates,
-            dynamicSnippets
+            disableDynamicSnippets
         });
     });
+}
+
+function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean, isRunningOnSelfHosted: boolean): string[] {
+    let excludeRules: string[] = [];
+    if (!brokenLinks && !strictBrokenLinks) {
+        excludeRules.push(Rules.ValidMarkdownLinks.name);
+    }
+    if (isRunningOnSelfHosted) {
+        excludeRules.push(Rules.ValidFileTypes.name);
+    }
+    return excludeRules;
 }

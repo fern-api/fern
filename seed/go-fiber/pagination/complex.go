@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/pagination/fern/internal"
+	big "math/big"
+)
+
+var (
+	conversationFieldFoo = big.NewInt(1 << 0)
 )
 
 type Conversation struct {
 	Foo string `json:"foo" url:"foo"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -23,6 +31,20 @@ func (c *Conversation) GetFoo() string {
 
 func (c *Conversation) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *Conversation) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetFoo sets the Foo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Conversation) SetFoo(foo string) {
+	c.Foo = foo
+	c.require(conversationFieldFoo)
 }
 
 func (c *Conversation) UnmarshalJSON(data []byte) error {
@@ -40,6 +62,17 @@ func (c *Conversation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Conversation) MarshalJSON() ([]byte, error) {
+	type embed Conversation
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Conversation) String() string {
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
@@ -47,12 +80,22 @@ func (c *Conversation) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	cursorPagesFieldNext       = big.NewInt(1 << 0)
+	cursorPagesFieldPage       = big.NewInt(1 << 1)
+	cursorPagesFieldPerPage    = big.NewInt(1 << 2)
+	cursorPagesFieldTotalPages = big.NewInt(1 << 3)
+)
+
 type CursorPages struct {
 	Next       *StartingAfterPaging `json:"next,omitempty" url:"next,omitempty"`
 	Page       *int                 `json:"page,omitempty" url:"page,omitempty"`
 	PerPage    *int                 `json:"per_page,omitempty" url:"per_page,omitempty"`
 	TotalPages *int                 `json:"total_pages,omitempty" url:"total_pages,omitempty"`
-	type_      string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 }
@@ -93,6 +136,41 @@ func (c *CursorPages) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *CursorPages) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CursorPages) SetNext(next *StartingAfterPaging) {
+	c.Next = next
+	c.require(cursorPagesFieldNext)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CursorPages) SetPage(page *int) {
+	c.Page = page
+	c.require(cursorPagesFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CursorPages) SetPerPage(perPage *int) {
+	c.PerPage = perPage
+	c.require(cursorPagesFieldPerPage)
+}
+
+// SetTotalPages sets the TotalPages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CursorPages) SetTotalPages(totalPages *int) {
+	c.TotalPages = totalPages
+	c.require(cursorPagesFieldTotalPages)
+}
+
 func (c *CursorPages) UnmarshalJSON(data []byte) error {
 	type embed CursorPages
 	var unmarshaler = struct {
@@ -126,7 +204,8 @@ func (c *CursorPages) MarshalJSON() ([]byte, error) {
 		embed: embed(*c),
 		Type:  "pages",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CursorPages) String() string {
@@ -136,9 +215,17 @@ func (c *CursorPages) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	multipleFilterSearchRequestFieldOperator = big.NewInt(1 << 0)
+	multipleFilterSearchRequestFieldValue    = big.NewInt(1 << 1)
+)
+
 type MultipleFilterSearchRequest struct {
 	Operator *MultipleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
 	Value    *MultipleFilterSearchRequestValue    `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -161,6 +248,27 @@ func (m *MultipleFilterSearchRequest) GetExtraProperties() map[string]interface{
 	return m.extraProperties
 }
 
+func (m *MultipleFilterSearchRequest) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetOperator sets the Operator field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MultipleFilterSearchRequest) SetOperator(operator *MultipleFilterSearchRequestOperator) {
+	m.Operator = operator
+	m.require(multipleFilterSearchRequestFieldOperator)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *MultipleFilterSearchRequest) SetValue(value *MultipleFilterSearchRequestValue) {
+	m.Value = value
+	m.require(multipleFilterSearchRequestFieldValue)
+}
+
 func (m *MultipleFilterSearchRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler MultipleFilterSearchRequest
 	var value unmarshaler
@@ -174,6 +282,17 @@ func (m *MultipleFilterSearchRequest) UnmarshalJSON(data []byte) error {
 	}
 	m.extraProperties = extraProperties
 	return nil
+}
+
+func (m *MultipleFilterSearchRequest) MarshalJSON() ([]byte, error) {
+	type embed MultipleFilterSearchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *MultipleFilterSearchRequest) String() string {
@@ -267,11 +386,20 @@ func (m *MultipleFilterSearchRequestValue) Accept(visitor MultipleFilterSearchRe
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+var (
+	paginatedConversationResponseFieldConversations = big.NewInt(1 << 0)
+	paginatedConversationResponseFieldPages         = big.NewInt(1 << 1)
+	paginatedConversationResponseFieldTotalCount    = big.NewInt(1 << 2)
+)
+
 type PaginatedConversationResponse struct {
 	Conversations []*Conversation `json:"conversations" url:"conversations"`
 	Pages         *CursorPages    `json:"pages,omitempty" url:"pages,omitempty"`
 	TotalCount    int             `json:"total_count" url:"total_count"`
-	type_         string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 }
@@ -303,6 +431,34 @@ func (p *PaginatedConversationResponse) Type() string {
 
 func (p *PaginatedConversationResponse) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
+}
+
+func (p *PaginatedConversationResponse) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetConversations sets the Conversations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PaginatedConversationResponse) SetConversations(conversations []*Conversation) {
+	p.Conversations = conversations
+	p.require(paginatedConversationResponseFieldConversations)
+}
+
+// SetPages sets the Pages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PaginatedConversationResponse) SetPages(pages *CursorPages) {
+	p.Pages = pages
+	p.require(paginatedConversationResponseFieldPages)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PaginatedConversationResponse) SetTotalCount(totalCount int) {
+	p.TotalCount = totalCount
+	p.require(paginatedConversationResponseFieldTotalCount)
 }
 
 func (p *PaginatedConversationResponse) UnmarshalJSON(data []byte) error {
@@ -338,7 +494,8 @@ func (p *PaginatedConversationResponse) MarshalJSON() ([]byte, error) {
 		embed: embed(*p),
 		Type:  "conversation.list",
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *PaginatedConversationResponse) String() string {
@@ -348,9 +505,17 @@ func (p *PaginatedConversationResponse) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+var (
+	searchRequestFieldPagination = big.NewInt(1 << 0)
+	searchRequestFieldQuery      = big.NewInt(1 << 1)
+)
+
 type SearchRequest struct {
 	Pagination *StartingAfterPaging `json:"pagination,omitempty" url:"pagination,omitempty"`
 	Query      *SearchRequestQuery  `json:"query" url:"query"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -373,6 +538,27 @@ func (s *SearchRequest) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *SearchRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchRequest) SetPagination(pagination *StartingAfterPaging) {
+	s.Pagination = pagination
+	s.require(searchRequestFieldPagination)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchRequest) SetQuery(query *SearchRequestQuery) {
+	s.Query = query
+	s.require(searchRequestFieldQuery)
+}
+
 func (s *SearchRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler SearchRequest
 	var value unmarshaler
@@ -386,6 +572,17 @@ func (s *SearchRequest) UnmarshalJSON(data []byte) error {
 	}
 	s.extraProperties = extraProperties
 	return nil
+}
+
+func (s *SearchRequest) MarshalJSON() ([]byte, error) {
+	type embed SearchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *SearchRequest) String() string {
@@ -457,10 +654,19 @@ func (s *SearchRequestQuery) Accept(visitor SearchRequestQueryVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+var (
+	singleFilterSearchRequestFieldField    = big.NewInt(1 << 0)
+	singleFilterSearchRequestFieldOperator = big.NewInt(1 << 1)
+	singleFilterSearchRequestFieldValue    = big.NewInt(1 << 2)
+)
+
 type SingleFilterSearchRequest struct {
 	Field    *string                            `json:"field,omitempty" url:"field,omitempty"`
 	Operator *SingleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
 	Value    *string                            `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -490,6 +696,34 @@ func (s *SingleFilterSearchRequest) GetExtraProperties() map[string]interface{} 
 	return s.extraProperties
 }
 
+func (s *SingleFilterSearchRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetField sets the Field field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SingleFilterSearchRequest) SetField(field *string) {
+	s.Field = field
+	s.require(singleFilterSearchRequestFieldField)
+}
+
+// SetOperator sets the Operator field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SingleFilterSearchRequest) SetOperator(operator *SingleFilterSearchRequestOperator) {
+	s.Operator = operator
+	s.require(singleFilterSearchRequestFieldOperator)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SingleFilterSearchRequest) SetValue(value *string) {
+	s.Value = value
+	s.require(singleFilterSearchRequestFieldValue)
+}
+
 func (s *SingleFilterSearchRequest) UnmarshalJSON(data []byte) error {
 	type unmarshaler SingleFilterSearchRequest
 	var value unmarshaler
@@ -503,6 +737,17 @@ func (s *SingleFilterSearchRequest) UnmarshalJSON(data []byte) error {
 	}
 	s.extraProperties = extraProperties
 	return nil
+}
+
+func (s *SingleFilterSearchRequest) MarshalJSON() ([]byte, error) {
+	type embed SingleFilterSearchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *SingleFilterSearchRequest) String() string {
@@ -558,9 +803,17 @@ func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOpera
 	return &s
 }
 
+var (
+	startingAfterPagingFieldPerPage       = big.NewInt(1 << 0)
+	startingAfterPagingFieldStartingAfter = big.NewInt(1 << 1)
+)
+
 type StartingAfterPaging struct {
 	PerPage       int     `json:"per_page" url:"per_page"`
 	StartingAfter *string `json:"starting_after,omitempty" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -583,6 +836,27 @@ func (s *StartingAfterPaging) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *StartingAfterPaging) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StartingAfterPaging) SetPerPage(perPage int) {
+	s.PerPage = perPage
+	s.require(startingAfterPagingFieldPerPage)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StartingAfterPaging) SetStartingAfter(startingAfter *string) {
+	s.StartingAfter = startingAfter
+	s.require(startingAfterPagingFieldStartingAfter)
+}
+
 func (s *StartingAfterPaging) UnmarshalJSON(data []byte) error {
 	type unmarshaler StartingAfterPaging
 	var value unmarshaler
@@ -596,6 +870,17 @@ func (s *StartingAfterPaging) UnmarshalJSON(data []byte) error {
 	}
 	s.extraProperties = extraProperties
 	return nil
+}
+
+func (s *StartingAfterPaging) MarshalJSON() ([]byte, error) {
+	type embed StartingAfterPaging
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *StartingAfterPaging) String() string {

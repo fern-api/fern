@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import resources.service.requests.NamedMixedPatchRequest;
+import resources.service.requests.OptionalMergePatchRequest;
 import resources.service.requests.PatchComplexRequest;
 import resources.service.requests.PatchProxyRequest;
 import resources.service.requests.RegularPatchRequest;
@@ -30,6 +32,20 @@ public interface ServiceService {
       consumes = "application/json"
   )
   void patchComplex(@PathVariable("id") String id, @RequestBody PatchComplexRequest body);
+
+  @PatchMapping(
+      value = "/named-mixed/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void namedPatchWithMixed(@PathVariable("id") String id, @RequestBody NamedMixedPatchRequest body);
+
+  @PatchMapping(
+      value = "/optional-merge-patch-test",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void optionalMergePatchTest(@RequestBody OptionalMergePatchRequest body);
 
   @PatchMapping(
       value = "/regular/{id}",

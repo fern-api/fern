@@ -178,7 +178,7 @@ public record UnionWithPrimitive
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
                 "string" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithPrimitive(discriminator, value);
@@ -223,7 +223,7 @@ public record UnionWithPrimitive
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Integer(int value) => new(value);
+        public static implicit operator UnionWithPrimitive.Integer(int value) => new(value);
     }
 
     /// <summary>
@@ -241,6 +241,6 @@ public record UnionWithPrimitive
 
         public override string ToString() => Value;
 
-        public static implicit operator String(string value) => new(value);
+        public static implicit operator UnionWithPrimitive.String(string value) => new(value);
     }
 }

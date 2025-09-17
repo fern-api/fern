@@ -1,6 +1,6 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
@@ -46,6 +46,11 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
+            referenceMarkdownPath: "./reference.md",
+            apiName: context.ir.readmeConfig?.apiName,
+            disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
+            whiteLabel: context.ir.readmeConfig?.whiteLabel,
+            customSections: toGeneratorCliCustomSections(context.ir.readmeConfig?.customSections),
             features
         };
     }
@@ -79,4 +84,21 @@ export class ReadmeConfigBuilder {
         }
         return FernGeneratorCli.LanguageInfo.java({});
     }
+}
+
+function toGeneratorCliCustomSections(
+    customSections: FernIr.ReadmeCustomSection[] | undefined
+): FernGeneratorCli.CustomSection[] | undefined {
+    let sections: FernGeneratorCli.CustomSection[] = [];
+    for (const section of customSections ?? []) {
+        const language = section.language.toUpperCase();
+        if (language === "JAVA") {
+            sections.push({
+                name: section.title,
+                language: FernGeneratorCli.Language.Java,
+                content: section.content
+            });
+        }
+    }
+    return sections.length > 0 ? sections : undefined;
 }

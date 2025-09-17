@@ -1,6 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
-import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+import { CSharp } from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -58,7 +58,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
         this.validateExceptionClassNames(customConfig);
-        validateReadOnlyMemoryTypes(customConfig);
+        // todo: fix this
+        new CSharp().validateReadOnlyMemoryTypes(customConfig);
+
         return customConfig;
     }
 
@@ -106,9 +108,15 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        // generate names for everything up front.
+        context.precalculate();
+
+        // before generating anything, generate the models first so that we
+        // can identify collisions or ambiguities in the generated code.
+        const models = generateModels({ context });
+
         await context.snippetGenerator.populateSnippetsCache();
 
-        const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
         }

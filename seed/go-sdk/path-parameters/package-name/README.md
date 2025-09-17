@@ -2,7 +2,11 @@
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FGo)
 
-The Seed Go library provides convenient access to the Seed API from Go.
+The Seed Go library provides convenient access to the Seed APIs from Go.
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -14,7 +18,7 @@ package example
 import (
     client "github.com/fern-api/path-parameters-go/client"
     context "context"
-    path "github.com/fern-api/path-parameters-go"
+    pathparametersgo "github.com/fern-api/path-parameters-go"
 )
 
 func do() {
@@ -22,7 +26,7 @@ func do() {
     client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &path.User{
+        &pathparametersgo.User{
             Name: "name",
             Tags: []string{
                 "tags",

@@ -1,4 +1,3 @@
-pub mod stream_response;
+pub mod dummy_stream_response;
 
-pub use stream_response::{*};
-
+pub use dummy_stream_response::*;

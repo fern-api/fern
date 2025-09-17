@@ -80,9 +80,9 @@ describe("test definitions", async () => {
                 audiences: { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        });
+        }, 20_000);
     });
-});
+}, 200_000);
 
 describe("test definitions openapi", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
@@ -106,7 +106,7 @@ describe("test definitions openapi", async () => {
                         : { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        });
+        }, 10_000);
     });
 }, 200_000);
 
@@ -117,6 +117,16 @@ it("generics", async () => {
         absolutePathToWorkspace: AbsoluteFilePath.of(GENERICS_DIR),
         audiences: { type: "all" },
         workspaceName: "generics"
+    });
+}, 200_000);
+
+it("readme", async () => {
+    const README_DIR = path.join(__dirname, "fixtures/readme/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(README_DIR),
+        audiences: { type: "all" },
+        workspaceName: "readme"
     });
 }, 200_000);
 

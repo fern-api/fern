@@ -9,9 +9,9 @@ export declare namespace RawClient {
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
-        bodyReference?: string;
+        bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
-        pathParameterReferences?: Record<string, string>;
+        pathParameterReferences: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
         /** the query parameters to pass to the endpoint */
@@ -30,6 +30,16 @@ export class RawClient {
         this.context = context;
     }
 
+    private writeBaseUrlDeclaration(writer: ruby.Writer): void {
+        // Write base URL declaration, including default environment if specified
+        writer.write("base_url: request_options[:base_url]");
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+        if (defaultEnvironmentReference != null) {
+            writer.write(" || ");
+            writer.writeNode(defaultEnvironmentReference);
+        }
+    }
+
     public sendRequest({
         baseUrl,
         endpoint,
@@ -46,10 +56,12 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
+                    writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
-                    this.writePathString({ writer, endpoint, pathParameterReferences: pathParameterReferences ?? {} });
-                    writer.writeLine();
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
+                    writer.writeLine(",");
                     if (headerBagReference != null) {
                         writer.writeLine(`headers: ${headerBagReference},`);
                     }
@@ -65,9 +77,42 @@ export class RawClient {
             case "bytes":
                 return undefined;
             case "multipartform":
-                return undefined;
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(
+                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalMultipartRequest()}.new(`
+                    );
+                    writer.indent();
+                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    writer.write(`path: `);
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
+                    writer.writeLine(",");
+                    if (headerBagReference != null) {
+                        writer.writeLine(`headers: ${headerBagReference},`);
+                    }
+                    if (queryBagReference != null) {
+                        writer.writeLine(`query: ${queryBagReference},`);
+                    }
+                    if (bodyReference != null) {
+                        writer.writeLine(`body: ${bodyReference},`);
+                    }
+                    writer.dedent();
+                    writer.write(`)`);
+                });
         }
-        return undefined;
+        return ruby.codeblock((writer) => {
+            writer.writeLine(
+                `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
+            );
+            writer.indent();
+            this.writeBaseUrlDeclaration(writer);
+            writer.writeLine(",");
+            writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
+            writer.write(`path: `);
+            this.writePathString({ writer, endpoint, pathParameterReferences });
+            writer.newLine();
+            writer.dedent();
+            writer.write(`)`);
+        });
     }
 
     private writePathString({
@@ -91,12 +136,11 @@ export class RawClient {
             if (part.pathParameter != null) {
                 const reference = pathParameterReferences[part.pathParameter];
                 if (reference == null) {
-                    throw new Error(
-                        `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
-                    );
+                    rubyPath += `#{${part.tail}}`;
+                } else {
+                    // Insert Ruby interpolation for the path parameter
+                    rubyPath += `#{${reference}}${part.tail}`;
                 }
-                // Insert Ruby interpolation for the path parameter
-                rubyPath += `#{${reference}}${part.tail}`;
             } else {
                 rubyPath += part.tail;
             }

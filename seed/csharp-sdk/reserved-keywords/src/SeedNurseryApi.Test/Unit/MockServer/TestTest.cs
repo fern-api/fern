@@ -6,7 +6,7 @@ namespace SeedNurseryApi.Test.Unit.MockServer;
 [TestFixture]
 public class TestTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

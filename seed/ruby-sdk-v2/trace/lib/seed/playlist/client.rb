@@ -1,84 +1,141 @@
+# frozen_string_literal: true
 
 module Seed
-    module Playlist
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Playlist::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Playlist
+    class Client
+      # @return [Seed::Playlist::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # Create a new playlist
-            #
-            # @return [Seed::Playlist::Playlist]
-            def create_playlist(request_options: {}, **params)
-                _request = params
+      # Create a new playlist
+      #
+      # @return [Seed::Playlist::Types::Playlist]
+      def create_playlist(request_options: {}, **params)
+        _path_param_names = ["serviceParam"]
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Playlist::Types::Playlist.load(_response.body)
+        _query_param_names = [
+          %w[datetime optionalDatetime],
+          %i[datetime optionalDatetime]
+        ].flatten
+        _query = params.slice(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-                else
-                    raise _response.body
-            end
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/v2/playlist/#{params[:serviceParam]}/create",
+          query: _query,
+          body: params.except(*_path_param_names)
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Playlist::Types::Playlist.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
 
-            # Returns the user's playlists
-            #
-            # @return [Array[Seed::Playlist::Playlist]]
-            def get_playlists(request_options: {}, **params)
-                _request = params
+      # Returns the user's playlists
+      #
+      # @return [Array[Seed::Playlist::Types::Playlist]]
+      def get_playlists(request_options: {}, **params)
+        _query_param_names = [
+          %w[limit otherField multiLineDocs optionalMultipleField multipleField],
+          %i[limit otherField multiLineDocs optionalMultipleField multipleField]
+        ].flatten
+        _query = params.slice(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-            end
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "GET",
+          path: "/v2/playlist/#{params[:serviceParam]}/all",
+          query: _query
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # Returns a playlist
-            #
-            # @return [Seed::Playlist::Playlist]
-            def get_playlist(request_options: {}, **params)
-                _request = params
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::Playlist::Types::Playlist.load(_response.body)
+      # Returns a playlist
+      #
+      # @return [Seed::Playlist::Types::Playlist]
+      def get_playlist(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "GET",
+          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Playlist::Types::Playlist.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
 
-                else
-                    raise _response.body
-            end
+      # Updates a playlist
+      #
+      # @return [Seed::Playlist::Types::Playlist | nil]
+      def update_playlist(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "PUT",
+          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
+          body: params
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # Updates a playlist
-            #
-            # @return [Seed::Playlist::Playlist | nil]
-            def update_playlist(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: PUT,
-                    path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
-                )
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-            end
+      # Deletes a playlist
+      #
+      # @return [untyped]
+      def delete_playlist(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "DELETE",
+          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # Deletes a playlist
-            #
-            # @return [untyped]
-            def delete_playlist(request_options: {}, **params)
-                _request = params
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
-
-                else
-                    raise _response.body
-            end
-
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
+  end
 end

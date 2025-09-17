@@ -64,14 +64,14 @@ public record EventInfo
     public SeedExamples.Commons.Metadata AsMetadata() =>
         IsMetadata
             ? (SeedExamples.Commons.Metadata)Value!
-            : throw new Exception("EventInfo.Type is not 'metadata'");
+            : throw new System.Exception("EventInfo.Type is not 'metadata'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'tag', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'tag'.</exception>
     public string AsTag() =>
-        IsTag ? (string)Value! : throw new Exception("EventInfo.Type is not 'tag'");
+        IsTag ? (string)Value! : throw new System.Exception("EventInfo.Type is not 'tag'");
 
     public T Match<T>(
         Func<SeedExamples.Commons.Metadata, T> onMetadata,
@@ -181,7 +181,7 @@ public record EventInfo
                         "Failed to deserialize SeedExamples.Commons.Metadata"
                     ),
                 "tag" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new EventInfo(discriminator, value);
@@ -223,7 +223,8 @@ public record EventInfo
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Metadata(SeedExamples.Commons.Metadata value) => new(value);
+        public static implicit operator EventInfo.Metadata(SeedExamples.Commons.Metadata value) =>
+            new(value);
     }
 
     /// <summary>
@@ -241,6 +242,6 @@ public record EventInfo
 
         public override string ToString() => Value;
 
-        public static implicit operator Tag(string value) => new(value);
+        public static implicit operator EventInfo.Tag(string value) => new(value);
     }
 }

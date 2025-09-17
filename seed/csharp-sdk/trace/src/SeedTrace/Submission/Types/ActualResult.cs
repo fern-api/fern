@@ -224,12 +224,12 @@ public record ActualResult
             var value = discriminator switch
             {
                 "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
                 "exception" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "exceptionV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.ExceptionV2>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
+                ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
                 _ => json.Deserialize<object?>(options),
             };
             return new ActualResult(discriminator, value);
@@ -275,7 +275,8 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ValueInner(SeedTrace.VariableValue value) => new(value);
+        public static implicit operator ActualResult.ValueInner(SeedTrace.VariableValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -293,7 +294,8 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Exception(SeedTrace.ExceptionInfo value) => new(value);
+        public static implicit operator ActualResult.Exception(SeedTrace.ExceptionInfo value) =>
+            new(value);
     }
 
     /// <summary>
@@ -311,6 +313,7 @@ public record ActualResult
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ExceptionV2(SeedTrace.ExceptionV2 value) => new(value);
+        public static implicit operator ActualResult.ExceptionV2(SeedTrace.ExceptionV2 value) =>
+            new(value);
     }
 }

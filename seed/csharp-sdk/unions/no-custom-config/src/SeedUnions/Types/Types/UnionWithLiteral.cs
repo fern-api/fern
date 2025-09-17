@@ -137,7 +137,7 @@ public record UnionWithLiteral
             var value = discriminator switch
             {
                 "fern" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
@@ -190,6 +190,6 @@ public record UnionWithLiteral
 
         public override string ToString() => Value;
 
-        public static implicit operator Fern(string value) => new(value);
+        public static implicit operator UnionWithLiteral.Fern(string value) => new(value);
     }
 }

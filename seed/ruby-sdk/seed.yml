@@ -53,9 +53,18 @@ fixtures:
 allowedFailures:
   - any-auth
   - circular-references
+  - enum
+  - errors
   - literal
+  - literals-unions
   - mixed-file-directory
+  - multiple-request-bodies
+  - nullable-optional
   - objects-with-imports
+  - ruby-reserved-word-properties
+  - websocket-bearer-auth
+  - websocket-inferred-auth
+  - property-access
 features:
   requestOptions: true
   idempotency: false

@@ -421,6 +421,298 @@
             "type": "typescript"
         },
         "endpointId": {
+            "path": "/named-mixed/{id}",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_service.namedPatchWithMixed"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedContentTypesClient } from \"@fern/content-type\";"
+                ],
+                "templateString": "const client = new SeedContentTypesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.namedPatchWithMixed(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "appId: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "appId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "instructions: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "instructions",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "active: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "active",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/content-type",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/optional-merge-patch-test",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_service.optionalMergePatchTest"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedContentTypesClient } from \"@fern/content-type\";"
+                ],
+                "templateString": "const client = new SeedContentTypesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.optionalMergePatchTest(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "requiredField: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "requiredField",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalString: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "optionalString",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalInteger: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "optionalInteger",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalBoolean: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "optionalBoolean",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "nullableString: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "nullableString",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/content-type",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
             "path": "/regular/{id}",
             "method": "PATCH",
             "identifierOverride": "endpoint_service.regularPatch"

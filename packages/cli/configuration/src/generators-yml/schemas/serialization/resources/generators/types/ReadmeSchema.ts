@@ -6,16 +6,20 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ReadmeEndpointSchema } from "./ReadmeEndpointSchema";
+import { ReadmeCustomSectionSchema } from "./ReadmeCustomSectionSchema";
 
 export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSchema.Raw, FernDefinition.ReadmeSchema> =
     core.serialization.object({
         bannerLink: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
+        apiName: core.serialization.string().optional(),
+        disabledSections: core.serialization.list(core.serialization.string()).optional(),
         defaultEndpoint: ReadmeEndpointSchema.optional(),
         features: core.serialization
             .record(core.serialization.string(), core.serialization.list(ReadmeEndpointSchema))
             .optional(),
+        customSections: core.serialization.list(ReadmeCustomSectionSchema).optional(),
     });
 
 export declare namespace ReadmeSchema {
@@ -23,7 +27,10 @@ export declare namespace ReadmeSchema {
         bannerLink?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;
+        apiName?: string | null;
+        disabledSections?: string[] | null;
         defaultEndpoint?: ReadmeEndpointSchema.Raw | null;
         features?: Record<string, ReadmeEndpointSchema.Raw[]> | null;
+        customSections?: ReadmeCustomSectionSchema.Raw[] | null;
     }
 }

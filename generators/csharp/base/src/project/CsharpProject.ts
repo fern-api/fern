@@ -2,12 +2,13 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { access, mkdir, readFile, writeFile } from "fs/promises";
+import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
+
 import { template } from "lodash-es";
 import path from "path";
 
 import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContext";
 import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
@@ -21,7 +22,7 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
-export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
+export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
     private name: string;
     private sourceFiles: CSharpFile[] = [];
     private testFiles: CSharpFile[] = [];
@@ -31,13 +32,14 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor({
         context,
         name
     }: {
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         name: string;
     }) {
         super(context);
@@ -75,6 +77,59 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
     public addTestFiles(file: CSharpFile): void {
         this.testFiles.push(file);
+    }
+
+    private async dotnetFormat(
+        absolutePathToSrcDirectory: AbsoluteFilePath,
+        absolutePathToProjectDirectory: AbsoluteFilePath,
+        editorConfig: string
+    ): Promise<void> {
+        // write a temporary '.editorconfig' file to the absolutePathToSrcDirectory
+        // so we can use dotnet format to pre-format the project (ie, optimize namespace usage, scoping, etc)
+        const editorConfigPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(".editorconfig"));
+        await writeFile(editorConfigPath, editorConfig);
+
+        // patch the csproj file to only target net8.0 (dotnet format gets weird with multiple target frameworks)
+        const csprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const csprojContents = (await readFile(csprojPath)).toString();
+
+        // write modified (temporary) csproj file
+        await writeFile(
+            csprojPath,
+            csprojContents
+                .replace(
+                    /<TargetFrameworks>.*<\/TargetFrameworks>/,
+                    `<TargetFrameworks>netstandard2.0</TargetFrameworks>`
+                )
+                .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
+                .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
+                .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
+        );
+
+        // call dotnet format
+        await loggingExeca(this.context.logger, "dotnet", ["format", "--severity", "error"], {
+            doNotPipeOutput: false,
+            cwd: absolutePathToSrcDirectory
+        });
+
+        await writeFile(csprojPath, csprojContents);
+        // remove the temporary editorconfig file
+        await unlink(editorConfigPath);
+
+        await writeFile(csprojPath, csprojContents);
+    }
+
+    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
+        const csharpier = findDotnetToolPath("csharpier");
+        await loggingExeca(
+            this.context.logger,
+            csharpier,
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                doNotPipeOutput: false,
+                cwd: absolutePathToSrcDirectory
+            }
+        );
     }
 
     public async persist(): Promise<void> {
@@ -161,16 +216,33 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        const csharpier = findDotnetToolPath("csharpier");
-        await loggingExeca(
-            this.context.logger,
-            csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
-            {
-                doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory
-            }
-        );
+        if (this.context.shouldUseDotnetFormat()) {
+            // apply dotnet analyzer and formatter pass 1
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+  dotnet_diagnostic.IDE0001.severity = error
+  dotnet_diagnostic.IDE0002.severity = error 
+  dotnet_diagnostic.IDE0003.severity = error 
+  dotnet_diagnostic.IDE0004.severity = error  
+  dotnet_diagnostic.IDE0007.severity = error
+  dotnet_diagnostic.IDE0017.severity = error
+  dotnet_diagnostic.IDE0018.severity = error
+  `
+            );
+            // apply dotnet analyzer and formatter pass 2
+            await this.dotnetFormat(
+                absolutePathToSrcDirectory,
+                absolutePathToProjectDirectory,
+                `[*.cs]
+dotnet_diagnostic.IDE0005.severity = error          
+          `
+            );
+        }
+
+        // format the code cleanly using csharpier
+        await this.csharpier(absolutePathToSrcDirectory);
     }
 
     private async createProject({
@@ -375,12 +447,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -392,12 +465,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -418,12 +491,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             ),
             new File(
@@ -431,12 +504,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 RelativeFilePath.of(""),
                 replaceTemplate({
                     contents: customPagerContextContents,
-                    variables: getTemplateVariables({
+                    variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
                         additionalProperties: this.context.generateNewAdditionalProperties()
-                    })
+                    }
                 }).replaceAll("CustomPager", customPagerName)
             )
         ];
@@ -449,12 +522,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                variables: getTemplateVariables({
+                variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.context.getTestUtilsNamespace(),
+                    testNamespace: this.context.getTestNamespace(),
                     additionalProperties: this.context.generateNewAdditionalProperties()
-                })
+                }
             })
         );
     }
@@ -475,25 +549,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
     return template(contents)(variables);
-}
-
-function getTemplateVariables({
-    grpc,
-    idempotencyHeaders,
-    namespace,
-    additionalProperties
-}: {
-    grpc: boolean;
-    idempotencyHeaders: boolean;
-    namespace: string;
-    additionalProperties: boolean;
-}): Record<string, unknown> {
-    return {
-        grpc,
-        idempotencyHeaders,
-        namespace,
-        additionalProperties
-    };
 }
 
 function getAsIsFilepath(filename: string): string {
@@ -538,7 +593,7 @@ declare namespace CsProj {
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         protobufSourceFilePaths: RelativeFilePath[];
     }
 }
@@ -550,7 +605,7 @@ class CsProj {
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
-    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
     public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {

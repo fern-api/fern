@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedBasicAuthEnvironmentVariablesClient } from "../../src/Client";
+import * as SeedBasicAuthEnvironmentVariables from "../../src/api/index";
 
 describe("BasicAuth", () => {
-    test("getWithBasicAuth", async () => {
+    test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -21,7 +22,27 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithBasicAuth", async () => {
+    test("getWithBasicAuth (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthEnvironmentVariablesClient({
+            username: "test",
+            accessToken: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+        server.mockEndpoint().get("/basic-auth").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.basicAuth.getWithBasicAuth();
+        }).rejects.toThrow(
+            new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest({
+                message: "message",
+            }),
+        );
+    });
+
+    test("postWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -43,5 +64,52 @@ describe("BasicAuth", () => {
             key: "value",
         });
         expect(response).toEqual(true);
+    });
+
+    test("postWithBasicAuth (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthEnvironmentVariablesClient({
+            username: "test",
+            accessToken: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = { message: "message" };
+        server
+            .mockEndpoint()
+            .post("/basic-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.basicAuth.postWithBasicAuth({
+                key: "value",
+            });
+        }).rejects.toThrow(
+            new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest({
+                message: "message",
+            }),
+        );
+    });
+
+    test("postWithBasicAuth (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthEnvironmentVariablesClient({
+            username: "test",
+            accessToken: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { key: "value" };
+
+        server.mockEndpoint().post("/basic-auth").jsonBody(rawRequestBody).respondWith().statusCode(400).build();
+
+        await expect(async () => {
+            return await client.basicAuth.postWithBasicAuth({
+                key: "value",
+            });
+        }).rejects.toThrow(new SeedBasicAuthEnvironmentVariables.BadRequest());
     });
 });

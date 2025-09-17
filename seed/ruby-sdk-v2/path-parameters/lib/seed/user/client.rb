@@ -1,63 +1,106 @@
+# frozen_string_literal: true
 
 module Seed
-    module User
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::User::Client]
-            def initialize(client)
-                @client = client
-            end
+  module User
+    class Client
+      # @return [Seed::User::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # @return [Seed::User::User]
-            def get_user(request_options: {}, **params)
-                _request = params
+      # @return [Seed::User::Types::User]
+      def get_user(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}"
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::User::Types::User.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::User::Types::User.load(_response.body)
+      # @return [Seed::User::Types::User]
+      def create_user(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/#{params[:tenant_id]}/user/",
+          body: Seed::User::Types::User.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::User::Types::User.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [Seed::User::Types::User]
+      def update_user(request_options: {}, **params)
+        _path_param_names = %w[tenant_id user_id]
 
-            # @return [Seed::User::User]
-            def create_user(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/#{params[:tenant_id]}/user/"
-                )
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "PATCH",
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
+          body: params.except(*_path_param_names)
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::User::Types::User.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::User::Types::User.load(_response.body)
+      # @return [Array[Seed::User::Types::User]]
+      def search_users(request_options: {}, **params)
+        _query_param_names = [
+          ["limit"],
+          %i[limit]
+        ].flatten
+        _query = params.slice(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-                else
-                    raise _response.body
-            end
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/search",
+          query: _query
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # @return [Seed::User::User]
-            def update_user(request_options: {}, **params)
-                _request = params
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return Seed::User::Types::User.load(_response.body)
-
-                else
-                    raise _response.body
-            end
-
-            # @return [Array[Seed::User::User]]
-            def search_users(request_options: {}, **params)
-                _request = params
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return 
-                else
-                    raise _response.body
-            end
-
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
+  end
 end

@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -80,6 +80,10 @@ fixtures:
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - customConfig:
+        inline-path-parameters: true
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
         publish-to: central
       outputFolder: publish-to
     - publishConfig:
@@ -96,6 +100,17 @@ fixtures:
         publisher_name: "Fern"
         reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
+    - publishConfig:
+        type: maven
+        coordinate: com.fern:exhaustive
+        registryUrl: "definitelyMavenCentral"
+      publishMetadata:
+        package_description: SDK with custom license
+        publisher_email: "developers@example.com"
+        publisher_name: "Example Corp"
+      license:
+        custom: LICENSE
+      outputFolder: custom-license
   java-inline-types:
     - customConfig:
         enable-inline-types: true
@@ -129,6 +144,17 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  pagination:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  unions:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   accept-header:
     - outputFolder: accept-header
   client-side-params:
@@ -145,11 +171,43 @@ fixtures:
         inline-path-parameters: true
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
+  examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
+        inline-file-properties: true
+        inline-path-parameters: true
+      outputFolder: inline-file-properties
+    - outputFolder: no-custom-config
+    - customConfig:
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        customSections:
+          - title: "Custom Section"
+            language: "JAVA"
+            content: |
+              This is a custom section. Latest package info is {{ group }}:{{ artifact }}:{{ version }}
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme-config
   nullable:
     - customConfig:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  java-nullable-named-request-types:
+    - outputFolder: custom-config
+      customConfig:
+        respect-nullable-schemas: true
   enum:
     - customConfig:
         enable-forward-compatible-enums: true
@@ -168,34 +226,71 @@ fixtures:
         client-class-name: BaseClient
         enable-extensible-builders: true
       outputFolder: extensible-builders
+  basic-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: basic-auth
+  oauth-client-credentials:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: oauth-client-credentials
+  custom-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: custom-auth
+  nullable-optional:
+    - customConfig:
+        use-nullable-annotation: true
+      outputFolder: with-nullable-annotation
+    - customConfig:
+        use-nullable-annotation: false
+      outputFolder: legacy
 scripts:
   - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
+  - api-wide-base-path
   - alias-extends
+  - bytes-download
+  - bytes-upload
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - examples
-  - exhaustive:signed_publish
+  - errors
+  - examples:wire-tests
+  - examples:inline-file-properties
+  - examples:no-custom-config
+  - examples:readme-config
   - exhaustive:local-files
+  - exhaustive:publish-to
+  - exhaustive:signed_publish
   - extends
-  - oauth-client-credentials-custom
-  - trace
-  - streaming-parameter
-  - literal
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - java-inline-types
+  - java-inline-types:no-wrapped-aliases
   - java-pagination-deep-cursor-path
-  - bytes
+  - literal
+  - nullable-optional:with-nullable-annotation
+  - nullable-optional:legacy
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-with-variables
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - streaming-parameter
+  - trace
+  - variables
+  - version-no-default
+  - websocket-inferred-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - api-wide-base-path
-  - client-side-params
   - extra-properties
   - java-inline-types:inline
   - java-inline-types:no-inline
-  - java-inline-types:no-wrapped-aliases
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config

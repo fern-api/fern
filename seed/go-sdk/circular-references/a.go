@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/circular-references/fern/internal"
+	big "math/big"
+)
+
+var (
+	aFieldS = big.NewInt(1 << 0)
 )
 
 type A struct {
 	S string `json:"s" url:"s"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,20 @@ func (a *A) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *A) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetS sets the S field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *A) SetS(s string) {
+	a.S = s
+	a.require(aFieldS)
+}
+
 func (a *A) UnmarshalJSON(data []byte) error {
 	type unmarshaler A
 	var value unmarshaler
@@ -40,6 +62,17 @@ func (a *A) UnmarshalJSON(data []byte) error {
 	a.extraProperties = extraProperties
 	a.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (a *A) MarshalJSON() ([]byte, error) {
+	type embed A
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (a *A) String() string {

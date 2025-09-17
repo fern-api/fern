@@ -21,29 +21,29 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "2.6.8",
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.8.1",
+        [GeneratorName.JAVA_SDK]: "2.43.0",
+        [GeneratorName.JAVA_SPRING]: "1.8.2",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_FASTAPI]: "1.8.0",
+        [GeneratorName.PYTHON_PYDANTIC]: "1.6.0",
+        [GeneratorName.PYTHON_SDK]: "4.26.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_FIBER]: "0.23.7",
+        [GeneratorName.GO_MODEL]: "0.23.7",
+        [GeneratorName.GO_SDK]: "1.7.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.SWIFT_SDK]: "0.6.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V58.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -99,10 +99,14 @@ function convertDynamicAuth(auth: IrVersions.V59.dynamic.Auth | undefined): IrVe
     if (auth == null) {
         return auth as IrVersions.V58.dynamic.Auth | undefined;
     }
-    if (auth.type === "inferred") {
-        return undefined;
-    }
-    return auth as IrVersions.V58.dynamic.Auth;
+    return auth._visit<IrVersions.V58.dynamic.Auth | undefined>({
+        basic: (value) => IrVersions.V58.dynamic.Auth.basic(value),
+        bearer: (value) => IrVersions.V58.dynamic.Auth.bearer(value),
+        header: (value) => IrVersions.V58.dynamic.Auth.header(value),
+        oauth: (value) => IrVersions.V58.dynamic.Auth.oauth(value),
+        inferred: () => undefined,
+        _other: () => undefined
+    });
 }
 
 function convertDynamicExamples(

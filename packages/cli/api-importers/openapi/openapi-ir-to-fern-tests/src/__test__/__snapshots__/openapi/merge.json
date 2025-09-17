@@ -10049,6 +10049,9 @@ service:
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
                   },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -10387,7 +10390,9 @@ service:
         type: root.PaginatedBankInfoList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -10492,6 +10497,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -10739,7 +10747,9 @@ service:
         type: root.PaginatedBenefitList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -10840,6 +10850,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -11065,7 +11078,9 @@ service:
         type: root.PaginatedCompanyList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -11207,6 +11222,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -11681,7 +11699,9 @@ service:
         type: root.PaginatedEmployeePayrollRunList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -12053,6 +12073,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -15956,7 +15979,9 @@ service:
         type: root.PaginatedEmployeeList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -16267,6 +16292,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -16962,7 +16990,9 @@ service:
         type: root.PaginatedEmploymentList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -17271,6 +17301,9 @@ service:
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
                   },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -17518,7 +17551,9 @@ service:
         type: root.PaginatedGroupList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -17612,6 +17647,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "[object Object]",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -17841,7 +17879,9 @@ service:
         type: root.PaginatedIssueList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: '[object Object]'
           response:
             body:
@@ -18141,6 +18181,9 @@ service:
                   "headers": {
                     "X-Account-Token": "[object Object]",
                   },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -18403,7 +18446,9 @@ service:
         type: root.PaginatedAccountDetailsAndActionsList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: '[object Object]'
           response:
             body:
@@ -18460,6 +18505,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -18711,7 +18759,9 @@ service:
         type: root.PaginatedLocationList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -19008,6 +19058,9 @@ service:
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
                   },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -19220,7 +19273,9 @@ service:
         type: root.PaginatedPayGroupList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -19304,6 +19359,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -19723,7 +19781,9 @@ service:
         type: root.PaginatedPayrollRunList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -20029,6 +20089,9 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "name": "Employees that started on or after January 1st, 2022",
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -20177,6 +20240,8 @@ service:
         status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
+          query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20216,6 +20281,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -20296,7 +20364,9 @@ service:
         type: root.PaginatedSyncStatusList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -20331,6 +20401,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -20566,7 +20639,9 @@ service:
         type: root.PaginatedTeamList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -20769,6 +20844,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -21402,7 +21480,9 @@ service:
         type: root.PaginatedTimeOffList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:
@@ -21614,6 +21694,9 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   },
                   "response": {
                     "body": {
@@ -21932,7 +22015,9 @@ service:
         type: root.PaginatedTimeOffBalanceList
         status-code: 200
       examples:
-        - headers:
+        - query-parameters:
+            cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+          headers:
             X-Account-Token: X-Account-Token
           response:
             body:

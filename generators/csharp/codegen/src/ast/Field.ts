@@ -1,8 +1,7 @@
-import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
-
+import { CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -81,27 +80,30 @@ export class Field extends AstNode {
     private readonly skipDefaultInitializer: boolean;
     private readonly interfaceReference?: ClassReference;
 
-    constructor({
-        name,
-        type,
-        access,
-        const_,
-        new_,
-        get,
-        init,
-        set,
-        annotations,
-        initializer,
-        summary,
-        doc,
-        jsonPropertyName,
-        readonly,
-        static_,
-        useRequired,
-        skipDefaultInitializer,
-        interfaceReference
-    }: Field.Args) {
-        super();
+    constructor(
+        {
+            name,
+            type,
+            access,
+            const_,
+            new_,
+            get,
+            init,
+            set,
+            annotations,
+            initializer,
+            summary,
+            doc,
+            jsonPropertyName,
+            readonly,
+            static_,
+            useRequired,
+            skipDefaultInitializer,
+            interfaceReference
+        }: Field.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
         this.name = name;
         this.type = type;
         this.const_ = const_ ?? false;
@@ -112,7 +114,7 @@ export class Field extends AstNode {
         this.init = init ?? false;
         this.annotations = annotations ?? [];
         this.initializer = initializer;
-        this.doc = XmlDocBlock.of(doc ?? { summary });
+        this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary });
         this.jsonPropertyName = jsonPropertyName;
         this.readonly = readonly;
         this.static_ = static_ ?? false;
@@ -122,11 +124,8 @@ export class Field extends AstNode {
 
         if (this.jsonPropertyName != null) {
             this.annotations = [
-                new Annotation({
-                    reference: new ClassReference({
-                        name: "JsonPropertyName",
-                        namespace: "System.Text.Json.Serialization"
-                    }),
+                this.csharp.annotation({
+                    reference: this.csharp.System.Text.Json.Serialization.JsonPropertyName,
                     argument: `"${this.jsonPropertyName}"`
                 }),
                 ...this.annotations

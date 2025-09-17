@@ -183,7 +183,7 @@ public record TestCaseImplementationReference
             var value = discriminator switch
             {
                 "templateId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "implementation" => json.Deserialize<SeedTrace.V2.V3.TestCaseImplementation>(
                     options
                 )
@@ -231,7 +231,8 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value;
 
-        public static implicit operator TemplateId(string value) => new(value);
+        public static implicit operator TestCaseImplementationReference.TemplateId(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -249,7 +250,7 @@ public record TestCaseImplementationReference
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Implementation(
+        public static implicit operator TestCaseImplementationReference.Implementation(
             SeedTrace.V2.V3.TestCaseImplementation value
         ) => new(value);
     }

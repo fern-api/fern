@@ -1,127 +1,176 @@
+# frozen_string_literal: true
 
 module Seed
-    module Admin
-        class Client
-            # @option client [Seed::Internal::Http::RawClient]
-            #
-            # @return [Seed::Admin::Client]
-            def initialize(client)
-                @client = client
-            end
+  module Admin
+    class Client
+      # @return [Seed::Admin::Client]
+      def initialize(client:)
+        @client = client
+      end
 
-            # @return [untyped]
-            def update_test_submission_status(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-test-submission-status/#{params[:submissionId]}"
-                )
+      # @return [untyped]
+      def update_test_submission_status(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-test-submission-status/#{params[:submissionId]}",
+          body: Seed::Submission::Types::TestSubmissionStatus.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [untyped]
+      def send_test_submission_update(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-test-submission-status-v2/#{params[:submissionId]}",
+          body: Seed::Submission::Types::TestSubmissionUpdate.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # @return [untyped]
-            def send_test_submission_update(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-test-submission-status-v2/#{params[:submissionId]}"
-                )
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+      # @return [untyped]
+      def update_workspace_submission_status(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-workspace-submission-status/#{params[:submissionId]}",
+          body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-                else
-                    raise _response.body
-            end
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-            # @return [untyped]
-            def update_workspace_submission_status(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-workspace-submission-status/#{params[:submissionId]}"
-                )
+      # @return [untyped]
+      def send_workspace_submission_update(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-workspace-submission-status-v2/#{params[:submissionId]}",
+          body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(params).to_h
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [untyped]
+      def store_traced_test_case(request_options: {}, **params)
+        _path_param_names = %w[submissionId testCaseId]
 
-            # @return [untyped]
-            def send_workspace_submission_update(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-workspace-submission-status-v2/#{params[:submissionId]}"
-                )
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-test-trace/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}",
+          body: params.except(*_path_param_names)
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                else
-                    raise _response.body
-            end
+      # @return [untyped]
+      def store_traced_test_case_v_2(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-test-trace-v2/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}",
+          body: params
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # @return [untyped]
-            def store_traced_test_case(request_options: {}, **params)
-                _request = params
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+      # @return [untyped]
+      def store_traced_workspace(request_options: {}, **params)
+        _path_param_names = ["submissionId"]
 
-                else
-                    raise _response.body
-            end
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-workspace-trace/submission/#{params[:submissionId]}",
+          body: params.except(*_path_param_names)
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-            # @return [untyped]
-            def store_traced_test_case_v_2(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-test-trace-v2/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}"
-                )
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
 
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
+      # @return [untyped]
+      def store_traced_workspace_v_2(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          method: "POST",
+          path: "/admin/store-workspace-trace-v2/submission/#{params[:submissionId]}",
+          body: params
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-                else
-                    raise _response.body
-            end
-
-            # @return [untyped]
-            def store_traced_workspace(request_options: {}, **params)
-                _request = params
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
-
-                else
-                    raise _response.body
-            end
-
-            # @return [untyped]
-            def store_traced_workspace_v_2(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: POST,
-                    path: "/admin/store-workspace-trace-v2/submission/#{params[:submissionId]}"
-                )
-
-                _response = @client.send(_request)
-                if _response.code >= "200" && _response.code < "300"
-                    return
-
-                else
-                    raise _response.body
-            end
-
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
+  end
 end

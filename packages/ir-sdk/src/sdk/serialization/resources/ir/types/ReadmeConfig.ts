@@ -7,6 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { EndpointId } from "../../commons/types/EndpointId";
 import { FeatureId } from "../../commons/types/FeatureId";
+import { ReadmeCustomSection } from "./ReadmeCustomSection";
 
 export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeConfig.Raw, FernIr.ReadmeConfig> =
     core.serialization.objectWithoutOptionalProperties({
@@ -14,7 +15,11 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
         bannerLink: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
+        apiName: core.serialization.string().optional(),
+        disabledFeatures: core.serialization.list(FeatureId).optional(),
+        whiteLabel: core.serialization.boolean().optional(),
         features: core.serialization.record(FeatureId, core.serialization.list(EndpointId)).optional(),
+        customSections: core.serialization.list(ReadmeCustomSection).optional(),
     });
 
 export declare namespace ReadmeConfig {
@@ -23,6 +28,10 @@ export declare namespace ReadmeConfig {
         bannerLink?: string | null;
         introduction?: string | null;
         apiReferenceLink?: string | null;
+        apiName?: string | null;
+        disabledFeatures?: FeatureId.Raw[] | null;
+        whiteLabel?: boolean | null;
         features?: Record<FeatureId.Raw, EndpointId.Raw[]> | null;
+        customSections?: ReadmeCustomSection.Raw[] | null;
     }
 }

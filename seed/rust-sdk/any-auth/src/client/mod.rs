@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod auth;
 pub mod user;
@@ -9,14 +9,13 @@ pub struct AnyAuthClient {
 }
 
 impl AnyAuthClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,
-            user: UserClient::new(config.clone())?
+            user: UserClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use auth::AuthClient;

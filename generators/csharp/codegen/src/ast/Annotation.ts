@@ -1,4 +1,5 @@
-import { ClassReference } from "./ClassReference";
+import { type CSharp } from "../csharp";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -15,8 +16,8 @@ export class Annotation extends AstNode {
     private reference: ClassReference;
     private argument?: string | AstNode;
 
-    constructor(args: Annotation.Args) {
-        super();
+    constructor(args: Annotation.Args, csharp: CSharp) {
+        super(csharp);
         this.reference = args.reference;
         this.argument = args.argument;
     }

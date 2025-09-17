@@ -4,12 +4,42 @@ package exhaustive
 
 import (
 	json "encoding/json"
+	big "math/big"
+)
+
+var (
+	reqWithHeadersFieldXTestServiceHeader  = big.NewInt(1 << 0)
+	reqWithHeadersFieldXTestEndpointHeader = big.NewInt(1 << 1)
 )
 
 type ReqWithHeaders struct {
 	XTestServiceHeader  string `json:"-" url:"-"`
 	XTestEndpointHeader string `json:"-" url:"-"`
 	Body                string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *ReqWithHeaders) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetXTestServiceHeader sets the XTestServiceHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReqWithHeaders) SetXTestServiceHeader(xTestServiceHeader string) {
+	r.XTestServiceHeader = xTestServiceHeader
+	r.require(reqWithHeadersFieldXTestServiceHeader)
+}
+
+// SetXTestEndpointHeader sets the XTestEndpointHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ReqWithHeaders) SetXTestEndpointHeader(xTestEndpointHeader string) {
+	r.XTestEndpointHeader = xTestEndpointHeader
+	r.require(reqWithHeadersFieldXTestEndpointHeader)
 }
 
 func (r *ReqWithHeaders) UnmarshalJSON(data []byte) error {

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod endpoints;
 pub mod inlined_requests;
@@ -15,17 +15,16 @@ pub struct ExhaustiveClient {
 }
 
 impl ExhaustiveClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             endpoints: EndpointsClient::new(config.clone())?,
             inlined_requests: InlinedRequestsClient::new(config.clone())?,
             no_auth: NoAuthClient::new(config.clone())?,
             no_req_body: NoReqBodyClient::new(config.clone())?,
-            req_with_headers: ReqWithHeadersClient::new(config.clone())?
+            req_with_headers: ReqWithHeadersClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use endpoints::EndpointsClient;

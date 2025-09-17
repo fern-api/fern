@@ -49,12 +49,14 @@ from .types import (
     UnionWithNoProperties,
     UnionWithOptionalTime,
     UnionWithPrimitive,
+    UnionWithSameNumberTypes,
+    UnionWithSameStringTypes,
     UnionWithSingleElement,
     UnionWithSubTypes,
     UnionWithTime,
     UnionWithoutKey,
 )
-from .union import Circle, GetShapeRequest, Shape, Square
+from .union import Circle, GetShapeRequest, Shape, Square, WithName
 
 __all__ = [
     "ActiveDiamond",
@@ -101,6 +103,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",
@@ -108,6 +112,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "bigunion",
     "types",
     "union",

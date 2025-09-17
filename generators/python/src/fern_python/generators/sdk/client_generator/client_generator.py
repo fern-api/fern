@@ -1,13 +1,29 @@
 from typing import List
 
-from .base_client_generator import ConstructorParameter
+from .base_client_generator import BaseClientGeneratorKwargs, ConstructorParameter
 from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
+from typing_extensions import Unpack
+
+import fern.ir.resources as ir_types
 
 
-class ClientGenerator(BaseWrappedClientGenerator):
+class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
+    def __init__(
+        self,
+        subpackage_id: ir_types.SubpackageId,
+        generated_root_client: GeneratedRootClient,
+        **kwargs: Unpack[BaseClientGeneratorKwargs],
+    ):
+        super().__init__(
+            **kwargs,
+        )
+        self._subpackage_id = subpackage_id
+        self._generated_root_client = generated_root_client
+
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
         async_class_declaration = self._create_class_declaration(is_async=True)
@@ -52,6 +68,8 @@ class ClientGenerator(BaseWrappedClientGenerator):
             generated_connect_method = websocket_connect_method_generator.generate()
             class_declaration.add_method(generated_connect_method.function)
 
+        self._generate_lazy_import_properties(class_declaration=class_declaration, is_async=is_async)
+
         return class_declaration
 
     def get_raw_client_class_name(self, *, is_async: bool) -> str:
@@ -61,7 +79,7 @@ class ClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_raw_client_class_name_for_subpackage_service(self._subpackage_id)
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_subpackage_service(self._subpackage_id)
             if is_async
@@ -80,10 +98,13 @@ class ClientGenerator(BaseWrappedClientGenerator):
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            kwargs = [
-                (param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name))
-                for param in self._get_constructor_parameters(is_async=is_async)
-            ]
+            # Avoid repeating parameters by tracking names
+            seen_param_names = set()
+            kwargs = []
+            for param in self._get_constructor_parameters(is_async=is_async):
+                if param.constructor_parameter_name not in seen_param_names:
+                    kwargs.append((param.constructor_parameter_name, AST.Expression(param.constructor_parameter_name)))
+                    seen_param_names.add(param.constructor_parameter_name)
 
             # Initialize the raw client with the client_wrapper
             writer.write_node(
@@ -106,25 +127,6 @@ class ClientGenerator(BaseWrappedClientGenerator):
                 )
             )
 
-            # Initialize nested clients
-            for subpackage_id in self._package.subpackages:
-                subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
-                    writer.write_node(
-                        AST.VariableDeclaration(
-                            name=f"self.{subpackage.name.snake_case.safe_name}",
-                            initializer=AST.Expression(
-                                AST.ClassInstantiation(
-                                    class_=(
-                                        self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                                        if is_async
-                                        else self._context.get_reference_to_subpackage_service(subpackage_id)
-                                    ),
-                                    kwargs=kwargs,
-                                )
-                            ),
-                        )
-                    )
-                    writer.write_line()
+            self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=True)
 
         return _write_constructor_body

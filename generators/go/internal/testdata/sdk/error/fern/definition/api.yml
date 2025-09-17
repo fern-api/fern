@@ -4,5 +4,5 @@ imports:
 error-discrimination:
   strategy: status-code
 errors:
-  - user.UpgradeError 
+  - user.UpgradeError
   - user.UntypedError

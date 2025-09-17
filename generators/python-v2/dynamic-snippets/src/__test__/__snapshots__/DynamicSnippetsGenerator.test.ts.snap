@@ -69,6 +69,19 @@ client.service.create_big_entity(
             }
         },
         "revenue": 1000000
+    },
+    event_info={
+        "type": "metadata",
+        "id": "event-12345",
+        "data": {
+            "key1": "val1",
+            "key2": "val2"
+        },
+        "json_string": "abc"
+    },
+    migration={
+        "name": "Migration 31 Aug",
+        "status": "RUNNING"
     }
 )
 "
@@ -404,6 +417,43 @@ client.nullable.get_users(
         None
     ],
     extra=None
+)
+"
+`;
+
+exports[`snippets > read-write-only > 'Body properties' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    base_url="https://api.example.com"
+)
+
+client.create_user(
+    password="password",
+    profile={
+        "name": "name",
+        "verification": {},
+        "ssn": "ssn"
+    }
+)
+"
+`;
+
+exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    base_url="https://api.example.com"
+)
+
+client.create_user(
+    id="id",
+    password="password",
+    profile={
+        "name": "name",
+        "verification": {},
+        "ssn": "ssn"
+    }
 )
 "
 `;

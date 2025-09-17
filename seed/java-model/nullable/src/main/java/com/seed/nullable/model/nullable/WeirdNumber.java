@@ -36,9 +36,9 @@ public final class WeirdNumber {
         if (this.type == 0) {
             return visitor.visit((int) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((Optional<Float>) this.value);
+            return visitor.visit2((Optional<Float>) this.value);
         } else if (this.type == 2) {
-            return visitor.visit((Optional<String>) this.value);
+            return visitor.visit3((Optional<String>) this.value);
         } else if (this.type == 3) {
             return visitor.visit((double) this.value);
         }
@@ -69,11 +69,11 @@ public final class WeirdNumber {
         return new WeirdNumber(value, 0);
     }
 
-    public static WeirdNumber of(Optional<Float> value) {
+    public static WeirdNumber of2(Optional<Float> value) {
         return new WeirdNumber(value, 1);
     }
 
-    public static WeirdNumber of(Optional<String> value) {
+    public static WeirdNumber of3(Optional<String> value) {
         return new WeirdNumber(value, 2);
     }
 
@@ -84,9 +84,9 @@ public final class WeirdNumber {
     public interface Visitor<T> {
         T visit(int value);
 
-        T visit(Optional<Float> value);
+        T visit2(Optional<Float> value);
 
-        T visit(Optional<String> value);
+        T visit3(Optional<String> value);
 
         T visit(double value);
     }
@@ -103,12 +103,12 @@ public final class WeirdNumber {
                 return of((Integer) value);
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<Float>>() {}));
-            } catch (IllegalArgumentException e) {
+                return of2(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<Float>>() {}));
+            } catch (RuntimeException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<String>>() {}));
-            } catch (IllegalArgumentException e) {
+                return of3(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<String>>() {}));
+            } catch (RuntimeException e) {
             }
             if (value instanceof Double) {
                 return of((Double) value);

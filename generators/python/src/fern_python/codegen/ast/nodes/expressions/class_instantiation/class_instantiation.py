@@ -14,6 +14,7 @@ class ClassInstantiation(AstNode):
         args: Sequence[Expression] = [],
         kwargs: Sequence[Tuple[str, Expression]] = [],
     ):
+        self._class_reference = class_
         self.callable_invocation = CallableInvocation(callable=class_, args=args, kwargs=kwargs)
 
     def get_metadata(self) -> AstNodeMetadata:
@@ -21,6 +22,9 @@ class ClassInstantiation(AstNode):
 
     def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         return self.callable_invocation.write(writer=writer, should_write_as_snippet=should_write_as_snippet)
+
+    def get_class_reference(self) -> ClassReference:
+        return self._class_reference
 
 
 if TYPE_CHECKING:

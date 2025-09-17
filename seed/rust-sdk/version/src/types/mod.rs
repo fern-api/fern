@@ -1,6 +1,5 @@
-pub mod user_id;
-pub mod user;
+pub mod user_user;
+pub mod user_user_id;
 
-pub use user_id::{*};
-pub use user::{*};
-
+pub use user_user::*;
+pub use user_user_id::*;

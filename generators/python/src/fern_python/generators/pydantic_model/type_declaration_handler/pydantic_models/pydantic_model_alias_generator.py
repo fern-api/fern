@@ -1,10 +1,10 @@
 from typing import Optional
 
-from fern_python.external_dependencies import PydanticVersionCompatibility
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
 from fern_python.codegen import AST, SourceFile
+from fern_python.external_dependencies import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
@@ -73,7 +73,9 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                     name=self._get_builder_name(self._alias.alias_of),
                     parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
                     return_type=ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name)),
-                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"),
+                    body=AST.CodeWriter(
+                        f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"
+                    ),
                     decorator=AST.ClassMethodDecorator.STATIC,
                 )
 

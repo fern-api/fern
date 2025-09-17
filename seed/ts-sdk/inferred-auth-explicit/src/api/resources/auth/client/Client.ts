@@ -13,7 +13,7 @@ export declare namespace Auth {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace Auth {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -61,7 +61,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthExplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
             requestOptions?.headers,
@@ -139,7 +139,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthExplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
             requestOptions?.headers,

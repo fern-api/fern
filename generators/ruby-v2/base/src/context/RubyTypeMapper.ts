@@ -40,7 +40,7 @@ export class RubyTypeMapper {
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
-                return ruby.Type.hash(ruby.Type.string(), ruby.Type.untyped());
+                return ruby.Type.hash(ruby.Type.string(), ruby.Type.object("Object"));
             default:
                 assertNever(reference);
         }
@@ -66,13 +66,9 @@ export class RubyTypeMapper {
         { fullyQualified }: { fullyQualified?: boolean } = {}
     ): ruby.ClassReference {
         // In Ruby, modules are used for namespaces.
-        const modules = [
-            this.context.getRootModule().name,
-            ...declaredTypeName.fernFilepath.allParts.map((part) => part.pascalCase.safeName)
-        ];
         return ruby.classReference({
             name: declaredTypeName.name.pascalCase.safeName,
-            modules,
+            modules: this.context.getModuleNamesForTypeId(declaredTypeName.typeId),
             fullyQualified: !!fullyQualified
         });
     }

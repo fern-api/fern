@@ -47,7 +47,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             const convertedEnum = enumConverter.convert();
             if (convertedEnum != null) {
                 this.addTypesToIr({
-                    ...convertedEnum.inlinedTypes,
+                    ...mapKeys(convertedEnum.inlinedTypes, this.context.maybePrependPackageName.bind(this.context)),
                     [this.context.maybePrependPackageName(schema.name)]: convertedEnum.convertedSchema
                 });
             }
@@ -64,7 +64,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             const convertedMessage = messageConverter.convert();
             if (convertedMessage != null) {
                 this.addTypesToIr({
-                    ...convertedMessage.inlinedTypes,
+                    ...mapKeys(convertedMessage.inlinedTypes, this.context.maybePrependPackageName.bind(this.context)),
                     [this.context.maybePrependPackageName(schema.name)]: convertedMessage.convertedSchema
                 });
             }
@@ -240,4 +240,8 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             audiences: this.audiences.type === "select" ? this.audiences.audiences : undefined
         };
     }
+}
+
+function mapKeys<T>(obj: Record<string, T>, fn: (key: string) => string): Record<string, T> {
+    return Object.fromEntries(Object.entries(obj).map(([key, value]) => [fn(key), value]));
 }

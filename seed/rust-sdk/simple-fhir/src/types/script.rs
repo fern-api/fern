@@ -1,7 +1,7 @@
 use crate::base_resource::BaseResource;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Script {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,

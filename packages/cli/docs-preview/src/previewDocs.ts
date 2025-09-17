@@ -24,7 +24,6 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
-import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -92,7 +91,8 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
                 markdown: finalMarkdown,
-                editThisPageUrl: previousValue.editThisPageUrl
+                editThisPageUrl: previousValue.editThisPageUrl,
+                rawMarkdown: markdown
             };
         }
 

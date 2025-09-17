@@ -1,20 +1,27 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     AuthScheme,
+    ErrorDeclaration,
     ExampleEndpointCall,
+    ExampleEndpointErrorResponse,
+    ExampleObjectType,
+    ExampleObjectTypeWithTypeId,
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
     HttpEndpoint,
     HttpMethod,
     HttpService,
-    IntermediateRepresentation
+    IntermediateRepresentation,
+    Name,
+    ObjectPropertyAccess
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
     DependencyType,
     ExportedFilePath,
     getExampleEndpointCalls,
+    getExampleEndpointCallsForTests,
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
     getTextOfTsNode,
@@ -42,6 +49,7 @@ export declare namespace JestTestGenerator {
         relativePackagePath: string;
         relativeTestPath: string;
         neverThrowErrors: boolean;
+        generateReadWriteOnlyTypes: boolean;
     }
 }
 
@@ -57,6 +65,7 @@ export class JestTestGenerator {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly neverThrowErrors: boolean;
+    private readonly generateReadWriteOnlyTypes: boolean;
 
     constructor({
         ir,
@@ -69,7 +78,8 @@ export class JestTestGenerator {
         retainOriginalCasing,
         relativePackagePath,
         relativeTestPath,
-        neverThrowErrors
+        neverThrowErrors,
+        generateReadWriteOnlyTypes
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -82,6 +92,7 @@ export class JestTestGenerator {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.neverThrowErrors = neverThrowErrors;
+        this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -184,13 +195,25 @@ export class JestTestGenerator {
     }
 
     private addDependencies(): void {
-        this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("ts-jest", "^29.3.4", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("jest", "^29.7.0", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("@types/jest", "^29.5.14", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("ts-jest", "^29.3.4", {
+            type: DependencyType.DEV
+        });
+        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", {
+            type: DependencyType.DEV
+        });
         if (this.generateWireTests) {
-            this.dependencyManager.addDependency("msw", "^2.8.4", { type: DependencyType.DEV });
+            this.dependencyManager.addDependency("msw", "^2.8.4", {
+                type: DependencyType.DEV
+            });
         }
     }
 
@@ -254,7 +277,9 @@ describe("test", () => {
     public createWireTestDirectory(): void {
         const wireTestPath = `${this.relativeTestPath}/wire`;
         this.rootDirectory.createDirectory(wireTestPath);
-        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", {
+            overwrite: true
+        });
     }
 
     public getMockAuthFilepath(): ExportedFilePath {
@@ -323,7 +348,10 @@ describe("test", () => {
 
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
-        const responseStatusCode = getExampleResponseStatusCode(example.response);
+        const responseStatusCode = getExampleResponseStatusCode({
+            response: example.response,
+            ir: this.ir
+        });
 
         return code`
 export function mockAuth(server: MockServer) {
@@ -448,7 +476,11 @@ export function mockAuth(server: MockServer) {
         request.request?._visit({
             inlinedRequestBody: (value) => {
                 value.properties.forEach((p) => {
-                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample(p.value));
+                    return (result[p.name.name.camelCase.safeName] = this.createRawJsonExample({
+                        example: p.value,
+                        isForRequest: true,
+                        isForResponse: false
+                    }));
                 });
             },
             reference: (value) => {
@@ -504,7 +536,14 @@ export function mockAuth(server: MockServer) {
                     object: (value) => {
                         return Object.fromEntries(
                             value.properties.map((property) => {
-                                return [property.name.name.camelCase.safeName, createRawJsonExample(property.value)];
+                                return [
+                                    property.name.name.camelCase.safeName,
+                                    createRawJsonExample({
+                                        example: property.value,
+                                        isForRequest: true,
+                                        isForResponse: false
+                                    })
+                                ];
                             })
                         );
                     },
@@ -534,7 +573,9 @@ export function mockAuth(server: MockServer) {
             },
             this.relativeTestPath
         );
-        const refToClientType = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
+        const refToClientType = context.sdkClientClass.getReferenceToClientClass({
+            isRoot: true
+        });
 
         const baseOptions: Record<string, Code> = {};
         if (this.ir.variables.length > 0) {
@@ -584,7 +625,9 @@ export function mockAuth(server: MockServer) {
 
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
-            .map((endpoint) => this.buildTest(endpoint, serviceGenerator, context, refToClientType, baseOptions))
+            .map((endpoint) =>
+                this.buildEndpointTests(endpoint, serviceGenerator, context, refToClientType, baseOptions)
+            )
             .filter((test) => test != null);
 
         if (tests.length === 0) {
@@ -598,22 +641,59 @@ describe("${serviceName}", () => {
 `;
     }
 
-    private buildTest(
+    private buildEndpointTests(
         endpoint: HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
         baseOptions: Record<string, Code>
-    ): Code | undefined {
-        const options: Record<string, Code> = { ...baseOptions };
-        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
-            (example) => example.response.type === "ok"
-        );
-        const example = successfulExamples[0];
-        if (!example) {
-            return;
+    ): Code[] {
+        let examples = getExampleEndpointCallsForTests(endpoint);
+        if (this.neverThrowErrors) {
+            // remove error examples because we don't have time to implement them properly right now
+            examples = examples.filter((example) => example.response.type === "ok");
         }
+        if (examples.length === 0) {
+            return [];
+        }
+        const hasMultipleExamples = examples.length > 1;
 
+        return examples
+            .flatMap((example, exampleIndex) =>
+                this.buildExampleTest({
+                    endpoint,
+                    example,
+                    exampleIndex,
+                    hasMultipleExamples,
+                    context,
+                    serviceGenerator,
+                    importStatement,
+                    baseOptions
+                })
+            )
+            .filter((test) => test != null) as Code[];
+    }
+
+    private buildExampleTest({
+        endpoint,
+        example,
+        exampleIndex,
+        hasMultipleExamples,
+        serviceGenerator,
+        context,
+        importStatement,
+        baseOptions
+    }: {
+        endpoint: HttpEndpoint;
+        example: ExampleEndpointCall;
+        exampleIndex: number;
+        hasMultipleExamples: boolean;
+        serviceGenerator: GeneratedSdkClientClass;
+        context: SdkContext;
+        importStatement: Reference;
+        baseOptions: Record<string, Code>;
+    }): Code | undefined {
+        const options: Record<string, Code> = { ...baseOptions };
         const generatedEndpoint = serviceGenerator.getEndpoint({
             endpointId: endpoint.id,
             context
@@ -635,14 +715,16 @@ describe("${serviceName}", () => {
             return;
         }
 
-        if (example.response.type !== "ok") {
-            throw new Error("Only successful responses are supported");
-        }
-
         const rawRequestBody = this.getRequestExample(example.request);
         const rawResponseBody = this.getResponseExample(example.response);
-        const responseStatusCode = getExampleResponseStatusCode(example.response);
-        const expected = getExpectedResponseBody({
+        const responseStatusCode = getExampleResponseStatusCode({
+            response: example.response,
+            ir: this.ir
+        });
+
+        const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
+
+        const expected = getExpectedResponse({
             response: example.response,
             context,
             neverThrowErrors: this.neverThrowErrors
@@ -693,8 +775,52 @@ describe("${serviceName}", () => {
             );
         }
 
+        const expectedName =
+            endpoint.pagination !== undefined
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "expected"
+                  })
+                : "expected";
+        const pageName =
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "page"
+                  })
+                : "page";
+        const nextPageName =
+            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results,
+                      variable: "nextPage"
+                  })
+                : "nextPage";
+        const paginationBlock =
+            endpoint.pagination !== undefined
+                ? code`
+                const expected = ${expected}
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                ${
+                    endpoint.pagination.type !== "custom"
+                        ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            expect(${pageName}.hasNextPage()).toBe(true);
+                            const nextPage = await ${pageName}.getNextPage();
+                            expect(${expectedName}).toEqual(${nextPageName}.data);
+                        `
+                        : code`expect(${expectedName}).toEqual(${pageName});`
+                }
+                `
+                : "";
+
+        let testName = endpoint.name.originalName;
+        if (hasMultipleExamples) {
+            testName += ` (${exampleIndex + 1})`;
+        }
+
         return code`
-    test("${endpoint.name.originalName}", async () => {
+    test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
@@ -719,16 +845,33 @@ describe("${serviceName}", () => {
                 `
                     : ""
             }.build();
-            
+
         ${
-            isHeadersResponse
-                ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+            willThrowError
+                ? code`
+            await expect(async () => {
+                return ${getTextOfTsNode(generatedExample.endpointInvocation)}
+            }).rejects.toThrow(${literalOf(expected)});`
+                : isHeadersResponse
+                  ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-        expect(response).toEqual(${expected});`
+                  : code`
+                    ${
+                        endpoint.pagination !== undefined
+                            ? paginationBlock
+                            : code`
+                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                            expect(response).toEqual(${expected});
+                          `
+                    }
+                `
         }
     });
           `;
+    }
+
+    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
@@ -763,7 +906,6 @@ describe("${serviceName}", () => {
             default:
                 assertNever(requestType);
         }
-
         const responseType = endpoint.response?.body?.type ?? "undefined";
         switch (responseType) {
             case "fileDownload":
@@ -781,9 +923,6 @@ describe("${serviceName}", () => {
         if (endpoint.idempotent) {
             return false;
         }
-        if (endpoint.pagination) {
-            return false;
-        }
         return true;
     }
 
@@ -796,12 +935,20 @@ describe("${serviceName}", () => {
                 return code`${literalOf(
                     Object.fromEntries(
                         value.properties.map((p) => {
-                            return [p.name.wireValue, this.createRawJsonExample(p.value)];
+                            return [
+                                p.name.wireValue,
+                                this.createRawJsonExample({
+                                    example: p.value,
+                                    isForRequest: true,
+                                    isForResponse: false
+                                })
+                            ];
                         })
                     )
                 )}`;
             },
-            reference: (value) => this.createRawJsonExample(value),
+            reference: (value) =>
+                this.createRawJsonExample({ example: value, isForRequest: true, isForResponse: false }),
             _other: () => code`${literalOf(request.jsonExample)}`
         });
         const rawCode = requestExample.toString().trim();
@@ -823,7 +970,7 @@ describe("${serviceName}", () => {
                         if (!value) {
                             return undefined;
                         }
-                        return createRawJsonExample(value);
+                        return createRawJsonExample({ example: value, isForRequest: false, isForResponse: true });
                     },
                     stream: () => {
                         throw new Error("Stream not supported in wire tests");
@@ -840,7 +987,8 @@ describe("${serviceName}", () => {
                 if (!value.body) {
                     return undefined;
                 }
-                return createRawJsonExample(value.body);
+
+                return createRawJsonExample({ example: value.body, isForRequest: false, isForResponse: true });
             },
             _other: () => {
                 throw new Error("Unsupported response type");
@@ -856,8 +1004,20 @@ describe("${serviceName}", () => {
         return responseExample;
     }
 
-    createRawJsonExample({ shape, jsonExample }: ExampleTypeReference): Code {
+    createRawJsonExample({
+        example,
+        isForRequest,
+        isForResponse
+    }: {
+        example: ExampleTypeReference;
+        isForRequest: boolean;
+        isForResponse: boolean;
+    }): Code {
+        const { shape, jsonExample } = example;
         const createRawJsonExample = this.createRawJsonExample.bind(this);
+        const filterOutReadonlyProps = this.generateReadWriteOnlyTypes && isForRequest === true;
+        const filterOutWriteonlyProps = this.generateReadWriteOnlyTypes && isForResponse === true;
+
         return shape._visit<Code>({
             primitive: (value) => {
                 return value._visit<Code>({
@@ -890,13 +1050,16 @@ describe("${serviceName}", () => {
             container: (value) => {
                 return value._visit({
                     list: (value) => {
-                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample(item)))}`;
+                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample({ example: item, isForRequest, isForResponse })))}`;
                     },
                     map: (value) => {
                         return code`${literalOf(
                             Object.fromEntries(
                                 value.map.map((item) => {
-                                    return [item.key.jsonExample, createRawJsonExample(item.value)];
+                                    return [
+                                        item.key.jsonExample,
+                                        createRawJsonExample({ example: item.value, isForRequest, isForResponse })
+                                    ];
                                 })
                             )
                         )}`;
@@ -905,16 +1068,16 @@ describe("${serviceName}", () => {
                         if (!value.nullable) {
                             return code`null`;
                         }
-                        return createRawJsonExample(value.nullable);
+                        return createRawJsonExample({ example: value.nullable, isForRequest, isForResponse });
                     },
                     optional: (value) => {
                         if (!value.optional) {
                             return code`undefined`;
                         }
-                        return createRawJsonExample(value.optional);
+                        return createRawJsonExample({ example: value.optional, isForRequest, isForResponse });
                     },
                     set: (value) => {
-                        return code`${arrayOf(...value.set.map(createRawJsonExample))}`;
+                        return code`${arrayOf(...value.set.map((v) => createRawJsonExample({ example: v, isForRequest, isForResponse })))}`;
                     },
                     literal: (value) => {
                         return value.literal._visit({
@@ -950,25 +1113,92 @@ describe("${serviceName}", () => {
             named: (value) => {
                 return value.shape._visit<Code>({
                     alias: (value) => {
-                        return createRawJsonExample(value.value);
+                        return createRawJsonExample({ example: value.value, isForRequest, isForResponse });
                     },
                     enum: (value) => {
                         return code`${literalOf(value.value.wireValue)}`;
                     },
                     object: (value) => {
                         return code`${literalOf(
-                            Object.fromEntries(
-                                value.properties.map((property) => {
-                                    return [property.name.wireValue, createRawJsonExample(property.value)];
-                                })
-                            )
+                            Object.fromEntries([
+                                ...getUnusedPropertiesFromJsonExample(jsonExample, value),
+                                ...value.properties
+                                    .filter((p) => {
+                                        if (typeof p.propertyAccess === "undefined") {
+                                            return true;
+                                        }
+                                        if (
+                                            filterOutReadonlyProps &&
+                                            p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                        ) {
+                                            return false;
+                                        }
+                                        if (
+                                            filterOutWriteonlyProps &&
+                                            p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                        ) {
+                                            return false;
+                                        }
+                                        return true;
+                                    })
+                                    .map((property) => {
+                                        return [
+                                            property.name.wireValue,
+                                            createRawJsonExample({
+                                                example: property.value,
+                                                isForRequest,
+                                                isForResponse
+                                            })
+                                        ];
+                                    })
+                            ])
                         )}`;
                     },
-                    union: () => {
-                        return code`${literalOf(jsonExample)}`;
+                    union: (value) => {
+                        return value.singleUnionType.shape._visit({
+                            noProperties: () => code`${literalOf(jsonExample)}`,
+                            singleProperty: () => code`${literalOf(jsonExample)}`,
+                            samePropertiesAsObject: (memberValue) => {
+                                return code`${literalOf(
+                                    Object.fromEntries([
+                                        ...getUnusedPropertiesFromJsonExample(jsonExample, memberValue),
+                                        ...memberValue.object.properties
+                                            .filter((p) => {
+                                                if (typeof p.propertyAccess === "undefined") {
+                                                    return true;
+                                                }
+                                                if (
+                                                    filterOutReadonlyProps &&
+                                                    p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                                ) {
+                                                    return false;
+                                                }
+                                                if (
+                                                    filterOutWriteonlyProps &&
+                                                    p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                                ) {
+                                                    return false;
+                                                }
+                                                return true;
+                                            })
+                                            .map((property) => {
+                                                return [
+                                                    property.name.wireValue,
+                                                    createRawJsonExample({
+                                                        example: property.value,
+                                                        isForRequest,
+                                                        isForResponse
+                                                    })
+                                                ];
+                                            })
+                                    ])
+                                )}`;
+                            },
+                            _other: () => code`${literalOf(jsonExample)}`
+                        });
                     },
                     undiscriminatedUnion: (value) => {
-                        return createRawJsonExample(value.singleUnionType);
+                        return createRawJsonExample({ example: value.singleUnionType, isForRequest, isForResponse });
                     },
                     _other: () => {
                         return code`${literalOf(jsonExample)}`;
@@ -985,17 +1215,41 @@ describe("${serviceName}", () => {
     }
 }
 
-function getExampleResponseStatusCode(response: ExampleResponse): number {
+function getExampleResponseStatusCode({
+    response,
+    ir
+}: {
+    response: ExampleResponse;
+    ir: IntermediateRepresentation;
+}): number {
     return response._visit({
         ok: () => 200,
-        error: () => 500,
+        error: (exampleError) => {
+            const error = getExampleErrorDeclarationOrThrow({ exampleError, ir });
+            return error.statusCode;
+        },
         _other: () => {
             throw new Error("Unsupported response type");
         }
     });
 }
 
-function getExpectedResponseBody({
+/**
+ * Properties that come from extends and base properties, which aren't included in the example shape, but are in the jsonExample
+ */
+function getUnusedPropertiesFromJsonExample(
+    jsonExample: unknown,
+    shape: ExampleObjectType | ExampleObjectTypeWithTypeId
+): [string, unknown][] {
+    const properties = "object" in shape ? shape.object.properties : shape.properties;
+    const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
+    if (typeof jsonExample === "object" && jsonExample !== null) {
+        return Object.entries(jsonExample).filter(([key]) => !propertyKeys.has(key));
+    }
+    return [];
+}
+
+function getExpectedResponse({
     response,
     context,
     neverThrowErrors
@@ -1004,15 +1258,16 @@ function getExpectedResponseBody({
     context: SdkContext;
     neverThrowErrors: boolean;
 }): Code {
-    const result = response._visit({
+    return response._visit({
         ok: (response) => {
-            return response._visit({
+            const result = response._visit({
                 body: (value) => {
                     if (!value) {
                         return code`undefined`;
                     }
                     const example = context.type.getGeneratedExample(value).build(context, {
-                        isForSnippet: true
+                        isForSnippet: true,
+                        isForResponse: true
                     });
                     return code`${getTextOfTsNode(example)}`;
                 },
@@ -1026,21 +1281,48 @@ function getExpectedResponseBody({
                     throw new Error("Unsupported response type");
                 }
             });
+            if (neverThrowErrors) {
+                return code`{
+                    body: ${result},
+                    ok: true,
+                    headers: expect.any(Object),
+                    rawResponse: expect.any(Object),
+                }`;
+            }
+            return result;
         },
-        error: () => {
-            throw new Error("Error response not supported in wire tests");
+        error: (value) => {
+            const errorReference = context.sdkError
+                .getReferenceToError(value.error)
+                .getTypeNode({ isForSnippet: true, isForResponse: true });
+
+            const body = value.body
+                ? getTextOfTsNode(
+                      context.type.getGeneratedExample(value.body).build(context, {
+                          isForSnippet: true,
+                          isForResponse: true
+                      })
+                  )
+                : "";
+            const error = code`new ${getTextOfTsNode(errorReference)}(${body})`;
+            return error;
         },
         _other: () => {
             throw new Error("Unsupported response type");
         }
     });
-    if (neverThrowErrors) {
-        return code`{
-            body: ${result},
-            ok: true,
-            headers: expect.any(Object),
-            rawResponse: expect.any(Object),
-        }`;
+}
+
+function getExampleErrorDeclarationOrThrow({
+    exampleError,
+    ir
+}: {
+    exampleError: ExampleEndpointErrorResponse;
+    ir: IntermediateRepresentation;
+}): ErrorDeclaration {
+    const error = ir.errors[exampleError.error.errorId];
+    if (!error) {
+        throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
     }
-    return result;
+    return error;
 }

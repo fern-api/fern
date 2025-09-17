@@ -1,0 +1,147 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/profiles/complex",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createComplexProfile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.CreateComplexProfile(\n\tcontext.TODO(),\n\t\u0026fern.ComplexProfile{\n\t\tId:                     \"id\",\n\t\tNullableRole:           fern.UserRoleAdmin,\n\t\tOptionalRole:           fern.UserRoleAdmin,\n\t\tOptionalNullableRole:   fern.UserRoleAdmin,\n\t\tNullableStatus:         fern.UserStatusActive,\n\t\tOptionalStatus:         fern.UserStatusActive,\n\t\tOptionalNullableStatus: fern.UserStatusActive,\n\t\tNullableNotification: \u0026fern.NotificationMethod{\n\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\tSubject:      \"subject\",\n\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\"htmlContent\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tOptionalNotification: \u0026fern.NotificationMethod{\n\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\tSubject:      \"subject\",\n\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\"htmlContent\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tOptionalNullableNotification: \u0026fern.NotificationMethod{\n\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\tSubject:      \"subject\",\n\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\"htmlContent\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tNullableSearchResult: \u0026fern.SearchResult{\n\t\t\tUser: \u0026fern.UserResponse{\n\t\t\t\tId:       \"id\",\n\t\t\t\tUsername: \"username\",\n\t\t\t\tEmail: fern.String(\n\t\t\t\t\t\"email\",\n\t\t\t\t),\n\t\t\t\tPhone: fern.String(\n\t\t\t\t\t\"phone\",\n\t\t\t\t),\n\t\t\t\tCreatedAt: fern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t\tUpdatedAt: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tAddress: \u0026fern.Address{\n\t\t\t\t\tStreet: \"street\",\n\t\t\t\t\tCity: fern.String(\n\t\t\t\t\t\t\"city\",\n\t\t\t\t\t),\n\t\t\t\t\tState: fern.String(\n\t\t\t\t\t\t\"state\",\n\t\t\t\t\t),\n\t\t\t\t\tZipCode: \"zipCode\",\n\t\t\t\t\tCountry: fern.String(\n\t\t\t\t\t\t\"country\",\n\t\t\t\t\t),\n\t\t\t\t\tBuildingId: fern.String(\n\t\t\t\t\t\t\"buildingId\",\n\t\t\t\t\t),\n\t\t\t\t\tTenantId: fern.String(\n\t\t\t\t\t\t\"tenantId\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tOptionalSearchResult: \u0026fern.SearchResult{\n\t\t\tUser: \u0026fern.UserResponse{\n\t\t\t\tId:       \"id\",\n\t\t\t\tUsername: \"username\",\n\t\t\t\tEmail: fern.String(\n\t\t\t\t\t\"email\",\n\t\t\t\t),\n\t\t\t\tPhone: fern.String(\n\t\t\t\t\t\"phone\",\n\t\t\t\t),\n\t\t\t\tCreatedAt: fern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t\tUpdatedAt: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tAddress: \u0026fern.Address{\n\t\t\t\t\tStreet: \"street\",\n\t\t\t\t\tCity: fern.String(\n\t\t\t\t\t\t\"city\",\n\t\t\t\t\t),\n\t\t\t\t\tState: fern.String(\n\t\t\t\t\t\t\"state\",\n\t\t\t\t\t),\n\t\t\t\t\tZipCode: \"zipCode\",\n\t\t\t\t\tCountry: fern.String(\n\t\t\t\t\t\t\"country\",\n\t\t\t\t\t),\n\t\t\t\t\tBuildingId: fern.String(\n\t\t\t\t\t\t\"buildingId\",\n\t\t\t\t\t),\n\t\t\t\t\tTenantId: fern.String(\n\t\t\t\t\t\t\"tenantId\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tNullableArray: []string{\n\t\t\t\"nullableArray\",\n\t\t\t\"nullableArray\",\n\t\t},\n\t\tOptionalArray: []string{\n\t\t\t\"optionalArray\",\n\t\t\t\"optionalArray\",\n\t\t},\n\t\tOptionalNullableArray: []string{\n\t\t\t\"optionalNullableArray\",\n\t\t\t\"optionalNullableArray\",\n\t\t},\n\t\tNullableListOfNullables: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"nullableListOfNullables\",\n\t\t\t),\n\t\t\tfern.String(\n\t\t\t\t\"nullableListOfNullables\",\n\t\t\t),\n\t\t},\n\t\tNullableMapOfNullables: map[string]**fern.Address{\n\t\t\t\"nullableMapOfNullables\": \u0026fern.Address{\n\t\t\t\tStreet: \"street\",\n\t\t\t\tCity: fern.String(\n\t\t\t\t\t\"city\",\n\t\t\t\t),\n\t\t\t\tState: fern.String(\n\t\t\t\t\t\"state\",\n\t\t\t\t),\n\t\t\t\tZipCode: \"zipCode\",\n\t\t\t\tCountry: fern.String(\n\t\t\t\t\t\"country\",\n\t\t\t\t),\n\t\t\t\tBuildingId: fern.String(\n\t\t\t\t\t\"buildingId\",\n\t\t\t\t),\n\t\t\t\tTenantId: fern.String(\n\t\t\t\t\t\"tenantId\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tNullableListOfUnions: []*fern.NotificationMethod{\n\t\t\t\u0026fern.NotificationMethod{\n\t\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\t\tSubject:      \"subject\",\n\t\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\t\"htmlContent\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t\t\u0026fern.NotificationMethod{\n\t\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\t\tSubject:      \"subject\",\n\t\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\t\"htmlContent\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tOptionalMapOfEnums: map[string]fern.UserRole{\n\t\t\t\"optionalMapOfEnums\": fern.UserRoleAdmin,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getComplexProfile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.GetComplexProfile(\n\tcontext.TODO(),\n\t\"profileId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateComplexProfile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.UpdateComplexProfile(\n\tcontext.TODO(),\n\t\"profileId\",\n\t\u0026fern.UpdateComplexProfileRequest{\n\t\tNullableRole:   fern.UserRoleAdmin,\n\t\tNullableStatus: fern.UserStatusActive,\n\t\tNullableNotification: \u0026fern.NotificationMethod{\n\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\tSubject:      \"subject\",\n\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\"htmlContent\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tNullableSearchResult: \u0026fern.SearchResult{\n\t\t\tUser: \u0026fern.UserResponse{\n\t\t\t\tId:       \"id\",\n\t\t\t\tUsername: \"username\",\n\t\t\t\tEmail: fern.String(\n\t\t\t\t\t\"email\",\n\t\t\t\t),\n\t\t\t\tPhone: fern.String(\n\t\t\t\t\t\"phone\",\n\t\t\t\t),\n\t\t\t\tCreatedAt: fern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t\tUpdatedAt: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tAddress: \u0026fern.Address{\n\t\t\t\t\tStreet: \"street\",\n\t\t\t\t\tCity: fern.String(\n\t\t\t\t\t\t\"city\",\n\t\t\t\t\t),\n\t\t\t\t\tState: fern.String(\n\t\t\t\t\t\t\"state\",\n\t\t\t\t\t),\n\t\t\t\t\tZipCode: \"zipCode\",\n\t\t\t\t\tCountry: fern.String(\n\t\t\t\t\t\t\"country\",\n\t\t\t\t\t),\n\t\t\t\t\tBuildingId: fern.String(\n\t\t\t\t\t\t\"buildingId\",\n\t\t\t\t\t),\n\t\t\t\t\tTenantId: fern.String(\n\t\t\t\t\t\t\"tenantId\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tNullableArray: []string{\n\t\t\t\"nullableArray\",\n\t\t\t\"nullableArray\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/search",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.getSearchResults"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.GetSearchResults(\n\tcontext.TODO(),\n\t\u0026fern.SearchRequest{\n\t\tQuery: \"query\",\n\t\tFilters: map[string]*string{\n\t\t\t\"filters\": fern.String(\n\t\t\t\t\"filters\",\n\t\t\t),\n\t\t},\n\t\tIncludeTypes: []string{\n\t\t\t\"includeTypes\",\n\t\t\t\"includeTypes\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/test/deserialization",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.testDeserialization"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.TestDeserialization(\n\tcontext.TODO(),\n\t\u0026fern.DeserializationTestRequest{\n\t\tRequiredString: \"requiredString\",\n\t\tNullableString: fern.String(\n\t\t\t\"nullableString\",\n\t\t),\n\t\tOptionalString: fern.String(\n\t\t\t\"optionalString\",\n\t\t),\n\t\tOptionalNullableString: fern.String(\n\t\t\t\"optionalNullableString\",\n\t\t),\n\t\tNullableEnum: fern.UserRoleAdmin,\n\t\tOptionalEnum: fern.UserStatusActive,\n\t\tNullableUnion: \u0026fern.NotificationMethod{\n\t\t\tEmail: \u0026fern.EmailNotification{\n\t\t\t\tEmailAddress: \"emailAddress\",\n\t\t\t\tSubject:      \"subject\",\n\t\t\t\tHtmlContent: fern.String(\n\t\t\t\t\t\"htmlContent\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tOptionalUnion: \u0026fern.SearchResult{\n\t\t\tUser: \u0026fern.UserResponse{\n\t\t\t\tId:       \"id\",\n\t\t\t\tUsername: \"username\",\n\t\t\t\tEmail: fern.String(\n\t\t\t\t\t\"email\",\n\t\t\t\t),\n\t\t\t\tPhone: fern.String(\n\t\t\t\t\t\"phone\",\n\t\t\t\t),\n\t\t\t\tCreatedAt: fern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t\tUpdatedAt: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tAddress: \u0026fern.Address{\n\t\t\t\t\tStreet: \"street\",\n\t\t\t\t\tCity: fern.String(\n\t\t\t\t\t\t\"city\",\n\t\t\t\t\t),\n\t\t\t\t\tState: fern.String(\n\t\t\t\t\t\t\"state\",\n\t\t\t\t\t),\n\t\t\t\t\tZipCode: \"zipCode\",\n\t\t\t\t\tCountry: fern.String(\n\t\t\t\t\t\t\"country\",\n\t\t\t\t\t),\n\t\t\t\t\tBuildingId: fern.String(\n\t\t\t\t\t\t\"buildingId\",\n\t\t\t\t\t),\n\t\t\t\t\tTenantId: fern.String(\n\t\t\t\t\t\t\"tenantId\",\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tNullableList: []string{\n\t\t\t\"nullableList\",\n\t\t\t\"nullableList\",\n\t\t},\n\t\tNullableMap: map[string]int{\n\t\t\t\"nullableMap\": 1,\n\t\t},\n\t\tNullableObject: \u0026fern.Address{\n\t\t\tStreet: \"street\",\n\t\t\tCity: fern.String(\n\t\t\t\t\"city\",\n\t\t\t),\n\t\t\tState: fern.String(\n\t\t\t\t\"state\",\n\t\t\t),\n\t\t\tZipCode: \"zipCode\",\n\t\t\tCountry: fern.String(\n\t\t\t\t\"country\",\n\t\t\t),\n\t\t\tBuildingId: fern.String(\n\t\t\t\t\"buildingId\",\n\t\t\t),\n\t\t\tTenantId: fern.String(\n\t\t\t\t\"tenantId\",\n\t\t\t),\n\t\t},\n\t\tOptionalObject: \u0026fern.Organization{\n\t\t\tId:   \"id\",\n\t\t\tName: \"name\",\n\t\t\tDomain: fern.String(\n\t\t\t\t\"domain\",\n\t\t\t),\n\t\t\tEmployeeCount: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.ListUsers(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tIncludeDeleted: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tSortBy: fern.String(\n\t\t\t\"sortBy\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.CreateUserRequest{\n\t\tUsername: \"username\",\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tPhone: fern.String(\n\t\t\t\"phone\",\n\t\t),\n\t\tAddress: \u0026fern.Address{\n\t\t\tStreet: \"street\",\n\t\t\tCity: fern.String(\n\t\t\t\t\"city\",\n\t\t\t),\n\t\t\tState: fern.String(\n\t\t\t\t\"state\",\n\t\t\t),\n\t\t\tZipCode: \"zipCode\",\n\t\t\tCountry: fern.String(\n\t\t\t\t\"country\",\n\t\t\t),\n\t\t\tBuildingId: fern.String(\n\t\t\t\t\"buildingId\",\n\t\t\t),\n\t\t\tTenantId: fern.String(\n\t\t\t\t\"tenantId\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/filter",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.filterByRole"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.FilterByRole(\n\tcontext.TODO(),\n\t\u0026fern.FilterByRoleRequest{\n\t\tRole:          fern.UserRoleAdmin,\n\t\tStatus:        fern.UserStatusActive,\n\t\tSecondaryRole: fern.UserRoleAdmin,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.SearchUsers(\n\tcontext.TODO(),\n\t\u0026fern.SearchUsersRequest{\n\t\tQuery: \"query\",\n\t\tDepartment: fern.String(\n\t\t\t\"department\",\n\t\t),\n\t\tRole: fern.String(\n\t\t\t\"role\",\n\t\t),\n\t\tIsActive: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.GetUser(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.UpdateUser(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.UpdateUserRequest{\n\t\tUsername: fern.String(\n\t\t\t\"username\",\n\t\t),\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tPhone: fern.String(\n\t\t\t\"phone\",\n\t\t),\n\t\tAddress: \u0026fern.Address{\n\t\t\tStreet: \"street\",\n\t\t\tCity: fern.String(\n\t\t\t\t\"city\",\n\t\t\t),\n\t\t\tState: fern.String(\n\t\t\t\t\"state\",\n\t\t\t),\n\t\t\tZipCode: \"zipCode\",\n\t\t\tCountry: fern.String(\n\t\t\t\t\"country\",\n\t\t\t),\n\t\t\tBuildingId: fern.String(\n\t\t\t\t\"buildingId\",\n\t\t\t),\n\t\t\tTenantId: fern.String(\n\t\t\t\t\"tenantId\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}/notifications",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getNotificationSettings"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.GetNotificationSettings(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}/tags",
+                "method": "PUT",
+                "identifier_override": "endpoint_nullable-optional.updateTags"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/nullable-optional/fern\"\n\tfernclient \"github.com/nullable-optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.NullableOptional.UpdateTags(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.UpdateTagsRequest{\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t\t\"tags\",\n\t\t},\n\t\tCategories: []string{\n\t\t\t\"categories\",\n\t\t\t\"categories\",\n\t\t},\n\t\tLabels: []string{\n\t\t\t\"labels\",\n\t\t\t\"labels\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

@@ -4,7 +4,7 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
+    private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -80,6 +81,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -326,6 +328,56 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippet = java.codeblock((writer) => {
             writer.writeLine("// Client level");
             writer.writeNodeStatement(clientWithTimeout);
+            writer.newLine();
+            writer.writeLine("// Request level");
+            writer.writeNodeStatement(endpointMethodInvocation);
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
+    private renderCustomHeadersSnippet(endpoint: EndpointWithFilepath): string {
+        const clientClassReference = this.context.getRootClientClassReference();
+
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: [
+                {
+                    name: "addHeader",
+                    value: java.TypeLiteral.raw(java.codeblock('"X-Custom-Header", "custom-value"'))
+                },
+                {
+                    name: "addHeader",
+                    value: java.TypeLiteral.raw(java.codeblock('"X-Request-Id", "abc-123"'))
+                }
+            ]
+        });
+
+        const clientWithHeaders = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${this.rootPackageClientName} = `);
+            writer.writeNodeStatement(clientInitialization);
+        });
+
+        const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
+        const requestOptionsInitialization = java.TypeLiteral.builder({
+            classReference: requestOptionsClassReference,
+            parameters: [
+                {
+                    name: "addHeader",
+                    value: java.TypeLiteral.raw(java.codeblock('"X-Request-Header", "request-value"'))
+                }
+            ]
+        });
+
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [
+            ReadmeSnippetBuilder.ELLIPSES,
+            requestOptionsInitialization
+        ]);
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Client level");
+            writer.writeNodeStatement(clientWithHeaders);
             writer.newLine();
             writer.writeLine("// Request level");
             writer.writeNodeStatement(endpointMethodInvocation);

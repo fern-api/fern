@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedInferredAuthImplicitNoExpiry;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedInferredAuthImplicitNoExpiryClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"
@@ -17,6 +17,8 @@ public class Example0
                 XApiKey = "X-Api-Key",
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
                 Scope = "scope"
             }
         );

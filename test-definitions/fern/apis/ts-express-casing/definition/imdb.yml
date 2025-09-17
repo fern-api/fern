@@ -17,7 +17,7 @@ service:
       docs: Add a movie to the database
       method: POST
       path: /create-movie
-      request: 
+      request:
         name: CreateMovieRequest
         body:
           properties:
@@ -26,7 +26,7 @@ service:
             movie_rating:
               type: double
               docs: The rating scale is one to five stars
-      response: 
+      response:
         type: MovieId
         status-code: 201
 

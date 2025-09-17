@@ -1,7 +1,7 @@
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule";
-export { getExampleEndpointCalls } from "./codegen-utils/getExampleEndpointCalls";
+export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls";
 export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,
@@ -24,11 +24,13 @@ export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./exports-manager";
 export * from "./express";
 export * from "./external-dependencies";
+export { getElementTypeFromArrayType } from "./getElementTypeFromArrayType";
 export { getFullPathForEndpoint } from "./getFullPathForEndpoint";
 export * from "./imports-manager";
 export { type PackageId } from "./PackageId";
 export * from "./public-exports-manager";
 export * from "./referencing";
+export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode";
 export { type TypeReferenceNode } from "./TypeReferenceNode";
 export * from "./typescript-project";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";

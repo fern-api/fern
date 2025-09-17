@@ -1,4 +1,3 @@
-pub mod streamed_completion;
+pub mod completions_streamed_completion;
 
-pub use streamed_completion::{*};
-
+pub use completions_streamed_completion::*;

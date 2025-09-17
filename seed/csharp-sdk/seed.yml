@@ -60,6 +60,9 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - "contributing"
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
@@ -166,9 +169,17 @@ fixtures:
     - customConfig:
         additional-properties: false
       outputFolder: no-additional-properties
+  csharp-namespace-collision:
+    - customConfig:
+        experimental-fully-qualified-namespaces: true
+        experimental-dotnet-format: true
+      outputFolder: fully-qualified-namespaces
+  csharp-system-collision:
+    - customConfig:
+        client-class-name: System
+      outputFolder: system-client
 allowedFailures:
   - imdb:exported-client-class-name
-  - literal
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager
@@ -176,22 +187,11 @@ allowedFailures:
 
   ## COMPILE FAILURES
   - any-auth
-  - examples:no-custom-config
-  - examples:readme-config
-  - objects-with-imports
-  - mixed-file-directory
 
-  # deserialization/?? issues for public readonly record struct 
+  # deserialization/?? issues for public readonly record struct
   - circular-references
   - circular-references-advanced
 
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
-  - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.
   - trace
-
-  # TODO: Add support for well-known types.
-  - csharp-grpc-proto-exhaustive:no-custom-config
-  - csharp-grpc-proto-exhaustive:package-id
-  - csharp-grpc-proto-exhaustive:read-only-memory
-  - csharp-grpc-proto-exhaustive:include-exception-handler

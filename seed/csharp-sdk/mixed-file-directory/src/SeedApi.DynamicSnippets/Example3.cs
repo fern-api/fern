@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedMixedFileDirectory;
-using SeedMixedFileDirectory.User.Events;
+using System.Threading.Tasks;
+using SeedMixedFileDirectory.User_.Events;
 
 namespace Usage;
 
 public class Example3
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedMixedFileDirectoryClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

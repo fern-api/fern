@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ClientError};
+use crate::{ApiError, ClientConfig};
 
 pub mod folder_a;
 pub mod folder_d;
@@ -11,15 +11,14 @@ pub struct CrossPackageTypeNamesClient {
 }
 
 impl CrossPackageTypeNamesClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             folder_a: FolderAClient::new(config.clone())?,
             folder_d: FolderDClient::new(config.clone())?,
-            foo: FooClient::new(config.clone())?
+            foo: FooClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use folder_a::FolderAClient;

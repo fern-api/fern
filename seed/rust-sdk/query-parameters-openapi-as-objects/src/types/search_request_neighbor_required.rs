@@ -1,17 +1,17 @@
-use crate::user::User;
 use crate::nested_user::NestedUser;
+use crate::user::User;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum SearchRequestNeighborRequired {
-        User(User),
+    User(User),
 
-        NestedUser(NestedUser),
+    NestedUser(NestedUser),
 
-        String(String),
+    String(String),
 
-        Integer(i32),
+    Integer(i32),
 }
 
 impl SearchRequestNeighborRequired {
@@ -31,61 +31,59 @@ impl SearchRequestNeighborRequired {
         matches!(self, Self::Integer(_))
     }
 
-
     pub fn as_user(&self) -> Option<&User> {
         match self {
-                    Self::User(value) => Some(value),
-                    _ => None,
-                }
+            Self::User(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_user(self) -> Option<User> {
         match self {
-                    Self::User(value) => Some(value),
-                    _ => None,
-                }
+            Self::User(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_nesteduser(&self) -> Option<&NestedUser> {
         match self {
-                    Self::NestedUser(value) => Some(value),
-                    _ => None,
-                }
+            Self::NestedUser(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_nesteduser(self) -> Option<NestedUser> {
         match self {
-                    Self::NestedUser(value) => Some(value),
-                    _ => None,
-                }
+            Self::NestedUser(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_string(&self) -> Option<&String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_integer(&self) -> Option<&i32> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_integer(self) -> Option<i32> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

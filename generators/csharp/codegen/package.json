@@ -20,9 +20,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -36,6 +34,7 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-fern/ir-sdk": "^58.2.0",
+    "@fern-api/base-generator": "workspace:*",
     "lodash-es": "^4.17.21",
     "zod": "^3.22.3"
   },

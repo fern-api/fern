@@ -32,6 +32,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.InlinePathParameters,
 		config.InlineFileProperties,
 		config.UseReaderForBytesRequest,
+		config.GettersPassByValue,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,
@@ -40,8 +41,8 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.ClientConstructorName,
 		config.ImportPath,
 		config.PackageName,
+		config.PackagePath,
 		config.ExportedClientName,
-		config.PackageLayout,
 		config.UnionVersion,
 		config.Module,
 	)

@@ -15,7 +15,7 @@ export interface HeaderParameterCodeBlock {
 
 export interface RequestBodyCodeBlock {
     code?: ruby.CodeBlock;
-    requestBodyReference: string;
+    requestBodyReference: ruby.CodeBlock;
 }
 
 export abstract class EndpointRequest {

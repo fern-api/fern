@@ -64,7 +64,7 @@ export class Class_ extends Module_ {
         }
 
         if (!this.hasBody()) {
-            writer.write("; end");
+            writer.writeLine("; end");
             return;
         }
 
@@ -74,9 +74,7 @@ export class Class_ extends Module_ {
 
             this.statements.forEach((statement, index) => {
                 statement.write(writer);
-                if (index < this.statements.length - 1) {
-                    writer.newLine();
-                }
+                writer.newLine();
             });
 
             writer.dedent();
@@ -91,8 +89,7 @@ export class Class_ extends Module_ {
             writer.dedent();
         }
 
-        writer.write("end");
-        writer.newLine();
+        writer.writeLine("end");
     }
 
     private hasBody(): boolean {

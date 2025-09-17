@@ -232,6 +232,10 @@ export class AbstractWriter {
     }
 
     private getIndentString(): string {
-        return " ".repeat(this.indentLevel * TAB_SIZE);
+        return " ".repeat(this.indentLevel * this.getTabSize());
+    }
+
+    protected getTabSize(): number {
+        return TAB_SIZE;
     }
 }

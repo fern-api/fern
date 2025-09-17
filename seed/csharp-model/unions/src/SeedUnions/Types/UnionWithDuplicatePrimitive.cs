@@ -279,9 +279,9 @@ public record UnionWithDuplicatePrimitive
                 "integer1" => json.GetProperty("value").Deserialize<int>(options),
                 "integer2" => json.GetProperty("value").Deserialize<int>(options),
                 "string1" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 "string2" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
+                ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithDuplicatePrimitive(discriminator, value);
@@ -334,7 +334,8 @@ public record UnionWithDuplicatePrimitive
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Integer1(int value) => new(value);
+        public static implicit operator UnionWithDuplicatePrimitive.Integer1(int value) =>
+            new(value);
     }
 
     /// <summary>
@@ -352,7 +353,8 @@ public record UnionWithDuplicatePrimitive
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Integer2(int value) => new(value);
+        public static implicit operator UnionWithDuplicatePrimitive.Integer2(int value) =>
+            new(value);
     }
 
     /// <summary>
@@ -370,7 +372,8 @@ public record UnionWithDuplicatePrimitive
 
         public override string ToString() => Value;
 
-        public static implicit operator String1(string value) => new(value);
+        public static implicit operator UnionWithDuplicatePrimitive.String1(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -388,6 +391,7 @@ public record UnionWithDuplicatePrimitive
 
         public override string ToString() => Value;
 
-        public static implicit operator String2(string value) => new(value);
+        public static implicit operator UnionWithDuplicatePrimitive.String2(string value) =>
+            new(value);
     }
 }

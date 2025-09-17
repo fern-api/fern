@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedTrace;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example32
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -13,7 +13,9 @@ public class Example32
             }
         );
 
-        await client.V2.Problem.GetProblemsAsync();
+        await client.V2.Problem.GetLatestProblemAsync(
+            "problemId"
+        );
     }
 
 }
