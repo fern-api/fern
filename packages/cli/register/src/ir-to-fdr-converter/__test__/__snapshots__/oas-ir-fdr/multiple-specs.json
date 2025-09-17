@@ -274,7 +274,7 @@
                     }
                   },
                   "contentType": "multipart/form-data",
-                  "exploded": false
+                  "exploded": true
                 }
               ]
             },
@@ -307,7 +307,10 @@
                   "type": "json"
                 },
                 "data": {
-                  "type": "json"
+                  "type": "exploded",
+                  "value": [
+                    null
+                  ]
                 }
               }
             },

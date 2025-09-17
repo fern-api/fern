@@ -8,4 +8,4 @@ export function property(args: Property.Args): Property {
     return new Property(args);
 }
 
-export { Type } from "./ast";
+export * from "./ast";

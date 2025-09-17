@@ -784,6 +784,7 @@
                   }
                 },
                 "contentType": "multipart/form-data",
+                "style": "exploded",
                 "type": "bodyProperty"
               }
             ],

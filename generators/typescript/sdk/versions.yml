@@ -1,11 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 2.4.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where a property set to `undefined` would not match with a property that is missing in the `withJson` MSW predicate.
+      type: fix
+  createdAt: '2025-07-08'
+  irVersion: 58
+
 - version: 2.4.2
   changelogEntry:
     - summary: |
         Fixes a compile issue when WebSocket connect methods require query parameters with special characters. 
         Fixes response deserialization in websockets to respect skipping validation. 
       type: fix
+  createdAt: '2025-07-04'
   irVersion: 58
 
 - version: 2.4.1
@@ -14,6 +23,7 @@
         When serde layer is enabled, WebSocket channels now pass through unrecognized properties 
         instead of stripping them to preserve forwards compatibility.
       type: fix
+  createdAt: '2025-07-04'
   irVersion: 58   
 
 - version: 2.4.0
