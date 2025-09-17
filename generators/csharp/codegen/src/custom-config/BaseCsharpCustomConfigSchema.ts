@@ -26,6 +26,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
+    "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
 
     // Deprecated.
     "extra-dependencies": z
@@ -37,8 +38,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "pascal-case-environments": z.boolean().optional(),
     "simplify-object-dictionaries": z.boolean().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
-    "experimental-additional-properties": z.boolean().optional(),
-    "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional()
+    "experimental-additional-properties": z.boolean().optional()
 });
 
 export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>;

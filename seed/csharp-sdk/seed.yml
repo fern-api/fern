@@ -59,7 +59,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        customReadmeSections:
+        custom-readme-sections:
           - title: "Override Section"
             content: "Override Content"
           - title: "Generator Invocation Custom Section"
@@ -73,10 +73,10 @@ fixtures:
         defaultEndpoint: POST /movie
         customSections:
           - title: "Base Readme Custom Section"
-            language: typescript
+            language: csharp
             content: "Base Readme Custom Content for {{ packageName }}"
           - title: "Override Section"
-            language: typescript
+            language: csharp
             content: "Base Content"
         features:
           timeouts:
