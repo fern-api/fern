@@ -245,12 +245,13 @@ jobs:
   typescript-sdk:
     runs-on: Seed
     needs: changes
-    if: >-
-      ${{
-        (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
-        && github.repository == 'fern-api/fern'
-      }}
+    #  CHRISM - add something like this back at the end
+    # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -260,6 +261,50 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
+
+  create-ts-test-matrix:
+    runs-on: Seed
+    needs: changes
+    outputs:
+      matrix_of_tests: ${{ steps.create-test-matrix.outputs.matrix_of_tests }}
+    # CHRISM - add something like this back at the end
+      # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
+    steps:
+      - name: Create Test Matrix
+        id: create-test-matrix
+        run: |
+          TEST_FIXTURES_1="accept-header alias alias-extends any-auth api-wide-base-path audiences"
+          TEST_FIXTURES_2="auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload bytes-download file-download file-upload imdb plain-text public-object streaming streaming-parameter server-sent-events server-sent-event-examples"
+          echo "matrix_of_tests=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+    
+  typescript-sdk-as-matrix:
+    runs-on: Seed
+    needs: [changes,create-ts-test-matrix]
+    strategy:
+      matrix:
+        fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
+    # CHRISM - add something like this back at the end
+    # if: >-
+    #   ${{
+    #     (((needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true')
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch')
+    #     && github.repository == 'fern-api/fern'
+    #   }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-sdk
+          generator-path: generators/typescript
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-express:
     runs-on: Seed
