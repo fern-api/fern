@@ -104,12 +104,18 @@ runs:
 
           echo "Fixture: ${ FIXTURE }"
           echo "Subfolder: ${ SUBFOLDER }"
-          
+
+          # Hack fix
+          SUBFOLDER_STRING=""
+          if [[ SUBFOLDER==""  ]]; then
+            SUBFOLDER_STRING="--outputFolder ${SUBFOLDER}"
+          fi
+
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${ FIXTURE } \
-          ${{ SUBFOLDER != "" && format('--outputFolder {0}', SUBFOLDER) || '' }} \
+          --fixture ${{ FIXTURE }} \
+          ${{ SUBFOLDER_STRING }} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
