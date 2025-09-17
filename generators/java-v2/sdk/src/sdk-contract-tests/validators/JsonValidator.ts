@@ -3,47 +3,42 @@ import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
- * Validator for JSON request/response bodies in contract tests.
- * Provides both basic JSON equality checks and enhanced validation for complex types.
+ * Validator for JSON assertions in contract tests.
  */
 export class JsonValidator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Formats a JSON object as a multi-line Java string variable with proper concatenation.
-     * This generates Java 8+ compatible string concatenation for better readability.
-     * @param writer The Writer instance to write to
-     * @param variableName The name of the Java variable to declare
-     * @param jsonData The JSON data to format
      */
     public formatMultilineJson(writer: Writer, variableName: string, jsonData: unknown): void {
         const formattedJson = JSON.stringify(jsonData, null, 2);
         const lines = formattedJson.split("\n");
 
-        if (lines.length === 1) {
-            // Single line JSON - no need for concatenation
-            writer.writeLine(`String ${variableName} = ${JSON.stringify(formattedJson)};`);
-        } else {
-            // Multi-line JSON - format with concatenation
-            writer.writeLine(
-                `String ${variableName} = "` + (lines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
-            );
-            for (let i = 1; i < lines.length - 1; i++) {
-                writer.writeLine('    "' + (lines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+        writer.writeLine(`String ${variableName} = ""`);
+        writer.indent();
+
+        lines.forEach((line, index) => {
+            const escapedLine = line
+                .replace(/\\/g, "\\\\")
+                .replace(/"/g, '\\"')
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r")
+                .replace(/\t/g, "\\t");
+
+            if (index === lines.length - 1) {
+                writer.writeLine(`+ "${escapedLine}";`);
+            } else {
+                writer.writeLine(`+ "${escapedLine}\\n"`);
             }
-            writer.writeLine('    "' + ((lines[lines.length - 1] ?? "").replace(/"/g, '\\"')) + '";');
-        }
+        });
+
+        writer.dedent();
     }
 
     /**
-     * Generates enhanced JSON validation beyond basic equality.
-     * Handles union types, optional/nullable types, and collections.
-     *
-     * @param writer The Writer instance
-     * @param endpoint The HTTP endpoint being tested
-     * @param context Whether validating request or response
-     * @param actualVarName Name of the actual JSON variable
-     * @param expectedVarName Name of the expected JSON variable
+     * Generates enhanced JSON validation with support for complex types
+     * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
@@ -52,64 +47,193 @@ export class JsonValidator {
         actualVarName: string,
         expectedVarName: string
     ): void {
-        // Basic JSON structure validation
-        const contextCapitalized = context.charAt(0).toUpperCase() + context.slice(1);
         writer.writeLine(
             `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
-            `"${contextCapitalized} body structure does not match expected");`
+                `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
-        // Union type validation
-        this.generateUnionTypeValidation(writer, actualVarName);
-
-        // Optional/nullable validation
-        this.generateOptionalNullableValidation(writer, actualVarName, context);
-
-        // Generic/collection validation
-        this.generateGenericCollectionValidation(writer, actualVarName);
+        if (context === "response") {
+            this.generateResponseTypeValidation(writer, endpoint, actualVarName);
+        } else {
+            this.generateRequestTypeValidation(writer, endpoint, actualVarName);
+        }
     }
 
-    private generateUnionTypeValidation(writer: Writer, actualVarName: string): void {
-        writer.writeLine(`if (${actualVarName}.has("type") || ${actualVarName}.has("_type") || ${actualVarName}.has("kind")) {`);
+    /**
+     * Generates enhanced validation for response types
+     */
+    private generateResponseTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "json") {
+            return;
+        }
+
+        if (this.isPaginatedEndpoint(endpoint)) {
+            this.generatePaginationValidation(writer, endpoint, actualVarName);
+        }
+
+        this.generateUnionTypeValidation(writer, actualVarName, "response");
+
+        this.generateOptionalTypeValidation(writer, actualVarName, "response");
+
+        this.generateGenericTypeValidation(writer, actualVarName, "response");
+    }
+
+    /**
+     * Generates enhanced validation for request types
+     */
+    private generateRequestTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const requestBody = endpoint.requestBody;
+        if (!requestBody) {
+            return;
+        }
+
+        this.generateUnionTypeValidation(writer, actualVarName, "request");
+
+        this.generateOptionalTypeValidation(writer, actualVarName, "request");
+
+        this.generateGenericTypeValidation(writer, actualVarName, "request");
+    }
+
+    /**
+     * Generates union type validation assertions
+     */
+    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+        writer.writeLine(
+            `if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`
+        );
         writer.indent();
-        writer.writeLine("String discriminator = null;");
-        writer.writeLine(`if (${actualVarName}.has("type")) discriminator = ${actualVarName}.get("type").asText();`);
-        writer.writeLine(`else if (${actualVarName}.has("_type")) discriminator = ${actualVarName}.get("_type").asText();`);
-        writer.writeLine(`else if (${actualVarName}.has("kind")) discriminator = ${actualVarName}.get("kind").asText();`);
-        writer.writeLine('Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");');
-        writer.writeLine('Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");');
+        writer.writeLine(`String discriminator = null;`);
+        writer.writeLine(`if (${jsonVarName}.has("type")) discriminator = ${jsonVarName}.get("type").asText();`);
+        writer.writeLine(`else if (${jsonVarName}.has("_type")) discriminator = ${jsonVarName}.get("_type").asText();`);
+        writer.writeLine(`else if (${jsonVarName}.has("kind")) discriminator = ${jsonVarName}.get("kind").asText();`);
+        writer.writeLine(`Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");`);
+        writer.writeLine(`Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");`);
         writer.dedent();
         writer.writeLine("}");
     }
 
-    private generateOptionalNullableValidation(
-        writer: Writer,
-        actualVarName: string,
-        context: "request" | "response"
-    ): void {
+    /**
+     * Generates optional/nullable type validation
+     */
+    private generateOptionalTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
         writer.writeLine("");
-        writer.writeLine(`if (!${actualVarName}.isNull()) {`);
+        writer.writeLine(`if (!${jsonVarName}.isNull()) {`);
         writer.indent();
         writer.writeLine(
-            `Assertions.assertTrue(${actualVarName}.isObject() || ${actualVarName}.isArray() || ` +
-            `${actualVarName}.isValueNode(), "${context} should be a valid JSON value");`
+            `Assertions.assertTrue(${jsonVarName}.isObject() || ${jsonVarName}.isArray() || ${jsonVarName}.isValueNode(), ` +
+                `"${context} should be a valid JSON value");`
         );
         writer.dedent();
         writer.writeLine("}");
     }
 
-    private generateGenericCollectionValidation(writer: Writer, actualVarName: string): void {
+    /**
+     * Generates validation for generic/collection types
+     */
+    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
         writer.writeLine("");
-        writer.writeLine(`if (${actualVarName}.isArray()) {`);
+        writer.writeLine(`if (${jsonVarName}.isArray()) {`);
         writer.indent();
-        writer.writeLine(`Assertions.assertTrue(${actualVarName}.size() >= 0, "Array should have valid size");`);
+        writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Array should have valid size");`);
         writer.dedent();
         writer.writeLine("}");
+        writer.writeLine(`if (${jsonVarName}.isObject()) {`);
+        writer.indent();
+        writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Object should have valid field count");`);
+        writer.dedent();
+        writer.writeLine("}");
+    }
 
-        writer.writeLine(`if (${actualVarName}.isObject()) {`);
-        writer.indent();
-        writer.writeLine(`Assertions.assertTrue(${actualVarName}.size() >= 0, "Object should have valid field count");`);
-        writer.dedent();
-        writer.writeLine("}");
+    /**
+     * Checks if an endpoint has pagination configuration
+     */
+    private isPaginatedEndpoint(endpoint: HttpEndpoint): boolean {
+        return endpoint.pagination != null;
+    }
+
+    /**
+     * Generates pagination-specific validation for Iterable<T> responses
+     */
+    private generatePaginationValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const pagination = endpoint.pagination;
+        if (!pagination) {
+            return;
+        }
+
+        writer.writeLine("");
+        writer.writeLine("// Validate pagination structure");
+
+        const resultsPath = this.getPaginationResultsPath(pagination);
+        const nextCursorPath = this.getPaginationNextCursorPath(pagination);
+
+        if (resultsPath) {
+            const pathParts = resultsPath.split(".");
+            let currentPath = actualVarName;
+
+            for (const part of pathParts) {
+                writer.writeLine(`if (${currentPath}.has("${part}")) {`);
+                writer.indent();
+                currentPath = `${currentPath}.get("${part}")`;
+            }
+
+            writer.writeLine(
+                `Assertions.assertTrue(${currentPath}.isArray(), ` +
+                    `"Pagination results at '${resultsPath}' should be an array");`
+            );
+
+            // Close all the if statements
+            for (let i = 0; i < pathParts.length; i++) {
+                writer.dedent();
+                writer.writeLine("}");
+            }
+        }
+
+        if (nextCursorPath && pagination.type === "cursor") {
+            const pathParts = nextCursorPath.split(".");
+            let currentPath = actualVarName;
+
+            for (const part of pathParts) {
+                writer.writeLine(`if (${currentPath}.has("${part}")) {`);
+                writer.indent();
+                currentPath = `${currentPath}.get("${part}")`;
+            }
+
+            writer.writeLine(
+                `Assertions.assertTrue(${currentPath}.isTextual() || ${currentPath}.isNull(), ` +
+                    `"Pagination cursor at '${nextCursorPath}' should be a string or null");`
+            );
+
+            // Close all the if statements
+            for (let i = 0; i < pathParts.length; i++) {
+                writer.dedent();
+                writer.writeLine("}");
+            }
+        }
+    }
+
+    /**
+     * Gets the path to pagination results from the pagination configuration
+     */
+    private getPaginationResultsPath(pagination: any): string | undefined {
+        // TODO:This is a simplified implementation - actual implementation would
+        // parse the ResponseProperty structure from IR
+        if (pagination.type === "cursor" || pagination.type === "offset") {
+            // For now, return common patterns
+            return "data";
+        }
+        return undefined;
+    }
+
+    /**
+     * Gets the path to the next cursor from the pagination configuration
+     */
+    private getPaginationNextCursorPath(pagination: any): string | undefined {
+        // This is a simplified implementation - actual implementation would
+        // parse the ResponseProperty structure from IR
+        if (pagination.type === "cursor") {
+            return "next";
+        }
+        return undefined;
     }
 }

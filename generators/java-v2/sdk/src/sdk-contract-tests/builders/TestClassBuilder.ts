@@ -1,18 +1,19 @@
 import { Writer } from "@fern-api/java-ast/src/ast";
+import { AuthScheme, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
+interface MultiUrlEnvironment {
+    urls?: Record<string, unknown>;
+}
+
 /**
- * Builder for generating JUnit test class boilerplate including setup, teardown, and MockWebServer configuration.
+ * Builder for generating test class boilerplate including setup/teardown methods.
  */
 export class TestClassBuilder {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
-     * Creates the test class boilerplate including imports, fields, setup and teardown methods.
-     * @param className The name of the test class (e.g., "AuthContractTest")
-     * @param clientClassName The name of the SDK client class (e.g., "SeedApiClient")
-     * @param hasAuth Whether the API has authentication configured
-     * @returns A writer function that generates the test class structure
+     * Creates the test class boilerplate with JUnit 5 setup.
      */
     public createTestClassBoilerplate(
         className: string,
@@ -20,7 +21,6 @@ export class TestClassBuilder {
         hasAuth: boolean
     ): (writer: Writer) => void {
         return (writer) => {
-            // Add imports
             writer.addImport("org.junit.jupiter.api.Assertions");
             writer.addImport("com.fasterxml.jackson.databind.ObjectMapper");
             writer.addImport("com.fasterxml.jackson.databind.JsonNode");
@@ -34,12 +34,10 @@ export class TestClassBuilder {
             writer.writeLine(`public class ${className} {`);
             writer.indent();
 
-            // Fields
             writer.writeLine("private MockWebServer server;");
             writer.writeLine(`private ${clientClassName} client;`);
             writer.writeLine("private ObjectMapper objectMapper = new ObjectMapper();");
 
-            // Setup method
             writer.writeLine("@BeforeEach");
             writer.writeLine("public void setup() throws Exception {");
             writer.indent();
@@ -48,12 +46,11 @@ export class TestClassBuilder {
             writer.writeLine(`client = ${clientClassName}.builder()`);
             writer.indent();
 
-            // Delegate environment and auth configuration to the main generator
-            // This will be refactored to use EnvironmentConfig and AuthExtractor modules
-            writer.writeLine('.url(server.url("/").toString())');
+            this.generateEnvironmentConfiguration(writer);
 
-            if (hasAuth) {
-                writer.writeLine('.token("test-token")');
+            const authConfig = this.getAuthClientBuilderCalls();
+            if (authConfig) {
+                writer.writeLine(authConfig);
             }
 
             writer.writeLine(".build();");
@@ -61,7 +58,6 @@ export class TestClassBuilder {
             writer.dedent();
             writer.writeLine("}");
 
-            // Teardown method
             writer.writeLine("@AfterEach");
             writer.writeLine("public void teardown() throws Exception {");
             writer.indent();
@@ -69,5 +65,111 @@ export class TestClassBuilder {
             writer.dedent();
             writer.writeLine("}");
         };
+    }
+
+    /**
+     * Generates environment configuration for the client builder
+     * Supports both single URL and multi-URL environment setups
+     */
+    private generateEnvironmentConfiguration(writer: Writer): void {
+        const environments = this.context.ir.environments;
+
+        if (!environments) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        const isMultiUrlEnvironment = this.isMultiUrlEnvironment(environments);
+
+        if (isMultiUrlEnvironment) {
+            this.generateMultiUrlEnvironmentConfiguration(writer, environments);
+        } else {
+            writer.writeLine('.url(server.url("/").toString())');
+        }
+    }
+
+    /**
+     * Determines if the environment configuration uses multiple URLs
+     */
+    private isMultiUrlEnvironment(environments: EnvironmentsConfig | undefined): boolean {
+        if (!environments) {
+            return false;
+        }
+
+        for (const envValue of Object.values(environments)) {
+            if (envValue && typeof envValue === "object" && "urls" in envValue) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Generates client environment configuration for APIs with multiple base URLs
+     */
+    private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
+        let environmentWithUrls: MultiUrlEnvironment | null = null;
+        for (const envValue of Object.values(environments)) {
+            if (envValue && typeof envValue === "object" && "urls" in envValue) {
+                environmentWithUrls = envValue as MultiUrlEnvironment;
+                break;
+            }
+        }
+
+        if (!environmentWithUrls || !environmentWithUrls.urls) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        writer.writeLine(".environment(Environment.custom()");
+        writer.indent();
+
+        for (const [urlKey, _urlValue] of Object.entries(environmentWithUrls.urls)) {
+            const methodName = `${urlKey}Url`;
+            writer.writeLine(`.${methodName}(server.url("/").toString())`);
+        }
+
+        writer.writeLine(".build())");
+        writer.dedent();
+    }
+
+    /**
+     * Generates authentication client builder calls based on test example data.
+     * Extracts realistic auth values from the example HTTP requests.
+     * Supports multiple authentication schemes including Bearer, Basic, Header, and OAuth.
+     */
+    private getAuthClientBuilderCalls(): string | undefined {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes || auth.schemes.length === 0) {
+            return undefined;
+        }
+
+        const scheme = auth.schemes[0];
+        if (!scheme) {
+            return undefined;
+        }
+
+        return this.getAuthCallForScheme(scheme);
+    }
+
+    /**
+     * Generates the appropriate auth configuration call for a given authentication scheme.
+     * Maps each auth scheme type to its corresponding client builder method with appropriate test values.
+     */
+    private getAuthCallForScheme(scheme: AuthScheme): string | undefined {
+        switch (scheme.type) {
+            case "bearer":
+                return '.token("test-token")';
+            case "basic":
+                return '.username("testuser").password("testpass")';
+            case "header":
+                const headerName = scheme.name?.name?.originalName || "X-API-Key";
+                return `.apiKey("test-api-key") // For header: ${headerName}`;
+            case "oauth":
+                return '.token("oauth-test-token")';
+            default:
+                return undefined;
+        }
     }
 }

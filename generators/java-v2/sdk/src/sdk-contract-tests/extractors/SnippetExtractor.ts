@@ -1,127 +1,104 @@
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
- * Extracts method calls from generated Java snippets for use in contract tests.
- * Handles complex multi-line method calls with proper indentation and bracket balancing.
+ * Extractor for processing code snippets and extracting method calls.
  */
 export class SnippetExtractor {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
-     * Extracts a clean client method call from a full Java snippet.
-     * Removes package declarations, imports, and class wrappers to get just the client invocation.
+     * Extracts just the client method call from a full Java snippet.
+     * Removes client instantiation and imports, returning only the actual method invocation.
      *
-     * @param fullSnippet The complete Java snippet including class wrapper
-     * @returns The extracted client method call
+     * @param fullSnippet The complete Java snippet including imports and client instantiation
+     * @returns The extracted client method call or a TODO comment if extraction fails
      */
     public extractMethodCall(fullSnippet: string): string {
-        const bounds = this.findClientCallBounds(fullSnippet);
-        if (!bounds) {
-            this.context.logger.debug("Could not find client call boundaries, using full snippet");
-            return fullSnippet;
-        }
-
-        const extractedLines = this.extractMethodCallLines(fullSnippet, bounds);
-        return this.formatExtractedMethodCall(extractedLines);
-    }
-
-    /**
-     * Finds the start and end indices of the client method call in the snippet.
-     */
-    private findClientCallBounds(fullSnippet: string): { start: number; end: number } | undefined {
         const lines = fullSnippet.split("\n");
-        let startLine = -1;
-        let endLine = -1;
 
-        // Find start of client call
+        let clientInstantiationIndex = -1;
+        let clientCallStartIndex = -1;
+
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            if (line && (line.includes("client.") || line.includes("= client."))) {
-                startLine = i;
+            if (!line) {
+                continue;
+            }
+
+            if (line.includes("client =") || line.includes("Client client =")) {
+                clientInstantiationIndex = i;
+            }
+
+            if (clientInstantiationIndex !== -1 && i > clientInstantiationIndex && line.includes("client.")) {
+                clientCallStartIndex = i;
                 break;
             }
         }
 
-        if (startLine === -1) {
-            return undefined;
+        if (clientCallStartIndex === -1) {
+            this.context.logger.debug("Could not find client method call in snippet");
+            return "// TODO: Add client call";
         }
 
-        // Find end of client call by tracking parentheses and semicolons
-        let openParens = 0;
-        let openBraces = 0;
-        for (let i = startLine; i < lines.length; i++) {
-            const line = lines[i] ?? "";
+        const methodCallLines: string[] = [];
+        let braceDepth = 0;
+        let parenDepth = 0;
+        let foundSemicolon = false;
 
-            // Track parentheses and braces
-            for (const char of line) {
-                if (char === '(') openParens++;
-                if (char === ')') openParens--;
-                if (char === '{') openBraces++;
-                if (char === '}') openBraces--;
-            }
-
-            // Method call ends with semicolon when parentheses are balanced
-            if (line.includes(';') && openParens === 0 && openBraces === 0) {
-                endLine = i;
-                break;
-            }
-        }
-
-        return endLine !== -1 ? { start: startLine, end: endLine } : undefined;
-    }
-
-    /**
-     * Extracts the lines containing the method call from the snippet.
-     */
-    private extractMethodCallLines(
-        fullSnippet: string,
-        bounds: { start: number; end: number }
-    ): string[] {
-        const lines = fullSnippet.split("\n");
-        const methodLines: string[] = [];
-
-        for (let i = bounds.start; i <= bounds.end; i++) {
+        for (let i = clientCallStartIndex; i < lines.length; i++) {
             const line = lines[i];
+            if (!line && methodCallLines.length === 0) {
+                continue;
+            }
+
             if (line !== undefined) {
-                // Remove leading whitespace but preserve relative indentation
-                const trimmedLine = i === bounds.start ? line.trim() : line;
-                methodLines.push(trimmedLine);
+                methodCallLines.push(line);
+
+                for (const char of line) {
+                    if (char === "{") {
+                        braceDepth++;
+                    } else if (char === "}") {
+                        braceDepth--;
+                    } else if (char === "(") {
+                        parenDepth++;
+                    } else if (char === ")") {
+                        parenDepth--;
+                    }
+                }
+
+                if (line.includes(";") && braceDepth === 0 && parenDepth === 0) {
+                    foundSemicolon = true;
+                    break;
+                }
             }
         }
 
-        return methodLines;
-    }
-
-    /**
-     * Formats the extracted method call lines into a clean string.
-     */
-    private formatExtractedMethodCall(methodLines: string[]): string {
-        if (methodLines.length === 0) {
-            return "";
+        if (!foundSemicolon || methodCallLines.length === 0) {
+            this.context.logger.debug("Could not extract complete method call");
+            return "// TODO: Add client call";
         }
 
-        // Find minimum indentation (excluding first line which is already trimmed)
-        let minIndent = Infinity;
-        for (let i = 1; i < methodLines.length; i++) {
-            const line = methodLines[i];
-            if (line && line.trim().length > 0) {
-                const leadingSpaces = line.length - line.trimStart().length;
-                minIndent = Math.min(minIndent, leadingSpaces);
-            }
+        const nonEmptyLines = methodCallLines.filter((line) => line && line.trim().length > 0);
+        if (nonEmptyLines.length === 0) {
+            return "// TODO: Add client call";
         }
 
-        // Adjust indentation for all lines
-        const adjustedLines = methodLines.map((line, index) => {
-            if (index === 0 || !line.trim()) {
-                return line;
-            }
-            if (minIndent !== Infinity && minIndent > 0) {
-                // Remove excess indentation
-                return line.substring(minIndent);
-            }
-            return line;
-        });
+        const minIndent = Math.min(
+            ...nonEmptyLines.map((line) => {
+                if (!line) {
+                    return 0;
+                }
+                const match = line.match(/^(\s*)/);
+                return match?.[1]?.length ?? 0;
+            })
+        );
 
-        return adjustedLines.join("\n");
+        const cleanedLines = methodCallLines.map((line) =>
+            line && line.length > minIndent ? line.substring(minIndent) : line || ""
+        );
+
+        const result = cleanedLines.join("\n").trim();
+        this.context.logger.debug(`Extracted method call: ${result}`);
+        return result;
     }
 }

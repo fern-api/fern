@@ -12,7 +12,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
+import { SdkContractTestGenerator } from "./sdk-contract-tests/SdkContractTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -91,9 +91,8 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // Generate wire tests if enabled
-        const wireTestGenerator = new WireTestGenerator(context);
-        await wireTestGenerator.generate();
+        const contractTestGenerator = new SdkContractTestGenerator(context);
+        await contractTestGenerator.generate();
 
         await context.project.persist();
     }
