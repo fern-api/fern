@@ -314,8 +314,7 @@ jobs:
       #     echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
       #     echo "${fixture_list}"
         run: |
-          echo "fixture_list=[\"imdb:no-custom-config\", \"imdb:omit-undefined\", \"imdb:no-scripts\", "streaming"]" >> $GITHUB_OUTPUT
-
+          echo 'fixture_list=["imdb:no-custom-config", "imdb:omit-undefined", "streaming"]' >> "$GITHUB_OUTPUT"
 
 
   typescript-sdk-as-matrix:
