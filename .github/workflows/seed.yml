@@ -21,6 +21,7 @@ concurrency:
 
 jobs:
   changes:
+    if: false # CHRISM - undo
     runs-on: ubuntu-latest
     outputs:
       seed: ${{ steps.get-generator-changes.outputs.seed }}
@@ -264,7 +265,6 @@ jobs:
 
   create-ts-test-matrix:
     runs-on: Seed
-    needs: changes
     outputs:
       matrix_of_tests: ${{ steps.create-test-matrix.outputs.matrix_of_tests }}
     # CHRISM - add something like this back at the end
@@ -285,7 +285,7 @@ jobs:
     
   typescript-sdk-as-matrix:
     runs-on: Seed
-    needs: [changes,create-ts-test-matrix]
+    needs: create-ts-test-matrix
     strategy:
       matrix:
         fixtures: ${{ needs.create-ts-test-matrix.outputs.matrix_of_tests }}
