@@ -1,6 +1,7 @@
 import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
@@ -24,7 +25,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
+        const rawCode = components.join("\n") + "\n";
+        // Try to format with rustfmt
+        const formattedCode = await formatRustSnippetAsync(rawCode);
+        return formattedCode;
     }
 
     public generateSnippetSync({
@@ -35,7 +39,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
+        const rawCode = components.join("\n") + "\n";
+        // Try sync formatting with rustfmt, but fallback to raw code if it fails
+        const formattedCode = formatRustSnippet(rawCode);
+        return formattedCode;
     }
 
     private buildCodeBlock({
@@ -110,7 +117,9 @@ export class EndpointSnippetGenerator {
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
-            })
+            }),
+            // Add the actual API method call
+            this.callMethod({ endpoint, snippet })
         ]);
 
         // Create the standalone function
@@ -146,14 +155,20 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = [
+        const imports = ["ClientConfig", this.getClientName({ endpoint })];
+
+        // Add request struct import if this endpoint uses an inlined request
+        if (endpoint.request.type === "inlined") {
+            const requestStructName = this.context.getStructName(endpoint.request.declaration.name);
+            imports.push(requestStructName);
+        }
+
+        return [
             new rust.UseStatement({
                 path: this.context.getPackageName(),
-                items: ["ClientConfig", this.getClientName({ endpoint })]
+                items: imports
             })
         ];
-
-        return imports;
     }
 
     private getClientConfigStruct({

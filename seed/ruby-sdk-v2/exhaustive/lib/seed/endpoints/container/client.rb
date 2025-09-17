@@ -17,10 +17,16 @@ module Seed
             path: "/container/list-of-primitives",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -31,10 +37,16 @@ module Seed
             path: "/container/list-of-objects",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Array[String]]
@@ -45,10 +57,16 @@ module Seed
             path: "/container/set-of-primitives",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -59,10 +77,16 @@ module Seed
             path: "/container/set-of-objects",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Hash[String, String]]
@@ -73,10 +97,16 @@ module Seed
             path: "/container/map-prim-to-prim",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -87,10 +117,16 @@ module Seed
             path: "/container/map-prim-to-object",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField | nil]
@@ -101,10 +137,16 @@ module Seed
             path: "/container/opt-objects",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
     end

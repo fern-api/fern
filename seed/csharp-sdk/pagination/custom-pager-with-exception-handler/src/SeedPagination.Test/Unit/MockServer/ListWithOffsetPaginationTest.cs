@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -55,11 +54,11 @@ public class ListWithOffsetPaginationTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithOffsetPaginationAsync(
-            new ListUsersOffsetPaginationRequest
+            new SeedPagination.ListUsersOffsetPaginationRequest
             {
                 Page = 1,
                 PerPage = 1,
-                Order = Order.Asc,
+                Order = SeedPagination.Order.Asc,
                 StartingAfter = "starting_after",
             }
         );

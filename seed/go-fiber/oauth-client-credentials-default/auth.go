@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/oauth-client-credentials-default/fern/internal"
+	big "math/big"
 )
 
 type GetTokenRequest struct {
@@ -42,9 +43,17 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 // An OAuth token response.
+var (
+	tokenResponseFieldAccessToken = big.NewInt(1 << 0)
+	tokenResponseFieldExpiresIn   = big.NewInt(1 << 1)
+)
+
 type TokenResponse struct {
 	AccessToken string `json:"access_token" url:"access_token"`
 	ExpiresIn   int    `json:"expires_in" url:"expires_in"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -67,6 +76,27 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *TokenResponse) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetAccessToken(accessToken string) {
+	t.AccessToken = accessToken
+	t.require(tokenResponseFieldAccessToken)
+}
+
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetExpiresIn(expiresIn int) {
+	t.ExpiresIn = expiresIn
+	t.require(tokenResponseFieldExpiresIn)
+}
+
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler TokenResponse
 	var value unmarshaler
@@ -80,6 +110,17 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *TokenResponse) MarshalJSON() ([]byte, error) {
+	type embed TokenResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *TokenResponse) String() string {

@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/cross-package-type-names/fern/internal"
+	big "math/big"
 )
 
 type FindRequest struct {
@@ -14,8 +15,15 @@ type FindRequest struct {
 	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
+var (
+	importingTypeFieldImported = big.NewInt(1 << 0)
+)
+
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -31,6 +39,20 @@ func (i *ImportingType) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
 
+func (i *ImportingType) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetImported sets the Imported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *ImportingType) SetImported(imported Imported) {
+	i.Imported = imported
+	i.require(importingTypeFieldImported)
+}
+
 func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	type unmarshaler ImportingType
 	var value unmarshaler
@@ -44,6 +66,17 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	}
 	i.extraProperties = extraProperties
 	return nil
+}
+
+func (i *ImportingType) MarshalJSON() ([]byte, error) {
+	type embed ImportingType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (i *ImportingType) String() string {

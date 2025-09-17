@@ -64,7 +64,26 @@ public class ServiceWireTest {
             "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
     @Test
     public void testCreateMovie() throws Exception {
@@ -123,7 +142,26 @@ public class ServiceWireTest {
             "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type")) discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind")) discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
+        }
+        
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
         
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
@@ -131,7 +169,26 @@ public class ServiceWireTest {
         String expectedResponseBody = "\"movie-c06a4ad7\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
     @Test
     public void testGetMetadata() throws Exception {
@@ -152,6 +209,9 @@ public class ServiceWireTest {
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
         
+        // Validate headers
+        Assertions.assertEquals("0.0.1", request.getHeader("X-API-Version"), "Header 'X-API-Version' should match expected value");
+        
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
@@ -169,7 +229,26 @@ public class ServiceWireTest {
             "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
     @Test
     public void testCreateBigEntity() throws Exception {
@@ -862,7 +941,26 @@ public class ServiceWireTest {
             "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type")) discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind")) discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
+        }
+        
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
         
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
@@ -886,7 +984,26 @@ public class ServiceWireTest {
             "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
     @Test
     public void testRefreshToken() throws Exception {

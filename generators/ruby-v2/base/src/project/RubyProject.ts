@@ -135,7 +135,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public getAsIsOutputDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`);
+        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
     }
 
     public getAsIsOutputFilename(templateFileName: string): string {
@@ -201,7 +201,7 @@ class GemspecFile {
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
-        const moduleName = this.context.getRootModule().name;
+        const moduleName = this.context.getRootModuleName();
 
         return dedent`
             # frozen_string_literal: true
@@ -217,7 +217,7 @@ class GemspecFile {
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.required_ruby_version = ">= 3.1.0"
+            spec.required_ruby_version = ">= 3.3.0"
             spec.metadata["rubygems_mfa_required"] = "true"
             
             # Specify which files should be added to the gem when it is released.
@@ -262,7 +262,7 @@ class CustomGemspecFile {
     }
 
     public async toString(): Promise<string> {
-        const moduleName = this.context.getRootModule().name;
+        const moduleName = this.context.getRootModuleName();
 
         return dedent`
             # frozen_string_literal: true
@@ -436,7 +436,7 @@ class VersionFile {
     }
 
     public toString(): string {
-        const seedName = this.context.getRootModule().name;
+        const seedName = this.context.getRootModuleName();
         const version = this.context.getVersionFromConfig();
 
         return dedent`

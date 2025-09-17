@@ -6,11 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/objects-with-imports/fern/internal"
+	big "math/big"
+)
+
+var (
+	metadataFieldId   = big.NewInt(1 << 0)
+	metadataFieldData = big.NewInt(1 << 1)
 )
 
 type Metadata struct {
 	Id   string            `json:"id" url:"id"`
 	Data map[string]string `json:"data,omitempty" url:"data,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -33,6 +42,27 @@ func (m *Metadata) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
 
+func (m *Metadata) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetId(id string) {
+	m.Id = id
+	m.require(metadataFieldId)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *Metadata) SetData(data map[string]string) {
+	m.Data = data
+	m.require(metadataFieldData)
+}
+
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	type unmarshaler Metadata
 	var value unmarshaler
@@ -46,6 +76,17 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	}
 	m.extraProperties = extraProperties
 	return nil
+}
+
+func (m *Metadata) MarshalJSON() ([]byte, error) {
+	type embed Metadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (m *Metadata) String() string {

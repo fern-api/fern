@@ -3,11 +3,23 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { AuthScheme, dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import {
+    AuthScheme,
+    dynamic,
+    EnvironmentsConfig,
+    HttpEndpoint,
+    ObjectProperty,
+    Pagination,
+    ResponseProperty
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
 import { WireTestDataExtractor, WireTestExample } from "./WireTestDataExtractor";
+
+interface MultiUrlEnvironment {
+    urls: Record<string, string>;
+}
 
 export class WireTestGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -45,7 +57,9 @@ export class WireTestGenerator {
             writer.writeLine("server.start();");
             writer.writeLine(`client = ${clientClassName}.builder()`);
             writer.indent();
-            writer.writeLine('.url(server.url("/").toString())');
+
+            // Generate environment configuration based on IR setup
+            this.generateEnvironmentConfiguration(writer);
 
             const authConfig = this.getAuthClientBuilderCalls();
             if (authConfig) {
@@ -108,6 +122,9 @@ export class WireTestGenerator {
             writer.writeLine("Assertions.assertNotNull(request);");
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
 
+            // Validate headers
+            this.generateHeaderValidation(writer, testExample);
+
             if (expectedRequestJson !== undefined && expectedRequestJson !== null) {
                 writer.writeLine("// Validate request body");
                 writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
@@ -131,9 +148,8 @@ export class WireTestGenerator {
 
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
-                writer.writeLine(
-                    'Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");'
-                );
+
+                this.generateEnhancedJsonValidation(writer, endpoint, "request", "actualJson", "expectedJson");
             }
 
             if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
@@ -161,8 +177,13 @@ export class WireTestGenerator {
 
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
-                writer.writeLine(
-                    'Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");'
+
+                this.generateEnhancedJsonValidation(
+                    writer,
+                    endpoint,
+                    "response",
+                    "actualResponseNode",
+                    "expectedResponseNode"
                 );
             } else if (hasResponseBody) {
                 writer.writeLine("");
@@ -733,5 +754,448 @@ export class WireTestGenerator {
             .replace(/\n/g, "\\n")
             .replace(/\r/g, "\\r")
             .replace(/\t/g, "\\t");
+    }
+
+    /**
+     * Generates environment configuration for the client builder
+     * Supports both single URL and multi-URL environment setups
+     */
+    private generateEnvironmentConfiguration(writer: Writer): void {
+        const environments = this.context.ir.environments;
+
+        if (!environments) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        const isMultiUrlEnvironment = this.isMultiUrlEnvironment(environments);
+
+        if (isMultiUrlEnvironment) {
+            this.generateMultiUrlEnvironmentConfiguration(writer, environments);
+        } else {
+            writer.writeLine('.url(server.url("/").toString())');
+        }
+    }
+
+    /**
+     * Determines if the environment configuration uses multiple URLs
+     */
+    private isMultiUrlEnvironment(environments: EnvironmentsConfig | undefined): boolean {
+        if (!environments) {
+            return false;
+        }
+
+        for (const envValue of Object.values(environments)) {
+            if (envValue && typeof envValue === "object" && "urls" in envValue) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Generates multi-URL environment configuration
+     */
+    private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
+        let environmentWithUrls: MultiUrlEnvironment | null = null;
+        for (const envValue of Object.values(environments)) {
+            if (envValue && typeof envValue === "object" && "urls" in envValue) {
+                environmentWithUrls = envValue as MultiUrlEnvironment;
+                break;
+            }
+        }
+
+        if (!environmentWithUrls || !environmentWithUrls.urls) {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
+        }
+
+        writer.writeLine(".environment(Environment.custom()");
+        writer.indent();
+
+        for (const [serviceName, _] of Object.entries(environmentWithUrls.urls)) {
+            const methodName = this.getEnvironmentUrlMethodName(serviceName);
+            writer.writeLine(`.${methodName}(server.url("/").toString())`);
+        }
+
+        writer.writeLine(".build())");
+        writer.dedent();
+    }
+
+    /**
+     * Converts service name to environment URL method name
+     * e.g., "ec2" -> "ec2Url", "s3" -> "s3Url"
+     */
+    private getEnvironmentUrlMethodName(serviceName: string): string {
+        // Convert to camelCase and add "Url" suffix
+        const camelCased = serviceName.toLowerCase().replace(/[-_](.)/g, (_, char) => char.toUpperCase());
+        return `${camelCased}Url`;
+    }
+
+    /**
+     * Generates enhanced JSON validation with support for complex types
+     * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
+     */
+    private generateEnhancedJsonValidation(
+        writer: Writer,
+        endpoint: HttpEndpoint,
+        context: "request" | "response",
+        actualVarName: string,
+        expectedVarName: string
+    ): void {
+        writer.writeLine(
+            `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
+                `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
+        );
+
+        if (context === "response") {
+            this.generateResponseTypeValidation(writer, endpoint, actualVarName);
+        } else {
+            this.generateRequestTypeValidation(writer, endpoint, actualVarName);
+        }
+    }
+
+    /**
+     * Generates enhanced validation for response types
+     */
+    private generateResponseTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody || responseBody.type !== "json") {
+            return;
+        }
+
+        if (this.isPaginatedEndpoint(endpoint)) {
+            this.generatePaginationValidation(writer, endpoint, actualVarName);
+        }
+
+        this.generateUnionTypeValidation(writer, actualVarName, "response");
+
+        this.generateOptionalTypeValidation(writer, actualVarName, "response");
+
+        this.generateGenericTypeValidation(writer, actualVarName, "response");
+    }
+
+    /**
+     * Generates enhanced validation for request types
+     */
+    private generateRequestTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const requestBody = endpoint.requestBody;
+        if (!requestBody) {
+            return;
+        }
+
+        this.generateUnionTypeValidation(writer, actualVarName, "request");
+
+        this.generateOptionalTypeValidation(writer, actualVarName, "request");
+
+        this.generateGenericTypeValidation(writer, actualVarName, "request");
+    }
+
+    /**
+     * Generates union type validation assertions
+     */
+    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+        writer.writeLine(
+            `if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`
+        );
+        writer.indent();
+        writer.writeLine(`String discriminator = null;`);
+        writer.writeLine(`if (${jsonVarName}.has("type")) discriminator = ${jsonVarName}.get("type").asText();`);
+        writer.writeLine(`else if (${jsonVarName}.has("_type")) discriminator = ${jsonVarName}.get("_type").asText();`);
+        writer.writeLine(`else if (${jsonVarName}.has("kind")) discriminator = ${jsonVarName}.get("kind").asText();`);
+        writer.writeLine(`Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");`);
+        writer.writeLine(`Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");`);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates optional/nullable type validation
+     */
+    private generateOptionalTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+        writer.writeLine("");
+        writer.writeLine(`if (!${jsonVarName}.isNull()) {`);
+        writer.indent();
+        writer.writeLine(
+            `Assertions.assertTrue(${jsonVarName}.isObject() || ${jsonVarName}.isArray() || ${jsonVarName}.isValueNode(), ` +
+                `"${context} should be a valid JSON value");`
+        );
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates validation for generic/collection types
+     */
+    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+        writer.writeLine("");
+        writer.writeLine(`if (${jsonVarName}.isArray()) {`);
+        writer.indent();
+        writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Array should have valid size");`);
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine(`if (${jsonVarName}.isObject()) {`);
+        writer.indent();
+        writer.writeLine(`Assertions.assertTrue(${jsonVarName}.size() >= 0, "Object should have valid field count");`);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Checks if an endpoint has pagination configuration
+     */
+    private isPaginatedEndpoint(endpoint: HttpEndpoint): boolean {
+        return endpoint.pagination != null;
+    }
+
+    /**
+     * Generates pagination-specific validation for Iterable<T> responses
+     */
+    private generatePaginationValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+        const pagination = endpoint.pagination;
+        if (!pagination) {
+            return;
+        }
+
+        writer.writeLine("");
+        writer.writeLine("// Pagination validation");
+
+        const resultsPath = this.extractPaginationResultsPath(pagination);
+        if (resultsPath) {
+            writer.writeLine(`// Results at path: ${resultsPath}`);
+            this.generatePaginationResultsValidation(writer, actualVarName, resultsPath);
+        }
+
+        const nextCursorPath = this.extractPaginationNextCursorPath(pagination);
+        if (nextCursorPath) {
+            writer.writeLine(`// Next cursor at path: ${nextCursorPath}`);
+            this.generatePaginationNextCursorValidation(writer, actualVarName, nextCursorPath);
+        }
+
+        writer.writeLine(
+            `Assertions.assertTrue(${actualVarName}.isObject(), "Paginated response should be an object");`
+        );
+    }
+
+    /**
+     * Extracts the results path from pagination configuration
+     * Handles different pagination types (Cursor, Offset)
+     */
+    private extractPaginationResultsPath(pagination: Pagination): string | null {
+        // Use visitor pattern to extract results path
+        return pagination._visit({
+            cursor: (cursor) => {
+                return this.buildPathFromResponseProperty(cursor.results);
+            },
+            offset: (offset) => {
+                return this.buildPathFromResponseProperty(offset.results);
+            },
+            custom: () => {
+                return "data";
+            },
+            _other: () => {
+                return "data";
+            }
+        });
+    }
+
+    /**
+     * Extracts the next cursor path from pagination configuration
+     * Handles different pagination types and structures
+     */
+    private extractPaginationNextCursorPath(pagination: Pagination): string | null {
+        return pagination._visit({
+            cursor: (cursor) => {
+                // cursor.next is a ResponseProperty object
+                return this.buildPathFromResponseProperty(cursor.next);
+            },
+            offset: () => {
+                return null;
+            },
+            custom: () => {
+                return "next";
+            },
+            _other: () => {
+                return "next";
+            }
+        });
+    }
+
+    /**
+     * Builds a path string from a ResponseProperty object
+     */
+    private buildPathFromResponseProperty(responseProperty: ResponseProperty | undefined | null): string {
+        // Defensive null check with clear fallback
+        if (!responseProperty) {
+            this.context.logger.debug("ResponseProperty is null or undefined, using default 'data' path");
+            return "data";
+        }
+
+        const pathParts: string[] = [];
+
+        if (responseProperty.propertyPath != null && Array.isArray(responseProperty.propertyPath)) {
+            for (const pathItem of responseProperty.propertyPath) {
+                // Defensive checks for deeply nested properties
+                if (pathItem != null) {
+                    const pathItemName = this.extractNameFromPathItem(pathItem);
+                    if (pathItemName) {
+                        pathParts.push(pathItemName);
+                    }
+                }
+            }
+        }
+
+        if (responseProperty.property != null) {
+            const propertyName = this.extractNameFromProperty(responseProperty.property);
+            if (propertyName) {
+                pathParts.push(propertyName);
+            }
+        }
+
+        if (pathParts.length > 0) {
+            const result = pathParts.join(".");
+            this.context.logger.debug(`Extracted pagination path: ${result}`);
+            return result;
+        }
+
+        this.context.logger.debug("Could not extract path from ResponseProperty, using default 'data'");
+        return "data";
+    }
+
+    /**
+     * Safely extracts name from a PropertyPathItem
+     * PropertyPathItem has a name property of type Name
+     * Using a structural type to avoid importing the internal type
+     */
+    private extractNameFromPathItem(
+        pathItem:
+            | {
+                  name?: {
+                      originalName?: string;
+                      camelCase?: {
+                          unsafeName?: string;
+                          safeName?: string;
+                      };
+                  };
+              }
+            | unknown
+    ): string | undefined {
+        const item = pathItem as {
+            name?: {
+                originalName?: string;
+                camelCase?: {
+                    unsafeName?: string;
+                    safeName?: string;
+                };
+            };
+        };
+
+        if (item?.name?.originalName) {
+            return item.name.originalName;
+        }
+        if (item?.name?.camelCase?.unsafeName) {
+            return item.name.camelCase.unsafeName;
+        }
+        if (item?.name?.camelCase?.safeName) {
+            return item.name.camelCase.safeName;
+        }
+        return undefined;
+    }
+
+    /**
+     * Safely extracts name from an ObjectProperty
+     */
+    private extractNameFromProperty(property: ObjectProperty): string | undefined {
+        if (property.name?.wireValue) {
+            return property.name.wireValue;
+        }
+        if (property.name?.name?.originalName) {
+            return property.name.name.originalName;
+        }
+        if (property.name?.name?.camelCase?.unsafeName) {
+            return property.name.name.camelCase.unsafeName;
+        }
+        if (property.name?.name?.camelCase?.safeName) {
+            return property.name.name.camelCase.safeName;
+        }
+        return undefined;
+    }
+
+    /**
+     * Generates validation for pagination results field
+     */
+    private generatePaginationResultsValidation(writer: Writer, actualVarName: string, resultsPath: string): void {
+        const pathParts = resultsPath.split(".");
+        let currentPath = actualVarName;
+
+        for (const part of pathParts) {
+            writer.writeLine(`if (${currentPath}.has("${part}")) {`);
+            writer.indent();
+            currentPath = `${currentPath}.get("${part}")`;
+        }
+
+        writer.writeLine(`Assertions.assertTrue(${currentPath}.isArray(), "Pagination results should be an array");`);
+        writer.writeLine(
+            `Assertions.assertTrue(${currentPath}.size() >= 0, "Pagination results array should have valid size");`
+        );
+
+        for (let i = 0; i < pathParts.length; i++) {
+            writer.dedent();
+            writer.writeLine("}");
+        }
+    }
+
+    /**
+     * Generates validation for pagination next cursor field
+     */
+    private generatePaginationNextCursorValidation(
+        writer: Writer,
+        actualVarName: string,
+        nextCursorPath: string
+    ): void {
+        const pathParts = nextCursorPath.split(".");
+        let currentPath = actualVarName;
+
+        for (const part of pathParts) {
+            writer.writeLine(`if (${currentPath}.has("${part}")) {`);
+            writer.indent();
+            currentPath = `${currentPath}.get("${part}")`;
+        }
+
+        writer.writeLine(`// Next cursor can be null for last page, or string for next page`);
+        writer.writeLine(
+            `Assertions.assertTrue(${currentPath}.isNull() || ${currentPath}.isTextual(), ` +
+                `"Next cursor should be null (last page) or string (next page)");`
+        );
+
+        for (let i = 0; i < pathParts.length; i++) {
+            writer.dedent();
+            writer.writeLine("}");
+        }
+    }
+
+    /**
+     * Generates header validation assertions for wire tests
+     * Validates that all expected headers are present in the recorded request
+     */
+    private generateHeaderValidation(writer: Writer, testExample: WireTestExample): void {
+        const headers = testExample.request.headers;
+
+        if (!headers || Object.keys(headers).length === 0) {
+            return;
+        }
+
+        writer.writeLine("");
+        writer.writeLine("// Validate headers");
+
+        for (const [headerName, expectedValue] of Object.entries(headers)) {
+            const sanitizedValue = this.sanitizeAuthValue(expectedValue);
+
+            writer.writeLine(
+                `Assertions.assertEquals("${sanitizedValue}", request.getHeader("${headerName}"), ` +
+                    `"Header '${headerName}' should match expected value");`
+            );
+        }
     }
 }

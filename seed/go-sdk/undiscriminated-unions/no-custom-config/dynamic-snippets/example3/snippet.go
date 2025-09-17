@@ -4,7 +4,7 @@ import (
     client "github.com/fern-api/undiscriminated-go/client"
     option "github.com/fern-api/undiscriminated-go/option"
     context "context"
-    undiscriminated "github.com/fern-api/undiscriminated-go"
+    undiscriminatedgo "github.com/fern-api/undiscriminated-go"
 )
 
 func do() {
@@ -15,7 +15,7 @@ func do() {
     )
     client.Union.UpdateMetadata(
         context.TODO(),
-        &undiscriminated.MetadataUnion{
+        &undiscriminatedgo.MetadataUnion{
             OptionalMetadata: map[string]any{
                 "string": map[string]any{
                     "key": "value",

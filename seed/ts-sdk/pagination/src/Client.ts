@@ -5,6 +5,7 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Complex } from "./api/resources/complex/client/Client.js";
+import { InlineUsers } from "./api/resources/inlineUsers/client/Client.js";
 import { Users } from "./api/resources/users/client/Client.js";
 
 export declare namespace SeedPaginationClient {
@@ -34,6 +35,7 @@ export declare namespace SeedPaginationClient {
 export class SeedPaginationClient {
     protected readonly _options: SeedPaginationClient.Options;
     protected _complex: Complex | undefined;
+    protected _inlineUsers: InlineUsers | undefined;
     protected _users: Users | undefined;
 
     constructor(_options: SeedPaginationClient.Options) {
@@ -55,6 +57,10 @@ export class SeedPaginationClient {
 
     public get complex(): Complex {
         return (this._complex ??= new Complex(this._options));
+    }
+
+    public get inlineUsers(): InlineUsers {
+        return (this._inlineUsers ??= new InlineUsers(this._options));
     }
 
     public get users(): Users {

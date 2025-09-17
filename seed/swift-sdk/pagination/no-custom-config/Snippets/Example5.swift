@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.users.listWithCursorPagination(request: .init(
+    try await client.inlineUsers.inlineUsers.listWithCursorPagination(request: .init(
         page: 1.1,
         perPage: 1.1,
         order: .asc,

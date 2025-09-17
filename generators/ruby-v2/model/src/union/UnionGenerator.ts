@@ -40,7 +40,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined
         });
-        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModule().name}::Internal::Types::Union`));
+        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModuleName()}::Internal::Types::Union`));
 
         classNode.addStatement(
             ruby.codeblock((writer) => {

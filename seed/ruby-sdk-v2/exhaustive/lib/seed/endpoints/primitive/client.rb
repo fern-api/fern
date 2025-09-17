@@ -17,10 +17,16 @@ module Seed
             path: "/primitive/string",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
@@ -31,10 +37,16 @@ module Seed
             path: "/primitive/integer",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
@@ -45,10 +57,16 @@ module Seed
             path: "/primitive/long",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
@@ -59,10 +77,16 @@ module Seed
             path: "/primitive/double",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [bool]
@@ -73,10 +97,16 @@ module Seed
             path: "/primitive/boolean",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
@@ -87,10 +117,16 @@ module Seed
             path: "/primitive/datetime",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
@@ -101,10 +137,16 @@ module Seed
             path: "/primitive/date",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
@@ -115,10 +157,16 @@ module Seed
             path: "/primitive/uuid",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
@@ -129,10 +177,16 @@ module Seed
             path: "/primitive/base64",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
     end

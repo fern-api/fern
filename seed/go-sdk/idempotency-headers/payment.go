@@ -4,11 +4,41 @@ package fern
 
 import (
 	fmt "fmt"
+	big "math/big"
+)
+
+var (
+	createPaymentRequestFieldAmount   = big.NewInt(1 << 0)
+	createPaymentRequestFieldCurrency = big.NewInt(1 << 1)
 )
 
 type CreatePaymentRequest struct {
 	Amount   int      `json:"amount" url:"-"`
 	Currency Currency `json:"currency" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreatePaymentRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAmount sets the Amount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePaymentRequest) SetAmount(amount int) {
+	c.Amount = amount
+	c.require(createPaymentRequestFieldAmount)
+}
+
+// SetCurrency sets the Currency field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePaymentRequest) SetCurrency(currency Currency) {
+	c.Currency = currency
+	c.require(createPaymentRequestFieldCurrency)
 }
 
 type Currency string

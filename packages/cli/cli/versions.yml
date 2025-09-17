@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Support running the Rust SDK generator using IR v58.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.5
+
+- changelogEntry:
+    - summary: Respect the `x-fern-server-name`` flag at the endpoint level in the V3 OpenAPI parser
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-16"
+  version: 0.77.4
+
+- changelogEntry:
     - summary: Support nested folders with x-fern-sdk-group-name in AsyncAPI parsing
       type: fix
   irVersion: 59
