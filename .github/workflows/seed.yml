@@ -264,7 +264,7 @@ jobs:
           generator-path: generators/typescript
 
   create-ts-test-matrix:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     outputs:
       fixture_list: ${{ steps.create-test-matrix.outputs.fixture_list }}
     # CHRISM - add something like this back at the end
