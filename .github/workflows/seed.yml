@@ -299,26 +299,17 @@ jobs:
       - name: Create Test Matrix
         id: create-test-matrix
         
-        # run: |
-        #   # Get starting point from output of get-available-fixtures command
-        #   MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
-          
-        #   # Remove newlines and spaces so next portion of filtering is easier
-        #   PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
-
-        #   # Extract just the fixtures
-        #   FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
-
-        #   echo "fixture_list=${FIXTURE_LIST}" >> $GITHUB_OUTPUT
-
-        #   # for debug
-        #   echo "List of fixtures: "
-        #   echo "${FIXTURE_LIST}"
-
-        #   echo "other struct: "
-        #   echo "${fixture_list}"
         run: |
-          echo 'fixture_list=["alias", "alias-extends"]' >> "$GITHUB_OUTPUT"
+          # Get starting point from output of get-available-fixtures command
+          MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
+          
+          # Remove newlines and spaces so next portion of filtering is easier
+          PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+
+          # Extract just the fixtures
+          FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+
+          echo 'fixture_list=[${FIXTURE_LIST}]' >> "$GITHUB_OUTPUT"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
