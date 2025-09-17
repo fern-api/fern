@@ -7,25 +7,96 @@ import (
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	internal "github.com/pagination/fern/internal"
+	big "math/big"
+)
+
+var (
+	listUsernamesRequestFieldStartingAfter = big.NewInt(1 << 0)
 )
 
 type ListUsernamesRequest struct {
 	// The cursor used for pagination in order to fetch
 	// the next page of results.
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsernamesRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsernamesRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsernamesRequestFieldStartingAfter)
+}
+
+var (
+	listUsersBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
+)
 
 type ListUsersBodyCursorPaginationRequest struct {
 	// The object that contains the cursor used for pagination
 	// in order to fetch the next page of results.
 	Pagination *WithCursor `json:"pagination,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersBodyCursorPaginationRequest) SetPagination(pagination *WithCursor) {
+	l.Pagination = pagination
+	l.require(listUsersBodyCursorPaginationRequestFieldPagination)
+}
+
+var (
+	listUsersBodyOffsetPaginationRequestFieldPagination = big.NewInt(1 << 0)
+)
 
 type ListUsersBodyOffsetPaginationRequest struct {
 	// The object that contains the offset used for pagination
 	// in order to fetch the next page of results.
 	Pagination *WithPage `json:"pagination,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPagination sets the Pagination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersBodyOffsetPaginationRequest) SetPagination(pagination *WithPage) {
+	l.Pagination = pagination
+	l.require(listUsersBodyOffsetPaginationRequestFieldPagination)
+}
+
+var (
+	listUsersCursorPaginationRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersCursorPaginationRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersCursorPaginationRequestFieldOrder         = big.NewInt(1 << 2)
+	listUsersCursorPaginationRequestFieldStartingAfter = big.NewInt(1 << 3)
+)
 
 type ListUsersCursorPaginationRequest struct {
 	// Defaults to first page
@@ -36,7 +107,52 @@ type ListUsersCursorPaginationRequest struct {
 	// The cursor used for pagination in order to fetch
 	// the next page of results.
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersCursorPaginationRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersCursorPaginationRequestFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersCursorPaginationRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUsersCursorPaginationRequestFieldPerPage)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersCursorPaginationRequest) SetOrder(order *Order) {
+	l.Order = order
+	l.require(listUsersCursorPaginationRequestFieldOrder)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersCursorPaginationRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsersCursorPaginationRequestFieldStartingAfter)
+}
+
+var (
+	listUsersDoubleOffsetPaginationRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersDoubleOffsetPaginationRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersDoubleOffsetPaginationRequestFieldOrder         = big.NewInt(1 << 2)
+	listUsersDoubleOffsetPaginationRequestFieldStartingAfter = big.NewInt(1 << 3)
+)
 
 type ListUsersDoubleOffsetPaginationRequest struct {
 	// Defaults to first page
@@ -47,23 +163,152 @@ type ListUsersDoubleOffsetPaginationRequest struct {
 	// The cursor used for pagination in order to fetch
 	// the next page of results.
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersDoubleOffsetPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersDoubleOffsetPaginationRequest) SetPage(page *float64) {
+	l.Page = page
+	l.require(listUsersDoubleOffsetPaginationRequestFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersDoubleOffsetPaginationRequest) SetPerPage(perPage *float64) {
+	l.PerPage = perPage
+	l.require(listUsersDoubleOffsetPaginationRequestFieldPerPage)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersDoubleOffsetPaginationRequest) SetOrder(order *Order) {
+	l.Order = order
+	l.require(listUsersDoubleOffsetPaginationRequestFieldOrder)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersDoubleOffsetPaginationRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsersDoubleOffsetPaginationRequestFieldStartingAfter)
+}
+
+var (
+	listUsersExtendedRequestFieldCursor = big.NewInt(1 << 0)
+)
 
 type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `json:"-" url:"cursor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersExtendedRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedRequest) SetCursor(cursor *uuid.UUID) {
+	l.Cursor = cursor
+	l.require(listUsersExtendedRequestFieldCursor)
+}
+
+var (
+	listUsersExtendedRequestForOptionalDataFieldCursor = big.NewInt(1 << 0)
+)
 
 type ListUsersExtendedRequestForOptionalData struct {
 	Cursor *uuid.UUID `json:"-" url:"cursor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersExtendedRequestForOptionalData) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedRequestForOptionalData) SetCursor(cursor *uuid.UUID) {
+	l.Cursor = cursor
+	l.require(listUsersExtendedRequestForOptionalDataFieldCursor)
+}
+
+var (
+	listWithGlobalConfigRequestFieldOffset = big.NewInt(1 << 0)
+)
 
 type ListWithGlobalConfigRequest struct {
 	Offset *int `json:"-" url:"offset,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListWithGlobalConfigRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListWithGlobalConfigRequest) SetOffset(offset *int) {
+	l.Offset = offset
+	l.require(listWithGlobalConfigRequestFieldOffset)
+}
+
+var (
+	listUsersMixedTypeCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+)
 
 type ListUsersMixedTypeCursorPaginationRequest struct {
 	Cursor *string `json:"-" url:"cursor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersMixedTypeCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersMixedTypeCursorPaginationRequest) SetCursor(cursor *string) {
+	l.Cursor = cursor
+	l.require(listUsersMixedTypeCursorPaginationRequestFieldCursor)
+}
+
+var (
+	listUsersOffsetPaginationRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersOffsetPaginationRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersOffsetPaginationRequestFieldOrder         = big.NewInt(1 << 2)
+	listUsersOffsetPaginationRequestFieldStartingAfter = big.NewInt(1 << 3)
+)
 
 type ListUsersOffsetPaginationRequest struct {
 	// Defaults to first page
@@ -74,7 +319,51 @@ type ListUsersOffsetPaginationRequest struct {
 	// The cursor used for pagination in order to fetch
 	// the next page of results.
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersOffsetPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginationRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersOffsetPaginationRequestFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginationRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUsersOffsetPaginationRequestFieldPerPage)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginationRequest) SetOrder(order *Order) {
+	l.Order = order
+	l.require(listUsersOffsetPaginationRequestFieldOrder)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginationRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsersOffsetPaginationRequestFieldStartingAfter)
+}
+
+var (
+	listWithOffsetPaginationHasNextPageRequestFieldPage  = big.NewInt(1 << 0)
+	listWithOffsetPaginationHasNextPageRequestFieldLimit = big.NewInt(1 << 1)
+	listWithOffsetPaginationHasNextPageRequestFieldOrder = big.NewInt(1 << 2)
+)
 
 type ListWithOffsetPaginationHasNextPageRequest struct {
 	// Defaults to first page
@@ -84,7 +373,44 @@ type ListWithOffsetPaginationHasNextPageRequest struct {
 	// paginated endpoint.
 	Limit *int   `json:"-" url:"limit,omitempty"`
 	Order *Order `json:"-" url:"order,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListWithOffsetPaginationHasNextPageRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListWithOffsetPaginationHasNextPageRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listWithOffsetPaginationHasNextPageRequestFieldPage)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListWithOffsetPaginationHasNextPageRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listWithOffsetPaginationHasNextPageRequestFieldLimit)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListWithOffsetPaginationHasNextPageRequest) SetOrder(order *Order) {
+	l.Order = order
+	l.require(listWithOffsetPaginationHasNextPageRequestFieldOrder)
+}
+
+var (
+	listUsersOffsetStepPaginationRequestFieldPage  = big.NewInt(1 << 0)
+	listUsersOffsetStepPaginationRequestFieldLimit = big.NewInt(1 << 1)
+	listUsersOffsetStepPaginationRequestFieldOrder = big.NewInt(1 << 2)
+)
 
 type ListUsersOffsetStepPaginationRequest struct {
 	// Defaults to first page
@@ -94,113 +420,53 @@ type ListUsersOffsetStepPaginationRequest struct {
 	// paginated endpoint.
 	Limit *int   `json:"-" url:"limit,omitempty"`
 	Order *Order `json:"-" url:"order,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-type UsernameCursor struct {
-	Cursor *UsernamePage `json:"cursor" url:"cursor"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (u *UsernameCursor) GetCursor() *UsernamePage {
-	if u == nil {
-		return nil
+func (l *ListUsersOffsetStepPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	return u.Cursor
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
-func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetStepPaginationRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersOffsetStepPaginationRequestFieldPage)
 }
 
-func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
-	type unmarshaler UsernameCursor
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = UsernameCursor(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	u.rawJSON = json.RawMessage(data)
-	return nil
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetStepPaginationRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listUsersOffsetStepPaginationRequestFieldLimit)
 }
 
-func (u *UsernameCursor) String() string {
-	if len(u.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetStepPaginationRequest) SetOrder(order *Order) {
+	l.Order = order
+	l.require(listUsersOffsetStepPaginationRequestFieldOrder)
 }
 
-type UsernamePage struct {
-	After *string  `json:"after,omitempty" url:"after,omitempty"`
-	Data  []string `json:"data" url:"data"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (u *UsernamePage) GetAfter() *string {
-	if u == nil {
-		return nil
-	}
-	return u.After
-}
-
-func (u *UsernamePage) GetData() []string {
-	if u == nil {
-		return nil
-	}
-	return u.Data
-}
-
-func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
-}
-
-func (u *UsernamePage) UnmarshalJSON(data []byte) error {
-	type unmarshaler UsernamePage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = UsernamePage(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	u.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (u *UsernamePage) String() string {
-	if len(u.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
+var (
+	listUsersExtendedOptionalListResponseFieldData       = big.NewInt(1 << 0)
+	listUsersExtendedOptionalListResponseFieldNext       = big.NewInt(1 << 1)
+	listUsersExtendedOptionalListResponseFieldTotalCount = big.NewInt(1 << 2)
+)
 
 type ListUsersExtendedOptionalListResponse struct {
 	Data *UserOptionalListContainer `json:"data" url:"data"`
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -231,6 +497,34 @@ func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]
 	return l.extraProperties
 }
 
+func (l *ListUsersExtendedOptionalListResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedOptionalListResponse) SetData(data *UserOptionalListContainer) {
+	l.Data = data
+	l.require(listUsersExtendedOptionalListResponseFieldData)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedOptionalListResponse) SetNext(next *uuid.UUID) {
+	l.Next = next
+	l.require(listUsersExtendedOptionalListResponseFieldNext)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedOptionalListResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersExtendedOptionalListResponseFieldTotalCount)
+}
+
 func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler ListUsersExtendedOptionalListResponse
 	var value unmarshaler
@@ -247,6 +541,17 @@ func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (l *ListUsersExtendedOptionalListResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersExtendedOptionalListResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUsersExtendedOptionalListResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -259,11 +564,20 @@ func (l *ListUsersExtendedOptionalListResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	listUsersExtendedResponseFieldData       = big.NewInt(1 << 0)
+	listUsersExtendedResponseFieldNext       = big.NewInt(1 << 1)
+	listUsersExtendedResponseFieldTotalCount = big.NewInt(1 << 2)
+)
+
 type ListUsersExtendedResponse struct {
 	Data *UserListContainer `json:"data" url:"data"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -294,6 +608,34 @@ func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} 
 	return l.extraProperties
 }
 
+func (l *ListUsersExtendedResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedResponse) SetData(data *UserListContainer) {
+	l.Data = data
+	l.require(listUsersExtendedResponseFieldData)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedResponse) SetNext(next *uuid.UUID) {
+	l.Next = next
+	l.require(listUsersExtendedResponseFieldNext)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersExtendedResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersExtendedResponseFieldTotalCount)
+}
+
 func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler ListUsersExtendedResponse
 	var value unmarshaler
@@ -310,6 +652,17 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *ListUsersExtendedResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersExtendedResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUsersExtendedResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -322,9 +675,17 @@ func (l *ListUsersExtendedResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	listUsersMixedTypePaginationResponseFieldNext = big.NewInt(1 << 0)
+	listUsersMixedTypePaginationResponseFieldData = big.NewInt(1 << 1)
+)
+
 type ListUsersMixedTypePaginationResponse struct {
 	Next string  `json:"next" url:"next"`
 	Data []*User `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -348,6 +709,27 @@ func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]i
 	return l.extraProperties
 }
 
+func (l *ListUsersMixedTypePaginationResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersMixedTypePaginationResponse) SetNext(next string) {
+	l.Next = next
+	l.require(listUsersMixedTypePaginationResponseFieldNext)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersMixedTypePaginationResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersMixedTypePaginationResponseFieldData)
+}
+
 func (l *ListUsersMixedTypePaginationResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler ListUsersMixedTypePaginationResponse
 	var value unmarshaler
@@ -364,6 +746,17 @@ func (l *ListUsersMixedTypePaginationResponse) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+func (l *ListUsersMixedTypePaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersMixedTypePaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUsersMixedTypePaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -376,12 +769,22 @@ func (l *ListUsersMixedTypePaginationResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	listUsersPaginationResponseFieldHasNextPage = big.NewInt(1 << 0)
+	listUsersPaginationResponseFieldPage        = big.NewInt(1 << 1)
+	listUsersPaginationResponseFieldTotalCount  = big.NewInt(1 << 2)
+	listUsersPaginationResponseFieldData        = big.NewInt(1 << 3)
+)
+
 type ListUsersPaginationResponse struct {
 	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
 	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -419,6 +822,41 @@ func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{
 	return l.extraProperties
 }
 
+func (l *ListUsersPaginationResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetHasNextPage sets the HasNextPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersPaginationResponse) SetHasNextPage(hasNextPage *bool) {
+	l.HasNextPage = hasNextPage
+	l.require(listUsersPaginationResponseFieldHasNextPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersPaginationResponse) SetPage(page *Page) {
+	l.Page = page
+	l.require(listUsersPaginationResponseFieldPage)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersPaginationResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersPaginationResponseFieldTotalCount)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersPaginationResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersPaginationResponseFieldData)
+}
+
 func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler ListUsersPaginationResponse
 	var value unmarshaler
@@ -435,6 +873,17 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *ListUsersPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersPaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUsersPaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -447,9 +896,17 @@ func (l *ListUsersPaginationResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	nextPageFieldPage          = big.NewInt(1 << 0)
+	nextPageFieldStartingAfter = big.NewInt(1 << 1)
+)
+
 type NextPage struct {
 	Page          int    `json:"page" url:"page"`
 	StartingAfter string `json:"starting_after" url:"starting_after"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -473,6 +930,27 @@ func (n *NextPage) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NextPage) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NextPage) SetPage(page int) {
+	n.Page = page
+	n.require(nextPageFieldPage)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NextPage) SetStartingAfter(startingAfter string) {
+	n.StartingAfter = startingAfter
+	n.require(nextPageFieldStartingAfter)
+}
+
 func (n *NextPage) UnmarshalJSON(data []byte) error {
 	type unmarshaler NextPage
 	var value unmarshaler
@@ -487,6 +965,17 @@ func (n *NextPage) UnmarshalJSON(data []byte) error {
 	n.extraProperties = extraProperties
 	n.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (n *NextPage) MarshalJSON() ([]byte, error) {
+	type embed NextPage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (n *NextPage) String() string {
@@ -523,12 +1012,22 @@ func (o Order) Ptr() *Order {
 	return &o
 }
 
+var (
+	pageFieldPage      = big.NewInt(1 << 0)
+	pageFieldNext      = big.NewInt(1 << 1)
+	pageFieldPerPage   = big.NewInt(1 << 2)
+	pageFieldTotalPage = big.NewInt(1 << 3)
+)
+
 type Page struct {
 	// The current page
 	Page      int       `json:"page" url:"page"`
 	Next      *NextPage `json:"next,omitempty" url:"next,omitempty"`
 	PerPage   int       `json:"per_page" url:"per_page"`
 	TotalPage int       `json:"total_page" url:"total_page"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -566,6 +1065,41 @@ func (p *Page) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *Page) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Page) SetPage(page int) {
+	p.Page = page
+	p.require(pageFieldPage)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Page) SetNext(next *NextPage) {
+	p.Next = next
+	p.require(pageFieldNext)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Page) SetPerPage(perPage int) {
+	p.PerPage = perPage
+	p.require(pageFieldPerPage)
+}
+
+// SetTotalPage sets the TotalPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *Page) SetTotalPage(totalPage int) {
+	p.TotalPage = totalPage
+	p.require(pageFieldTotalPage)
+}
+
 func (p *Page) UnmarshalJSON(data []byte) error {
 	type unmarshaler Page
 	var value unmarshaler
@@ -582,6 +1116,17 @@ func (p *Page) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (p *Page) MarshalJSON() ([]byte, error) {
+	type embed Page
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (p *Page) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -594,9 +1139,17 @@ func (p *Page) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldId   = big.NewInt(1 << 1)
+)
+
 type User struct {
 	Name string `json:"name" url:"name"`
 	Id   int    `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -620,6 +1173,27 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetId(id int) {
+	u.Id = id
+	u.require(userFieldId)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -636,6 +1210,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *User) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -648,8 +1233,15 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userListContainerFieldUsers = big.NewInt(1 << 0)
+)
+
 type UserListContainer struct {
 	Users []*User `json:"users" url:"users"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -664,6 +1256,20 @@ func (u *UserListContainer) GetUsers() []*User {
 
 func (u *UserListContainer) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UserListContainer) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListContainer) SetUsers(users []*User) {
+	u.Users = users
+	u.require(userListContainerFieldUsers)
 }
 
 func (u *UserListContainer) UnmarshalJSON(data []byte) error {
@@ -682,6 +1288,17 @@ func (u *UserListContainer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserListContainer) MarshalJSON() ([]byte, error) {
+	type embed UserListContainer
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserListContainer) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -694,8 +1311,15 @@ func (u *UserListContainer) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userOptionalListContainerFieldUsers = big.NewInt(1 << 0)
+)
+
 type UserOptionalListContainer struct {
 	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -710,6 +1334,20 @@ func (u *UserOptionalListContainer) GetUsers() []*User {
 
 func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UserOptionalListContainer) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserOptionalListContainer) SetUsers(users []*User) {
+	u.Users = users
+	u.require(userOptionalListContainerFieldUsers)
 }
 
 func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
@@ -728,6 +1366,17 @@ func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserOptionalListContainer) MarshalJSON() ([]byte, error) {
+	type embed UserOptionalListContainer
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserOptionalListContainer) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -740,9 +1389,17 @@ func (u *UserOptionalListContainer) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userOptionalListPageFieldData = big.NewInt(1 << 0)
+	userOptionalListPageFieldNext = big.NewInt(1 << 1)
+)
+
 type UserOptionalListPage struct {
 	Data *UserOptionalListContainer `json:"data" url:"data"`
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -766,6 +1423,27 @@ func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserOptionalListPage) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserOptionalListPage) SetData(data *UserOptionalListContainer) {
+	u.Data = data
+	u.require(userOptionalListPageFieldData)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserOptionalListPage) SetNext(next *uuid.UUID) {
+	u.Next = next
+	u.require(userOptionalListPageFieldNext)
+}
+
 func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 	type unmarshaler UserOptionalListPage
 	var value unmarshaler
@@ -782,6 +1460,17 @@ func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserOptionalListPage) MarshalJSON() ([]byte, error) {
+	type embed UserOptionalListPage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserOptionalListPage) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -794,9 +1483,17 @@ func (u *UserOptionalListPage) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	userPageFieldData = big.NewInt(1 << 0)
+	userPageFieldNext = big.NewInt(1 << 1)
+)
+
 type UserPage struct {
 	Data *UserListContainer `json:"data" url:"data"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -820,6 +1517,27 @@ func (u *UserPage) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UserPage) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPage) SetData(data *UserListContainer) {
+	u.Data = data
+	u.require(userPageFieldData)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPage) SetNext(next *uuid.UUID) {
+	u.Next = next
+	u.require(userPageFieldNext)
+}
+
 func (u *UserPage) UnmarshalJSON(data []byte) error {
 	type unmarshaler UserPage
 	var value unmarshaler
@@ -836,6 +1554,17 @@ func (u *UserPage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserPage) MarshalJSON() ([]byte, error) {
+	type embed UserPage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserPage) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -848,8 +1577,15 @@ func (u *UserPage) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	usernameContainerFieldResults = big.NewInt(1 << 0)
+)
+
 type UsernameContainer struct {
 	Results []string `json:"results" url:"results"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -864,6 +1600,20 @@ func (u *UsernameContainer) GetResults() []string {
 
 func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UsernameContainer) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetResults sets the Results field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsernameContainer) SetResults(results []string) {
+	u.Results = results
+	u.require(usernameContainerFieldResults)
 }
 
 func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
@@ -882,6 +1632,17 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UsernameContainer) MarshalJSON() ([]byte, error) {
+	type embed UsernameContainer
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UsernameContainer) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -894,8 +1655,15 @@ func (u *UsernameContainer) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	withCursorFieldCursor = big.NewInt(1 << 0)
+)
+
 type WithCursor struct {
 	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -910,6 +1678,20 @@ func (w *WithCursor) GetCursor() *string {
 
 func (w *WithCursor) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
+}
+
+func (w *WithCursor) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithCursor) SetCursor(cursor *string) {
+	w.Cursor = cursor
+	w.require(withCursorFieldCursor)
 }
 
 func (w *WithCursor) UnmarshalJSON(data []byte) error {
@@ -928,6 +1710,17 @@ func (w *WithCursor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (w *WithCursor) MarshalJSON() ([]byte, error) {
+	type embed WithCursor
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (w *WithCursor) String() string {
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -940,8 +1733,15 @@ func (w *WithCursor) String() string {
 	return fmt.Sprintf("%#v", w)
 }
 
+var (
+	withPageFieldPage = big.NewInt(1 << 0)
+)
+
 type WithPage struct {
 	Page *int `json:"page,omitempty" url:"page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -958,6 +1758,20 @@ func (w *WithPage) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
 
+func (w *WithPage) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithPage) SetPage(page *int) {
+	w.Page = page
+	w.require(withPageFieldPage)
+}
+
 func (w *WithPage) UnmarshalJSON(data []byte) error {
 	type unmarshaler WithPage
 	var value unmarshaler
@@ -972,6 +1786,17 @@ func (w *WithPage) UnmarshalJSON(data []byte) error {
 	w.extraProperties = extraProperties
 	w.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (w *WithPage) MarshalJSON() ([]byte, error) {
+	type embed WithPage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (w *WithPage) String() string {

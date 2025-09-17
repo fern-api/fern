@@ -20,8 +20,7 @@ public class AuthWireTest {
         server.start();
         client = SeedOauthClientCredentialsClient.builder()
             .url(server.url("/").toString())
-            .clientId("test-client-id")
-                        .clientSecret("test-client-secret")
+            .token("oauth-test-token")
             .build();
     }
     @AfterEach
@@ -48,28 +47,68 @@ public class AuthWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"my_oauth_app_123\",\n" +
-            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
-            "  \"audience\": \"https://api.example.com\",\n" +
-            "  \"grant_type\": \"client_credentials\",\n" +
-            "  \"scope\": \"read:users\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"client_id\": \"my_oauth_app_123\",\n"
+            + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
+            + "  \"audience\": \"https://api.example.com\",\n"
+            + "  \"grant_type\": \"client_credentials\",\n"
+            + "  \"scope\": \"read:users\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type")) discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind")) discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
+        }
+        
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
         
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"access_token\": \"access_token\",\n" +
-            "  \"expires_in\": 1,\n" +
-            "  \"refresh_token\": \"refresh_token\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"access_token\": \"access_token\",\n"
+            + "  \"expires_in\": 1,\n"
+            + "  \"refresh_token\": \"refresh_token\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
     @Test
     public void testRefreshToken() throws Exception {
@@ -92,28 +131,68 @@ public class AuthWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"my_oauth_app_123\",\n" +
-            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
-            "  \"refresh_token\": \"refresh_token\",\n" +
-            "  \"audience\": \"https://api.example.com\",\n" +
-            "  \"grant_type\": \"refresh_token\",\n" +
-            "  \"scope\": \"read:users\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"client_id\": \"my_oauth_app_123\",\n"
+            + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
+            + "  \"refresh_token\": \"refresh_token\",\n"
+            + "  \"audience\": \"https://api.example.com\",\n"
+            + "  \"grant_type\": \"refresh_token\",\n"
+            + "  \"scope\": \"read:users\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body does not match expected");
+        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type")) discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind")) discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
+        }
+        
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
         
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"access_token\": \"access_token\",\n" +
-            "  \"expires_in\": 1,\n" +
-            "  \"refresh_token\": \"refresh_token\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"access_token\": \"access_token\",\n"
+            + "  \"expires_in\": 1,\n"
+            + "  \"refresh_token\": \"refresh_token\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body does not match expected");
+        Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type")) discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind")) discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+        
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
+        }
+        
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
     }
 }

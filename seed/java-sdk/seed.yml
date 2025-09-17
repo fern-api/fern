@@ -80,6 +80,10 @@ fixtures:
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - customConfig:
+        inline-path-parameters: true
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
         publish-to: central
       outputFolder: publish-to
     - publishConfig:
@@ -140,6 +144,17 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  pagination:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  unions:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   accept-header:
     - outputFolder: accept-header
   client-side-params:

@@ -136,7 +136,7 @@ export class RawClient {
             if (part.pathParameter != null) {
                 const reference = pathParameterReferences[part.pathParameter];
                 if (reference == null) {
-                    rubyPath += `#{${part.tail}`;
+                    rubyPath += `#{${part.tail}}`;
                 } else {
                     // Insert Ruby interpolation for the path parameter
                     rubyPath += `#{${reference}}${part.tail}`;

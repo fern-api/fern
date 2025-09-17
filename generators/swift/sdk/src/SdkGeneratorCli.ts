@@ -21,6 +21,7 @@ import {
     SingleUrlEnvironmentGenerator,
     SubClientGenerator
 } from "./generators";
+import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -76,7 +77,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
-        await this.generateReadme(context);
+        await Promise.all([this.generateReadme(context), this.generateReference(context)]);
     }
 
     private generatePackageSwiftFile(context: SdkGeneratorContext): void {
@@ -96,6 +97,16 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+        }
+    }
+
+    private async generateReference(context: SdkGeneratorContext): Promise<void> {
+        try {
+            const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
+            const content = await context.generatorAgent.generateReference(builder);
+            context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
+        } catch (e) {
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
     }
 

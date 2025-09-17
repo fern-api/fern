@@ -6,15 +6,45 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/http-head/fern/internal"
+	big "math/big"
+)
+
+var (
+	listUsersRequestFieldLimit = big.NewInt(1 << 0)
 )
 
 type ListUsersRequest struct {
 	Limit int `json:"-" url:"limit"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (l *ListUsersRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersRequest) SetLimit(limit int) {
+	l.Limit = limit
+	l.require(listUsersRequestFieldLimit)
+}
+
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldTags = big.NewInt(1 << 1)
+)
 
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -38,6 +68,27 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -52,6 +103,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

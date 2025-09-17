@@ -3,6 +3,7 @@
 namespace Seed;
 
 use Seed\Complex\ComplexClient;
+use Seed\InlineUsers\InlineUsersClient;
 use Seed\Users\UsersClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -13,6 +14,11 @@ class SeedClient
      * @var ComplexClient $complex
      */
     public ComplexClient $complex;
+
+    /**
+     * @var InlineUsersClient $inlineUsers
+     */
+    public InlineUsersClient $inlineUsers;
 
     /**
      * @var UsersClient $users
@@ -70,6 +76,7 @@ class SeedClient
         );
 
         $this->complex = new ComplexClient($this->client, $this->options);
+        $this->inlineUsers = new InlineUsersClient($this->client, $this->options);
         $this->users = new UsersClient($this->client, $this->options);
     }
 }

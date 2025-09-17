@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
@@ -9,7 +10,6 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-
 import { GeneratedType } from "./GeneratedType";
 import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
 
@@ -42,4 +42,57 @@ export interface TypeContext {
     needsRequestResponseTypeVariantById: (typeId: TypeId) => { request: boolean; response: boolean };
     needsRequestResponseTypeVariantByType(type: Type): { request: boolean; response: boolean };
     typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference;
+    generateGetterForResponsePropertyAsString({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): string;
+    generateGetterForResponseProperty({
+        variable,
+        isVariableOptional,
+        property,
+        noOptionalChaining
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.ResponseProperty;
+        noOptionalChaining?: boolean;
+    }): ts.Expression;
+    generateGetterForRequestProperty({
+        variable,
+        isVariableOptional,
+        property
+    }: {
+        variable?: string;
+        isVariableOptional?: boolean;
+        property: FernIr.RequestProperty;
+    }): ts.Expression;
+    generateSetterForRequestPropertyAsString({
+        variable,
+        property
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): string;
+    generateSetterForRequestProperty({
+        variable,
+        property
+    }: {
+        variable?: string;
+        property: FernIr.RequestProperty;
+    }): ts.Expression;
+
+    getReferenceToResponsePropertyType({
+        responseType,
+        property
+    }: {
+        responseType: ts.TypeNode;
+        property: FernIr.ResponseProperty;
+    }): ts.TypeNode;
 }

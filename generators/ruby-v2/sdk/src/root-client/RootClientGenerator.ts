@@ -70,7 +70,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [this.context.getRootModule().name],
+                    modules: [this.context.getRootModuleName()],
                     fullyQualified: true
                 })
             )

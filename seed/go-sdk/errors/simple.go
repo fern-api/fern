@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/errors/fern/internal"
+	big "math/big"
+)
+
+var (
+	fooRequestFieldBar = big.NewInt(1 << 0)
 )
 
 type FooRequest struct {
 	Bar string `json:"bar" url:"bar"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -24,6 +32,20 @@ func (f *FooRequest) GetBar() string {
 
 func (f *FooRequest) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FooRequest) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetBar sets the Bar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooRequest) SetBar(bar string) {
+	f.Bar = bar
+	f.require(fooRequestFieldBar)
 }
 
 func (f *FooRequest) UnmarshalJSON(data []byte) error {
@@ -42,6 +64,17 @@ func (f *FooRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FooRequest) MarshalJSON() ([]byte, error) {
+	type embed FooRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FooRequest) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -54,8 +87,15 @@ func (f *FooRequest) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	fooResponseFieldBar = big.NewInt(1 << 0)
+)
+
 type FooResponse struct {
 	Bar string `json:"bar" url:"bar"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -72,6 +112,20 @@ func (f *FooResponse) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *FooResponse) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetBar sets the Bar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooResponse) SetBar(bar string) {
+	f.Bar = bar
+	f.require(fooResponseFieldBar)
+}
+
 func (f *FooResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler FooResponse
 	var value unmarshaler
@@ -86,6 +140,17 @@ func (f *FooResponse) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FooResponse) MarshalJSON() ([]byte, error) {
+	type embed FooResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FooResponse) String() string {

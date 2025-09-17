@@ -18,10 +18,18 @@ module Seed
           path: "/movies/create-movie",
           body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        return Seed::Imdb::Types::MovieId.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Imdb::Types::MovieId.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
 
       # @return [Seed::Imdb::Types::Movie]
@@ -31,10 +39,18 @@ module Seed
           method: "GET",
           path: "/movies/#{params[:movieId]}"
         )
-        _response = @client.send(_request)
-        return Seed::Imdb::Types::Movie.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Imdb::Types::Movie.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
     end
   end

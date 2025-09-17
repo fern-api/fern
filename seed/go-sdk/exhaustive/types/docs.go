@@ -6,6 +6,11 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
+	big "math/big"
+)
+
+var (
+	objectWithDocsFieldString = big.NewInt(1 << 0)
 )
 
 type ObjectWithDocs struct {
@@ -66,6 +71,9 @@ type ObjectWithDocs struct {
 	// - &: HTML entities
 	String string `json:"string" url:"string"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
@@ -79,6 +87,20 @@ func (o *ObjectWithDocs) GetString() string {
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
+}
+
+func (o *ObjectWithDocs) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetString sets the String field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithDocs) SetString(string_ string) {
+	o.String = string_
+	o.require(objectWithDocsFieldString)
 }
 
 func (o *ObjectWithDocs) UnmarshalJSON(data []byte) error {
@@ -95,6 +117,17 @@ func (o *ObjectWithDocs) UnmarshalJSON(data []byte) error {
 	o.extraProperties = extraProperties
 	o.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (o *ObjectWithDocs) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithDocs
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *ObjectWithDocs) String() string {

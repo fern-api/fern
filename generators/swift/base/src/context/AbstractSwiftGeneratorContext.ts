@@ -4,6 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
+    HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
     Package,
@@ -207,5 +208,48 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public getFullyQualifiedNameForSchemaType(symbolName: string): string {
         return `${this.targetName}.${symbolName}`;
+    }
+
+    public getEndpointMethodDetails(endpoint: HttpEndpoint) {
+        const endpointContainer = this.getEndpointContainer(endpoint);
+        if (endpointContainer.type === "none") {
+            throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+        }
+        const packageOrSubpackage =
+            endpointContainer.type === "root-package" ? this.ir.rootPackage : endpointContainer.subpackage;
+        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName);
+        const leadingPath = leadingParts.join(".");
+        const methodName = endpoint.name.camelCase.unsafeName;
+        const fullyQualifiedMethodName = [...leadingParts, methodName].join(".");
+        return {
+            leadingParts,
+            leadingPath,
+            methodName,
+            fullyQualifiedMethodName
+        };
+    }
+
+    public getEndpointContainer(
+        endpoint: HttpEndpoint
+    ):
+        | { type: "root-package"; package: Package }
+        | { type: "subpackage"; subpackageId: SubpackageId; subpackage: Subpackage }
+        | { type: "none" } {
+        const rootPackageServiceId = this.ir.rootPackage.service;
+        if (rootPackageServiceId) {
+            const rootPackageService = this.getHttpServiceOrThrow(rootPackageServiceId);
+            if (rootPackageService.endpoints.some((e) => e.id === endpoint.id)) {
+                return { type: "root-package", package: this.ir.rootPackage };
+            }
+        }
+        for (const [subpackageId, subpackage] of Object.entries(this.ir.subpackages)) {
+            if (typeof subpackage.service === "string") {
+                const service = this.getHttpServiceOrThrow(subpackage.service);
+                if (service.endpoints.some((e) => e.id === endpoint.id)) {
+                    return { type: "subpackage", subpackageId, subpackage };
+                }
+            }
+        }
+        return { type: "none" };
     }
 }

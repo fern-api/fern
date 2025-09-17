@@ -6,11 +6,19 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/unions/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	barFieldName = big.NewInt(1 << 0)
 )
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -24,6 +32,20 @@ func (b *Bar) GetName() string {
 
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *Bar) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *Bar) SetName(name string) {
+	b.Name = name
+	b.require(barFieldName)
 }
 
 func (b *Bar) UnmarshalJSON(data []byte) error {
@@ -41,6 +63,17 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *Bar) MarshalJSON() ([]byte, error) {
+	type embed Bar
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *Bar) String() string {
 	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
@@ -48,8 +81,15 @@ func (b *Bar) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+var (
+	fooFieldName = big.NewInt(1 << 0)
+)
+
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -63,6 +103,20 @@ func (f *Foo) GetName() string {
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *Foo) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetName(name string) {
+	f.Name = name
+	f.require(fooFieldName)
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -80,6 +134,17 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *Foo) MarshalJSON() ([]byte, error) {
+	type embed Foo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *Foo) String() string {
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
@@ -87,9 +152,17 @@ func (f *Foo) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	fooExtendedFieldName = big.NewInt(1 << 0)
+	fooExtendedFieldAge  = big.NewInt(1 << 1)
+)
+
 type FooExtended struct {
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -112,6 +185,27 @@ func (f *FooExtended) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *FooExtended) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooExtended) SetName(name string) {
+	f.Name = name
+	f.require(fooExtendedFieldName)
+}
+
+// SetAge sets the Age field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooExtended) SetAge(age int) {
+	f.Age = age
+	f.require(fooExtendedFieldAge)
+}
+
 func (f *FooExtended) UnmarshalJSON(data []byte) error {
 	type unmarshaler FooExtended
 	var value unmarshaler
@@ -125,6 +219,17 @@ func (f *FooExtended) UnmarshalJSON(data []byte) error {
 	}
 	f.extraProperties = extraProperties
 	return nil
+}
+
+func (f *FooExtended) MarshalJSON() ([]byte, error) {
+	type embed FooExtended
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FooExtended) String() string {

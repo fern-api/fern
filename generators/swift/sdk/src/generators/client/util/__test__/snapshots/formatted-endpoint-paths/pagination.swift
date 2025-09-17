@@ -1,6 +1,20 @@
 // service_complex
 "/\(index)/conversations/search"
 
+// service_inline-users/inline-users
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+
 // service_users
 "/users"
 "/users"

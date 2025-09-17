@@ -2,16 +2,110 @@
 
 package enum
 
+import (
+	big "math/big"
+)
+
+var (
+	sendEnumAsQueryParamRequestFieldOperand             = big.NewInt(1 << 0)
+	sendEnumAsQueryParamRequestFieldMaybeOperand        = big.NewInt(1 << 1)
+	sendEnumAsQueryParamRequestFieldOperandOrColor      = big.NewInt(1 << 2)
+	sendEnumAsQueryParamRequestFieldMaybeOperandOrColor = big.NewInt(1 << 3)
+)
+
 type SendEnumAsQueryParamRequest struct {
 	Operand             Operand         `json:"-" url:"operand"`
 	MaybeOperand        *Operand        `json:"-" url:"maybeOperand,omitempty"`
 	OperandOrColor      *ColorOrOperand `json:"-" url:"operandOrColor"`
 	MaybeOperandOrColor *ColorOrOperand `json:"-" url:"maybeOperandOrColor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (s *SendEnumAsQueryParamRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOperand sets the Operand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumAsQueryParamRequest) SetOperand(operand Operand) {
+	s.Operand = operand
+	s.require(sendEnumAsQueryParamRequestFieldOperand)
+}
+
+// SetMaybeOperand sets the MaybeOperand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumAsQueryParamRequest) SetMaybeOperand(maybeOperand *Operand) {
+	s.MaybeOperand = maybeOperand
+	s.require(sendEnumAsQueryParamRequestFieldMaybeOperand)
+}
+
+// SetOperandOrColor sets the OperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumAsQueryParamRequest) SetOperandOrColor(operandOrColor *ColorOrOperand) {
+	s.OperandOrColor = operandOrColor
+	s.require(sendEnumAsQueryParamRequestFieldOperandOrColor)
+}
+
+// SetMaybeOperandOrColor sets the MaybeOperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumAsQueryParamRequest) SetMaybeOperandOrColor(maybeOperandOrColor *ColorOrOperand) {
+	s.MaybeOperandOrColor = maybeOperandOrColor
+	s.require(sendEnumAsQueryParamRequestFieldMaybeOperandOrColor)
+}
+
+var (
+	sendEnumListAsQueryParamRequestFieldOperand             = big.NewInt(1 << 0)
+	sendEnumListAsQueryParamRequestFieldMaybeOperand        = big.NewInt(1 << 1)
+	sendEnumListAsQueryParamRequestFieldOperandOrColor      = big.NewInt(1 << 2)
+	sendEnumListAsQueryParamRequestFieldMaybeOperandOrColor = big.NewInt(1 << 3)
+)
 
 type SendEnumListAsQueryParamRequest struct {
 	Operand             []Operand         `json:"-" url:"operand"`
 	MaybeOperand        []*Operand        `json:"-" url:"maybeOperand,omitempty"`
 	OperandOrColor      []*ColorOrOperand `json:"-" url:"operandOrColor"`
 	MaybeOperandOrColor []*ColorOrOperand `json:"-" url:"maybeOperandOrColor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SendEnumListAsQueryParamRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOperand sets the Operand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumListAsQueryParamRequest) SetOperand(operand []Operand) {
+	s.Operand = operand
+	s.require(sendEnumListAsQueryParamRequestFieldOperand)
+}
+
+// SetMaybeOperand sets the MaybeOperand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumListAsQueryParamRequest) SetMaybeOperand(maybeOperand []*Operand) {
+	s.MaybeOperand = maybeOperand
+	s.require(sendEnumListAsQueryParamRequestFieldMaybeOperand)
+}
+
+// SetOperandOrColor sets the OperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumListAsQueryParamRequest) SetOperandOrColor(operandOrColor []*ColorOrOperand) {
+	s.OperandOrColor = operandOrColor
+	s.require(sendEnumListAsQueryParamRequestFieldOperandOrColor)
+}
+
+// SetMaybeOperandOrColor sets the MaybeOperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumListAsQueryParamRequest) SetMaybeOperandOrColor(maybeOperandOrColor []*ColorOrOperand) {
+	s.MaybeOperandOrColor = maybeOperandOrColor
+	s.require(sendEnumListAsQueryParamRequestFieldMaybeOperandOrColor)
 }
