@@ -279,9 +279,14 @@ jobs:
         id: create-test-matrix
         run: |
           TEST_FIXTURES_1="accept-header alias alias-extends any-auth api-wide-base-path audiences"
-          TEST_FIXTURES_2="auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload bytes-download file-download file-upload imdb plain-text public-object streaming streaming-parameter server-sent-events server-sent-event-examples"
-          echo "matrix_of_tests=$TEST_FIXTURES_1" >> $GITHUB_OUTPUT
-          echo "$matrix_of_tests"
+          TEST_STRING=$(echo "$TEST_FIXTURES_1")
+
+          echo "test_string=$TEST_STRING" >> $GITHUB_OUTPUT
+          echo "Built test matrix string as: "
+          echo "$TEST_STRING"
+
+          echo "Test string as: "
+          echo "$TEST_FIXTURES_1"
     
   typescript-sdk-as-matrix:
     runs-on: Seed
