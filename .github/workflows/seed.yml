@@ -20,6 +20,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  full-checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+  full-checkout-with-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-checkout
+          path: .
+
+  checkout-from-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: full-checkout
+          path: .
+
   changes:
     if: false # CHRISM - undo
     runs-on: ubuntu-latest
