@@ -318,9 +318,9 @@ jobs:
         #   echo "other struct: "
         #   echo "${fixture_list}"
         run: |
-          echo "fixture_list=$(echo "[alias,alias-extends]")" >> $GITHUB_OUTPUT
-          echo "other struct: "
-          echo "${fixture_list}"
+          echo "fixture_list=[\"alias\",\"alias-extends\"]" >> $GITHUB_OUTPUT
+          echo "Testing fixture_list output:"
+          echo "$(echo '["alias","alias-extends"]')"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
