@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -12,15 +12,19 @@ impl ServiceClient {
         Ok(Self { http_client })
     }
 
-    pub async fn post(&self, endpoint_param: &String, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            &format!("/service/{}", endpoint_param),
-            None,
-            None,
-            options,
-        ).await
+    pub async fn post(
+        &self,
+        endpoint_param: &String,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("/service/{}", endpoint_param),
+                None,
+                None,
+                options,
+            )
+            .await
     }
-
 }
-

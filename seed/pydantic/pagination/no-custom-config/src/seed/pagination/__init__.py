@@ -30,6 +30,7 @@ from .resources import (
     WithCursor,
     WithPage,
     complex_,
+    inline_users,
     users,
 )
 from .username_cursor import UsernameCursor
@@ -65,5 +66,6 @@ __all__ = [
     "WithCursor",
     "WithPage",
     "complex_",
+    "inline_users",
     "users",
 ]

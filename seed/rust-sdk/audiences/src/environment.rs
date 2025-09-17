@@ -9,14 +9,14 @@ pub enum Environment {
 }
 impl Environment {
     pub fn url(&self) -> &'static str {
-    match self {
-        Self::EnvironmentA => "https://api.example.a.com",
-        Self::EnvironmentB => "https://api.example.b.com",
+        match self {
+            Self::EnvironmentA => "https://api.example.a.com",
+            Self::EnvironmentB => "https://api.example.b.com",
+        }
     }
-}
 }
 impl Default for Environment {
     fn default() -> Self {
-    Self::EnvironmentA
-}
+        Self::EnvironmentA
+    }
 }

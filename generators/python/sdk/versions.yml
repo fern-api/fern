@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.28.5
+  changelogEntry:
+    - summary: |
+        Generator no longer fails on failed generator-cli installation
+      type: fix
+  createdAt: "2025-09-16"
+  irVersion: 59
+
 - version: 4.28.4
   changelogEntry:
     - summary: |

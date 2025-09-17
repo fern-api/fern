@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -45,7 +44,7 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-            new ListUsersExtendedRequestForOptionalData
+            new SeedPagination.ListUsersExtendedRequestForOptionalData
             {
                 Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             }

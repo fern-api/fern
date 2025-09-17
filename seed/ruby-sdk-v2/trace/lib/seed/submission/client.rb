@@ -13,16 +13,22 @@ module Seed
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/sessions/create-session/#{params[:language]}"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Submission::Types::ExecutionSessionResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-
-        raise _response.body
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Submission::Types::ExecutionSessionResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
 
       # Returns execution server URL for session. Returns empty if session isn't registered.
@@ -30,14 +36,20 @@ module Seed
       # @return [Seed::Submission::Types::ExecutionSessionResponse | nil]
       def get_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/sessions/#{params[:sessionId]}"
         )
-        _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-        raise _response.body
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Stops execution session.
@@ -45,29 +57,41 @@ module Seed
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
           path: "/sessions/stop/#{params[:sessionId]}"
         )
-        _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-        raise _response.body
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::Prod,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/sessions/execution-sessions-state"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::Submission::Types::GetExecutionSessionStateResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-
-        raise _response.body
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Submission::Types::GetExecutionSessionStateResponse.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
     end
   end

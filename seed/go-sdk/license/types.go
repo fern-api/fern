@@ -6,11 +6,19 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/license/fern/internal"
+	big "math/big"
 )
 
 // A simple type with just a name.
+var (
+	typeFieldName = big.NewInt(1 << 0)
+)
+
 type Type struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -27,6 +35,20 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *Type) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *Type) SetName(name string) {
+	t.Name = name
+	t.require(typeFieldName)
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	type unmarshaler Type
 	var value unmarshaler
@@ -41,6 +63,17 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.extraProperties = extraProperties
 	t.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *Type) String() string {

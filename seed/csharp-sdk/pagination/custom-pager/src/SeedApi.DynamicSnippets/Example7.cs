@@ -13,11 +13,11 @@ public class Example7
             }
         );
 
-        await client.Users.ListWithOffsetStepPaginationAsync(
-            new ListUsersOffsetStepPaginationRequest{
+        await client.InlineUsers.InlineUsers.ListWithOffsetStepPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersOffsetStepPaginationRequest{
                 Page = 1,
                 Limit = 1,
-                Order = Order.Asc
+                Order = SeedPagination.InlineUsers.Order.Asc
             }
         );
     }

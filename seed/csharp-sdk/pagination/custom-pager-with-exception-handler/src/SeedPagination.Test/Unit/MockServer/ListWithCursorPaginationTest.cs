@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -55,11 +54,11 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithCursorPaginationAsync(
-            new ListUsersCursorPaginationRequest
+            new SeedPagination.ListUsersCursorPaginationRequest
             {
                 Page = 1,
                 PerPage = 1,
-                Order = Order.Asc,
+                Order = SeedPagination.Order.Asc,
                 StartingAfter = "starting_after",
             }
         );

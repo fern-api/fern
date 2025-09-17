@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
@@ -42,7 +41,7 @@ public class ListWithMixedTypeCursorPaginationTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithMixedTypeCursorPaginationAsync(
-            new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
+            new SeedPagination.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
         );
         await foreach (var item in items)
         {

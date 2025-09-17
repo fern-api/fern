@@ -50,8 +50,8 @@ describe("Users", () => {
             order: "asc",
             starting_after: "starting_after",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -86,8 +86,8 @@ describe("Users", () => {
         const page = await client.users.listWithMixedTypeCursorPagination({
             cursor: "cursor",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -143,8 +143,8 @@ describe("Users", () => {
                 cursor: "cursor",
             },
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -194,8 +194,8 @@ describe("Users", () => {
             order: "asc",
             starting_after: "starting_after",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -245,8 +245,8 @@ describe("Users", () => {
             order: "asc",
             starting_after: "starting_after",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -302,8 +302,8 @@ describe("Users", () => {
                 page: 1,
             },
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -352,8 +352,8 @@ describe("Users", () => {
             limit: 1,
             order: "asc",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -402,8 +402,8 @@ describe("Users", () => {
             limit: 1,
             order: "asc",
         });
-        expect(expected.data).toEqual(page.data);
 
+        expect(expected.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
@@ -444,8 +444,8 @@ describe("Users", () => {
         const page = await client.users.listWithExtendedResults({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
-        expect(expected.data.users).toEqual(page.data);
 
+        expect(expected.data.users).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data.users).toEqual(nextPage.data);
@@ -486,8 +486,8 @@ describe("Users", () => {
         const page = await client.users.listWithExtendedResultsAndOptionalData({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
-        expect(expected.data.users).toEqual(page.data);
 
+        expect(expected.data.users).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data.users).toEqual(nextPage.data);
@@ -509,8 +509,8 @@ describe("Users", () => {
         const page = await client.users.listUsernames({
             starting_after: "starting_after",
         });
-        expect(expected.cursor.data).toEqual(page.data);
 
+        expect(expected.cursor.data).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.cursor.data).toEqual(nextPage.data);
@@ -529,8 +529,8 @@ describe("Users", () => {
         const page = await client.users.listWithGlobalConfig({
             offset: 1,
         });
-        expect(expected.results).toEqual(page.data);
 
+        expect(expected.results).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.results).toEqual(nextPage.data);

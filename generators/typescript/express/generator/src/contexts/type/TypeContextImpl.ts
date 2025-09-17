@@ -330,4 +330,23 @@ export class TypeContextImpl implements TypeContext {
             response: false
         };
     }
+
+    generateGetterForResponsePropertyAsString(): string {
+        throw new Error("Method not implemented.");
+    }
+    generateGetterForResponseProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    generateGetterForRequestProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    generateSetterForRequestPropertyAsString(): string {
+        throw new Error("Method not implemented.");
+    }
+    generateSetterForRequestProperty(): ts.Expression {
+        throw new Error("Method not implemented.");
+    }
+    getReferenceToResponsePropertyType(): ts.TypeNode {
+        throw new Error("Method not implemented.");
+    }
 }

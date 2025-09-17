@@ -6,6 +6,7 @@ package com.seed.pagination;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.Suppliers;
 import com.seed.pagination.resources.complex.AsyncComplexClient;
+import com.seed.pagination.resources.inlineusers.AsyncInlineUsersClient;
 import com.seed.pagination.resources.users.AsyncUsersClient;
 import java.util.function.Supplier;
 
@@ -14,16 +15,23 @@ public class AsyncSeedPaginationClient {
 
     protected final Supplier<AsyncComplexClient> complexClient;
 
+    protected final Supplier<AsyncInlineUsersClient> inlineUsersClient;
+
     protected final Supplier<AsyncUsersClient> usersClient;
 
     public AsyncSeedPaginationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.complexClient = Suppliers.memoize(() -> new AsyncComplexClient(clientOptions));
+        this.inlineUsersClient = Suppliers.memoize(() -> new AsyncInlineUsersClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new AsyncUsersClient(clientOptions));
     }
 
     public AsyncComplexClient complex() {
         return this.complexClient.get();
+    }
+
+    public AsyncInlineUsersClient inlineUsers() {
+        return this.inlineUsersClient.get();
     }
 
     public AsyncUsersClient users() {

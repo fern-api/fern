@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/circular-references/fern/internal"
+	big "math/big"
 )
 
 type ContainerValue struct {
@@ -428,11 +429,22 @@ func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
 }
 
 type ObjectValue struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 }
 
 func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
+}
+
+func (o *ObjectValue) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {
@@ -448,6 +460,17 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 	}
 	o.extraProperties = extraProperties
 	return nil
+}
+
+func (o *ObjectValue) MarshalJSON() ([]byte, error) {
+	type embed ObjectValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *ObjectValue) String() string {
@@ -479,8 +502,15 @@ func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
 }
 
+var (
+	tFieldChild = big.NewInt(1 << 0)
+)
+
 type T struct {
 	Child *TorU `json:"child" url:"child"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -496,6 +526,20 @@ func (t *T) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
 
+func (t *T) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetChild sets the Child field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *T) SetChild(child *TorU) {
+	t.Child = child
+	t.require(tFieldChild)
+}
+
 func (t *T) UnmarshalJSON(data []byte) error {
 	type unmarshaler T
 	var value unmarshaler
@@ -509,6 +553,17 @@ func (t *T) UnmarshalJSON(data []byte) error {
 	}
 	t.extraProperties = extraProperties
 	return nil
+}
+
+func (t *T) MarshalJSON() ([]byte, error) {
+	type embed T
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (t *T) String() string {
@@ -580,8 +635,15 @@ func (t *TorU) Accept(visitor TorUVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", t)
 }
 
+var (
+	uFieldChild = big.NewInt(1 << 0)
+)
+
 type U struct {
 	Child *T `json:"child" url:"child"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -597,6 +659,20 @@ func (u *U) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *U) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetChild sets the Child field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *U) SetChild(child *T) {
+	u.Child = child
+	u.require(uFieldChild)
+}
+
 func (u *U) UnmarshalJSON(data []byte) error {
 	type unmarshaler U
 	var value unmarshaler
@@ -610,6 +686,17 @@ func (u *U) UnmarshalJSON(data []byte) error {
 	}
 	u.extraProperties = extraProperties
 	return nil
+}
+
+func (u *U) MarshalJSON() ([]byte, error) {
+	type embed U
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *U) String() string {

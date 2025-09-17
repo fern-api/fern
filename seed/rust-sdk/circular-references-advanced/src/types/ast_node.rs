@@ -5,9 +5,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum Node {
-        BranchNode(BranchNode),
+    BranchNode(BranchNode),
 
-        LeafNode(LeafNode),
+    LeafNode(LeafNode),
 }
 
 impl Node {
@@ -19,33 +19,31 @@ impl Node {
         matches!(self, Self::LeafNode(_))
     }
 
-
     pub fn as_branchnode(&self) -> Option<&BranchNode> {
         match self {
-                    Self::BranchNode(value) => Some(value),
-                    _ => None,
-                }
+            Self::BranchNode(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_branchnode(self) -> Option<BranchNode> {
         match self {
-                    Self::BranchNode(value) => Some(value),
-                    _ => None,
-                }
+            Self::BranchNode(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_leafnode(&self) -> Option<&LeafNode> {
         match self {
-                    Self::LeafNode(value) => Some(value),
-                    _ => None,
-                }
+            Self::LeafNode(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_leafnode(self) -> Option<LeafNode> {
         match self {
-                    Self::LeafNode(value) => Some(value),
-                    _ => None,
-                }
+            Self::LeafNode(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

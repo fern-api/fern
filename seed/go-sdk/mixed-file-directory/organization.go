@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/mixed-file-directory/fern/internal"
+	big "math/big"
+)
+
+var (
+	createOrganizationRequestFieldName = big.NewInt(1 << 0)
 )
 
 type CreateOrganizationRequest struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -24,6 +32,20 @@ func (c *CreateOrganizationRequest) GetName() string {
 
 func (c *CreateOrganizationRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateOrganizationRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationRequest) SetName(name string) {
+	c.Name = name
+	c.require(createOrganizationRequestFieldName)
 }
 
 func (c *CreateOrganizationRequest) UnmarshalJSON(data []byte) error {
@@ -42,6 +64,17 @@ func (c *CreateOrganizationRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateOrganizationRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateOrganizationRequest) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -54,10 +87,19 @@ func (c *CreateOrganizationRequest) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	organizationFieldId    = big.NewInt(1 << 0)
+	organizationFieldName  = big.NewInt(1 << 1)
+	organizationFieldUsers = big.NewInt(1 << 2)
+)
+
 type Organization struct {
 	Id    Id      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Users []*User `json:"users" url:"users"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -88,6 +130,34 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *Organization) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetId(id Id) {
+	o.Id = id
+	o.require(organizationFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetUsers(users []*User) {
+	o.Users = users
+	o.require(organizationFieldUsers)
+}
+
 func (o *Organization) UnmarshalJSON(data []byte) error {
 	type unmarshaler Organization
 	var value unmarshaler
@@ -102,6 +172,17 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	o.extraProperties = extraProperties
 	o.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (o *Organization) MarshalJSON() ([]byte, error) {
+	type embed Organization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *Organization) String() string {

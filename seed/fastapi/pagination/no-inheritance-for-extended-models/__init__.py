@@ -32,6 +32,7 @@ from .resources import (
     WithCursor,
     WithPage,
     complex,
+    inline_users,
     users,
 )
 from .security import ApiAuth
@@ -70,5 +71,6 @@ __all__ = [
     "WithCursor",
     "WithPage",
     "complex",
+    "inline_users",
     "users",
 ]
