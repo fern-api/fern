@@ -17,7 +17,7 @@ import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
-import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
@@ -39,6 +39,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
+    addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -282,6 +283,66 @@ function addRunCommand(cli: Argv) {
                 local: argv.local,
                 keepDocker: argv.keepDocker
             });
+        }
+    );
+}
+
+function addGetAvailableFixturesCommand(cli: Argv) {
+    cli.command(
+        "get-available-fixtures",
+        "Get the available fixtures and output folder options for the given generator",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    string: true,
+                    demandOption: true,
+                    description: "Generator to get fixtures for"
+                })
+                .option("include-subfolders", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            // Get all available fixtures
+            const availableFixtures = FIXTURES.filter((fixture) => {
+                const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) =>
+                    fixture.startsWith(prefix)
+                )[0];
+                return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
+            });
+
+            if (argv["include-subfolders"]) {
+                // Add fixtures that have subfolders with their subfoldered version
+                const allOptions: string[] = [];
+                for (const fixture of availableFixtures) {
+                    const config = generator.workspaceConfig.fixtures?.[fixture];
+                    if (config != null && config.length > 0) {
+                        // This fixture has subfolders, add to map as fixture:outputFolder
+                        for (const outputFolder of config.map((c) => c.outputFolder)) {
+                            allOptions.push(`${fixture}:${outputFolder}`);
+                        }
+                    } else {
+                        // This fixture has no subfolders, keep as is
+                        allOptions.push(fixture);
+                    }
+                }
+                console.log(JSON.stringify({ fixtures: allOptions }, null, 2));
+            } else {
+                console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
+            }
         }
     );
 }
