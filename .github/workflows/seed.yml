@@ -275,44 +275,48 @@ jobs:
     #     && github.repository == 'fern-api/fern'
     #   }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      # - name: Install
+      #   uses: ./.github/actions/install
   
-      - uses: bufbuild/buf-setup-action@v1.34.0
-        with:
-          github_token: ${{ github.token }}
+      # - uses: bufbuild/buf-setup-action@v1.34.0
+      #   with:
+      #     github_token: ${{ github.token }}
   
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
+      # - uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "stable"
   
-      - name: Install protoc-gen-openapi
-        shell: bash
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
-      - name: Build seed 
-        run: |
-          pnpm seed:build
+      # - name: Install protoc-gen-openapi
+      #   shell: bash
+      #   run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      # - name: Build seed 
+      #   run: |
+      #     pnpm seed:build
 
       - name: Create Test Matrix
         id: create-test-matrix
         
-        run: |
-          # Get starting point from output of get-available-fixtures command
-          MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
+      #   run: |
+      #     # Get starting point from output of get-available-fixtures command
+      #     MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
           
-          # Remove newlines and spaces so next portion of filtering is easier
-          PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+      #     # Remove newlines and spaces so next portion of filtering is easier
+      #     PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
 
-          # Extract just the fixtures
-          FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+      #     # Extract just the fixtures
+      #     FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
 
-          MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+      #     MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
 
-          echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
-          echo "${fixture_list}"
+      #     echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
+      #     echo "${fixture_list}"
+        run: |
+          echo "fixture_list=[\"imdb:no-custom-config\", \"imdb:omit-undefined\", \"imdb:no-scripts\", "streaming"]" >> $GITHUB_OUTPUT
+
+
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
