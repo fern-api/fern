@@ -35,7 +35,7 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
 
     public getModuleNamesForTypeId(typeId: TypeId): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return [this.getRootModule().name, ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
+        return [this.getRootModuleName(), ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
     }
 
     public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
