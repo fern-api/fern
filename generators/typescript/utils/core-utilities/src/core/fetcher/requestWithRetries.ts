@@ -1,7 +1,7 @@
 const INITIAL_RETRY_DELAY = 1000; // in milliseconds
 const MAX_RETRY_DELAY = 60000; // in milliseconds
 const DEFAULT_MAX_RETRIES = 2;
-const JITTER_FACTOR = 0.25; // 20% random jitter
+const JITTER_FACTOR = 0.2; // 20% random jitter
 
 function addPositiveJitter(delay: number): number {
     // Generate a random value between 0 and +JITTER_FACTOR
@@ -10,8 +10,8 @@ function addPositiveJitter(delay: number): number {
 }
 
 function addSymmetricJitter(delay: number): number {
-    // Generate a random value between -JITTER_FACTOR and +JITTER_FACTOR
-    const jitterMultiplier = 1 + (Math.random() * 2 - 1) * JITTER_FACTOR;
+    // Generate a random value in a JITTER_FACTOR-sized percentage range around delay
+    const jitterMultiplier = 1 + (Math.random() - 0.5) * JITTER_FACTOR;
     return delay * jitterMultiplier;
 }
 
