@@ -6,6 +6,7 @@ package com.seed.pagination;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.Suppliers;
 import com.seed.pagination.resources.complex.ComplexClient;
+import com.seed.pagination.resources.inlineusers.InlineUsersClient;
 import com.seed.pagination.resources.users.UsersClient;
 import java.util.function.Supplier;
 
@@ -14,16 +15,23 @@ public class SeedPaginationClient {
 
     protected final Supplier<ComplexClient> complexClient;
 
+    protected final Supplier<InlineUsersClient> inlineUsersClient;
+
     protected final Supplier<UsersClient> usersClient;
 
     public SeedPaginationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.complexClient = Suppliers.memoize(() -> new ComplexClient(clientOptions));
+        this.inlineUsersClient = Suppliers.memoize(() -> new InlineUsersClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new UsersClient(clientOptions));
     }
 
     public ComplexClient complex() {
         return this.complexClient.get();
+    }
+
+    public InlineUsersClient inlineUsers() {
+        return this.inlineUsersClient.get();
     }
 
     public UsersClient users() {

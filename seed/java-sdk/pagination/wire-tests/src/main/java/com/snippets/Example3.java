@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;
 
 public class Example3 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example3 {
             .url("https://api.fern.com")
             .build();
 
-        client.users().listWithMixedTypeCursorPagination(
+        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest
                 .builder()
                 .build()
