@@ -31,7 +31,9 @@ use seed_server_sent_events::{ClientConfig, ServerSentEventsClient, StreamComple
 async fn main() {
     let config = ClientConfig {};
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
-    client.completions_stream(StreamCompletionRequest { query: "query" }).await;
+    client
+        .completions_stream(StreamCompletionRequest { query: "query" })
+        .await;
 }
 ```
 

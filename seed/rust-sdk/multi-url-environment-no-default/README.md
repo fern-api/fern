@@ -25,15 +25,19 @@ cargo add seed_multi_url_environment_no_default
 Instantiate and use the client with the following:
 
 ```rust
-use seed_multi_url_environment_no_default::{ClientConfig, MultiUrlEnvironmentNoDefaultClient, BootInstanceRequest};
+use seed_multi_url_environment_no_default::{
+    BootInstanceRequest, ClientConfig, MultiUrlEnvironmentNoDefaultClient,
+};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string())
+        api_key: Some("<token>".to_string()),
     };
     let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
-    client.ec_2_boot_instance(BootInstanceRequest { size: "size" }).await;
+    client
+        .ec_2_boot_instance(BootInstanceRequest { size: "size" })
+        .await;
 }
 ```
 

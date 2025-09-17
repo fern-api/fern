@@ -25,12 +25,12 @@ cargo add seed_bearer_token_environment_variable
 Instantiate and use the client with the following:
 
 ```rust
-use seed_bearer_token_environment_variable::{ClientConfig, BearerTokenEnvironmentVariableClient};
+use seed_bearer_token_environment_variable::{BearerTokenEnvironmentVariableClient, ClientConfig};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string())
+        api_key: Some("<token>".to_string()),
     };
     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
     client.service_get_with_bearer_token().await;

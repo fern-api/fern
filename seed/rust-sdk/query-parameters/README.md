@@ -25,7 +25,7 @@ cargo add seed_query_parameters
 Instantiate and use the client with the following:
 
 ```rust
-use seed_query_parameters::{ClientConfig, QueryParametersClient, GetUsersRequest};
+use seed_query_parameters::{ClientConfig, GetUsersRequest, QueryParametersClient};
 
 #[tokio::main]
 async fn main() {

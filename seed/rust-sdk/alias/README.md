@@ -25,7 +25,7 @@ cargo add seed_alias
 Instantiate and use the client with the following:
 
 ```rust
-use seed_alias::{ClientConfig, AliasClient};
+use seed_alias::{AliasClient, ClientConfig};
 
 #[tokio::main]
 async fn main() {

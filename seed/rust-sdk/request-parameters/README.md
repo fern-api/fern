@@ -25,13 +25,20 @@ cargo add seed_request_parameters
 Instantiate and use the client with the following:
 
 ```rust
-use seed_request_parameters::{ClientConfig, RequestParametersClient, CreateUsernameRequest};
+use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = RequestParametersClient::new(config).expect("Failed to build client");
-    client.user_create_username(CreateUsernameRequest { tags: vec!["tags", "tags"], username: "username", password: "password", name: "test" }).await;
+    client
+        .user_create_username(CreateUsernameRequest {
+            tags: vec!["tags", "tags"],
+            username: "username",
+            password: "password",
+            name: "test",
+        })
+        .await;
 }
 ```
 

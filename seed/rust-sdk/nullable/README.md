@@ -25,7 +25,7 @@ cargo add seed_nullable
 Instantiate and use the client with the following:
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient, CreateUserRequest};
+use seed_nullable::{ClientConfig, CreateUserRequest, NullableClient};
 
 #[tokio::main]
 async fn main() {
