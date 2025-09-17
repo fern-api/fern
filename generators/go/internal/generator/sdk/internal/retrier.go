@@ -10,8 +10,8 @@ import (
 
 const (
 	defaultRetryAttempts = 2
-	minRetryDelay        = 500 * time.Millisecond
-	maxRetryDelay        = 5000 * time.Millisecond
+	minRetryDelay        = 1000 * time.Millisecond
+	maxRetryDelay        = 60000 * time.Millisecond
 )
 
 // RetryOption adapts the behavior the *Retrier.
@@ -184,7 +184,11 @@ func (r *Retrier) retryDelay(response *http.Response, retryAttempt uint) (time.D
 // exponentialBackoff calculates the delay time based on the retry attempt
 // and applies symmetric jitter (±10% around the delay).
 func (r *Retrier) exponentialBackoff(retryAttempt uint) (time.Duration, error) {
-	delay := minRetryDelay + minRetryDelay * time.Duration(retryAttempt * retryAttempt)
+	if retryAttempt > 63 { // 2^63+ would overflow uint64
+		retryAttempt = 63
+	}
+
+	delay := minRetryDelay << retryAttempt
 	if delay > maxRetryDelay {
 		delay = maxRetryDelay
 	}
