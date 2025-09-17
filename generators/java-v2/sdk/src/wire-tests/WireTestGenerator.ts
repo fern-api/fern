@@ -87,7 +87,7 @@ export class WireTestGenerator {
         testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toMethodName(endpoint.name.pascalCase.safeName)}`;
+            const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
             const methodCall = this.extractMethodCall(snippet);
 
             writer.writeLine("@Test");
@@ -129,22 +129,8 @@ export class WireTestGenerator {
                 writer.writeLine("// Validate request body");
                 writer.writeLine("String actualRequestBody = request.getBody().readUtf8();");
 
-                // Format JSON for readability using string concatenation (Java 8+ compatible)
-                const formattedJson = JSON.stringify(expectedRequestJson, null, 2);
-                const lines = formattedJson.split("\n");
-                if (lines.length === 1) {
-                    // Single line JSON - no need for concatenation
-                    writer.writeLine(`String expectedRequestBody = ${JSON.stringify(formattedJson)};`);
-                } else {
-                    // Multi-line JSON - format with concatenation
-                    writer.writeLine(
-                        'String expectedRequestBody = "' + (lines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
-                    );
-                    for (let i = 1; i < lines.length - 1; i++) {
-                        writer.writeLine('    "' + (lines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
-                    }
-                    writer.writeLine('    "' + (lines[lines.length - 1] ?? "").replace(/"/g, '\\"') + '";');
-                }
+                // Format JSON for readability using the helper method
+                this.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
 
                 writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                 writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
@@ -159,21 +145,8 @@ export class WireTestGenerator {
 
                 writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
-                const formattedResponseJson = JSON.stringify(expectedResponseJson, null, 2);
-                const responseLines = formattedResponseJson.split("\n");
-                if (responseLines.length === 1) {
-                    writer.writeLine(`String expectedResponseBody = ${JSON.stringify(formattedResponseJson)};`);
-                } else {
-                    writer.writeLine(
-                        'String expectedResponseBody = "' + (responseLines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
-                    );
-                    for (let i = 1; i < responseLines.length - 1; i++) {
-                        writer.writeLine('    "' + (responseLines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
-                    }
-                    writer.writeLine(
-                        '    "' + (responseLines[responseLines.length - 1] ?? "").replace(/"/g, '\\"') + '";'
-                    );
-                }
+                // Format JSON for readability using the helper method
+                this.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
 
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
@@ -251,7 +224,7 @@ export class WireTestGenerator {
                 dynamicIr,
                 dynamicSnippetsGenerator
             );
-            const testFileName = `${this.toClassName(serviceName)}WireTest.java`;
+            const testFileName = `${this.toJavaClassName(serviceName)}WireTest.java`;
             const testFilePath = this.getTestFilePath();
 
             const file = new File(testFileName, RelativeFilePath.of(testFilePath), testClass);
@@ -266,7 +239,7 @@ export class WireTestGenerator {
         dynamicIr: dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<string> {
-        const className = `${this.toClassName(serviceName)}WireTest`;
+        const className = `${this.toJavaClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
 
         const testDataExtractor = new WireTestDataExtractor(this.context);
@@ -441,12 +414,48 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private toClassName(serviceName: string): string {
+    /**
+     * Converts a service name to a valid Java class name by removing non-alphanumeric characters.
+     * @param serviceName The service name to convert
+     * @returns A valid Java class name
+     */
+    private toJavaClassName(serviceName: string): string {
         return serviceName.replace(/[^a-zA-Z0-9]/g, "");
     }
 
-    private toMethodName(name: string): string {
+    /**
+     * Converts a name to a valid Java method name by capitalizing the first letter.
+     * @param name The name to convert
+     * @returns A valid Java method name
+     */
+    private toJavaMethodName(name: string): string {
         return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    /**
+     * Formats a JSON object as a multi-line Java string variable with proper concatenation.
+     * This generates Java 8+ compatible string concatenation for better readability.
+     * @param writer The Writer instance to write to
+     * @param variableName The name of the Java variable to declare
+     * @param jsonData The JSON data to format
+     */
+    private formatMultilineJson(writer: Writer, variableName: string, jsonData: unknown): void {
+        const formattedJson = JSON.stringify(jsonData, null, 2);
+        const lines = formattedJson.split("\n");
+
+        if (lines.length === 1) {
+            // Single line JSON - no need for concatenation
+            writer.writeLine(`String ${variableName} = ${JSON.stringify(formattedJson)};`);
+        } else {
+            // Multi-line JSON - format with concatenation
+            writer.writeLine(
+                `String ${variableName} = "` + (lines[0] ?? "").replace(/"/g, '\\"') + '\\n" +'
+            );
+            for (let i = 1; i < lines.length - 1; i++) {
+                writer.writeLine('    "' + (lines[i] ?? "").replace(/"/g, '\\"') + '\\n" +');
+            }
+            writer.writeLine('    "' + (lines[lines.length - 1] ?? "").replace(/"/g, '\\"') + '";');
+        }
     }
 
     private getTestFilePath(): string {
@@ -795,7 +804,19 @@ export class WireTestGenerator {
     }
 
     /**
-     * Generates multi-URL environment configuration
+     * Generates client environment configuration for APIs with multiple base URLs (microservices).
+     * Detects if the API has multi-URL environments and generates appropriate Environment.custom()
+     * builder calls with individual service URL configurations.
+     *
+     * @param writer The Writer instance to write Java code to
+     * @param environments The environments configuration from IR containing URL mappings
+     *
+     * @example
+     * // For multi-URL environment with ec2 and s3 services:
+     * .environment(Environment.custom()
+     *     .ec2Url(server.url("/").toString())
+     *     .s3Url(server.url("/").toString())
+     *     .build())
      */
     private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
         let environmentWithUrls: MultiUrlEnvironment | null = null;
@@ -1023,7 +1044,19 @@ export class WireTestGenerator {
     }
 
     /**
-     * Builds a path string from a ResponseProperty object
+     * Extracts a JSON path string from a ResponseProperty for pagination validation.
+     * Handles complex nested structures like "data.items" or "results.users" by traversing
+     * the property path and joining the parts with dots.
+     *
+     * @param responseProperty The IR ResponseProperty containing the path information,
+     *                        typically from pagination configuration (cursor.results, offset.results)
+     * @returns A dot-separated path string (e.g., "data", "results.items") that can be used
+     *          to navigate the JSON response structure. Returns "data" as default fallback.
+     *
+     * @example
+     * // For a response structure: { data: { items: [...] } }
+     * // ResponseProperty with propertyPath: ["data"] and property: "items"
+     * // Returns: "data.items"
      */
     private buildPathFromResponseProperty(responseProperty: ResponseProperty | undefined | null): string {
         // Defensive null check with clear fallback
