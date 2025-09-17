@@ -275,6 +275,27 @@ jobs:
     #     && github.repository == 'fern-api/fern'
     #   }}
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+  
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+  
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+  
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Build seed 
+        run: |
+          pnpm seed:build
+
       - name: Create Test Matrix
         id: create-test-matrix
         run: |
