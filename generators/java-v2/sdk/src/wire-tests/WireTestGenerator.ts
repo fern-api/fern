@@ -224,7 +224,7 @@ export class WireTestGenerator {
                 dynamicIr,
                 dynamicSnippetsGenerator
             );
-            const testFileName = `${this.toJavaClassName(serviceName)}WireTest.java`;
+            const testFileName = `${this.toJavaClassName(serviceName)}ContractTest.java`;
             const testFilePath = this.getTestFilePath();
 
             const file = new File(testFileName, RelativeFilePath.of(testFilePath), testClass);
@@ -239,7 +239,7 @@ export class WireTestGenerator {
         dynamicIr: dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<string> {
-        const className = `${this.toJavaClassName(serviceName)}WireTest`;
+        const className = `${this.toJavaClassName(serviceName)}ContractTest`;
         const clientClassName = this.context.getRootClientClassName();
 
         const testDataExtractor = new WireTestDataExtractor(this.context);
