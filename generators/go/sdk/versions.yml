@@ -13,7 +13,7 @@
     - summary: |
         Add config flag `exportAllRequestsAtRoot`, which restructures the repo
         such that all request types are exposed through the root-level namespace.
-      type: fix
+      type: feat
   createdAt: "2025-09-17"
   irVersion: 59
 
