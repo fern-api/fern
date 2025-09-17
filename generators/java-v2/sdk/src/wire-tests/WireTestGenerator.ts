@@ -178,7 +178,13 @@ export class WireTestGenerator {
                 writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                 writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
 
-                this.generateEnhancedJsonValidation(writer, endpoint, "response", "actualResponseNode", "expectedResponseNode");
+                this.generateEnhancedJsonValidation(
+                    writer,
+                    endpoint,
+                    "response",
+                    "actualResponseNode",
+                    "expectedResponseNode"
+                );
             } else if (hasResponseBody) {
                 writer.writeLine("");
                 writer.writeLine("// Validate response deserialization");
@@ -805,7 +811,7 @@ export class WireTestGenerator {
             return;
         }
 
-        writer.writeLine('.environment(Environment.custom()');
+        writer.writeLine(".environment(Environment.custom()");
         writer.indent();
 
         for (const [serviceName, _] of Object.entries(environmentWithUrls.urls)) {
@@ -813,7 +819,7 @@ export class WireTestGenerator {
             writer.writeLine(`.${methodName}(server.url("/").toString())`);
         }
 
-        writer.writeLine('.build())');
+        writer.writeLine(".build())");
         writer.dedent();
     }
 
@@ -840,7 +846,7 @@ export class WireTestGenerator {
     ): void {
         writer.writeLine(
             `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
-            `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
+                `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
         if (context === "response") {
@@ -890,7 +896,9 @@ export class WireTestGenerator {
      * Generates union type validation assertions
      */
     private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
-        writer.writeLine(`if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`);
+        writer.writeLine(
+            `if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`
+        );
         writer.indent();
         writer.writeLine(`String discriminator = null;`);
         writer.writeLine(`if (${jsonVarName}.has("type")) discriminator = ${jsonVarName}.get("type").asText();`);
@@ -909,8 +917,10 @@ export class WireTestGenerator {
         writer.writeLine("");
         writer.writeLine(`if (!${jsonVarName}.isNull()) {`);
         writer.indent();
-        writer.writeLine(`Assertions.assertTrue(${jsonVarName}.isObject() || ${jsonVarName}.isArray() || ${jsonVarName}.isValueNode(), ` +
-            `"${context} should be a valid JSON value");`);
+        writer.writeLine(
+            `Assertions.assertTrue(${jsonVarName}.isObject() || ${jsonVarName}.isArray() || ${jsonVarName}.isValueNode(), ` +
+                `"${context} should be a valid JSON value");`
+        );
         writer.dedent();
         writer.writeLine("}");
     }
@@ -963,7 +973,9 @@ export class WireTestGenerator {
             this.generatePaginationNextCursorValidation(writer, actualVarName, nextCursorPath);
         }
 
-        writer.writeLine(`Assertions.assertTrue(${actualVarName}.isObject(), "Paginated response should be an object");`);
+        writer.writeLine(
+            `Assertions.assertTrue(${actualVarName}.isObject(), "Paginated response should be an object");`
+        );
     }
 
     /**
@@ -1056,15 +1068,19 @@ export class WireTestGenerator {
      * PropertyPathItem has a name property of type Name
      * Using a structural type to avoid importing the internal type
      */
-    private extractNameFromPathItem(pathItem: {
-        name?: {
-            originalName?: string;
-            camelCase?: {
-                unsafeName?: string;
-                safeName?: string
-            }
-        }
-    } | unknown): string | undefined {
+    private extractNameFromPathItem(
+        pathItem:
+            | {
+                  name?: {
+                      originalName?: string;
+                      camelCase?: {
+                          unsafeName?: string;
+                          safeName?: string;
+                      };
+                  };
+              }
+            | unknown
+    ): string | undefined {
         const item = pathItem as any; // Safe because we check properties exist
 
         if (item?.name?.originalName) {
@@ -1112,7 +1128,9 @@ export class WireTestGenerator {
         }
 
         writer.writeLine(`Assertions.assertTrue(${currentPath}.isArray(), "Pagination results should be an array");`);
-        writer.writeLine(`Assertions.assertTrue(${currentPath}.size() >= 0, "Pagination results array should have valid size");`);
+        writer.writeLine(
+            `Assertions.assertTrue(${currentPath}.size() >= 0, "Pagination results array should have valid size");`
+        );
 
         for (let i = 0; i < pathParts.length; i++) {
             writer.dedent();
@@ -1123,7 +1141,11 @@ export class WireTestGenerator {
     /**
      * Generates validation for pagination next cursor field
      */
-    private generatePaginationNextCursorValidation(writer: Writer, actualVarName: string, nextCursorPath: string): void {
+    private generatePaginationNextCursorValidation(
+        writer: Writer,
+        actualVarName: string,
+        nextCursorPath: string
+    ): void {
         const pathParts = nextCursorPath.split(".");
         let currentPath = actualVarName;
 
@@ -1134,8 +1156,10 @@ export class WireTestGenerator {
         }
 
         writer.writeLine(`// Next cursor can be null for last page, or string for next page`);
-        writer.writeLine(`Assertions.assertTrue(${currentPath}.isNull() || ${currentPath}.isTextual(), ` +
-            `"Next cursor should be null (last page) or string (next page)");`);
+        writer.writeLine(
+            `Assertions.assertTrue(${currentPath}.isNull() || ${currentPath}.isTextual(), ` +
+                `"Next cursor should be null (last page) or string (next page)");`
+        );
 
         for (let i = 0; i < pathParts.length; i++) {
             writer.dedent();
@@ -1162,7 +1186,7 @@ export class WireTestGenerator {
 
             writer.writeLine(
                 `Assertions.assertEquals("${sanitizedValue}", request.getHeader("${headerName}"), ` +
-                `"Header '${headerName}' should match expected value");`
+                    `"Header '${headerName}' should match expected value");`
             );
         }
     }

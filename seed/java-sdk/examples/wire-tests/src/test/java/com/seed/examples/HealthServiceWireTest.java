@@ -54,7 +54,6 @@ public class HealthServiceWireTest {
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
-        // Enhanced union type validation
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -64,24 +63,14 @@ public class HealthServiceWireTest {
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
         
-        // Enhanced optional/nullable type validation
-        if (actualResponseNode.isNull()) {
-            // Null values are acceptable for optional types
-        } else {
+        if (!actualResponseNode.isNull()) {
             Assertions.assertTrue(actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(), "response should be a valid JSON value");
         }
         
-        // Enhanced generic/collection type validation
         if (actualResponseNode.isArray()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
-            // Validate array elements if present
-            for (int i = 0; i < actualResponseNode.size(); i++) {
-                JsonNode element = actualResponseNode.get(i);
-                Assertions.assertNotNull(element, "Array element at index " + i + " should not be null");
-            }
         }
         if (actualResponseNode.isObject()) {
-            // Validate object structure
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
     }
