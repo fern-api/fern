@@ -82,7 +82,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     private getClientModuleNames(): string[] {
         return [
-            this.context.getRootModule().name,
+            this.context.getRootModuleName(),
             ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
         ];
     }
@@ -95,7 +95,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         return ruby.classReference({
             name: CLIENT_CLASS_NAME,
             modules: [
-                this.context.getRootModule().name,
+                this.context.getRootModuleName(),
                 ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
             ],
             fullyQualified: true

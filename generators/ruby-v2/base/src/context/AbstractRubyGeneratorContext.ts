@@ -59,9 +59,13 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
+    public getRootModuleName(): string {
+        return capitalize(this.getRootFolderName());
+    }
+
     public getRootModule(): ruby.Module_ {
         return ruby.module({
-            name: capitalize(this.getRootFolderName()),
+            name: this.getRootModuleName(),
             statements: []
         });
     }
