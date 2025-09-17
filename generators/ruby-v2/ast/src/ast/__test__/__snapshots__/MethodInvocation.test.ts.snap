@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MethodInvocation > writes method invocation with 1 argument 1`] = `"2.my_method(1)"`;
+
+exports[`MethodInvocation > writes method invocation with 1 argument and a block 1`] = `
+"2.my_method(1) do
+  Time.now
+end"
+`;
+
+exports[`MethodInvocation > writes method invocation with 2 arguments 1`] = `
+"2.my_method(
+  1,
+  3
+)"
+`;
+
+exports[`MethodInvocation > writes method invocation with 2 arguments and a block 1`] = `
+"2.my_method(
+  1,
+  3
+) do
+  Time.now
+end"
+`;
+
+exports[`MethodInvocation > writes method invocation with no arguments 1`] = `"2.my_method()"`;
+
+exports[`MethodInvocation > writes method invocation with no arguments but a block 1`] = `
+"2.my_method() do
+  Time.now
+end"
+`;

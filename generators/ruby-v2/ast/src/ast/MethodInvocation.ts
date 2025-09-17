@@ -9,6 +9,8 @@ export declare namespace MethodInvocation {
         method: string;
         /** The arguments passed to the method */
         arguments_: AstNode[];
+        /** The block being invoked by the method call, if any */
+        block?: AstNode;
     }
 }
 
@@ -16,12 +18,14 @@ export class MethodInvocation extends AstNode {
     private on: AstNode;
     private method: string;
     private arguments_: AstNode[];
+    private block?: AstNode;
 
-    constructor({ on, method, arguments_ }: MethodInvocation.Args) {
+    constructor({ on, method, arguments_, block }: MethodInvocation.Args) {
         super();
         this.on = on;
         this.method = method;
         this.arguments_ = arguments_;
+        this.block = block;
     }
 
     public write(writer: Writer): void {
@@ -53,5 +57,14 @@ export class MethodInvocation extends AstNode {
             });
         }
         writer.write(")");
+        if (this.block) {
+            writer.write(" do");
+            writer.newLine();
+            writer.indent();
+            this.block.write(writer);
+            writer.writeNewLineIfLastLineNot();
+            writer.dedent();
+            writer.write("end");
+        }
     }
 }
