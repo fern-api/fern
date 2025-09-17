@@ -39,13 +39,14 @@ public class BigunionWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"type\": \"normalSweet\",\n" +
-            "  \"value\": \"value\",\n" +
-            "  \"id\": \"id\",\n" +
-            "  \"created-at\": \"2024-01-15T09:30:00Z\",\n" +
-            "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"type\": \"normalSweet\",\n"
+            + "  \"value\": \"value\",\n"
+            + "  \"id\": \"id\",\n"
+            + "  \"created-at\": \"2024-01-15T09:30:00Z\",\n"
+            + "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -87,13 +88,14 @@ public class BigunionWireTest {
         Assertions.assertEquals("PATCH", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"type\": \"normalSweet\",\n" +
-            "  \"value\": \"value\",\n" +
-            "  \"id\": \"id\",\n" +
-            "  \"created-at\": \"2024-01-15T09:30:00Z\",\n" +
-            "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"type\": \"normalSweet\",\n"
+            + "  \"value\": \"value\",\n"
+            + "  \"id\": \"id\",\n"
+            + "  \"created-at\": \"2024-01-15T09:30:00Z\",\n"
+            + "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -120,7 +122,8 @@ public class BigunionWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "true";
+        String expectedResponseBody = ""
+            + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -170,22 +173,23 @@ public class BigunionWireTest {
         Assertions.assertEquals("PATCH", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "[\n" +
-            "  {\n" +
-            "    \"type\": \"normalSweet\",\n" +
-            "    \"value\": \"value\",\n" +
-            "    \"id\": \"id\",\n" +
-            "    \"created-at\": \"2024-01-15T09:30:00Z\",\n" +
-            "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"type\": \"normalSweet\",\n" +
-            "    \"value\": \"value\",\n" +
-            "    \"id\": \"id\",\n" +
-            "    \"created-at\": \"2024-01-15T09:30:00Z\",\n" +
-            "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n" +
-            "  }\n" +
-            "]";
+        String expectedRequestBody = ""
+            + "[\n"
+            + "  {\n"
+            + "    \"type\": \"normalSweet\",\n"
+            + "    \"value\": \"value\",\n"
+            + "    \"id\": \"id\",\n"
+            + "    \"created-at\": \"2024-01-15T09:30:00Z\",\n"
+            + "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+            + "  },\n"
+            + "  {\n"
+            + "    \"type\": \"normalSweet\",\n"
+            + "    \"value\": \"value\",\n"
+            + "    \"id\": \"id\",\n"
+            + "    \"created-at\": \"2024-01-15T09:30:00Z\",\n"
+            + "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+            + "  }\n"
+            + "]";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -212,9 +216,10 @@ public class BigunionWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"string\": true\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"string\": true\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

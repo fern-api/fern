@@ -40,7 +40,8 @@ public class EndpointsParamsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"string\"";
+        String expectedResponseBody = ""
+            + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -77,7 +78,8 @@ public class EndpointsParamsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"string\"";
+        String expectedResponseBody = ""
+            + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -176,7 +178,8 @@ public class EndpointsParamsWireTest {
         Assertions.assertEquals("PUT", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "\"string\"";
+        String expectedRequestBody = ""
+            + "\"string\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -203,7 +206,8 @@ public class EndpointsParamsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"string\"";
+        String expectedResponseBody = ""
+            + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -238,7 +242,8 @@ public class EndpointsParamsWireTest {
         Assertions.assertEquals("PUT", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "\"string\"";
+        String expectedRequestBody = ""
+            + "\"string\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -265,7 +270,8 @@ public class EndpointsParamsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"string\"";
+        String expectedResponseBody = ""
+            + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

@@ -1,3 +1,12 @@
+- version: 3.5.1
+  changelogEntry:
+    - summary: |
+        Refactored wire test generator to modular architecture for improved maintainability.
+        Enhanced JSON formatting in tests with proper multi-line string concatenation for better readability.
+      type: chore
+  createdAt: "2025-09-17"
+  irVersion: 59
+
 - version: 3.5.0
   changelogEntry:
     - summary: |

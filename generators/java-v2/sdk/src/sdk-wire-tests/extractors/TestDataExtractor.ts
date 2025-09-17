@@ -5,7 +5,7 @@ import {
     ExampleTypeReference,
     HttpEndpoint
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
  * Extracts test data directly from the static IR for wire test validation.
@@ -18,7 +18,6 @@ export class WireTestDataExtractor {
     public getTestExamples(endpoint: HttpEndpoint): WireTestExample[] {
         const examples: WireTestExample[] = [];
 
-        // Process user-specified examples
         for (const userExample of endpoint.userSpecifiedExamples) {
             if (userExample.example) {
                 const extracted = this.extractTestExample(userExample.example, endpoint);
@@ -165,7 +164,6 @@ export class WireTestDataExtractor {
     }
 
     private createRawJsonExample(typeRef: ExampleTypeReference): unknown {
-        // Simply use jsonExample directly for all types
         return typeRef.jsonExample;
     }
 }
