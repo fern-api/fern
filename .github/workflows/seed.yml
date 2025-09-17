@@ -280,7 +280,8 @@ jobs:
         run: |
           TEST_FIXTURES_1="accept-header alias alias-extends any-auth api-wide-base-path audiences"
           TEST_FIXTURES_2="auth-environment-variables basic-auth basic-auth-environment-variable bearer-token-environment-variable bytes bytes-upload bytes-download file-download file-upload imdb plain-text public-object streaming streaming-parameter server-sent-events server-sent-event-examples"
-          echo "matrix_of_tests=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+          echo "matrix_of_tests=$(echo "$TEST_FIXTURES_1,$TEST_FIXTURES_2")" >> $GITHUB_OUTPUT
+          echo $matrix_of_tests
     
   typescript-sdk-as-matrix:
     runs-on: Seed
