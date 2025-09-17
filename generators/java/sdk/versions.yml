@@ -1,3 +1,13 @@
+- version: 3.5.0
+  changelogEntry:
+    - summary: |
+        Enhanced wire testing framework with comprehensive SDK validation capabilities. Wire tests now include
+        header validation from IR examples, multi-URL environment configuration support, complex type validation
+        for unions/nullable/generic types, and full pagination testing with Iterable<T> support.
+      type: feat
+  createdAt: "2025-09-16"
+  irVersion: 59
+
 - version: 3.4.1
   changelogEntry:
     - summary: |
