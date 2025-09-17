@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - version: 0.0.9
-  createdAt: "2025-09-10"
+  createdAt: "2025-09-18"
   changelogEntry:
     - type: chore
       summary: base CI workflow
