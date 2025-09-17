@@ -1,13 +1,14 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
+import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
-import { convertIr } from "../utils/convertIr";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertIr } from "../utils/convertIr";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
