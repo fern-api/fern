@@ -132,6 +132,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
+            
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
+            
             // For now, we'll accept any snippet type and try to extract the client code
             // This is because Rust may not be officially supported in the union type yet
             const snippet = endpointSnippet.snippet as { type?: string; client?: string };

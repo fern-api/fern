@@ -309,6 +309,9 @@ foreach ($items->getPages() as $page) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
         }
         return snippets;
