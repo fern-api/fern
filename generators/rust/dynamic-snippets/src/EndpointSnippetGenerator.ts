@@ -2,6 +2,7 @@ import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
+import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 
@@ -24,7 +25,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
+        const rawCode = components.join("\n") + "\n";
+        // Try to format with rustfmt
+        const formattedCode = await formatRustSnippetAsync(rawCode);
+        return formattedCode;
     }
 
     public generateSnippetSync({
@@ -35,7 +39,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
+        const rawCode = components.join("\n") + "\n";
+        // Try sync formatting with rustfmt, but fallback to raw code if it fails
+        const formattedCode = formatRustSnippet(rawCode);
+        return formattedCode;
     }
 
     private buildCodeBlock({

@@ -1952,6 +1952,9 @@ importers:
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
+      '@fern-api/rust-base':
+        specifier: workspace:*
+        version: link:../base
       '@fern-api/rust-codegen':
         specifier: workspace:*
         version: link:../codegen
