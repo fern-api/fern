@@ -82,6 +82,7 @@ class GeneratorCli:
             print(
                 f"running command: {' '.join([GENERATOR_CLI, 'generate-reference', '--config', reference_config_filepath])}"
             )
+            print(f"jsklan test log")
             return self._run_command(
                 command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath]
             )
@@ -97,6 +98,7 @@ class GeneratorCli:
         pagination_enabled: Union[bool, None] = False,
         websocket_enabled: bool = False,
     ) -> str:
+        print(f"jsklan test log")
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
             package_name=self._package_name,
@@ -185,8 +187,6 @@ class GeneratorCli:
                     snippets_are_optional=False,
                 ),
             )
-        custom_sections = self._get_custom_readme_sections()
-        self._debug_log(message=f"Custom sections: {custom_sections}")
         return generatorcli.readme.ReadmeConfig(
             introduction=self._ir.readme_config.introduction if self._ir.readme_config else None,
             organization=self._organization,
@@ -202,7 +202,6 @@ class GeneratorCli:
             api_name=self._ir.readme_config.api_name if self._ir.readme_config else None,
             disabled_features=self._ir.readme_config.disabled_features if self._ir.readme_config else None,
             white_label=self._ir.readme_config.white_label if self._ir.readme_config else None,
-            custom_sections=custom_sections,
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
