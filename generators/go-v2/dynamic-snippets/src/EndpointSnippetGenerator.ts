@@ -777,7 +777,7 @@ export class EndpointSnippetGenerator {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getTypeName(parameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
+                value: this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
             });
         }
 
