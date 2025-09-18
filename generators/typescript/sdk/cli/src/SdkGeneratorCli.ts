@@ -232,7 +232,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
         }
         if (customConfig.testFramework === "vitest") {
-            await convertJestImportsToVitest(persistedTypescriptProject.getRootDirectory());
+            await convertJestImportsToVitest(
+                persistedTypescriptProject.getRootDirectory(),
+                persistedTypescriptProject.getTestDirectory()
+            );
         }
     }
 

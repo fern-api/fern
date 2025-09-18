@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { NpmPackage } from "@fern-api/typescript-base";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
@@ -150,7 +150,13 @@ export abstract class TypescriptProject {
             runScripts: this.runScripts,
             directory: directoryOnDiskToWriteTo,
             srcDirectory: RelativeFilePath.of(this.packagePath),
-            testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
+            testDirectory:
+                this.packagePath === TypescriptProject.DEFAULT_SRC_DIRECTORY
+                    ? RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY)
+                    : join(
+                          RelativeFilePath.of(this.packagePath),
+                          RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY)
+                      ),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             buildCommand: this.getBuildCommand(),
             formatCommand: this.getFormatCommand(),

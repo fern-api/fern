@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.0.1
+  changelogEntry:
+    - summary: Fix incorrect pnpm commands inside of ci.yml
+      type: fix
+    - summary: Delete browser specific tests.
+      type: fix
+    - summary: Make tests more robust across Jest and Vitest.
+      type: fix
+  createdAt: "2025-09-18"
+  irVersion: 60
+
 - version: 3.0.0
   changelogEntry:
     - summary: |
@@ -9,6 +20,8 @@
         |--------|--------|-----|
         | `packageManager` | `yarn` | `pnpm` |
         | `testFramework` | `jest` | `vitest` |
+
+        `testFramework: vitest` is not supported alongside `useBigInt: true`, `streamType: wrapper`, or `packagePath`.
       type: feat
   createdAt: "2025-09-18"
   irVersion: 60

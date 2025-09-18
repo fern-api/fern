@@ -2,20 +2,18 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { Project, SyntaxKind } from "ts-morph";
 
-export async function convertJestImportsToVitest(pathToProject: AbsoluteFilePath): Promise<void> {
-    // Find the test directory relative to the project root
-    const testDir = join(pathToProject, RelativeFilePath.of("tests"));
-    const testDirPath = testDir;
-
+export async function convertJestImportsToVitest(
+    pathToProject: AbsoluteFilePath,
+    testsPath: RelativeFilePath
+): Promise<void> {
     const project = new Project({
-        tsConfigFilePath: path.join(pathToProject, "tsconfig.json"),
+        tsConfigFilePath: path.join(pathToProject, testsPath, "tsconfig.json"),
         skipAddingFilesFromTsConfig: true
     });
 
     // Use ts-morph to add all test files under the test directory
-    project.addSourceFilesAtPaths(path.join(testDirPath, "**/*.ts"));
+    project.addSourceFilesAtPaths(path.join(pathToProject, testsPath, "**/*.ts"));
     const testFiles = project.getSourceFiles();
-
     await Promise.all(
         testFiles.map(async (sourceFile) => {
             // 0. Replace import { ... } from "@jest/globals" with import { ... } from "vitest"

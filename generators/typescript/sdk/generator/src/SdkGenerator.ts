@@ -505,8 +505,7 @@ export class SdkGenerator {
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath,
-            testFramework: config.testFramework
+            relativeTestPath: this.relativeTestPath
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
