@@ -36,16 +36,17 @@ export class HttpEndpointGenerator {
         endpoint: HttpEndpoint;
         serviceId: ServiceId;
     }): ruby.Method {
-        const returnType = getEndpointReturnType({ context: this.context, endpoint });
         const rawClient = new RawClient(this.context);
 
-        const statements = [];
+        const returnType = getEndpointReturnType({ context: this.context, endpoint });
 
         const request = getEndpointRequest({
             context: this.context,
             endpoint,
             serviceId
         });
+
+        const statements: ruby.AstNode[] = [];
 
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {

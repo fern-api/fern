@@ -5,11 +5,11 @@ module <%= gem_namespace %>
     class ItemIterator
       include Enumerable
 
-      # Instantiates a ItemIterator, an Enumerable class which wraps calls to a paginated API and yields the individual items from the API.
+      # Instantiates an ItemIterator, an Enumerable class which wraps calls to a paginated API and yields the individual items from the API.
       #
-      # @param initial_cursor [String] The initial cursor to use when iterating.
-      # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
-      # @param item_field [String] The name of the field in API responses to extract the items to iterate over.
+      # @param initial_cursor [String] The initial cursor to use when iterating, if any.
+      # @param cursor_field [Symbol] The field in API responses to extract the next cursor from.
+      # @param item_field [Symbol] The field in API responses to extract the items to iterate over.
       # @return [<%= gem_namespace %>::Internal::ItemIterator]
       def initialize(initial_cursor:, cursor_field:, item_field:, &block)
         @item_field = item_field
@@ -17,7 +17,7 @@ module <%= gem_namespace %>
         @page = nil
       end
 
-      # Returns the PageIterator mediating access to the underlying API.
+      # Returns the PageIterator that is mediating access to the underlying API.
       #
       # @return [<%= gem_namespace %>::Internal::PageIterator]
       def pages
@@ -26,7 +26,7 @@ module <%= gem_namespace %>
 
       # Iterates over each item returned by the API.
       #
-      # @param block [Proc] The block which is passed every page as it is received.
+      # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [nil]
       def each(&block)
         while item = get_next do
@@ -46,7 +46,7 @@ module <%= gem_namespace %>
         any_items_in_cached_page
       end
 
-      # Retrieves the next item from the API.
+      # Retrieves the next item from the API, advancing the iteration.
       #
       # @return [Boolean]
       def get_next

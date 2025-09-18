@@ -19,7 +19,7 @@ module <%= gem_namespace %>
 
       # Iterates over each page returned by the API.
       #
-      # @param block [Proc] The block which is passed every page as it is received.
+      # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [nil]
       def each(&block)
         while page = get_next do
