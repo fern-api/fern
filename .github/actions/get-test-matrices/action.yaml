@@ -1,0 +1,244 @@
+name: Get Test Matrices
+description: Get available test sets for all generators. Set in this context is dependent on --include-output-folders option.
+
+inputs:
+  with-output-folders:
+    description: "Whether or not to include output folders as unique tests"
+    required: false
+    default: "true"
+
+outputs:
+  ruby-model:
+    description: "Test set matrix for ruby"
+    value: ${{ steps.get-ruby-model-test-matrix.outputs.parsed }}
+  ruby-sdk:
+    description: "Test set matrix for ruby-sdk"
+    value: ${{ steps.get-ruby-sdk-test-matrix.outputs.parsed }}
+  ruby-sdk-v2:
+    description: "Test set matrix for ruby-sdk-v2"
+    value: ${{ steps.get-ruby-sdk-v2-test-matrix.outputs.parsed }}
+  pydantic:
+    description: "Test set matrix for pydantic-sdk"
+    value: ${{ steps.get-pydantic-sdk-test-matrix.outputs.parsed }}
+  python-sdk:
+    description: "Test set matrix for python-sdk"
+    value: ${{ steps.get-python-sdk-test-matrix.outputs.parsed }}
+  fastapi:
+    description: "Test set matrix for fastapi"
+    value: ${{ steps.get-fastapi-test-matrix.outputs.parsed }}
+  openapi:
+    description: "Test set matrix for openapi"
+    value: ${{ steps.get-openapi-test-matrix.outputs.parsed }}
+  postman:
+    description: "Test set matrix for postman"
+    value: ${{ steps.get-postman-test-matrix.outputs.parsed }}
+  java-sdk:
+    description: "Test set matrix for java-sdk"
+    value: ${{ steps.get-java-sdk-test-matrix.outputs.parsed }}
+  java-model:
+    description: "Test set matrix for java-model"
+    value: ${{ steps.get-java-model-test-matrix.outputs.parsed }}
+  java-spring:
+    description: "Test set matrix for java-spring"
+    value: ${{ steps.get-java-spring-test-matrix.outputs.parsed }}
+  ts-sdk:
+    description: "Test set matrix for ts-sdk"
+    value: ${{ steps.get-ts-sdk-test-matrix.outputs.parsed }}
+  ts-express:
+    description: "Test set matrix for ts-sdk"
+    value: ${{ steps.get-ts-express-test-matrix.outputs.parsed }}
+  go-fiber:
+    description: "Test set matrix for go-fiber"
+    value: ${{ steps.get-go-fiber-test-matrix.outputs.parsed }}
+  go-model:
+    description: "Test set matrix for go-model"
+    value: ${{ steps.get-go-model-test-matrix.outputs.parsed }}
+  go-sdk:
+    description: "Test set matrix for go-sdk"
+    value: ${{ steps.get-go-sdk-test-matrix.outputs.parsed }}
+  csharp-model:
+    description: "Test set matrix for csharp-model"
+    value: ${{ steps.get-csharp-model-test-matrix.outputs.parsed }}
+  csharp-sdk:
+    description: "Test set matrix for csharp-sdk"
+    value: ${{ steps.get-csharp-sdk-test-matrix.outputs.parsed }}
+  php-model:
+    description: "Test set matrix for php-model"
+    value: ${{ steps.get-php-model-test-matrix.outputs.parsed }}
+  php-sdk:
+    description: "Test set matrix for php-sdk"
+    value: ${{ steps.get-php-sdk-test-matrix.outputs.parsed }}
+  swift-sdk:
+    description: "Test set matrix for swift-sdk"
+    value: ${{ steps.get-swift-sdk-test-matrix.outputs.parsed }}
+  rust-model:
+    description: "Test set matrix for rust-model"
+    value: ${{ steps.get-rust-model-test-matrix.outputs.parsed }}
+  rust-sdk:
+    description: "Test set matrix for rust-sdk"
+    value: ${{ steps.get-rust-sdk-test-matrix.outputs.parsed }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install
+      uses: ./.github/actions/install
+
+    - uses: bufbuild/buf-setup-action@v1.34.0
+      with:
+        github_token: ${{ github.token }}
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+
+    - name: Install protoc-gen-openapi
+      shell: bash
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+    - name: Build seed
+      shell: bash
+      run: |
+        pnpm seed:build
+
+    # For now, only genericize parsing (not the full process) so we don't have to re-checkout and setup an environment
+    - name: Get ruby-model Test Matrix
+      id: get-ruby-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ruby-model
+
+    - name: Get ruby-sdk Test Matrix
+      id: get-ruby-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ruby-sdk
+
+    - name: Get ruby-sdk-v2 Test Matrix
+      id: get-ruby-sdk-v2-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ruby-sdk-v2
+
+    - name: Get pydantic-sdk Test Matrix
+      id: get-pydantic-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: pydantic-sdk
+
+    - name: Get python-sdk Test Matrix
+      id: get-python-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: python-sdk
+
+    - name: Get fastapi Test Matrix
+      id: get-fastapi-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: fastapi
+
+    - name: Get openapi Test Matrix
+      id: get-openapi-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: openapi
+
+    - name: Get postman Test Matrix
+      id: get-postman-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: postman
+
+    - name: Get java-sdk Test Matrix
+      id: get-java-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: java-sdk
+
+    - name: Get java-model Test Matrix
+      id: get-java-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: java-model
+
+    - name: Get java-spring Test Matrix
+      id: get-java-spring-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: java-spring
+
+    - name: Get ts-sdk Test Matrix
+      id: get-ts-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ts-sdk
+
+    - name: Get ts-express Test Matrix
+      id: get-ts-express-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ts-express
+
+    - name: Get go-fiber Test Matrix
+      id: get-go-fiber-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: go-fiber
+
+    - name: Get go-model Test Matrix
+      id: get-go-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: go-model
+
+    - name: Get go-sdk Test Matrix
+      id: get-go-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: go-sdk
+
+    - name: Get csharp-model Test Matrix
+      id: get-csharp-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: csharp-model
+
+    - name: Get csharp-sdk Test Matrix
+      id: get-csharp-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: csharp-sdk
+
+    - name: Get php-model Test Matrix
+      id: get-php-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: php-model
+
+    - name: Get php-sdk Test Matrix
+      id: get-php-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: php-sdk
+
+    - name: Get swift-sdk Test Matrix
+      id: get-swift-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: swift-sdk
+
+    - name: Get rust-model Test Matrix
+      id: get-rust-model-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: rust-model
+
+    - name: Get rust-sdk Test Matrix
+      id: get-rust-sdk-test-matrix
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: rust-sdk

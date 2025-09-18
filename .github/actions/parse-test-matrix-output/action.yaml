@@ -1,0 +1,38 @@
+name: Parse Test Matrix Output
+description: Take the log output of get-available-fixtures and parse it into a test set matrix ingestible by GitHub Actions.
+
+inputs:
+  generator-name:
+    description: "Generator to get fixtures for"
+    required: true
+  #  CHRISM - add back eventually
+  # include-output-folders:
+  #   description: "Whether to include output folders as unique tests"
+  #   required: false
+  #   default: "true"
+
+outputs:
+  parsed:
+    description: "Parsed test set matrix"
+    value: ${{ steps.parse-test-set-matrix.outputs.fixture_list }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Parse Test Matrix
+      id: parse-test-set-matrix
+      shell: bash
+      run: |
+        # Get starting point from output of get-available-fixtures command
+        MESSY_DATA=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders | awk '/"fixtures/,0')
+
+        # Remove newlines and spaces so next portion of filtering is easier
+        PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+
+        # Extract just the fixtures
+        FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+
+        MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+
+        echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
+        echo "${fixture_list}"
