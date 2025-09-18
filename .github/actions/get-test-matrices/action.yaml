@@ -123,11 +123,11 @@ runs:
       with:
         generator-name: ruby-sdk-v2
 
-    - name: Get pydantic-sdk Test Matrix
-      id: get-pydantic-sdk-test-matrix
+    - name: Get pydantic Test Matrix
+      id: get-pydantic-test-matrix
       uses: ./.github/actions/parse-test-matrix-output
       with:
-        generator-name: pydantic-sdk
+        generator-name: pydantic
 
     - name: Get python-sdk Test Matrix
       id: get-python-sdk-test-matrix
