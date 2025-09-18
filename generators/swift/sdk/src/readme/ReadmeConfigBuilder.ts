@@ -3,8 +3,8 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { SDKRequirements } from "../requirements";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
@@ -71,7 +71,10 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.customReadmeSections;
+    const customConfigSections = parseCustomConfigOrUndefined(
+        context.logger,
+        context.config.customConfig
+    )?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
