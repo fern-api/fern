@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
 export const BaseRustCustomConfigSchema = z.object({
     packageName: z.string().optional(),
@@ -11,6 +12,7 @@ export const BaseRustCustomConfigSchema = z.object({
     useReqwest: z.boolean().optional().default(true),
     useTokio: z.boolean().optional().default(true),
     extraDependencies: z.record(z.string()).optional(),
+    customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     extraDevDependencies: z.record(z.string()).optional()
 });
 
