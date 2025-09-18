@@ -17,7 +17,7 @@ export function getFernRetriesExtension(
         return undefined;
     }
     if (retriesExtension.disabled === true) {
-        return finalIr.RetriesConfiguration.disabled();
+        return finalIr.RetriesConfiguration.disabled(retriesExtension.disabled);
     }
     // If you want to support more fields, map them here.
     // For now, only handle 'disabled'

@@ -4,47 +4,4 @@
 
 import * as FernIr from "../../../index";
 
-export type RetriesConfiguration = FernIr.RetriesConfiguration.Disabled;
-
-export namespace RetriesConfiguration {
-    export interface Disabled extends _Utils {
-        type: "disabled";
-        value: boolean | undefined;
-    }
-
-    export interface _Utils {
-        _visit: <_Result>(visitor: FernIr.RetriesConfiguration._Visitor<_Result>) => _Result;
-    }
-
-    export interface _Visitor<_Result> {
-        disabled: (value: boolean | undefined) => _Result;
-        _other: (value: { type: string }) => _Result;
-    }
-}
-
-export const RetriesConfiguration = {
-    disabled: (value?: boolean): FernIr.RetriesConfiguration.Disabled => {
-        return {
-            value: value,
-            type: "disabled",
-            _visit: function <_Result>(
-                this: FernIr.RetriesConfiguration.Disabled,
-                visitor: FernIr.RetriesConfiguration._Visitor<_Result>,
-            ) {
-                return FernIr.RetriesConfiguration._visit(this, visitor);
-            },
-        };
-    },
-
-    _visit: <_Result>(
-        value: FernIr.RetriesConfiguration,
-        visitor: FernIr.RetriesConfiguration._Visitor<_Result>,
-    ): _Result => {
-        switch (value.type) {
-            case "disabled":
-                return visitor.disabled(value.value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+export type RetriesConfiguration = FernIr.RetriesDisabledSchema;

@@ -412,7 +412,14 @@ function convertEndpointRetries({
     if (retries == null) {
         return undefined;
     }
-    return retries.type === "disabled" ? RetriesConfiguration.disabled() : undefined;
+    switch (retries.type) {
+        case "disabled":
+            return {
+                disabled: retries.value ?? undefined
+            };
+        default:
+            assertNever(retries as never);
+    }
 }
 
 interface ConvertedRequest {

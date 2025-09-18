@@ -4,11 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type RetriesConfiguration = FernDefinition.RetriesConfiguration.Disabled;
-
-export namespace RetriesConfiguration {
-    export interface Disabled {
-        type: "disabled";
-        value?: boolean;
-    }
-}
+export type RetriesConfiguration = FernDefinition.RetriesDisabledSchema;
