@@ -125,7 +125,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
+        # generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
+        # Just for testing
+        generator-name: [ts-sdk]
     outputs:
       ruby-model: ${{ steps.get-test-matrices.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.get-test-matrices.outputs.ruby-sdk-test-matrix }}
@@ -191,6 +193,7 @@ jobs:
         id: package-test-matrices
         uses: ./.github/actions/package-test-matrix
         with:
+          full-fixture-matrix: ${{ steps.get-test-matrices.outputs.parsed }}
           package-amount: 10
 
       - name: Set test matrices for ${{ matrix.generator-name }}
