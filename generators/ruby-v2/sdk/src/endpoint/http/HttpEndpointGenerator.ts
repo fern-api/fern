@@ -73,12 +73,12 @@ export class HttpEndpointGenerator {
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom":
-                    break; // custom pagination not yet supported
+                    break;
                 case "cursor":
                     requestStatements = [
                         ruby.invokeMethod({
                             on: ruby.classReference({
-                                name: "ItemIterator",
+                                name: "CursorItemIterator",
                                 modules: [this.context.getRootModuleName(), "Internal"]
                             }),
                             method: "new",
@@ -110,7 +110,37 @@ export class HttpEndpointGenerator {
                     ];
                     break;
                 case "offset":
-                    break; // offset pagination not yet supported
+                    requestStatements = [
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: "OffsetItemIterator",
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [],
+                            keywordArguments: [
+                                ["page_field", ruby.codeblock(`:${endpoint.pagination.page.property.name.wireValue}`)],
+                                [
+                                    "item_field",
+                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                ],
+                                [
+                                    "initial_page",
+                                    ruby.codeblock(`params[:${endpoint.pagination.page.property.name.wireValue}]`)
+                                ]
+                            ],
+                            block: [
+                                ["next_page"],
+                                [
+                                    ruby.codeblock(
+                                        `params[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
+                                    ),
+                                    ...requestStatements
+                                ]
+                            ]
+                        })
+                    ];
+                    break;
                 default:
                     assertNever(endpoint.pagination);
             }
