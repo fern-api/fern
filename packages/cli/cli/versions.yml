@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Update ir migration config to support v59 for latest csharp sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.6
+
+- changelogEntry:
     - summary: Support running the Rust SDK generator using IR v58.
       type: fix
   irVersion: 59
