@@ -2653,6 +2653,16 @@
               "type": "null"
             }
           ]
+        },
+        "dynamic-snippets": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

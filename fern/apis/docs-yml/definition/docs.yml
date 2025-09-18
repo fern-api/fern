@@ -1073,6 +1073,13 @@ types:
         availability: pre-release
         docs: |
           OpenAPI parser in alpha.
+      dynamic-snippets:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          If `dynamic-snippets` is set to true, snippets will be created using a dynamic method.
+
+          This allows users to generate snippets for all SDK languages.
 
   PlaygroundSettings:
     properties:
