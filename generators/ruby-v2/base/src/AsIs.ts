@@ -13,7 +13,10 @@ export const AsIsFiles = {
 
     // Iterator classes
     ItemIterator: "internal/iterators/item_iterator.Template.rb",
-    PageIterator: "internal/iterators/page_iterator.Template.rb",
+    CursorItemIterator: "internal/iterators/cursor_item_iterator.Template.rb",
+    OffsetItemIterator: "internal/iterators/offset_item_iterator.Template.rb",
+    CursorPageIterator: "internal/iterators/cursor_page_iterator.Template.rb",
+    OffsetPageIterator: "internal/iterators/offset_page_iterator.Template.rb",
 
     // HTTP
     HttpBaseRequest: "internal/http/base_request.Template.rb",
@@ -84,5 +87,8 @@ const asIsTopoValue = {
     [AsIsFiles.ServerError]: 24,
     [AsIsFiles.TimeoutError]: 25,
     [AsIsFiles.ItemIterator]: 26,
-    [AsIsFiles.PageIterator]: 27
+    [AsIsFiles.CursorItemIterator]: 27,
+    [AsIsFiles.OffsetItemIterator]: 28,
+    [AsIsFiles.CursorPageIterator]: 29,
+    [AsIsFiles.OffsetPageIterator]: 30
 };

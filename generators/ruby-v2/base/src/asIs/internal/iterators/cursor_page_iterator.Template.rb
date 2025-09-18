@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
 module <%= gem_namespace %>
   module Internal
-    class PageIterator
+    class CursorPageIterator
       include Enumerable
 
-      # Instantiates a PageIterator, an Enumerable class which wraps calls to a paginated API and yields pages of items.
+      # Instantiates a CursorPageIterator, an Enumerable class which wraps calls to a paginated API and yields pages of items.
       #
       # @param initial_cursor [String] The initial cursor to use when iterating.
       # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
-      # @return [<%= gem_namespace %>::Internal::PageIterator]
+      # @return [<%= gem_namespace %>::Internal::CursorPageIterator]
       def initialize(initial_cursor:, cursor_field:, &block)
         @need_initial_load = initial_cursor.nil?
         @cursor = initial_cursor
