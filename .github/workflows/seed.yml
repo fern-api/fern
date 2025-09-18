@@ -481,7 +481,7 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ needs.get-all-test-matrices.outputs.ts-sdk }}
+        fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

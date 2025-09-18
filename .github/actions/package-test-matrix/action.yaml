@@ -53,8 +53,8 @@ runs:
             PACKAGE+=("${FIXTURES[j]}")
           done
           
-          # Convert package to JSON array
-          PACKAGE_JSON=$(printf '%s\n' "${PACKAGE[@]}" | jq -R . | jq -s .)
+          # Convert package to JSON array (compact format)
+          PACKAGE_JSON=$(printf '%s\n' "${PACKAGE[@]}" | jq -R . | jq -s -c .)
           PACKAGES+=("$PACKAGE_JSON")
           
           echo "Package $((i+1)): $PACKAGE_JSON"
