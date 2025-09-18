@@ -43,6 +43,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src",
         filename: "query_parameter_builder.rs"
     },
+    Utils: {
+        relativePathToDir: "src",
+        filename: "utils.rs"
+    },
     // Project-level configuration files
     CargoToml: {
         relativePathToDir: "",
