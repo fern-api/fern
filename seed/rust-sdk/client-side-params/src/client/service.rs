@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -28,36 +28,15 @@ impl ServiceClient {
                 Method::GET,
                 "/api/resources",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = page {
-                        query_builder.add_simple("page", &value.to_string());
-                    }
-                    if let Some(value) = per_page {
-                        query_builder.add_simple("per_page", &value.to_string());
-                    }
-                    if let Some(value) = sort {
-                        query_builder.add_simple("sort", &value);
-                    }
-                    if let Some(value) = order {
-                        query_builder.add_simple("order", &value);
-                    }
-                    if let Some(value) = include_totals {
-                        query_builder.add_simple("include_totals", &value.to_string());
-                    }
-                    if let Some(value) = fields {
-                        query_builder.add_simple("fields", &value);
-                    }
-                    if let Some(value) = search {
-                        query_builder.add_simple("search", &value);
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .int("page", page)
+                    .int("per_page", per_page)
+                    .string("sort", sort)
+                    .string("order", order)
+                    .bool("include_totals", include_totals)
+                    .string("fields", fields)
+                    .string("search", search)
+                    .build(),
                 options,
             )
             .await
@@ -75,16 +54,10 @@ impl ServiceClient {
                 Method::GET,
                 &format!("/api/resources/{}", resource_id),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = include_metadata {
-                        query_params.push(("include_metadata".to_string(), value.to_string()));
-                    }
-                    if let Some(value) = format {
-                        query_params.push(("format".to_string(), value.clone()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .bool("include_metadata", include_metadata)
+                    .string("format", format)
+                    .build(),
                 options,
             )
             .await
@@ -102,16 +75,10 @@ impl ServiceClient {
                 Method::POST,
                 "/api/resources/search",
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = limit {
-                        query_params.push(("limit".to_string(), value.to_string()));
-                    }
-                    if let Some(value) = offset {
-                        query_params.push(("offset".to_string(), value.to_string()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .int("limit", limit)
+                    .int("offset", offset)
+                    .build(),
                 options,
             )
             .await
@@ -134,46 +101,16 @@ impl ServiceClient {
                 Method::GET,
                 "/api/users",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = page {
-                        query_builder
-                            .add_simple("page", &serde_json::to_string(&value).unwrap_or_default());
-                    }
-                    if let Some(value) = per_page {
-                        query_builder.add_simple(
-                            "per_page",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = include_totals {
-                        query_builder.add_simple(
-                            "include_totals",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = sort {
-                        query_builder.add_simple("sort", &value);
-                    }
-                    if let Some(value) = connection {
-                        query_builder.add_simple("connection", &value);
-                    }
-                    if let Some(value) = q {
-                        query_builder.add_simple("q", &value);
-                    }
-                    if let Some(value) = search_engine {
-                        query_builder.add_simple("search_engine", &value);
-                    }
-                    if let Some(value) = fields {
-                        query_builder.add_simple("fields", &value);
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .int("page", page)
+                    .int("per_page", per_page)
+                    .bool("include_totals", include_totals)
+                    .string("sort", sort)
+                    .string("connection", connection)
+                    .string("q", q)
+                    .string("search_engine", search_engine)
+                    .string("fields", fields)
+                    .build(),
                 options,
             )
             .await
@@ -191,19 +128,10 @@ impl ServiceClient {
                 Method::GET,
                 &format!("/api/users/{}", user_id),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = fields {
-                        query_params.push(("fields".to_string(), value.clone()));
-                    }
-                    if let Some(value) = include_fields {
-                        query_params.push((
-                            "include_fields".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .string("fields", fields)
+                    .bool("include_fields", include_fields)
+                    .build(),
                 options,
             )
             .await
@@ -270,19 +198,11 @@ impl ServiceClient {
                 Method::GET,
                 "/api/connections",
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = strategy {
-                        query_params.push(("strategy".to_string(), value.clone()));
-                    }
-                    if let Some(value) = name {
-                        query_params.push(("name".to_string(), value.clone()));
-                    }
-                    if let Some(value) = fields {
-                        query_params.push(("fields".to_string(), value.clone()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .string("strategy", strategy)
+                    .string("name", name)
+                    .string("fields", fields)
+                    .build(),
                 options,
             )
             .await
@@ -299,13 +219,7 @@ impl ServiceClient {
                 Method::GET,
                 &format!("/api/connections/{}", connection_id),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = fields {
-                        query_params.push(("fields".to_string(), value.clone()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new().string("fields", fields).build(),
                 options,
             )
             .await
@@ -328,58 +242,16 @@ impl ServiceClient {
                 Method::GET,
                 "/api/clients",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = fields {
-                        query_builder.add_simple("fields", &value);
-                    }
-                    if let Some(value) = include_fields {
-                        query_builder.add_simple(
-                            "include_fields",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = page {
-                        query_builder
-                            .add_simple("page", &serde_json::to_string(&value).unwrap_or_default());
-                    }
-                    if let Some(value) = per_page {
-                        query_builder.add_simple(
-                            "per_page",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = include_totals {
-                        query_builder.add_simple(
-                            "include_totals",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = is_global {
-                        query_builder.add_simple(
-                            "is_global",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = is_first_party {
-                        query_builder.add_simple(
-                            "is_first_party",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = app_type {
-                        query_builder.add_simple(
-                            "app_type",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .string("fields", fields)
+                    .bool("include_fields", include_fields)
+                    .int("page", page)
+                    .int("per_page", per_page)
+                    .bool("include_totals", include_totals)
+                    .bool("is_global", is_global)
+                    .bool("is_first_party", is_first_party)
+                    .serialize("app_type", app_type)
+                    .build(),
                 options,
             )
             .await
@@ -397,19 +269,10 @@ impl ServiceClient {
                 Method::GET,
                 &format!("/api/clients/{}", client_id),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = fields {
-                        query_params.push(("fields".to_string(), value.clone()));
-                    }
-                    if let Some(value) = include_fields {
-                        query_params.push((
-                            "include_fields".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .string("fields", fields)
+                    .bool("include_fields", include_fields)
+                    .build(),
                 options,
             )
             .await

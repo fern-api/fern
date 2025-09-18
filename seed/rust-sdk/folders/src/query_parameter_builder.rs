@@ -1,58 +1,143 @@
-use percent_encoding::{utf8_percent_encode, CONTROLS};
-use thiserror::Error;
+use chrono::{DateTime, Utc};
+use serde::Serialize;
 
-/// Generic query parameter builder for various query patterns
+/// Modern query builder with type-safe method chaining
+/// Provides a clean, Swift-like API for building HTTP query parameters
 #[derive(Debug, Default)]
-pub struct QueryParameterBuilder {
+pub struct QueryBuilder {
     params: Vec<(String, String)>,
 }
 
-/// Errors that can occur during query building
-#[derive(Debug, Error)]
-pub enum QueryBuilderError {
-    #[error("Invalid query syntax: {0}")]
-    InvalidQuerySyntax(String),
-    #[error("URL encoding error: {0}")]
-    EncodingError(String),
-}
-
-impl QueryParameterBuilder {
+impl QueryBuilder {
     /// Create a new query parameter builder
     pub fn new() -> Self {
-        Self { params: Vec::new() }
+        Self::default()
     }
 
-    /// Add a simple key-value parameter with URL encoding
-    pub fn add_simple<T: ToString>(&mut self, key: &str, value: T) {
-        let encoded_key = utf8_percent_encode(key, CONTROLS).to_string();
-        let encoded_value = utf8_percent_encode(&value.to_string(), CONTROLS).to_string();
-        self.params.push((encoded_key, encoded_value));
+    /// Add a string parameter
+    pub fn string(mut self, key: &str, value: Option<String>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v));
+        }
+        self
     }
 
-    /// Try to parse a complex query string using common patterns
-    /// This is a best-effort generic parser that handles:
+    /// Add an integer parameter - handles both i32 and i64 automatically
+    pub fn int(mut self, key: &str, value: Option<impl Into<i64>>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v.into().to_string()));
+        }
+        self
+    }
+
+    /// Add a float parameter
+    pub fn float(mut self, key: &str, value: Option<f64>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add a boolean parameter
+    pub fn bool(mut self, key: &str, value: Option<bool>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add a datetime parameter
+    pub fn datetime(mut self, key: &str, value: Option<DateTime<Utc>>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v.to_rfc3339()));
+        }
+        self
+    }
+
+    /// Add a UUID parameter (converts to string)
+    pub fn uuid(mut self, key: &str, value: Option<uuid::Uuid>) -> Self {
+        if let Some(v) = value {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
+    pub fn date(mut self, key: &str, value: Option<chrono::NaiveDate>) -> Self {
+        if let Some(v) = value {
+            // Convert NaiveDate to DateTime<Utc> at start of day
+            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
+            self.params.push((key.to_string(), datetime.to_rfc3339()));
+        }
+        self
+    }
+
+    /// Add any serializable parameter (for enums and complex types)
+    pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
+        if let Some(v) = value {
+            if let Ok(serialized) = serde_json::to_string(&v) {
+                self.params.push((key.to_string(), serialized));
+            }
+        }
+        self
+    }
+
+    /// Parse and add a structured query string
+    /// Handles complex query patterns like:
     /// - "key:value" patterns
     /// - "key:value1,value2" (comma-separated values)
     /// - Quoted values: "key:\"value with spaces\""
     /// - Space-separated terms (treated as AND logic)
-    pub fn add_structured_query(&mut self, query: &str) -> Result<(), QueryBuilderError> {
-        let parsed_params = parse_structured_query(query)?;
-        self.params.extend(parsed_params);
-        Ok(())
+    pub fn structured_query(mut self, key: &str, query: Option<String>) -> Self {
+        if let Some(query_str) = query {
+            if let Ok(parsed_params) = parse_structured_query(&query_str) {
+                self.params.extend(parsed_params);
+            } else {
+                // Fall back to simple query parameter if parsing fails
+                self.params.push((key.to_string(), query_str));
+            }
+        }
+        self
     }
 
-    /// Build the final query parameter vector
-    pub fn build(self) -> Vec<(String, String)> {
-        self.params
+    /// Build the final query parameters
+    pub fn build(self) -> Option<Vec<(String, String)>> {
+        if self.params.is_empty() {
+            None
+        } else {
+            Some(self.params)
+        }
     }
 }
 
-/// Generic parser for structured query strings
-/// Handles common patterns like "key:value key2:value1,value2"
+/// Errors that can occur during structured query parsing
+#[derive(Debug)]
+pub enum QueryBuilderError {
+    InvalidQuerySyntax(String),
+}
+
+impl std::fmt::Display for QueryBuilderError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QueryBuilderError::InvalidQuerySyntax(msg) => {
+                write!(f, "Invalid query syntax: {}", msg)
+            }
+        }
+    }
+}
+
+impl std::error::Error for QueryBuilderError {}
+
+/// Parse structured query strings like "key:value key2:value1,value2"
+/// Used for complex filtering patterns in APIs like Foxglove
+///
+/// Supported patterns:
+/// - Simple: "status:active"
+/// - Multiple values: "type:sensor,camera"
+/// - Quoted values: "location:\"New York\""
+/// - Complex: "status:active type:sensor location:\"San Francisco\""
 pub fn parse_structured_query(query: &str) -> Result<Vec<(String, String)>, QueryBuilderError> {
     let mut params = Vec::new();
-
-    // Tokenize the query string properly handling quoted strings
     let terms = tokenize_query(query);
 
     for term in terms {
@@ -60,13 +145,10 @@ pub fn parse_structured_query(query: &str) -> Result<Vec<(String, String)>, Quer
             // Handle comma-separated values
             for value in values.split(',') {
                 let clean_value = value.trim_matches('"'); // Remove quotes
-                let encoded_key = utf8_percent_encode(key, CONTROLS).to_string();
-                let encoded_value = utf8_percent_encode(clean_value, CONTROLS).to_string();
-                params.push((encoded_key, encoded_value));
+                params.push((key.to_string(), clean_value.to_string()));
             }
         } else {
-            // For terms without colons, we could treat them as general search
-            // but since this is generic, we'll return an error to be explicit
+            // For terms without colons, return error to be explicit about expected format
             return Err(QueryBuilderError::InvalidQuerySyntax(format!(
                 "Cannot parse term '{}' - expected 'key:value' format for structured queries",
                 term

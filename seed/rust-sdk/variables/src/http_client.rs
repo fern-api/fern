@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, RequestOptions};
+use crate::{ApiError, ClientConfig, RequestOptions, Utils::join_url};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,
@@ -34,13 +34,9 @@ impl HttpClient {
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
     where
-        T: DeserializeOwned,
+        T: DeserializeOwned, // Generic T: DeserializeOwned means the response will be automatically deserialized into whatever type you specify:
     {
-        let url = format!(
-            "{}/{}",
-            self.config.base_url.trim_end_matches('/'),
-            path.trim_start_matches('/')
-        );
+        let url = join_url(&self.config.base_url, path);
         let mut request = self.client.request(method, &url);
 
         // Apply query parameters if provided

@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -59,28 +59,13 @@ impl ServiceClient {
                 Method::POST,
                 "/just-file-with-query-params",
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = maybe_string {
-                        query_params.push(("maybeString".to_string(), value.clone()));
-                    }
-                    if let Some(value) = integer {
-                        query_params.push(("integer".to_string(), value.to_string()));
-                    }
-                    if let Some(value) = maybe_integer {
-                        query_params.push((
-                            "maybeInteger".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    if let Some(value) = list_of_strings {
-                        query_params.push(("listOfStrings".to_string(), value.clone()));
-                    }
-                    if let Some(value) = optional_list_of_strings {
-                        query_params.push(("optionalListOfStrings".to_string(), value.clone()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .string("maybeString", maybe_string)
+                    .int("integer", integer)
+                    .int("maybeInteger", maybe_integer)
+                    .string("listOfStrings", list_of_strings)
+                    .string("optionalListOfStrings", optional_list_of_strings)
+                    .build(),
                 options,
             )
             .await

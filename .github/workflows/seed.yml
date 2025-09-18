@@ -424,6 +424,24 @@ jobs:
           generator-name: swift-sdk
           generator-path: generators/swift
 
+  rust-model:
+    runs-on: Seed
+    needs: changes
+    if: >-
+      ${{
+        ((needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true')
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: rust-model
+          generator-path: generators/rust
+
   rust-sdk:
     runs-on: Seed
     needs: changes
