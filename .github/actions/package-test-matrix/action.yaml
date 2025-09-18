@@ -18,7 +18,7 @@ runs:
   using: "composite"
   steps:
     - name: Package Test Matrix
-      id: parse-test-set-matrix
+      id: package-test-matrix
       shell: bash
       run: |
         # Input JSON array (this would come from your data source)
