@@ -728,15 +728,23 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
-        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
-            this.withSourceFile({
-                filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                }
-            });
+        const typeDeclarations = Object.values(this.getTypesToGenerate());
+
+        const firstType = typeDeclarations[0];
+        if (!firstType) {
+            return;
         }
+
+        this.withSourceFile({
+            filepath: this.typeDeclarationReferencer.getExportedFilepath(firstType.name),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+
+                for (const typeDeclaration of typeDeclarations) {
+					context.type.getGeneratedType(typeDeclaration.name).writeToFile(context)
+                }
+            }
+        });
     }
 
     private generateTypeSchemas(): { generated: boolean } {

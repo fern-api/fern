@@ -47,7 +47,7 @@ export async function convertJestImportsToVitest(
                     `vi.useFakeTimers({ 
 	toFake: [
 		"setTimeout",
-		"clearTimeout", 
+		"clearTimeout",
 		"setInterval",
 		"clearInterval",
 		"setImmediate",

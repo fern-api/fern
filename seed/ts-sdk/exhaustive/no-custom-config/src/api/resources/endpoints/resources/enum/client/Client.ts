@@ -39,23 +39,23 @@ export class Enum {
     }
 
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {SeedExhaustive.WeatherReport} request
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     public getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedExhaustive.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+    ): core.HttpResponsePromise<SeedExhaustive.WeatherReport> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedExhaustive.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
+    ): Promise<core.WithRawResponse<SeedExhaustive.WeatherReport>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -78,7 +78,7 @@ export class Enum {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.WeatherReport, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedExhaustive.WeatherReport, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -7,7 +7,7 @@ import * as SeedExhaustive from "../../../../../index.js";
 import * as core from "../../../../../../core/index.js";
 
 export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.NestedObjectWithRequiredField, rawResponse?: core.RawResponse) {
+    constructor(body: SeedExhaustive.NestedObjectWithRequiredField, rawResponse?: core.RawResponse) {
         super({
             message: "NestedObjectWithRequiredFieldError",
             statusCode: 400,

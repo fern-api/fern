@@ -12,21 +12,13 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
         return {
             directories: [
                 ...this.containingDirectory,
-                ...getExportedDirectoriesForFernFilepath({
-                    fernFilepath: typeName.fernFilepath,
-                    subExports: {
-                        [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
-                            exportAll: true
-                        }
-                    }
-                }),
                 {
                     nameOnDisk: TYPES_DIRECTORY_NAME,
                     exportDeclaration: { exportAll: true }
                 }
             ],
             file: {
-                nameOnDisk: this.getFilename(typeName),
+                nameOnDisk: `${TYPES_DIRECTORY_NAME}.ts`,
                 exportDeclaration: { exportAll: true }
             }
         };

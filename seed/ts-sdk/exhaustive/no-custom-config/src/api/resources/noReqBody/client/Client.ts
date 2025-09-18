@@ -46,13 +46,13 @@ export class NoReqBody {
      */
     public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
     private async __getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<SeedExhaustive.ObjectWithOptionalField>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -73,7 +73,7 @@ export class NoReqBody {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                data: _response.body as SeedExhaustive.ObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
             };
         }
