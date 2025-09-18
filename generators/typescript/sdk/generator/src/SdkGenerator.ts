@@ -72,7 +72,7 @@ import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referenc
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
-import { JestTestGenerator } from "./test-generator/JestTestGenerator";
+import { TestGenerator } from "./test-generator/TestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";
 
@@ -152,6 +152,7 @@ export declare namespace SdkGenerator {
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         exportAllRequestsAtRoot: boolean;
+        testFramework: "jest" | "vitest";
     }
 }
 
@@ -212,7 +213,7 @@ export class SdkGenerator {
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
-    private jestTestGenerator: JestTestGenerator;
+    private TestGenerator: TestGenerator;
     private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
     private generatorAgent: TypeScriptGeneratorAgent;
@@ -463,7 +464,7 @@ export class SdkGenerator {
             omitUndefined: config.omitUndefined,
             skipResponseValidation: config.skipResponseValidation
         });
-        this.jestTestGenerator = new JestTestGenerator({
+        this.TestGenerator = new TestGenerator({
             ir: intermediateRepresentation,
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
@@ -475,7 +476,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             neverThrowErrors: config.neverThrowErrors,
-            generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
+            testFramework: config.testFramework
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
@@ -503,7 +505,8 @@ export class SdkGenerator {
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            testFramework: config.testFramework
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -594,14 +597,14 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        await this.jestTestGenerator.addExtras();
+        await this.TestGenerator.addExtras();
         this.extraScripts = {
             ...this.extraScripts,
-            ...this.jestTestGenerator.scripts
+            ...this.TestGenerator.scripts
         };
         this.extraFiles = {
             ...this.extraFiles,
-            ...this.jestTestGenerator.extraFiles
+            ...this.TestGenerator.extraFiles
         };
 
         if (this.config.snippetFilepath != null) {
@@ -960,12 +963,12 @@ export class SdkGenerator {
         this.context.logger.debug("Generating test files...");
         if (this.config.generateWireTests) {
             // make sure folder is always created, even if no wire tests are generated
-            this.jestTestGenerator.createWireTestDirectory();
+            this.TestGenerator.createWireTestDirectory();
             this.withSourceFile({
-                filepath: this.jestTestGenerator.getMockAuthFilepath(),
+                filepath: this.TestGenerator.getMockAuthFilepath(),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
-                    const file = this.jestTestGenerator.buildMockAuthFile({ context });
+                    const file = this.TestGenerator.buildMockAuthFile({ context });
                     if (file) {
                         sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
                     }
@@ -979,10 +982,10 @@ export class SdkGenerator {
             }
 
             this.withSourceFile({
-                filepath: this.jestTestGenerator.getTestFile(service),
+                filepath: this.TestGenerator.getTestFile(service),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
-                    const file = this.jestTestGenerator.buildFile(
+                    const file = this.TestGenerator.buildFile(
                         this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
                         service,
                         packageId,

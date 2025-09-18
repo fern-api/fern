@@ -27,11 +27,7 @@ describe("BasicAuth", () => {
 
         await expect(async () => {
             return await client.basicAuth.getWithBasicAuth();
-        }).rejects.toThrow(
-            new SeedBasicAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
     });
 
     test("postWithBasicAuth (1)", async () => {
@@ -72,11 +68,7 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            new SeedBasicAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
     });
 
     test("postWithBasicAuth (3)", async () => {
@@ -90,6 +82,6 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(new SeedBasicAuth.BadRequest());
+        }).rejects.toThrow(SeedBasicAuth.BadRequest);
     });
 });
