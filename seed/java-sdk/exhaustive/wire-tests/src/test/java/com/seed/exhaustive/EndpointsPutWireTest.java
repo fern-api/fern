@@ -2,6 +2,9 @@ package com.seed.exhaustive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
+import com.seed.exhaustive.resources.endpoints.put.types.PutResponse;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

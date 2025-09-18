@@ -98,8 +98,10 @@ export class SdkWireTestGenerator {
         const clientClassName = this.context.getRootClientClassName();
 
         const testDataExtractor = new WireTestDataExtractor(this.context);
+        const snippetExtractor = new SnippetExtractor(this.context);
 
         const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
+        const allImports = new Set<string>();
 
         for (const endpoint of endpoints) {
             const testExamples = testDataExtractor.getTestExamples(endpoint);
@@ -112,17 +114,26 @@ export class SdkWireTestGenerator {
                 const firstDynamicExample = dynamicEndpoint.examples[0];
                 if (firstDynamicExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(
+                        const fullSnippet = await this.generateSnippetForExample(
                             firstDynamicExample,
                             dynamicSnippetsGenerator
                         );
+
+                        // Extract imports from the full snippet
+                        const imports = snippetExtractor.extractImports(fullSnippet);
+                        imports.forEach((imp) => allImports.add(imp));
+
                         const firstTestExample = testExamples[0];
                         if (firstTestExample) {
                             endpointTests.set(endpoint.id, {
-                                snippet,
+                                snippet: fullSnippet,
                                 testExample: firstTestExample
                             });
                         }
+
+                        // Collect imports from return type resolution
+                        const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
+                        returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
                         this.context.logger.debug(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
                     }
@@ -133,7 +144,7 @@ export class SdkWireTestGenerator {
         const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
 
         const testClass = java.codeblock((writer) => {
-            this.testClassBuilder.createTestClassBoilerplate(className, clientClassName, hasAuth)(writer);
+            this.testClassBuilder.createTestClassBoilerplate(className, clientClassName, hasAuth, allImports)(writer);
 
             for (const endpoint of endpoints) {
                 const testData = endpointTests.get(endpoint.id);

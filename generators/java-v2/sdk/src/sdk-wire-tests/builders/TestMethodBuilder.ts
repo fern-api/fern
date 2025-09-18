@@ -174,4 +174,32 @@ export class TestMethodBuilder {
             return "Object";
         }
     }
+
+    /**
+     * Gets the return type for an endpoint and collects its imports.
+     */
+    public getEndpointReturnTypeWithImports(endpoint: HttpEndpoint): { typeName: string; imports: Set<string> } {
+        try {
+            const javaType = this.context.getReturnTypeForEndpoint(endpoint);
+
+            const simpleWriter = new java.Writer({
+                packageName: this.context.getCorePackageName(),
+                customConfig: this.context.customConfig
+            });
+
+            javaType.write(simpleWriter);
+
+            const typeName = simpleWriter.buffer.trim();
+            const imports = simpleWriter.getImports();
+
+            if (typeName === "Void") {
+                return { typeName: "void", imports };
+            }
+
+            return { typeName, imports };
+        } catch (error) {
+            this.context.logger.warn(`Could not resolve return type for endpoint ${endpoint.id}, using Object`);
+            return { typeName: "Object", imports: new Set<string>() };
+        }
+    }
 }

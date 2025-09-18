@@ -36,7 +36,7 @@ import { arrayOf, Code, code, literalOf } from "ts-poet";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
-export declare namespace JestTestGenerator {
+export declare namespace TestGenerator {
     interface Args {
         ir: IntermediateRepresentation;
         dependencyManager: DependencyManager;
@@ -50,10 +50,11 @@ export declare namespace JestTestGenerator {
         relativeTestPath: string;
         neverThrowErrors: boolean;
         generateReadWriteOnlyTypes: boolean;
+        testFramework: "jest" | "vitest";
     }
 }
 
-export class JestTestGenerator {
+export class TestGenerator {
     private readonly ir: IntermediateRepresentation;
     private readonly dependencyManager: DependencyManager;
     private readonly rootDirectory: Directory;
@@ -66,6 +67,7 @@ export class JestTestGenerator {
     private readonly relativeTestPath: string;
     private readonly neverThrowErrors: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly testFramework: "jest" | "vitest";
 
     constructor({
         ir,
@@ -79,8 +81,9 @@ export class JestTestGenerator {
         relativePackagePath,
         relativeTestPath,
         neverThrowErrors,
-        generateReadWriteOnlyTypes
-    }: JestTestGenerator.Args) {
+        generateReadWriteOnlyTypes,
+        testFramework
+    }: TestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
         this.rootDirectory = rootDirectory;
@@ -93,6 +96,7 @@ export class JestTestGenerator {
         this.relativeTestPath = relativeTestPath;
         this.neverThrowErrors = neverThrowErrors;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.testFramework = testFramework;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -179,6 +183,55 @@ export class JestTestGenerator {
         }
     }
 
+    private async addVitestConfigs(): Promise<void> {
+        const vitestConfig = this.rootDirectory.createSourceFile(
+            "vitest.config.ts",
+            code`
+            import { defineConfig } from "vitest/config";
+            export default defineConfig({
+                test: {
+                    projects: [
+                        {
+                            test: {
+                                globals: true,
+                                name: "unit",
+                                environment: "node",
+                                root: "./${this.relativeTestPath}",
+                                include: ["**/*.test.{js,ts,jsx,tsx}"],
+                                exclude: ["**/*.browser.(spec|test).[jt]sx?", "wire/**"]
+                            }
+                        },
+                        {
+                            test: {
+                                globals: true,
+                                name: "browser",
+                                environment: "happy-dom",
+                                root: "./${this.relativeTestPath}",
+                                include: ["unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"]
+                            }
+                        },
+                        ${
+                            this.generateWireTests
+                                ? code`{
+                                    test: {
+                                        globals: true,
+                                        name: "wire",
+                                        environment: "node",
+                                        root: "./tests/wire",
+                                        setupFiles: ["./mock-server/setup.ts"]
+                                    }
+                                },`
+                                : ""
+                        }
+                    ],
+                    passWithNoTests: true
+                }
+            });
+            `.toString({ dprintOptions: { indentWidth: 4 } })
+        );
+        await vitestConfig.save();
+    }
+
     public getTestFile(service: HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
@@ -195,21 +248,30 @@ export class JestTestGenerator {
     }
 
     private addDependencies(): void {
-        this.dependencyManager.addDependency("jest", "^29.7.0", {
-            type: DependencyType.DEV
-        });
-        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", {
-            type: DependencyType.DEV
-        });
-        this.dependencyManager.addDependency("@types/jest", "^29.5.14", {
-            type: DependencyType.DEV
-        });
-        this.dependencyManager.addDependency("ts-jest", "^29.3.4", {
-            type: DependencyType.DEV
-        });
-        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", {
-            type: DependencyType.DEV
-        });
+        switch (this.testFramework) {
+            case "jest":
+                this.dependencyManager.addDependency("jest", "^29.7.0", {
+                    type: DependencyType.DEV
+                });
+                this.dependencyManager.addDependency("@jest/globals", "^29.7.0", {
+                    type: DependencyType.DEV
+                });
+                this.dependencyManager.addDependency("@types/jest", "^29.5.14", {
+                    type: DependencyType.DEV
+                });
+                this.dependencyManager.addDependency("ts-jest", "^29.3.4", {
+                    type: DependencyType.DEV
+                });
+                this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", {
+                    type: DependencyType.DEV
+                });
+                break;
+            case "vitest":
+                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                    type: DependencyType.DEV
+                });
+                break;
+        }
         if (this.generateWireTests) {
             this.dependencyManager.addDependency("msw", "^2.8.4", {
                 type: DependencyType.DEV
@@ -218,22 +280,46 @@ export class JestTestGenerator {
     }
 
     public async addExtras(): Promise<void> {
-        await this.addJestConfigs();
+        switch (this.testFramework) {
+            case "jest":
+                await this.addJestConfigs();
+                break;
+            case "vitest":
+                await this.addVitestConfigs();
+                break;
+        }
         this.addDependencies();
     }
 
     public get scripts(): Record<string, string> {
-        const scripts: Record<string, string> = {
-            test: "jest --config jest.config.mjs"
-        };
-        if (this.writeUnitTests) {
-            scripts["test:unit"] = "jest --selectProjects unit";
-            scripts["test:browser"] = "jest --selectProjects browser";
+        switch (this.testFramework) {
+            case "jest": {
+                const scripts: Record<string, string> = {
+                    test: "jest --config jest.config.mjs"
+                };
+                if (this.writeUnitTests) {
+                    scripts["test:unit"] = "jest --selectProjects unit";
+                    scripts["test:browser"] = "jest --selectProjects browser";
+                }
+                if (this.generateWireTests) {
+                    scripts["test:wire"] = "jest --selectProjects wire";
+                }
+                return scripts;
+            }
+            case "vitest": {
+                const scripts: Record<string, string> = {
+                    test: "vitest"
+                };
+                scripts["test:unit"] = "vitest --project unit";
+                scripts["test:browser"] = "vitest --project browser";
+                if (this.generateWireTests) {
+                    scripts["test:wire"] = "vitest --project wire";
+                }
+                return scripts;
+            }
+            default:
+                return {};
         }
-        if (this.generateWireTests) {
-            scripts["test:wire"] = "jest --selectProjects wire";
-        }
-        return scripts;
     }
 
     public get extraFiles(): Record<string, string> {
@@ -252,7 +338,12 @@ export class JestTestGenerator {
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
-        "baseUrl": ".."
+        "baseUrl": ".."${
+            this.testFramework === "vitest"
+                ? `,
+            "types": ["vitest/globals"]`
+                : ""
+        }
     },
     "include": ${JSON.stringify(includePaths)},
     "exclude": []
@@ -1296,16 +1387,7 @@ function getExpectedResponse({
                 .getReferenceToError(value.error)
                 .getTypeNode({ isForSnippet: true, isForResponse: true });
 
-            const body = value.body
-                ? getTextOfTsNode(
-                      context.type.getGeneratedExample(value.body).build(context, {
-                          isForSnippet: true,
-                          isForResponse: true
-                      })
-                  )
-                : "";
-            const error = code`new ${getTextOfTsNode(errorReference)}(${body})`;
-            return error;
+            return code`${getTextOfTsNode(errorReference)}`;
         },
         _other: () => {
             throw new Error("Unsupported response type");
