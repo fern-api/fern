@@ -475,6 +475,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "java") {
                 throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
             }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
         }
         return snippets;

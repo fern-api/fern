@@ -21,3 +21,14 @@ describe("snippets (exportedClientName)", () => {
             })
     });
 });
+
+describe("snippets (exportAllRequestsAtRoot)", () => {
+    const runner = new DynamicSnippetsTestRunner();
+    runner.runTests({
+        buildGenerator: ({ irFilepath }) =>
+            buildDynamicSnippetsGenerator({
+                irFilepath,
+                config: buildGeneratorConfig({ customConfig: { exportAllRequestsAtRoot: true } })
+            })
+    });
+});

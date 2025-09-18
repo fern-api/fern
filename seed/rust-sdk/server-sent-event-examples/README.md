@@ -32,7 +32,7 @@ async fn main() {
     let config = ClientConfig {};
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
-        .completions_stream(StreamCompletionRequest { query: "query" })
+        .completions_stream(StreamCompletionRequest { query: "foo" })
         .await;
 }
 ```
