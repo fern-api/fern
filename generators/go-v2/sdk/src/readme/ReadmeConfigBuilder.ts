@@ -67,10 +67,10 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
-        if (section.language === "java" && !customConfigSections?.some((s) => s.title === section.title)) {
+        if (section.language === "go" && !customConfigSections?.some((s) => s.title === section.title)) {
             sections.push({
                 name: section.title,
-                language: FernGeneratorCli.Language.Java,
+                language: FernGeneratorCli.Language.Go,
                 content: section.content
             });
         }
@@ -78,7 +78,7 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
     for (const section of customConfigSections ?? []) {
         sections.push({
             name: section.title,
-            language: FernGeneratorCli.Language.Java,
+            language: FernGeneratorCli.Language.Go,
             content: section.content
         });
     }
