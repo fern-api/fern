@@ -60,8 +60,8 @@ runs:
           echo "Package $((i+1)): $PACKAGE_JSON"
         done
 
-        # Convert all packages to JSON array
-        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGES[@]}" | jq -s .)
+        # Convert all packages to JSON array (compact format, no newlines)
+        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGES[@]}" | jq -s -c .)
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
         echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT
