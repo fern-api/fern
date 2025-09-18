@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Update ir migration config to support v59 for latest ruby sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.8
+
+- changelogEntry:
     - summary: Update dynamic snippets generation to not fail on empty PHP configuration
       type: fix
   irVersion: 59
