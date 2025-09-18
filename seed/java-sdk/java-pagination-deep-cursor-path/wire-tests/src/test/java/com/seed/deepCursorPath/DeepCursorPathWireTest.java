@@ -2,6 +2,19 @@ package com.seed.deepCursorPath;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.A;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.B;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.D;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.Response;
+import java.util.Arrays;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -57,15 +70,16 @@ public class DeepCursorPathWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"b\": {\n" +
-            "    \"c\": {\n" +
-            "      \"d\": {\n" +
-            "        \"starting_after\": \"starting_after\"\n" +
-            "      }\n" +
-            "    }\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"b\": {\n"
+            + "    \"c\": {\n"
+            + "      \"d\": {\n"
+            + "        \"starting_after\": \"starting_after\"\n"
+            + "      }\n"
+            + "    }\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -92,29 +106,25 @@ public class DeepCursorPathWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"starting_after\": \"starting_after\",\n" +
-            "  \"results\": [\n" +
-            "    \"results\",\n" +
-            "    \"results\"\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"starting_after\": \"starting_after\",\n"
+            + "  \"results\": [\n"
+            + "    \"results\",\n"
+            + "    \"results\"\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: results
-        if (actualResponseNode.has("results")) {
-            Assertions.assertTrue(actualResponseNode.get("results").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("results").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: starting_after
-        if (actualResponseNode.has("starting_after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -159,15 +169,16 @@ public class DeepCursorPathWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"indirection\": {\n" +
-            "    \"starting_after\": \"starting_after\",\n" +
-            "    \"results\": [\n" +
-            "      \"results\",\n" +
-            "      \"results\"\n" +
-            "    ]\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"indirection\": {\n"
+            + "    \"starting_after\": \"starting_after\",\n"
+            + "    \"results\": [\n"
+            + "      \"results\",\n"
+            + "      \"results\"\n"
+            + "    ]\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -194,29 +205,25 @@ public class DeepCursorPathWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"starting_after\": \"starting_after\",\n" +
-            "  \"results\": [\n" +
-            "    \"results\",\n" +
-            "    \"results\"\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"starting_after\": \"starting_after\",\n"
+            + "  \"results\": [\n"
+            + "    \"results\",\n"
+            + "    \"results\"\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: results
-        if (actualResponseNode.has("results")) {
-            Assertions.assertTrue(actualResponseNode.get("results").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("results").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: starting_after
-        if (actualResponseNode.has("starting_after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -268,15 +275,16 @@ public class DeepCursorPathWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"b\": {\n" +
-            "    \"c\": {\n" +
-            "      \"b\": {\n" +
-            "        \"starting_after\": \"starting_after\"\n" +
-            "      }\n" +
-            "    }\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"b\": {\n"
+            + "    \"c\": {\n"
+            + "      \"b\": {\n"
+            + "        \"starting_after\": \"starting_after\"\n"
+            + "      }\n"
+            + "    }\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -303,29 +311,25 @@ public class DeepCursorPathWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"starting_after\": \"starting_after\",\n" +
-            "  \"results\": [\n" +
-            "    \"results\",\n" +
-            "    \"results\"\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"starting_after\": \"starting_after\",\n"
+            + "  \"results\": [\n"
+            + "    \"results\",\n"
+            + "    \"results\"\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: results
-        if (actualResponseNode.has("results")) {
-            Assertions.assertTrue(actualResponseNode.get("results").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("results").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: starting_after
-        if (actualResponseNode.has("starting_after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();

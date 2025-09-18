@@ -138,7 +138,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**temperature:** `Optional<Float>` 
+**temperature:** `Optional<Double>` 
     
 </dd>
 </dl>

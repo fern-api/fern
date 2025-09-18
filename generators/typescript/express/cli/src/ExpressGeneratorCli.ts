@@ -33,7 +33,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             enableInlineTypes,
             packagePath: parsed?.packagePath ?? undefined,
-            packageManager: parsed?.packageManager ?? "yarn"
+            packageManager: parsed?.packageManager ?? "pnpm"
         };
     }
 

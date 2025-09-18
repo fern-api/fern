@@ -39,10 +39,6 @@ describe("PropertyBasedError", () => {
 
         await expect(async () => {
             return await client.propertyBasedError.throwError();
-        }).rejects.toThrow(
-            new SeedErrorProperty.PropertyBasedErrorTest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedErrorProperty.PropertyBasedErrorTest);
     });
 });

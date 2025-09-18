@@ -2,6 +2,9 @@ package com.seed.unions;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.resources.union.types.Circle;
+import com.seed.unions.resources.union.types.Shape;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

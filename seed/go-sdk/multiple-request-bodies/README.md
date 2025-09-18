@@ -30,18 +30,7 @@ func do() {
     )
     client.UploadJsonDocument(
         context.TODO(),
-        &fern.UploadDocumentRequest{
-            Author: fern.String(
-                "author",
-            ),
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-            Title: fern.String(
-                "title",
-            ),
-        },
+        &fern.UploadDocumentRequest{},
     )
 }
 ```

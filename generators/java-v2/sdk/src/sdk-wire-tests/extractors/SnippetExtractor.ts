@@ -9,9 +9,6 @@ export class SnippetExtractor {
     /**
      * Extracts just the client method call from a full Java snippet.
      * Removes client instantiation and imports, returning only the actual method invocation.
-     *
-     * @param fullSnippet The complete Java snippet including imports and client instantiation
-     * @returns The extracted client method call or a TODO comment if extraction fails
      */
     public extractMethodCall(fullSnippet: string): string {
         const lines = fullSnippet.split("\n");
@@ -100,5 +97,31 @@ export class SnippetExtractor {
         const result = cleanedLines.join("\n").trim();
         this.context.logger.debug(`Extracted method call: ${result}`);
         return result;
+    }
+
+    /**
+     * Extracts import statements from a full Java snippet.
+     */
+    public extractImports(fullSnippet: string): string[] {
+        const lines = fullSnippet.split("\n");
+        const imports: string[] = [];
+
+        for (const line of lines) {
+            const trimmedLine = line.trim();
+
+            if (trimmedLine.startsWith("public class") || trimmedLine.startsWith("class")) {
+                break;
+            }
+
+            if (trimmedLine.startsWith("import ")) {
+                // Remove 'import ' prefix and ';' suffix
+                const importStatement = trimmedLine.substring(7).replace(/;$/, "").trim();
+
+                imports.push(importStatement);
+            }
+        }
+
+        this.context.logger.debug(`Extracted ${imports.length} imports from snippet`);
+        return imports;
     }
 }

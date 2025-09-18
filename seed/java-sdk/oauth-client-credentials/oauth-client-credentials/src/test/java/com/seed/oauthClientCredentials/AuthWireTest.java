@@ -2,6 +2,10 @@ package com.seed.oauthClientCredentials;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
+import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
+import com.seed.oauthClientCredentials.resources.auth.types.TokenResponse;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

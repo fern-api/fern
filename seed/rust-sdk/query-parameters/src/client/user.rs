@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 use std::collections::HashMap;
 
@@ -36,73 +36,22 @@ impl UserClient {
                 Method::GET,
                 "/user",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = limit {
-                        query_builder.add_simple("limit", &value.to_string());
-                    }
-                    if let Some(value) = id {
-                        query_builder.add_simple("id", &value.to_string());
-                    }
-                    if let Some(value) = date {
-                        query_builder.add_simple("date", &value.to_rfc3339());
-                    }
-                    if let Some(value) = deadline {
-                        query_builder.add_simple("deadline", &value.to_rfc3339());
-                    }
-                    if let Some(value) = bytes {
-                        query_builder.add_simple("bytes", &value.to_string());
-                    }
-                    if let Some(value) = user {
-                        query_builder
-                            .add_simple("user", &serde_json::to_string(&value).unwrap_or_default());
-                    }
-                    if let Some(value) = user_list {
-                        query_builder.add_simple(
-                            "userList",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = optional_deadline {
-                        query_builder.add_simple("optionalDeadline", &value.to_rfc3339());
-                    }
-                    if let Some(value) = key_value {
-                        query_builder.add_simple(
-                            "keyValue",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = optional_string {
-                        query_builder.add_simple("optionalString", &value);
-                    }
-                    if let Some(value) = nested_user {
-                        query_builder.add_simple(
-                            "nestedUser",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = optional_user {
-                        query_builder.add_simple(
-                            "optionalUser",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = exclude_user {
-                        query_builder.add_simple(
-                            "excludeUser",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = filter {
-                        query_builder.add_simple("filter", &value);
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .int("limit", limit)
+                    .uuid("id", id)
+                    .date("date", date)
+                    .datetime("deadline", deadline)
+                    .string("bytes", bytes)
+                    .serialize("user", user)
+                    .serialize("userList", user_list)
+                    .datetime("optionalDeadline", optional_deadline)
+                    .serialize("keyValue", key_value)
+                    .string("optionalString", optional_string)
+                    .serialize("nestedUser", nested_user)
+                    .serialize("optionalUser", optional_user)
+                    .serialize("excludeUser", exclude_user)
+                    .string("filter", filter)
+                    .build(),
                 options,
             )
             .await
