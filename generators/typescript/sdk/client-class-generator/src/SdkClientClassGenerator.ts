@@ -90,7 +90,7 @@ export class SdkClientClassGenerator {
         exportsManager,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
+        useDefaultRequestParameterValues
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -150,7 +150,7 @@ export class SdkClientClassGenerator {
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
-            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
         });
     }
 }

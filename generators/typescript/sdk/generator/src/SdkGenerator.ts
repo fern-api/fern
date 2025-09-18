@@ -328,7 +328,8 @@ export class SdkGenerator {
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
@@ -439,7 +440,7 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -840,6 +841,14 @@ export class SdkGenerator {
     }
 
     private generateRequestWrappers() {
+        if (this.config.exportAllRequestsAtRoot) {
+            this.generateAggregatedRequestWrappers();
+        } else {
+            this.generateIndividualRequestWrappers();
+        }
+    }
+
+    private generateIndividualRequestWrappers() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -858,6 +867,42 @@ export class SdkGenerator {
                     });
                 }
             }
+        });
+    }
+
+    private generateAggregatedRequestWrappers() {
+        // Collect all request wrappers
+        const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
+
+        this.forEachService((service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                    requestWrappers.push({ packageId, endpoint });
+                }
+            }
+        });
+
+        // Generate a single file with all request wrappers
+        // Use the first request wrapper to get the global filepath
+        const firstWrapper = requestWrappers[0];
+        if (!firstWrapper) {
+            return;
+        }
+
+        this.withSourceFile({
+            filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
+                packageId: firstWrapper.packageId,
+                endpoint: firstWrapper.endpoint
+            }),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+
+                // Generate all request wrappers in the single file
+                for (const { packageId, endpoint } of requestWrappers) {
+                    context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
+                }
+            },
+            addExportTypeModifier: true
         });
     }
 
@@ -1423,7 +1468,7 @@ export class SdkGenerator {
         filepath,
         addExportTypeModifier,
         overwrite,
-        packagePath = this.relativePackagePath,
+        packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;

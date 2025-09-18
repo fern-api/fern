@@ -173,7 +173,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         fileResponseType,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
+        useDefaultRequestParameterValues
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;

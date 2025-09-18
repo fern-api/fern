@@ -11,12 +11,41 @@ export declare namespace RequestWrapperDeclarationReferencer {
         packageId: PackageId;
         endpoint: HttpEndpoint;
     }
+
+    export interface Init extends AbstractSdkClientClassDeclarationReferencer.Init {
+        exportAllRequestsAtRoot: boolean;
+    }
 }
 
 const REQUESTS_DIRECTORY_NAME = "requests";
 
 export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
+    private exportAllRequestsAtRoot: boolean;
+
+    constructor({ exportAllRequestsAtRoot, ...superInit }: RequestWrapperDeclarationReferencer.Init) {
+        super(superInit);
+        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
+    }
+
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
+        if (this.exportAllRequestsAtRoot) {
+            // When exporting all requests at root, use a global requests.ts file
+            return {
+                directories: [
+                    ...this.containingDirectory,
+                    {
+                        nameOnDisk: REQUESTS_DIRECTORY_NAME,
+                        exportDeclaration: { exportAll: true }
+                    }
+                ],
+                file: {
+                    nameOnDisk: `${REQUESTS_DIRECTORY_NAME}.ts`,
+                    exportDeclaration: { exportAll: true }
+                }
+            };
+        }
+
+        // Default behavior - individual files per subpackage
         return {
             directories: [
                 ...this.getExportedDirectory(name, {
