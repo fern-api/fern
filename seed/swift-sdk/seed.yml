@@ -46,11 +46,11 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        custom-readme-sections:
+        customReadmeSections:
           - title: "Override Section"
             content: "Override Content"
           - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ packageName }}"
+            content: "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -61,7 +61,7 @@ fixtures:
         customSections:
           - title: "Base Readme Custom Section"
             language: swift
-            content: "Base Readme Custom Content for {{ packageName }}"
+            content: "Base Readme Custom Content for {{ gitUrl }}:{{ minVersion }}"
           - title: "Override Section"
             language: swift
             content: "Base Content"
