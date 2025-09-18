@@ -10,7 +10,6 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
-    RetriesConfiguration,
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -34,6 +33,7 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertRetries } from "./convertRetries";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
 
 export function convertHttpService({
@@ -202,7 +202,9 @@ export function convertHttpService({
                 v2Examples: undefined,
                 source: undefined,
                 audiences: endpoint.audiences,
-                retries: endpoint.retries?.disabled === true ? RetriesConfiguration.disabled() : undefined
+                retries: convertRetries({
+                    endpointSchema: endpoint
+                })
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;

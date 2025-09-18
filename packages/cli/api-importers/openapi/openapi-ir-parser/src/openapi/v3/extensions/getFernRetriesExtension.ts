@@ -3,7 +3,6 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
-
 import { finalIr } from "@fern-api/openapi-ir";
 
 interface RetriesFernExtensionSchema {
@@ -11,7 +10,9 @@ interface RetriesFernExtensionSchema {
     // Add other fields as needed for your schema
 }
 
-export function getFernRetriesExtension(operation: OpenAPIV3.OperationObject): finalIr.RetriesConfiguration | undefined {
+export function getFernRetriesExtension(
+    operation: OpenAPIV3.OperationObject
+): finalIr.RetriesConfiguration | undefined {
     const retriesExtension = getExtension<RetriesFernExtensionSchema>(operation, FernOpenAPIExtension.RETRIES);
 
     if (retriesExtension == null) {
