@@ -185,6 +185,8 @@ class GeneratorCli:
                     snippets_are_optional=False,
                 ),
             )
+        custom_sections = self._get_custom_readme_sections()
+        self._debug_log(message=f"Custom sections: {custom_sections}")
         return generatorcli.readme.ReadmeConfig(
             introduction=self._ir.readme_config.introduction if self._ir.readme_config else None,
             organization=self._organization,
@@ -200,6 +202,7 @@ class GeneratorCli:
             api_name=self._ir.readme_config.api_name if self._ir.readme_config else None,
             disabled_features=self._ir.readme_config.disabled_features if self._ir.readme_config else None,
             white_label=self._ir.readme_config.white_label if self._ir.readme_config else None,
+            custom_sections=custom_sections,
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
@@ -257,9 +260,12 @@ class GeneratorCli:
             )
         )
 
-    def _get_custom_readme_sections(self) -> List[generatorcli.CustomSection]:
+    def _get_custom_readme_sections(self) -> Optional[List[generatorcli.CustomSection]]:
         ir_custom_sections = self._ir.readme_config.custom_sections if self._ir.readme_config else None
         custom_config_sections = SDKCustomConfig.parse_obj(self.context.generator_config.custom_config or {}).custom_readme_sections
+
+        self._debug_log(message=f"IR custom sections: {ir_custom_sections}")
+        self._debug_log(message=f"Custom config sections: {custom_config_sections}")
 
         sections = []
         for section in ir_custom_sections or []:
@@ -277,4 +283,4 @@ class GeneratorCli:
                 "content": section.content
             })
 
-        return sections if sections.length > 0 else None
+        return sections if len(sections) > 0 else None
