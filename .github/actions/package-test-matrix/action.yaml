@@ -22,7 +22,7 @@ runs:
       shell: bash
       run: |
         # Input JSON array (this would come from your data source)
-        FIXTURE_ARRAY=${{ fromJson(inputs.full-fixture-matrix) }}
+        FIXTURE_ARRAY='${{ inputs.full-fixture-matrix }}'
 
         # Get package amount from input
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
