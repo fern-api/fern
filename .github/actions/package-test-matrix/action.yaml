@@ -1,0 +1,67 @@
+name: Package Test Matrix
+description: Ingest the entire test matrix and divide it into smaller pieces.
+
+inputs:
+  full-fixture-matrix:
+    description: "The entire fixture matrix"
+    required: true
+  package-amount:
+    description: "Maximum number of tests to run on a single runner"
+    required: true
+
+outputs:
+  packaged:
+    description: "Parsed test set matrix"
+    value: ${{ steps.package-test-matrix.outputs.packaged }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Package Test Matrix
+      id: package-test-matrix
+      shell: bash
+      run: |
+        # Input JSON array (this would come from your data source)
+        FIXTURE_ARRAY='${{ inputs.full-fixture-matrix }}'
+
+        # Get package amount from input
+        PACKAGE_AMOUNT=${{ inputs.package-amount }}
+
+        # Parse JSON array and convert to bash array
+        FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
+
+        # Get total number of fixtures
+        TOTAL_FIXTURES=${#FIXTURES[@]}
+        echo "Total fixtures: $TOTAL_FIXTURES"
+        echo "Package amount: $PACKAGE_AMOUNT"
+
+        # Calculate number of packages needed
+        NUM_PACKAGES=$(( (TOTAL_FIXTURES + PACKAGE_AMOUNT - 1) / PACKAGE_AMOUNT ))
+        echo "Number of packages needed: $NUM_PACKAGES"
+
+        # Create array to store all packages
+        PACKAGES=()
+
+        # Split fixtures into packages
+        for ((i=0; i<NUM_PACKAGES; i++)); do
+          START_INDEX=$((i * PACKAGE_AMOUNT))
+          END_INDEX=$((START_INDEX + PACKAGE_AMOUNT))
+          
+          # Create package array
+          PACKAGE=()
+          for ((j=START_INDEX; j<END_INDEX && j<TOTAL_FIXTURES; j++)); do
+            PACKAGE+=("${FIXTURES[j]}")
+          done
+          
+          # Convert package to JSON array (compact format)
+          PACKAGE_JSON=$(printf '%s\n' "${PACKAGE[@]}" | jq -R . | jq -s -c .)
+          PACKAGES+=("$PACKAGE_JSON")
+          
+          echo "Package $((i+1)): $PACKAGE_JSON"
+        done
+
+        # Convert all packages to JSON array (compact format, no newlines)
+        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGES[@]}" | jq -s -c .)
+
+        echo "Final packaged matrix: $PACKAGED_MATRIX"
+        echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT
