@@ -129,29 +129,29 @@ jobs:
         # Just for testing
         generator-name: [ts-sdk]
     outputs:
-      ruby-model: ${{ steps.get-test-matrices.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.get-test-matrices.outputs.ruby-sdk-test-matrix }}
-      ruby-sdk-v2: ${{ steps.get-test-matrices.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.get-test-matrices.outputs.pydantic-test-matrix }}
-      python-sdk: ${{ steps.get-test-matrices.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.get-test-matrices.outputs.fastapi-test-matrix }}
-      openapi: ${{ steps.get-test-matrices.outputs.openapi-test-matrix }}
-      postman: ${{ steps.get-test-matrices.outputs.postman-test-matrix }}
-      java-sdk: ${{ steps.get-test-matrices.outputs.java-sdk-test-matrix }}
-      java-model: ${{ steps.get-test-matrices.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.get-test-matrices.outputs.java-spring-test-matrix }}
-      ts-sdk: ${{ steps.get-test-matrices.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.get-test-matrices.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.get-test-matrices.outputs.go-fiber-test-matrix }}
-      go-model: ${{ steps.get-test-matrices.outputs.go-model-test-matrix }}
-      go-sdk: ${{ steps.get-test-matrices.outputs.go-sdk-test-matrix }}
-      csharp-model: ${{ steps.get-test-matrices.outputs.csharp-model-test-matrix }}
-      csharp-sdk: ${{ steps.get-test-matrices.outputs.csharp-sdk-test-matrix }}
-      php-model: ${{ steps.get-test-matrices.outputs.php-model-test-matrix }}
-      php-sdk: ${{ steps.get-test-matrices.outputs.php-sdk-test-matrix }}
-      swift-sdk: ${{ steps.get-test-matrices.outputs.swift-sdk-test-matrix }}
-      rust-model: ${{ steps.get-test-matrices.outputs.rust-model-test-matrix }}
-      rust-sdk: ${{ steps.get-test-matrices.outputs.rust-sdk-test-matrix }}
+      ruby-model: ${{ steps.set-test-matrices.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.set-test-matrices.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.set-test-matrices.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.set-test-matrices.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.set-test-matrices.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.set-test-matrices.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.set-test-matrices.outputs.openapi-test-matrix }}
+      postman: ${{ steps.set-test-matrices.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.set-test-matrices.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.set-test-matrices.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.set-test-matrices.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.set-test-matrices.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.set-test-matrices.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.set-test-matrices.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.set-test-matrices.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.set-test-matrices.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.set-test-matrices.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.set-test-matrices.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.set-test-matrices.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.set-test-matrices.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.set-test-matrices.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.set-test-matrices.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.set-test-matrices.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
