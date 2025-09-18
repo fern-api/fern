@@ -146,7 +146,11 @@ export class DynamicTypeInstantiationMapper {
     }): go.TypeInstantiation {
         switch (named.type) {
             case "alias":
-                return this.convert({ typeReference: named.typeReference, value, as });
+                // return this.convert({ typeReference: named.typeReference, value, as });
+                return this.convertAlias({
+                    aliasType: named,
+                    literalValue: named.typeReference
+                });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
@@ -160,6 +164,40 @@ export class DynamicTypeInstantiationMapper {
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
+        }
+    }
+
+    private convertAlias({
+        aliasType,
+        literalValue
+    }: {
+        aliasType: FernIr.dynamic.NamedType.Alias;
+        literalValue: FernIr.dynamic.TypeReference;
+    }): go.TypeInstantiation {
+        switch (literalValue.type) {
+            case "literal":
+                return go.TypeInstantiation.reference(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: this.context.getTypeName(aliasType.declaration.name),
+                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+                        }),
+                        arguments_: [this.convertLiteralValue(literalValue.value)]
+                    })
+                );
+            default:
+                return go.TypeInstantiation.nop();
+        }
+    }
+
+    private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        switch (literal.type) {
+            case "boolean":
+                return go.TypeInstantiation.bool(literal.value);
+            case "string":
+                return go.TypeInstantiation.string(literal.value);
+            default:
+                return go.TypeInstantiation.nop();
         }
     }
 
