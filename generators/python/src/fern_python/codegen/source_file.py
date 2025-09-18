@@ -223,8 +223,6 @@ class SourceFileImpl(SourceFile):
         self._statements = generics_statements + self._statements
 
         # resolve references
-        # Log that we are about to resolve references for this reference resolver
-        print(f"About to resolve references for reference resolver with ID: {id(self._reference_resolver)}")
         self._reference_resolver.resolve_references()
 
         writer = NodeWriterImpl(
