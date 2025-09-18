@@ -32,7 +32,7 @@ $client->headers->send(
     new SendLiteralsInHeadersRequest([
         'endpointVersion' => '02-12-2024',
         'async' => true,
-        'query' => 'query',
+        'query' => 'What is the weather today',
     ]),
 );
 

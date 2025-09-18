@@ -18,7 +18,7 @@ require "seed"
 client = seed::Client.new();
 
 client.completions.stream({
-  query:'query'
+  query:'foo'
 });
 ```
 

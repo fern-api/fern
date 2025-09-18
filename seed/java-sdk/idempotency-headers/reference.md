@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.create(request) -> String</code></summary>
+<details><summary><code>client.payment.create(request) -> UUID</code></summary>
 <dl>
 <dd>
 

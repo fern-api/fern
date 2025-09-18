@@ -282,6 +282,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "ruby") {
                 throw new Error(`Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`);
             }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;
         }
         return snippets;

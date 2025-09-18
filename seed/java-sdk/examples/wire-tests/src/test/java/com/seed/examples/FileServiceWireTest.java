@@ -2,6 +2,9 @@ package com.seed.examples;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.resources.file.service.requests.GetFileRequest;
+import com.seed.examples.resources.types.types.File;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

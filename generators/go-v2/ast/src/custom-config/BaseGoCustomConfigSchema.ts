@@ -21,7 +21,8 @@ export const baseGoCustomConfigSchema = z.object({
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
     gettersPassByValue: z.boolean().optional(),
-    enableWireTests: z.boolean().optional()
+    enableWireTests: z.boolean().optional(),
+    exportAllRequestsAtRoot: z.boolean().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

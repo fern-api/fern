@@ -7,7 +7,7 @@ async fn main() {
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_with_cursor_pagination(ListUsersCursorPaginationRequest {
+        .inline_users_inline_users_list_with_cursor_pagination(ListUsersCursorPaginationRequest {
             starting_after: Some("starting_after"),
         })
         .await;

@@ -201,11 +201,11 @@ describe("requestWithRetries", () => {
         await jest.runAllTimersAsync();
         const response = await responsePromise;
 
-        // Should use the x-ratelimit-reset delay (approximately 4000ms, but with jitter)
+        // Should use the x-ratelimit-reset delay (approximately 4000ms, but with positive jitter)
         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
         const actualDelay = setTimeoutSpy.mock.calls[0][1];
         expect(actualDelay).toBeGreaterThan(3000);
-        expect(actualDelay).toBeLessThan(5000);
+        expect(actualDelay).toBeLessThan(6000);
         expect(response.status).toBe(200);
     });
 

@@ -94,17 +94,17 @@ export class JavaTypeMapper {
     public convertPrimitive({ primitive }: { primitive: PrimitiveType }): java.Type {
         return PrimitiveTypeV1._visit<java.Type>(primitive.v1, {
             integer: () => java.Type.integer(),
-            long: () => java.Type.integer(),
+            long: () => java.Type.long(),
             uint: () => java.Type.integer(),
-            uint64: () => java.Type.integer(),
+            uint64: () => java.Type.long(),
             float: () => java.Type.float(),
-            double: () => java.Type.float(),
+            double: () => java.Type.double(),
             boolean: () => java.Type.boolean(),
             string: () => java.Type.string(),
             date: () => java.Type.date(),
             dateTime: () => java.Type.dateTime(),
-            uuid: () => java.Type.string(),
-            base64: () => java.Type.string(),
+            uuid: () => java.Type.uuid(),
+            base64: () => java.Type.bytes(),
             bigInteger: () => java.Type.string(),
             _other: () => java.Type.object()
         });

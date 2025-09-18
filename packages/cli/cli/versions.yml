@@ -12,8 +12,22 @@
         existing behavior. New users will get the new defaults.
       type: feat
   irVersion: 59
-  createdAt: "2025-09-17"
+  createdAt: "2025-09-18"
   version: 1.0.0
+
+- changelogEntry:
+    - summary: Update dynamic snippets generation to not fail on empty PHP configuration
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.7
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest csharp sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.6
 
 - changelogEntry:
     - summary: Support running the Rust SDK generator using IR v58.

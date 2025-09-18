@@ -33,13 +33,7 @@ async fn main() {
         api_key: Some("<token>".to_string()),
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .upload_json_document(UploadDocumentRequest {
-            author: Some("author"),
-            tags: Some(vec!["tags", "tags"]),
-            title: Some("title"),
-        })
-        .await;
+    client.upload_json_document(UploadDocumentRequest {}).await;
 }
 ```
 
