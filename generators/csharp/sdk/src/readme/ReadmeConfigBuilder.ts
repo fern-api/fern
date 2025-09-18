@@ -1,10 +1,9 @@
+import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
-import { Logger } from "@fern-api/logger";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -62,10 +61,9 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = parseCustomConfigOrUndefined(
-        context.logger,
-        context.config.customConfig
-    )?.["custom-readme-sections"];
+    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.[
+        "custom-readme-sections"
+    ];
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {

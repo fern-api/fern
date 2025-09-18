@@ -1,5 +1,5 @@
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 import { z } from "zod";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
 export const BaseCsharpCustomConfigSchema = z.object({
     // Influence dynamic snippets.
