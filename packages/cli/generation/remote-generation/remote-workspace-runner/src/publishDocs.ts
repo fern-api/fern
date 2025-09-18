@@ -46,7 +46,7 @@ export async function publishDocs({
     preview,
     editThisPage,
     isPrivate = false,
-    disableTemplates = false,
+    disableTemplates = false
 }: {
     token: FernToken;
     organization: string;
