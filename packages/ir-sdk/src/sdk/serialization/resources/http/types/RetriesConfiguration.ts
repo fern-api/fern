@@ -11,13 +11,15 @@ export const RetriesConfiguration: core.serialization.Schema<
     FernIr.RetriesConfiguration
 > = core.serialization
     .union("type", {
-        disabled: core.serialization.object({}),
+        disabled: core.serialization.object({
+            value: core.serialization.boolean().optional(),
+        }),
     })
     .transform<FernIr.RetriesConfiguration>({
         transform: (value) => {
             switch (value.type) {
                 case "disabled":
-                    return FernIr.RetriesConfiguration.disabled();
+                    return FernIr.RetriesConfiguration.disabled(value.value);
                 default:
                     return value as FernIr.RetriesConfiguration;
             }
@@ -30,5 +32,6 @@ export declare namespace RetriesConfiguration {
 
     export interface Disabled {
         type: "disabled";
+        value?: boolean | null;
     }
 }

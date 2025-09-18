@@ -74,7 +74,7 @@ types:
 
   RetriesConfiguration:
     union:
-      disabled: {}
+      disabled: optional<boolean>
 
   HttpEndpointSource:
     union:

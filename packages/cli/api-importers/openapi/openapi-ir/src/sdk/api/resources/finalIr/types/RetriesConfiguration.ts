@@ -9,6 +9,7 @@ export type RetriesConfiguration = FernOpenapiIr.RetriesConfiguration.Disabled;
 export namespace RetriesConfiguration {
     export interface Disabled extends _Utils {
         type: "disabled";
+        value: boolean | undefined;
     }
 
     export interface _Utils {
@@ -16,14 +17,15 @@ export namespace RetriesConfiguration {
     }
 
     export interface _Visitor<_Result> {
-        disabled: () => _Result;
+        disabled: (value: boolean | undefined) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const RetriesConfiguration = {
-    disabled: (): FernOpenapiIr.RetriesConfiguration.Disabled => {
+    disabled: (value?: boolean): FernOpenapiIr.RetriesConfiguration.Disabled => {
         return {
+            value: value,
             type: "disabled",
             _visit: function <_Result>(
                 this: FernOpenapiIr.RetriesConfiguration.Disabled,
@@ -40,7 +42,7 @@ export const RetriesConfiguration = {
     ): _Result => {
         switch (value.type) {
             case "disabled":
-                return visitor.disabled();
+                return visitor.disabled(value.value);
             default:
                 return visitor._other(value as any);
         }

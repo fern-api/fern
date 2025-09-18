@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
+import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
@@ -368,9 +368,9 @@ export function buildEndpoint({
     }
 
     if (endpoint.retries != null) {
-        convertedEndpoint.retries = {
-            disabled: endpoint.retries.type === "disabled"
-        };
+        convertedEndpoint.retries = convertEndpointRetries({
+            retries: endpoint.retries
+        });
     }
 
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
@@ -402,6 +402,17 @@ function convertEndpointExamples({
             throw e;
         }
     });
+}
+
+function convertEndpointRetries({
+    retries
+}: {
+    retries: RetriesConfiguration | null;
+}): RawSchemas.RetriesConfiguration | undefined {
+    if (retries == null) {
+        return undefined;
+    }
+    return retries.type === "disabled" ? RetriesConfiguration.disabled() : undefined;
 }
 
 interface ConvertedRequest {
