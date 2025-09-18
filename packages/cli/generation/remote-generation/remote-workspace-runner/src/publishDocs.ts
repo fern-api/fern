@@ -452,7 +452,6 @@ async function generateLanguageSpecificDynamicIRs({
                     }
                 }
 
-                console.log(generatorInvocation.config);
                 // construct a generatorConfig for php since it is not parsed by getDynamicGeneratorConfig
                 if (
                     generatorInvocation.language === "php" &&
