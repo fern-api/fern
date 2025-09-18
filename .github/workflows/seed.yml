@@ -108,6 +108,7 @@ jobs:
           fetch-depth: 200
           sparse-checkout: |
             ${{ matrix.files }}
+            ./github/
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
