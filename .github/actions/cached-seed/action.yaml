@@ -91,7 +91,7 @@ runs:
           echo "Set to run: ${{ inputs.fixtures-to-run }}"
           SET_TO_RUN=${{ inputs.fixtures-to-run }}
             # Check if the value contains the ':' character
-            if [[ SET_TO_RUN==*":"* ]]; then
+            if [if [[ "$SET_TO_RUN" == *":"* ]]; then
               # Extract the part before the colon and set as the fixture to run
               FIXTURE="${SET_TO_RUN%:*}"
               # Extract the part after the colon and set as the subfolder to run
