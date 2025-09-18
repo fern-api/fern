@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -39,16 +39,10 @@ impl ServiceClient {
                 Method::GET,
                 "/resource",
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = page_limit {
-                        query_params.push(("page_limit".to_string(), value.to_string()));
-                    }
-                    if let Some(value) = before_date {
-                        query_params.push(("beforeDate".to_string(), value.to_rfc3339()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .int("page_limit", page_limit)
+                    .date("beforeDate", before_date)
+                    .build(),
                 options,
             )
             .await

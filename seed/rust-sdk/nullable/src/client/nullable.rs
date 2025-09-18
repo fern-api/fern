@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct NullableClient {
@@ -26,31 +26,13 @@ impl NullableClient {
                 Method::GET,
                 "/users",
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = usernames {
-                        query_params.push(("usernames".to_string(), value.clone()));
-                    }
-                    if let Some(value) = avatar {
-                        query_params.push(("avatar".to_string(), value.clone()));
-                    }
-                    if let Some(value) = activated {
-                        query_params.push((
-                            "activated".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    if let Some(value) = tags {
-                        query_params.push(("tags".to_string(), value.clone()));
-                    }
-                    if let Some(value) = extra {
-                        query_params.push((
-                            "extra".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .string("usernames", usernames)
+                    .string("avatar", avatar)
+                    .bool("activated", activated)
+                    .serialize("tags", tags)
+                    .serialize("extra", extra)
+                    .build(),
                 options,
             )
             .await
