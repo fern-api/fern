@@ -114,8 +114,8 @@ runs:
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${{ FIXTURE }} \
-          ${{ SUBFOLDER_STRING }} \
+          --fixture ${ FIXTURE } \
+          ${ SUBFOLDER_STRING } \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
