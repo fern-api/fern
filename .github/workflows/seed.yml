@@ -121,41 +121,76 @@ jobs:
         run: |
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
-  # temporarily disabled
   get-all-test-matrices:
-    if: false 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
     outputs:
-      ruby-model: ${{ steps.get-test-matrices.outputs.ruby-model }}
-      ruby-sdk: ${{ steps.get-test-matrices.outputs.ruby-sdk }}
-      ruby-sdk-v2: ${{ steps.get-test-matrices.outputs.ruby-sdk-v2 }}
-      pydantic: ${{ steps.get-test-matrices.outputs.pydantic }}
-      python-sdk: ${{ steps.get-test-matrices.outputs.python-sdk }}
-      fastapi: ${{ steps.get-test-matrices.outputs.fastapi }}
-      openapi: ${{ steps.get-test-matrices.outputs.openapi }}
-      postman: ${{ steps.get-test-matrices.outputs.postman }}
-      java-sdk: ${{ steps.get-test-matrices.outputs.java-sdk }}
-      java-model: ${{ steps.get-test-matrices.outputs.java-model }}
-      java-spring: ${{ steps.get-test-matrices.outputs.java-spring }}
-      ts-sdk: ${{ steps.get-test-matrices.outputs.ts-sdk }}
-      ts-express: ${{ steps.get-test-matrices.outputs.ts-express }}
-      go-fiber: ${{ steps.get-test-matrices.outputs.go-fiber }}
-      go-model: ${{ steps.get-test-matrices.outputs.go-model }}
-      go-sdk: ${{ steps.get-test-matrices.outputs.go-sdk }}
-      csharp-model: ${{ steps.get-test-matrices.outputs.csharp-model }}
-      csharp-sdk: ${{ steps.get-test-matrices.outputs.csharp-sdk }}
-      php-model: ${{ steps.get-test-matrices.outputs.php-model }}
-      php-sdk: ${{ steps.get-test-matrices.outputs.php-sdk }}
-      swift-sdk: ${{ steps.get-test-matrices.outputs.swift-sdk }}
-      rust-model: ${{ steps.get-test-matrices.outputs.rust-model }}
-      rust-sdk: ${{ steps.get-test-matrices.outputs.rust-sdk }}
+      ruby-model: ${{ steps.get-test-matrices.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.get-test-matrices.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.get-test-matrices.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.get-test-matrices.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.get-test-matrices.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.get-test-matrices.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.get-test-matrices.outputs.openapi-test-matrix }}
+      postman: ${{ steps.get-test-matrices.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.get-test-matrices.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.get-test-matrices.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.get-test-matrices.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.get-test-matrices.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.get-test-matrices.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.get-test-matrices.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.get-test-matrices.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.get-test-matrices.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.get-test-matrices.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.get-test-matrices.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.get-test-matrices.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.get-test-matrices.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.get-test-matrices.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.get-test-matrices.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.get-test-matrices.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        # with:
+        #   # Checkout github actions folder and folders to build and run pnpm seed commands
+        #   sparse-checkout: |
+        #     .github/
+        #     generators/
+        #     packages/
+        #     seed/
 
-      - name: Get Test Matrices
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: Build seed
+        shell: bash
+        run: |
+          pnpm seed:build
+
+      - name: Get test matrices for ${{ matrix.generator-name }}
         id: get-test-matrices
-        uses: ./.github/actions/get-test-matrices
+        uses: ./.github/actions/parse-test-matrix-output
+        with:
+          generator-name: ${{ matrix.generator-name }}
+
+      - name: Set test matrices for ${{ matrix.generator-name }}
+        id: set-test-matrices
+        run: |
+          echo "${{ matrix.generator-name }}-test-matrix=${{ steps.get-test-matrices.outputs.parsed }}" >> $GITHUB_OUTPUT
 
 
   ruby-model:
