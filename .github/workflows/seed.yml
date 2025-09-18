@@ -506,7 +506,8 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ matrix.fixtures }}
+          echo: ${{ matrix.fixtures }}
+          # fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-express:
     runs-on: ubuntu-latest
