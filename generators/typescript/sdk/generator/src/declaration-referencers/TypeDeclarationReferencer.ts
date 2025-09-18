@@ -1,6 +1,5 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
-import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
+import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";

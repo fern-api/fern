@@ -742,8 +742,8 @@ export class SdkGenerator {
 
                 for (const typeDeclaration of typeDeclarations) {
                     const currentStatementCount = context.sourceFile.getStatements().length;
-                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context)
-					context.sourceFile.insertStatements(currentStatementCount, writer => writer.newLine())
+                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                    context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
                 }
             }
         });
