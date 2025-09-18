@@ -484,7 +484,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
-        fixtures: [{"package1": "accept-header"},{"package2": "alias"},{"package3": "alias-extends"}]
+        fixtures: [{"accept-header"},{"alias"},{"alias-extends"}]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
