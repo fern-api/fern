@@ -297,25 +297,21 @@ jobs:
       #     pnpm seed:build
 
       - name: Create Test Matrix
-        id: create-test-matrix
-        
-      #   run: |
-      #     # Get starting point from output of get-available-fixtures command
-      #     MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
-          
-      #     # Remove newlines and spaces so next portion of filtering is easier
-      #     PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
-
-      #     # Extract just the fixtures
-      #     FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
-
-      #     MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
-
-      #     echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
-      #     echo "${fixture_list}"
+        id: create-test-matrix    
         run: |
-          echo 'fixture_list=["imdb:no-custom-config", "imdb:omit-undefined", "streaming"]' >> "$GITHUB_OUTPUT"
+          # Get starting point from output of get-available-fixtures command
+          MESSY_DATA=$(pnpm seed get-available-fixtures --generator ts-sdk --include-subfolders | awk '/"fixtures/,0')
+          
+          # Remove newlines and spaces so next portion of filtering is easier
+          PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
 
+          # Extract just the fixtures
+          FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+
+          MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+
+          echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
+          echo "${fixture_list}"
 
   typescript-sdk-as-matrix:
     runs-on: ubuntu-latest
