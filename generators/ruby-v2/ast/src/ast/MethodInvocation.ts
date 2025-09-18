@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -7,24 +8,32 @@ export declare namespace MethodInvocation {
         on: AstNode;
         /** The method to invoke */
         method: string;
-        /** The arguments passed to the method */
+        /** Positional arguments passed to the method */
         arguments_: AstNode[];
+        /** Keyword arguments passed to the method */
+        keywordArguments?: [string, AstNode][];
         /** The block being invoked by the method call, if any */
-        block?: AstNode;
+        block?: AstNode[];
     }
 }
+
+type PositionalOrKeywordArgument =
+    | { kind: "positional"; arg: AstNode }
+    | { kind: "keyword"; name: string; arg: AstNode };
 
 export class MethodInvocation extends AstNode {
     private on: AstNode;
     private method: string;
     private arguments_: AstNode[];
-    private block?: AstNode;
+    private keywordArguments?: [string, AstNode][];
+    private block?: AstNode[];
 
-    constructor({ on, method, arguments_, block }: MethodInvocation.Args) {
+    constructor({ on, method, arguments_, keywordArguments, block }: MethodInvocation.Args) {
         super();
         this.on = on;
         this.method = method;
         this.arguments_ = arguments_;
+        this.keywordArguments = keywordArguments;
         this.block = block;
     }
 
@@ -36,24 +45,33 @@ export class MethodInvocation extends AstNode {
         // separated by commas, for better readability in the generated Ruby code.
         // Otherwise, write the arguments inline (on the same line).
         writer.write("(");
-        if (this.arguments_.length > 1) {
+
+        var allArguments: PositionalOrKeywordArgument[] = [];
+        for (const arg of this.arguments_) {
+            allArguments.push({ kind: "positional", arg });
+        }
+        for (const [name, arg] of this.keywordArguments || []) {
+            allArguments.push({ kind: "keyword", name, arg });
+        }
+
+        if (allArguments.length > 1) {
             writer.indent();
             writer.newLine();
-            this.arguments_.forEach((argument, index) => {
+            allArguments.forEach((argument, index) => {
                 if (index > 0) {
                     writer.write(",");
                     writer.newLine();
                 }
-                argument.write(writer);
+                writeArgument(writer, argument);
             });
             writer.newLine();
             writer.dedent();
         } else {
-            this.arguments_.forEach((argument, index) => {
+            allArguments.forEach((argument, index) => {
                 if (index > 0) {
                     writer.write(", ");
                 }
-                argument.write(writer);
+                writeArgument(writer, argument);
             });
         }
         writer.write(")");
@@ -61,10 +79,27 @@ export class MethodInvocation extends AstNode {
             writer.write(" do");
             writer.newLine();
             writer.indent();
-            this.block.write(writer);
-            writer.writeNewLineIfLastLineNot();
+            for (const line of this.block) {
+                line.write(writer);
+                writer.writeNewLineIfLastLineNot();
+            }
             writer.dedent();
             writer.write("end");
         }
+    }
+}
+
+function writeArgument(writer: Writer, arg: PositionalOrKeywordArgument): void {
+    switch (arg.kind) {
+        case "positional":
+            arg.arg.write(writer);
+            return;
+        case "keyword":
+            writer.write(arg.name);
+            writer.write(": ");
+            arg.arg.write(writer);
+            return;
+        default:
+            assertNever(arg);
     }
 }

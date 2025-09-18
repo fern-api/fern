@@ -8,6 +8,8 @@ exports[`MethodInvocation > writes method invocation with 1 argument and a block
 end"
 `;
 
+exports[`MethodInvocation > writes method invocation with 1 keyword argument 1`] = `"2.my_method(keyword: 1)"`;
+
 exports[`MethodInvocation > writes method invocation with 2 arguments 1`] = `
 "2.my_method(
   1,
@@ -22,6 +24,22 @@ exports[`MethodInvocation > writes method invocation with 2 arguments and a bloc
 ) do
   Time.now
 end"
+`;
+
+exports[`MethodInvocation > writes method invocation with 2 keyword arguments 1`] = `
+"2.my_method(
+  keyword1: 1,
+  keyword2: 2
+)"
+`;
+
+exports[`MethodInvocation > writes method invocation with a mix of positional and keyword arguments 1`] = `
+"2.my_method(
+  1,
+  3,
+  keyword1: 1,
+  keyword2: 2
+)"
 `;
 
 exports[`MethodInvocation > writes method invocation with no arguments 1`] = `"2.my_method()"`;
