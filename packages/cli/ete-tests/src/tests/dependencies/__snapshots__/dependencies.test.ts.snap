@@ -536,6 +536,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1242,4 +1243,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3541548`;
+exports[`dependencies > file dependencies 1`] = `4804243`;
