@@ -260,25 +260,25 @@ class GeneratorCli:
 
     def _get_custom_readme_sections(self) -> Optional[List[generatorcli.CustomSection]]:
         ir_custom_sections = self._ir.readme_config.custom_sections if self._ir.readme_config else None
-        custom_config_sections = SDKCustomConfig.parse_obj(self._context.generator_config.custom_config or {}).custom_readme_sections
+        custom_config_sections = SDKCustomConfig.parse_obj(
+            self._context.generator_config.custom_config or {}
+        ).custom_readme_sections
 
         self._debug_log(message=f"IR custom sections: {ir_custom_sections}")
         self._debug_log(message=f"Custom config sections: {custom_config_sections}")
 
         sections = []
         for ir_section in ir_custom_sections or []:
-            if ir_section.language == "python" and not any(s.title == ir_section.title for s in custom_config_sections or []):
-                sections.append(generatorcli.CustomSection(
-                    name=ir_section.title,
-                    language="PYTHON",
-                    content=ir_section.content
-                ))
+            if ir_section.language == "python" and not any(
+                s.title == ir_section.title for s in custom_config_sections or []
+            ):
+                sections.append(
+                    generatorcli.CustomSection(name=ir_section.title, language="PYTHON", content=ir_section.content)
+                )
 
         for config_section in custom_config_sections or []:
-            sections.append(generatorcli.CustomSection(
-                name=config_section.title,
-                language="PYTHON",
-                content=config_section.content
-            ))
+            sections.append(
+                generatorcli.CustomSection(name=config_section.title, language="PYTHON", content=config_section.content)
+            )
 
         return sections if len(sections) > 0 else None

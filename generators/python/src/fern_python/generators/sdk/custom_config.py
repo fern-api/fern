@@ -37,6 +37,7 @@ class DependencyCustomConfig(BaseDependencyCustomConfig):
     python: Optional[str] = None
     optional: bool = False
 
+
 class CustomReadmeSection(pydantic.BaseModel):
     title: str
     content: str
