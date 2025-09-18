@@ -1,3 +1,4 @@
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 import { z } from "zod";
 
 export const BaseRubyCustomConfigSchema = z.object({
