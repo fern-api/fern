@@ -25,10 +25,10 @@ export class HttpEndpointGenerator {
     }
 
     public generate({ endpoint, serviceId }: HttpEndpointGenerator.GenerateArgs): ruby.Method[] {
-        return [this.generatePagedMethod({ endpoint, serviceId })];
+        return [this.generateUnpagedMethod({ endpoint, serviceId })];
     }
 
-    private generatePagedMethod({
+    private generateUnpagedMethod({
         endpoint,
         serviceId
     }: {
@@ -46,7 +46,6 @@ export class HttpEndpointGenerator {
         });
 
         const statements: ruby.AstNode[] = [];
-        const paginationBlockStatements: ruby.AstNode[] = [];
 
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
@@ -69,16 +68,16 @@ export class HttpEndpointGenerator {
         });
 
         if (sendRequestCodeBlock != null) {
-            paginationBlockStatements.push(sendRequestCodeBlock);
+            statements.push(sendRequestCodeBlock);
         } else {
-            paginationBlockStatements.push(
+            statements.push(
                 ruby.codeblock((writer) => {
                     writer.write(`_request = ${PARAMS_VN}`);
                 })
             );
         }
 
-        paginationBlockStatements.push(
+        statements.push(
             ruby.begin({
                 body: ruby.codeblock(`${HTTP_RESPONSE_VN} = @client.send(${RAW_CLIENT_REQUEST_VARIABLE_NAME})`),
                 rescues: [
@@ -95,9 +94,9 @@ export class HttpEndpointGenerator {
             })
         );
 
-        paginationBlockStatements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
+        statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
 
-        paginationBlockStatements.push(
+        statements.push(
             ruby.ifElse({
                 if: {
                     condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
@@ -130,24 +129,6 @@ export class HttpEndpointGenerator {
                         errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
                     }).write(writer);
                 })
-            })
-        );
-
-        statements.push(
-            ruby.invokeMethod({
-                on: ruby.classReference({
-                    name: "ItemIterator",
-                    modules: [this.context.getRootModuleName(), "Internal"]
-                }),
-                method: "new",
-                arguments_: [],
-                keywordArguments: [
-                    // TODO: Fix
-                    ["item_field", ruby.codeblock(`:cards`)],
-                    // TODO: Fix
-                    ["initial_cursor", ruby.codeblock(`params[:cursor]`)]
-                ],
-                block: paginationBlockStatements
             })
         );
 
