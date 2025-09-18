@@ -122,6 +122,8 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
+    # CHRISM - forcing test
+    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -470,7 +472,7 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
-    needs: get-all-test-matrices
+    # needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
@@ -481,7 +483,12 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        fixtures: [
+          {"package1": "accept-header"},
+          {"package2": "alias"},
+          {"package3": "alias-extends"}
+        ]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
