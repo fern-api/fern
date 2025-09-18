@@ -29,7 +29,7 @@ func do() {
     )
     client.Echo(
         context.TODO(),
-        "string",
+        "Hello world!\n\nwith\n\tnewlines",
     )
 }
 ```

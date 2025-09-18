@@ -2,6 +2,9 @@ package com.seed.exhaustive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
+import com.seed.exhaustive.resources.endpoints.put.types.PutResponse;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -45,22 +48,23 @@ public class EndpointsPutWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"errors\": [\n" +
-            "    {\n" +
-            "      \"category\": \"API_ERROR\",\n" +
-            "      \"code\": \"INTERNAL_SERVER_ERROR\",\n" +
-            "      \"detail\": \"detail\",\n" +
-            "      \"field\": \"field\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"category\": \"API_ERROR\",\n" +
-            "      \"code\": \"INTERNAL_SERVER_ERROR\",\n" +
-            "      \"detail\": \"detail\",\n" +
-            "      \"field\": \"field\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"errors\": [\n"
+            + "    {\n"
+            + "      \"category\": \"API_ERROR\",\n"
+            + "      \"code\": \"INTERNAL_SERVER_ERROR\",\n"
+            + "      \"detail\": \"detail\",\n"
+            + "      \"field\": \"field\"\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"category\": \"API_ERROR\",\n"
+            + "      \"code\": \"INTERNAL_SERVER_ERROR\",\n"
+            + "      \"detail\": \"detail\",\n"
+            + "      \"field\": \"field\"\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

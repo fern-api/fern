@@ -2,6 +2,8 @@ package com.seed.basicAuth;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.basicAuth.SeedBasicAuthClient;
+import java.util.HashMap;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -20,8 +22,7 @@ public class BasicAuthWireTest {
         server.start();
         client = SeedBasicAuthClient.builder()
             .url(server.url("/").toString())
-            .username("test-user")
-                        .password("test-password")
+            .username("testuser").password("testpass")
             .build();
     }
     @AfterEach
@@ -41,7 +42,8 @@ public class BasicAuthWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "true";
+        String expectedResponseBody = ""
+            + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -78,9 +80,10 @@ public class BasicAuthWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"key\": \"value\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"key\": \"value\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -107,7 +110,8 @@ public class BasicAuthWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "true";
+        String expectedResponseBody = ""
+            + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

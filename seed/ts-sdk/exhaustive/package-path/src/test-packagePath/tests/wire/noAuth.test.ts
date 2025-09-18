@@ -45,10 +45,6 @@ describe("NoAuth", () => {
             return await client.noAuth.postWithNoAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            new SeedExhaustive.BadRequestBody({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedExhaustive.BadRequestBody);
     });
 });

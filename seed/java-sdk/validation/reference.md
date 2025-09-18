@@ -35,7 +35,7 @@ client.create(
 <dl>
 <dd>
 
-**decimal:** `Float` 
+**decimal:** `Double` 
     
 </dd>
 </dl>
@@ -106,7 +106,7 @@ client.get(
 <dl>
 <dd>
 
-**decimal:** `Float` 
+**decimal:** `Double` 
     
 </dd>
 </dl>

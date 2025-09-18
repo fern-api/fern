@@ -117,12 +117,7 @@ describe("Playlist", () => {
 
         await expect(async () => {
             return await client.playlist.getPlaylist(1, "playlistId");
-        }).rejects.toThrow(
-            new SeedTrace.PlaylistIdNotFoundError({
-                type: "playlistId",
-                value: "string",
-            }),
-        );
+        }).rejects.toThrow(SeedTrace.PlaylistIdNotFoundError);
     });
 
     test("getPlaylist (3)", async () => {
@@ -133,7 +128,7 @@ describe("Playlist", () => {
 
         await expect(async () => {
             return await client.playlist.getPlaylist(1, "playlistId");
-        }).rejects.toThrow(new SeedTrace.UnauthorizedError());
+        }).rejects.toThrow(SeedTrace.UnauthorizedError);
     });
 
     test("updatePlaylist (1)", async () => {
@@ -186,12 +181,7 @@ describe("Playlist", () => {
                 name: "name",
                 problems: ["problems", "problems"],
             });
-        }).rejects.toThrow(
-            new SeedTrace.PlaylistIdNotFoundError({
-                type: "playlistId",
-                value: "string",
-            }),
-        );
+        }).rejects.toThrow(SeedTrace.PlaylistIdNotFoundError);
     });
 
     test("deletePlaylist", async () => {

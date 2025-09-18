@@ -47,12 +47,7 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.NotFoundError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.NotFoundError);
     });
 
     test("fooWithoutEndpointError (3)", async () => {
@@ -73,12 +68,7 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.BadRequestError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.BadRequestError);
     });
 
     test("fooWithoutEndpointError (4)", async () => {
@@ -99,12 +89,7 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.InternalServerError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.InternalServerError);
     });
 
     test("foo (1)", async () => {
@@ -147,12 +132,7 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooMuch({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooMuch);
     });
 
     test("foo (3)", async () => {
@@ -173,12 +153,7 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooLittle({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooLittle);
     });
 
     test("foo (4)", async () => {
@@ -199,12 +174,7 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.NotFoundError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.NotFoundError);
     });
 
     test("foo (5)", async () => {
@@ -225,12 +195,7 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.BadRequestError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.BadRequestError);
     });
 
     test("foo (6)", async () => {
@@ -251,12 +216,7 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.InternalServerError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.InternalServerError);
     });
 
     test("fooWithExamples (1)", async () => {
@@ -299,12 +259,7 @@ describe("Simple", () => {
             return await client.simple.fooWithExamples({
                 bar: "hello",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooMuch({
-                message: "Too much foo",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooMuch);
     });
 
     test("fooWithExamples (3)", async () => {
@@ -325,11 +280,6 @@ describe("Simple", () => {
             return await client.simple.fooWithExamples({
                 bar: "hello",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooLittle({
-                message: "Too little foo",
-                code: 2,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooLittle);
     });
 });

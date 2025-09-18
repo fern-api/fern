@@ -2,6 +2,37 @@ package com.seed.examples;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.resources.commons.types.types.Data;
+import com.seed.examples.resources.commons.types.types.EventInfo;
+import com.seed.examples.resources.commons.types.types.Metadata;
+import com.seed.examples.resources.service.requests.GetMetadataRequest;
+import com.seed.examples.resources.types.types.Actor;
+import com.seed.examples.resources.types.types.BigEntity;
+import com.seed.examples.resources.types.types.CastMember;
+import com.seed.examples.resources.types.types.Directory;
+import com.seed.examples.resources.types.types.Entity;
+import com.seed.examples.resources.types.types.Exception;
+import com.seed.examples.resources.types.types.ExceptionInfo;
+import com.seed.examples.resources.types.types.ExtendedMovie;
+import com.seed.examples.resources.types.types.File;
+import com.seed.examples.resources.types.types.Metadata;
+import com.seed.examples.resources.types.types.Migration;
+import com.seed.examples.resources.types.types.MigrationStatus;
+import com.seed.examples.resources.types.types.Moment;
+import com.seed.examples.resources.types.types.Movie;
+import com.seed.examples.resources.types.types.Node;
+import com.seed.examples.resources.types.types.Response;
+import com.seed.examples.resources.types.types.Test;
+import com.seed.examples.resources.types.types.Tree;
+import com.seed.examples.types.BasicType;
+import com.seed.examples.types.Type;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -40,28 +71,29 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"id\": \"movie-c06a4ad7\",\n" +
-            "  \"prequel\": \"movie-cv9b914f\",\n" +
-            "  \"title\": \"The Boy and the Heron\",\n" +
-            "  \"from\": \"Hayao Miyazaki\",\n" +
-            "  \"rating\": 8,\n" +
-            "  \"type\": \"movie\",\n" +
-            "  \"tag\": \"tag-wf9as23d\",\n" +
-            "  \"metadata\": {\n" +
-            "    \"actors\": [\n" +
-            "      \"Christian Bale\",\n" +
-            "      \"Florence Pugh\",\n" +
-            "      \"Willem Dafoe\"\n" +
-            "    ],\n" +
-            "    \"releaseDate\": \"2023-12-08\",\n" +
-            "    \"ratings\": {\n" +
-            "      \"rottenTomatoes\": 97,\n" +
-            "      \"imdb\": 7.6\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"revenue\": 1000000\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"id\": \"movie-c06a4ad7\",\n"
+            + "  \"prequel\": \"movie-cv9b914f\",\n"
+            + "  \"title\": \"The Boy and the Heron\",\n"
+            + "  \"from\": \"Hayao Miyazaki\",\n"
+            + "  \"rating\": 8,\n"
+            + "  \"type\": \"movie\",\n"
+            + "  \"tag\": \"tag-wf9as23d\",\n"
+            + "  \"metadata\": {\n"
+            + "    \"actors\": [\n"
+            + "      \"Christian Bale\",\n"
+            + "      \"Florence Pugh\",\n"
+            + "      \"Willem Dafoe\"\n"
+            + "    ],\n"
+            + "    \"releaseDate\": \"2023-12-08\",\n"
+            + "    \"ratings\": {\n"
+            + "      \"rottenTomatoes\": 97,\n"
+            + "      \"imdb\": 7.6\n"
+            + "    }\n"
+            + "  },\n"
+            + "  \"revenue\": 1000000\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -118,28 +150,29 @@ public class ServiceWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"id\": \"movie-c06a4ad7\",\n" +
-            "  \"prequel\": \"movie-cv9b914f\",\n" +
-            "  \"title\": \"The Boy and the Heron\",\n" +
-            "  \"from\": \"Hayao Miyazaki\",\n" +
-            "  \"rating\": 8,\n" +
-            "  \"type\": \"movie\",\n" +
-            "  \"tag\": \"tag-wf9as23d\",\n" +
-            "  \"metadata\": {\n" +
-            "    \"actors\": [\n" +
-            "      \"Christian Bale\",\n" +
-            "      \"Florence Pugh\",\n" +
-            "      \"Willem Dafoe\"\n" +
-            "    ],\n" +
-            "    \"releaseDate\": \"2023-12-08\",\n" +
-            "    \"ratings\": {\n" +
-            "      \"rottenTomatoes\": 97,\n" +
-            "      \"imdb\": 7.6\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"revenue\": 1000000\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"id\": \"movie-c06a4ad7\",\n"
+            + "  \"prequel\": \"movie-cv9b914f\",\n"
+            + "  \"title\": \"The Boy and the Heron\",\n"
+            + "  \"from\": \"Hayao Miyazaki\",\n"
+            + "  \"rating\": 8,\n"
+            + "  \"type\": \"movie\",\n"
+            + "  \"tag\": \"tag-wf9as23d\",\n"
+            + "  \"metadata\": {\n"
+            + "    \"actors\": [\n"
+            + "      \"Christian Bale\",\n"
+            + "      \"Florence Pugh\",\n"
+            + "      \"Willem Dafoe\"\n"
+            + "    ],\n"
+            + "    \"releaseDate\": \"2023-12-08\",\n"
+            + "    \"ratings\": {\n"
+            + "      \"rottenTomatoes\": 97,\n"
+            + "      \"imdb\": 7.6\n"
+            + "    }\n"
+            + "  },\n"
+            + "  \"revenue\": 1000000\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -166,7 +199,8 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"movie-c06a4ad7\"";
+        String expectedResponseBody = ""
+            + "\"movie-c06a4ad7\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -215,18 +249,19 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"type\": \"html\",\n" +
-            "  \"extra\": {\n" +
-            "    \"version\": \"0.0.1\",\n" +
-            "    \"tenancy\": \"test\"\n" +
-            "  },\n" +
-            "  \"tags\": [\n" +
-            "    \"development\",\n" +
-            "    \"public\"\n" +
-            "  ],\n" +
-            "  \"value\": \"<head>...</head>\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"type\": \"html\",\n"
+            + "  \"extra\": {\n"
+            + "    \"version\": \"0.0.1\",\n"
+            + "    \"tenancy\": \"test\"\n"
+            + "  },\n"
+            + "  \"tags\": [\n"
+            + "    \"development\",\n"
+            + "    \"public\"\n"
+            + "  ],\n"
+            + "  \"value\": \"<head>...</head>\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -715,230 +750,231 @@ public class ServiceWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"castMember\": {\n" +
-            "    \"name\": \"name\",\n" +
-            "    \"id\": \"id\"\n" +
-            "  },\n" +
-            "  \"extendedMovie\": {\n" +
-            "    \"cast\": [\n" +
-            "      \"cast\",\n" +
-            "      \"cast\"\n" +
-            "    ],\n" +
-            "    \"id\": \"id\",\n" +
-            "    \"prequel\": \"prequel\",\n" +
-            "    \"title\": \"title\",\n" +
-            "    \"from\": \"from\",\n" +
-            "    \"rating\": 1.1,\n" +
-            "    \"type\": \"movie\",\n" +
-            "    \"tag\": \"tag\",\n" +
-            "    \"book\": \"book\",\n" +
-            "    \"metadata\": {\n" +
-            "      \"metadata\": {\n" +
-            "        \"key\": \"value\"\n" +
-            "      }\n" +
-            "    },\n" +
-            "    \"revenue\": 1000000\n" +
-            "  },\n" +
-            "  \"entity\": {\n" +
-            "    \"type\": \"primitive\",\n" +
-            "    \"name\": \"name\"\n" +
-            "  },\n" +
-            "  \"metadata\": {\n" +
-            "    \"type\": \"html\",\n" +
-            "    \"value\": \"metadata\",\n" +
-            "    \"extra\": {\n" +
-            "      \"extra\": \"extra\"\n" +
-            "    },\n" +
-            "    \"tags\": [\n" +
-            "      \"tags\"\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"commonMetadata\": {\n" +
-            "    \"id\": \"id\",\n" +
-            "    \"data\": {\n" +
-            "      \"data\": \"data\"\n" +
-            "    },\n" +
-            "    \"jsonString\": \"jsonString\"\n" +
-            "  },\n" +
-            "  \"eventInfo\": {\n" +
-            "    \"type\": \"metadata\",\n" +
-            "    \"id\": \"id\",\n" +
-            "    \"data\": {\n" +
-            "      \"data\": \"data\"\n" +
-            "    },\n" +
-            "    \"jsonString\": \"jsonString\"\n" +
-            "  },\n" +
-            "  \"data\": {\n" +
-            "    \"type\": \"string\",\n" +
-            "    \"value\": \"data\"\n" +
-            "  },\n" +
-            "  \"migration\": {\n" +
-            "    \"name\": \"name\",\n" +
-            "    \"status\": \"RUNNING\"\n" +
-            "  },\n" +
-            "  \"exception\": {\n" +
-            "    \"type\": \"generic\",\n" +
-            "    \"exceptionType\": \"exceptionType\",\n" +
-            "    \"exceptionMessage\": \"exceptionMessage\",\n" +
-            "    \"exceptionStacktrace\": \"exceptionStacktrace\"\n" +
-            "  },\n" +
-            "  \"test\": {\n" +
-            "    \"type\": \"and\",\n" +
-            "    \"value\": true\n" +
-            "  },\n" +
-            "  \"node\": {\n" +
-            "    \"name\": \"name\",\n" +
-            "    \"nodes\": [\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"nodes\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"trees\": [\n" +
-            "          {\n" +
-            "            \"nodes\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"nodes\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"nodes\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"trees\": [\n" +
-            "          {\n" +
-            "            \"nodes\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"nodes\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    ],\n" +
-            "    \"trees\": [\n" +
-            "      {\n" +
-            "        \"nodes\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"nodes\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"nodes\": [],\n" +
-            "            \"trees\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"directory\": {\n" +
-            "    \"name\": \"name\",\n" +
-            "    \"files\": [\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"contents\": \"contents\"\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"contents\": \"contents\"\n" +
-            "      }\n" +
-            "    ],\n" +
-            "    \"directories\": [\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"files\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"contents\": \"contents\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"contents\": \"contents\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"directories\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"files\": [],\n" +
-            "            \"directories\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"files\": [],\n" +
-            "            \"directories\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"files\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"contents\": \"contents\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"contents\": \"contents\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"directories\": [\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"files\": [],\n" +
-            "            \"directories\": []\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"name\",\n" +
-            "            \"files\": [],\n" +
-            "            \"directories\": []\n" +
-            "          }\n" +
-            "        ]\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"moment\": {\n" +
-            "    \"id\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n" +
-            "    \"date\": \"2023-01-15\",\n" +
-            "    \"datetime\": \"2024-01-15T09:30:00Z\"\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"castMember\": {\n"
+            + "    \"name\": \"name\",\n"
+            + "    \"id\": \"id\"\n"
+            + "  },\n"
+            + "  \"extendedMovie\": {\n"
+            + "    \"cast\": [\n"
+            + "      \"cast\",\n"
+            + "      \"cast\"\n"
+            + "    ],\n"
+            + "    \"id\": \"id\",\n"
+            + "    \"prequel\": \"prequel\",\n"
+            + "    \"title\": \"title\",\n"
+            + "    \"from\": \"from\",\n"
+            + "    \"rating\": 1.1,\n"
+            + "    \"type\": \"movie\",\n"
+            + "    \"tag\": \"tag\",\n"
+            + "    \"book\": \"book\",\n"
+            + "    \"metadata\": {\n"
+            + "      \"metadata\": {\n"
+            + "        \"key\": \"value\"\n"
+            + "      }\n"
+            + "    },\n"
+            + "    \"revenue\": 1000000\n"
+            + "  },\n"
+            + "  \"entity\": {\n"
+            + "    \"type\": \"primitive\",\n"
+            + "    \"name\": \"name\"\n"
+            + "  },\n"
+            + "  \"metadata\": {\n"
+            + "    \"type\": \"html\",\n"
+            + "    \"value\": \"metadata\",\n"
+            + "    \"extra\": {\n"
+            + "      \"extra\": \"extra\"\n"
+            + "    },\n"
+            + "    \"tags\": [\n"
+            + "      \"tags\"\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"commonMetadata\": {\n"
+            + "    \"id\": \"id\",\n"
+            + "    \"data\": {\n"
+            + "      \"data\": \"data\"\n"
+            + "    },\n"
+            + "    \"jsonString\": \"jsonString\"\n"
+            + "  },\n"
+            + "  \"eventInfo\": {\n"
+            + "    \"type\": \"metadata\",\n"
+            + "    \"id\": \"id\",\n"
+            + "    \"data\": {\n"
+            + "      \"data\": \"data\"\n"
+            + "    },\n"
+            + "    \"jsonString\": \"jsonString\"\n"
+            + "  },\n"
+            + "  \"data\": {\n"
+            + "    \"type\": \"string\",\n"
+            + "    \"value\": \"data\"\n"
+            + "  },\n"
+            + "  \"migration\": {\n"
+            + "    \"name\": \"name\",\n"
+            + "    \"status\": \"RUNNING\"\n"
+            + "  },\n"
+            + "  \"exception\": {\n"
+            + "    \"type\": \"generic\",\n"
+            + "    \"exceptionType\": \"exceptionType\",\n"
+            + "    \"exceptionMessage\": \"exceptionMessage\",\n"
+            + "    \"exceptionStacktrace\": \"exceptionStacktrace\"\n"
+            + "  },\n"
+            + "  \"test\": {\n"
+            + "    \"type\": \"and\",\n"
+            + "    \"value\": true\n"
+            + "  },\n"
+            + "  \"node\": {\n"
+            + "    \"name\": \"name\",\n"
+            + "    \"nodes\": [\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"nodes\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          }\n"
+            + "        ],\n"
+            + "        \"trees\": [\n"
+            + "          {\n"
+            + "            \"nodes\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"nodes\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"nodes\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          }\n"
+            + "        ],\n"
+            + "        \"trees\": [\n"
+            + "          {\n"
+            + "            \"nodes\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"nodes\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      }\n"
+            + "    ],\n"
+            + "    \"trees\": [\n"
+            + "      {\n"
+            + "        \"nodes\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"nodes\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"nodes\": [],\n"
+            + "            \"trees\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      }\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"directory\": {\n"
+            + "    \"name\": \"name\",\n"
+            + "    \"files\": [\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"contents\": \"contents\"\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"contents\": \"contents\"\n"
+            + "      }\n"
+            + "    ],\n"
+            + "    \"directories\": [\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"files\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"contents\": \"contents\"\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"contents\": \"contents\"\n"
+            + "          }\n"
+            + "        ],\n"
+            + "        \"directories\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"files\": [],\n"
+            + "            \"directories\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"files\": [],\n"
+            + "            \"directories\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"files\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"contents\": \"contents\"\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"contents\": \"contents\"\n"
+            + "          }\n"
+            + "        ],\n"
+            + "        \"directories\": [\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"files\": [],\n"
+            + "            \"directories\": []\n"
+            + "          },\n"
+            + "          {\n"
+            + "            \"name\": \"name\",\n"
+            + "            \"files\": [],\n"
+            + "            \"directories\": []\n"
+            + "          }\n"
+            + "        ]\n"
+            + "      }\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"moment\": {\n"
+            + "    \"id\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
+            + "    \"date\": \"2023-01-15\",\n"
+            + "    \"datetime\": \"2024-01-15T09:30:00Z\"\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -965,23 +1001,24 @@ public class ServiceWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"response\": {\n" +
-            "    \"key\": \"value\"\n" +
-            "  },\n" +
-            "  \"identifiers\": [\n" +
-            "    {\n" +
-            "      \"type\": \"primitive\",\n" +
-            "      \"value\": \"value\",\n" +
-            "      \"label\": \"label\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"type\": \"primitive\",\n" +
-            "      \"value\": \"value\",\n" +
-            "      \"label\": \"label\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"response\": {\n"
+            + "    \"key\": \"value\"\n"
+            + "  },\n"
+            + "  \"identifiers\": [\n"
+            + "    {\n"
+            + "      \"type\": \"primitive\",\n"
+            + "      \"value\": \"value\",\n"
+            + "      \"label\": \"label\"\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"type\": \"primitive\",\n"
+            + "      \"value\": \"value\",\n"
+            + "      \"label\": \"label\"\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

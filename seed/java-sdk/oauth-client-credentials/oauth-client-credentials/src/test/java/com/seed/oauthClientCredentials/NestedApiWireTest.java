@@ -2,6 +2,7 @@ package com.seed.oauthClientCredentials;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -20,8 +21,7 @@ public class NestedApiWireTest {
         server.start();
         client = SeedOauthClientCredentialsClient.builder()
             .url(server.url("/").toString())
-            .clientId("test-client-id")
-                        .clientSecret("test-client-secret")
+            .token("oauth-test-token")
             .build();
     }
     @AfterEach

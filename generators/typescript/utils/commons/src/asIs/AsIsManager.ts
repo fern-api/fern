@@ -13,6 +13,7 @@ export namespace AsIsManager {
         generateWireTests: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        testFramework: "jest" | "vitest";
     }
 }
 
@@ -21,11 +22,20 @@ export class AsIsManager {
     private readonly generateWireTests: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
-    constructor({ useBigInt, generateWireTests, relativePackagePath, relativeTestPath }: AsIsManager.Init) {
+    private readonly testFramework: "jest" | "vitest";
+
+    constructor({
+        useBigInt,
+        generateWireTests,
+        relativePackagePath,
+        relativeTestPath,
+        testFramework
+    }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.testFramework = testFramework;
     }
 
     /**
@@ -45,7 +55,7 @@ export class AsIsManager {
                     ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
                 bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
-                BrowserEnvironment: {
+                BrowserTestEnvironment: {
                     ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
                 }
             },
@@ -63,7 +73,9 @@ export class AsIsManager {
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-        filesToCopy.push(asIsFiles.tests.BrowserEnvironment);
+        if (this.testFramework === "jest") {
+            filesToCopy.push(asIsFiles.tests.BrowserTestEnvironment);
+        }
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
             filesToCopy.push(asIsFiles.core.json.bigint);

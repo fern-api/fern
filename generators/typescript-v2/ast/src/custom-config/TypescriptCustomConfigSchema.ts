@@ -34,6 +34,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     flattenRequestParameters: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
+    testFramework: z.optional(z.enum(["jest", "vitest"])),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

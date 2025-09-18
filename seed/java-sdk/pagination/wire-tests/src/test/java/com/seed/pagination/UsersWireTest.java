@@ -2,6 +2,20 @@ package com.seed.pagination;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.pagination.SeedPaginationClient;
+import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
+import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
+import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
+import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
+import com.seed.pagination.resources.users.types.Order;
+import com.seed.pagination.resources.users.types.UsernameContainer;
+import com.seed.pagination.types.UsernameCursor;
+import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -48,45 +62,41 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: starting_after
-        if (actualResponseNode.has("starting_after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -125,35 +135,31 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"next\": \"next\",\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"next\": \"next\",\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: next
         if (actualResponseNode.has("next")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("next").isNull() || actualResponseNode.get("next").isTextual(), "Next cursor should be null (last page) or string (next page)");
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -189,11 +195,12 @@ public class UsersWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"pagination\": {\n" +
-            "    \"cursor\": \"cursor\"\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"pagination\": {\n"
+            + "    \"cursor\": \"cursor\"\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -220,45 +227,41 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: starting_after
-        if (actualResponseNode.has("starting_after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("starting_after").isNull() || actualResponseNode.get("starting_after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -300,40 +303,38 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -375,40 +376,38 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -444,11 +443,12 @@ public class UsersWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"pagination\": {\n" +
-            "    \"page\": 1\n" +
-            "  }\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"pagination\": {\n"
+            + "    \"page\": 1\n"
+            + "  }\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -475,40 +475,38 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -549,40 +547,38 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -623,40 +619,38 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"hasNextPage\": true,\n" +
-            "  \"page\": {\n" +
-            "    \"page\": 1,\n" +
-            "    \"next\": {\n" +
-            "      \"page\": 1,\n" +
-            "      \"starting_after\": \"starting_after\"\n" +
-            "    },\n" +
-            "    \"per_page\": 1,\n" +
-            "    \"total_page\": 1\n" +
-            "  },\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"name\": \"name\",\n" +
-            "      \"id\": 1\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"hasNextPage\": true,\n"
+            + "  \"page\": {\n"
+            + "    \"page\": 1,\n"
+            + "    \"next\": {\n"
+            + "      \"page\": 1,\n"
+            + "      \"starting_after\": \"starting_after\"\n"
+            + "    },\n"
+            + "    \"per_page\": 1,\n"
+            + "    \"total_page\": 1\n"
+            + "  },\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": [\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"name\": \"name\",\n"
+            + "      \"id\": 1\n"
+            + "    }\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -695,38 +689,34 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": {\n" +
-            "    \"users\": [\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"id\": 1\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"id\": 1\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": {\n"
+            + "    \"users\": [\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"id\": 1\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"id\": 1\n"
+            + "      }\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: users
-        if (actualResponseNode.has("users")) {
-            Assertions.assertTrue(actualResponseNode.get("users").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("users").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: next
         if (actualResponseNode.has("next")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("next").isNull() || actualResponseNode.get("next").isTextual(), "Next cursor should be null (last page) or string (next page)");
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -765,38 +755,34 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"total_count\": 1,\n" +
-            "  \"data\": {\n" +
-            "    \"users\": [\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"id\": 1\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"name\": \"name\",\n" +
-            "        \"id\": 1\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"total_count\": 1,\n"
+            + "  \"data\": {\n"
+            + "    \"users\": [\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"id\": 1\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"name\": \"name\",\n"
+            + "        \"id\": 1\n"
+            + "      }\n"
+            + "    ]\n"
+            + "  },\n"
+            + "  \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: users
-        if (actualResponseNode.has("users")) {
-            Assertions.assertTrue(actualResponseNode.get("users").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("users").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: next
         if (actualResponseNode.has("next")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("next").isNull() || actualResponseNode.get("next").isTextual(), "Next cursor should be null (last page) or string (next page)");
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -835,31 +821,27 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"cursor\": {\n" +
-            "    \"after\": \"after\",\n" +
-            "    \"data\": [\n" +
-            "      \"data\",\n" +
-            "      \"data\"\n" +
-            "    ]\n" +
-            "  }\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"cursor\": {\n"
+            + "    \"after\": \"after\",\n"
+            + "    \"data\": [\n"
+            + "      \"data\",\n"
+            + "      \"data\"\n"
+            + "    ]\n"
+            + "  }\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: data
+        // Validate pagination structure
         if (actualResponseNode.has("data")) {
-            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("data").size() >= 0, "Pagination results array should have valid size");
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        // Next cursor at path: after
-        if (actualResponseNode.has("after")) {
-            // Next cursor can be null for last page, or string for next page
-            Assertions.assertTrue(actualResponseNode.get("after").isNull() || actualResponseNode.get("after").isTextual(), "Next cursor should be null (last page) or string (next page)");
+        if (actualResponseNode.has("next")) {
+            Assertions.assertTrue(actualResponseNode.get("next").isTextual() || actualResponseNode.get("next").isNull(), "Pagination cursor at 'next' should be a string or null");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();
@@ -898,23 +880,21 @@ public class UsersWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"results\": [\n" +
-            "    \"results\",\n" +
-            "    \"results\"\n" +
-            "  ]\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"results\": [\n"
+            + "    \"results\",\n"
+            + "    \"results\"\n"
+            + "  ]\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
         
-        // Pagination validation
-        // Results at path: results
-        if (actualResponseNode.has("results")) {
-            Assertions.assertTrue(actualResponseNode.get("results").isArray(), "Pagination results should be an array");
-            Assertions.assertTrue(actualResponseNode.get("results").size() >= 0, "Pagination results array should have valid size");
+        // Validate pagination structure
+        if (actualResponseNode.has("data")) {
+            Assertions.assertTrue(actualResponseNode.get("data").isArray(), "Pagination results at 'data' should be an array");
         }
-        Assertions.assertTrue(actualResponseNode.isObject(), "Paginated response should be an object");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type")) discriminator = actualResponseNode.get("type").asText();

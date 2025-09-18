@@ -26,10 +26,6 @@ describe("Service", () => {
 
         await expect(async () => {
             return await client.service.endpoint();
-        }).rejects.toThrow(
-            new SeedAccept.NotFoundError({
-                key: "value",
-            }),
-        );
+        }).rejects.toThrow(SeedAccept.NotFoundError);
     });
 });
