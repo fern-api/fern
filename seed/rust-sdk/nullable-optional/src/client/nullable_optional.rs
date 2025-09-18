@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct NullableOptionalClient {
@@ -74,36 +74,12 @@ impl NullableOptionalClient {
                 Method::GET,
                 "/api/users",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = limit {
-                        query_builder.add_simple(
-                            "limit",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = offset {
-                        query_builder.add_simple(
-                            "offset",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = include_deleted {
-                        query_builder.add_simple(
-                            "includeDeleted",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = sort_by {
-                        query_builder.add_simple("sortBy", &value);
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .int("limit", limit)
+                    .int("offset", offset)
+                    .bool("includeDeleted", include_deleted)
+                    .serialize("sortBy", sort_by)
+                    .build(),
                 options,
             )
             .await
@@ -122,33 +98,12 @@ impl NullableOptionalClient {
                 Method::GET,
                 "/api/users/search",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = query {
-                        // Try to parse as structured query, fall back to simple if it fails
-                        if let Err(_) = query_builder.add_structured_query(&value) {
-                            query_builder.add_simple("query", &value);
-                        }
-                    }
-                    if let Some(value) = department {
-                        query_builder.add_simple("department", &value);
-                    }
-                    if let Some(value) = role {
-                        query_builder.add_simple("role", &value);
-                    }
-                    if let Some(value) = is_active {
-                        query_builder.add_simple(
-                            "isActive",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .structured_query("query", query)
+                    .string("department", department)
+                    .string("role", role)
+                    .serialize("isActive", is_active)
+                    .build(),
                 options,
             )
             .await
@@ -231,28 +186,11 @@ impl NullableOptionalClient {
                 Method::GET,
                 "/api/users/filter",
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = role {
-                        query_params.push((
-                            "role".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    if let Some(value) = status {
-                        query_params.push((
-                            "status".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    if let Some(value) = secondary_role {
-                        query_params.push((
-                            "secondaryRole".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .serialize("role", role)
+                    .serialize("status", status)
+                    .serialize("secondaryRole", secondary_role)
+                    .build(),
                 options,
             )
             .await

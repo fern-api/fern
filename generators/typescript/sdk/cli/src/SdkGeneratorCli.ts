@@ -79,11 +79,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
-            packageManager: parsed?.packageManager ?? "yarn",
+            packageManager: parsed?.packageManager ?? "pnpm",
             generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
             flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
             exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false,
-            testFramework: parsed?.testFramework ?? "jest"
+            testFramework: parsed?.testFramework ?? "vitest"
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {

@@ -212,6 +212,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "query_parameter_builder", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "utils", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -274,6 +275,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         );
         useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
         useStatements.push(new UseStatement({ path: "query_parameter_builder", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "utils", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,

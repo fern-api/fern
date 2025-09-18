@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -17,13 +17,8 @@ impl PackageClient {
             Method::POST,
             "",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = for_ {
-                query_params.push(("for".to_string(), value.clone()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().string("for", for_)
+            .build(),
             options,
         ).await
     }

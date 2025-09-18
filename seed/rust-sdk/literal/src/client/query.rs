@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct QueryClient {
@@ -30,69 +30,17 @@ impl QueryClient {
                 Method::POST,
                 "query",
                 None,
-                {
-                    let mut query_builder = crate::QueryParameterBuilder::new();
-                    if let Some(value) = prompt {
-                        query_builder.add_simple(
-                            "prompt",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = optional_prompt {
-                        query_builder.add_simple(
-                            "optional_prompt",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = alias_prompt {
-                        query_builder.add_simple(
-                            "alias_prompt",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = alias_optional_prompt {
-                        query_builder.add_simple(
-                            "alias_optional_prompt",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = query {
-                        // Try to parse as structured query, fall back to simple if it fails
-                        if let Err(_) = query_builder.add_structured_query(&value) {
-                            query_builder.add_simple("query", &value);
-                        }
-                    }
-                    if let Some(value) = stream {
-                        query_builder.add_simple(
-                            "stream",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = optional_stream {
-                        query_builder.add_simple(
-                            "optional_stream",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = alias_stream {
-                        query_builder.add_simple(
-                            "alias_stream",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    if let Some(value) = alias_optional_stream {
-                        query_builder.add_simple(
-                            "alias_optional_stream",
-                            &serde_json::to_string(&value).unwrap_or_default(),
-                        );
-                    }
-                    let params = query_builder.build();
-                    if params.is_empty() {
-                        None
-                    } else {
-                        Some(params)
-                    }
-                },
+                QueryBuilder::new()
+                    .string("prompt", prompt)
+                    .serialize("optional_prompt", optional_prompt)
+                    .serialize("alias_prompt", alias_prompt)
+                    .serialize("alias_optional_prompt", alias_optional_prompt)
+                    .structured_query("query", query)
+                    .string("stream", stream)
+                    .serialize("optional_stream", optional_stream)
+                    .serialize("alias_stream", alias_stream)
+                    .serialize("alias_optional_stream", alias_optional_stream)
+                    .build(),
                 options,
             )
             .await

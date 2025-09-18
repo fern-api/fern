@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct UserClient {
@@ -28,13 +28,7 @@ impl UserClient {
                 Method::GET,
                 "/users",
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = limit {
-                        query_params.push(("limit".to_string(), value.to_string()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new().int("limit", limit).build(),
                 options,
             )
             .await
