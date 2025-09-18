@@ -115,10 +115,7 @@ export class SnippetExtractor {
 
             if (trimmedLine.startsWith("import ")) {
                 // Remove 'import ' prefix and ';' suffix
-                const importStatement = trimmedLine
-                    .substring(7)
-                    .replace(/;$/, '')
-                    .trim();
+                const importStatement = trimmedLine.substring(7).replace(/;$/, "").trim();
 
                 imports.push(importStatement);
             }

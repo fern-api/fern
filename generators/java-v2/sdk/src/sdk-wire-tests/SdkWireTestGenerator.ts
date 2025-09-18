@@ -121,7 +121,7 @@ export class SdkWireTestGenerator {
 
                         // Extract imports from the full snippet
                         const imports = snippetExtractor.extractImports(fullSnippet);
-                        imports.forEach(imp => allImports.add(imp));
+                        imports.forEach((imp) => allImports.add(imp));
 
                         const firstTestExample = testExamples[0];
                         if (firstTestExample) {
@@ -133,7 +133,7 @@ export class SdkWireTestGenerator {
 
                         // Collect imports from return type resolution
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
-                        returnTypeInfo.imports.forEach(imp => allImports.add(imp));
+                        returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
                         this.context.logger.debug(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
                     }
