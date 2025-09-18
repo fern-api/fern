@@ -8,16 +8,17 @@ module <%= gem_namespace %>
       # Instantiates a ItemIterator, an Enumerable class which wraps calls to a paginated API and yields the individual items from the API.
       #
       # @param initial_cursor [String] The initial cursor to use when iterating.
+      # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
+      # @param item_field [String] The name of the field in API responses to extract the items to iterate over.
       # @return [<%= gem_namespace %>::Internal::ItemIterator]
-      def initialize(initial_cursor:, item_field:, &block)
+      def initialize(initial_cursor:, cursor_field:, item_field:, &block)
         @item_field = item_field
-        @page_iterator = PageIterator.new(initial_cursor:, &block)
+        @page_iterator = PageIterator.new(initial_cursor:, cursor_field:, &block)
         @page = nil
       end
 
       # Returns the PageIterator mediating access to the underlying API.
       #
-      # @param initial_cursor [String] The initial cursor to use when iterating.
       # @return [<%= gem_namespace %>::Internal::PageIterator]
       def pages
         @page_iterator

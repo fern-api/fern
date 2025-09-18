@@ -11,6 +11,7 @@ module Seed
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :starting_after,
           item_field: :conversations,
           initial_cursor: params[:starting_after]
         ) do

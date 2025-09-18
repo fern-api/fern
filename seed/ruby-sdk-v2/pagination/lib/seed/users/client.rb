@@ -11,6 +11,7 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_cursor_pagination(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: params[:starting_after]
         ) do
@@ -44,8 +45,9 @@ module Seed
       # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :next,
           item_field: :data,
-          initial_cursor: params[:next]
+          initial_cursor: params[:cursor]
         ) do
           _query_param_names = [
             ["cursor"],
@@ -77,8 +79,9 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: params[:starting_after]
+          initial_cursor: params[:cursor]
         ) do
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
@@ -242,8 +245,9 @@ module Seed
       # @return [Seed::Users::Types::ListUsersExtendedResponse]
       def list_with_extended_results(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :next,
           item_field: :users,
-          initial_cursor: params[:next]
+          initial_cursor: params[:cursor]
         ) do
           _query_param_names = [
             ["cursor"],
@@ -275,8 +279,9 @@ module Seed
       # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :next,
           item_field: :users,
-          initial_cursor: params[:next]
+          initial_cursor: params[:cursor]
         ) do
           _query_param_names = [
             ["cursor"],
@@ -308,8 +313,9 @@ module Seed
       # @return [Seed::Types::UsernameCursor]
       def list_usernames(request_options: {}, **params)
         Seed::Internal::ItemIterator.new(
+          cursor_field: :after,
           item_field: :data,
-          initial_cursor: params[:after]
+          initial_cursor: params[:starting_after]
         ) do
           _query_param_names = [
             ["starting_after"],

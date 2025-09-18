@@ -55,12 +55,16 @@ export class HttpEndpointGenerator {
                             arguments_: [],
                             keywordArguments: [
                                 [
+                                    "cursor_field",
+                                    ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
+                                ],
+                                [
                                     "item_field",
                                     ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
                                 ],
                                 [
                                     "initial_cursor",
-                                    ruby.codeblock(`params[:${endpoint.pagination.next.property.name.wireValue}]`)
+                                    ruby.codeblock(`params[:${endpoint.pagination.page.property.name.wireValue}]`)
                                 ]
                             ],
                             block: statements
