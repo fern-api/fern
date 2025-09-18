@@ -257,7 +257,7 @@ class GeneratorCli:
             )
         )
 
-    def _get_custom_readme_sections(self) -> List[generatorcli.readme.CustomReadmeSection]:
+    def _get_custom_readme_sections(self) -> List[generatorcli.CustomSection]:
         ir_custom_sections = self._ir.readme_config.custom_sections if self._ir.readme_config else None
         custom_config_sections = SDKCustomConfig.parse_obj(self.context.generator_config.custom_config or {}).custom_readme_sections
 
