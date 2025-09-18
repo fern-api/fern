@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct OrganizationsClient {
@@ -59,16 +59,7 @@ impl OrganizationsClient {
                 Method::GET,
                 &format!("/{}{}", tenant_id, organization_id),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = limit {
-                        query_params.push((
-                            "limit".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new().int("limit", limit).build(),
                 options,
             )
             .await

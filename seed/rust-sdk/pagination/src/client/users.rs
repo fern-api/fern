@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use crate::{AsyncPaginator, PaginationResult};
 use reqwest::Method;
 
@@ -22,28 +22,11 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = page {
-                query_params.push((
-                    "page".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = per_page {
-                query_params.push((
-                    "per_page".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = order {
-                query_params.push((
-                    "order".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new()
+            .int("page", page)
+            .int("per_page", per_page)
+            .serialize("order", order)
+            .build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(
@@ -223,25 +206,11 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = per_page {
-                query_params.push((
-                    "per_page".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = order {
-                query_params.push((
-                    "order".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = starting_after {
-                query_params.push(("starting_after".to_string(), value.clone()));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new()
+            .int("per_page", per_page)
+            .serialize("order", order)
+            .string("starting_after", starting_after)
+            .build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(
@@ -311,25 +280,11 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = per_page {
-                query_params.push((
-                    "per_page".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = order {
-                query_params.push((
-                    "order".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            if let Some(value) = starting_after {
-                query_params.push(("starting_after".to_string(), value.clone()));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new()
+            .float("per_page", per_page)
+            .serialize("order", order)
+            .string("starting_after", starting_after)
+            .build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(
@@ -467,16 +422,7 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = order {
-                query_params.push((
-                    "order".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new().serialize("order", order).build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(
@@ -545,16 +491,7 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = order {
-                query_params.push((
-                    "order".to_string(),
-                    serde_json::to_string(&value).unwrap_or_default(),
-                ));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new().serialize("order", order).build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(

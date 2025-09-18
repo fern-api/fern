@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct FooClient {
@@ -23,16 +23,9 @@ impl FooClient {
                 Method::POST,
                 "",
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = optional_string {
-                        query_params.push((
-                            "optionalString".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .serialize("optionalString", optional_string)
+                    .build(),
                 options,
             )
             .await
