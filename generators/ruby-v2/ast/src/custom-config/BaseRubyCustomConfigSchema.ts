@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const BaseRubyCustomConfigSchema = z.object({
     module: z.optional(z.string()),
-    clientModuleName: z.optional(z.string())
+    clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
 });
 
