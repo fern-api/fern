@@ -56,7 +56,7 @@ types:
       retries: optional<RetriesConfiguration>
 
   RetriesConfiguration:
-    properties:
+    union:
       disabled: optional<boolean>
 
   HttpMethodSchema:

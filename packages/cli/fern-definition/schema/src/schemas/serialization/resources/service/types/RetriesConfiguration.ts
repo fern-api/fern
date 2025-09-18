@@ -6,15 +6,25 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const RetriesConfiguration: core.serialization.ObjectSchema<
+export const RetriesConfiguration: core.serialization.Schema<
     serializers.RetriesConfiguration.Raw,
     FernDefinition.RetriesConfiguration
-> = core.serialization.object({
-    disabled: core.serialization.boolean().optional(),
-});
+> = core.serialization
+    .union("type", {
+        disabled: core.serialization.object({
+            value: core.serialization.boolean().optional(),
+        }),
+    })
+    .transform<FernDefinition.RetriesConfiguration>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace RetriesConfiguration {
-    export interface Raw {
-        disabled?: boolean | null;
+    export type Raw = RetriesConfiguration.Disabled;
+
+    export interface Disabled {
+        type: "disabled";
+        value?: boolean | null;
     }
 }
