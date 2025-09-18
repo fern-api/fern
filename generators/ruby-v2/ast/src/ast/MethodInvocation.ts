@@ -18,8 +18,8 @@ export declare namespace MethodInvocation {
 }
 
 type PositionalOrKeywordArgument =
-    | { kind: "positional"; arg: AstNode }
-    | { kind: "keyword"; name: string; arg: AstNode };
+    | { kind: "positional"; node: AstNode }
+    | { kind: "keyword"; name: string; node: AstNode };
 
 export class MethodInvocation extends AstNode {
     private on: AstNode;
@@ -47,11 +47,11 @@ export class MethodInvocation extends AstNode {
         writer.write("(");
 
         var allArguments: PositionalOrKeywordArgument[] = [];
-        for (const arg of this.arguments_) {
-            allArguments.push({ kind: "positional", arg });
+        for (const node of this.arguments_) {
+            allArguments.push({ kind: "positional", node });
         }
-        for (const [name, arg] of this.keywordArguments || []) {
-            allArguments.push({ kind: "keyword", name, arg });
+        for (const [name, node] of this.keywordArguments || []) {
+            allArguments.push({ kind: "keyword", name, node });
         }
 
         if (allArguments.length > 1) {
@@ -92,13 +92,13 @@ export class MethodInvocation extends AstNode {
 function writeArgument(writer: Writer, arg: PositionalOrKeywordArgument): void {
     switch (arg.kind) {
         case "positional":
-            arg.arg.write(writer);
-            return;
+            arg.node.write(writer);
+            break;
         case "keyword":
             writer.write(arg.name);
             writer.write(": ");
-            arg.arg.write(writer);
-            return;
+            arg.node.write(writer);
+            break;
         default:
             assertNever(arg);
     }
