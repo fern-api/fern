@@ -107,6 +107,7 @@ export async function runWithCustomFixture({
                 ...(customFixtureConfig?.customConfig as Record<string, unknown>),
                 ...(generatorGroup.invocation.config as Record<string, unknown>)
             },
+            readmeConfig: apiWorkspace.generatorsConfiguration?.rawConfiguration.readme,
             outputFolder: ""
         };
         console.log(

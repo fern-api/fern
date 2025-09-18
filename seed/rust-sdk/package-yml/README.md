@@ -32,7 +32,10 @@ async fn main() {
     let config = ClientConfig {};
     let client = PackageYmlClient::new(config).expect("Failed to build client");
     client
-        .echo("id", serde_json::json!({"name":"name","size":1}))
+        .echo(
+            "id-ksfd9c1",
+            serde_json::json!({"name":"Hello world!","size":20}),
+        )
         .await;
 }
 ```

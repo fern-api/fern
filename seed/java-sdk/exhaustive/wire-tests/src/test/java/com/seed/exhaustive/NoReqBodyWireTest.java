@@ -40,28 +40,29 @@ public class NoReqBodyWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"string\": \"string\",\n" +
-            "  \"integer\": 1,\n" +
-            "  \"long\": 1000000,\n" +
-            "  \"double\": 1.1,\n" +
-            "  \"bool\": true,\n" +
-            "  \"datetime\": \"2024-01-15T09:30:00Z\",\n" +
-            "  \"date\": \"2023-01-15\",\n" +
-            "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n" +
-            "  \"base64\": \"SGVsbG8gd29ybGQh\",\n" +
-            "  \"list\": [\n" +
-            "    \"list\",\n" +
-            "    \"list\"\n" +
-            "  ],\n" +
-            "  \"set\": [\n" +
-            "    \"set\"\n" +
-            "  ],\n" +
-            "  \"map\": {\n" +
-            "    \"1\": \"map\"\n" +
-            "  },\n" +
-            "  \"bigint\": \"1000000\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"string\": \"string\",\n"
+            + "  \"integer\": 1,\n"
+            + "  \"long\": 1000000,\n"
+            + "  \"double\": 1.1,\n"
+            + "  \"bool\": true,\n"
+            + "  \"datetime\": \"2024-01-15T09:30:00Z\",\n"
+            + "  \"date\": \"2023-01-15\",\n"
+            + "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
+            + "  \"base64\": \"SGVsbG8gd29ybGQh\",\n"
+            + "  \"list\": [\n"
+            + "    \"list\",\n"
+            + "    \"list\"\n"
+            + "  ],\n"
+            + "  \"set\": [\n"
+            + "    \"set\"\n"
+            + "  ],\n"
+            + "  \"map\": {\n"
+            + "    \"1\": \"map\"\n"
+            + "  },\n"
+            + "  \"bigint\": \"1000000\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -98,7 +99,8 @@ public class NoReqBodyWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "\"string\"";
+        String expectedResponseBody = ""
+            + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

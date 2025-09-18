@@ -67,28 +67,29 @@ public class EndpointsContentTypeWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"string\": \"string\",\n" +
-            "  \"integer\": 1,\n" +
-            "  \"long\": 1000000,\n" +
-            "  \"double\": 1.1,\n" +
-            "  \"bool\": true,\n" +
-            "  \"datetime\": \"2024-01-15T09:30:00Z\",\n" +
-            "  \"date\": \"2023-01-15\",\n" +
-            "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n" +
-            "  \"base64\": \"SGVsbG8gd29ybGQh\",\n" +
-            "  \"list\": [\n" +
-            "    \"list\",\n" +
-            "    \"list\"\n" +
-            "  ],\n" +
-            "  \"set\": [\n" +
-            "    \"set\"\n" +
-            "  ],\n" +
-            "  \"map\": {\n" +
-            "    \"1\": \"map\"\n" +
-            "  },\n" +
-            "  \"bigint\": \"1000000\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"string\": \"string\",\n"
+            + "  \"integer\": 1,\n"
+            + "  \"long\": 1000000,\n"
+            + "  \"double\": 1.1,\n"
+            + "  \"bool\": true,\n"
+            + "  \"datetime\": \"2024-01-15T09:30:00Z\",\n"
+            + "  \"date\": \"2023-01-15\",\n"
+            + "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
+            + "  \"base64\": \"SGVsbG8gd29ybGQh\",\n"
+            + "  \"list\": [\n"
+            + "    \"list\",\n"
+            + "    \"list\"\n"
+            + "  ],\n"
+            + "  \"set\": [\n"
+            + "    \"set\"\n"
+            + "  ],\n"
+            + "  \"map\": {\n"
+            + "    \"1\": \"map\"\n"
+            + "  },\n"
+            + "  \"bigint\": \"1000000\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -152,28 +153,29 @@ public class EndpointsContentTypeWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"string\": \"string\",\n" +
-            "  \"integer\": 1,\n" +
-            "  \"long\": 1000000,\n" +
-            "  \"double\": 1.1,\n" +
-            "  \"bool\": true,\n" +
-            "  \"datetime\": \"2024-01-15T09:30:00Z\",\n" +
-            "  \"date\": \"2023-01-15\",\n" +
-            "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n" +
-            "  \"base64\": \"SGVsbG8gd29ybGQh\",\n" +
-            "  \"list\": [\n" +
-            "    \"list\",\n" +
-            "    \"list\"\n" +
-            "  ],\n" +
-            "  \"set\": [\n" +
-            "    \"set\"\n" +
-            "  ],\n" +
-            "  \"map\": {\n" +
-            "    \"1\": \"map\"\n" +
-            "  },\n" +
-            "  \"bigint\": \"1000000\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"string\": \"string\",\n"
+            + "  \"integer\": 1,\n"
+            + "  \"long\": 1000000,\n"
+            + "  \"double\": 1.1,\n"
+            + "  \"bool\": true,\n"
+            + "  \"datetime\": \"2024-01-15T09:30:00Z\",\n"
+            + "  \"date\": \"2023-01-15\",\n"
+            + "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
+            + "  \"base64\": \"SGVsbG8gd29ybGQh\",\n"
+            + "  \"list\": [\n"
+            + "    \"list\",\n"
+            + "    \"list\"\n"
+            + "  ],\n"
+            + "  \"set\": [\n"
+            + "    \"set\"\n"
+            + "  ],\n"
+            + "  \"map\": {\n"
+            + "    \"1\": \"map\"\n"
+            + "  },\n"
+            + "  \"bigint\": \"1000000\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");

@@ -2023,7 +2023,7 @@ func getEndpointParameters(
 			&ast.StructType{
 				Name: &ast.ImportedReference{
 					Name:       endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName,
-					ImportPath: fernFilepathToImportPath(f.baseImportPath, fernFilepath),
+					ImportPath: getImportPathForRequestType(f, fernFilepath),
 				},
 				Fields: fields,
 			},
@@ -2400,8 +2400,14 @@ func (f *fileWriter) endpointFromIR(
 				}
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
-				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				// All inlined request types are now generated in the root package
+				rootImportPath := f.baseImportPath
+				if rootImportPath == "" {
+					// If no base import path, reference without package qualifier
+					requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				} else {
+					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(rootImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
 					requestValueName = "requestBuffer"
 					if f.useReaderForBytesRequest {
@@ -2735,6 +2741,18 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	return nil
 }
 
+// getImportPathForRequestType returns the appropriate import path for request types
+// based on the exportAllRequestsAtRoot configuration.
+func getImportPathForRequestType(f *fileWriter, fernFilepath *ir.FernFilepath) string {
+	// Use the root package import path when exportAllRequestsAtRoot is enabled,
+	// otherwise use the service's filepath
+	if f.exportAllRequestsAtRoot && f.filename == inlinedRequestsFilename {
+		return f.baseImportPath
+	} else {
+		return fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+	}
+}
+
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
 func (f *fileWriter) WriteRequestType(
 	fernFilepath *ir.FernFilepath,
@@ -2747,11 +2765,11 @@ func (f *fileWriter) WriteRequestType(
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
-		bodyField  = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
-		typeName   = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-		receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		receiver  = typeNameToReceiver(typeName)
 	)
+	importPath := getImportPathForRequestType(f, fernFilepath)
 
 	// Collect all property names and types for bigint constants and setters
 	var propertyNames []string

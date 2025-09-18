@@ -24,7 +24,7 @@ func do() {
     client := client.NewClient()
     client.Service.GetResource(
         context.TODO(),
-        "ResourceID",
+        "rsc-xyz",
     )
 }
 ```

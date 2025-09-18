@@ -54,11 +54,11 @@ public class Example {
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest
                 .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
+                .clientId("my_oauth_app_123")
+                .clientSecret("sk_live_abcdef123456789")
                 .audience("https://api.example.com")
                 .grantType("client_credentials")
-                .scope("scope")
+                .scope("read:users")
                 .build()
         );
     }

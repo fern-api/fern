@@ -20,8 +20,7 @@ public class AuthWireTest {
         server.start();
         client = SeedOauthClientCredentialsClient.builder()
             .url(server.url("/").toString())
-            .clientId("test-client-id")
-                        .clientSecret("test-client-secret")
+            .token("oauth-test-token")
             .build();
     }
     @AfterEach
@@ -48,13 +47,14 @@ public class AuthWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"my_oauth_app_123\",\n" +
-            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
-            "  \"audience\": \"https://api.example.com\",\n" +
-            "  \"grant_type\": \"client_credentials\",\n" +
-            "  \"scope\": \"read:users\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"client_id\": \"my_oauth_app_123\",\n"
+            + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
+            + "  \"audience\": \"https://api.example.com\",\n"
+            + "  \"grant_type\": \"client_credentials\",\n"
+            + "  \"scope\": \"read:users\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -81,11 +81,12 @@ public class AuthWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"access_token\": \"access_token\",\n" +
-            "  \"expires_in\": 1,\n" +
-            "  \"refresh_token\": \"refresh_token\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"access_token\": \"access_token\",\n"
+            + "  \"expires_in\": 1,\n"
+            + "  \"refresh_token\": \"refresh_token\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
@@ -130,14 +131,15 @@ public class AuthWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "{\n" +
-            "  \"client_id\": \"my_oauth_app_123\",\n" +
-            "  \"client_secret\": \"sk_live_abcdef123456789\",\n" +
-            "  \"refresh_token\": \"refresh_token\",\n" +
-            "  \"audience\": \"https://api.example.com\",\n" +
-            "  \"grant_type\": \"refresh_token\",\n" +
-            "  \"scope\": \"read:users\"\n" +
-            "}";
+        String expectedRequestBody = ""
+            + "{\n"
+            + "  \"client_id\": \"my_oauth_app_123\",\n"
+            + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
+            + "  \"refresh_token\": \"refresh_token\",\n"
+            + "  \"audience\": \"https://api.example.com\",\n"
+            + "  \"grant_type\": \"refresh_token\",\n"
+            + "  \"scope\": \"read:users\"\n"
+            + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -164,11 +166,12 @@ public class AuthWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "{\n" +
-            "  \"access_token\": \"access_token\",\n" +
-            "  \"expires_in\": 1,\n" +
-            "  \"refresh_token\": \"refresh_token\"\n" +
-            "}";
+        String expectedResponseBody = ""
+            + "{\n"
+            + "  \"access_token\": \"access_token\",\n"
+            + "  \"expires_in\": 1,\n"
+            + "  \"refresh_token\": \"refresh_token\"\n"
+            + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(expectedResponseNode, actualResponseNode, "Response body structure does not match expected");

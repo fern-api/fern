@@ -17,11 +17,7 @@ require "seed"
 
 client = seed::Client.new(token: '<token>');
 
-client.upload_json_document({
-  author:'author',
-  tags:['tags', 'tags'],
-  title:'title'
-});
+client.upload_json_document({});
 ```
 
 ## Environments

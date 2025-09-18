@@ -18,8 +18,8 @@ require "seed"
 client = seed::Client.new();
 
 client.dummy.generate({
-  stream:true,
-  numEvents:1
+  stream:false,
+  numEvents:5
 });
 ```
 
