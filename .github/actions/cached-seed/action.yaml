@@ -87,7 +87,7 @@ runs:
         # Check if a fixture set was provided, set defaults to empty strings
         FIXTURE=""
         SUBFOLDER=""
-        if [ -z "${{ inputs.fixtures-to-run }}" ]; then
+        if [[ "${{ inputs.fixtures-to-run }}" != "" ]]; then
           echo "Set to run: ${{ inputs.fixtures-to-run }}"
           SET_TO_RUN = ${{ inputs.fixtures-to-run }}
             # Check if the value contains the ':' character
