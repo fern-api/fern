@@ -167,14 +167,8 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private convertAlias({
-        aliasType,
-        literalValue
-    }: {
-        aliasType: FernIr.dynamic.NamedType.Alias;
-        literalValue: FernIr.dynamic.TypeReference;
-    }): go.TypeInstantiation {
-        switch (literalValue.type) {
+    private convertAlias({ aliasType }: { aliasType: FernIr.dynamic.NamedType.Alias }): go.TypeInstantiation {
+        switch (aliasType.typeReference.type) {
             case "literal":
                 return go.TypeInstantiation.reference(
                     go.invokeFunc({
@@ -182,7 +176,7 @@ export class DynamicTypeInstantiationMapper {
                             name: this.context.getTypeName(aliasType.declaration.name),
                             importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
                         }),
-                        arguments_: [this.convertLiteralValue(literalValue.value)]
+                        arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
                     })
                 );
             default:
