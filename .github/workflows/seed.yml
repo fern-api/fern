@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     outputs:
       # Note: purposely excluding seed. Running every generator at once will lock up all of our runners.
       ruby: ${{ steps.get-generator-changes.outputs.ruby }}
@@ -41,7 +41,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
-          fetch-depth: 200
+          fetch-depth: 200 
+        
       - name: Get generator changes
         id: get-generator-changes
         uses: ./.github/actions/get-generator-changes
@@ -125,6 +126,7 @@ jobs:
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -148,6 +150,7 @@ jobs:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
           validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -170,6 +173,7 @@ jobs:
         with:
           generator-name: pydantic
           generator-path: generators/python
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -193,6 +197,7 @@ jobs:
           generator-name: python-sdk
           generator-path: generators/python
           validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   fastapi:
     runs-on: ubuntu-latest
@@ -215,6 +220,7 @@ jobs:
         with:
           generator-name: fastapi
           generator-path: generators/python
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -237,6 +243,7 @@ jobs:
         with:
           generator-name: openapi
           generator-path: generators/openapi
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   postman:
     runs-on: ubuntu-latest
@@ -259,6 +266,7 @@ jobs:
         with:
           generator-name: postman
           generator-path: generators/postman
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -281,6 +289,7 @@ jobs:
         with:
           generator-name: java-sdk
           generator-path: generators/java generators/java-v2
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -303,6 +312,7 @@ jobs:
         with:
           generator-name: java-model
           generator-path: generators/java
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   java-spring:
     runs-on: ubuntu-latest
@@ -325,6 +335,7 @@ jobs:
         with:
           generator-name: java-spring
           generator-path: generators/java
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -347,6 +358,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -369,6 +381,7 @@ jobs:
         with:
           generator-name: ts-express
           generator-path: generators/typescript
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -391,6 +404,7 @@ jobs:
         with:
           generator-name: go-fiber
           generator-path: generators/go generators/go-v2
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -413,6 +427,7 @@ jobs:
         with:
           generator-name: go-model
           generator-path: generators/go generators/go-v2
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -436,6 +451,7 @@ jobs:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
           validation-exclude-paths: "seed/*/.mock/*"
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -458,6 +474,7 @@ jobs:
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -480,6 +497,7 @@ jobs:
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   php-model:
     runs-on: ubuntu-latest
@@ -502,6 +520,7 @@ jobs:
         with:
           generator-name: php-model
           generator-path: generators/php
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -524,6 +543,7 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -546,6 +566,7 @@ jobs:
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   rust-model:
     runs-on: ubuntu-latest
@@ -568,6 +589,7 @@ jobs:
         with:
           generator-name: rust-model
           generator-path: generators/rust
+          fixtures-to-run: ${{ matrix.fixtures }}
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -590,3 +612,4 @@ jobs:
         with:
           generator-name: rust-sdk
           generator-path: generators/rust
+          fixtures-to-run: ${{ matrix.fixtures }}
