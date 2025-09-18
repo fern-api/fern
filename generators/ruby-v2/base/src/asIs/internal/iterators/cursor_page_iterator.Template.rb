@@ -3,10 +3,10 @@ module <%= gem_namespace %>
     class CursorPageIterator
       include Enumerable
 
-      # Instantiates a CursorPageIterator, an Enumerable class which wraps calls to a paginated API and yields pages of items.
+      # Instantiates a CursorPageIterator, an Enumerable class which wraps calls to a cursor-based paginated API and yields pages of items.
       #
-      # @param initial_cursor [String] The initial cursor to use when iterating.
-      # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
+      # @param initial_cursor [String] The initial cursor to use when iterating, if any.
+      # @param cursor_field [Symbol] The name of the field in API responses to extract the next cursor from.
       # @return [<%= gem_namespace %>::Internal::CursorPageIterator]
       def initialize(initial_cursor:, cursor_field:, &block)
         @need_initial_load = initial_cursor.nil?

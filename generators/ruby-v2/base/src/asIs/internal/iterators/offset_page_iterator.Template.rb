@@ -5,8 +5,8 @@ module <%= gem_namespace %>
 
       # Instantiates an OffsetPageIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields pages of items from it.
       #
-      # @param initial_cursor [String] The initial cursor to use when iterating.
-      # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
+      # @param initial_page [Integer] The initial page to use when iterating, if any.
+      # @param page_field [String] The name of the field in API responses to extract the next page from.
       # @return [<%= gem_namespace %>::Internal::PageIterator]
       def initialize(initial_page:, page_field:, &block)
         @page_number = initial_page || 1

@@ -3,8 +3,8 @@ module <%= gem_namespace %>
     class OffsetItemIterator < ItemIterator
       # Instantiates an OffsetItemIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields the individual items from it.
       #
-      # @param initial_cursor [String] The initial cursor to use when iterating.
-      # @param cursor_field [String] The name of the field in API responses to extract the next cursor from.
+      # @param initial_page [Integer] The initial page to use when iterating, if any.
+      # @param page_field [String] The name of the field in API responses to extract the next page from.
       # @param item_field [String] The name of the field in API responses to extract the items to iterate over.
       def initialize(initial_page:, page_field:, item_field:, &block)
         @item_field = item_field
