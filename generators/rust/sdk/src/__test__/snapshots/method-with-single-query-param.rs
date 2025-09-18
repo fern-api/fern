@@ -3,13 +3,8 @@ pub async fn gettest(limit: Option<String>, options: Option<RequestOptions>) -> 
             Method::GET,
             "/api/test",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = limit {
-                query_params.push(("limit".to_string(), value.clone()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().string("limit", limit)
+            .build(),
             options,
         ).await
 }
