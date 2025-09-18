@@ -202,14 +202,12 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 // expectedRetryDurations holds an array of calculated retry durations,
 // where the index of the array should correspond to the retry attempt.
 //
-// Values are calculated based off of `minRetryDelay + minRetryDelay*i*i`, with
-// a max and min value of 5000ms and 500ms respectively.
+// Values are calculated based off of `minRetryDelay * 2^i`.
 var expectedRetryDurations = []time.Duration{
-	500 * time.Millisecond,
-	1000 * time.Millisecond,
-	2500 * time.Millisecond,
-	5000 * time.Millisecond,
-	5000 * time.Millisecond,
+	1000 * time.Millisecond, // 500ms * 2^1 = 1000ms
+	2000 * time.Millisecond, // 500ms * 2^2 = 2000ms
+	4000 * time.Millisecond, // 500ms * 2^3 = 4000ms
+	8000 * time.Millisecond, // 500ms * 2^4 = 8000ms
 }
 
 func TestRetryDelayTiming(t *testing.T) {
@@ -226,8 +224,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return "1"
 			},
-			expectedMinMs: 700,  // 70% of 1000ms after jitter and execution overhead
-			expectedMaxMs: 1100, // 1000ms + some tolerance
+			expectedMinMs: 500,
+			expectedMaxMs: 1500,
 		},
 		{
 			name:       "retry-after with HTTP date",
@@ -235,8 +233,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return time.Now().Add(3 * time.Second).Format(time.RFC1123)
 			},
-			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
-			expectedMaxMs: 3100, // 3000ms + some tolerance
+			expectedMinMs: 1500,
+			expectedMaxMs: 4500,
 		},
 		{
 			name:       "x-ratelimit-reset with future timestamp",
@@ -244,17 +242,8 @@ func TestRetryDelayTiming(t *testing.T) {
 			headerValueFunc: func() string {
 				return fmt.Sprintf("%d", time.Now().Add(3 * time.Second).Unix())
 			},
-			expectedMinMs: 1500, // 50% of 3000ms after jitter and execution overhead
-			expectedMaxMs: 3100, // 3000ms + some tolerance
-		},
-		{
-			name:       "retry-after exceeding max delay gets capped",
-			headerName: "retry-after",
-			headerValueFunc: func() string {
-				return "10"
-			},
-			expectedMinMs: 2500, // 50% of 5000ms (maxRetryDelay) after jitter and execution overhead
-			expectedMaxMs: 5100, // maxRetryDelay + some tolerance
+			expectedMinMs: 1500,
+			expectedMaxMs: 4500,
 		},
 	}
 

@@ -1,4 +1,4 @@
-use crate::client::CLIENT_NAME;
+use crate::client::OauthClientCredentialsClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -71,22 +71,8 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(
-        self,
-    ) -> Result<
-        {
-            {
-                CLIENT_NAME
-            }
-        },
-        ApiError,
-    > {
+    pub fn build(self) -> Result<OauthClientCredentialsClient, ApiError> {
         // Call the client constructor with all authentication parameters
-        {
-            {
-                CLIENT_NAME
-            }
-        }
-        ::new(self.config)
+        OauthClientCredentialsClient::new(self.config)
     }
 }
