@@ -81,7 +81,7 @@ export function convertObject({
                 continue;
             }
 
-            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf or anyOfschemas
+            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf or anyOfSchemas
             if (resolvedReference.oneOf != null || resolvedReference.anyOf != null) {
                 const variants = resolvedReference.oneOf ?? resolvedReference.anyOf;
                 if (variants != null) {
