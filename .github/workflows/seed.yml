@@ -27,62 +27,62 @@ jobs:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
-              generators/ruby/**
+              generators/ruby/
               seed/ruby-sdk/seed.yml
               seed/ruby-model/seed.yml
             generator-name: ruby
           - files: |
-              generators/ruby-v2/**
+              generators/ruby-v2/
               seed/ruby-sdk-v2/seed.yml
             generator-name: ruby-v2
           - files: |
-              generators/openapi/**
+              generators/openapi/
               seed/openapi/seed.yml
             generator-name: openapi
           - files: |
-              generators/python/**
+              generators/python/
               seed/pydantic/seed.yml
               seed/pydantic-v2/seed.yml
               seed/python-sdk/seed.yml
               seed/fastapi/seed.yml
             generator-name: python
           - files: |
-              generators/postman/**
+              generators/postman/
               seed/postman/seed.yml
             generator-name: postman
           - files: |
-              generators/java/**
+              generators/java/
               seed/java-sdk/seed.yml
               seed/java-model/seed.yml
               seed/java-spring/seed.yml
             generator-name: java
           - files: |
-              generators/typescript/**
+              generators/typescript/
               seed/ts-sdk/seed.yml
               seed/ts-express/seed.yml
             generator-name: typescript
           - files: |
-              generators/go/**
+              generators/go/
               seed/go-sdk/seed.yml
               seed/go-model/seed.yml
               seed/go-fiber/seed.yml
             generator-name: go
           - files: |
-              generators/csharp/**
+              generators/csharp/
               seed/csharp-sdk/seed.yml
               seed/csharp-model/seed.yml
             generator-name: csharp
           - files: |
-              generators/php/**
+              generators/php/
               seed/php-sdk/seed.yml
               seed/php-model/seed.yml
             generator-name: php
           - files: |
-              generators/swift/**
+              generators/swift/
               seed/swift-sdk/seed.yml
             generator-name: swift
           - files: |
-              generators/rust/**
+              generators/rust/
               seed/rust-model/seed.yml
               seed/rust-sdk/seed.yml
             generator-name: rust
