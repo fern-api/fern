@@ -33,6 +33,24 @@ exports[`MethodInvocation > writes method invocation with 2 keyword arguments 1`
 )"
 `;
 
+exports[`MethodInvocation > writes method invocation with a block with one block arg 1`] = `
+"2.my_method() do |duration|
+  Time.now + duration
+end"
+`;
+
+exports[`MethodInvocation > writes method invocation with a block with three block args 1`] = `
+"2.my_method() do |duration1, duration2, duration3|
+  Time.now + duration1 + duration2 + duration3
+end"
+`;
+
+exports[`MethodInvocation > writes method invocation with a block with two block args 1`] = `
+"2.my_method() do |duration1, duration2|
+  Time.now + duration1 + duration2
+end"
+`;
+
 exports[`MethodInvocation > writes method invocation with a mix of positional and keyword arguments 1`] = `
 "2.my_method(
   1,

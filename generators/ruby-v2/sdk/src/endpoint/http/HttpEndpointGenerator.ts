@@ -67,7 +67,15 @@ export class HttpEndpointGenerator {
                                     ruby.codeblock(`params[:${endpoint.pagination.page.property.name.wireValue}]`)
                                 ]
                             ],
-                            block: statements
+                            block: [
+                                ["next_cursor"],
+                                [
+                                    ruby.codeblock(
+                                        `params[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
+                                    ),
+                                    ...statements
+                                ]
+                            ]
                         })
                     ];
                     break;

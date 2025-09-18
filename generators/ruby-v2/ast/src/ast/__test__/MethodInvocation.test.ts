@@ -37,7 +37,40 @@ describe("MethodInvocation", () => {
             on: ruby.codeblock(`2`),
             method: "my_method",
             arguments_: [],
-            block: [ruby.codeblock(`Time.now`)]
+            block: [[], [ruby.codeblock(`Time.now`)]]
+        });
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method invocation with a block with one block arg", () => {
+        const method = ruby.invokeMethod({
+            on: ruby.codeblock(`2`),
+            method: "my_method",
+            arguments_: [],
+            block: [["duration"], [ruby.codeblock(`Time.now + duration`)]]
+        });
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method invocation with a block with two block args", () => {
+        const method = ruby.invokeMethod({
+            on: ruby.codeblock(`2`),
+            method: "my_method",
+            arguments_: [],
+            block: [["duration1", "duration2"], [ruby.codeblock(`Time.now + duration1 + duration2`)]]
+        });
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("writes method invocation with a block with three block args", () => {
+        const method = ruby.invokeMethod({
+            on: ruby.codeblock(`2`),
+            method: "my_method",
+            arguments_: [],
+            block: [
+                ["duration1", "duration2", "duration3"],
+                [ruby.codeblock(`Time.now + duration1 + duration2 + duration3`)]
+            ]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
@@ -47,7 +80,7 @@ describe("MethodInvocation", () => {
             on: ruby.codeblock(`2`),
             method: "my_method",
             arguments_: [ruby.codeblock(`1`)],
-            block: [ruby.codeblock(`Time.now`)]
+            block: [[], [ruby.codeblock(`Time.now`)]]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
@@ -57,7 +90,7 @@ describe("MethodInvocation", () => {
             on: ruby.codeblock(`2`),
             method: "my_method",
             arguments_: [ruby.codeblock(`1`), ruby.codeblock(`3`)],
-            block: [ruby.codeblock(`Time.now`)]
+            block: [[], [ruby.codeblock(`Time.now`)]]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });

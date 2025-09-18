@@ -12,8 +12,8 @@ export declare namespace MethodInvocation {
         arguments_: AstNode[];
         /** Keyword arguments passed to the method */
         keywordArguments?: [string, AstNode][];
-        /** The block being invoked by the method call, if any */
-        block?: AstNode[];
+        /** If the method is being passed a block, the list of args and the code contained in the block */
+        block?: [string[], AstNode[]];
     }
 }
 
@@ -26,7 +26,7 @@ export class MethodInvocation extends AstNode {
     private method: string;
     private arguments_: AstNode[];
     private keywordArguments?: [string, AstNode][];
-    private block?: AstNode[];
+    private block?: [string[], AstNode[]];
 
     constructor({ on, method, arguments_, keywordArguments, block }: MethodInvocation.Args) {
         super();
@@ -76,10 +76,23 @@ export class MethodInvocation extends AstNode {
         }
         writer.write(")");
         if (this.block) {
+            const [args, codelines] = this.block;
             writer.write(" do");
+
+            if (args.length > 0) {
+                writer.write(" |");
+                args.forEach((argument, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    writer.write(argument);
+                });
+                writer.write("|");
+            }
+
             writer.newLine();
             writer.indent();
-            for (const line of this.block) {
+            for (const line of codelines) {
                 line.write(writer);
                 writer.writeNewLineIfLastLineNot();
             }
