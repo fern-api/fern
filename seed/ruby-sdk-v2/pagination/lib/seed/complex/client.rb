@@ -14,7 +14,8 @@ module Seed
           cursor_field: :starting_after,
           item_field: :conversations,
           initial_cursor: params[:starting_after]
-        ) do
+        ) do |next_cursor|
+          params[:starting_after] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

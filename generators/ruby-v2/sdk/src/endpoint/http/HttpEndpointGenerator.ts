@@ -37,15 +37,44 @@ export class HttpEndpointGenerator {
         serviceId: ServiceId;
     }): ruby.Method {
         const returnType = getEndpointReturnType({ context: this.context, endpoint });
+        const rawClient = new RawClient(this.context);
 
-        let statements = this.generateRequestProcedure({ endpoint, serviceId });
+        const statements = [];
+
+        const request = getEndpointRequest({
+            context: this.context,
+            endpoint,
+            serviceId
+        });
+
+        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            statements.push(requestBodyCodeBlock.code);
+        }
+
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock?.code != null) {
+            statements.push(queryParameterCodeBlock.code);
+        }
+
+        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const sendRequestCodeBlock = rawClient.sendRequest({
+            baseUrl: ruby.codeblock(""),
+            pathParameterReferences,
+            endpoint,
+            requestType: request?.getRequestType(),
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference
+        });
+
+        let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom":
                     break; // custom pagination not yet supported
                 case "cursor":
-                    statements = [
+                    requestStatements = [
                         ruby.invokeMethod({
                             on: ruby.classReference({
                                 name: "ItemIterator",
@@ -73,7 +102,7 @@ export class HttpEndpointGenerator {
                                     ruby.codeblock(
                                         `params[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
                                     ),
-                                    ...statements
+                                    ...requestStatements
                                 ]
                             ]
                         })
@@ -85,6 +114,8 @@ export class HttpEndpointGenerator {
                     assertNever(endpoint.pagination);
             }
         }
+
+        statements.push(...requestStatements);
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
@@ -107,40 +138,12 @@ export class HttpEndpointGenerator {
 
     private generateRequestProcedure({
         endpoint,
-        serviceId
+        sendRequestCodeBlock
     }: {
         endpoint: HttpEndpoint;
-        serviceId: ServiceId;
+        sendRequestCodeBlock?: ruby.CodeBlock;
     }): ruby.AstNode[] {
-        const rawClient = new RawClient(this.context);
-
-        const request = getEndpointRequest({
-            context: this.context,
-            endpoint,
-            serviceId
-        });
-
         const statements: ruby.AstNode[] = [];
-
-        const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
-        if (requestBodyCodeBlock?.code != null) {
-            statements.push(requestBodyCodeBlock.code);
-        }
-
-        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock?.code != null) {
-            statements.push(queryParameterCodeBlock.code);
-        }
-
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
-        const sendRequestCodeBlock = rawClient.sendRequest({
-            baseUrl: ruby.codeblock(""),
-            pathParameterReferences,
-            endpoint,
-            requestType: request?.getRequestType(),
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            bodyReference: requestBodyCodeBlock?.requestBodyReference
-        });
 
         if (sendRequestCodeBlock != null) {
             statements.push(sendRequestCodeBlock);
