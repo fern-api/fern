@@ -619,12 +619,9 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "STRING",
+                        "v1": "DATE_TIME",
                         "v2": {
-                          "validation": {
-                            "format": "date-time"
-                          },
-                          "type": "string"
+                          "type": "dateTime"
                         }
                       },
                       "type": "primitive"
@@ -946,12 +943,9 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "STRING",
+                        "v1": "DATE_TIME",
                         "v2": {
-                          "validation": {
-                            "format": "date-time"
-                          },
-                          "type": "string"
+                          "type": "dateTime"
                         }
                       },
                       "type": "primitive"
@@ -1213,12 +1207,9 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "STRING",
+                        "v1": "DATE_TIME",
                         "v2": {
-                          "validation": {
-                            "format": "date-time"
-                          },
-                          "type": "string"
+                          "type": "dateTime"
                         }
                       },
                       "type": "primitive"

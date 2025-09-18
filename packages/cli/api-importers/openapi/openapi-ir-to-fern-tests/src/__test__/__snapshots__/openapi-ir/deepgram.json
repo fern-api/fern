@@ -1605,7 +1605,6 @@
                       "type": "boolean"
                     },
                     "generatedName": "ListenRequestSummarize",
-                    "nameOverride": "Legacy",
                     "title": "Legacy",
                     "groupName": [],
                     "type": "primitive"
@@ -2540,7 +2539,6 @@
               "type": "int"
             },
             "generatedName": "SpeakRequestBitRate",
-            "nameOverride": "aac",
             "title": "aac",
             "groupName": [],
             "type": "primitive"
@@ -2773,7 +2771,6 @@
               "type": "int"
             },
             "generatedName": "SpeakRequestSpeakSampleRate",
-            "nameOverride": "opus",
             "title": "opus",
             "groupName": [],
             "type": "primitive"
@@ -4977,7 +4974,7 @@
       "generatedRequestName": "UpdateProjectRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateProjectRequest",
+          "generatedName": "UpdateProjectRequestBody",
           "schema": "update_projects",
           "source": {
             "file": "../openapi.yml",
@@ -8316,7 +8313,7 @@
       "generatedRequestName": "CreateProjectKeyRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateProjectKeyRequest",
+          "generatedName": "CreateProjectKeyRequestBody",
           "schema": "keys",
           "source": {
             "file": "../openapi.yml",
@@ -11283,7 +11280,7 @@
       "generatedRequestName": "UpdateProjectMemberScopesRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateProjectMemberScopesRequest",
+          "generatedName": "UpdateProjectMemberScopesRequestBody",
           "schema": "update_member_scope",
           "source": {
             "file": "../openapi.yml",
@@ -11956,7 +11953,7 @@
       "generatedRequestName": "CreateProjectInviteRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateProjectInviteRequest",
+          "generatedName": "CreateProjectInviteRequestBody",
           "schema": "create_project_invite",
           "source": {
             "file": "../openapi.yml",
@@ -14850,9 +14847,7 @@
                 "generatedName": "getProjectUsageResponseStart",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseStart",
                   "groupName": [],
@@ -14871,9 +14866,7 @@
                 "generatedName": "getProjectUsageResponseEnd",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseEnd",
                   "groupName": [],
@@ -15398,14 +15391,14 @@
                 "start": {
                   "value": {
                     "value": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -16741,9 +16734,7 @@
               "schema": {
                 "description": "Start date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-16",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseStart",
                 "groupName": [],
@@ -16758,9 +16749,7 @@
               "schema": {
                 "description": "End date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-23",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseEnd",
                 "groupName": [],
@@ -16953,9 +16942,7 @@
                               "value": {
                                 "description": "Start date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingStart",
                                 "groupName": [],
@@ -16975,9 +16962,7 @@
                               "value": {
                                 "description": "End date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingEnd",
                                 "groupName": [],
@@ -17605,14 +17590,14 @@
                 "start": {
                   "value": {
                     "value": "2025-01-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2025-01-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -17693,14 +17678,14 @@
                             "start": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "end": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -22141,7 +22126,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "SpeakApiKey",
               "title": "SpeakApiKey",
               "groupName": [],
               "type": "primitive"
@@ -22159,7 +22143,6 @@
             "schema": {
               "description": "Encoding allows you to specify the expected encoding of your audio output",
               "generatedName": "Encoding",
-              "nameOverride": "SpeakEncoding",
               "title": "SpeakEncoding",
               "values": [
                 {
@@ -22221,7 +22204,6 @@
             "schema": {
               "description": "AI model used to process submitted text",
               "generatedName": "Model",
-              "nameOverride": "SpeakModel",
               "title": "SpeakModel",
               "values": [
                 {
@@ -22308,7 +22290,6 @@
             "schema": {
               "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
               "generatedName": "SampleRate",
-              "nameOverride": "SpeakSampleRate",
               "title": "SpeakSampleRate",
               "values": [
                 {
@@ -22716,7 +22697,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "ListenApiKey",
               "title": "ListenApiKey",
               "groupName": [],
               "type": "primitive"
@@ -22738,7 +22718,6 @@
                 "type": "string"
               },
               "generatedName": "Callback",
-              "nameOverride": "ListenCallback",
               "title": "ListenCallback",
               "groupName": [],
               "type": "primitive"
@@ -22754,7 +22733,6 @@
             "schema": {
               "description": "HTTP method by which the callback request will be made",
               "generatedName": "CallbackMethod",
-              "nameOverride": "ListenCallbackMethod",
               "title": "ListenCallbackMethod",
               "values": [
                 {
@@ -22806,7 +22784,6 @@
                 "type": "string"
               },
               "generatedName": "Channels",
-              "nameOverride": "ListenChannels",
               "title": "ListenChannels",
               "groupName": [],
               "type": "primitive"
@@ -22822,7 +22799,6 @@
             "schema": {
               "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
               "generatedName": "Diarize",
-              "nameOverride": "ListenDiarize",
               "title": "ListenDiarize",
               "values": [
                 {
@@ -22864,7 +22840,6 @@
                 "type": "string"
               },
               "generatedName": "DiarizeVersion",
-              "nameOverride": "ListenDiarizeVersion",
               "title": "ListenDiarizeVersion",
               "groupName": [],
               "type": "primitive"
@@ -22880,7 +22855,6 @@
             "schema": {
               "description": "Identify and extract key entities from content in submitted audio",
               "generatedName": "Dictation",
-              "nameOverride": "ListenDictation",
               "title": "ListenDictation",
               "values": [
                 {
@@ -22917,7 +22891,6 @@
             "schema": {
               "description": "Specify the expected encoding of your submitted audio",
               "generatedName": "Encoding",
-              "nameOverride": "ListenEncoding",
               "title": "ListenEncoding",
               "values": [
                 {
@@ -22984,7 +22957,6 @@
                 "type": "string"
               },
               "generatedName": "Endpointing",
-              "nameOverride": "ListenEndpointing",
               "title": "ListenEndpointing",
               "groupName": [],
               "type": "primitive"
@@ -23004,7 +22976,6 @@
                 "type": "string"
               },
               "generatedName": "Extra",
-              "nameOverride": "ListenExtra",
               "title": "ListenExtra",
               "groupName": [],
               "type": "primitive"
@@ -23020,7 +22991,6 @@
             "schema": {
               "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
               "generatedName": "FillerWords",
-              "nameOverride": "ListenFillerWords",
               "title": "ListenFillerWords",
               "values": [
                 {
@@ -23057,7 +23027,6 @@
             "schema": {
               "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
               "generatedName": "InterimResults",
-              "nameOverride": "ListenInterimResults",
               "title": "ListenInterimResults",
               "values": [
                 {
@@ -23098,7 +23067,6 @@
                 "type": "string"
               },
               "generatedName": "Keyterm",
-              "nameOverride": "ListenKeyterm",
               "title": "ListenKeyterm",
               "groupName": [],
               "type": "primitive"
@@ -23118,7 +23086,6 @@
                 "type": "string"
               },
               "generatedName": "Keywords",
-              "nameOverride": "ListenKeywords",
               "title": "ListenKeywords",
               "groupName": [],
               "type": "primitive"
@@ -23134,7 +23101,6 @@
             "schema": {
               "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
               "generatedName": "Language",
-              "nameOverride": "ListenLanguage",
               "title": "ListenLanguage",
               "values": [
                 {
@@ -23441,7 +23407,6 @@
             "schema": {
               "description": "AI model to use for the transcription",
               "generatedName": "Model",
-              "nameOverride": "ListenModel",
               "title": "ListenModel",
               "values": [
                 {
@@ -23613,7 +23578,6 @@
             "schema": {
               "description": "Transcribe each audio channel independently",
               "generatedName": "Multichannel",
-              "nameOverride": "ListenMultichannel",
               "title": "ListenMultichannel",
               "values": [
                 {
@@ -23650,7 +23614,6 @@
             "schema": {
               "description": "Convert numbers from written format to numerical format",
               "generatedName": "Numerals",
-              "nameOverride": "ListenNumerals",
               "title": "ListenNumerals",
               "values": [
                 {
@@ -23687,7 +23650,6 @@
             "schema": {
               "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
               "generatedName": "ProfanityFilter",
-              "nameOverride": "ListenProfanityFilter",
               "title": "ListenProfanityFilter",
               "values": [
                 {
@@ -23724,7 +23686,6 @@
             "schema": {
               "description": "Add punctuation and capitalization to the transcript",
               "generatedName": "Punctuate",
-              "nameOverride": "ListenPunctuate",
               "title": "ListenPunctuate",
               "values": [
                 {
@@ -23761,7 +23722,6 @@
             "schema": {
               "description": "Redaction removes sensitive information from your transcripts",
               "generatedName": "Redact",
-              "nameOverride": "ListenRedact",
               "title": "ListenRedact",
               "values": [
                 {
@@ -23822,7 +23782,6 @@
                 "type": "string"
               },
               "generatedName": "Replace",
-              "nameOverride": "ListenReplace",
               "title": "ListenReplace",
               "groupName": [],
               "type": "primitive"
@@ -23842,7 +23801,6 @@
                 "type": "string"
               },
               "generatedName": "SampleRate",
-              "nameOverride": "ListenSampleRate",
               "title": "ListenSampleRate",
               "groupName": [],
               "type": "primitive"
@@ -23862,7 +23820,6 @@
                 "type": "string"
               },
               "generatedName": "Search",
-              "nameOverride": "ListenSearch",
               "title": "ListenSearch",
               "groupName": [],
               "type": "primitive"
@@ -23878,7 +23835,6 @@
             "schema": {
               "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
               "generatedName": "SmartFormat",
-              "nameOverride": "ListenSmartFormat",
               "title": "ListenSmartFormat",
               "values": [
                 {
@@ -23919,7 +23875,6 @@
                 "type": "string"
               },
               "generatedName": "Tag",
-              "nameOverride": "ListenTag",
               "title": "ListenTag",
               "groupName": [],
               "type": "primitive"
@@ -23939,7 +23894,6 @@
                 "type": "string"
               },
               "generatedName": "UtteranceEnd",
-              "nameOverride": "ListenUtteranceEnd",
               "title": "ListenUtteranceEnd",
               "groupName": [],
               "type": "primitive"
@@ -23955,7 +23909,6 @@
             "schema": {
               "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
               "generatedName": "VadEvents",
-              "nameOverride": "ListenVadEvents",
               "title": "ListenVadEvents",
               "values": [
                 {
@@ -23997,7 +23950,6 @@
                 "type": "string"
               },
               "generatedName": "Version",
-              "nameOverride": "ListenVersion",
               "title": "ListenVersion",
               "groupName": [],
               "type": "primitive"
@@ -25122,7 +25074,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "AgentApiKey",
               "title": "AgentApiKey",
               "groupName": [],
               "type": "primitive"

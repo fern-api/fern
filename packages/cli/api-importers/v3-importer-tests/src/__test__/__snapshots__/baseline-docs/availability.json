@@ -713,13 +713,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -758,13 +764,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -802,31 +814,37 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "DeprecatedParam",
-                      "camelCase": {
-                        "unsafeName": "deprecatedParam",
-                        "safeName": "deprecatedParam"
+                    "container": {
+                      "nullable": {
+                        "name": {
+                          "originalName": "DeprecatedParam",
+                          "camelCase": {
+                            "unsafeName": "deprecatedParam",
+                            "safeName": "deprecatedParam"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "deprecated_param",
+                            "safeName": "deprecated_param"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "DEPRECATED_PARAM",
+                            "safeName": "DEPRECATED_PARAM"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "DeprecatedParam",
+                            "safeName": "DeprecatedParam"
+                          }
+                        },
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "typeId": "type_:DeprecatedParam",
+                        "type": "named"
                       },
-                      "snakeCase": {
-                        "unsafeName": "deprecated_param",
-                        "safeName": "deprecated_param"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "DEPRECATED_PARAM",
-                        "safeName": "DEPRECATED_PARAM"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "DeprecatedParam",
-                        "safeName": "DeprecatedParam"
-                      }
+                      "type": "nullable"
                     },
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "typeId": "type_:DeprecatedParam",
-                    "type": "named"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -868,13 +886,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -918,13 +942,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -962,13 +992,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -1005,31 +1041,37 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "DeprecatedParam",
-                      "camelCase": {
-                        "unsafeName": "deprecatedParam",
-                        "safeName": "deprecatedParam"
+                    "container": {
+                      "nullable": {
+                        "name": {
+                          "originalName": "DeprecatedParam",
+                          "camelCase": {
+                            "unsafeName": "deprecatedParam",
+                            "safeName": "deprecatedParam"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "deprecated_param",
+                            "safeName": "deprecated_param"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "DEPRECATED_PARAM",
+                            "safeName": "DEPRECATED_PARAM"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "DeprecatedParam",
+                            "safeName": "DeprecatedParam"
+                          }
+                        },
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "typeId": "type_:DeprecatedParam",
+                        "type": "named"
                       },
-                      "snakeCase": {
-                        "unsafeName": "deprecated_param",
-                        "safeName": "deprecated_param"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "DEPRECATED_PARAM",
-                        "safeName": "DEPRECATED_PARAM"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "DeprecatedParam",
-                        "safeName": "DeprecatedParam"
-                      }
+                      "type": "nullable"
                     },
-                    "fernFilepath": {
-                      "allParts": [],
-                      "packagePath": []
-                    },
-                    "typeId": "type_:DeprecatedParam",
-                    "type": "named"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -1070,13 +1112,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -1128,7 +1176,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -2541,8 +2589,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2572,8 +2623,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2603,8 +2657,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "type_:DeprecatedParam",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:DeprecatedParam",
+                    "type": "named"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2634,8 +2691,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2667,8 +2727,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2698,8 +2761,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2729,8 +2795,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "type_:DeprecatedParam",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:DeprecatedParam",
+                    "type": "named"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -2760,15 +2829,18 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
             }
           ],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"

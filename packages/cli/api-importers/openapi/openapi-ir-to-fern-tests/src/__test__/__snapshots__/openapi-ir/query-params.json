@@ -276,8 +276,7 @@
                   },
                   {
                     "schema": {
-                      "format": "date",
-                      "type": "string"
+                      "type": "date"
                     },
                     "generatedName": "SearchRequestAfter",
                     "groupName": [],

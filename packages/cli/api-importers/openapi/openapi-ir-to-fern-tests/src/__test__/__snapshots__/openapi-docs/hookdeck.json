@@ -2501,7 +2501,7 @@
                 "docs": "Error code",
                 "type": "string",
               },
-              "data": "optional<ApiErrorResponseData>",
+              "data": "optional<nullable<ApiErrorResponseData>>",
               "message": {
                 "docs": "Error description",
                 "type": "string",
@@ -2629,15 +2629,15 @@
             "properties": {
               "cancelled_at": {
                 "docs": "Date the bulk retry was cancelled",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "completed_at": {
                 "docs": "Date the bulk retry was completed",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "completed_count": {
                 "docs": "Number of events that were successfully delivered",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "created_at": {
                 "docs": "Date the bulk retry was created",
@@ -2645,15 +2645,15 @@
               },
               "estimated_batch": {
                 "docs": "Number of batches required to complete the bulk retry",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "estimated_count": {
                 "docs": "Number of estimated events to be retried",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "failed_count": {
                 "docs": "Number of events that failed to be delivered",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "id": {
                 "docs": "ID of the bulk retry",
@@ -2663,18 +2663,18 @@
                 "docs": "Indicates if the bulk retry is currently in progress",
                 "type": "boolean",
               },
-              "number": "optional<float>",
+              "number": "optional<nullable<float>>",
               "processed_batch": {
                 "docs": "Number of batches currently processed",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "progress": {
                 "docs": "Progression of the batch operations, values 0 - 1",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "query": {
                 "docs": "Query object to filter records",
-                "type": "optional<BatchOperationQuery>",
+                "type": "optional<nullable<BatchOperationQuery>>",
               },
               "team_id": {
                 "docs": "ID of the workspace",
@@ -2707,15 +2707,15 @@
             "properties": {
               "estimated_batch": {
                 "docs": "Number of batches required to complete the bulk retry",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "estimated_count": {
                 "docs": "Number of estimated events to be retried",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "progress": {
                 "docs": "Progression of the batch operations, values 0 - 1",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
             },
             "source": {
@@ -2732,7 +2732,7 @@
             },
             "union": [
               "map<string, unknown>",
-              "optional<string>",
+              "optional<nullable<string>>",
             ],
           },
           "Bookmark": {
@@ -2741,7 +2741,7 @@
             "properties": {
               "alias": {
                 "docs": "Alternate alias for the bookmark",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "created_at": {
                 "docs": "Date the bookmark was created",
@@ -2762,7 +2762,7 @@
               },
               "last_used_at": {
                 "docs": "Date the bookmark was last manually triggered",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "team_id": {
                 "docs": "ID of the workspace",
@@ -2799,7 +2799,7 @@
             "properties": {
               "archived_at": {
                 "docs": "Date the connection was archived",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "created_at": {
                 "docs": "Date the connection was created",
@@ -2816,15 +2816,15 @@
               },
               "paused_at": {
                 "docs": "Date the connection was paused",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "resolved_rules": {
                 "docs": "Array of rules applied to connection after factoring for the ruleset",
-                "type": "optional<list<Rule>>",
+                "type": "optional<nullable<list<Rule>>>",
               },
               "rules": {
                 "docs": "Array of rules configured on the connection",
-                "type": "optional<list<Rule>>",
+                "type": "optional<nullable<list<Rule>>>",
               },
               "ruleset": "optional<Ruleset>",
               "source": "Source",
@@ -2850,7 +2850,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "float",
               "boolean",
               "ConnectionFilterPropertyThree",
@@ -2951,14 +2951,14 @@
             "inline": undefined,
             "properties": {
               "aggregation_keys": "DeliveryIssueAggregationKeys",
-              "auto_resolved_at": "optional<datetime>",
+              "auto_resolved_at": "optional<nullable<datetime>>",
               "created_at": {
                 "docs": "ISO timestamp for when the issue was created",
                 "type": "string",
               },
               "dismissed_at": {
                 "docs": "ISO timestamp for when the issue was dismissed",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "first_seen_at": {
                 "docs": "ISO timestamp for when the issue was first opened",
@@ -2974,9 +2974,9 @@
               },
               "last_updated_by": {
                 "docs": "ID of the team member who last updated the issue status",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
-              "merged_with": "optional<string>",
+              "merged_with": "optional<nullable<string>>",
               "opened_at": {
                 "docs": "ISO timestamp for when the issue was last opened",
                 "type": "datetime",
@@ -3035,7 +3035,7 @@
             "inline": undefined,
             "properties": {
               "aggregation_keys": "DeliveryIssueAggregationKeys",
-              "auto_resolved_at": "optional<datetime>",
+              "auto_resolved_at": "optional<nullable<datetime>>",
               "created_at": {
                 "docs": "ISO timestamp for when the issue was created",
                 "type": "string",
@@ -3043,7 +3043,7 @@
               "data": "optional<DeliveryIssueData>",
               "dismissed_at": {
                 "docs": "ISO timestamp for when the issue was dismissed",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "first_seen_at": {
                 "docs": "ISO timestamp for when the issue was first opened",
@@ -3059,9 +3059,9 @@
               },
               "last_updated_by": {
                 "docs": "ID of the team member who last updated the issue status",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
-              "merged_with": "optional<string>",
+              "merged_with": "optional<nullable<string>>",
               "opened_at": {
                 "docs": "ISO timestamp for when the issue was last opened",
                 "type": "datetime",
@@ -3087,11 +3087,11 @@
             "properties": {
               "archived_at": {
                 "docs": "Date the destination was archived",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "cli_path": {
                 "docs": "Path for the CLI destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "created_at": {
                 "docs": "Date the destination was created",
@@ -3105,10 +3105,10 @@
                 "docs": "A unique, human-friendly name for the destination",
                 "type": "string",
               },
-              "path_forwarding_disabled": "optional<boolean>",
+              "path_forwarding_disabled": "optional<nullable<boolean>>",
               "rate_limit": {
                 "docs": "Limit event attempts to receive per period. Max value is workspace plan's max attempts thoughput.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "rate_limit_period": "optional<DestinationRateLimitPeriod>",
               "team_id": {
@@ -3121,7 +3121,7 @@
               },
               "url": {
                 "docs": "HTTP endpoint of the destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -3171,14 +3171,14 @@
               },
               "cli_id": {
                 "docs": "ID of the CLI the event is sent to",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "created_at": {
                 "docs": "Date the event was created",
                 "type": "datetime",
               },
               "created_at_id": "optional<string>",
-              "data": "optional<EventData>",
+              "data": "optional<nullable<EventData>>",
               "destination_id": {
                 "docs": "ID of the associated destination",
                 "type": "string",
@@ -3193,12 +3193,12 @@
               },
               "last_attempt_at": {
                 "docs": "Date of the most recently attempted retry",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "last_attempt_at_id": "optional<string>",
               "next_attempt_at": {
                 "docs": "Date of the next scheduled retry",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "request_id": {
                 "docs": "ID of the request that created the event",
@@ -3206,7 +3206,7 @@
               },
               "response_status": {
                 "docs": "Event status",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "source_id": {
                 "docs": "ID of the associated source",
@@ -3215,7 +3215,7 @@
               "status": "EventStatus",
               "successful_at": {
                 "docs": "Date of the latest successful attempt",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "team_id": {
                 "docs": "ID of the workspace",
@@ -3241,19 +3241,19 @@
             "properties": {
               "archived_at": {
                 "docs": "Date the attempt was archived",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "attempt_number": {
                 "docs": "Sequential number of attempts (up to and including this one) made for the associated event",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "body": {
                 "docs": "Response body from the destination",
-                "type": "optional<EventAttemptBody>",
+                "type": "optional<nullable<EventAttemptBody>>",
               },
               "bulk_retry_id": {
                 "docs": "ID of associated bulk retry",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "created_at": {
                 "docs": "Date the attempt was created",
@@ -3261,13 +3261,13 @@
               },
               "delivered_at": {
                 "docs": "Date the attempt was delivered",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "delivery_latency": {
                 "docs": "Time elapsed between attempt initiation and final delivery (in ms)",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
-              "destination_id": "optional<string>",
+              "destination_id": "optional<nullable<string>>",
               "error_code": "optional<AttemptErrorCodes>",
               "event_id": {
                 "docs": "Event ID",
@@ -3279,25 +3279,25 @@
               },
               "requested_url": {
                 "docs": "URL of the destination where delivery was attempted",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "responded_at": {
                 "docs": "Date the destination responded to this attempt",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "response_latency": {
                 "docs": "Time elapsed between attempt initiation and a response from the destination (in ms)",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "response_status": {
                 "docs": "Attempt's HTTP response code",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "state": "optional<AttemptState>",
               "status": "AttemptStatus",
               "successful_at": {
                 "docs": "Date the attempt was successful",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "team_id": {
                 "docs": "Team ID",
@@ -3337,12 +3337,12 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "body": "optional<EventDataBody>",
-              "headers": "optional<EventDataHeaders>",
-              "is_large_payload": "optional<boolean>",
-              "parsed_query": "optional<EventDataParsedQuery>",
+              "body": "optional<nullable<EventDataBody>>",
+              "headers": "optional<nullable<EventDataHeaders>>",
+              "is_large_payload": "optional<nullable<boolean>>",
+              "parsed_query": "optional<nullable<EventDataParsedQuery>>",
               "path": "string",
-              "query": "optional<string>",
+              "query": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3380,7 +3380,7 @@
             },
             "union": [
               "string",
-              "map<string, optional<string>>",
+              "map<string, optional<nullable<string>>>",
             ],
           },
           "EventDataParsedQuery": {
@@ -3392,7 +3392,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "EventDataParsedQueryOne",
             ],
           },
@@ -3506,7 +3506,7 @@
               "cause": "IgnoredEventCause",
               "created_at": "datetime",
               "id": "string",
-              "meta": "optional<IgnoredEventMeta>",
+              "meta": "optional<nullable<IgnoredEventMeta>>",
               "request_id": "string",
               "team_id": "string",
               "updated_at": "datetime",
@@ -3721,11 +3721,11 @@
               },
               "deleted_at": {
                 "docs": "ISO timestamp for when the issue trigger was deleted",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "disabled_at": {
                 "docs": "ISO timestamp for when the issue trigger was disabled",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "id": {
                 "docs": "ID of the issue trigger",
@@ -3733,11 +3733,11 @@
               },
               "name": {
                 "docs": "Optional unique name to use as reference when using the API",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "team_id": {
                 "docs": "ID of the workspace",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "type": "IssueType",
               "updated_at": {
@@ -3983,42 +3983,42 @@
             "properties": {
               "cli_events_count": {
                 "docs": "The count of CLI events created from this request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "created_at": {
                 "docs": "	Date the event was created",
                 "type": "datetime",
               },
-              "data": "optional<RequestData>",
+              "data": "optional<nullable<RequestData>>",
               "duplicate_hash": {
                 "docs": "Hash of the request data payload used to check for duplicates",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "duplicate_hits": {
                 "docs": "Count of duplicate hits found",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "events_count": {
                 "docs": "The count of events created from this request (CLI events not included)",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "id": {
                 "docs": "ID of the request",
                 "type": "string",
               },
-              "ignored_count": "optional<integer>",
+              "ignored_count": "optional<nullable<integer>>",
               "ingest_priority": {
                 "docs": "The priority attributed to the request when received",
-                "type": "optional<RequestIngestPriority>",
+                "type": "optional<nullable<RequestIngestPriority>>",
               },
               "ingested_at": {
                 "docs": "The time the request was originally received",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "ingested_at_id": "optional<string>",
               "original_event_data_id": {
                 "docs": "ID of the request data",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "rejection_cause": "optional<RequestRejectionCause>",
               "source_id": {
@@ -4035,7 +4035,7 @@
               },
               "verified": {
                 "docs": "Whether or not the request was verified when received",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
             },
             "source": {
@@ -4046,12 +4046,12 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "body": "optional<RequestDataBody>",
-              "headers": "optional<RequestDataHeaders>",
-              "is_large_payload": "optional<boolean>",
-              "parsed_query": "optional<RequestDataParsedQuery>",
+              "body": "optional<nullable<RequestDataBody>>",
+              "headers": "optional<nullable<RequestDataHeaders>>",
+              "is_large_payload": "optional<nullable<boolean>>",
+              "parsed_query": "optional<nullable<RequestDataParsedQuery>>",
               "path": "string",
-              "query": "optional<string>",
+              "query": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4089,7 +4089,7 @@
             },
             "union": [
               "string",
-              "map<string, optional<string>>",
+              "map<string, optional<nullable<string>>>",
             ],
           },
           "RequestDataParsedQuery": {
@@ -4101,7 +4101,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "RequestDataParsedQueryOne",
             ],
           },
@@ -4168,7 +4168,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "events": "optional<list<Event>>",
+              "events": "optional<nullable<list<Event>>>",
               "request": "Request",
             },
             "source": {
@@ -4181,11 +4181,11 @@
             "properties": {
               "count": {
                 "docs": "Maximum number of retries to attempt",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "interval": {
                 "docs": "Time in MS between each retry",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "strategy": "RetryStrategy",
             },
@@ -4227,7 +4227,7 @@
             "properties": {
               "archived_at": {
                 "docs": "Date the ruleset was archived",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "created_at": {
                 "docs": "Date the ruleset was created",
@@ -4318,11 +4318,11 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "api_key": "optional<string>",
-              "api_secret": "optional<string>",
-              "rate_limit": "optional<float>",
-              "rate_limit_period": "optional<ShopifyIntegrationConfigsRateLimitPeriod>",
-              "shop": "optional<string>",
+              "api_key": "optional<nullable<string>>",
+              "api_secret": "optional<nullable<string>>",
+              "rate_limit": "optional<nullable<float>>",
+              "rate_limit_period": "optional<nullable<ShopifyIntegrationConfigsRateLimitPeriod>>",
+              "shop": "optional<nullable<string>>",
               "webhook_secret_key": "string",
             },
             "source": {
@@ -4343,12 +4343,12 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "body": "optional<ShortEventDataBody>",
-              "headers": "optional<ShortEventDataHeaders>",
-              "is_large_payload": "optional<boolean>",
-              "parsed_query": "optional<ShortEventDataParsedQuery>",
+              "body": "optional<nullable<ShortEventDataBody>>",
+              "headers": "optional<nullable<ShortEventDataHeaders>>",
+              "is_large_payload": "optional<nullable<boolean>>",
+              "parsed_query": "optional<nullable<ShortEventDataParsedQuery>>",
               "path": "string",
-              "query": "optional<string>",
+              "query": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4386,7 +4386,7 @@
             },
             "union": [
               "string",
-              "map<string, optional<string>>",
+              "map<string, optional<nullable<string>>>",
             ],
           },
           "ShortEventDataParsedQuery": {
@@ -4398,7 +4398,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "ShortEventDataParsedQueryOne",
             ],
           },
@@ -4416,7 +4416,7 @@
             "properties": {
               "archived_at": {
                 "docs": "Date the source was archived",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "created_at": {
                 "docs": "Date the source was created",
@@ -4428,11 +4428,11 @@
               },
               "integration": {
                 "docs": "Integration object",
-                "type": "optional<SourceIntegration>",
+                "type": "optional<nullable<SourceIntegration>>",
               },
               "integration_id": {
                 "docs": "ID of the integration",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "docs": "Name for the source",
@@ -4495,7 +4495,7 @@
             "properties": {
               "enabled": "boolean",
               "source_id": "string",
-              "topics": "optional<list<TopicsValue>>",
+              "topics": "optional<nullable<list<TopicsValue>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4536,7 +4536,7 @@
               },
               "transformation_id": {
                 "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "type": {
                 "docs": "A transformation rule must be of type `transformation`",
@@ -4557,7 +4557,7 @@
               },
               "env": {
                 "docs": "A key-value object of environment variables to encrypt and expose to your transformation code",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<nullable<map<string, optional<nullable<string>>>>>",
               },
               "name": {
                 "docs": "The unique name of the transformation",
@@ -4610,16 +4610,16 @@
                 "docs": "Date the transformation was created",
                 "type": "datetime",
               },
-              "encrypted_env": "optional<string>",
+              "encrypted_env": "optional<nullable<string>>",
               "env": {
                 "docs": "Key-value environment variables to be passed to the transformation",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<nullable<map<string, optional<nullable<string>>>>>",
               },
               "id": {
                 "docs": "ID of the transformation",
                 "type": "string",
               },
-              "iv": "optional<string>",
+              "iv": "optional<nullable<string>>",
               "name": {
                 "docs": "A unique, human-friendly name for the transformation",
                 "type": "string",
@@ -4643,7 +4643,7 @@
             "properties": {
               "created_at": "datetime",
               "id": "string",
-              "issue_id": "optional<string>",
+              "issue_id": "optional<nullable<string>>",
               "log_level": "TransformationExecutionLogLevel",
               "logs": "list<ConsoleLine>",
               "original_event_data": "optional<ShortEventData>",
@@ -4689,12 +4689,12 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "console": "optional<list<ConsoleLine>>",
-              "execution_id": "optional<string>",
+              "console": "optional<nullable<list<ConsoleLine>>>",
+              "execution_id": "optional<nullable<string>>",
               "log_level": "TransformationExecutionLogLevel",
-              "request": "optional<TransformationExecutorOutputRequest>",
-              "request_id": "optional<string>",
-              "transformation_id": "optional<string>",
+              "request": "optional<nullable<TransformationExecutorOutputRequest>>",
+              "request_id": "optional<nullable<string>>",
+              "transformation_id": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4704,11 +4704,11 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "body": "optional<TransformationExecutorOutputRequestBody>",
-              "headers": "optional<TransformationExecutorOutputRequestHeaders>",
-              "parsed_query": "optional<TransformationExecutorOutputRequestParsedQuery>",
+              "body": "optional<nullable<TransformationExecutorOutputRequestBody>>",
+              "headers": "optional<nullable<TransformationExecutorOutputRequestHeaders>>",
+              "parsed_query": "optional<nullable<TransformationExecutorOutputRequestParsedQuery>>",
               "path": "string",
-              "query": "optional<TransformationExecutorOutputRequestQuery>",
+              "query": "optional<nullable<TransformationExecutorOutputRequestQuery>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4723,7 +4723,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "TransformationExecutorOutputRequestBodyOne",
             ],
           },
@@ -4757,7 +4757,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<string>",
+              "optional<nullable<string>>",
               "TransformationExecutorOutputRequestParsedQueryOne",
             ],
           },
@@ -4778,7 +4778,7 @@
               "openapi": "../openapi.yml",
             },
             "union": [
-              "optional<TransformationExecutorOutputRequestQueryZero>",
+              "optional<nullable<TransformationExecutorOutputRequestQueryZero>>",
               "string",
             ],
           },
@@ -4805,14 +4805,14 @@
             "inline": undefined,
             "properties": {
               "aggregation_keys": "TransformationIssueAggregationKeys",
-              "auto_resolved_at": "optional<datetime>",
+              "auto_resolved_at": "optional<nullable<datetime>>",
               "created_at": {
                 "docs": "ISO timestamp for when the issue was created",
                 "type": "string",
               },
               "dismissed_at": {
                 "docs": "ISO timestamp for when the issue was dismissed",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "first_seen_at": {
                 "docs": "ISO timestamp for when the issue was first opened",
@@ -4828,9 +4828,9 @@
               },
               "last_updated_by": {
                 "docs": "ID of the team member who last updated the issue status",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
-              "merged_with": "optional<string>",
+              "merged_with": "optional<nullable<string>>",
               "opened_at": {
                 "docs": "ISO timestamp for when the issue was last opened",
                 "type": "datetime",
@@ -4879,7 +4879,7 @@
               "transformation_execution_id": "string",
               "trigger_event_request_transformation_id": {
                 "docs": "Deprecated but still found on historical issues",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -4891,7 +4891,7 @@
             "inline": undefined,
             "properties": {
               "aggregation_keys": "TransformationIssueAggregationKeys",
-              "auto_resolved_at": "optional<datetime>",
+              "auto_resolved_at": "optional<nullable<datetime>>",
               "created_at": {
                 "docs": "ISO timestamp for when the issue was created",
                 "type": "string",
@@ -4899,7 +4899,7 @@
               "data": "optional<TransformationIssueData>",
               "dismissed_at": {
                 "docs": "ISO timestamp for when the issue was dismissed",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
               "first_seen_at": {
                 "docs": "ISO timestamp for when the issue was first opened",
@@ -4915,9 +4915,9 @@
               },
               "last_updated_by": {
                 "docs": "ID of the team member who last updated the issue status",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
-              "merged_with": "optional<string>",
+              "merged_with": "optional<nullable<string>>",
               "opened_at": {
                 "docs": "ISO timestamp for when the issue was last opened",
                 "type": "datetime",
@@ -6510,16 +6510,16 @@ types:
         type: string
         docs: ID of the issue trigger
       team_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the workspace
       name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional unique name to use as reference when using the API
       type: IssueType
       configs: IssueTriggerReference
       channels: optional<IssueTriggerChannels>
       disabled_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue trigger was disabled
       updated_at:
         type: datetime
@@ -6528,7 +6528,7 @@ types:
         type: datetime
         docs: ISO timestamp for when the issue trigger was created
       deleted_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue trigger was deleted
     source:
       openapi: ../openapi.yml
@@ -6556,7 +6556,7 @@ types:
       message:
         type: string
         docs: Error description
-      data: optional<ApiErrorResponseData>
+      data: optional<nullable<ApiErrorResponseData>>
     source:
       openapi: ../openapi.yml
   DeletedIssueTriggerResponse:
@@ -6634,39 +6634,39 @@ types:
         type: string
         docs: Event ID
       response_status:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Attempt's HTTP response code
       attempt_number:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Sequential number of attempts (up to and including this one) made for
           the associated event
       trigger: optional<AttemptTrigger>
       error_code: optional<AttemptErrorCodes>
       body:
-        type: optional<EventAttemptBody>
+        type: optional<nullable<EventAttemptBody>>
         docs: Response body from the destination
       requested_url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: URL of the destination where delivery was attempted
       bulk_retry_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of associated bulk retry
       status: AttemptStatus
       successful_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the attempt was successful
       delivered_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the attempt was delivered
       responded_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the destination responded to this attempt
       delivery_latency:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Time elapsed between attempt initiation and final delivery (in ms)
       response_latency:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Time elapsed between attempt initiation and a response from the
           destination (in ms)
@@ -6678,9 +6678,9 @@ types:
         docs: Date the attempt was created
       state: optional<AttemptState>
       archived_at:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Date the attempt was archived
-      destination_id: optional<string>
+      destination_id: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   EventAttemptPaginatedResult:
@@ -6698,7 +6698,7 @@ types:
   ShortEventDataParsedQuery:
     discriminated: false
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - ShortEventDataParsedQueryOne
     source:
       openapi: ../openapi.yml
@@ -6707,7 +6707,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, optional<string>>
+      - map<string, optional<nullable<string>>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6728,11 +6728,11 @@ types:
   ShortEventData:
     properties:
       path: string
-      query: optional<string>
-      parsed_query: optional<ShortEventDataParsedQuery>
-      headers: optional<ShortEventDataHeaders>
-      body: optional<ShortEventDataBody>
-      is_large_payload: optional<boolean>
+      query: optional<nullable<string>>
+      parsed_query: optional<nullable<ShortEventDataParsedQuery>>
+      headers: optional<nullable<ShortEventDataHeaders>>
+      body: optional<nullable<ShortEventDataBody>>
+      is_large_payload: optional<nullable<boolean>>
     source:
       openapi: ../openapi.yml
   Bookmark:
@@ -6753,11 +6753,11 @@ types:
         type: string
         docs: Descriptive name of the bookmark
       alias:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Alternate alias for the bookmark
       data: optional<ShortEventData>
       last_used_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the bookmark was last manually triggered
       updated_at:
         type: datetime
@@ -6791,7 +6791,7 @@ types:
   EventDataParsedQuery:
     discriminated: false
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - EventDataParsedQueryOne
     source:
       openapi: ../openapi.yml
@@ -6800,7 +6800,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, optional<string>>
+      - map<string, optional<nullable<string>>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6821,11 +6821,11 @@ types:
   EventData:
     properties:
       path: string
-      query: optional<string>
-      parsed_query: optional<EventDataParsedQuery>
-      headers: optional<EventDataHeaders>
-      body: optional<EventDataBody>
-      is_large_payload: optional<boolean>
+      query: optional<nullable<string>>
+      parsed_query: optional<nullable<EventDataParsedQuery>>
+      headers: optional<nullable<EventDataHeaders>>
+      body: optional<nullable<EventDataBody>>
+      is_large_payload: optional<nullable<boolean>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6855,22 +6855,22 @@ types:
       attempts:
         type: integer
         docs: Number of delivery attempts made
-      data: optional<EventData>
+      data: optional<nullable<EventData>>
       last_attempt_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date of the most recently attempted retry
       next_attempt_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date of the next scheduled retry
       response_status:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Event status
       status: EventStatus
       successful_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date of the latest successful attempt
       cli_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the CLI the event is sent to
       updated_at:
         type: datetime
@@ -6911,21 +6911,21 @@ types:
       team_id:
         type: string
         docs: ID of the workspace
-      path_forwarding_disabled: optional<boolean>
+      path_forwarding_disabled: optional<nullable<boolean>>
       url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: HTTP endpoint of the destination
       cli_path:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Path for the CLI destination
       rate_limit:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Limit event attempts to receive per period. Max value is workspace
           plan's max attempts thoughput.
       rate_limit_period: optional<DestinationRateLimitPeriod>
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the destination was archived
       updated_at:
         type: datetime
@@ -6965,7 +6965,7 @@ types:
     docs: Query object to filter records
     union:
       - map<string, unknown>
-      - optional<string>
+      - optional<nullable<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -6978,7 +6978,7 @@ types:
         type: string
         docs: ID of the workspace
       query:
-        type: optional<BatchOperationQuery>
+        type: optional<nullable<BatchOperationQuery>>
         docs: Query object to filter records
       created_at:
         type: datetime
@@ -6987,33 +6987,33 @@ types:
         type: datetime
         docs: Last time the bulk retry was updated
       cancelled_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the bulk retry was cancelled
       completed_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the bulk retry was completed
       estimated_batch:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of batches required to complete the bulk retry
       estimated_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of estimated events to be retried
       processed_batch:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of batches currently processed
       completed_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of events that were successfully delivered
       in_progress:
         type: boolean
         docs: Indicates if the bulk retry is currently in progress
       progress:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: Progression of the batch operations, values 0 - 1
       failed_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of events that failed to be delivered
-      number: optional<float>
+      number: optional<nullable<float>>
     source:
       openapi: ../openapi.yml
   BatchOperationPaginatedResult:
@@ -7026,13 +7026,13 @@ types:
   BatchOperationPlan:
     properties:
       estimated_batch:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of batches required to complete the bulk retry
       estimated_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Number of estimated events to be retried
       progress:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: Progression of the batch operations, values 0 - 1
     source:
       openapi: ../openapi.yml
@@ -7122,11 +7122,11 @@ types:
   ShopifyIntegrationConfigs:
     properties:
       webhook_secret_key: string
-      rate_limit_period: optional<ShopifyIntegrationConfigsRateLimitPeriod>
-      rate_limit: optional<float>
-      api_key: optional<string>
-      api_secret: optional<string>
-      shop: optional<string>
+      rate_limit_period: optional<nullable<ShopifyIntegrationConfigsRateLimitPeriod>>
+      rate_limit: optional<nullable<float>>
+      api_key: optional<nullable<string>>
+      api_secret: optional<nullable<string>>
+      shop: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   IntegrationConfigs:
@@ -7246,13 +7246,13 @@ types:
         type: datetime
         docs: ISO timestamp for when the issue last occured
       last_updated_by:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the team member who last updated the issue status
       dismissed_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue was dismissed
-      auto_resolved_at: optional<datetime>
-      merged_with: optional<string>
+      auto_resolved_at: optional<nullable<datetime>>
+      merged_with: optional<nullable<string>>
       updated_at:
         type: string
         docs: ISO timestamp for when the issue was last updated
@@ -7278,7 +7278,7 @@ types:
     properties:
       transformation_execution_id: string
       trigger_event_request_transformation_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Deprecated but still found on historical issues
     source:
       openapi: ../openapi.yml
@@ -7312,7 +7312,7 @@ types:
       created_at: datetime
       original_event_data: optional<ShortEventData>
       transformed_event_data: optional<ShortEventData>
-      issue_id: optional<string>
+      issue_id: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   TransformationIssueData:
@@ -7342,13 +7342,13 @@ types:
         type: datetime
         docs: ISO timestamp for when the issue last occured
       last_updated_by:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the team member who last updated the issue status
       dismissed_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue was dismissed
-      auto_resolved_at: optional<datetime>
-      merged_with: optional<string>
+      auto_resolved_at: optional<nullable<datetime>>
+      merged_with: optional<nullable<string>>
       updated_at:
         type: string
         docs: ISO timestamp for when the issue was last updated
@@ -7402,13 +7402,13 @@ types:
         type: datetime
         docs: ISO timestamp for when the issue last occured
       last_updated_by:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the team member who last updated the issue status
       dismissed_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue was dismissed
-      auto_resolved_at: optional<datetime>
-      merged_with: optional<string>
+      auto_resolved_at: optional<nullable<datetime>>
+      merged_with: optional<nullable<string>>
       updated_at:
         type: string
         docs: ISO timestamp for when the issue was last updated
@@ -7439,13 +7439,13 @@ types:
         type: datetime
         docs: ISO timestamp for when the issue last occured
       last_updated_by:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the team member who last updated the issue status
       dismissed_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: ISO timestamp for when the issue was dismissed
-      auto_resolved_at: optional<datetime>
-      merged_with: optional<string>
+      auto_resolved_at: optional<nullable<datetime>>
+      merged_with: optional<nullable<string>>
       updated_at:
         type: string
         docs: ISO timestamp for when the issue was last updated
@@ -7494,7 +7494,7 @@ types:
   RequestDataParsedQuery:
     discriminated: false
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - RequestDataParsedQueryOne
     source:
       openapi: ../openapi.yml
@@ -7503,7 +7503,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, optional<string>>
+      - map<string, optional<nullable<string>>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -7524,11 +7524,11 @@ types:
   RequestData:
     properties:
       path: string
-      query: optional<string>
-      parsed_query: optional<RequestDataParsedQuery>
-      headers: optional<RequestDataHeaders>
-      body: optional<RequestDataBody>
-      is_large_payload: optional<boolean>
+      query: optional<nullable<string>>
+      parsed_query: optional<nullable<RequestDataParsedQuery>>
+      headers: optional<nullable<RequestDataHeaders>>
+      body: optional<nullable<RequestDataBody>>
+      is_large_payload: optional<nullable<boolean>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -7541,38 +7541,38 @@ types:
         type: string
         docs: ID of the workspace
       verified:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: Whether or not the request was verified when received
       original_event_data_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the request data
       duplicate_hash:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Hash of the request data payload used to check for duplicates
       duplicate_hits:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Count of duplicate hits found
       rejection_cause: optional<RequestRejectionCause>
       ingest_priority:
-        type: optional<RequestIngestPriority>
+        type: optional<nullable<RequestIngestPriority>>
         docs: The priority attributed to the request when received
       ingested_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: The time the request was originally received
       ingested_at_id: optional<string>
       source_id:
         type: string
         docs: ID of the associated source
       events_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The count of events created from this request (CLI events not
           included)
       cli_events_count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: The count of CLI events created from this request
-      ignored_count: optional<integer>
-      data: optional<RequestData>
+      ignored_count: optional<nullable<integer>>
+      data: optional<nullable<RequestData>>
       updated_at:
         type: datetime
         docs: Date the event was last updated
@@ -7591,7 +7591,7 @@ types:
   RetryRequest:
     properties:
       request: Request
-      events: optional<list<Event>>
+      events: optional<nullable<list<Event>>>
     source:
       openapi: ../openapi.yml
   IgnoredEventCause:
@@ -7630,7 +7630,7 @@ types:
       webhook_id: string
       cause: IgnoredEventCause
       request_id: string
-      meta: optional<IgnoredEventMeta>
+      meta: optional<nullable<IgnoredEventMeta>>
       updated_at: datetime
       created_at: datetime
     source:
@@ -7653,10 +7653,10 @@ types:
     properties:
       strategy: RetryStrategy
       interval:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Time in MS between each retry
       count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Maximum number of retries to attempt
     source:
       openapi: ../openapi.yml
@@ -7681,7 +7681,7 @@ types:
     discriminated: false
     docs: JSON using our filter syntax to filter on request headers
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - float
       - boolean
       - ConnectionFilterPropertyThree
@@ -7719,7 +7719,7 @@ types:
         type: string
         docs: A string representation of your JavaScript (ES6) code to run
       env:
-        type: optional<map<string, optional<string>>>
+        type: optional<nullable<map<string, optional<nullable<string>>>>>
         docs: >-
           A key-value object of environment variables to encrypt and expose to
           your transformation code
@@ -7732,7 +7732,7 @@ types:
         type: literal<"transform">
         docs: A transformation rule must be of type `transformation`
       transformation_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           ID of the attached transformation object. Optional input, always set
           once the rule is defined
@@ -7787,7 +7787,7 @@ types:
         type: boolean
         docs: Default ruleset of Workspace
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the ruleset was archived
       updated_at:
         type: datetime
@@ -7836,13 +7836,13 @@ types:
         type: string
         docs: A unique URL that must be supplied to your webhook's provider
       integration_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ID of the integration
       integration:
-        type: optional<SourceIntegration>
+        type: optional<nullable<SourceIntegration>>
         docs: Integration object
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the source was archived
       updated_at:
         type: datetime
@@ -7875,7 +7875,7 @@ types:
   ToggleWebhookNotifications:
     properties:
       enabled: boolean
-      topics: optional<list<TopicsValue>>
+      topics: optional<nullable<list<TopicsValue>>>
       source_id: string
     source:
       openapi: ../openapi.yml
@@ -7893,10 +7893,10 @@ types:
       code:
         type: string
         docs: JavaScript code to be executed
-      encrypted_env: optional<string>
-      iv: optional<string>
+      encrypted_env: optional<nullable<string>>
+      iv: optional<nullable<string>>
       env:
-        type: optional<map<string, optional<string>>>
+        type: optional<nullable<map<string, optional<nullable<string>>>>>
         docs: Key-value environment variables to be passed to the transformation
       updated_at:
         type: datetime
@@ -7929,7 +7929,7 @@ types:
   TransformationExecutorOutputRequestQuery:
     discriminated: false
     union:
-      - optional<TransformationExecutorOutputRequestQueryZero>
+      - optional<nullable<TransformationExecutorOutputRequestQueryZero>>
       - string
     source:
       openapi: ../openapi.yml
@@ -7942,7 +7942,7 @@ types:
   TransformationExecutorOutputRequestParsedQuery:
     discriminated: false
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - TransformationExecutorOutputRequestParsedQueryOne
     source:
       openapi: ../openapi.yml
@@ -7955,29 +7955,29 @@ types:
   TransformationExecutorOutputRequestBody:
     discriminated: false
     union:
-      - optional<string>
+      - optional<nullable<string>>
       - TransformationExecutorOutputRequestBodyOne
     source:
       openapi: ../openapi.yml
     inline: true
   TransformationExecutorOutputRequest:
     properties:
-      headers: optional<TransformationExecutorOutputRequestHeaders>
+      headers: optional<nullable<TransformationExecutorOutputRequestHeaders>>
       path: string
-      query: optional<TransformationExecutorOutputRequestQuery>
-      parsed_query: optional<TransformationExecutorOutputRequestParsedQuery>
-      body: optional<TransformationExecutorOutputRequestBody>
+      query: optional<nullable<TransformationExecutorOutputRequestQuery>>
+      parsed_query: optional<nullable<TransformationExecutorOutputRequestParsedQuery>>
+      body: optional<nullable<TransformationExecutorOutputRequestBody>>
     source:
       openapi: ../openapi.yml
     inline: true
   TransformationExecutorOutput:
     properties:
-      request_id: optional<string>
-      transformation_id: optional<string>
-      execution_id: optional<string>
+      request_id: optional<nullable<string>>
+      transformation_id: optional<nullable<string>>
+      execution_id: optional<nullable<string>>
       log_level: TransformationExecutionLogLevel
-      request: optional<TransformationExecutorOutputRequest>
-      console: optional<list<ConsoleLine>>
+      request: optional<nullable<TransformationExecutorOutputRequest>>
+      console: optional<nullable<list<ConsoleLine>>>
     source:
       openapi: ../openapi.yml
   TransformationExecutionPaginatedResult:
@@ -8002,16 +8002,16 @@ types:
       source: Source
       ruleset: optional<Ruleset>
       resolved_rules:
-        type: optional<list<Rule>>
+        type: optional<nullable<list<Rule>>>
         docs: Array of rules applied to connection after factoring for the ruleset
       rules:
-        type: optional<list<Rule>>
+        type: optional<nullable<list<Rule>>>
         docs: Array of rules configured on the connection
       archived_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the connection was archived
       paused_at:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: Date the connection was paused
       updated_at:
         type: datetime
@@ -8083,8 +8083,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/attempts/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetAttemptRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single attempt",
@@ -8161,7 +8164,7 @@ types:
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -8171,7 +8174,7 @@ types:
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -8181,7 +8184,7 @@ types:
                   },
                   "order_by": "optional<GetAttemptsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -8252,16 +8255,16 @@ service:
           order_by: optional<GetAttemptsRequestOrderBy>
           dir: optional<GetAttemptsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -8309,9 +8312,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a single attempt
+      request:
+        name: GetAttemptRequest
+        path-parameters:
+          id: string
       response:
         docs: A single attempt
         type: optional<root.EventAttempt>
@@ -8484,8 +8489,11 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "method": "DELETE",
               "pagination": undefined,
               "path": "/bookmarks/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteBookmarkRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "An object with deleted bookmark's id",
@@ -8534,8 +8542,11 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "method": "GET",
               "pagination": undefined,
               "path": "/bookmarks/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetBookmarkRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single bookmark",
@@ -8623,9 +8634,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                       "pattern": undefined,
                     },
                   },
-                  "last_used_at": "optional<datetime>",
+                  "last_used_at": "optional<nullable<datetime>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -8645,7 +8656,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -8655,7 +8666,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                   },
                   "order_by": "optional<GetBookmarksRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -8736,9 +8747,6 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "method": "POST",
               "pagination": undefined,
               "path": "/bookmarks/{id}/trigger",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -8751,7 +8759,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TriggerBookmarkRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -8804,9 +8814,6 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "method": "PUT",
               "pagination": undefined,
               "path": "/bookmarks/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -8855,7 +8862,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateBookmarkRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -8956,20 +8965,20 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          last_used_at: optional<datetime>
+          last_used_at: optional<nullable<datetime>>
           order_by: optional<GetBookmarksRequestOrderBy>
           dir: optional<GetBookmarksRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -9072,9 +9081,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a single bookmark
+      request:
+        name: GetBookmarkRequest
+        path-parameters:
+          id: string
       response:
         docs: A single bookmark
         type: root.Bookmark
@@ -9109,11 +9120,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a bookmark
       request:
         name: UpdateBookmarkRequest
+        path-parameters:
+          id: string
         body:
           properties:
             event_data_id:
@@ -9175,9 +9186,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Delete a bookmark
+      request:
+        name: DeleteBookmarkRequest
+        path-parameters:
+          id: string
       response:
         docs: An object with deleted bookmark's id
         type: root.DeletedBookmarkResponse
@@ -9197,11 +9210,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Trigger a bookmark
       request:
         name: TriggerBookmarkRequest
+        path-parameters:
+          id: string
         body:
           properties:
             target:
@@ -9303,8 +9316,11 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "method": "POST",
               "pagination": undefined,
               "path": "/bulk/events/retry/{id}/cancel",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "CancelEventBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single events bulk retry",
@@ -9458,9 +9474,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "request": {
                 "name": "GetEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
+                  "cancelled_at": "optional<nullable<datetime>>",
+                  "completed_at": "optional<nullable<datetime>>",
+                  "created_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetEventBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -9472,9 +9488,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                       "pattern": undefined,
                     },
                   },
-                  "in_progress": "optional<boolean>",
+                  "in_progress": "optional<nullable<boolean>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -9484,7 +9500,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -9494,7 +9510,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                   },
                   "order_by": "optional<GetEventBulkRetriesRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -9502,7 +9518,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                       "pattern": undefined,
                     },
                   },
-                  "query_partial_match": "optional<boolean>",
+                  "query_partial_match": "optional<nullable<boolean>>",
                 },
               },
               "response": {
@@ -9552,8 +9568,11 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "method": "GET",
               "pagination": undefined,
               "path": "/bulk/events/retry/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetEventBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single events bulk retry",
@@ -9585,9 +9604,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "bulk_retry_id": "optional<CreateEventBulkRetryRequestQueryBulkRetryId>",
               "cli_id": {
                 "docs": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
-                "type": "optional<CreateEventBulkRetryRequestQueryCliId>",
+                "type": "optional<nullable<CreateEventBulkRetryRequestQueryCliId>>",
               },
-              "cli_user_id": "optional<CreateEventBulkRetryRequestQueryCliUserId>",
+              "cli_user_id": "optional<nullable<CreateEventBulkRetryRequestQueryCliUserId>>",
               "created_at": {
                 "docs": "Filter by `created_at` date using a date operator",
                 "type": "optional<CreateEventBulkRetryRequestQueryCreatedAt>",
@@ -9609,7 +9628,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "issue_id": "optional<CreateEventBulkRetryRequestQueryIssueId>",
               "last_attempt_at": {
                 "docs": "Filter by `last_attempt_at` date using a date operator",
-                "type": "optional<CreateEventBulkRetryRequestQueryLastAttemptAt>",
+                "type": "optional<nullable<CreateEventBulkRetryRequestQueryLastAttemptAt>>",
               },
               "parsed_query": {
                 "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
@@ -9621,7 +9640,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "response_status": {
                 "docs": "Filter by HTTP response status code",
-                "type": "optional<CreateEventBulkRetryRequestQueryResponseStatus>",
+                "type": "optional<nullable<CreateEventBulkRetryRequestQueryResponseStatus>>",
               },
               "source_id": {
                 "docs": "Filter by source IDs",
@@ -9633,7 +9652,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               },
               "successful_at": {
                 "docs": "Filter by `successful_at` date using a date operator",
-                "type": "optional<CreateEventBulkRetryRequestQuerySuccessfulAt>",
+                "type": "optional<nullable<CreateEventBulkRetryRequestQuerySuccessfulAt>>",
               },
               "webhook_id": {
                 "docs": "Filter by webhook connection IDs",
@@ -10522,21 +10541,21 @@ docs: A bookmark lets you conveniently store and replay a specific request.
         type: optional<CreateEventBulkRetryRequestQueryAttempts>
         docs: Filter by number of attempts
       response_status:
-        type: optional<CreateEventBulkRetryRequestQueryResponseStatus>
+        type: optional<nullable<CreateEventBulkRetryRequestQueryResponseStatus>>
         docs: Filter by HTTP response status code
       successful_at:
-        type: optional<CreateEventBulkRetryRequestQuerySuccessfulAt>
+        type: optional<nullable<CreateEventBulkRetryRequestQuerySuccessfulAt>>
         docs: Filter by `successful_at` date using a date operator
       created_at:
         type: optional<CreateEventBulkRetryRequestQueryCreatedAt>
         docs: Filter by `created_at` date using a date operator
       error_code: optional<CreateEventBulkRetryRequestQueryErrorCode>
       cli_id:
-        type: optional<CreateEventBulkRetryRequestQueryCliId>
+        type: optional<nullable<CreateEventBulkRetryRequestQueryCliId>>
         docs: Filter by CLI IDs. `?[any]=true` operator for any CLI.
-      cli_user_id: optional<CreateEventBulkRetryRequestQueryCliUserId>
+      cli_user_id: optional<nullable<CreateEventBulkRetryRequestQueryCliUserId>>
       last_attempt_at:
-        type: optional<CreateEventBulkRetryRequestQueryLastAttemptAt>
+        type: optional<nullable<CreateEventBulkRetryRequestQueryLastAttemptAt>>
         docs: Filter by `last_attempt_at` date using a date operator
       event_data_id: optional<CreateEventBulkRetryRequestQueryEventDataId>
       headers:
@@ -10574,29 +10593,29 @@ service:
       request:
         name: GetEventBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at: optional<nullable<datetime>>
+          completed_at: optional<nullable<datetime>>
+          created_at: optional<nullable<datetime>>
           id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          query_partial_match: optional<boolean>
-          in_progress: optional<boolean>
+          query_partial_match: optional<nullable<boolean>>
+          in_progress: optional<nullable<boolean>>
           order_by: optional<GetEventBulkRetriesRequestOrderBy>
           dir: optional<GetEventBulkRetriesRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -10706,9 +10725,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get an events bulk retry
+      request:
+        name: GetEventBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
@@ -10743,9 +10764,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Cancel an events bulk retry
+      request:
+        name: CancelEventBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single events bulk retry
         type: root.BatchOperation
@@ -10829,8 +10852,11 @@ docs: ''
               "method": "POST",
               "pagination": undefined,
               "path": "/bulk/ignored-events/retry/{id}/cancel",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "CancelIgnoredEventBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
@@ -10984,9 +11010,9 @@ docs: ''
               "request": {
                 "name": "GetIgnoredEventBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
+                  "cancelled_at": "optional<nullable<datetime>>",
+                  "completed_at": "optional<nullable<datetime>>",
+                  "created_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetIgnoredEventBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -10998,9 +11024,9 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "in_progress": "optional<boolean>",
+                  "in_progress": "optional<nullable<boolean>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11010,7 +11036,7 @@ docs: ''
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -11020,7 +11046,7 @@ docs: ''
                   },
                   "order_by": "optional<GetIgnoredEventBulkRetriesRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -11028,7 +11054,7 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "query_partial_match": "optional<boolean>",
+                  "query_partial_match": "optional<nullable<boolean>>",
                 },
               },
               "response": {
@@ -11078,8 +11104,11 @@ docs: ''
               "method": "GET",
               "pagination": undefined,
               "path": "/bulk/ignored-events/retry/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetIgnoredEventBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single ignored events bulk retry",
@@ -11244,29 +11273,29 @@ service:
       request:
         name: GetIgnoredEventBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at: optional<nullable<datetime>>
+          completed_at: optional<nullable<datetime>>
+          created_at: optional<nullable<datetime>>
           id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          query_partial_match: optional<boolean>
-          in_progress: optional<boolean>
+          query_partial_match: optional<nullable<boolean>>
+          in_progress: optional<nullable<boolean>>
           order_by: optional<GetIgnoredEventBulkRetriesRequestOrderBy>
           dir: optional<GetIgnoredEventBulkRetriesRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -11374,9 +11403,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get an ignored events bulk retry
+      request:
+        name: GetIgnoredEventBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
@@ -11411,9 +11442,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Cancel an ignored events bulk retry
+      request:
+        name: CancelIgnoredEventBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single ignored events bulk retry
         type: root.BatchOperation
@@ -11497,8 +11530,11 @@ docs: ''
               "method": "POST",
               "pagination": undefined,
               "path": "/bulk/requests/retry/{id}/cancel",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "CancelRequestBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single requests bulk retry",
@@ -11652,9 +11688,9 @@ docs: ''
               "request": {
                 "name": "GetRequestBulkRetriesRequest",
                 "query-parameters": {
-                  "cancelled_at": "optional<datetime>",
-                  "completed_at": "optional<datetime>",
-                  "created_at": "optional<datetime>",
+                  "cancelled_at": "optional<nullable<datetime>>",
+                  "completed_at": "optional<nullable<datetime>>",
+                  "created_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetRequestBulkRetriesRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -11666,9 +11702,9 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "in_progress": "optional<boolean>",
+                  "in_progress": "optional<nullable<boolean>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11678,7 +11714,7 @@ docs: ''
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -11688,7 +11724,7 @@ docs: ''
                   },
                   "order_by": "optional<GetRequestBulkRetriesRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -11696,7 +11732,7 @@ docs: ''
                       "pattern": undefined,
                     },
                   },
-                  "query_partial_match": "optional<boolean>",
+                  "query_partial_match": "optional<nullable<boolean>>",
                 },
               },
               "response": {
@@ -11746,8 +11782,11 @@ docs: ''
               "method": "GET",
               "pagination": undefined,
               "path": "/bulk/requests/retry/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetRequestBulkRetryRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single requests bulk retry",
@@ -11795,7 +11834,7 @@ docs: ''
               },
               "rejection_cause": {
                 "docs": "Filter by rejection cause",
-                "type": "optional<CreateRequestBulkRetryRequestQueryRejectionCause>",
+                "type": "optional<nullable<CreateRequestBulkRetryRequestQueryRejectionCause>>",
               },
               "source_id": {
                 "docs": "Filter by source IDs",
@@ -12445,7 +12484,7 @@ docs: ''
         docs: Filter by requests IDs
       status: optional<CreateRequestBulkRetryRequestQueryStatus>
       rejection_cause:
-        type: optional<CreateRequestBulkRetryRequestQueryRejectionCause>
+        type: optional<nullable<CreateRequestBulkRetryRequestQueryRejectionCause>>
         docs: Filter by rejection cause
       ignored_count: optional<CreateRequestBulkRetryRequestQueryIgnoredCount>
       events_count: optional<CreateRequestBulkRetryRequestQueryEventsCount>
@@ -12492,29 +12531,29 @@ service:
       request:
         name: GetRequestBulkRetriesRequest
         query-parameters:
-          cancelled_at: optional<datetime>
-          completed_at: optional<datetime>
-          created_at: optional<datetime>
+          cancelled_at: optional<nullable<datetime>>
+          completed_at: optional<nullable<datetime>>
+          created_at: optional<nullable<datetime>>
           id:
             type: optional<string>
             allow-multiple: true
             validation:
               maxLength: 255
-          in_progress: optional<boolean>
-          query_partial_match: optional<boolean>
+          in_progress: optional<nullable<boolean>>
+          query_partial_match: optional<nullable<boolean>>
           order_by: optional<GetRequestBulkRetriesRequestOrderBy>
           dir: optional<GetRequestBulkRetriesRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -12624,9 +12663,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a requests bulk retry
+      request:
+        name: GetRequestBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
@@ -12661,9 +12702,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Cancel a requests bulk retry
+      request:
+        name: CancelRequestBulkRetryRequest
+        path-parameters:
+          id: string
       response:
         docs: A single requests bulk retry
         type: root.BatchOperation
@@ -12799,8 +12842,11 @@ docs: ''
               "method": "PUT",
               "pagination": undefined,
               "path": "/webhooks/{id}/archive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "ArchiveConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single connection",
@@ -12911,7 +12957,7 @@ docs: ''
                     },
                     "destination_id": {
                       "docs": "ID of a destination to bind to the connection",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -12939,7 +12985,7 @@ docs: ''
                     },
                     "ruleset_id": {
                       "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -12953,7 +12999,7 @@ docs: ''
                     },
                     "source_id": {
                       "docs": "ID of a source to bind to the connection",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -13068,8 +13114,11 @@ docs: ''
               "method": "GET",
               "pagination": undefined,
               "path": "/webhooks/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single connection",
@@ -13162,8 +13211,8 @@ docs: ''
               "request": {
                 "name": "GetConnectionsRequest",
                 "query-parameters": {
-                  "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
+                  "archived": "optional<nullable<boolean>>",
+                  "archived_at": "optional<nullable<datetime>>",
                   "destination_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -13176,7 +13225,7 @@ docs: ''
                   },
                   "dir": "optional<GetConnectionsRequestDir>",
                   "full_name": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 155,
@@ -13195,7 +13244,7 @@ docs: ''
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13214,7 +13263,7 @@ docs: ''
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -13223,9 +13272,9 @@ docs: ''
                     },
                   },
                   "order_by": "optional<GetConnectionsRequestOrderBy>",
-                  "paused_at": "optional<datetime>",
+                  "paused_at": "optional<nullable<datetime>>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -13344,8 +13393,11 @@ docs: ''
               "method": "PUT",
               "pagination": undefined,
               "path": "/webhooks/{id}/pause",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "PauseConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single connection",
@@ -13446,8 +13498,11 @@ docs: ''
               "method": "PUT",
               "pagination": undefined,
               "path": "/webhooks/{id}/unarchive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "UnarchiveConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single connection",
@@ -13548,8 +13603,11 @@ docs: ''
               "method": "PUT",
               "pagination": undefined,
               "path": "/webhooks/{id}/unpause",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "UnpauseConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single connection",
@@ -13653,9 +13711,6 @@ docs: ''
               "method": "PUT",
               "pagination": undefined,
               "path": "/webhooks/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -13679,7 +13734,7 @@ docs: ''
                     },
                     "ruleset_id": {
                       "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -13692,7 +13747,9 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateConnectionRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -13804,7 +13861,7 @@ docs: ''
                     },
                     "destination_id": {
                       "docs": "ID of a destination to bind to the connection",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -13832,7 +13889,7 @@ docs: ''
                     },
                     "ruleset_id": {
                       "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -13846,7 +13903,7 @@ docs: ''
                     },
                     "source_id": {
                       "docs": "ID of a source to bind to the connection",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -13883,7 +13940,7 @@ docs: ''
             "properties": {
               "cli_path": {
                 "docs": "Path for the CLI destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "docs": "Name for the destination",
@@ -13898,7 +13955,7 @@ docs: ''
               "path_forwarding_disabled": "optional<boolean>",
               "rate_limit": {
                 "docs": "Limit event attempts to receive per period",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "rate_limit_period": {
                 "docs": "Period to rate limit attempts",
@@ -13906,7 +13963,7 @@ docs: ''
               },
               "url": {
                 "docs": "Endpoint of the destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -14009,7 +14066,7 @@ docs: ''
             "properties": {
               "cli_path": {
                 "docs": "Path for the CLI destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "docs": "Name for the destination",
@@ -14024,7 +14081,7 @@ docs: ''
               "path_forwarding_disabled": "optional<boolean>",
               "rate_limit": {
                 "docs": "Limit event attempts to receive per period",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "rate_limit_period": {
                 "docs": "Period to rate limit attempts",
@@ -14032,7 +14089,7 @@ docs: ''
               },
               "url": {
                 "docs": "Endpoint of the destination",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -14123,16 +14180,16 @@ docs: ''
           pattern: ^[A-z0-9-_]+$
           maxLength: 155
       url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Endpoint of the destination
       cli_path:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Path for the CLI destination
       rate_limit_period:
         type: optional<CreateConnectionRequestDestinationRateLimitPeriod>
         docs: Period to rate limit attempts
       rate_limit:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Limit event attempts to receive per period
       path_forwarding_disabled: optional<boolean>
     source:
@@ -14185,16 +14242,16 @@ docs: ''
           pattern: ^[A-z0-9-_]+$
           maxLength: 155
       url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Endpoint of the destination
       cli_path:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Path for the CLI destination
       rate_limit_period:
         type: optional<UpsertConnectionRequestDestinationRateLimitPeriod>
         docs: Period to rate limit attempts
       rate_limit:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: Limit event attempts to receive per period
       path_forwarding_disabled: optional<boolean>
     source:
@@ -14281,27 +14338,27 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          archived: optional<boolean>
-          archived_at: optional<datetime>
+          archived: optional<nullable<boolean>>
+          archived_at: optional<nullable<datetime>>
           full_name:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               pattern: ^[a-z0-9-_>\s]+$
               maxLength: 155
-          paused_at: optional<datetime>
+          paused_at: optional<nullable<datetime>>
           order_by: optional<GetConnectionsRequestOrderBy>
           dir: optional<GetConnectionsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -14377,12 +14434,12 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             destination_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: ID of a destination to bind to the connection
               validation:
                 maxLength: 255
             source_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: ID of a source to bind to the connection
               validation:
                 maxLength: 255
@@ -14396,7 +14453,7 @@ service:
               type: optional<CreateConnectionRequestRuleset>
               docs: Ruleset input object
             ruleset_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 ID of a rule to bind to the connection. Default to the Workspace
                 default ruleset
@@ -14492,12 +14549,12 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             destination_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: ID of a destination to bind to the connection
               validation:
                 maxLength: 255
             source_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: ID of a source to bind to the connection
               validation:
                 maxLength: 255
@@ -14511,7 +14568,7 @@ service:
               type: optional<UpsertConnectionRequestRuleset>
               docs: Ruleset input object
             ruleset_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 ID of a rule to bind to the connection. Default to the Workspace
                 default ruleset
@@ -14595,9 +14652,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a single connection
+      request:
+        name: GetConnectionRequest
+        path-parameters:
+          id: string
       response:
         docs: A single connection
         type: root.Connection
@@ -14671,11 +14730,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a connection
       request:
         name: UpdateConnectionRequest
+        path-parameters:
+          id: string
         body:
           properties:
             name:
@@ -14688,7 +14747,7 @@ service:
               type: optional<UpdateConnectionRequestRuleset>
               docs: Ruleset input object
             ruleset_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 ID of a rule to bind to the connection. Default to the Workspace
                 default ruleset
@@ -14774,9 +14833,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Archive a connection
+      request:
+        name: ArchiveConnectionRequest
+        path-parameters:
+          id: string
       response:
         docs: A single connection
         type: root.Connection
@@ -14850,9 +14911,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Unarchive a connection
+      request:
+        name: UnarchiveConnectionRequest
+        path-parameters:
+          id: string
       response:
         docs: A single connection
         type: root.Connection
@@ -14926,9 +14989,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Pause a connection
+      request:
+        name: PauseConnectionRequest
+        path-parameters:
+          id: string
       response:
         docs: A single connection
         type: root.Connection
@@ -15002,9 +15067,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Unpause a connection
+      request:
+        name: UnpauseConnectionRequest
+        path-parameters:
+          id: string
       response:
         docs: A single connection
         type: root.Connection
@@ -15123,8 +15190,11 @@ docs: >-
               "method": "PUT",
               "pagination": undefined,
               "path": "/destinations/{id}/archive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "ArchiveDestinationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single destination",
@@ -15173,7 +15243,7 @@ docs: >-
                   "properties": {
                     "cli_path": {
                       "docs": "Path for the CLI destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "name": {
                       "docs": "Name for the destination",
@@ -15188,7 +15258,7 @@ docs: >-
                     "path_forwarding_disabled": "optional<boolean>",
                     "rate_limit": {
                       "docs": "Limit event attempts to receive per period",
-                      "type": "optional<integer>",
+                      "type": "optional<nullable<integer>>",
                     },
                     "rate_limit_period": {
                       "docs": "Period to rate limit attempts",
@@ -15196,7 +15266,7 @@ docs: >-
                     },
                     "url": {
                       "docs": "Endpoint of the destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                   },
                 },
@@ -15247,8 +15317,11 @@ docs: >-
               "method": "GET",
               "pagination": undefined,
               "path": "/destinations/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetDestinationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single destination",
@@ -15304,8 +15377,8 @@ docs: >-
               "request": {
                 "name": "GetDestinationsRequest",
                 "query-parameters": {
-                  "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
+                  "archived": "optional<nullable<boolean>>",
+                  "archived_at": "optional<nullable<datetime>>",
                   "cli_path": {
                     "type": "optional<string>",
                     "validation": {
@@ -15327,7 +15400,7 @@ docs: >-
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15346,7 +15419,7 @@ docs: >-
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -15356,7 +15429,7 @@ docs: >-
                   },
                   "order_by": "optional<GetDestinationsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -15411,8 +15484,11 @@ docs: >-
               "method": "PUT",
               "pagination": undefined,
               "path": "/destinations/{id}/unarchive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "UnarchiveDestinationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single destination",
@@ -15460,19 +15536,16 @@ docs: >-
               "method": "PUT",
               "pagination": undefined,
               "path": "/destinations/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
                     "archived_at": {
                       "docs": "Date the destination was archived",
-                      "type": "optional<datetime>",
+                      "type": "optional<nullable<datetime>>",
                     },
                     "cli_path": {
                       "docs": "Path for the CLI destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "name": {
                       "docs": "Name for the destination",
@@ -15487,7 +15560,7 @@ docs: >-
                     "path_forwarding_disabled": "optional<boolean>",
                     "rate_limit": {
                       "docs": "Limit event attempts to receive per period",
-                      "type": "optional<integer>",
+                      "type": "optional<nullable<integer>>",
                     },
                     "rate_limit_period": {
                       "docs": "Period to rate limit attempts",
@@ -15495,14 +15568,16 @@ docs: >-
                     },
                     "url": {
                       "docs": "Endpoint of the destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                   },
                 },
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDestinationRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -15552,7 +15627,7 @@ docs: >-
                   "properties": {
                     "cli_path": {
                       "docs": "Path for the CLI destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "name": {
                       "docs": "Name for the destination",
@@ -15567,7 +15642,7 @@ docs: >-
                     "path_forwarding_disabled": "optional<boolean>",
                     "rate_limit": {
                       "docs": "Limit event attempts to receive per period",
-                      "type": "optional<integer>",
+                      "type": "optional<nullable<integer>>",
                     },
                     "rate_limit_period": {
                       "docs": "Period to rate limit attempts",
@@ -15575,7 +15650,7 @@ docs: >-
                     },
                     "url": {
                       "docs": "Endpoint of the destination",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                   },
                 },
@@ -15711,8 +15786,8 @@ service:
             validation:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
-          archived: optional<boolean>
-          archived_at: optional<datetime>
+          archived: optional<nullable<boolean>>
+          archived_at: optional<nullable<datetime>>
           url:
             type: optional<string>
             allow-multiple: true
@@ -15723,16 +15798,16 @@ service:
           order_by: optional<GetDestinationsRequestOrderBy>
           dir: optional<GetDestinationsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -15783,16 +15858,16 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             url:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Endpoint of the destination
             cli_path:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Path for the CLI destination
             rate_limit_period:
               type: optional<CreateDestinationRequestRateLimitPeriod>
               docs: Period to rate limit attempts
             rate_limit:
-              type: optional<integer>
+              type: optional<nullable<integer>>
               docs: Limit event attempts to receive per period
             path_forwarding_disabled: optional<boolean>
         content-type: application/json
@@ -15838,16 +15913,16 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             url:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Endpoint of the destination
             cli_path:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Path for the CLI destination
             rate_limit_period:
               type: optional<UpsertDestinationRequestRateLimitPeriod>
               docs: Period to rate limit attempts
             rate_limit:
-              type: optional<integer>
+              type: optional<nullable<integer>>
               docs: Limit event attempts to receive per period
             path_forwarding_disabled: optional<boolean>
         content-type: application/json
@@ -15881,9 +15956,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a destination
+      request:
+        name: GetDestinationRequest
+        path-parameters:
+          id: string
       response:
         docs: A single destination
         type: root.Destination
@@ -15913,11 +15990,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a destination
       request:
         name: UpdateDestinationRequest
+        path-parameters:
+          id: string
         body:
           properties:
             name:
@@ -15927,19 +16004,19 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             url:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Endpoint of the destination
             cli_path:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Path for the CLI destination
             rate_limit_period:
               type: optional<UpdateDestinationRequestRateLimitPeriod>
               docs: Period to rate limit attempts
             rate_limit:
-              type: optional<integer>
+              type: optional<nullable<integer>>
               docs: Limit event attempts to receive per period
             archived_at:
-              type: optional<datetime>
+              type: optional<nullable<datetime>>
               docs: Date the destination was archived
             path_forwarding_disabled: optional<boolean>
         content-type: application/json
@@ -15976,9 +16053,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Archive a destination
+      request:
+        name: ArchiveDestinationRequest
+        path-parameters:
+          id: string
       response:
         docs: A single destination
         type: root.Destination
@@ -16008,9 +16087,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Unarchive a destination
+      request:
+        name: UnarchiveDestinationRequest
+        path-parameters:
+          id: string
       response:
         docs: A single destination
         type: root.Destination
@@ -16098,8 +16179,11 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "method": "GET",
               "pagination": undefined,
               "path": "/events/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetEventRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single event",
@@ -16234,7 +16318,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                       "pattern": undefined,
                     },
                   },
-                  "include": "optional<literal<"data">>",
+                  "include": "optional<nullable<literal<"data">>>",
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -16247,7 +16331,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   },
                   "last_attempt_at": "optional<datetime>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16257,7 +16341,7 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -16267,9 +16351,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                   },
                   "order_by": "optional<GetEventsRequestOrderBy>",
                   "parsed_query": "optional<string>",
-                  "path": "optional<string>",
+                  "path": "optional<nullable<string>>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -16342,8 +16426,11 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "method": "GET",
               "pagination": undefined,
               "path": "/events/{id}/raw_body",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetRequestRawBodyRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A request raw body data",
@@ -16401,8 +16488,11 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "method": "PUT",
               "pagination": undefined,
               "path": "/events/{id}/mute",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "MuteEventRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single event",
@@ -16484,8 +16574,11 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "method": "POST",
               "pagination": undefined,
               "path": "/events/{id}/retry",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "RetryEventRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Retried event with event attempt",
@@ -16604,21 +16697,21 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          path: optional<string>
-          include: optional<literal<"data">>
+          path: optional<nullable<string>>
+          include: optional<nullable<literal<"data">>>
           order_by: optional<GetEventsRequestOrderBy>
           dir: optional<GetEventsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -16666,9 +16759,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get an event
+      request:
+        name: GetEventRequest
+        path-parameters:
+          id: string
       response:
         docs: A single event
         type: root.Event
@@ -16712,9 +16807,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a event raw body data
+      request:
+        name: GetRequestRawBodyRequest
+        path-parameters:
+          id: string
       response:
         docs: A request raw body data
         type: root.RawBody
@@ -16734,9 +16831,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retry an event
+      request:
+        name: RetryEventRequest
+        path-parameters:
+          id: string
       response:
         docs: Retried event with event attempt
         type: root.RetriedEvent
@@ -16802,9 +16901,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Mute an event
+      request:
+        name: MuteEventRequest
+        path-parameters:
+          id: string
       response:
         docs: A single event
         type: root.Event
@@ -16883,9 +16984,12 @@ docs: An event is any request that Hookdeck receives from a source.
               "method": "PUT",
               "pagination": undefined,
               "path": "/integrations/{id}/attach/{source_id}",
-              "path-parameters": {
-                "id": "string",
-                "source_id": "string",
+              "request": {
+                "name": "AttachIntegrationToSourceRequest",
+                "path-parameters": {
+                  "id": "string",
+                  "source_id": "string",
+                },
               },
               "response": {
                 "docs": "Attach operation success status",
@@ -17001,8 +17105,11 @@ docs: An event is any request that Hookdeck receives from a source.
               "method": "DELETE",
               "pagination": undefined,
               "path": "/integrations/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteIntegrationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "An object with deleted integration id",
@@ -17035,9 +17142,12 @@ docs: An event is any request that Hookdeck receives from a source.
               "method": "PUT",
               "pagination": undefined,
               "path": "/integrations/{id}/detach/{source_id}",
-              "path-parameters": {
-                "id": "string",
-                "source_id": "string",
+              "request": {
+                "name": "DetachIntegrationToSourceRequest",
+                "path-parameters": {
+                  "id": "string",
+                  "source_id": "string",
+                },
               },
               "response": {
                 "docs": "Detach operation success status",
@@ -17087,8 +17197,11 @@ docs: An event is any request that Hookdeck receives from a source.
               "method": "GET",
               "pagination": undefined,
               "path": "/integrations/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetIntegrationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single integration",
@@ -17151,8 +17264,8 @@ docs: An event is any request that Hookdeck receives from a source.
               "request": {
                 "name": "GetIntegrationsRequest",
                 "query-parameters": {
-                  "label": "optional<string>",
-                  "provider": "optional<root.IntegrationProvider>",
+                  "label": "optional<nullable<string>>",
+                  "provider": "optional<nullable<root.IntegrationProvider>>",
                 },
               },
               "response": {
@@ -17206,9 +17319,6 @@ docs: An event is any request that Hookdeck receives from a source.
               "method": "PUT",
               "pagination": undefined,
               "path": "/integrations/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -17230,7 +17340,9 @@ docs: An event is any request that Hookdeck receives from a source.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIntegrationRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -17299,8 +17411,8 @@ service:
       request:
         name: GetIntegrationsRequest
         query-parameters:
-          label: optional<string>
-          provider: optional<root.IntegrationProvider>
+          label: optional<nullable<string>>
+          provider: optional<nullable<root.IntegrationProvider>>
       response:
         docs: List of integrations
         type: root.IntegrationPaginatedResult
@@ -17401,9 +17513,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get an integration
+      request:
+        name: GetIntegrationRequest
+        path-parameters:
+          id: string
       response:
         docs: A single integration
         type: root.Integration
@@ -17437,11 +17551,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update an integration
       request:
         name: UpdateIntegrationRequest
+        path-parameters:
+          id: string
         body:
           properties:
             label:
@@ -17493,9 +17607,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Delete an integration
+      request:
+        name: DeleteIntegrationRequest
+        path-parameters:
+          id: string
       response:
         docs: An object with deleted integration id
         type: root.DeletedIntegration
@@ -17515,10 +17631,12 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
-        source_id: string
       display-name: Attach an integration to a source
+      request:
+        name: AttachIntegrationToSourceRequest
+        path-parameters:
+          id: string
+          source_id: string
       response:
         docs: Attach operation success status
         type: root.AttachedIntegrationToSource
@@ -17540,10 +17658,12 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
-        source_id: string
       display-name: Detach an integration from a source
+      request:
+        name: DetachIntegrationToSourceRequest
+        path-parameters:
+          id: string
+          source_id: string
       response:
         docs: Detach operation success status
         type: root.DetachedIntegrationFromSource
@@ -17703,8 +17823,11 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/issue-triggers/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteIssueTriggerRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "An object with deleted issue trigger's id",
@@ -17753,8 +17876,11 @@ types:
               "method": "PUT",
               "pagination": undefined,
               "path": "/issue-triggers/{id}/disable",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DisableIssueTriggerRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single issue trigger",
@@ -17803,8 +17929,11 @@ types:
               "method": "PUT",
               "pagination": undefined,
               "path": "/issue-triggers/{id}/enable",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "EnableIssueTriggerRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single issue trigger",
@@ -17853,8 +17982,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/issue-triggers/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetIssueTriggerRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single issue trigger",
@@ -17912,9 +18044,9 @@ types:
                 "name": "GetIssueTriggersRequest",
                 "query-parameters": {
                   "dir": "optional<GetIssueTriggersRequestDir>",
-                  "disabled_at": "optional<datetime>",
+                  "disabled_at": "optional<nullable<datetime>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -17924,7 +18056,7 @@ types:
                     },
                   },
                   "name": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -17933,7 +18065,7 @@ types:
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -17943,7 +18075,7 @@ types:
                   },
                   "order_by": "optional<GetIssueTriggersRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -17951,7 +18083,7 @@ types:
                       "pattern": undefined,
                     },
                   },
-                  "type": "optional<root.IssueType>",
+                  "type": "optional<nullable<root.IssueType>>",
                 },
               },
               "response": {
@@ -18003,9 +18135,6 @@ types:
               "method": "PUT",
               "pagination": undefined,
               "path": "/issue-triggers/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -18016,7 +18145,7 @@ types:
                     },
                     "disabled_at": {
                       "docs": "Date when the issue trigger was disabled",
-                      "type": "optional<datetime>",
+                      "type": "optional<nullable<datetime>>",
                     },
                     "name": {
                       "docs": "Optional unique name to use as reference when using the API",
@@ -18033,7 +18162,9 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueTriggerRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -18240,24 +18371,24 @@ service:
         name: GetIssueTriggersRequest
         query-parameters:
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
-          type: optional<root.IssueType>
-          disabled_at: optional<datetime>
+          type: optional<nullable<root.IssueType>>
+          disabled_at: optional<nullable<datetime>>
           order_by: optional<GetIssueTriggersRequestOrderBy>
           dir: optional<GetIssueTriggersRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -18395,9 +18526,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a single issue trigger
+      request:
+        name: GetIssueTriggerRequest
+        path-parameters:
+          id: string
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
@@ -18430,11 +18563,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update an issue trigger
       request:
         name: UpdateIssueTriggerRequest
+        path-parameters:
+          id: string
         body:
           properties:
             configs:
@@ -18442,7 +18575,7 @@ service:
               docs: Configuration object for the specific issue type selected
             channels: optional<root.IssueTriggerChannels>
             disabled_at:
-              type: optional<datetime>
+              type: optional<nullable<datetime>>
               docs: Date when the issue trigger was disabled
             name:
               type: optional<string>
@@ -18484,9 +18617,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Delete an issue trigger
+      request:
+        name: DeleteIssueTriggerRequest
+        path-parameters:
+          id: string
       response:
         docs: An object with deleted issue trigger's id
         type: root.DeletedIssueTriggerResponse
@@ -18506,9 +18641,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Disable an issue trigger
+      request:
+        name: DisableIssueTriggerRequest
+        path-parameters:
+          id: string
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
@@ -18541,9 +18678,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Enable an issue trigger
+      request:
+        name: EnableIssueTriggerRequest
+        path-parameters:
+          id: string
       response:
         docs: A single issue trigger
         type: root.IssueTrigger
@@ -18638,8 +18777,11 @@ docs: >-
               "method": "DELETE",
               "pagination": undefined,
               "path": "/issues/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DismissIssueRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Dismissed issue",
@@ -18746,8 +18888,11 @@ docs: >-
               "method": "GET",
               "pagination": undefined,
               "path": "/issues/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetIssueRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single issue",
@@ -18785,10 +18930,10 @@ docs: >-
               "request": {
                 "name": "GetIssueCountRequest",
                 "query-parameters": {
-                  "created_at": "optional<datetime>",
+                  "created_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetIssueCountRequestDir>",
-                  "dismissed_at": "optional<datetime>",
-                  "first_seen_at": "optional<datetime>",
+                  "dismissed_at": "optional<nullable<datetime>>",
+                  "first_seen_at": "optional<nullable<datetime>>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -18809,9 +18954,9 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": "optional<datetime>",
+                  "last_seen_at": "optional<nullable<datetime>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18825,7 +18970,7 @@ docs: >-
                     "type": "optional<string>",
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -18835,7 +18980,7 @@ docs: >-
                   },
                   "order_by": "optional<GetIssueCountRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -18923,10 +19068,10 @@ docs: >-
               "request": {
                 "name": "GetIssuesRequest",
                 "query-parameters": {
-                  "created_at": "optional<datetime>",
+                  "created_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetIssuesRequestDir>",
-                  "dismissed_at": "optional<datetime>",
-                  "first_seen_at": "optional<datetime>",
+                  "dismissed_at": "optional<nullable<datetime>>",
+                  "first_seen_at": "optional<nullable<datetime>>",
                   "id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -18947,9 +19092,9 @@ docs: >-
                       "pattern": undefined,
                     },
                   },
-                  "last_seen_at": "optional<datetime>",
+                  "last_seen_at": "optional<nullable<datetime>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18963,7 +19108,7 @@ docs: >-
                     "type": "optional<string>",
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -18973,7 +19118,7 @@ docs: >-
                   },
                   "order_by": "optional<GetIssuesRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -19047,9 +19192,6 @@ docs: >-
               "method": "PUT",
               "pagination": undefined,
               "path": "/issues/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -19062,7 +19204,9 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -19242,23 +19386,23 @@ service:
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at: optional<datetime>
-          first_seen_at: optional<datetime>
-          last_seen_at: optional<datetime>
-          dismissed_at: optional<datetime>
+          created_at: optional<nullable<datetime>>
+          first_seen_at: optional<nullable<datetime>>
+          last_seen_at: optional<nullable<datetime>>
+          dismissed_at: optional<nullable<datetime>>
           order_by: optional<GetIssuesRequestOrderBy>
           dir: optional<GetIssuesRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -19332,23 +19476,23 @@ service:
           merged_with:
             type: optional<string>
             allow-multiple: true
-          created_at: optional<datetime>
-          first_seen_at: optional<datetime>
-          last_seen_at: optional<datetime>
-          dismissed_at: optional<datetime>
+          created_at: optional<nullable<datetime>>
+          first_seen_at: optional<nullable<datetime>>
+          last_seen_at: optional<nullable<datetime>>
+          dismissed_at: optional<nullable<datetime>>
           order_by: optional<GetIssueCountRequestOrderBy>
           dir: optional<GetIssueCountRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -19372,9 +19516,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a single issue
+      request:
+        name: GetIssueRequest
+        path-parameters:
+          id: string
       response:
         docs: A single issue
         type: root.IssueWithData
@@ -19459,11 +19605,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update issue
       request:
         name: UpdateIssueRequest
+        path-parameters:
+          id: string
         body:
           properties:
             status:
@@ -19514,9 +19660,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Dismiss an issue
+      request:
+        name: DismissIssueRequest
+        path-parameters:
+          id: string
       response:
         docs: Dismissed issue
         type: root.Issue
@@ -19733,8 +19881,11 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "method": "GET",
               "pagination": undefined,
               "path": "/requests/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetRequestRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single request",
@@ -19801,11 +19952,11 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "method": "GET",
               "pagination": undefined,
               "path": "/requests/{id}/events",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "name": "GetRequestEventsRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": {
                   "attempts": {
                     "type": "optional<integer>",
@@ -19876,7 +20027,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "include": "optional<literal<"data">>",
+                  "include": "optional<nullable<literal<"data">>>",
                   "issue_id": {
                     "allow-multiple": true,
                     "type": "optional<string>",
@@ -19889,7 +20040,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "last_attempt_at": "optional<datetime>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19899,7 +20050,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -19909,9 +20060,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "order_by": "optional<GetRequestEventsRequestOrderBy>",
                   "parsed_query": "optional<string>",
-                  "path": "optional<string>",
+                  "path": "optional<nullable<string>>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -20005,11 +20156,11 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "method": "GET",
               "pagination": undefined,
               "path": "/requests/{id}/ignored_events",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "name": "GetRequestIgnoredEventsRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": {
                   "dir": "optional<GetRequestIgnoredEventsRequestDir>",
                   "id": {
@@ -20023,7 +20174,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20033,7 +20184,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -20043,7 +20194,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "order_by": "optional<GetRequestIgnoredEventsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -20084,8 +20235,11 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "method": "GET",
               "pagination": undefined,
               "path": "/requests/{id}/raw_body",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetRequestRawBodyRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A request raw body data",
@@ -20193,10 +20347,10 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "multipleOf": undefined,
                     },
                   },
-                  "include": "optional<literal<"data">>",
+                  "include": "optional<nullable<literal<"data">>>",
                   "ingested_at": "optional<datetime>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20206,7 +20360,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -20216,9 +20370,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   },
                   "order_by": "optional<GetRequestsRequestOrderBy>",
                   "parsed_query": "optional<string>",
-                  "path": "optional<string>",
+                  "path": "optional<nullable<string>>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -20237,8 +20391,8 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                       "pattern": undefined,
                     },
                   },
-                  "status": "optional<GetRequestsRequestStatus>",
-                  "verified": "optional<boolean>",
+                  "status": "optional<nullable<GetRequestsRequestStatus>>",
+                  "verified": "optional<nullable<boolean>>",
                 },
               },
               "response": {
@@ -20329,9 +20483,6 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "method": "POST",
               "pagination": undefined,
               "path": "/requests/{id}/retry",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -20344,7 +20495,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RetryRequestRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -20463,7 +20616,7 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          status: optional<GetRequestsRequestStatus>
+          status: optional<nullable<GetRequestsRequestStatus>>
           rejection_cause: optional<root.RequestRejectionCause>
           ignored_count:
             type: optional<integer>
@@ -20478,11 +20631,11 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          verified: optional<boolean>
+          verified: optional<nullable<boolean>>
           headers: optional<string>
           body: optional<string>
           parsed_query: optional<string>
-          path: optional<string>
+          path: optional<nullable<string>>
           created_at: optional<datetime>
           ingested_at: optional<datetime>
           bulk_retry_id:
@@ -20490,20 +20643,20 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          include: optional<literal<"data">>
+          include: optional<nullable<literal<"data">>>
           order_by: optional<GetRequestsRequestOrderBy>
           dir: optional<GetRequestsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -20549,9 +20702,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a request
+      request:
+        name: GetRequestRequest
+        path-parameters:
+          id: string
       response:
         docs: A single request
         type: root.Request
@@ -20593,9 +20748,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a request raw body data
+      request:
+        name: GetRequestRawBodyRequest
+        path-parameters:
+          id: string
       response:
         docs: A request raw body data
         type: root.RawBody
@@ -20615,11 +20772,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retry a request
       request:
         name: RetryRequestRequest
+        path-parameters:
+          id: string
         body:
           properties:
             webhook_ids:
@@ -20696,11 +20853,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get request events
       request:
         name: GetRequestEventsRequest
+        path-parameters:
+          id: string
         query-parameters:
           id:
             type: optional<string>
@@ -20762,21 +20919,21 @@ service:
             allow-multiple: true
             validation:
               maxLength: 255
-          path: optional<string>
-          include: optional<literal<"data">>
+          path: optional<nullable<string>>
+          include: optional<nullable<literal<"data">>>
           order_by: optional<GetRequestEventsRequestOrderBy>
           dir: optional<GetRequestEventsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -20827,11 +20984,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get request ignored events
       request:
         name: GetRequestIgnoredEventsRequest
+        path-parameters:
+          id: string
         query-parameters:
           id:
             type: optional<string>
@@ -20841,16 +20998,16 @@ service:
           order_by: optional<GetRequestIgnoredEventsRequestOrderBy>
           dir: optional<GetRequestIgnoredEventsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -20936,8 +21093,11 @@ docs: A request represent a webhook received by Hookdeck.
               "method": "PUT",
               "pagination": undefined,
               "path": "/rulesets/{id}/archive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "ArchiveRulesetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single ruleset",
@@ -21056,8 +21216,11 @@ docs: A request represent a webhook received by Hookdeck.
               "method": "GET",
               "pagination": undefined,
               "path": "/rulesets/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetRulesetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single ruleset",
@@ -21115,8 +21278,8 @@ docs: A request represent a webhook received by Hookdeck.
               "request": {
                 "name": "GetRulesetsRequest",
                 "query-parameters": {
-                  "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
+                  "archived": "optional<nullable<boolean>>",
+                  "archived_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetRulesetsRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -21129,7 +21292,7 @@ docs: A request represent a webhook received by Hookdeck.
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21139,7 +21302,7 @@ docs: A request represent a webhook received by Hookdeck.
                     },
                   },
                   "name": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 155,
@@ -21148,7 +21311,7 @@ docs: A request represent a webhook received by Hookdeck.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -21158,7 +21321,7 @@ docs: A request represent a webhook received by Hookdeck.
                   },
                   "order_by": "optional<GetRulesetsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -21213,8 +21376,11 @@ docs: A request represent a webhook received by Hookdeck.
               "method": "PUT",
               "pagination": undefined,
               "path": "/rulesets/{id}/unarchive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "UnarchiveRulesetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single ruleset",
@@ -21264,15 +21430,12 @@ docs: A request represent a webhook received by Hookdeck.
               "method": "PUT",
               "pagination": undefined,
               "path": "/rulesets/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
                     "archived_at": {
                       "docs": "Date the ruleset was archived",
-                      "type": "optional<datetime>",
+                      "type": "optional<nullable<datetime>>",
                     },
                     "is_team_default": "optional<boolean>",
                     "name": {
@@ -21294,7 +21457,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateRulesetRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -21428,25 +21593,25 @@ service:
             validation:
               maxLength: 255
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
-          archived: optional<boolean>
-          archived_at: optional<datetime>
+          archived: optional<nullable<boolean>>
+          archived_at: optional<nullable<datetime>>
           order_by: optional<GetRulesetsRequestOrderBy>
           dir: optional<GetRulesetsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -21578,9 +21743,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a ruleset
+      request:
+        name: GetRulesetRequest
+        path-parameters:
+          id: string
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
@@ -21611,11 +21778,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a ruleset
       request:
         name: UpdateRulesetRequest
+        path-parameters:
+          id: string
         body:
           properties:
             name:
@@ -21625,7 +21792,7 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             archived_at:
-              type: optional<datetime>
+              type: optional<nullable<datetime>>
               docs: Date the ruleset was archived
             rules:
               type: optional<list<root.Rule>>
@@ -21665,9 +21832,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Archive a ruleset
+      request:
+        name: ArchiveRulesetRequest
+        path-parameters:
+          id: string
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
@@ -21698,9 +21867,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Unarchive a ruleset
+      request:
+        name: UnarchiveRulesetRequest
+        path-parameters:
+          id: string
       response:
         docs: A single ruleset
         type: optional<root.Ruleset>
@@ -21779,8 +21950,11 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "method": "PUT",
               "pagination": undefined,
               "path": "/sources/{id}/archive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "ArchiveSourceRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single source",
@@ -21896,8 +22070,11 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "method": "GET",
               "pagination": undefined,
               "path": "/sources/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetSourceRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single source",
@@ -21958,8 +22135,8 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "request": {
                 "name": "GetSourcesRequest",
                 "query-parameters": {
-                  "archived": "optional<boolean>",
-                  "archived_at": "optional<datetime>",
+                  "archived": "optional<nullable<boolean>>",
+                  "archived_at": "optional<nullable<datetime>>",
                   "dir": "optional<GetSourcesRequestDir>",
                   "id": {
                     "allow-multiple": true,
@@ -21971,9 +22148,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                       "pattern": undefined,
                     },
                   },
-                  "integration_id": "optional<string>",
+                  "integration_id": "optional<nullable<string>>",
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21992,7 +22169,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -22002,7 +22179,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                   },
                   "order_by": "optional<GetSourcesRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -22058,8 +22235,11 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "method": "PUT",
               "pagination": undefined,
               "path": "/sources/{id}/unarchive",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "UnarchiveSourceRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single source",
@@ -22110,15 +22290,12 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "method": "PUT",
               "pagination": undefined,
               "path": "/sources/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
                     "archived_at": {
                       "docs": "Date the source was archived",
-                      "type": "optional<datetime>",
+                      "type": "optional<nullable<datetime>>",
                     },
                     "name": {
                       "docs": "A unique name for the source",
@@ -22135,7 +22312,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateSourceRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -22269,22 +22448,22 @@ service:
             validation:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
-          archived: optional<boolean>
-          archived_at: optional<datetime>
-          integration_id: optional<string>
+          archived: optional<nullable<boolean>>
+          archived_at: optional<nullable<datetime>>
+          integration_id: optional<nullable<string>>
           order_by: optional<GetSourcesRequestOrderBy>
           dir: optional<GetSourcesRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -22416,9 +22595,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a source
+      request:
+        name: GetSourceRequest
+        path-parameters:
+          id: string
       response:
         docs: A single source
         type: root.Source
@@ -22451,11 +22632,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a source
       request:
         name: UpdateSourceRequest
+        path-parameters:
+          id: string
         body:
           properties:
             name:
@@ -22465,7 +22646,7 @@ service:
                 pattern: ^[A-z0-9-_]+$
                 maxLength: 155
             archived_at:
-              type: optional<datetime>
+              type: optional<nullable<datetime>>
               docs: Date the source was archived
         content-type: application/json
       response:
@@ -22503,9 +22684,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Archive a source
+      request:
+        name: ArchiveSourceRequest
+        path-parameters:
+          id: string
       response:
         docs: A single source
         type: root.Source
@@ -22538,9 +22721,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Unarchive a source
+      request:
+        name: UnarchiveSourceRequest
+        path-parameters:
+          id: string
       response:
         docs: A single source
         type: root.Source
@@ -22688,8 +22873,11 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "method": "GET",
               "pagination": undefined,
               "path": "/transformations/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetTransformationRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single transformation",
@@ -22754,9 +22942,12 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "method": "GET",
               "pagination": undefined,
               "path": "/transformations/{id}/executions/{execution_id}",
-              "path-parameters": {
-                "execution_id": "string",
-                "id": "string",
+              "request": {
+                "name": "GetTransformationExecutionRequest",
+                "path-parameters": {
+                  "execution_id": "string",
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "A single transformation execution",
@@ -22823,11 +23014,11 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "method": "GET",
               "pagination": undefined,
               "path": "/transformations/{id}/executions",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "name": "GetTransformationExecutionsRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": {
                   "created_at": "optional<datetime>",
                   "dir": "optional<GetTransformationExecutionsRequestDir>",
@@ -22842,7 +23033,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22853,7 +23044,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   },
                   "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -22863,7 +23054,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   },
                   "order_by": "optional<GetTransformationExecutionsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -22946,7 +23137,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                   },
                   "limit": {
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22956,7 +23147,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                   },
                   "name": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 155,
@@ -22965,7 +23156,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                   },
                   "next": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -22975,7 +23166,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   },
                   "order_by": "optional<GetTransformationsRequestOrderBy>",
                   "prev": {
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 255,
@@ -23106,9 +23297,6 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "method": "PUT",
               "pagination": undefined,
               "path": "/transformations/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -23135,7 +23323,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTransformationRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -23295,11 +23485,11 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "path": {
                 "docs": "Path of the request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "query": {
                 "docs": "String representation of the query params of the request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -23431,10 +23621,10 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
         type: optional<TestTransformationRequestRequestBody>
         docs: Body of the request
       path:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Path of the request
       query:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: String representation of the query params of the request
       parsed_query:
         type: optional<TestTransformationRequestRequestParsedQuery>
@@ -23479,23 +23669,23 @@ service:
             validation:
               maxLength: 255
           name:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               pattern: ^[A-z0-9-_]+$
               maxLength: 155
           order_by: optional<GetTransformationsRequestOrderBy>
           dir: optional<GetTransformationsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -23631,9 +23821,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get a transformation
+      request:
+        name: GetTransformationRequest
+        path-parameters:
+          id: string
       response:
         docs: A single transformation
         type: root.Transformation
@@ -23662,11 +23854,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a transformation
       request:
         name: UpdateTransformationRequest
+        path-parameters:
+          id: string
         body:
           properties:
             name:
@@ -23769,11 +23961,11 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Get transformation executions
       request:
         name: GetTransformationExecutionsRequest
+        path-parameters:
+          id: string
         query-parameters:
           log_level: optional<GetTransformationExecutionsRequestLogLevel>
           webhook_id:
@@ -23790,16 +23982,16 @@ service:
           order_by: optional<GetTransformationExecutionsRequestOrderBy>
           dir: optional<GetTransformationExecutionsRequestDir>
           limit:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             validation:
               min: 0
               max: 255
           next:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
           prev:
-            type: optional<string>
+            type: optional<nullable<string>>
             validation:
               maxLength: 255
       response:
@@ -23846,10 +24038,12 @@ service:
       docs: ''
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
-        execution_id: string
       display-name: Get a transformation execution
+      request:
+        name: GetTransformationExecutionRequest
+        path-parameters:
+          id: string
+          execution_id: string
       response:
         docs: A single transformation execution
         type: root.TransformationExecution

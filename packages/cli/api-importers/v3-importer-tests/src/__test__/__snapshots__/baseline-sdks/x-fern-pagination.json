@@ -585,13 +585,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "INTEGER",
-                      "v2": {
-                        "type": "integer"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "INTEGER",
+                          "v2": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -629,13 +635,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "INTEGER",
-                      "v2": {
-                        "type": "integer"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "INTEGER",
+                          "v2": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -781,13 +793,19 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -898,13 +916,19 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -1468,8 +1492,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
+                  "value": {
+                    "value": "INTEGER",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -1499,8 +1526,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
+                  "value": {
+                    "value": "INTEGER",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }

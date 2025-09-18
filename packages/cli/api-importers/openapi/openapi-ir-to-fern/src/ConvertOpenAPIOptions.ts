@@ -59,9 +59,9 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     detectGlobalHeaders: true,
     objectQueryParameters: false,
     respectReadonlySchemas: false,
-    respectNullableSchemas: false,
+    respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: false,
+    inlinePathParameters: true,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false
 };

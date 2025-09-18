@@ -1045,8 +1045,8 @@
               "authConfiguration": "ApplicationAuthConfiguration",
               "createdAt": "datetime",
               "createdBy": "string",
-              "deletedAt": "optional<datetime>",
-              "deletedBy": "optional<string>",
+              "deletedAt": "optional<nullable<datetime>>",
+              "deletedBy": "optional<nullable<string>>",
               "orgId": "OrgId",
             },
             "source": {
@@ -1096,11 +1096,11 @@
               "buildId": "BuildId",
               "createdAt": "datetime",
               "createdBy": "string",
-              "deletedAt": "optional<datetime>",
-              "finishedAt": "optional<datetime>",
+              "deletedAt": "optional<nullable<datetime>>",
+              "finishedAt": "optional<nullable<datetime>>",
               "imageSize": "double",
               "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
-              "startedAt": "optional<datetime>",
+              "startedAt": "optional<nullable<datetime>>",
               "status": "BuildStatus",
             },
             "source": {
@@ -1300,7 +1300,7 @@
             "inline": undefined,
             "properties": {
               "appId": "AppId",
-              "currentAllocation": "optional<RoomAllocation>",
+              "currentAllocation": "optional<nullable<RoomAllocation>>",
               "roomId": "RoomId",
               "status": "RoomStatus",
             },
@@ -1330,16 +1330,16 @@
               "draining": "boolean",
               "egressedBytes": "double",
               "host": "string",
-              "idleSince": "optional<datetime>",
+              "idleSince": "optional<nullable<datetime>>",
               "port": "double",
               "processId": "ProcessId",
               "region": "Region",
               "roomSlotsAvailable": "double",
               "roomsPerProcess": "double",
-              "startedAt": "optional<datetime>",
+              "startedAt": "optional<nullable<datetime>>",
               "startingAt": "datetime",
-              "stoppingAt": "optional<datetime>",
-              "terminatedAt": "optional<datetime>",
+              "stoppingAt": "optional<nullable<datetime>>",
+              "terminatedAt": "optional<nullable<datetime>>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -1405,7 +1405,7 @@
             "properties": {
               "allocations": "list<RoomAllocation>",
               "appId": "AppId",
-              "currentAllocation": "optional<RoomAllocation>",
+              "currentAllocation": "optional<nullable<RoomAllocation>>",
               "roomId": "RoomId",
               "status": "RoomStatus",
             },
@@ -1420,7 +1420,7 @@
               "processId": "ProcessId",
               "roomAllocationId": "RoomAllocationId",
               "scheduledAt": "datetime",
-              "unscheduledAt": "optional<datetime>",
+              "unscheduledAt": "optional<nullable<datetime>>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -1984,8 +1984,8 @@ types:
     inline: true
   Application:
     properties:
-      deletedBy: optional<string>
-      deletedAt: optional<datetime>
+      deletedBy: optional<nullable<string>>
+      deletedAt: optional<nullable<datetime>>
       createdAt: datetime
       createdBy: string
       orgId: OrgId
@@ -2124,9 +2124,9 @@ types:
       regionalContainerTags: list<BuildRegionalContainerTagsItem>
       imageSize: double
       status: BuildStatus
-      deletedAt: optional<datetime>
-      finishedAt: optional<datetime>
-      startedAt: optional<datetime>
+      deletedAt: optional<nullable<datetime>>
+      finishedAt: optional<nullable<datetime>>
+      startedAt: optional<nullable<datetime>>
       createdAt: datetime
       createdBy: string
       buildId: BuildId
@@ -2196,13 +2196,13 @@ types:
   Process:
     properties:
       egressedBytes: double
-      idleSince: optional<datetime>
+      idleSince: optional<nullable<datetime>>
       activeConnections: double
       roomSlotsAvailable: double
       draining: boolean
-      terminatedAt: optional<datetime>
-      stoppingAt: optional<datetime>
-      startedAt: optional<datetime>
+      terminatedAt: optional<nullable<datetime>>
+      stoppingAt: optional<nullable<datetime>>
+      startedAt: optional<nullable<datetime>>
       startingAt: datetime
       roomsPerProcess: double
       port: double
@@ -2224,7 +2224,7 @@ types:
   RoomAllocationId: string
   RoomAllocation:
     properties:
-      unscheduledAt: optional<datetime>
+      unscheduledAt: optional<nullable<datetime>>
       scheduledAt: datetime
       processId: ProcessId
       roomAllocationId: RoomAllocationId
@@ -2236,7 +2236,7 @@ types:
       appId: AppId
       roomId: RoomId
       status: RoomStatus
-      currentAllocation: optional<RoomAllocation>
+      currentAllocation: optional<nullable<RoomAllocation>>
     source:
       openapi: ../openapi.json
   OmitRoomAllocations:
@@ -2253,7 +2253,7 @@ types:
       openapi: ../openapi.json
   Room:
     properties:
-      currentAllocation: optional<RoomAllocation>
+      currentAllocation: optional<nullable<RoomAllocation>>
       status: RoomStatus
       allocations: list<RoomAllocation>
       roomId: RoomId
@@ -2358,8 +2358,11 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/apps/v1/delete/{appId}",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "DeleteAppRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -2398,8 +2401,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/apps/v1/info/{appId}",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "GetAppInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -2505,12 +2511,13 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/apps/v1/update/{appId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": "root.AppConfig",
                 "content-type": "application/json",
+                "name": "UpdateAppRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -2611,10 +2618,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         body: root.AppConfig
+        path-parameters:
+          appId: root.AppId
+        name: UpdateAppRequest
         content-type: application/json
       response:
         docs: Ok
@@ -2648,8 +2656,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: GetAppInfoRequest
+        path-parameters:
+          appId: root.AppId
       response:
         docs: Ok
         type: root.Application
@@ -2678,8 +2688,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: DeleteAppRequest
+        path-parameters:
+          appId: root.AppId
       errors:
         - root.DeleteAppRequestNotFoundError
         - root.DeleteAppRequestInternalServerError
@@ -2721,8 +2733,11 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/auth/v1/{appId}/login/anonymous",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "LoginAnonymousRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -2758,9 +2773,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/auth/v1/{appId}/login/google",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -2770,7 +2782,9 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginGoogleRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -2806,9 +2820,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/auth/v1/{appId}/login/nickname",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -2818,7 +2829,9 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginNicknameRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -2896,8 +2909,10 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: LoginAnonymousRequest
+        path-parameters:
+          appId: root.AppId
       response:
         docs: Ok
         type: LoginAnonymousResponse
@@ -2916,10 +2931,10 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: LoginNicknameRequest
+        path-parameters:
+          appId: root.AppId
         body:
           properties:
             nickname: string
@@ -2944,10 +2959,10 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: LoginGoogleRequest
+        path-parameters:
+          appId: root.AppId
         body:
           properties:
             idToken: string
@@ -3018,8 +3033,11 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/create",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "CreateBuildRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "",
@@ -3049,9 +3067,12 @@ service:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/delete/{buildId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "buildId": "root.BuildId",
+              "request": {
+                "name": "DeleteBuildRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "buildId": "root.BuildId",
+                },
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -3093,9 +3114,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/info/{buildId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "buildId": "root.BuildId",
+              "request": {
+                "name": "GetBuildInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "buildId": "root.BuildId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -3143,8 +3167,11 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/list",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "GetBuildsRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -3165,10 +3192,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/run/{buildId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "buildId": "root.BuildId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -3178,7 +3201,10 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "RunBuildRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "buildId": "root.BuildId",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -3208,8 +3234,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: GetBuildsRequest
+        path-parameters:
+          appId: root.AppId
       response:
         docs: Ok
         type: list<root.Build>
@@ -3239,9 +3267,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        buildId: root.BuildId
+      request:
+        name: GetBuildInfoRequest
+        path-parameters:
+          appId: root.AppId
+          buildId: root.BuildId
       response:
         docs: Ok
         type: root.Build
@@ -3272,8 +3302,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: CreateBuildRequest
+        path-parameters:
+          appId: root.AppId
       response:
         docs: ''
         type: root.Build
@@ -3305,11 +3337,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        buildId: root.BuildId
       request:
         name: RunBuildRequest
+        path-parameters:
+          appId: root.AppId
+          buildId: root.BuildId
         body:
           properties:
             file: file
@@ -3327,9 +3359,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        buildId: root.BuildId
+      request:
+        name: DeleteBuildRequest
+        path-parameters:
+          appId: root.AppId
+          buildId: root.BuildId
       errors:
         - root.DeleteBuildRequestNotFoundError
         - root.DeleteBuildRequestUnprocessableEntityError
@@ -3404,13 +3438,14 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/deployments/v1/{appId}/create/{buildId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "buildId": "root.BuildId",
-              },
               "request": {
                 "body": "root.DeploymentConfig",
                 "content-type": "application/json",
+                "name": "CreateDeploymentRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "buildId": "root.BuildId",
+                },
               },
               "response": {
                 "docs": "",
@@ -3459,9 +3494,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/deployments/v1/{appId}/info/{deploymentId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "deploymentId": "root.DeploymentId",
+              "request": {
+                "name": "GetDeploymentInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "deploymentId": "root.DeploymentId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -3511,8 +3549,11 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/deployments/v1/{appId}/list",
-              "path-parameters": {
-                "appId": "root.AppId",
+              "request": {
+                "name": "GetDeploymentsRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -3541,8 +3582,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
+      request:
+        name: GetDeploymentsRequest
+        path-parameters:
+          appId: root.AppId
       response:
         docs: Ok
         type: list<root.Deployment>
@@ -3574,9 +3617,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        deploymentId: root.DeploymentId
+      request:
+        name: GetDeploymentInfoRequest
+        path-parameters:
+          appId: root.AppId
+          deploymentId: root.DeploymentId
       response:
         docs: Ok
         type: root.Deployment
@@ -3609,11 +3654,12 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        buildId: root.BuildId
       request:
         body: root.DeploymentConfig
+        path-parameters:
+          appId: root.AppId
+          buildId: root.BuildId
+        name: CreateDeploymentRequest
         content-type: application/json
       response:
         docs: ''
@@ -3760,17 +3806,17 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v1/{appId}/create/private",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "CreatePrivateLobbyDeprecatedRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -3807,17 +3853,17 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v1/{appId}/create/public",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "CreatePublicLobbyDeprecatedRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -3867,17 +3913,17 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/lobby/v1/{appId}/list",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "ListActivePublicLobbiesDeprecatedRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -3907,14 +3953,14 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreatePrivateLobbyDeprecatedRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
           local:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
       response:
         docs: Ok
@@ -3939,14 +3985,14 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreatePublicLobbyDeprecatedRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
           local:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
       response:
         docs: Ok
@@ -3971,15 +4017,15 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: ListActivePublicLobbiesDeprecatedRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
           local:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -4064,9 +4110,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/create",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4078,9 +4121,11 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateLobbyRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": "optional<nullable<root.RoomId>>",
                 },
               },
               "response": {
@@ -4137,9 +4182,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/create/local",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4150,9 +4192,11 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateLocalLobbyRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": "optional<nullable<root.RoomId>>",
                 },
               },
               "response": {
@@ -4209,9 +4253,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/create/private",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4222,9 +4263,11 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreatePrivateLobbyRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": "optional<nullable<root.RoomId>>",
                 },
               },
               "response": {
@@ -4281,9 +4324,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/create/public",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4294,9 +4334,11 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreatePublicLobbyRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "roomId": "optional<root.RoomId>",
+                  "roomId": "optional<nullable<root.RoomId>>",
                 },
               },
               "response": {
@@ -4342,9 +4384,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/info/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
+              "request": {
+                "name": "GetLobbyInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -4387,13 +4432,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/list/public",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "ListActivePublicLobbiesRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -4445,10 +4490,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lobby/v2/{appId}/setState/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4458,7 +4499,10 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SetLobbyStateRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4501,12 +4545,12 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreatePrivateLobbyRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId: optional<nullable<root.RoomId>>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -4550,12 +4594,12 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreatePublicLobbyRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId: optional<nullable<root.RoomId>>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -4599,12 +4643,12 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreateLocalLobbyRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId: optional<nullable<root.RoomId>>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -4648,12 +4692,12 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreateLobbyRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          roomId: optional<root.RoomId>
+          roomId: optional<nullable<root.RoomId>>
         body:
           properties:
             visibility: CreateLobbyRequestVisibility
@@ -4698,12 +4742,12 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: ListActivePublicLobbiesRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -4730,9 +4774,11 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
+      request:
+        name: GetLobbyInfoRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
       response:
         docs: Ok
         type: root.Lobby
@@ -4762,11 +4808,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
       request:
         name: SetLobbyStateRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
         body:
           properties:
             state: map<string, unknown>
@@ -4830,18 +4876,18 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/logs/v1/{appId}/all",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "GetLogsForAppRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "region": "optional<root.Region>",
-                  "tailLines": "optional<root.TailLines>",
+                  "region": "optional<nullable<root.Region>>",
+                  "tailLines": "optional<nullable<root.TailLines>>",
                 },
               },
               "response": {
@@ -4862,18 +4908,18 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/logs/v1/{appId}/deployment/{deploymentId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "deploymentId": "root.DeploymentId",
-              },
               "request": {
                 "name": "GetLogsForDeploymentRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "deploymentId": "root.DeploymentId",
+                },
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "tailLines": "optional<root.TailLines>",
+                  "tailLines": "optional<nullable<root.TailLines>>",
                 },
               },
               "response": {
@@ -4894,18 +4940,18 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/logs/v1/{appId}/process/{processId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "processId": "root.ProcessId",
-              },
               "request": {
                 "name": "GetLogsForProcessRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "processId": "root.ProcessId",
+                },
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
-                  "tailLines": "optional<root.TailLines>",
+                  "tailLines": "optional<nullable<root.TailLines>>",
                 },
               },
               "response": {
@@ -4935,16 +4981,16 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: GetLogsForAppRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
           follow:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
-          tailLines: optional<root.TailLines>
-          region: optional<root.Region>
+          tailLines: optional<nullable<root.TailLines>>
+          region: optional<nullable<root.Region>>
       response:
         docs: Ok
         type: file
@@ -4957,16 +5003,16 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        processId: root.ProcessId
       request:
         name: GetLogsForProcessRequest
+        path-parameters:
+          appId: root.AppId
+          processId: root.ProcessId
         query-parameters:
           follow:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
-          tailLines: optional<root.TailLines>
+          tailLines: optional<nullable<root.TailLines>>
       response:
         docs: Ok
         type: file
@@ -4979,16 +5025,16 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        deploymentId: root.DeploymentId
       request:
         name: GetLogsForDeploymentRequest
+        path-parameters:
+          appId: root.AppId
+          deploymentId: root.DeploymentId
         query-parameters:
           follow:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             default: false
-          tailLines: optional<root.TailLines>
+          tailLines: optional<nullable<root.TailLines>>
       response:
         docs: Ok
         type: text
@@ -5055,22 +5101,22 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/metrics/v1/{appId}/process/{processId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "processId": "root.ProcessId",
-              },
               "request": {
                 "name": "GetMetricsRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "processId": "root.ProcessId",
+                },
                 "query-parameters": {
-                  "end": "optional<integer>",
+                  "end": "optional<nullable<integer>>",
                   "metrics": {
                     "allow-multiple": true,
                     "type": "optional<root.MetricName>",
                   },
-                  "start": "optional<integer>",
+                  "start": "optional<nullable<integer>>",
                   "step": {
                     "default": 60,
-                    "type": "optional<integer>",
+                    "type": "optional<nullable<integer>>",
                   },
                 },
               },
@@ -5101,19 +5147,19 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        processId: root.ProcessId
       request:
         name: GetMetricsRequest
+        path-parameters:
+          appId: root.AppId
+          processId: root.ProcessId
         query-parameters:
           metrics:
             type: optional<root.MetricName>
             allow-multiple: true
-          end: optional<integer>
-          start: optional<integer>
+          end: optional<nullable<integer>>
+          start: optional<nullable<integer>>
           step:
-            type: optional<integer>
+            type: optional<nullable<integer>>
             default: 60
       response:
         docs: Ok
@@ -5191,9 +5237,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/processes/v1/{appId}/info/{processId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "processId": "root.ProcessId",
+              "request": {
+                "name": "GetProcessInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "processId": "root.ProcessId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -5250,13 +5299,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/processes/v1/{appId}/list/running",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "GetRunningProcessesRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -5306,13 +5355,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/processes/v1/{appId}/list/stopped",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "name": "GetStoppedProcessesRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": {
-                  "region": "optional<root.Region>",
+                  "region": "optional<nullable<root.Region>>",
                 },
               },
               "response": {
@@ -5342,12 +5391,12 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: GetRunningProcessesRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
       response:
         docs: Ok
         type: list<root.ProcessWithRooms>
@@ -5386,12 +5435,12 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: GetStoppedProcessesRequest
+        path-parameters:
+          appId: root.AppId
         query-parameters:
-          region: optional<root.Region>
+          region: optional<nullable<root.Region>>
       response:
         docs: Ok
         type: list<root.Process>
@@ -5425,9 +5474,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        processId: root.ProcessId
+      request:
+        name: GetProcessInfoRequest
+        path-parameters:
+          appId: root.AppId
+          processId: root.ProcessId
       response:
         docs: Ok
         type: root.Process
@@ -5493,9 +5544,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/create",
-              "path-parameters": {
-                "appId": "root.AppId",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5505,7 +5553,9 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRoomRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "appId": "root.AppId",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5535,9 +5585,12 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/destroy/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
+              "request": {
+                "name": "DestroyRoomRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -5575,9 +5628,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/list/{processId}/active",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "processId": "root.ProcessId",
+              "request": {
+                "name": "GetActiveRoomsForProcessRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "processId": "root.ProcessId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -5613,9 +5669,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
+              "request": {
+                "name": "GetConnectionInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -5658,9 +5717,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/list/{processId}/inactive",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "processId": "root.ProcessId",
+              "request": {
+                "name": "GetInactiveRoomsForProcessRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "processId": "root.ProcessId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -5709,9 +5771,12 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/info/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
+              "request": {
+                "name": "GetRoomInfoRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
               },
               "response": {
                 "docs": "Ok",
@@ -5740,9 +5805,12 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/suspend/{roomId}",
-              "path-parameters": {
-                "appId": "root.AppId",
-                "roomId": "root.RoomId",
+              "request": {
+                "name": "SuspendRoomRequest",
+                "path-parameters": {
+                  "appId": "root.AppId",
+                  "roomId": "root.RoomId",
+                },
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -5766,10 +5834,10 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
       request:
         name: CreateRoomRequest
+        path-parameters:
+          appId: root.AppId
         body:
           properties:
             region: root.Region
@@ -5794,9 +5862,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
+      request:
+        name: GetRoomInfoRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
       response:
         docs: Ok
         type: root.Room
@@ -5828,9 +5898,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        processId: root.ProcessId
+      request:
+        name: GetActiveRoomsForProcessRequest
+        path-parameters:
+          appId: root.AppId
+          processId: root.ProcessId
       response:
         docs: Ok
         type: list<root.RoomWithoutAllocations>
@@ -5857,9 +5929,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        processId: root.ProcessId
+      request:
+        name: GetInactiveRoomsForProcessRequest
+        path-parameters:
+          appId: root.AppId
+          processId: root.ProcessId
       response:
         docs: Ok
         type: list<root.RoomWithoutAllocations>
@@ -5886,9 +5960,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
+      request:
+        name: DestroyRoomRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
       errors:
         - root.DestroyRoomRequestNotFoundError
         - root.DestroyRoomRequestInternalServerError
@@ -5902,9 +5978,11 @@ service:
       auth: true
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
+      request:
+        name: SuspendRoomRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
       errors:
         - root.SuspendRoomRequestNotFoundError
         - root.SuspendRoomRequestInternalServerError
@@ -5918,9 +5996,11 @@ service:
       auth: false
       source:
         openapi: ../openapi.json
-      path-parameters:
-        appId: root.AppId
-        roomId: root.RoomId
+      request:
+        name: GetConnectionInfoRequest
+        path-parameters:
+          appId: root.AppId
+          roomId: root.RoomId
       response:
         docs: Ok
         type: root.ConnectionInfo

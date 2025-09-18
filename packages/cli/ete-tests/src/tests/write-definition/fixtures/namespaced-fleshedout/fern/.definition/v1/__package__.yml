@@ -441,7 +441,7 @@ service:
               Pass text/event-stream to receive the streamed response as
               server-sent events. The default is `\n` delimited events.
             name: accepts
-            type: optional<literal<"text/event-stream">>
+            type: optional<nullable<literal<"text/event-stream">>>
         name: ChatRequest
       response:
         docs: OK

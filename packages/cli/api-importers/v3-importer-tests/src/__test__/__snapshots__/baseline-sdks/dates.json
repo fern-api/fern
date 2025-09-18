@@ -51,10 +51,16 @@
       "valueType": {
         "container": {
           "optional": {
-            "primitive": {
-              "v1": "DATE"
+            "container": {
+              "nullable": {
+                "primitive": {
+                  "v1": "DATE"
+                },
+                "type": "primitive"
+              },
+              "type": "nullable"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "type": "optional"
         },
@@ -91,10 +97,16 @@
       "valueType": {
         "container": {
           "optional": {
-            "primitive": {
-              "v1": "DATE_TIME"
+            "container": {
+              "nullable": {
+                "primitive": {
+                  "v1": "DATE_TIME"
+                },
+                "type": "primitive"
+              },
+              "type": "nullable"
             },
-            "type": "primitive"
+            "type": "container"
           },
           "type": "optional"
         },
@@ -314,10 +326,16 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "DATE"
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "DATE"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -355,10 +373,16 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "DATE_TIME"
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "DATE_TIME"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -750,8 +774,11 @@
         },
         "typeReference": {
           "value": {
-            "value": "DATE",
-            "type": "primitive"
+            "value": {
+              "value": "DATE",
+              "type": "primitive"
+            },
+            "type": "nullable"
           },
           "type": "optional"
         }
@@ -781,8 +808,11 @@
         },
         "typeReference": {
           "value": {
-            "value": "DATE_TIME",
-            "type": "primitive"
+            "value": {
+              "value": "DATE_TIME",
+              "type": "primitive"
+            },
+            "type": "nullable"
           },
           "type": "optional"
         }
@@ -872,8 +902,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "DATE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DATE",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -903,8 +936,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DATE_TIME",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }

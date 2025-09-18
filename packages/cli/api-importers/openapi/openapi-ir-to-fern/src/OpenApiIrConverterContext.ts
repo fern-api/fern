@@ -85,9 +85,9 @@ export class OpenApiIrConverterContext {
         this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
         this.objectQueryParameters = options?.objectQueryParameters ?? false;
         this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
-        this.respectNullableSchemas = options?.respectNullableSchemas ?? false;
+        this.respectNullableSchemas = options?.respectNullableSchemas ?? true;
         this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
-        this.inlinePathParameters = options?.inlinePathParameters ?? false;
+        this.inlinePathParameters = options?.inlinePathParameters ?? true;
         this.useBytesForBinaryResponse = options?.useBytesForBinaryResponse ?? false;
         this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;

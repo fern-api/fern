@@ -62,26 +62,26 @@
   "headers": [],
   "idempotencyHeaders": [],
   "types": {
-    "type_transcript:TranscriptListRequestStatus": {
+    "type_transcript:ListTranscriptRequestStatus": {
       "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
       "name": {
         "name": {
-          "originalName": "TranscriptListRequestStatus",
+          "originalName": "ListTranscriptRequestStatus",
           "camelCase": {
-            "unsafeName": "transcriptListRequestStatus",
-            "safeName": "transcriptListRequestStatus"
+            "unsafeName": "listTranscriptRequestStatus",
+            "safeName": "listTranscriptRequestStatus"
           },
           "snakeCase": {
-            "unsafeName": "transcript_list_request_status",
-            "safeName": "transcript_list_request_status"
+            "unsafeName": "list_transcript_request_status",
+            "safeName": "list_transcript_request_status"
           },
           "screamingSnakeCase": {
-            "unsafeName": "TRANSCRIPT_LIST_REQUEST_STATUS",
-            "safeName": "TRANSCRIPT_LIST_REQUEST_STATUS"
+            "unsafeName": "LIST_TRANSCRIPT_REQUEST_STATUS",
+            "safeName": "LIST_TRANSCRIPT_REQUEST_STATUS"
           },
           "pascalCase": {
-            "unsafeName": "TranscriptListRequestStatus",
-            "safeName": "TranscriptListRequestStatus"
+            "unsafeName": "ListTranscriptRequestStatus",
+            "safeName": "ListTranscriptRequestStatus"
           }
         },
         "fernFilepath": {
@@ -127,7 +127,7 @@
             }
           }
         },
-        "typeId": "type_transcript:TranscriptListRequestStatus"
+        "typeId": "type_transcript:ListTranscriptRequestStatus"
       },
       "shape": {
         "values": [
@@ -1778,13 +1778,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1822,13 +1828,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2461,13 +2473,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2881,10 +2899,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "FLOAT"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "FLOAT"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6187,13 +6211,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6232,34 +6262,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "TranscriptWord",
-                        "camelCase": {
-                          "unsafeName": "transcriptWord",
-                          "safeName": "transcriptWord"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "TranscriptWord",
+                            "camelCase": {
+                              "unsafeName": "transcriptWord",
+                              "safeName": "transcriptWord"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "transcript_word",
+                              "safeName": "transcript_word"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TRANSCRIPT_WORD",
+                              "safeName": "TRANSCRIPT_WORD"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TranscriptWord",
+                              "safeName": "TranscriptWord"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:TranscriptWord",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "transcript_word",
-                          "safeName": "transcript_word"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TRANSCRIPT_WORD",
-                          "safeName": "TRANSCRIPT_WORD"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TranscriptWord",
-                          "safeName": "TranscriptWord"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:TranscriptWord",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -6300,34 +6336,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "TranscriptUtterance",
-                        "camelCase": {
-                          "unsafeName": "transcriptUtterance",
-                          "safeName": "transcriptUtterance"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "TranscriptUtterance",
+                            "camelCase": {
+                              "unsafeName": "transcriptUtterance",
+                              "safeName": "transcriptUtterance"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "transcript_utterance",
+                              "safeName": "transcript_utterance"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TRANSCRIPT_UTTERANCE",
+                              "safeName": "TRANSCRIPT_UTTERANCE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TranscriptUtterance",
+                              "safeName": "TranscriptUtterance"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:TranscriptUtterance",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "transcript_utterance",
-                          "safeName": "transcript_utterance"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TRANSCRIPT_UTTERANCE",
-                          "safeName": "TRANSCRIPT_UTTERANCE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TranscriptUtterance",
-                          "safeName": "TranscriptUtterance"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:TranscriptUtterance",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -6367,17 +6409,23 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "validation": {
-                        "min": 0,
-                        "max": 1
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "validation": {
+                            "min": 0,
+                            "max": 1
+                          },
+                          "type": "double"
+                        }
                       },
-                      "type": "double"
-                    }
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6415,10 +6463,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "FLOAT"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "FLOAT"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6456,13 +6510,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6500,13 +6560,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6544,13 +6610,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6588,13 +6660,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6632,13 +6710,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6714,13 +6798,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6761,13 +6851,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6905,13 +7001,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6949,13 +7051,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7043,13 +7151,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7087,13 +7201,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7169,13 +7289,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7213,13 +7339,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7258,34 +7390,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "PiiPolicy",
-                        "camelCase": {
-                          "unsafeName": "piiPolicy",
-                          "safeName": "piiPolicy"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "PiiPolicy",
+                            "camelCase": {
+                              "unsafeName": "piiPolicy",
+                              "safeName": "piiPolicy"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pii_policy",
+                              "safeName": "pii_policy"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PII_POLICY",
+                              "safeName": "PII_POLICY"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PiiPolicy",
+                              "safeName": "PiiPolicy"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:PiiPolicy",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "pii_policy",
-                          "safeName": "pii_policy"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PII_POLICY",
-                          "safeName": "PII_POLICY"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "PiiPolicy",
-                          "safeName": "PiiPolicy"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:PiiPolicy",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -7387,13 +7525,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7431,13 +7575,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "INTEGER",
-                    "v2": {
-                      "type": "integer"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7475,13 +7625,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7519,31 +7675,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TranscriptContentSafetyLabels",
-                    "camelCase": {
-                      "unsafeName": "transcriptContentSafetyLabels",
-                      "safeName": "transcriptContentSafetyLabels"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "TranscriptContentSafetyLabels",
+                        "camelCase": {
+                          "unsafeName": "transcriptContentSafetyLabels",
+                          "safeName": "transcriptContentSafetyLabels"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "transcript_content_safety_labels",
+                          "safeName": "transcript_content_safety_labels"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TRANSCRIPT_CONTENT_SAFETY_LABELS",
+                          "safeName": "TRANSCRIPT_CONTENT_SAFETY_LABELS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TranscriptContentSafetyLabels",
+                          "safeName": "TranscriptContentSafetyLabels"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:TranscriptContentSafetyLabels",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "transcript_content_safety_labels",
-                      "safeName": "transcript_content_safety_labels"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TRANSCRIPT_CONTENT_SAFETY_LABELS",
-                      "safeName": "TRANSCRIPT_CONTENT_SAFETY_LABELS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TranscriptContentSafetyLabels",
-                      "safeName": "TranscriptContentSafetyLabels"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:TranscriptContentSafetyLabels",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7581,13 +7743,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7625,31 +7793,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TranscriptIabCategoriesResult",
-                    "camelCase": {
-                      "unsafeName": "transcriptIabCategoriesResult",
-                      "safeName": "transcriptIabCategoriesResult"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "TranscriptIabCategoriesResult",
+                        "camelCase": {
+                          "unsafeName": "transcriptIabCategoriesResult",
+                          "safeName": "transcriptIabCategoriesResult"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "transcript_iab_categories_result",
+                          "safeName": "transcript_iab_categories_result"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TRANSCRIPT_IAB_CATEGORIES_RESULT",
+                          "safeName": "TRANSCRIPT_IAB_CATEGORIES_RESULT"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TranscriptIabCategoriesResult",
+                          "safeName": "TranscriptIabCategoriesResult"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:TranscriptIabCategoriesResult",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "transcript_iab_categories_result",
-                      "safeName": "transcript_iab_categories_result"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TRANSCRIPT_IAB_CATEGORIES_RESULT",
-                      "safeName": "TRANSCRIPT_IAB_CATEGORIES_RESULT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TranscriptIabCategoriesResult",
-                      "safeName": "TranscriptIabCategoriesResult"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:TranscriptIabCategoriesResult",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7687,13 +7861,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7732,34 +7912,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "TranscriptCustomSpelling",
-                        "camelCase": {
-                          "unsafeName": "transcriptCustomSpelling",
-                          "safeName": "transcriptCustomSpelling"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "TranscriptCustomSpelling",
+                            "camelCase": {
+                              "unsafeName": "transcriptCustomSpelling",
+                              "safeName": "transcriptCustomSpelling"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "transcript_custom_spelling",
+                              "safeName": "transcript_custom_spelling"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TRANSCRIPT_CUSTOM_SPELLING",
+                              "safeName": "TRANSCRIPT_CUSTOM_SPELLING"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TranscriptCustomSpelling",
+                              "safeName": "TranscriptCustomSpelling"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:TranscriptCustomSpelling",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "transcript_custom_spelling",
-                          "safeName": "transcript_custom_spelling"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TRANSCRIPT_CUSTOM_SPELLING",
-                          "safeName": "TRANSCRIPT_CUSTOM_SPELLING"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TranscriptCustomSpelling",
-                          "safeName": "TranscriptCustomSpelling"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:TranscriptCustomSpelling",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -7799,13 +7985,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7844,34 +8036,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "Chapter",
-                        "camelCase": {
-                          "unsafeName": "chapter",
-                          "safeName": "chapter"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "Chapter",
+                            "camelCase": {
+                              "unsafeName": "chapter",
+                              "safeName": "chapter"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "chapter",
+                              "safeName": "chapter"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "CHAPTER",
+                              "safeName": "CHAPTER"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Chapter",
+                              "safeName": "Chapter"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:Chapter",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "chapter",
-                          "safeName": "chapter"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "CHAPTER",
-                          "safeName": "CHAPTER"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Chapter",
-                          "safeName": "Chapter"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:Chapter",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -7949,13 +8147,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7993,13 +8197,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8037,13 +8247,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8081,13 +8297,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8175,13 +8397,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8219,13 +8447,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8264,34 +8498,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "SentimentAnalysisResult",
-                        "camelCase": {
-                          "unsafeName": "sentimentAnalysisResult",
-                          "safeName": "sentimentAnalysisResult"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "SentimentAnalysisResult",
+                            "camelCase": {
+                              "unsafeName": "sentimentAnalysisResult",
+                              "safeName": "sentimentAnalysisResult"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "sentiment_analysis_result",
+                              "safeName": "sentiment_analysis_result"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SENTIMENT_ANALYSIS_RESULT",
+                              "safeName": "SENTIMENT_ANALYSIS_RESULT"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "SentimentAnalysisResult",
+                              "safeName": "SentimentAnalysisResult"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:SentimentAnalysisResult",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "sentiment_analysis_result",
-                          "safeName": "sentiment_analysis_result"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SENTIMENT_ANALYSIS_RESULT",
-                          "safeName": "SENTIMENT_ANALYSIS_RESULT"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SentimentAnalysisResult",
-                          "safeName": "SentimentAnalysisResult"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:SentimentAnalysisResult",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -8331,13 +8571,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8376,34 +8622,40 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "name": {
-                        "originalName": "Entity",
-                        "camelCase": {
-                          "unsafeName": "entity",
-                          "safeName": "entity"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "name": {
+                            "originalName": "Entity",
+                            "camelCase": {
+                              "unsafeName": "entity",
+                              "safeName": "entity"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "entity",
+                              "safeName": "entity"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ENTITY",
+                              "safeName": "ENTITY"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Entity",
+                              "safeName": "Entity"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:Entity",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "entity",
-                          "safeName": "entity"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ENTITY",
-                          "safeName": "ENTITY"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Entity",
-                          "safeName": "Entity"
-                        }
+                        "type": "list"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:Entity",
-                      "type": "named"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -8443,10 +8695,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "FLOAT"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "FLOAT"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8484,13 +8742,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -10038,13 +10302,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -11765,13 +12035,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -12944,13 +13220,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13138,13 +13420,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -19938,17 +20214,29 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "primitive": {
-                      "v1": "LONG",
-                      "v2": {
-                        "default": 10,
-                        "type": "long"
-                      }
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "primitive": {
+                              "v1": "LONG",
+                              "v2": {
+                                "default": 10,
+                                "type": "long"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "nullable"
+                        },
+                        "type": "container"
+                      },
+                      "type": "optional"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -19984,73 +20272,85 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "name": {
-                      "originalName": "TranscriptListRequestStatus",
-                      "camelCase": {
-                        "unsafeName": "transcriptListRequestStatus",
-                        "safeName": "transcriptListRequestStatus"
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "name": {
+                              "originalName": "ListTranscriptRequestStatus",
+                              "camelCase": {
+                                "unsafeName": "listTranscriptRequestStatus",
+                                "safeName": "listTranscriptRequestStatus"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "list_transcript_request_status",
+                                "safeName": "list_transcript_request_status"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "LIST_TRANSCRIPT_REQUEST_STATUS",
+                                "safeName": "LIST_TRANSCRIPT_REQUEST_STATUS"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "ListTranscriptRequestStatus",
+                                "safeName": "ListTranscriptRequestStatus"
+                              }
+                            },
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "originalName": "transcript",
+                                  "camelCase": {
+                                    "unsafeName": "transcript",
+                                    "safeName": "transcript"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "transcript",
+                                    "safeName": "transcript"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TRANSCRIPT",
+                                    "safeName": "TRANSCRIPT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Transcript",
+                                    "safeName": "Transcript"
+                                  }
+                                }
+                              ],
+                              "packagePath": [],
+                              "file": {
+                                "originalName": "transcript",
+                                "camelCase": {
+                                  "unsafeName": "transcript",
+                                  "safeName": "transcript"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "transcript",
+                                  "safeName": "transcript"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "TRANSCRIPT",
+                                  "safeName": "TRANSCRIPT"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "Transcript",
+                                  "safeName": "Transcript"
+                                }
+                              }
+                            },
+                            "typeId": "type_transcript:ListTranscriptRequestStatus",
+                            "type": "named"
+                          },
+                          "type": "nullable"
+                        },
+                        "type": "container"
                       },
-                      "snakeCase": {
-                        "unsafeName": "transcript_list_request_status",
-                        "safeName": "transcript_list_request_status"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "TRANSCRIPT_LIST_REQUEST_STATUS",
-                        "safeName": "TRANSCRIPT_LIST_REQUEST_STATUS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "TranscriptListRequestStatus",
-                        "safeName": "TranscriptListRequestStatus"
-                      }
+                      "type": "optional"
                     },
-                    "fernFilepath": {
-                      "allParts": [
-                        {
-                          "originalName": "transcript",
-                          "camelCase": {
-                            "unsafeName": "transcript",
-                            "safeName": "transcript"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "transcript",
-                            "safeName": "transcript"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TRANSCRIPT",
-                            "safeName": "TRANSCRIPT"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Transcript",
-                            "safeName": "Transcript"
-                          }
-                        }
-                      ],
-                      "packagePath": [],
-                      "file": {
-                        "originalName": "transcript",
-                        "camelCase": {
-                          "unsafeName": "transcript",
-                          "safeName": "transcript"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "transcript",
-                          "safeName": "transcript"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TRANSCRIPT",
-                          "safeName": "TRANSCRIPT"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Transcript",
-                          "safeName": "Transcript"
-                        }
-                      }
-                    },
-                    "typeId": "type_transcript:TranscriptListRequestStatus",
-                    "type": "named"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -20086,19 +20386,25 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "primitive": {
+                              "v1": "DATE"
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "nullable"
                         },
-                        "type": "string"
-                      }
+                        "type": "container"
+                      },
+                      "type": "optional"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -20134,16 +20440,28 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "primitive": {
+                              "v1": "STRING",
+                              "v2": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "nullable"
+                        },
+                        "type": "container"
+                      },
+                      "type": "optional"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -20179,16 +20497,28 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "primitive": {
+                              "v1": "STRING",
+                              "v2": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "nullable"
+                        },
+                        "type": "container"
+                      },
+                      "type": "optional"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -20224,16 +20554,28 @@
               },
               "valueType": {
                 "container": {
-                  "optional": {
-                    "primitive": {
-                      "v1": "BOOLEAN",
-                      "v2": {
-                        "type": "boolean"
-                      }
+                  "nullable": {
+                    "container": {
+                      "optional": {
+                        "container": {
+                          "nullable": {
+                            "primitive": {
+                              "v1": "BOOLEAN",
+                              "v2": {
+                                "type": "boolean"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "nullable"
+                        },
+                        "type": "container"
+                      },
+                      "type": "optional"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "type": "container"
               },
@@ -20248,22 +20590,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TranscriptListRequest",
+                "originalName": "ListTranscriptRequest",
                 "camelCase": {
-                  "unsafeName": "transcriptListRequest",
-                  "safeName": "transcriptListRequest"
+                  "unsafeName": "listTranscriptRequest",
+                  "safeName": "listTranscriptRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transcript_list_request",
-                  "safeName": "transcript_list_request"
+                  "unsafeName": "list_transcript_request",
+                  "safeName": "list_transcript_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSCRIPT_LIST_REQUEST",
-                  "safeName": "TRANSCRIPT_LIST_REQUEST"
+                  "unsafeName": "LIST_TRANSCRIPT_REQUEST",
+                  "safeName": "LIST_TRANSCRIPT_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TranscriptListRequest",
-                  "safeName": "TranscriptListRequest"
+                  "unsafeName": "ListTranscriptRequest",
+                  "safeName": "ListTranscriptRequest"
                 }
               },
               "bodyKey": {
@@ -20942,13 +21284,19 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -20986,13 +21334,19 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -21625,13 +21979,19 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -22045,10 +22405,16 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "primitive": {
-                        "v1": "FLOAT"
+                      "container": {
+                        "nullable": {
+                          "primitive": {
+                            "v1": "FLOAT"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "nullable"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -22749,6 +23115,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetTranscriptRequest",
+                "camelCase": {
+                  "unsafeName": "getTranscriptRequest",
+                  "safeName": "getTranscriptRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_transcript_request",
+                  "safeName": "get_transcript_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_TRANSCRIPT_REQUEST",
+                  "safeName": "GET_TRANSCRIPT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetTranscriptRequest",
+                  "safeName": "GetTranscriptRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -23110,6 +23540,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "DeleteTranscriptRequest",
+                "camelCase": {
+                  "unsafeName": "deleteTranscriptRequest",
+                  "safeName": "deleteTranscriptRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "delete_transcript_request",
+                  "safeName": "delete_transcript_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DELETE_TRANSCRIPT_REQUEST",
+                  "safeName": "DELETE_TRANSCRIPT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "DeleteTranscriptRequest",
+                  "safeName": "DeleteTranscriptRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -23613,13 +24107,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "INTEGER",
-                      "v2": {
-                        "type": "integer"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "INTEGER",
+                          "v2": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -23636,22 +24136,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TranscriptGetSubtitlesRequest",
+                "originalName": "GetSubtitlesTranscriptRequest",
                 "camelCase": {
-                  "unsafeName": "transcriptGetSubtitlesRequest",
-                  "safeName": "transcriptGetSubtitlesRequest"
+                  "unsafeName": "getSubtitlesTranscriptRequest",
+                  "safeName": "getSubtitlesTranscriptRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transcript_get_subtitles_request",
-                  "safeName": "transcript_get_subtitles_request"
+                  "unsafeName": "get_subtitles_transcript_request",
+                  "safeName": "get_subtitles_transcript_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSCRIPT_GET_SUBTITLES_REQUEST",
-                  "safeName": "TRANSCRIPT_GET_SUBTITLES_REQUEST"
+                  "unsafeName": "GET_SUBTITLES_TRANSCRIPT_REQUEST",
+                  "safeName": "GET_SUBTITLES_TRANSCRIPT_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TranscriptGetSubtitlesRequest",
-                  "safeName": "TranscriptGetSubtitlesRequest"
+                  "unsafeName": "GetSubtitlesTranscriptRequest",
+                  "safeName": "GetSubtitlesTranscriptRequest"
                 }
               },
               "bodyKey": {
@@ -23673,7 +24173,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -24028,6 +24528,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetSentencesTranscriptRequest",
+                "camelCase": {
+                  "unsafeName": "getSentencesTranscriptRequest",
+                  "safeName": "getSentencesTranscriptRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_sentences_transcript_request",
+                  "safeName": "get_sentences_transcript_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_SENTENCES_TRANSCRIPT_REQUEST",
+                  "safeName": "GET_SENTENCES_TRANSCRIPT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetSentencesTranscriptRequest",
+                  "safeName": "GetSentencesTranscriptRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -24389,6 +24953,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetParagraphsTranscriptRequest",
+                "camelCase": {
+                  "unsafeName": "getParagraphsTranscriptRequest",
+                  "safeName": "getParagraphsTranscriptRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_paragraphs_transcript_request",
+                  "safeName": "get_paragraphs_transcript_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_PARAGRAPHS_TRANSCRIPT_REQUEST",
+                  "safeName": "GET_PARAGRAPHS_TRANSCRIPT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetParagraphsTranscriptRequest",
+                  "safeName": "GetParagraphsTranscriptRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -24799,22 +25427,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TranscriptWordSearchRequest",
+                "originalName": "WordSearchTranscriptRequest",
                 "camelCase": {
-                  "unsafeName": "transcriptWordSearchRequest",
-                  "safeName": "transcriptWordSearchRequest"
+                  "unsafeName": "wordSearchTranscriptRequest",
+                  "safeName": "wordSearchTranscriptRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transcript_word_search_request",
-                  "safeName": "transcript_word_search_request"
+                  "unsafeName": "word_search_transcript_request",
+                  "safeName": "word_search_transcript_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSCRIPT_WORD_SEARCH_REQUEST",
-                  "safeName": "TRANSCRIPT_WORD_SEARCH_REQUEST"
+                  "unsafeName": "WORD_SEARCH_TRANSCRIPT_REQUEST",
+                  "safeName": "WORD_SEARCH_TRANSCRIPT_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TranscriptWordSearchRequest",
-                  "safeName": "TranscriptWordSearchRequest"
+                  "unsafeName": "WordSearchTranscriptRequest",
+                  "safeName": "WordSearchTranscriptRequest"
                 }
               },
               "bodyKey": {
@@ -24836,7 +25464,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -25221,6 +25849,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetRedactedAudioTranscriptRequest",
+                "camelCase": {
+                  "unsafeName": "getRedactedAudioTranscriptRequest",
+                  "safeName": "getRedactedAudioTranscriptRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_redacted_audio_transcript_request",
+                  "safeName": "get_redacted_audio_transcript_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_REDACTED_AUDIO_TRANSCRIPT_REQUEST",
+                  "safeName": "GET_REDACTED_AUDIO_TRANSCRIPT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetRedactedAudioTranscriptRequest",
+                  "safeName": "GetRedactedAudioTranscriptRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -28569,6 +29261,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "PurgeRequestDataLemurRequest",
+                "camelCase": {
+                  "unsafeName": "purgeRequestDataLemurRequest",
+                  "safeName": "purgeRequestDataLemurRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "purge_request_data_lemur_request",
+                  "safeName": "purge_request_data_lemur_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PURGE_REQUEST_DATA_LEMUR_REQUEST",
+                  "safeName": "PURGE_REQUEST_DATA_LEMUR_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "PurgeRequestDataLemurRequest",
+                  "safeName": "PurgeRequestDataLemurRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -28922,7 +29678,7 @@
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {
       "service_transcript": [
-        "type_transcript:TranscriptListRequestStatus",
+        "type_transcript:ListTranscriptRequestStatus",
         "type_:RedactedAudioResponse",
         "type_:RedactedAudioStatus",
         "type_:SubtitleFormat",
@@ -29069,13 +29825,19 @@
           "valueType": {
             "container": {
               "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
-                  }
+                "container": {
+                  "nullable": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "type": "optional"
             },
@@ -29153,13 +29915,19 @@
           "valueType": {
             "container": {
               "optional": {
-                "primitive": {
-                  "v1": "INTEGER",
-                  "v2": {
-                    "type": "integer"
-                  }
+                "container": {
+                  "nullable": {
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "type": "optional"
             },
@@ -29198,13 +29966,19 @@
           "valueType": {
             "container": {
               "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
-                  }
+                "container": {
+                  "nullable": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "type": "optional"
             },
@@ -29243,13 +30017,19 @@
           "valueType": {
             "container": {
               "optional": {
-                "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "type": "string"
-                  }
+                "container": {
+                  "nullable": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
-                "type": "primitive"
+                "type": "container"
               },
               "type": "optional"
             },
@@ -29901,25 +30681,25 @@
   "dynamic": {
     "version": "1.0.0",
     "types": {
-      "type_transcript:TranscriptListRequestStatus": {
+      "type_transcript:ListTranscriptRequestStatus": {
         "declaration": {
           "name": {
-            "originalName": "TranscriptListRequestStatus",
+            "originalName": "ListTranscriptRequestStatus",
             "camelCase": {
-              "unsafeName": "transcriptListRequestStatus",
-              "safeName": "transcriptListRequestStatus"
+              "unsafeName": "listTranscriptRequestStatus",
+              "safeName": "listTranscriptRequestStatus"
             },
             "snakeCase": {
-              "unsafeName": "transcript_list_request_status",
-              "safeName": "transcript_list_request_status"
+              "unsafeName": "list_transcript_request_status",
+              "safeName": "list_transcript_request_status"
             },
             "screamingSnakeCase": {
-              "unsafeName": "TRANSCRIPT_LIST_REQUEST_STATUS",
-              "safeName": "TRANSCRIPT_LIST_REQUEST_STATUS"
+              "unsafeName": "LIST_TRANSCRIPT_REQUEST_STATUS",
+              "safeName": "LIST_TRANSCRIPT_REQUEST_STATUS"
             },
             "pascalCase": {
-              "unsafeName": "TranscriptListRequestStatus",
-              "safeName": "TranscriptListRequestStatus"
+              "unsafeName": "ListTranscriptRequestStatus",
+              "safeName": "ListTranscriptRequestStatus"
             }
           },
           "fernFilepath": {
@@ -31016,8 +31796,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -31047,8 +31830,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -31456,8 +32242,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -31738,8 +32527,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "FLOAT",
-                "type": "primitive"
+                "value": {
+                  "value": "FLOAT",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34254,8 +35046,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34286,10 +35081,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:TranscriptWord",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:TranscriptWord",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34320,10 +35118,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:TranscriptUtterance",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:TranscriptUtterance",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34353,8 +35154,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34384,8 +35188,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "FLOAT",
-                "type": "primitive"
+                "value": {
+                  "value": "FLOAT",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34415,8 +35222,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34446,8 +35256,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34477,8 +35290,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34508,8 +35324,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34539,8 +35358,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34598,8 +35420,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34629,8 +35454,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34719,8 +35547,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34750,8 +35581,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34815,8 +35649,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34846,8 +35683,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34905,8 +35745,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34936,8 +35779,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -34968,10 +35814,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:PiiPolicy",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:PiiPolicy",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35032,8 +35881,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35063,8 +35915,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "INTEGER",
-                "type": "primitive"
+                "value": {
+                  "value": "INTEGER",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35094,8 +35949,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35125,8 +35983,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:TranscriptContentSafetyLabels",
-                "type": "named"
+                "value": {
+                  "value": "type_:TranscriptContentSafetyLabels",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35156,8 +36017,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35187,8 +36051,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:TranscriptIabCategoriesResult",
-                "type": "named"
+                "value": {
+                  "value": "type_:TranscriptIabCategoriesResult",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35218,8 +36085,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35250,10 +36120,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:TranscriptCustomSpelling",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:TranscriptCustomSpelling",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35283,8 +36156,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35315,10 +36191,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:Chapter",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:Chapter",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35376,8 +36255,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35407,8 +36289,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35438,8 +36323,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35469,8 +36357,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35534,8 +36425,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35565,8 +36459,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35597,10 +36494,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:SentimentAnalysisResult",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:SentimentAnalysisResult",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35630,8 +36530,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35662,10 +36565,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:Entity",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:Entity",
+                    "type": "named"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35695,8 +36601,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "FLOAT",
-                "type": "primitive"
+                "value": {
+                  "value": "FLOAT",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35726,8 +36635,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -36941,8 +37853,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -38104,8 +39019,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -38918,8 +39836,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -39042,7 +39963,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -42678,22 +43599,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TranscriptListRequest",
+              "originalName": "ListTranscriptRequest",
               "camelCase": {
-                "unsafeName": "transcriptListRequest",
-                "safeName": "transcriptListRequest"
+                "unsafeName": "listTranscriptRequest",
+                "safeName": "listTranscriptRequest"
               },
               "snakeCase": {
-                "unsafeName": "transcript_list_request",
-                "safeName": "transcript_list_request"
+                "unsafeName": "list_transcript_request",
+                "safeName": "list_transcript_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSCRIPT_LIST_REQUEST",
-                "safeName": "TRANSCRIPT_LIST_REQUEST"
+                "unsafeName": "LIST_TRANSCRIPT_REQUEST",
+                "safeName": "LIST_TRANSCRIPT_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TranscriptListRequest",
-                "safeName": "TranscriptListRequest"
+                "unsafeName": "ListTranscriptRequest",
+                "safeName": "ListTranscriptRequest"
               }
             },
             "fernFilepath": {
@@ -42767,10 +43688,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "LONG",
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "LONG",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             },
             {
@@ -42798,10 +43725,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "type_transcript:TranscriptListRequestStatus",
-                  "type": "named"
+                  "value": {
+                    "value": {
+                      "value": "type_transcript:ListTranscriptRequestStatus",
+                      "type": "named"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             },
             {
@@ -42829,10 +43762,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "DATE",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             },
             {
@@ -42860,10 +43799,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             },
             {
@@ -42891,10 +43836,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             },
             {
@@ -42922,10 +43873,16 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "BOOLEAN",
-                  "type": "primitive"
+                  "value": {
+                    "value": {
+                      "value": "BOOLEAN",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
+                  },
+                  "type": "optional"
                 },
-                "type": "optional"
+                "type": "nullable"
               }
             }
           ],
@@ -43291,8 +44248,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -43322,8 +44282,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -43731,8 +44694,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
+                    "value": {
+                      "value": "INTEGER",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -44013,8 +44979,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "FLOAT",
-                    "type": "primitive"
+                    "value": {
+                      "value": "FLOAT",
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -44320,6 +45289,70 @@
           "path": "/v2/transcript/{transcript_id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetTranscriptRequest",
+              "camelCase": {
+                "unsafeName": "getTranscriptRequest",
+                "safeName": "getTranscriptRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_transcript_request",
+                "safeName": "get_transcript_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_TRANSCRIPT_REQUEST",
+                "safeName": "GET_TRANSCRIPT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetTranscriptRequest",
+                "safeName": "GetTranscriptRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transcript",
+                  "camelCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT",
+                    "safeName": "TRANSCRIPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transcript",
+                    "safeName": "Transcript"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transcript",
+                "camelCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT",
+                  "safeName": "TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transcript",
+                  "safeName": "Transcript"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -44350,7 +45383,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -44458,6 +45497,70 @@
           "path": "/v2/transcript/{transcript_id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "DeleteTranscriptRequest",
+              "camelCase": {
+                "unsafeName": "deleteTranscriptRequest",
+                "safeName": "deleteTranscriptRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "delete_transcript_request",
+                "safeName": "delete_transcript_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DELETE_TRANSCRIPT_REQUEST",
+                "safeName": "DELETE_TRANSCRIPT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "DeleteTranscriptRequest",
+                "safeName": "DeleteTranscriptRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transcript",
+                  "camelCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT",
+                    "safeName": "TRANSCRIPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transcript",
+                    "safeName": "Transcript"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transcript",
+                "camelCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT",
+                  "safeName": "TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transcript",
+                  "safeName": "Transcript"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -44488,7 +45591,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -44598,22 +45707,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TranscriptGetSubtitlesRequest",
+              "originalName": "GetSubtitlesTranscriptRequest",
               "camelCase": {
-                "unsafeName": "transcriptGetSubtitlesRequest",
-                "safeName": "transcriptGetSubtitlesRequest"
+                "unsafeName": "getSubtitlesTranscriptRequest",
+                "safeName": "getSubtitlesTranscriptRequest"
               },
               "snakeCase": {
-                "unsafeName": "transcript_get_subtitles_request",
-                "safeName": "transcript_get_subtitles_request"
+                "unsafeName": "get_subtitles_transcript_request",
+                "safeName": "get_subtitles_transcript_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSCRIPT_GET_SUBTITLES_REQUEST",
-                "safeName": "TRANSCRIPT_GET_SUBTITLES_REQUEST"
+                "unsafeName": "GET_SUBTITLES_TRANSCRIPT_REQUEST",
+                "safeName": "GET_SUBTITLES_TRANSCRIPT_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TranscriptGetSubtitlesRequest",
-                "safeName": "TranscriptGetSubtitlesRequest"
+                "unsafeName": "GetSubtitlesTranscriptRequest",
+                "safeName": "GetSubtitlesTranscriptRequest"
               }
             },
             "fernFilepath": {
@@ -44744,8 +45853,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
+                  "value": {
+                    "value": "INTEGER",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -44753,7 +45865,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -44864,6 +45976,70 @@
           "path": "/v2/transcript/{transcript_id}/sentences"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetSentencesTranscriptRequest",
+              "camelCase": {
+                "unsafeName": "getSentencesTranscriptRequest",
+                "safeName": "getSentencesTranscriptRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_sentences_transcript_request",
+                "safeName": "get_sentences_transcript_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_SENTENCES_TRANSCRIPT_REQUEST",
+                "safeName": "GET_SENTENCES_TRANSCRIPT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetSentencesTranscriptRequest",
+                "safeName": "GetSentencesTranscriptRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transcript",
+                  "camelCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT",
+                    "safeName": "TRANSCRIPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transcript",
+                    "safeName": "Transcript"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transcript",
+                "camelCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT",
+                  "safeName": "TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transcript",
+                  "safeName": "Transcript"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -44894,7 +46070,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -45002,6 +46184,70 @@
           "path": "/v2/transcript/{transcript_id}/paragraphs"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetParagraphsTranscriptRequest",
+              "camelCase": {
+                "unsafeName": "getParagraphsTranscriptRequest",
+                "safeName": "getParagraphsTranscriptRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_paragraphs_transcript_request",
+                "safeName": "get_paragraphs_transcript_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_PARAGRAPHS_TRANSCRIPT_REQUEST",
+                "safeName": "GET_PARAGRAPHS_TRANSCRIPT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetParagraphsTranscriptRequest",
+                "safeName": "GetParagraphsTranscriptRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transcript",
+                  "camelCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT",
+                    "safeName": "TRANSCRIPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transcript",
+                    "safeName": "Transcript"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transcript",
+                "camelCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT",
+                  "safeName": "TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transcript",
+                  "safeName": "Transcript"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -45032,7 +46278,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -45142,22 +46394,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TranscriptWordSearchRequest",
+              "originalName": "WordSearchTranscriptRequest",
               "camelCase": {
-                "unsafeName": "transcriptWordSearchRequest",
-                "safeName": "transcriptWordSearchRequest"
+                "unsafeName": "wordSearchTranscriptRequest",
+                "safeName": "wordSearchTranscriptRequest"
               },
               "snakeCase": {
-                "unsafeName": "transcript_word_search_request",
-                "safeName": "transcript_word_search_request"
+                "unsafeName": "word_search_transcript_request",
+                "safeName": "word_search_transcript_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSCRIPT_WORD_SEARCH_REQUEST",
-                "safeName": "TRANSCRIPT_WORD_SEARCH_REQUEST"
+                "unsafeName": "WORD_SEARCH_TRANSCRIPT_REQUEST",
+                "safeName": "WORD_SEARCH_TRANSCRIPT_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TranscriptWordSearchRequest",
-                "safeName": "TranscriptWordSearchRequest"
+                "unsafeName": "WordSearchTranscriptRequest",
+                "safeName": "WordSearchTranscriptRequest"
               }
             },
             "fernFilepath": {
@@ -45272,7 +46524,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -45383,6 +46635,70 @@
           "path": "/v2/transcript/{transcript_id}/redacted-audio"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetRedactedAudioTranscriptRequest",
+              "camelCase": {
+                "unsafeName": "getRedactedAudioTranscriptRequest",
+                "safeName": "getRedactedAudioTranscriptRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_redacted_audio_transcript_request",
+                "safeName": "get_redacted_audio_transcript_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_REDACTED_AUDIO_TRANSCRIPT_REQUEST",
+                "safeName": "GET_REDACTED_AUDIO_TRANSCRIPT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetRedactedAudioTranscriptRequest",
+                "safeName": "GetRedactedAudioTranscriptRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transcript",
+                  "camelCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transcript",
+                    "safeName": "transcript"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSCRIPT",
+                    "safeName": "TRANSCRIPT"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transcript",
+                    "safeName": "Transcript"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transcript",
+                "camelCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "snakeCase": {
+                  "unsafeName": "transcript",
+                  "safeName": "transcript"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSCRIPT",
+                  "safeName": "TRANSCRIPT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transcript",
+                  "safeName": "Transcript"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -45413,7 +46729,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -46956,6 +48278,70 @@
           "path": "/lemur/v3/{request_id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "PurgeRequestDataLemurRequest",
+              "camelCase": {
+                "unsafeName": "purgeRequestDataLemurRequest",
+                "safeName": "purgeRequestDataLemurRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "purge_request_data_lemur_request",
+                "safeName": "purge_request_data_lemur_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PURGE_REQUEST_DATA_LEMUR_REQUEST",
+                "safeName": "PURGE_REQUEST_DATA_LEMUR_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PurgeRequestDataLemurRequest",
+                "safeName": "PurgeRequestDataLemurRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "lemur",
+                  "camelCase": {
+                    "unsafeName": "lemur",
+                    "safeName": "lemur"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "lemur",
+                    "safeName": "lemur"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LEMUR",
+                    "safeName": "LEMUR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Lemur",
+                    "safeName": "Lemur"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "lemur",
+                "camelCase": {
+                  "unsafeName": "lemur",
+                  "safeName": "lemur"
+                },
+                "snakeCase": {
+                  "unsafeName": "lemur",
+                  "safeName": "lemur"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LEMUR",
+                  "safeName": "LEMUR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Lemur",
+                  "safeName": "Lemur"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -46986,7 +48372,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -47212,7 +48604,7 @@
       },
       "service": "service_transcript",
       "types": [
-        "type_transcript:TranscriptListRequestStatus"
+        "type_transcript:ListTranscriptRequestStatus"
       ],
       "errors": [],
       "subpackages": [],

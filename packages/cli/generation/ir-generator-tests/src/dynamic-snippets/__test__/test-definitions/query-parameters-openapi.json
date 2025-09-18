@@ -458,7 +458,7 @@
                         },
                         "typeReference": {
                             "type": "primitive",
-                            "value": "STRING"
+                            "value": "DATE"
                         },
                         "propertyAccess": null
                     },
@@ -610,8 +610,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "DATE_TIME"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
+                                }
                             }
                         },
                         "propertyAccess": null
@@ -642,16 +645,22 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "map",
-                                "key": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                },
+                                "type": "nullable",
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
+                                    "type": "map",
+                                    "key": {
                                         "type": "primitive",
                                         "value": "STRING"
+                                    },
+                                    "value": {
+                                        "type": "optional",
+                                        "value": {
+                                            "type": "nullable",
+                                            "value": {
+                                                "type": "primitive",
+                                                "value": "STRING"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -716,8 +725,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:NestedUser"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:NestedUser"
+                                }
                             }
                         },
                         "propertyAccess": null
@@ -748,8 +760,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:User"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:User"
+                                }
                             }
                         },
                         "propertyAccess": null

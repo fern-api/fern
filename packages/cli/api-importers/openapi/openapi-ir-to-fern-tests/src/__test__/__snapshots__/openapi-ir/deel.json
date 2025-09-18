@@ -410,7 +410,7 @@
                     "start_date": {
                       "value": {
                         "value": "1999-12-31",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -565,7 +565,7 @@
                           "start_date": {
                             "value": {
                               "value": "1999-12-31",
-                              "type": "string"
+                              "type": "date"
                             },
                             "type": "primitive"
                           },
@@ -579,7 +579,7 @@
                           "end_date": {
                             "value": {
                               "value": "1999-12-31",
-                              "type": "string"
+                              "type": "date"
                             },
                             "type": "primitive"
                           },
@@ -606,8 +606,8 @@
                       "properties": {
                         "vacation_accrual_start_date": {
                           "value": {
-                            "value": "vacation_accrual_start_date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -1309,14 +1309,14 @@
                         "start_date": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "end_date": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -7370,7 +7370,7 @@
       "generatedRequestName": "AttachExternalIdRequest",
       "request": {
         "schema": {
-          "generatedName": "AttachExternalIdRequest",
+          "generatedName": "AttachExternalIdRequestBody",
           "schema": "InputToPatchContractExternalId",
           "source": {
             "file": "../openapi.yml",
@@ -8792,7 +8792,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -8880,7 +8880,7 @@
       "generatedRequestName": "CreateContractPgoTakRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateContractPgoTakRequest",
+          "generatedName": "CreateContractPgoTakRequestBody",
           "schema": "InputToCreatePgoTask",
           "source": {
             "file": "../openapi.yml",
@@ -9128,7 +9128,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   }
@@ -9430,7 +9430,7 @@
       "generatedRequestName": "CreateTaskManyReviewRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateTaskManyReviewRequest",
+          "generatedName": "CreateTaskManyReviewRequestBody",
           "schema": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
           "source": {
             "file": "../openapi.yml",
@@ -9721,7 +9721,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -9825,7 +9825,7 @@
       "generatedRequestName": "CreateTaskReviewByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateTaskReviewByIdRequest",
+          "generatedName": "CreateTaskReviewByIdRequestBody",
           "schema": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
           "source": {
             "file": "../openapi.yml",
@@ -10107,7 +10107,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10518,7 +10518,7 @@
       "generatedRequestName": "AmendContractDetailsRequest",
       "request": {
         "schema": {
-          "generatedName": "AmendContractDetailsRequest",
+          "generatedName": "AmendContractDetailsRequestBody",
           "schema": "ContractToAmendDetailsContainer",
           "source": {
             "file": "../openapi.yml",
@@ -10821,7 +10821,7 @@
       "generatedRequestName": "TerminateContractRequest",
       "request": {
         "schema": {
-          "generatedName": "TerminateContractRequest",
+          "generatedName": "TerminateContractRequestBody",
           "schema": "ContractToTerminateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -11079,7 +11079,7 @@
                     "completion_date": {
                       "value": {
                         "value": "1999-12-31",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -11131,7 +11131,7 @@
       "generatedRequestName": "SignContractRequest",
       "request": {
         "schema": {
-          "generatedName": "SignContractRequest",
+          "generatedName": "SignContractRequestBody",
           "schema": "ContractSignatureToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -11667,7 +11667,7 @@
       "generatedRequestName": "InviteToSignContractRequest",
       "request": {
         "schema": {
-          "generatedName": "InviteToSignContractRequest",
+          "generatedName": "InviteToSignContractRequestBody",
           "schema": "ContractInvitationToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -13266,7 +13266,7 @@
       "generatedRequestName": "CreateMilestoneRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateMilestoneRequest",
+          "generatedName": "CreateMilestoneRequestBody",
           "schema": "MilestoneToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -14289,7 +14289,7 @@
       "generatedRequestName": "CreateMilestoneReviewRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateMilestoneReviewRequest",
+          "generatedName": "CreateMilestoneReviewRequestBody",
           "schema": "MilestoneReviewToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -14607,7 +14607,7 @@
       "generatedRequestName": "CreateMilestoneReviewsRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateMilestoneReviewsRequest",
+          "generatedName": "CreateMilestoneReviewsRequestBody",
           "schema": "MilestoneReviewsToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -15308,7 +15308,7 @@
       "generatedRequestName": "CreateOffCyclePaymentRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateOffCyclePaymentRequest",
+          "generatedName": "CreateOffCyclePaymentRequestBody",
           "schema": "OffCyclePaymentToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -15549,7 +15549,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -16028,7 +16028,7 @@
       "generatedRequestName": "AddPremiumRequest",
       "request": {
         "schema": {
-          "generatedName": "AddPremiumRequest",
+          "generatedName": "AddPremiumRequestBody",
           "schema": "PremiumToAddContainer",
           "source": {
             "file": "../openapi.yml",
@@ -17147,7 +17147,7 @@
                   "start_date": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -17211,14 +17211,14 @@
                         "cycle_start": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "cycle_end": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -17232,7 +17232,7 @@
                             "due": {
                               "value": {
                                 "value": "1999-12-31",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -17785,7 +17785,7 @@
       "generatedRequestName": "CreateEorTimeOffsRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateEorTimeOffsRequest",
+          "generatedName": "CreateEorTimeOffsRequestBody",
           "schema": "CreateTimeoffContainer",
           "source": {
             "file": "../openapi.yml",
@@ -18478,7 +18478,7 @@
       "generatedRequestName": "EditEorTimeOffsRequest",
       "request": {
         "schema": {
-          "generatedName": "EditEorTimeOffsRequest",
+          "generatedName": "EditEorTimeOffsRequestBody",
           "schema": "CreateTimeoffContainer",
           "source": {
             "file": "../openapi.yml",
@@ -20255,7 +20255,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -21183,7 +21183,7 @@
       "generatedRequestName": "UpdateTimesheetByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateTimesheetByIdRequest",
+          "generatedName": "UpdateTimesheetByIdRequestBody",
           "schema": "TimesheetToUpdateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -21500,7 +21500,7 @@
       "generatedRequestName": "CreateTimesheetReviewRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateTimesheetReviewRequest",
+          "generatedName": "CreateTimesheetReviewRequestBody",
           "schema": "TimesheetReviewToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -23750,7 +23750,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -24154,7 +24154,7 @@
       "generatedRequestName": "UpdateInvoiceAdjustmentByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateInvoiceAdjustmentByIdRequest",
+          "generatedName": "UpdateInvoiceAdjustmentByIdRequestBody",
           "schema": "InvoiceAdjustmentToUpdateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -24464,7 +24464,7 @@
       "generatedRequestName": "CreateInvoiceAdjustmentReviewRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateInvoiceAdjustmentReviewRequest",
+          "generatedName": "CreateInvoiceAdjustmentReviewRequestBody",
           "schema": "InvoiceAdjustmentReviewToCreateContainer",
           "source": {
             "file": "../openapi.yml",
@@ -28937,7 +28937,7 @@
       "generatedRequestName": "ReviewTimeoffRequest",
       "request": {
         "schema": {
-          "generatedName": "ReviewTimeoffRequest",
+          "generatedName": "ReviewTimeoffRequestBody",
           "schema": "TimeoffToReviewContainer",
           "source": {
             "file": "../openapi.yml",
@@ -32773,7 +32773,7 @@
       "generatedRequestName": "WebhookControllerEditByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "WebhookControllerEditByIdRequest",
+          "generatedName": "WebhookControllerEditByIdRequestBody",
           "schema": "PatchWebhookRequest",
           "source": {
             "file": "../openapi.yml",
@@ -35664,10 +35664,7 @@
       "DateStringDefaultNow": {
         "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
         "schema": {
-          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-          "format": "date",
-          "example": "1999-12-31",
-          "type": "string"
+          "type": "date"
         },
         "generatedName": "DateStringDefaultNow",
         "groupName": [],
@@ -35676,10 +35673,7 @@
       "DateStringRequired": {
         "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
         "schema": {
-          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-          "format": "date",
-          "example": "1999-12-31",
-          "type": "string"
+          "type": "date"
         },
         "generatedName": "DateStringRequired",
         "groupName": [],
@@ -35691,10 +35685,7 @@
         "value": {
           "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
           "schema": {
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "format": "date",
-            "example": "1999-12-31",
-            "type": "string"
+            "type": "date"
           },
           "generatedName": "DateString",
           "groupName": [],
@@ -57492,7 +57483,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "InvoiceContractor",
-        "nameOverride": "Contractor",
         "title": "Contractor",
         "groupName": [],
         "additionalProperties": false,
@@ -58133,8 +58123,7 @@
                       "key": "vacation_accrual_start_date",
                       "schema": {
                         "schema": {
-                          "format": "date",
-                          "type": "string"
+                          "type": "date"
                         },
                         "generatedName": "HrisDirectEmployeeVacationInfoVacationAccrualStartDate",
                         "groupName": [],

@@ -97,11 +97,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/users/{userId}",
-              "path-parameters": {
-                "userId": "string",
-              },
               "request": {
                 "name": "GetUsersUserIdRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
                 "query-parameters": {
                   "activated": "string",
                   "email": "optional<nullable<string>>",
@@ -307,11 +307,11 @@
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       display-name: Get a user
       request:
         name: GetUsersUserIdRequest
+        path-parameters:
+          userId: string
         query-parameters:
           activated: string
           email: optional<nullable<string>>

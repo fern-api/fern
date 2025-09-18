@@ -41,8 +41,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/users/{userId}",
-              "path-parameters": {
-                "userId": "string",
+              "request": {
+                "name": "GetUsersUserIdRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
               },
               "response": {
                 "docs": "User retrieved successfully",
@@ -158,9 +161,11 @@
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       display-name: Get a user
+      request:
+        name: GetUsersUserIdRequest
+        path-parameters:
+          userId: string
       response:
         docs: User retrieved successfully
         type: User
@@ -277,14 +282,14 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/organizations/{organizationId}/users",
-              "path-parameters": {
-                "organizationId": "string",
-              },
               "request": {
                 "name": "GetOrganizationsOrganizationIdUsersRequest",
+                "path-parameters": {
+                  "organizationId": "string",
+                },
                 "query-parameters": {
-                  "page": "optional<integer>",
-                  "pageSize": "optional<integer>",
+                  "page": "optional<nullable<integer>>",
+                  "pageSize": "optional<nullable<integer>>",
                 },
               },
               "response": {
@@ -314,14 +319,14 @@ service:
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        organizationId: string
       display-name: List organization users
       request:
         name: GetOrganizationsOrganizationIdUsersRequest
+        path-parameters:
+          organizationId: string
         query-parameters:
-          page: optional<integer>
-          pageSize: optional<integer>
+          page: optional<nullable<integer>>
+          pageSize: optional<nullable<integer>>
       response:
         docs: User created successfully
         type: root.UserList
@@ -376,8 +381,8 @@ service:
               "request": {
                 "name": "GetUsersRequest",
                 "query-parameters": {
-                  "page": "optional<integer>",
-                  "pageSize": "optional<integer>",
+                  "page": "optional<nullable<integer>>",
+                  "pageSize": "optional<nullable<integer>>",
                 },
               },
               "response": {
@@ -411,8 +416,8 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          page: optional<integer>
-          pageSize: optional<integer>
+          page: optional<nullable<integer>>
+          pageSize: optional<nullable<integer>>
       response:
         docs: User created successfully
         type: root.UserList

@@ -1606,7 +1606,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -1628,7 +1628,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -2091,7 +2091,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "PEPStatus",
+                        "originalName": "PepStatus",
                         "camelCase": {
                           "unsafeName": "pepStatus",
                           "safeName": "pepStatus"
@@ -2113,7 +2113,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "typeId": "type_:PEPStatus",
+                      "typeId": "type_:PepStatus",
                       "type": "named"
                     },
                     "type": "list"
@@ -2527,7 +2527,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -2549,7 +2549,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -3012,7 +3012,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "PEPStatus",
+                        "originalName": "PepStatus",
                         "camelCase": {
                           "unsafeName": "pepStatus",
                           "safeName": "pepStatus"
@@ -3034,7 +3034,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "typeId": "type_:PEPStatus",
+                      "typeId": "type_:PepStatus",
                       "type": "named"
                     },
                     "type": "list"
@@ -3372,7 +3372,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "PEPStatus",
+                        "originalName": "PepStatus",
                         "camelCase": {
                           "unsafeName": "pepStatus",
                           "safeName": "pepStatus"
@@ -3394,7 +3394,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "typeId": "type_:PEPStatus",
+                      "typeId": "type_:PepStatus",
                       "type": "named"
                     },
                     "type": "list"
@@ -5143,7 +5143,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "IBANDetails",
+                "originalName": "IbanDetails",
                 "camelCase": {
                   "unsafeName": "ibanDetails",
                   "safeName": "ibanDetails"
@@ -5165,7 +5165,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:IBANDetails",
+              "typeId": "type_:IbanDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5195,7 +5195,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "ACHDetails",
+                "originalName": "AchDetails",
                 "camelCase": {
                   "unsafeName": "achDetails",
                   "safeName": "achDetails"
@@ -5217,7 +5217,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:ACHDetails",
+              "typeId": "type_:AchDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5247,7 +5247,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "SWIFTDetails",
+                "originalName": "SwiftDetails",
                 "camelCase": {
                   "unsafeName": "swiftDetails",
                   "safeName": "swiftDetails"
@@ -5269,7 +5269,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:SWIFTDetails",
+              "typeId": "type_:SwiftDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5351,7 +5351,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "UPIDetails",
+                "originalName": "UpiDetails",
                 "camelCase": {
                   "unsafeName": "upiDetails",
                   "safeName": "upiDetails"
@@ -5373,7 +5373,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:UPIDetails",
+              "typeId": "type_:UpiDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5675,7 +5675,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "IBANDetails",
+                "originalName": "IbanDetails",
                 "camelCase": {
                   "unsafeName": "ibanDetails",
                   "safeName": "ibanDetails"
@@ -5697,7 +5697,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:IBANDetails",
+              "typeId": "type_:IbanDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5727,7 +5727,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "ACHDetails",
+                "originalName": "AchDetails",
                 "camelCase": {
                   "unsafeName": "achDetails",
                   "safeName": "achDetails"
@@ -5749,7 +5749,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:ACHDetails",
+              "typeId": "type_:AchDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5779,7 +5779,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "UPIDetails",
+                "originalName": "UpiDetails",
                 "camelCase": {
                   "unsafeName": "upiDetails",
                   "safeName": "upiDetails"
@@ -5801,7 +5801,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:UPIDetails",
+              "typeId": "type_:UpiDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -5883,7 +5883,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "SWIFTDetails",
+                "originalName": "SwiftDetails",
                 "camelCase": {
                   "unsafeName": "swiftDetails",
                   "safeName": "swiftDetails"
@@ -5905,7 +5905,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:SWIFTDetails",
+              "typeId": "type_:SwiftDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -13984,7 +13984,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -14006,7 +14006,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -14620,7 +14620,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "MCCDetails",
+                    "originalName": "MccDetails",
                     "camelCase": {
                       "unsafeName": "mccDetails",
                       "safeName": "mccDetails"
@@ -14642,7 +14642,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:MCCDetails",
+                  "typeId": "type_:MccDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -15040,7 +15040,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "IBANDetails",
+                "originalName": "IbanDetails",
                 "camelCase": {
                   "unsafeName": "ibanDetails",
                   "safeName": "ibanDetails"
@@ -15062,7 +15062,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:IBANDetails",
+              "typeId": "type_:IbanDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -15092,7 +15092,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "ACHDetails",
+                "originalName": "AchDetails",
                 "camelCase": {
                   "unsafeName": "achDetails",
                   "safeName": "achDetails"
@@ -15114,7 +15114,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:ACHDetails",
+              "typeId": "type_:AchDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -15144,7 +15144,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "SWIFTDetails",
+                "originalName": "SwiftDetails",
                 "camelCase": {
                   "unsafeName": "swiftDetails",
                   "safeName": "swiftDetails"
@@ -15166,7 +15166,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:SWIFTDetails",
+              "typeId": "type_:SwiftDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -15248,7 +15248,7 @@
             },
             "shape": {
               "name": {
-                "originalName": "UPIDetails",
+                "originalName": "UpiDetails",
                 "camelCase": {
                   "unsafeName": "upiDetails",
                   "safeName": "upiDetails"
@@ -15270,7 +15270,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "typeId": "type_:UPIDetails",
+              "typeId": "type_:UpiDetails",
               "type": "named",
               "propertiesType": "samePropertiesAsObject"
             }
@@ -15508,7 +15508,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -15530,7 +15530,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -16144,7 +16144,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "MCCDetails",
+                    "originalName": "MccDetails",
                     "camelCase": {
                       "unsafeName": "mccDetails",
                       "safeName": "mccDetails"
@@ -16166,7 +16166,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:MCCDetails",
+                  "typeId": "type_:MccDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -17581,11 +17581,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:IBANDetails": {
+    "type_:IbanDetails": {
       "docs": "Standardized model for Bank Details",
       "name": {
         "name": {
-          "originalName": "IBANDetails",
+          "originalName": "IbanDetails",
           "camelCase": {
             "unsafeName": "ibanDetails",
             "safeName": "ibanDetails"
@@ -17607,7 +17607,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:IBANDetails"
+        "typeId": "type_:IbanDetails"
       },
       "shape": {
         "extends": [],
@@ -18397,11 +18397,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:ACHDetails": {
+    "type_:AchDetails": {
       "docs": "Model for ACH payment method",
       "name": {
         "name": {
-          "originalName": "ACHDetails",
+          "originalName": "AchDetails",
           "camelCase": {
             "unsafeName": "achDetails",
             "safeName": "achDetails"
@@ -18423,7 +18423,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:ACHDetails"
+        "typeId": "type_:AchDetails"
       },
       "shape": {
         "extends": [],
@@ -18730,11 +18730,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:SWIFTDetails": {
+    "type_:SwiftDetails": {
       "docs": "Model for SWIFT payment method",
       "name": {
         "name": {
-          "originalName": "SWIFTDetails",
+          "originalName": "SwiftDetails",
           "camelCase": {
             "unsafeName": "swiftDetails",
             "safeName": "swiftDetails"
@@ -18756,7 +18756,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:SWIFTDetails"
+        "typeId": "type_:SwiftDetails"
       },
       "shape": {
         "extends": [],
@@ -19863,11 +19863,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:UPIDetails": {
+    "type_:UpiDetails": {
       "docs": "Model for UPI payment method",
       "name": {
         "name": {
-          "originalName": "UPIDetails",
+          "originalName": "UpiDetails",
           "camelCase": {
             "unsafeName": "upiDetails",
             "safeName": "upiDetails"
@@ -19889,7 +19889,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:UPIDetails"
+        "typeId": "type_:UpiDetails"
       },
       "shape": {
         "extends": [],
@@ -23244,11 +23244,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:UPIPaymentMethod": {
+    "type_:UpiPaymentMethod": {
       "docs": "Classify the method of payment as \"UPI\" for UPIDetails",
       "name": {
         "name": {
-          "originalName": "UPIPaymentMethod",
+          "originalName": "UpiPaymentMethod",
           "camelCase": {
             "unsafeName": "upiPaymentMethod",
             "safeName": "upiPaymentMethod"
@@ -23270,7 +23270,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:UPIPaymentMethod"
+        "typeId": "type_:UpiPaymentMethod"
       },
       "shape": {
         "aliasOf": {
@@ -23302,11 +23302,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:IBANPaymentMethod": {
+    "type_:IbanPaymentMethod": {
       "docs": "Classify the method of payment as \"IBAN\" for IBANDetails",
       "name": {
         "name": {
-          "originalName": "IBANPaymentMethod",
+          "originalName": "IbanPaymentMethod",
           "camelCase": {
             "unsafeName": "ibanPaymentMethod",
             "safeName": "ibanPaymentMethod"
@@ -23328,7 +23328,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:IBANPaymentMethod"
+        "typeId": "type_:IbanPaymentMethod"
       },
       "shape": {
         "aliasOf": {
@@ -23476,11 +23476,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:ACHPaymentMethod": {
+    "type_:AchPaymentMethod": {
       "docs": "Classify the method of payment as \"ACH\" for ACHDetails",
       "name": {
         "name": {
-          "originalName": "ACHPaymentMethod",
+          "originalName": "AchPaymentMethod",
           "camelCase": {
             "unsafeName": "achPaymentMethod",
             "safeName": "achPaymentMethod"
@@ -23502,7 +23502,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:ACHPaymentMethod"
+        "typeId": "type_:AchPaymentMethod"
       },
       "shape": {
         "aliasOf": {
@@ -23534,11 +23534,11 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:SWIFTPaymentMethod": {
+    "type_:SwiftPaymentMethod": {
       "docs": "Classify the method of payment as \"SWIFT\" for SWIFTDetails",
       "name": {
         "name": {
-          "originalName": "SWIFTPaymentMethod",
+          "originalName": "SwiftPaymentMethod",
           "camelCase": {
             "unsafeName": "swiftPaymentMethod",
             "safeName": "swiftPaymentMethod"
@@ -23560,7 +23560,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:SWIFTPaymentMethod"
+        "typeId": "type_:SwiftPaymentMethod"
       },
       "shape": {
         "aliasOf": {
@@ -24045,10 +24045,10 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:KYCStatus": {
+    "type_:KycStatus": {
       "name": {
         "name": {
-          "originalName": "KYCStatus",
+          "originalName": "KycStatus",
           "camelCase": {
             "unsafeName": "kycStatus",
             "safeName": "kycStatus"
@@ -24070,7 +24070,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:KYCStatus"
+        "typeId": "type_:KycStatus"
       },
       "shape": {
         "values": [
@@ -24204,10 +24204,10 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:PEPStatus": {
+    "type_:PepStatus": {
       "name": {
         "name": {
-          "originalName": "PEPStatus",
+          "originalName": "PepStatus",
           "camelCase": {
             "unsafeName": "pepStatus",
             "safeName": "pepStatus"
@@ -24229,7 +24229,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:PEPStatus"
+        "typeId": "type_:PepStatus"
       },
       "shape": {
         "extends": [],
@@ -24330,10 +24330,10 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:KYCStatusDetails": {
+    "type_:KycStatusDetails": {
       "name": {
         "name": {
-          "originalName": "KYCStatusDetails",
+          "originalName": "KycStatusDetails",
           "camelCase": {
             "unsafeName": "kycStatusDetails",
             "safeName": "kycStatusDetails"
@@ -24355,7 +24355,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:KYCStatusDetails"
+        "typeId": "type_:KycStatusDetails"
       },
       "shape": {
         "extends": [],
@@ -24430,7 +24430,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatus",
+                    "originalName": "KycStatus",
                     "camelCase": {
                       "unsafeName": "kycStatus",
                       "safeName": "kycStatus"
@@ -24452,7 +24452,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatus",
+                  "typeId": "type_:KycStatus",
                   "type": "named"
                 },
                 "type": "optional"
@@ -41582,10 +41582,10 @@
       "userProvidedExamples": [],
       "autogeneratedExamples": []
     },
-    "type_:MCCDetails": {
+    "type_:MccDetails": {
       "name": {
         "name": {
-          "originalName": "MCCDetails",
+          "originalName": "MccDetails",
           "camelCase": {
             "unsafeName": "mccDetails",
             "safeName": "mccDetails"
@@ -41607,7 +41607,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "typeId": "type_:MCCDetails"
+        "typeId": "type_:MccDetails"
       },
       "shape": {
         "extends": [],
@@ -43516,7 +43516,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -43538,7 +43538,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -44001,7 +44001,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "PEPStatus",
+                        "originalName": "PepStatus",
                         "camelCase": {
                           "unsafeName": "pepStatus",
                           "safeName": "pepStatus"
@@ -44023,7 +44023,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "typeId": "type_:PEPStatus",
+                      "typeId": "type_:PepStatus",
                       "type": "named"
                     },
                     "type": "list"
@@ -44483,7 +44483,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "KYCStatusDetails",
+                    "originalName": "KycStatusDetails",
                     "camelCase": {
                       "unsafeName": "kycStatusDetails",
                       "safeName": "kycStatusDetails"
@@ -44505,7 +44505,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:KYCStatusDetails",
+                  "typeId": "type_:KycStatusDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -45119,7 +45119,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "MCCDetails",
+                    "originalName": "MccDetails",
                     "camelCase": {
                       "unsafeName": "mccDetails",
                       "safeName": "mccDetails"
@@ -45141,7 +45141,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:MCCDetails",
+                  "typeId": "type_:MccDetails",
                   "type": "named"
                 },
                 "type": "optional"
@@ -45287,13 +45287,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -45573,13 +45579,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -45618,13 +45630,19 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
@@ -45981,6 +45999,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetConsumerTransactionRequest",
+                "camelCase": {
+                  "unsafeName": "getConsumerTransactionRequest",
+                  "safeName": "getConsumerTransactionRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_consumer_transaction_request",
+                  "safeName": "get_consumer_transaction_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_CONSUMER_TRANSACTION_REQUEST",
+                  "safeName": "GET_CONSUMER_TRANSACTION_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetConsumerTransactionRequest",
+                  "safeName": "GetConsumerTransactionRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -47098,6 +47180,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetConsumerUserRequest",
+                "camelCase": {
+                  "unsafeName": "getConsumerUserRequest",
+                  "safeName": "getConsumerUserRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_consumer_user_request",
+                  "safeName": "get_consumer_user_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_CONSUMER_USER_REQUEST",
+                  "safeName": "GET_CONSUMER_USER_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetConsumerUserRequest",
+                  "safeName": "GetConsumerUserRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -47567,6 +47713,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetBusinessUserUserIdRequest",
+                "camelCase": {
+                  "unsafeName": "getBusinessUserUserIDRequest",
+                  "safeName": "getBusinessUserUserIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_business_user_user_id_request",
+                  "safeName": "get_business_user_user_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_BUSINESS_USER_USER_ID_REQUEST",
+                  "safeName": "GET_BUSINESS_USER_USER_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetBusinessUserUserIDRequest",
+                  "safeName": "GetBusinessUserUserIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -48838,14 +49048,14 @@
         "type_:CardDetailsCardFunding",
         "type_:CardDetailsCardType",
         "type_:CardDetails",
-        "type_:IBANDetails",
+        "type_:IbanDetails",
         "type_:WalletDetails",
-        "type_:ACHDetails",
-        "type_:SWIFTDetails",
+        "type_:AchDetails",
+        "type_:SwiftDetails",
         "type_:MpesaDetailsTransactionType",
         "type_:MpesaDetails",
         "type_:GenericBankAccountDetails",
-        "type_:UPIDetails",
+        "type_:UpiDetails",
         "type_:TransactionLimitsPaymentMethodLimits",
         "type_:TransactionLimits",
         "type_:RuleAction",
@@ -48856,9 +49066,9 @@
         "type_:TransactionState",
         "type_:AcquisitionChannel",
         "type_:UserState",
-        "type_:KYCStatus",
-        "type_:PEPStatus",
-        "type_:KYCStatusDetails",
+        "type_:KycStatus",
+        "type_:PepStatus",
+        "type_:KycStatusDetails",
         "type_:UserStateDetails",
         "type_:RiskLevel",
         "type_:CardExpiry",
@@ -48869,7 +49079,7 @@
         "type_:CheckDetails",
         "type_:CountryCode",
         "type_:CurrencyCode",
-        "type_:MCCDetails",
+        "type_:MccDetails",
         "type_:TransactionCountLimit",
         "type_:TransactionAmountLimit",
         "type_:TransactionLimit",
@@ -48892,12 +49102,12 @@
       "type_:CaseManagementEventCaseStatusReason",
       "type_:CaseManagementEvent",
       "type_:Date",
-      "type_:UPIPaymentMethod",
-      "type_:IBANPaymentMethod",
+      "type_:UpiPaymentMethod",
+      "type_:IbanPaymentMethod",
       "type_:CardPaymentMethod",
       "type_:WalletPaymentMethod",
-      "type_:ACHPaymentMethod",
-      "type_:SWIFTPaymentMethod",
+      "type_:AchPaymentMethod",
+      "type_:SwiftPaymentMethod",
       "type_:CheckPaymentMethod",
       "type_:MpesaPaymentMethod",
       "type_:GeneralBankAccountPaymentMethod",
@@ -49862,7 +50072,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -50117,7 +50327,7 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:PEPStatus",
+                  "value": "type_:PepStatus",
                   "type": "named"
                 },
                 "type": "list"
@@ -50333,7 +50543,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -50588,7 +50798,7 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:PEPStatus",
+                  "value": "type_:PepStatus",
                   "type": "named"
                 },
                 "type": "list"
@@ -50780,7 +50990,7 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:PEPStatus",
+                  "value": "type_:PepStatus",
                   "type": "named"
                 },
                 "type": "list"
@@ -51786,7 +51996,7 @@
             "type": "samePropertiesAsObject"
           },
           "IBAN": {
-            "typeId": "type_:IBANDetails",
+            "typeId": "type_:IbanDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "IBAN",
@@ -51813,7 +52023,7 @@
             "type": "samePropertiesAsObject"
           },
           "ACH": {
-            "typeId": "type_:ACHDetails",
+            "typeId": "type_:AchDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "ACH",
@@ -51840,7 +52050,7 @@
             "type": "samePropertiesAsObject"
           },
           "SWIFT": {
-            "typeId": "type_:SWIFTDetails",
+            "typeId": "type_:SwiftDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "SWIFT",
@@ -51894,7 +52104,7 @@
             "type": "samePropertiesAsObject"
           },
           "UPI": {
-            "typeId": "type_:UPIDetails",
+            "typeId": "type_:UpiDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "UPI",
@@ -52081,7 +52291,7 @@
             "type": "samePropertiesAsObject"
           },
           "IBAN": {
-            "typeId": "type_:IBANDetails",
+            "typeId": "type_:IbanDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "IBAN",
@@ -52108,7 +52318,7 @@
             "type": "samePropertiesAsObject"
           },
           "ACH": {
-            "typeId": "type_:ACHDetails",
+            "typeId": "type_:AchDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "ACH",
@@ -52135,7 +52345,7 @@
             "type": "samePropertiesAsObject"
           },
           "UPI": {
-            "typeId": "type_:UPIDetails",
+            "typeId": "type_:UpiDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "UPI",
@@ -52189,7 +52399,7 @@
             "type": "samePropertiesAsObject"
           },
           "SWIFT": {
-            "typeId": "type_:SWIFTDetails",
+            "typeId": "type_:SwiftDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "SWIFT",
@@ -57116,7 +57326,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -57438,7 +57648,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:MCCDetails",
+                "value": "type_:MccDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -57673,7 +57883,7 @@
             "type": "samePropertiesAsObject"
           },
           "IBAN": {
-            "typeId": "type_:IBANDetails",
+            "typeId": "type_:IbanDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "IBAN",
@@ -57700,7 +57910,7 @@
             "type": "samePropertiesAsObject"
           },
           "ACH": {
-            "typeId": "type_:ACHDetails",
+            "typeId": "type_:AchDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "ACH",
@@ -57727,7 +57937,7 @@
             "type": "samePropertiesAsObject"
           },
           "SWIFT": {
-            "typeId": "type_:SWIFTDetails",
+            "typeId": "type_:SwiftDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "SWIFT",
@@ -57781,7 +57991,7 @@
             "type": "samePropertiesAsObject"
           },
           "UPI": {
-            "typeId": "type_:UPIDetails",
+            "typeId": "type_:UpiDetails",
             "discriminantValue": {
               "name": {
                 "originalName": "UPI",
@@ -57947,7 +58157,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -58269,7 +58479,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:MCCDetails",
+                "value": "type_:MccDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -59219,10 +59429,10 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_:IBANDetails": {
+      "type_:IbanDetails": {
         "declaration": {
           "name": {
-            "originalName": "IBANDetails",
+            "originalName": "IbanDetails",
             "camelCase": {
               "unsafeName": "ibanDetails",
               "safeName": "ibanDetails"
@@ -59743,10 +59953,10 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_:ACHDetails": {
+      "type_:AchDetails": {
         "declaration": {
           "name": {
-            "originalName": "ACHDetails",
+            "originalName": "AchDetails",
             "camelCase": {
               "unsafeName": "achDetails",
               "safeName": "achDetails"
@@ -59960,10 +60170,10 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_:SWIFTDetails": {
+      "type_:SwiftDetails": {
         "declaration": {
           "name": {
-            "originalName": "SWIFTDetails",
+            "originalName": "SwiftDetails",
             "camelCase": {
               "unsafeName": "swiftDetails",
               "safeName": "swiftDetails"
@@ -60742,10 +60952,10 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_:UPIDetails": {
+      "type_:UpiDetails": {
         "declaration": {
           "name": {
-            "originalName": "UPIDetails",
+            "originalName": "UpiDetails",
             "camelCase": {
               "unsafeName": "upiDetails",
               "safeName": "upiDetails"
@@ -63100,10 +63310,10 @@
         ],
         "type": "enum"
       },
-      "type_:UPIPaymentMethod": {
+      "type_:UpiPaymentMethod": {
         "declaration": {
           "name": {
-            "originalName": "UPIPaymentMethod",
+            "originalName": "UpiPaymentMethod",
             "camelCase": {
               "unsafeName": "upiPaymentMethod",
               "safeName": "upiPaymentMethod"
@@ -63135,10 +63345,10 @@
         },
         "type": "alias"
       },
-      "type_:IBANPaymentMethod": {
+      "type_:IbanPaymentMethod": {
         "declaration": {
           "name": {
-            "originalName": "IBANPaymentMethod",
+            "originalName": "IbanPaymentMethod",
             "camelCase": {
               "unsafeName": "ibanPaymentMethod",
               "safeName": "ibanPaymentMethod"
@@ -63240,10 +63450,10 @@
         },
         "type": "alias"
       },
-      "type_:ACHPaymentMethod": {
+      "type_:AchPaymentMethod": {
         "declaration": {
           "name": {
-            "originalName": "ACHPaymentMethod",
+            "originalName": "AchPaymentMethod",
             "camelCase": {
               "unsafeName": "achPaymentMethod",
               "safeName": "achPaymentMethod"
@@ -63275,10 +63485,10 @@
         },
         "type": "alias"
       },
-      "type_:SWIFTPaymentMethod": {
+      "type_:SwiftPaymentMethod": {
         "declaration": {
           "name": {
-            "originalName": "SWIFTPaymentMethod",
+            "originalName": "SwiftPaymentMethod",
             "camelCase": {
               "unsafeName": "swiftPaymentMethod",
               "safeName": "swiftPaymentMethod"
@@ -63665,10 +63875,10 @@
         ],
         "type": "enum"
       },
-      "type_:KYCStatus": {
+      "type_:KycStatus": {
         "declaration": {
           "name": {
-            "originalName": "KYCStatus",
+            "originalName": "KycStatus",
             "camelCase": {
               "unsafeName": "kycStatus",
               "safeName": "kycStatus"
@@ -63805,10 +64015,10 @@
         ],
         "type": "enum"
       },
-      "type_:PEPStatus": {
+      "type_:PepStatus": {
         "declaration": {
           "name": {
-            "originalName": "PEPStatus",
+            "originalName": "PepStatus",
             "camelCase": {
               "unsafeName": "pepStatus",
               "safeName": "pepStatus"
@@ -63895,10 +64105,10 @@
         "additionalProperties": false,
         "type": "object"
       },
-      "type_:KYCStatusDetails": {
+      "type_:KycStatusDetails": {
         "declaration": {
           "name": {
-            "originalName": "KYCStatusDetails",
+            "originalName": "KycStatusDetails",
             "camelCase": {
               "unsafeName": "kycStatusDetails",
               "safeName": "kycStatusDetails"
@@ -63978,7 +64188,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatus",
+                "value": "type_:KycStatus",
                 "type": "named"
               },
               "type": "optional"
@@ -78803,10 +79013,10 @@
         ],
         "type": "enum"
       },
-      "type_:MCCDetails": {
+      "type_:MccDetails": {
         "declaration": {
           "name": {
-            "originalName": "MCCDetails",
+            "originalName": "MccDetails",
             "camelCase": {
               "unsafeName": "mccDetails",
               "safeName": "mccDetails"
@@ -80004,7 +80214,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -80259,7 +80469,7 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "type_:PEPStatus",
+                  "value": "type_:PepStatus",
                   "type": "named"
                 },
                 "type": "list"
@@ -80512,7 +80722,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:KYCStatusDetails",
+                "value": "type_:KycStatusDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -80834,7 +81044,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:MCCDetails",
+                "value": "type_:MccDetails",
                 "type": "named"
               },
               "type": "optional"
@@ -80998,8 +81208,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -81126,8 +81339,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -81157,8 +81373,11 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
                 "type": "optional"
               }
@@ -81267,6 +81486,31 @@
           "path": "/transactions/{transactionId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetConsumerTransactionRequest",
+              "camelCase": {
+                "unsafeName": "getConsumerTransactionRequest",
+                "safeName": "getConsumerTransactionRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_consumer_transaction_request",
+                "safeName": "get_consumer_transaction_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_CONSUMER_TRANSACTION_REQUEST",
+                "safeName": "GET_CONSUMER_TRANSACTION_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetConsumerTransactionRequest",
+                "safeName": "GetConsumerTransactionRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -81297,7 +81541,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -81788,6 +82038,31 @@
           "path": "/consumer/users/{userId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetConsumerUserRequest",
+              "camelCase": {
+                "unsafeName": "getConsumerUserRequest",
+                "safeName": "getConsumerUserRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_consumer_user_request",
+                "safeName": "get_consumer_user_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_CONSUMER_USER_REQUEST",
+                "safeName": "GET_CONSUMER_USER_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetConsumerUserRequest",
+                "safeName": "GetConsumerUserRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -81818,7 +82093,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -81964,6 +82245,31 @@
           "path": "/business/users/{userId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetBusinessUserUserIdRequest",
+              "camelCase": {
+                "unsafeName": "getBusinessUserUserIDRequest",
+                "safeName": "getBusinessUserUserIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_business_user_user_id_request",
+                "safeName": "get_business_user_user_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_BUSINESS_USER_USER_ID_REQUEST",
+                "safeName": "GET_BUSINESS_USER_USER_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetBusinessUserUserIDRequest",
+                "safeName": "GetBusinessUserUserIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -81994,7 +82300,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -82664,14 +82976,14 @@
       "type_:CardDetailsCardFunding",
       "type_:CardDetailsCardType",
       "type_:CardDetails",
-      "type_:IBANDetails",
+      "type_:IbanDetails",
       "type_:WalletDetails",
-      "type_:ACHDetails",
-      "type_:SWIFTDetails",
+      "type_:AchDetails",
+      "type_:SwiftDetails",
       "type_:MpesaDetailsTransactionType",
       "type_:MpesaDetails",
       "type_:GenericBankAccountDetails",
-      "type_:UPIDetails",
+      "type_:UpiDetails",
       "type_:TransactionLimitsPaymentMethodLimits",
       "type_:TransactionLimits",
       "type_:RuleAction",
@@ -82685,19 +82997,19 @@
       "type_:Date",
       "type_:TransactionState",
       "type_:AcquisitionChannel",
-      "type_:UPIPaymentMethod",
-      "type_:IBANPaymentMethod",
+      "type_:UpiPaymentMethod",
+      "type_:IbanPaymentMethod",
       "type_:CardPaymentMethod",
       "type_:WalletPaymentMethod",
-      "type_:ACHPaymentMethod",
-      "type_:SWIFTPaymentMethod",
+      "type_:AchPaymentMethod",
+      "type_:SwiftPaymentMethod",
       "type_:CheckPaymentMethod",
       "type_:MpesaPaymentMethod",
       "type_:GeneralBankAccountPaymentMethod",
       "type_:UserState",
-      "type_:KYCStatus",
-      "type_:PEPStatus",
-      "type_:KYCStatusDetails",
+      "type_:KycStatus",
+      "type_:PepStatus",
+      "type_:KycStatusDetails",
       "type_:UserStateDetails",
       "type_:CaseClosedDetails",
       "type_:AlertClosedDetails",
@@ -82720,7 +83032,7 @@
       "type_:CheckDetails",
       "type_:CountryCode",
       "type_:CurrencyCode",
-      "type_:MCCDetails",
+      "type_:MccDetails",
       "type_:TransactionCountLimit",
       "type_:TransactionAmountLimit",
       "type_:TransactionLimit",

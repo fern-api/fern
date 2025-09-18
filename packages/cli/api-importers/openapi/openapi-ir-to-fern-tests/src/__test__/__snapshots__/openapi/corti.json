@@ -4285,12 +4285,6 @@ navigation:
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/{id}/codes/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4311,7 +4305,12 @@ navigation:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestCodesPredict",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4363,10 +4362,13 @@ navigation:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/codes/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdCodesRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4419,12 +4421,6 @@ navigation:
               "method": "PUT",
               "pagination": undefined,
               "path": "/interactions/{id}/codes/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4437,7 +4433,12 @@ navigation:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestCodesUpdate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4487,13 +4488,15 @@ service:
       docs: ' Get all codes associated with an interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
       display-name: List Codes
+      request:
+        name: GetInteractionsIdCodesRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
       response:
         docs: List of associated codes.
         type: root.ResponseCodesList
@@ -4524,15 +4527,15 @@ service:
       docs: ' Generate Codes.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
       display-name: Generate Codes
       request:
         name: RequestCodesPredict
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
         body:
           properties:
             modelName:
@@ -4581,15 +4584,15 @@ service:
       docs: ' Mark provided codes as selected.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
       display-name: Select Codes
       request:
         name: RequestCodesUpdate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
         body:
           properties:
             finalCodes:
@@ -4675,14 +4678,17 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/interactions/{id}/documents/{documentId}",
-              "path-parameters": {
-                "documentId": {
-                  "docs": "The document ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "DeleteInteractionsIdDocumentsDocumentIdRequest",
+                "path-parameters": {
+                  "documentId": {
+                    "docs": "The document ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4851,12 +4857,6 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/{id}/documents/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4886,7 +4886,12 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestDocumentCreate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4943,22 +4948,22 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/documents/{documentId}",
-              "path-parameters": {
-                "documentId": {
-                  "docs": "The document ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetInteractionsIdDocumentsDocumentIdRequest",
+                "path-parameters": {
+                  "documentId": {
+                    "docs": "The document ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "context": {
                     "docs": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                 },
               },
@@ -5012,10 +5017,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/documents/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdDocumentsRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5073,16 +5081,6 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/interactions/{id}/documents/{documentId}",
-              "path-parameters": {
-                "documentId": {
-                  "docs": "The document ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "id": {
-                  "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5096,7 +5094,16 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestDocumentUpdate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "documentId": {
+                    "docs": "The document ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": "The interaction ID representing the context for the request. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5159,13 +5166,15 @@ service:
       docs: ' List Documents'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
       display-name: List Documents
+      request:
+        name: GetInteractionsIdDocumentsRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
       response:
         docs: ' '
         type: root.ResponseDocumentList
@@ -5199,15 +5208,15 @@ service:
       docs: ' Generate Document.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
       display-name: Generate Document
       request:
         name: RequestDocumentCreate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
         body:
           properties:
             context:
@@ -5363,23 +5372,23 @@ service:
       docs: ' Get Document.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
-        documentId:
-          type: string
-          docs: >-
-            The document ID representing the context for the request. Must be a
-            valid UUID.
       display-name: Get Document
       request:
         name: GetInteractionsIdDocumentsDocumentIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
+          documentId:
+            type: string
+            docs: >-
+              The document ID representing the context for the request. Must be
+              a valid UUID.
         query-parameters:
           context:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: >-
               If true the response contains the context used to generated the
               document, such as fact, transcript or string.
@@ -5420,18 +5429,20 @@ service:
       auth: false
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
-        documentId:
-          type: string
-          docs: >-
-            The document ID representing the context for the request. Must be a
-            valid UUID.
       display-name: Delete Document
+      request:
+        name: DeleteInteractionsIdDocumentsDocumentIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
+          documentId:
+            type: string
+            docs: >-
+              The document ID representing the context for the request. Must be
+              a valid UUID.
       response:
         docs: ''
         type: root.NoContent
@@ -5456,20 +5467,20 @@ service:
       auth: false
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The interaction ID representing the context for the request. Must be
-            a valid UUID.
-        documentId:
-          type: string
-          docs: >-
-            The document ID representing the context for the request. Must be a
-            valid UUID.
       display-name: Update Document
       request:
         name: RequestDocumentUpdate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The interaction ID representing the context for the request. Must
+              be a valid UUID.
+          documentId:
+            type: string
+            docs: >-
+              The document ID representing the context for the request. Must be
+              a valid UUID.
         body:
           properties:
             name:
@@ -5589,12 +5600,6 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/{id}/facts/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction to which the facts belong. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5607,7 +5612,12 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestFactsCreate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction to which the facts belong. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5697,10 +5707,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/facts/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which facts should be retrieved. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdFactsRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which facts should be retrieved. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5749,16 +5762,6 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/interactions/{id}/facts/{factId}",
-              "path-parameters": {
-                "factId": {
-                  "docs": "The unique identifier of the fact to update. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "id": {
-                  "docs": "The unique identifier of the interaction to which the fact belongs. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5783,7 +5786,16 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestFactUpdate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "factId": {
+                    "docs": "The unique identifier of the fact to update. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": "The unique identifier of the interaction to which the fact belongs. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5838,12 +5850,6 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/interactions/{id}/facts/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which facts are being updated. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5856,7 +5862,12 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestFactsUpdate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which facts are being updated. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5958,13 +5969,15 @@ service:
       docs: ' Retrieves a list of facts for a given interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which facts should be
-            retrieved. Must be a valid UUID.
       display-name: List Facts
+      request:
+        name: GetInteractionsIdFactsRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which facts should be
+              retrieved. Must be a valid UUID.
       response:
         docs: Returns a list of facts associated with the specified interaction.
         type: root.ResponseFactsList
@@ -5996,15 +6009,15 @@ service:
       docs: ' Adds new facts to an interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to which the facts belong.
-            Must be a valid UUID.
       display-name: Add Facts
       request:
         name: RequestFactsCreate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to which the facts
+              belong. Must be a valid UUID.
         body:
           properties:
             facts:
@@ -6045,15 +6058,15 @@ service:
       docs: ' Updates multiple facts associated with an interaction. If the interaction `status = "in progress"`, the updated facts will be sent to the client over WebSocket.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which facts are being
-            updated. Must be a valid UUID.
       display-name: Update Facts
       request:
         name: RequestFactsUpdate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which facts are being
+              updated. Must be a valid UUID.
         body:
           properties:
             facts:
@@ -6092,18 +6105,18 @@ service:
       docs: ' Updates an existing fact within a specific interaction. If the interaction `status = "in progress"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to which the fact belongs.
-            Must be a valid UUID.
-        factId:
-          type: string
-          docs: The unique identifier of the fact to update. Must be a valid UUID.
       display-name: Update Fact
       request:
         name: RequestFactUpdate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to which the fact
+              belongs. Must be a valid UUID.
+          factId:
+            type: string
+            docs: The unique identifier of the fact to update. Must be a valid UUID.
         body:
           properties:
             text:
@@ -6284,10 +6297,13 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/interactions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction to delete. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "DeleteInteractionsIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction to delete. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6348,10 +6364,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction to retrieve. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction to retrieve. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6412,27 +6431,27 @@ types:
                 "query-parameters": {
                   "direction": {
                     "docs": "Sorting order. Allowed values: [asc, desc]. Default is desc.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "encounterStatus": {
                     "docs": "The status of the encounter. To filter on multiple statuses, pass the same parameter again.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "index": {
                     "docs": "Page number to retrieve. Starts at 1. For example, index=2 with pageSize=10 will return interactions 11–20. Must be greater than 0. Default is 1.",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "pageSize": {
                     "docs": "Number of interactions to return per page. Must be greater than 0. Default is 10.",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "patient": {
                     "docs": "A unique identifier for the patient. Must be a valid UUID.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "sort": {
                     "docs": "Field used to sort interactions. Allowed values: [startedAt, endedAt, updatedAt, lastUpdated]. Default is startedAt.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -6495,12 +6514,6 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/interactions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction to update. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -6521,7 +6534,12 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestInteractionUpdate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction to update. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -6557,31 +6575,31 @@ service:
         name: GetInteractionsRequest
         query-parameters:
           sort:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               Field used to sort interactions. Allowed values: [startedAt,
               endedAt, updatedAt, lastUpdated]. Default is startedAt.
           direction:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: 'Sorting order. Allowed values: [asc, desc]. Default is desc.'
           pageSize:
-            type: optional<long>
+            type: optional<nullable<long>>
             docs: >-
               Number of interactions to return per page. Must be greater than 0.
               Default is 10.
           index:
-            type: optional<long>
+            type: optional<nullable<long>>
             docs: >-
               Page number to retrieve. Starts at 1. For example, index=2 with
               pageSize=10 will return interactions 11–20. Must be greater than
               0. Default is 1.
           encounterStatus:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: >-
               The status of the encounter. To filter on multiple statuses, pass
               the same parameter again.
           patient:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: A unique identifier for the patient. Must be a valid UUID.
       response:
         docs: ' '
@@ -6667,13 +6685,15 @@ service:
       docs: ' Retrieves a previously recorded interaction by its unique identifier (interaction ID).'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to retrieve. Must be a
-            valid UUID.
       display-name: Get Existing Interaction
+      request:
+        name: GetInteractionsIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to retrieve. Must be a
+              valid UUID.
       response:
         docs: Returns the requested interaction with all associated details.
         type: root.ResponseInteraction
@@ -6716,13 +6736,15 @@ service:
       docs: ' Deletes an existing interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to delete. Must be a valid
-            UUID.
       display-name: Delete Interaction
+      request:
+        name: DeleteInteractionsIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to delete. Must be a
+              valid UUID.
       response:
         docs: >-
           The interaction was successfully deleted. No response body is
@@ -6747,15 +6769,15 @@ service:
       docs: ' Modifies an existing interaction by updating specific fields without overwriting the entire record.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to update. Must be a valid
-            UUID.
       display-name: Update Interaction
       request:
         name: RequestInteractionUpdate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to update. Must be a
+              valid UUID.
         body:
           properties:
             assignedUserId:
@@ -6849,14 +6871,17 @@ service:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/interactions/{id}/recordings/{recordingId}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which the recording should be deleted from. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "recordingId": {
-                  "docs": "The unique identifier of the recording to be deleted. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "DeleteInteractionsIdRecordingsRecordingIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which the recording should be deleted from. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "recordingId": {
+                    "docs": "The unique identifier of the recording to be deleted. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6882,14 +6907,17 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/recordings/{recordingId}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which the recording should be retrieved. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "recordingId": {
-                  "docs": "The unique identifier of the recording to be retrieved. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdRecordingsRecordingIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which the recording should be retrieved. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "recordingId": {
+                    "docs": "The unique identifier of the recording to be retrieved. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6931,10 +6959,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/recordings/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which recordings should be retrieved. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdRecordingsRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which recordings should be retrieved. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6998,13 +7029,15 @@ service:
       docs: ' Retrieve a list of recordings for a given interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which recordings should
-            be retrieved. Must be a valid UUID.
       display-name: List Recordings
+      request:
+        name: GetInteractionsIdRecordingsRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which recordings
+              should be retrieved. Must be a valid UUID.
       response:
         docs: Returns a list of recording IDs for the interaction.
         type: root.ResponseRecordingList
@@ -7056,18 +7089,20 @@ service:
       docs: ' Retrieve a specific recording for a given interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which the recording
-            should be retrieved. Must be a valid UUID.
-        recordingId:
-          type: string
-          docs: >-
-            The unique identifier of the recording to be retrieved. Must be a
-            valid UUID.
       display-name: Get Recording
+      request:
+        name: GetInteractionsIdRecordingsRecordingIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which the recording
+              should be retrieved. Must be a valid UUID.
+          recordingId:
+            type: string
+            docs: >-
+              The unique identifier of the recording to be retrieved. Must be a
+              valid UUID.
       response:
         docs: Binary content of the recording file.
         type: text
@@ -7085,18 +7120,20 @@ service:
       docs: ' Delete a specific recording for a given interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which the recording
-            should be deleted from. Must be a valid UUID.
-        recordingId:
-          type: string
-          docs: >-
-            The unique identifier of the recording to be deleted. Must be a
-            valid UUID.
       display-name: Delete Recording
+      request:
+        name: DeleteInteractionsIdRecordingsRecordingIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which the recording
+              should be deleted from. Must be a valid UUID.
+          recordingId:
+            type: string
+            docs: >-
+              The unique identifier of the recording to be deleted. Must be a
+              valid UUID.
       response:
         docs: ''
         type: root.NoContent
@@ -7705,10 +7742,13 @@ imports:
               "method": "GET",
               "pagination": undefined,
               "path": "/templates/{key}",
-              "path-parameters": {
-                "key": {
-                  "docs": "The key of the template",
-                  "type": "string",
+              "request": {
+                "name": "GetTemplatesKeyRequest",
+                "path-parameters": {
+                  "key": {
+                    "docs": "The key of the template",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -7762,11 +7802,11 @@ imports:
                 "query-parameters": {
                   "lang": {
                     "docs": "Filter template sections by language.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "org": {
                     "docs": "Filter template sections by organization.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -7821,15 +7861,15 @@ imports:
                 "query-parameters": {
                   "lang": {
                     "docs": "Filter templates by language.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "org": {
                     "docs": "Filter templates by organization.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "templateStatus": {
                     "docs": "Filter templates by their status.",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -7866,10 +7906,10 @@ service:
         name: GetTemplateSectionsRequest
         query-parameters:
           org:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter template sections by organization.
           lang:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter template sections by language.
       response:
         docs: List of Template Sections
@@ -7905,13 +7945,13 @@ service:
         name: GetTemplatesRequest
         query-parameters:
           org:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter templates by organization.
           lang:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter templates by language.
           templateStatus:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Filter templates by their status.
       response:
         docs: List of Templates
@@ -7942,11 +7982,13 @@ service:
       docs: ' Retrieves template by key.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        key:
-          type: string
-          docs: The key of the template
       display-name: Get Template
+      request:
+        name: GetTemplatesKeyRequest
+        path-parameters:
+          key:
+            type: string
+            docs: The key of the template
       response:
         docs: Template by key
         type: root.TemplateFiltered
@@ -8035,12 +8077,6 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/interactions/{id}/transcripts/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which the transcript is created. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -8077,7 +8113,12 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestTranscriptCreate",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which the transcript is created. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -8119,14 +8160,17 @@ service:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/interactions/{id}/transcripts/{transcriptId}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction to which the transcript belongs. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "transcriptId": {
-                  "docs": "The unique identifier of the transcript to delete. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "DeleteInteractionsIdTranscriptsTranscriptIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction to which the transcript belongs. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "transcriptId": {
+                    "docs": "The unique identifier of the transcript to delete. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -8183,14 +8227,17 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/transcripts/{transcriptId}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction containing the transcript. Must be a valid UUID.",
-                  "type": "string",
-                },
-                "transcriptId": {
-                  "docs": "The unique identifier of the transcript to retrieve. Must be a valid UUID.",
-                  "type": "string",
+              "request": {
+                "name": "GetInteractionsIdTranscriptsTranscriptIdRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction containing the transcript. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                  "transcriptId": {
+                    "docs": "The unique identifier of the transcript to retrieve. Must be a valid UUID.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -8236,34 +8283,34 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/interactions/{id}/transcripts/",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique identifier of the interaction for which transcripts should be retrieved. Must be a valid UUID.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetInteractionsIdTranscriptsRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique identifier of the interaction for which transcripts should be retrieved. Must be a valid UUID.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "direction": {
                     "docs": "Describes sorting direction",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "full": {
                     "docs": "Display full transcripts in listing",
-                    "type": "optional<boolean>",
+                    "type": "optional<nullable<boolean>>",
                   },
                   "index": {
                     "docs": "The number of transcripts to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20.",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "pageSize": {
                     "docs": "The number of transcripts to return. For example, a pageSize of 10 will return a maximum of 10 interactions.",
-                    "type": "optional<long>",
+                    "type": "optional<nullable<long>>",
                   },
                   "sort": {
                     "docs": "Describes transcript attribute for sorting",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -8311,34 +8358,34 @@ service:
       docs: ' Retrieves a list of transcripts for a given interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which transcripts
-            should be retrieved. Must be a valid UUID.
       display-name: List Transcripts
       request:
         name: GetInteractionsIdTranscriptsRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which transcripts
+              should be retrieved. Must be a valid UUID.
         query-parameters:
           sort:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Describes transcript attribute for sorting
           direction:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: Describes sorting direction
           pageSize:
-            type: optional<long>
+            type: optional<nullable<long>>
             docs: >-
               The number of transcripts to return. For example, a pageSize of 10
               will return a maximum of 10 interactions.
           index:
-            type: optional<long>
+            type: optional<nullable<long>>
             docs: >-
               The number of transcripts to skip. For example, index=2 with
               pageSize=10 will skip the first 10 interactions and return 11-20.
           full:
-            type: optional<boolean>
+            type: optional<nullable<boolean>>
             docs: Display full transcripts in listing
       response:
         docs: Returns a list of transcripts associated with the interaction.
@@ -8367,15 +8414,15 @@ service:
       docs: ' Creates a new transcript for an interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction for which the transcript is
-            created. Must be a valid UUID.
       display-name: Create Transcript
       request:
         name: RequestTranscriptCreate
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction for which the transcript
+              is created. Must be a valid UUID.
         body:
           properties:
             recordingId:
@@ -8453,18 +8500,20 @@ service:
       docs: ' Retrieves the transcript for a specific interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction containing the transcript.
-            Must be a valid UUID.
-        transcriptId:
-          type: string
-          docs: >-
-            The unique identifier of the transcript to retrieve. Must be a valid
-            UUID.
       display-name: Get Transcript
+      request:
+        name: GetInteractionsIdTranscriptsTranscriptIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction containing the
+              transcript. Must be a valid UUID.
+          transcriptId:
+            type: string
+            docs: >-
+              The unique identifier of the transcript to retrieve. Must be a
+              valid UUID.
       response:
         docs: ''
         type: root.ResponseTranscriptCreate
@@ -8501,18 +8550,20 @@ service:
       docs: ' Deletes a specific transcript associated with an interaction.'
       source:
         openapi: ../swagger.json
-      path-parameters:
-        id:
-          type: string
-          docs: >-
-            The unique identifier of the interaction to which the transcript
-            belongs. Must be a valid UUID.
-        transcriptId:
-          type: string
-          docs: >-
-            The unique identifier of the transcript to delete. Must be a valid
-            UUID.
       display-name: Delete Transcript
+      request:
+        name: DeleteInteractionsIdTranscriptsTranscriptIdRequest
+        path-parameters:
+          id:
+            type: string
+            docs: >-
+              The unique identifier of the interaction to which the transcript
+              belongs. Must be a valid UUID.
+          transcriptId:
+            type: string
+            docs: >-
+              The unique identifier of the transcript to delete. Must be a valid
+              UUID.
       response:
         docs: ''
         type: root.NoContent
@@ -8563,7 +8614,7 @@ types:
         "Tenant-Name": {
           "docs": "Identifies a distinct entity within Corti's multi-tenant system. Ensures correct routing and authentication of the request.",
           "name": "tenantName",
-          "type": "optional<string>",
+          "type": "optional<nullable<string>>",
         },
       },
       "name": "api",
@@ -8579,7 +8630,7 @@ environments:
   EU_BETA: https://api.beta-eu.corti.app/v2/
 headers:
   Tenant-Name:
-    type: optional<string>
+    type: optional<nullable<string>>
     name: tenantName
     docs: >-
       Identifies a distinct entity within Corti's multi-tenant system. Ensures

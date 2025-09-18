@@ -21,7 +21,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetRequest",
+      "generatedRequestName": "GetUserRequest",
       "response": {
         "description": "Success",
         "schema": {
@@ -29,16 +29,16 @@
           "properties": [
             {
               "conflict": {},
-              "generatedName": "userGetResponseId",
+              "generatedName": "getUserResponseId",
               "key": "id",
               "schema": {
-                "generatedName": "userGetResponseId",
+                "generatedName": "getUserResponseId",
                 "value": {
                   "schema": {
                     "format": "uuid",
                     "type": "string"
                   },
-                  "generatedName": "UserGetResponseId",
+                  "generatedName": "GetUserResponseId",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -49,7 +49,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "UserGetResponse",
+          "generatedName": "GetUserResponse",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -114,7 +114,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetAllRequest",
+      "generatedRequestName": "GetAllUserRequest",
       "response": {
         "description": "Success",
         "schema": {
@@ -123,16 +123,16 @@
             "properties": [
               {
                 "conflict": {},
-                "generatedName": "userGetAllResponseItemId",
+                "generatedName": "getAllUserResponseItemId",
                 "key": "id",
                 "schema": {
-                  "generatedName": "userGetAllResponseItemId",
+                  "generatedName": "getAllUserResponseItemId",
                   "value": {
                     "schema": {
                       "format": "uuid",
                       "type": "string"
                     },
-                    "generatedName": "UserGetAllResponseItemId",
+                    "generatedName": "GetAllUserResponseItemId",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -143,7 +143,7 @@
               }
             ],
             "allOfPropertyConflicts": [],
-            "generatedName": "UserGetAllResponseItem",
+            "generatedName": "GetAllUserResponseItem",
             "groupName": [],
             "additionalProperties": false,
             "source": {
@@ -152,7 +152,7 @@
             },
             "type": "object"
           },
-          "generatedName": "UserGetAllResponse",
+          "generatedName": "GetAllUserResponse",
           "groupName": [],
           "type": "array"
         },

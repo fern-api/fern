@@ -30,63 +30,63 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
-              "path-parameters": {
-                "active_id": {
-                  "docs": "active header",
-                  "type": "string",
-                },
-                "deprecated_ref_id": "DeprecatedParam",
-                "id": {
-                  "availability": "deprecated",
-                  "docs": "collection id",
-                  "type": "string",
-                },
-                "x-fern-availability_path_param": {
-                  "availability": "pre-release",
-                  "docs": "active beta header",
-                  "type": "string",
-                },
-              },
               "request": {
                 "headers": {
                   "X-Active-Header": {
                     "docs": "active header",
                     "name": "activeHeader",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "X-Deprecated-Header": {
                     "availability": "deprecated",
                     "docs": "deprecated header",
                     "name": "deprecatedHeader",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "X-Deprecated-Ref-Header": {
                     "name": "deprecatedRefHeader",
-                    "type": "optional<DeprecatedParam>",
+                    "type": "optional<nullable<DeprecatedParam>>",
                   },
                   "x-fern-availability_header": {
                     "availability": "pre-release",
                     "docs": "active beta header",
                     "name": "fernAvailabilityHeader",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
                 "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+                "path-parameters": {
+                  "active_id": {
+                    "docs": "active header",
+                    "type": "string",
+                  },
+                  "deprecated_ref_id": "DeprecatedParam",
+                  "id": {
+                    "availability": "deprecated",
+                    "docs": "collection id",
+                    "type": "string",
+                  },
+                  "x-fern-availability_path_param": {
+                    "availability": "pre-release",
+                    "docs": "active beta header",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "active_lang": {
                     "docs": "language code",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "deprecated_lang": {
                     "availability": "deprecated",
                     "docs": "language code",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
-                  "deprecated_ref_lang": "optional<DeprecatedParam>",
+                  "deprecated_ref_lang": "optional<nullable<DeprecatedParam>>",
                   "x-fern-availability_query_param": {
                     "availability": "pre-release",
                     "docs": "active beta query param",
-                    "type": "optional<string>",
+                    "type": "optional<nullable<string>>",
                   },
                 },
               },
@@ -298,50 +298,50 @@
       auth: false
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: collection id
-          availability: deprecated
-        active_id:
-          type: string
-          docs: active header
-        deprecated_ref_id: DeprecatedParam
-        x-fern-availability_path_param:
-          type: string
-          docs: active beta header
-          availability: pre-release
       request:
         name: >-
           GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest
+        path-parameters:
+          id:
+            type: string
+            docs: collection id
+            availability: deprecated
+          active_id:
+            type: string
+            docs: active header
+          deprecated_ref_id: DeprecatedParam
+          x-fern-availability_path_param:
+            type: string
+            docs: active beta header
+            availability: pre-release
         query-parameters:
           deprecated_lang:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: language code
             availability: deprecated
           active_lang:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: language code
-          deprecated_ref_lang: optional<DeprecatedParam>
+          deprecated_ref_lang: optional<nullable<DeprecatedParam>>
           x-fern-availability_query_param:
-            type: optional<string>
+            type: optional<nullable<string>>
             docs: active beta query param
             availability: pre-release
         headers:
           X-Deprecated-Header:
-            type: optional<string>
+            type: optional<nullable<string>>
             name: deprecatedHeader
             docs: deprecated header
             availability: deprecated
           X-Active-Header:
-            type: optional<string>
+            type: optional<nullable<string>>
             name: activeHeader
             docs: active header
           X-Deprecated-Ref-Header:
-            type: optional<DeprecatedParam>
+            type: optional<nullable<DeprecatedParam>>
             name: deprecatedRefHeader
           x-fern-availability_header:
-            type: optional<string>
+            type: optional<nullable<string>>
             name: fernAvailabilityHeader
             docs: active beta header
             availability: pre-release

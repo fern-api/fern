@@ -8427,7 +8427,6 @@
                 "type": "string"
               },
               "generatedName": "Token",
-              "nameOverride": "StreamToken",
               "title": "StreamToken",
               "namespace": "stream",
               "groupName": [
@@ -8452,7 +8451,6 @@
                 "type": "string"
               },
               "generatedName": "TenantName",
-              "nameOverride": "StreamTenantName",
               "title": "StreamTenantName",
               "namespace": "stream",
               "groupName": [
@@ -8479,7 +8477,6 @@
                 "type": "string"
               },
               "generatedName": "Id",
-              "nameOverride": "StreamId",
               "title": "StreamId",
               "namespace": "stream",
               "groupName": [
@@ -9329,7 +9326,6 @@
                 "type": "reference"
               },
               "generatedName": "DocumentContextData",
-              "nameOverride": "Facts",
               "title": "Facts",
               "groupName": [],
               "type": "array"
@@ -9350,7 +9346,6 @@
                 "type": "string"
               },
               "generatedName": "DocumentContextData",
-              "nameOverride": "Text",
               "title": "Text",
               "groupName": [],
               "type": "primitive"

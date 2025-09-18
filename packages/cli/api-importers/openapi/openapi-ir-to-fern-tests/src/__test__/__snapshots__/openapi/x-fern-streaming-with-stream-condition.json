@@ -278,12 +278,12 @@ types:
         "Request-Timeout": {
           "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
           "name": "requestTimeout",
-          "type": "optional<integer>",
+          "type": "optional<nullable<integer>>",
         },
         "Request-Timeout-Millis": {
           "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
           "name": "requestTimeoutMillis",
-          "type": "optional<integer>",
+          "type": "optional<nullable<integer>>",
         },
       },
       "name": "api",
@@ -298,13 +298,13 @@ environments:
 default-environment: Default
 headers:
   Request-Timeout:
-    type: optional<integer>
+    type: optional<nullable<integer>>
     name: requestTimeout
     docs: >-
       The API will make a best effort to complete the request in the specified
       seconds or time out.
   Request-Timeout-Millis:
-    type: optional<integer>
+    type: optional<nullable<integer>>
     name: requestTimeoutMillis
     docs: >-
       The API will make a best effort to complete the request in the specified

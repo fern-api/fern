@@ -501,7 +501,7 @@
       "generatedRequestName": "UpdateAppRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateAppRequest",
+          "generatedName": "UpdateAppRequestBody",
           "schema": "AppConfig",
           "source": {
             "file": "../openapi.json",
@@ -3022,7 +3022,7 @@
       "generatedRequestName": "CreateDeploymentRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateDeploymentRequest",
+          "generatedName": "CreateDeploymentRequestBody",
           "schema": "DeploymentConfig",
           "source": {
             "file": "../openapi.json",

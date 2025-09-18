@@ -2370,7 +2370,7 @@
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "request": {
         "schema": {
-          "generatedName": "ModelVersionCompilePromptRequest",
+          "generatedName": "ModelVersionCompilePromptRequestBody",
           "schema": "ModelVersionCompilePromptRequestRequest",
           "source": {
             "file": "../openapi.yml",
@@ -2854,7 +2854,7 @@
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "request": {
         "schema": {
-          "generatedName": "UpsertSandboxScenarioRequest",
+          "generatedName": "UpsertSandboxScenarioRequestBody",
           "schema": "UpsertSandboxScenarioRequestRequest",
           "source": {
             "file": "../openapi.yml",
@@ -3825,7 +3825,7 @@
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "request": {
         "schema": {
-          "generatedName": "UpsertTestSuiteTestCaseRequest",
+          "generatedName": "UpsertTestSuiteTestCaseRequestBody",
           "schema": "TestSuiteTestCaseRequest",
           "source": {
             "file": "../openapi.yml",

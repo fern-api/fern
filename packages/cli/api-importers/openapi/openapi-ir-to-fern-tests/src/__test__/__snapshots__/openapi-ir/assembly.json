@@ -52,7 +52,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "FilesUploadRequest",
+      "generatedRequestName": "UploadFilesRequest",
       "request": {
         "source": {
           "file": "../openapi.yml",
@@ -64,7 +64,7 @@
       "response": {
         "description": "File uploaded successfully",
         "schema": {
-          "generatedName": "FilesUploadResponse",
+          "generatedName": "UploadFilesResponse",
           "schema": "UploadedFile",
           "source": {
             "file": "../openapi.yml",
@@ -301,9 +301,9 @@
           "description": "Maximum amount of transcripts to retrieve",
           "name": "limit",
           "schema": {
-            "generatedName": "TranscriptListRequestLimit",
+            "generatedName": "ListTranscriptRequestLimit",
             "value": {
-              "generatedName": "TranscriptListRequestLimit",
+              "generatedName": "ListTranscriptRequestLimit",
               "description": "Maximum amount of transcripts to retrieve",
               "value": {
                 "description": "Maximum amount of transcripts to retrieve",
@@ -311,7 +311,7 @@
                   "default": 10,
                   "type": "int64"
                 },
-                "generatedName": "TranscriptListRequestLimit",
+                "generatedName": "ListTranscriptRequestLimit",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -329,13 +329,13 @@
           "description": "Filter by transcript status",
           "name": "status",
           "schema": {
-            "generatedName": "TranscriptListRequestStatus",
+            "generatedName": "ListTranscriptRequestStatus",
             "value": {
-              "generatedName": "TranscriptListRequestStatus",
+              "generatedName": "ListTranscriptRequestStatus",
               "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
               "value": {
                 "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
-                "generatedName": "TranscriptListRequestStatus",
+                "generatedName": "ListTranscriptRequestStatus",
                 "values": [
                   {
                     "generatedName": "queued",
@@ -383,17 +383,16 @@
           "description": "Only get transcripts created on this date",
           "name": "created_on",
           "schema": {
-            "generatedName": "TranscriptListRequestCreatedOn",
+            "generatedName": "ListTranscriptRequestCreatedOn",
             "value": {
-              "generatedName": "TranscriptListRequestCreatedOn",
+              "generatedName": "ListTranscriptRequestCreatedOn",
               "description": "Only get transcripts created on this date",
               "value": {
                 "description": "Only get transcripts created on this date",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
-                "generatedName": "TranscriptListRequestCreatedOn",
+                "generatedName": "ListTranscriptRequestCreatedOn",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -411,16 +410,16 @@
           "description": "Get transcripts that were created before this transcript ID",
           "name": "before_id",
           "schema": {
-            "generatedName": "TranscriptListRequestBeforeId",
+            "generatedName": "ListTranscriptRequestBeforeId",
             "value": {
-              "generatedName": "TranscriptListRequestBeforeId",
+              "generatedName": "ListTranscriptRequestBeforeId",
               "description": "Get transcripts that were created before this transcript ID",
               "value": {
                 "description": "Get transcripts that were created before this transcript ID",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "TranscriptListRequestBeforeId",
+                "generatedName": "ListTranscriptRequestBeforeId",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -438,16 +437,16 @@
           "description": "Get transcripts that were created after this transcript ID",
           "name": "after_id",
           "schema": {
-            "generatedName": "TranscriptListRequestAfterId",
+            "generatedName": "ListTranscriptRequestAfterId",
             "value": {
-              "generatedName": "TranscriptListRequestAfterId",
+              "generatedName": "ListTranscriptRequestAfterId",
               "description": "Get transcripts that were created after this transcript ID",
               "value": {
                 "description": "Get transcripts that were created after this transcript ID",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "TranscriptListRequestAfterId",
+                "generatedName": "ListTranscriptRequestAfterId",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -465,16 +464,16 @@
           "description": "Only get throttled transcripts, overrides the status filter",
           "name": "throttled_only",
           "schema": {
-            "generatedName": "TranscriptListRequestThrottledOnly",
+            "generatedName": "ListTranscriptRequestThrottledOnly",
             "value": {
-              "generatedName": "TranscriptListRequestThrottledOnly",
+              "generatedName": "ListTranscriptRequestThrottledOnly",
               "description": "Only get throttled transcripts, overrides the status filter",
               "value": {
                 "description": "Only get throttled transcripts, overrides the status filter",
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "TranscriptListRequestThrottledOnly",
+                "generatedName": "ListTranscriptRequestThrottledOnly",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -490,11 +489,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "TranscriptListRequest",
+      "generatedRequestName": "ListTranscriptRequest",
       "response": {
         "description": "A list of transcripts filtered by `limit` and `status`",
         "schema": {
-          "generatedName": "TranscriptListResponse",
+          "generatedName": "ListTranscriptResponse",
           "schema": "TranscriptList",
           "source": {
             "file": "../openapi.yml",
@@ -833,10 +832,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptCreateRequest",
+      "generatedRequestName": "CreateTranscriptRequest",
       "request": {
         "schema": {
-          "generatedName": "TranscriptCreateRequest",
+          "generatedName": "CreateTranscriptRequest",
           "schema": "CreateTranscriptParameters",
           "source": {
             "file": "../openapi.yml",
@@ -856,7 +855,7 @@
       "response": {
         "description": "Transcript created and queued for processing.",
         "schema": {
-          "generatedName": "TranscriptCreateResponse",
+          "generatedName": "CreateTranscriptResponse",
           "schema": "Transcript",
           "source": {
             "file": "../openapi.yml",
@@ -1976,7 +1975,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptGetRequestTranscriptId",
+            "generatedName": "GetTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -1988,11 +1987,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptGetRequest",
+      "generatedRequestName": "GetTranscriptRequest",
       "response": {
         "description": "The transcript resource",
         "schema": {
-          "generatedName": "TranscriptGetResponse",
+          "generatedName": "GetTranscriptResponse",
           "schema": "Transcript",
           "source": {
             "file": "../openapi.yml",
@@ -3111,7 +3110,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptDeleteRequestTranscriptId",
+            "generatedName": "DeleteTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -3123,11 +3122,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptDeleteRequest",
+      "generatedRequestName": "DeleteTranscriptRequest",
       "response": {
         "description": "The deleted transcript response.",
         "schema": {
-          "generatedName": "TranscriptDeleteResponse",
+          "generatedName": "DeleteTranscriptResponse",
           "schema": "Transcript",
           "source": {
             "file": "../openapi.yml",
@@ -4246,7 +4245,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptGetSubtitlesRequestTranscriptId",
+            "generatedName": "GetSubtitlesTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -4259,7 +4258,7 @@
           "description": "The format of the captions.",
           "name": "subtitle_format",
           "schema": {
-            "generatedName": "TranscriptGetSubtitlesRequestSubtitleFormat",
+            "generatedName": "GetSubtitlesTranscriptRequestSubtitleFormat",
             "schema": "SubtitleFormat",
             "source": {
               "file": "../openapi.yml",
@@ -4278,12 +4277,12 @@
           "description": "The maximum number of characters per caption",
           "name": "chars_per_caption",
           "schema": {
-            "generatedName": "TranscriptGetSubtitlesRequestCharsPerCaption",
+            "generatedName": "GetSubtitlesTranscriptRequestCharsPerCaption",
             "value": {
               "schema": {
                 "type": "int"
               },
-              "generatedName": "TranscriptGetSubtitlesRequestCharsPerCaption",
+              "generatedName": "GetSubtitlesTranscriptRequestCharsPerCaption",
               "groupName": [],
               "type": "primitive"
             },
@@ -4297,7 +4296,7 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "TranscriptGetSubtitlesRequest",
+      "generatedRequestName": "GetSubtitlesTranscriptRequest",
       "response": {
         "description": "The exported captions as text",
         "source": {
@@ -4530,7 +4529,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptGetSentencesRequestTranscriptId",
+            "generatedName": "GetSentencesTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -4542,11 +4541,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptGetSentencesRequest",
+      "generatedRequestName": "GetSentencesTranscriptRequest",
       "response": {
         "description": "Exported sentences",
         "schema": {
-          "generatedName": "TranscriptGetSentencesResponse",
+          "generatedName": "GetSentencesTranscriptResponse",
           "schema": "SentencesResponse",
           "source": {
             "file": "../openapi.yml",
@@ -4909,7 +4908,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptGetParagraphsRequestTranscriptId",
+            "generatedName": "GetParagraphsTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -4921,11 +4920,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptGetParagraphsRequest",
+      "generatedRequestName": "GetParagraphsTranscriptRequest",
       "response": {
         "description": "Exported paragraphs",
         "schema": {
-          "generatedName": "TranscriptGetParagraphsResponse",
+          "generatedName": "GetParagraphsTranscriptResponse",
           "schema": "ParagraphsResponse",
           "source": {
             "file": "../openapi.yml",
@@ -5288,7 +5287,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptWordSearchRequestTranscriptId",
+            "generatedName": "WordSearchTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -5307,11 +5306,11 @@
               "schema": {
                 "type": "string"
               },
-              "generatedName": "TranscriptWordSearchRequestWordsItem",
+              "generatedName": "WordSearchTranscriptRequestWordsItem",
               "groupName": [],
               "type": "primitive"
             },
-            "generatedName": "TranscriptWordSearchRequestWords",
+            "generatedName": "WordSearchTranscriptRequestWords",
             "groupName": [],
             "type": "array"
           },
@@ -5322,11 +5321,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "TranscriptWordSearchRequest",
+      "generatedRequestName": "WordSearchTranscriptRequest",
       "response": {
         "description": "Word search response",
         "schema": {
-          "generatedName": "TranscriptWordSearchResponse",
+          "generatedName": "WordSearchTranscriptResponse",
           "schema": "WordSearchResponse",
           "source": {
             "file": "../openapi.yml",
@@ -5565,7 +5564,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "TranscriptGetRedactedAudioRequestTranscriptId",
+            "generatedName": "GetRedactedAudioTranscriptRequestTranscriptId",
             "groupName": [],
             "type": "primitive"
           },
@@ -5577,11 +5576,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TranscriptGetRedactedAudioRequest",
+      "generatedRequestName": "GetRedactedAudioTranscriptRequest",
       "response": {
         "description": "The redacted audio object containing the status and URL to the redacted audio.",
         "schema": {
-          "generatedName": "TranscriptGetRedactedAudioResponse",
+          "generatedName": "GetRedactedAudioTranscriptResponse",
           "schema": "RedactedAudioResponse",
           "source": {
             "file": "../openapi.yml",
@@ -5856,10 +5855,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "RealtimeCreateTemporaryTokenRequest",
+      "generatedRequestName": "CreateTemporaryTokenRealtimeRequest",
       "request": {
         "schema": {
-          "generatedName": "RealtimeCreateTemporaryTokenRequest",
+          "generatedName": "CreateTemporaryTokenRealtimeRequest",
           "schema": "CreateRealtimeTemporaryTokenParameters",
           "source": {
             "file": "../openapi.yml",
@@ -5879,7 +5878,7 @@
       "response": {
         "description": "Temporary authentication token generated.",
         "schema": {
-          "generatedName": "RealtimeCreateTemporaryTokenResponse",
+          "generatedName": "CreateTemporaryTokenRealtimeResponse",
           "schema": "RealtimeTemporaryTokenResponse",
           "source": {
             "file": "../openapi.yml",
@@ -6148,10 +6147,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "LemurSummaryRequest",
+      "generatedRequestName": "SummaryLemurRequest",
       "request": {
         "schema": {
-          "generatedName": "LemurSummaryRequest",
+          "generatedName": "SummaryLemurRequest",
           "schema": "LemurSummaryParameters",
           "source": {
             "file": "../openapi.yml",
@@ -6171,7 +6170,7 @@
       "response": {
         "description": "LeMUR summary response",
         "schema": {
-          "generatedName": "LemurSummaryResponse",
+          "generatedName": "SummaryLemurResponse",
           "schema": "LemurSummaryResponse",
           "source": {
             "file": "../openapi.yml",
@@ -6452,10 +6451,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "LemurQuestionAnswerRequest",
+      "generatedRequestName": "QuestionAnswerLemurRequest",
       "request": {
         "schema": {
-          "generatedName": "LemurQuestionAnswerRequest",
+          "generatedName": "QuestionAnswerLemurRequest",
           "schema": "LemurQuestionAnswerParameters",
           "source": {
             "file": "../openapi.yml",
@@ -6475,7 +6474,7 @@
       "response": {
         "description": "LeMUR question & answer response",
         "schema": {
-          "generatedName": "LemurQuestionAnswerResponse",
+          "generatedName": "QuestionAnswerLemurResponse",
           "schema": "LemurQuestionAnswerResponse",
           "source": {
             "file": "../openapi.yml",
@@ -6790,10 +6789,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "LemurActionItemsRequest",
+      "generatedRequestName": "ActionItemsLemurRequest",
       "request": {
         "schema": {
-          "generatedName": "LemurActionItemsRequest",
+          "generatedName": "ActionItemsLemurRequest",
           "schema": "LemurActionItemsParameters",
           "source": {
             "file": "../openapi.yml",
@@ -6813,7 +6812,7 @@
       "response": {
         "description": "LeMUR action items response",
         "schema": {
-          "generatedName": "LemurActionItemsResponse",
+          "generatedName": "ActionItemsLemurResponse",
           "schema": "LemurActionItemsResponse",
           "source": {
             "file": "../openapi.yml",
@@ -7094,10 +7093,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "LemurTaskRequest",
+      "generatedRequestName": "TaskLemurRequest",
       "request": {
         "schema": {
-          "generatedName": "LemurTaskRequest",
+          "generatedName": "TaskLemurRequest",
           "schema": "LemurTaskParameters",
           "source": {
             "file": "../openapi.yml",
@@ -7117,7 +7116,7 @@
       "response": {
         "description": "LeMUR task response",
         "schema": {
-          "generatedName": "LemurTaskResponse",
+          "generatedName": "TaskLemurResponse",
           "schema": "LemurTaskResponse",
           "source": {
             "file": "../openapi.yml",
@@ -7410,7 +7409,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "LemurPurgeRequestDataRequestRequestId",
+            "generatedName": "PurgeRequestDataLemurRequestRequestId",
             "groupName": [],
             "type": "primitive"
           },
@@ -7422,11 +7421,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "LemurPurgeRequestDataRequest",
+      "generatedRequestName": "PurgeRequestDataLemurRequest",
       "response": {
         "description": "LeMUR request data deleted.",
         "schema": {
-          "generatedName": "LemurPurgeRequestDataResponse",
+          "generatedName": "PurgeRequestDataLemurResponse",
           "schema": "PurgeLemurRequestDataResponse",
           "source": {
             "file": "../openapi.yml",
@@ -12762,8 +12761,7 @@
               "value": {
                 "description": "Only get transcripts created on this date",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TranscriptListParametersCreatedOn",
                 "groupName": [],

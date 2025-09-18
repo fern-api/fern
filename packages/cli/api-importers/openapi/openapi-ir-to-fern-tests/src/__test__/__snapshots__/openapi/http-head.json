@@ -47,7 +47,7 @@
               "request": {
                 "name": "GetUsersRequest",
                 "query-parameters": {
-                  "limit": "optional<double>",
+                  "limit": "optional<nullable<double>>",
                 },
               },
               "response": {
@@ -114,7 +114,7 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          limit: optional<double>
+          limit: optional<nullable<double>>
       response:
         docs: User retrieved successfully
         type: GetUsersResponse
