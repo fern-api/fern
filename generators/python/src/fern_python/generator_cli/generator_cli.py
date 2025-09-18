@@ -270,17 +270,17 @@ class GeneratorCli:
         sections = []
         for section in ir_custom_sections or []:
             if section.language == "python" and not any(s.title == section.title for s in custom_config_sections or []):
-                sections.append({
-                    "name": section.title,
-                    "language": "PYTHON",
-                    "content": section.content
-                })
+                sections.append(generatorcli.CustomSection(
+                    name=section.title,
+                    language="PYTHON",
+                    content=section.content
+                ))
 
         for section in custom_config_sections or []:
-            sections.append({
-                "name": section.title,
-                "language": "PYTHON",
-                "content": section.content
-            })
+            sections.append(generatorcli.CustomSection(
+                name=section.title,
+                language="PYTHON",
+                content=section.content
+            ))
 
         return sections if len(sections) > 0 else None
