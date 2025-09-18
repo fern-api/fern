@@ -527,8 +527,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ];
             }
-        } else if (this.oauth != null) {
-            {
+        } else if (scheme.type === "oauth") {
+            if (this.oauth !== null) {
                 return [
                     {
                         name: "clientId",
@@ -551,8 +551,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         environmentVariable: scheme.configuration.clientSecretEnvVar
                     }
                 ];
+            } else {
+                this.context.logger.warn("Auth schems is set to oauth, but no oauth configuration is provided");
+                return [];
             }
-        } else if (scheme.type === "oauth") {
+        } else if (scheme.type === "inferred") {
+            this.context.logger.warn("Inferred auth scheme is not supported for C# SDK");
             return [];
         } else {
             assertNever(scheme);
