@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -35,9 +36,67 @@ export class HttpEndpointGenerator {
         endpoint: HttpEndpoint;
         serviceId: ServiceId;
     }): ruby.Method {
-        const rawClient = new RawClient(this.context);
-
         const returnType = getEndpointReturnType({ context: this.context, endpoint });
+
+        let statements = this.generateRequestProcedure({ endpoint, serviceId });
+
+        if (endpoint.pagination) {
+            switch (endpoint.pagination.type) {
+                case "custom":
+                    throw "custom pagination not yet supported";
+                case "cursor":
+                    statements = [
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: "ItemIterator",
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [],
+                            keywordArguments: [
+                                // TODO: Fix
+                                ["item_field", ruby.codeblock(`:cards`)],
+                                // TODO: Fix
+                                ["initial_cursor", ruby.codeblock(`params[:cursor]`)]
+                            ],
+                            block: statements
+                        })
+                    ];
+                    break;
+                case "offset":
+                    throw "offset pagination not yet supported";
+                default:
+                    assertNever(endpoint.pagination);
+            }
+        }
+
+        return ruby.method({
+            name: endpoint.name.snakeCase.safeName,
+            docstring: endpoint.docs,
+            returnType,
+            parameters: {
+                keyword: [
+                    ruby.parameters.keyword({
+                        name: "request_options",
+                        initializer: ruby.TypeLiteral.hash([])
+                    })
+                ],
+                keywordSplat: ruby.parameters.keywordSplat({
+                    name: PARAMS_VN
+                })
+            },
+            statements
+        });
+    }
+
+    private generateRequestProcedure({
+        endpoint,
+        serviceId
+    }: {
+        endpoint: HttpEndpoint;
+        serviceId: ServiceId;
+    }): ruby.AstNode[] {
+        const rawClient = new RawClient(this.context);
 
         const request = getEndpointRequest({
             context: this.context,
@@ -132,23 +191,7 @@ export class HttpEndpointGenerator {
             })
         );
 
-        return ruby.method({
-            name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
-            returnType,
-            parameters: {
-                keyword: [
-                    ruby.parameters.keyword({
-                        name: "request_options",
-                        initializer: ruby.TypeLiteral.hash([])
-                    })
-                ],
-                keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN
-                })
-            },
-            statements
-        });
+        return statements;
     }
 
     private getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
