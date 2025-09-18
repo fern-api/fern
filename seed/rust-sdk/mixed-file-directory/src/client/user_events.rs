@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -17,13 +17,8 @@ impl UserEventsClient {
             Method::GET,
             "/users/events/",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = limit {
-                query_params.push(("limit".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().int("limit", limit)
+            .build(),
             options,
         ).await
     }

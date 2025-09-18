@@ -32,7 +32,8 @@ RUN echo '{ \
     "form-data-encoder": "^4.0.2", \
     "ts-loader": "^9.5.1", \
     "webpack": "^5.97.1", \
-    "fetch-mock-jest": "^1.5.1" \
+    "fetch-mock-jest": "^1.5.1", \
+    "vitest": "^3.2.4" \
   } \
 }' > package.json
 

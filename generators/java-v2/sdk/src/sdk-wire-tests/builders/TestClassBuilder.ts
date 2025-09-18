@@ -18,7 +18,8 @@ export class TestClassBuilder {
     public createTestClassBoilerplate(
         className: string,
         clientClassName: string,
-        hasAuth: boolean
+        hasAuth: boolean,
+        additionalImports?: Set<string>
     ): (writer: Writer) => void {
         return (writer) => {
             writer.addImport("org.junit.jupiter.api.Assertions");
@@ -30,6 +31,13 @@ export class TestClassBuilder {
             writer.addImport("org.junit.jupiter.api.AfterEach");
             writer.addImport("org.junit.jupiter.api.BeforeEach");
             writer.addImport("org.junit.jupiter.api.Test");
+
+            // Add any additional imports collected from snippets and type resolution
+            if (additionalImports) {
+                additionalImports.forEach((importStatement) => {
+                    writer.addImport(importStatement);
+                });
+            }
 
             writer.writeLine(`public class ${className} {`);
             writer.indent();

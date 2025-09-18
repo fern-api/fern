@@ -68,6 +68,27 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
+    public convertToPointerIfPossible(args: DynamicTypeInstantiationMapper.Args): go.TypeInstantiation {
+        const converted = this.convert(args);
+        switch (args.typeReference.type) {
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named?.type === "enum") {
+                    return go.TypeInstantiation.reference(
+                        go.invokeMethod({
+                            on: converted,
+                            method: "Ptr",
+                            arguments_: []
+                        })
+                    );
+                }
+                return converted;
+            }
+            default:
+                return converted;
+        }
+    }
+
     private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): go.TypeInstantiation {
         if (!Array.isArray(value)) {
             this.context.errors.add({

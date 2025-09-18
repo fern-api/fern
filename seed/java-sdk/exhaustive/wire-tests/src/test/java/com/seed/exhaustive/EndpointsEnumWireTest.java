@@ -2,6 +2,8 @@ package com.seed.exhaustive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

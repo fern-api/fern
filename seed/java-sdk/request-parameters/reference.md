@@ -256,7 +256,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `UUID` 
     
 </dd>
 </dl>
@@ -280,7 +280,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**bytes:** `String` 
+**bytes:** `byte[]` 
     
 </dd>
 </dl>
@@ -360,7 +360,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**longParam:** `Integer` 
+**longParam:** `Long` 
     
 </dd>
 </dl>

@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -37,20 +37,8 @@ impl EndpointsParamsClient {
             Method::GET,
             "/params",
             None,
-            {
-            let mut query_builder = crate::QueryParameterBuilder::new();
-            if let Some(value) = query {
-                // Try to parse as structured query, fall back to simple if it fails
-                if let Err(_) = query_builder.add_structured_query(&value) {
-                    query_builder.add_simple("query", &value);
-                }
-            }
-            if let Some(value) = number {
-                query_builder.add_simple("number", &value.to_string());
-            }
-            let params = query_builder.build();
-            if params.is_empty() { None } else { Some(params) }
-        },
+            QueryBuilder::new().structured_query("query", query).int("number", number)
+            .build(),
             options,
         ).await
     }
@@ -60,20 +48,8 @@ impl EndpointsParamsClient {
             Method::GET,
             "/params",
             None,
-            {
-            let mut query_builder = crate::QueryParameterBuilder::new();
-            if let Some(value) = query {
-                // Try to parse as structured query, fall back to simple if it fails
-                if let Err(_) = query_builder.add_structured_query(&value) {
-                    query_builder.add_simple("query", &value);
-                }
-            }
-            if let Some(value) = number {
-                query_builder.add_simple("number", &value.to_string());
-            }
-            let params = query_builder.build();
-            if params.is_empty() { None } else { Some(params) }
-        },
+            QueryBuilder::new().structured_query("query", query).int("number", number)
+            .build(),
             options,
         ).await
     }
@@ -83,17 +59,8 @@ impl EndpointsParamsClient {
             Method::GET,
             &format!("/params/path-query/{}", param),
             None,
-            {
-            let mut query_builder = crate::QueryParameterBuilder::new();
-            if let Some(value) = query {
-                // Try to parse as structured query, fall back to simple if it fails
-                if let Err(_) = query_builder.add_structured_query(&value) {
-                    query_builder.add_simple("query", &value);
-                }
-            }
-            let params = query_builder.build();
-            if params.is_empty() { None } else { Some(params) }
-        },
+            QueryBuilder::new().structured_query("query", query)
+            .build(),
             options,
         ).await
     }
@@ -103,17 +70,8 @@ impl EndpointsParamsClient {
             Method::GET,
             &format!("/params/path-query/{}", param),
             None,
-            {
-            let mut query_builder = crate::QueryParameterBuilder::new();
-            if let Some(value) = query {
-                // Try to parse as structured query, fall back to simple if it fails
-                if let Err(_) = query_builder.add_structured_query(&value) {
-                    query_builder.add_simple("query", &value);
-                }
-            }
-            let params = query_builder.build();
-            if params.is_empty() { None } else { Some(params) }
-        },
+            QueryBuilder::new().structured_query("query", query)
+            .build(),
             options,
         ).await
     }

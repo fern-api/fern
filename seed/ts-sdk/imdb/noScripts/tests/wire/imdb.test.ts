@@ -68,7 +68,7 @@ describe("Imdb", () => {
         
             await expect(async () => {
                 return await client.imdb.getMovie("movieId")
-            }).rejects.toThrow(new SeedApi.MovieDoesNotExistError("string"));
+            }).rejects.toThrow(SeedApi.MovieDoesNotExistError);
     });
           
 });

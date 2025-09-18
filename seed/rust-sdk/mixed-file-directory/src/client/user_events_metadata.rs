@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -17,13 +17,8 @@ impl UserEventsMetadataClient {
             Method::GET,
             "/users/events/metadata/",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = id {
-                query_params.push(("id".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().serialize("id", id)
+            .build(),
             options,
         ).await
     }
