@@ -9,7 +9,6 @@ import {
     ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
-    RetriesConfiguration,
     Schema,
     SchemaId,
     SchemaWithExample,

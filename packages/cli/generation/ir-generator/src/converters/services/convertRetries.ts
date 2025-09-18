@@ -10,7 +10,7 @@ export function convertRetries({
         return undefined;
     }
 
-    if (endpointSchema.retries.disabled === true) {
+    if (endpointSchema.retries.type === "disabled") {
         return RetriesConfiguration.disabled();
     }
 
