@@ -266,14 +266,14 @@ class GeneratorCli:
             if section.language == "python" and not any(s.title == section.title for s in custom_config_sections or []):
                 sections.append({
                     "name": section.title,
-                    "language": generatorcli.Language.Python,
+                    "language": "PYTHON",
                     "content": section.content
                 })
 
         for section in custom_config_sections or []:
             sections.append({
                 "name": section.title,
-                "language": generatorcli.Language.Python,
+                "language": "PYTHON",
                 "content": section.content
             })
 

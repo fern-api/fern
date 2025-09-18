@@ -102,10 +102,10 @@ fixtures:
           split across multiple lines.
         customSections:
           - title: "Base Readme Custom Section"
-            language: typescript
+            language: python
             content: "Base Readme Custom Content for {{ packageName }}"
           - title: "Override Section"
-            language: typescript
+            language: python
             content: "Base Content"
         features:
           asyncClient:
