@@ -349,7 +349,7 @@ client.inlineUsers().inlineUsers().listWithCursorPagination(
 <dl>
 <dd>
 
-**page:** `Optional<Float>` — Defaults to first page
+**page:** `Optional<Double>` — Defaults to first page
     
 </dd>
 </dl>
@@ -357,7 +357,7 @@ client.inlineUsers().inlineUsers().listWithCursorPagination(
 <dl>
 <dd>
 
-**perPage:** `Optional<Float>` — Defaults to per page
+**perPage:** `Optional<Double>` — Defaults to per page
     
 </dd>
 </dl>
@@ -602,7 +602,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<String>` 
+**cursor:** `Optional<UUID>` 
     
 </dd>
 </dl>
@@ -647,7 +647,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<String>` 
+**cursor:** `Optional<UUID>` 
     
 </dd>
 </dl>
@@ -1031,7 +1031,7 @@ client.users().listWithCursorPagination(
 <dl>
 <dd>
 
-**page:** `Optional<Float>` — Defaults to first page
+**page:** `Optional<Double>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1039,7 +1039,7 @@ client.users().listWithCursorPagination(
 <dl>
 <dd>
 
-**perPage:** `Optional<Float>` — Defaults to per page
+**perPage:** `Optional<Double>` — Defaults to per page
     
 </dd>
 </dl>
@@ -1284,7 +1284,7 @@ client.users().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<String>` 
+**cursor:** `Optional<UUID>` 
     
 </dd>
 </dl>
@@ -1329,7 +1329,7 @@ client.users().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<String>` 
+**cursor:** `Optional<UUID>` 
     
 </dd>
 </dl>

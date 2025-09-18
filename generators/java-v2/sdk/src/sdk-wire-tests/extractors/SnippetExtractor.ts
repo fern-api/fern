@@ -101,4 +101,42 @@ export class SnippetExtractor {
         this.context.logger.debug(`Extracted method call: ${result}`);
         return result;
     }
+
+    /**
+     * Extracts import statements from a full Java snippet.
+     *
+     * Note: We don't filter imports here - the Writer class handles deduplication
+     * automatically via its internal Set, so we just collect all imports and let
+     * the system handle it properly.
+     *
+     * @param fullSnippet The complete Java snippet including imports and class definition
+     * @returns An array of import statements (without the 'import' keyword and semicolon)
+     */
+    public extractImports(fullSnippet: string): string[] {
+        const lines = fullSnippet.split("\n");
+        const imports: string[] = [];
+
+        for (const line of lines) {
+            const trimmedLine = line.trim();
+
+            // Stop when we hit the class declaration
+            if (trimmedLine.startsWith("public class") || trimmedLine.startsWith("class")) {
+                break;
+            }
+
+            // Extract import statements
+            if (trimmedLine.startsWith("import ")) {
+                // Remove 'import ' prefix and ';' suffix
+                const importStatement = trimmedLine
+                    .substring(7) // Remove 'import '
+                    .replace(/;$/, '') // Remove trailing semicolon
+                    .trim();
+
+                imports.push(importStatement);
+            }
+        }
+
+        this.context.logger.debug(`Extracted ${imports.length} imports from snippet`);
+        return imports;
+    }
 }

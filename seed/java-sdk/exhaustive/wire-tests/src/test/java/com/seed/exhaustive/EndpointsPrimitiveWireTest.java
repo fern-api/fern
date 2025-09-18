@@ -2,6 +2,9 @@ package com.seed.exhaustive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -160,7 +163,7 @@ public class EndpointsPrimitiveWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("1000000"));
-        Integer response = client.endpoints().primitive().getAndReturnLong(1000000L);
+        Long response = client.endpoints().primitive().getAndReturnLong(1000000L);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -224,7 +227,7 @@ public class EndpointsPrimitiveWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("1.1"));
-        Float response = client.endpoints().primitive().getAndReturnDouble(1.1);
+        Double response = client.endpoints().primitive().getAndReturnDouble(1.1);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -480,7 +483,7 @@ public class EndpointsPrimitiveWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\""));
-        String response = client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
+        UUID response = client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -544,7 +547,7 @@ public class EndpointsPrimitiveWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"SGVsbG8gd29ybGQh\""));
-        String response = client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes());
+        byte[] response = client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
