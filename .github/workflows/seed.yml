@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/ping-pong-with-github
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -21,6 +21,7 @@ concurrency:
 
 jobs:
   changes:
+    if: false
     runs-on: ubuntu-latest 
     strategy:
       matrix:
@@ -469,8 +470,19 @@ jobs:
           generator-path: generators/java
           fixtures-to-run: ${{ matrix.fixtures }}
 
+  forced-test:
+    runs-on: ubuntu-latest
+    outputs:  
+      test-data: ${{ steps.output-test-data.outputs.test-data }}
+    steps:
+      - name: Output test data
+        id: output-test-data
+        run: |
+          echo "test-data="['accept-header'],['alias'],['alias-extends']" >> $GITHUB_OUTPUT
+
   typescript-sdk:
     runs-on: ubuntu-latest
+    needs: forced-test
     # CHRISM - forcing test
     # needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
@@ -484,7 +496,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
-        fixtures: [{"accept-header"},{"alias"},{"alias-extends"}]
+        fixtures: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
