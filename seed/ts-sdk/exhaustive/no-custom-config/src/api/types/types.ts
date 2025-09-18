@@ -10,12 +10,14 @@ export interface Error_ {
     detail?: string;
     field?: string;
 }
+
 export type ErrorCategory = "API_ERROR" | "AUTHENTICATION_ERROR" | "INVALID_REQUEST_ERROR";
 export const ErrorCategory = {
     ApiError: "API_ERROR",
     AuthenticationError: "AUTHENTICATION_ERROR",
     InvalidRequestError: "INVALID_REQUEST_ERROR",
 } as const;
+
 export type ErrorCode =
     | "INTERNAL_SERVER_ERROR"
     | "UNAUTHORIZED"
@@ -41,12 +43,15 @@ export const ErrorCode = {
     ServiceUnavailable: "SERVICE_UNAVAILABLE",
     Unknown: "Unknown",
 } as const;
+
 export interface PutResponse {
     errors?: SeedExhaustive.Error_[];
 }
+
 export interface BadObjectRequestInfo {
     message: string;
 }
+
 export interface ObjectWithDocs {
     /**
      * Characters that could lead to broken generated SDKs:
@@ -107,6 +112,7 @@ export interface ObjectWithDocs {
      */
     string: string;
 }
+
 export type WeatherReport = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 export const WeatherReport = {
     Sunny: "SUNNY",
@@ -114,6 +120,7 @@ export const WeatherReport = {
     Raining: "RAINING",
     Snowing: "SNOWING",
 } as const;
+
 export interface ObjectWithOptionalField {
     /** This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered. */
     string?: string;
@@ -130,24 +137,31 @@ export interface ObjectWithOptionalField {
     map?: Record<number, string>;
     bigint?: string;
 }
+
 export interface ObjectWithRequiredField {
     string: string;
 }
+
 export interface ObjectWithMapOfMap {
     map: Record<string, Record<string, string>>;
 }
+
 export interface NestedObjectWithOptionalField {
     string?: string;
     NestedObject?: SeedExhaustive.ObjectWithOptionalField;
 }
+
 export interface NestedObjectWithRequiredField {
     string: string;
     NestedObject: SeedExhaustive.ObjectWithOptionalField;
 }
+
 export interface DoubleOptional {
     optionalAlias?: SeedExhaustive.OptionalAlias | undefined;
 }
+
 export type OptionalAlias = string | undefined;
+
 export type Animal = SeedExhaustive.Animal.Dog | SeedExhaustive.Animal.Cat;
 
 export namespace Animal {
@@ -159,10 +173,12 @@ export namespace Animal {
         animal: "cat";
     }
 }
+
 export interface Dog {
     name: string;
     likesToWoof: boolean;
 }
+
 export interface Cat {
     name: string;
     likesToMeow: boolean;
