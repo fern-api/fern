@@ -107,7 +107,7 @@ runs:
 
         # Hack fix
         SUBFOLDER_STRING=""
-        if [[ SUBFOLDER==""  ]]; then
+        if [[ "$SUBFOLDER" != ""  ]]; then
           SUBFOLDER_STRING="--outputFolder ${SUBFOLDER}"
         fi
 
