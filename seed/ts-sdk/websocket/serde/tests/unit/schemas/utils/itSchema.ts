@@ -1,4 +1,4 @@
-/* eslint-disable jest/no-export */
+/* eslint-disable vi/no-export */
 import { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema";
 
 export function itSchemaIdentity<T>(
@@ -24,7 +24,7 @@ export function itSchema<Raw, Parsed>(
         only?: boolean;
     },
 ): void {
-    // eslint-disable-next-line jest/valid-title
+    // eslint-disable-next-line vi/valid-title
     (only ? describe.only : describe)(title, () => {
         itParse("parse()", schema, { raw, parsed, opts });
         itJson("json()", schema, { raw, parsed, opts });
@@ -44,7 +44,7 @@ export function itParse<Raw, Parsed>(
         opts?: SchemaOptions;
     },
 ): void {
-    // eslint-disable-next-line jest/valid-title
+    // eslint-disable-next-line vi/valid-title
     it(title, () => {
         const maybeValid = schema.parse(raw, opts);
         if (!maybeValid.ok) {
@@ -67,7 +67,7 @@ export function itJson<Raw, Parsed>(
         opts?: SchemaOptions;
     },
 ): void {
-    // eslint-disable-next-line jest/valid-title
+    // eslint-disable-next-line vi/valid-title
     it(title, () => {
         const maybeValid = schema.json(parsed, opts);
         if (!maybeValid.ok) {
