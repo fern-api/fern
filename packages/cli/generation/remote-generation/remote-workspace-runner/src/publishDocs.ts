@@ -452,12 +452,14 @@ async function generateLanguageSpecificDynamicIRs({
                     }
                 }
 
-                console.log(generatorInvocation.config)
+                console.log(generatorInvocation.config);
                 // construct a generatorConfig for php since it is not parsed by getDynamicGeneratorConfig
-                if (generatorInvocation.language === "php" && 
-                    generatorInvocation.config && 
-                    typeof generatorInvocation.config === "object" && 
-                    "packageName" in generatorInvocation.config) {
+                if (
+                    generatorInvocation.language === "php" &&
+                    generatorInvocation.config &&
+                    typeof generatorInvocation.config === "object" &&
+                    "packageName" in generatorInvocation.config
+                ) {
                     packageName = (generatorInvocation.config as { packageName?: string }).packageName ?? "";
                 }
 
