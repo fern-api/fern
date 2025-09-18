@@ -37,6 +37,10 @@ class DependencyCustomConfig(BaseDependencyCustomConfig):
     python: Optional[str] = None
     optional: bool = False
 
+class CustomReadmeSection(pydantic.BaseModel):
+    title: str
+    content: str
+
 
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
@@ -52,6 +56,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
     exclude_types_from_init_exports: Optional[bool] = False
+    custom_readme_sections: Optional[List[CustomReadmeSection]] = None
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directory
     improved_imports: bool = True

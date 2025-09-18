@@ -18,6 +18,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.custom_config import SDKCustomConfig
 
 import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
@@ -255,3 +256,25 @@ class GeneratorCli:
                 )
             )
         )
+
+    def _get_custom_readme_sections(self) -> List[generatorcli.readme.CustomReadmeSection]:
+        ir_custom_sections = self._ir.readme_config.custom_sections if self._ir.readme_config else None
+        custom_config_sections = SDKCustomConfig.parse_obj(self.context.generator_config.custom_config or {}).custom_readme_sections
+
+        sections = []
+        for section in ir_custom_sections or []:
+            if section.language == "python" and not any(s.title == section.title for s in custom_config_sections or []):
+                sections.append({
+                    "name": section.title,
+                    "language": generatorcli.Language.Python,
+                    "content": section.content
+                })
+
+        for section in custom_config_sections or []:
+            sections.append({
+                "name": section.title,
+                "language": generatorcli.Language.Python,
+                "content": section.content
+            })
+
+        return sections if sections.length > 0 else None
