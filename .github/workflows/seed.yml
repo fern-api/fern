@@ -22,32 +22,107 @@ concurrency:
 jobs:
   changes:
     runs-on: ubuntu-latest 
+    strategy:
+      matrix:
+        generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        include:
+          - files: |
+              generators/ruby/**
+              seed/ruby-sdk/seed.yml
+              seed/ruby-model/seed.yml
+            generator-name: ruby
+          - files: |
+              generators/ruby-v2/**
+              seed/ruby-sdk-v2/seed.yml
+            generator-name: ruby-v2
+          - files: |
+              generators/openapi/**
+              seed/openapi/seed.yml
+            generator-name: openapi
+          - files: |
+              generators/python/**
+              seed/pydantic/seed.yml
+              seed/pydantic-v2/seed.yml
+              seed/python-sdk/seed.yml
+              seed/fastapi/seed.yml
+            generator-name: python
+          - files: |
+              generators/postman/**
+              seed/postman/seed.yml
+            generator-name: postman
+          - files: |
+              generators/java/**
+              seed/java-sdk/seed.yml
+              seed/java-model/seed.yml
+              seed/java-spring/seed.yml
+            generator-name: java
+          - files: |
+              generators/typescript/**
+              seed/ts-sdk/seed.yml
+              seed/ts-express/seed.yml
+            generator-name: typescript
+          - files: |
+              generators/go/**
+              seed/go-sdk/seed.yml
+              seed/go-model/seed.yml
+              seed/go-fiber/seed.yml
+            generator-name: go
+          - files: |
+              generators/csharp/**
+              seed/csharp-sdk/seed.yml
+              seed/csharp-model/seed.yml
+            generator-name: csharp
+          - files: |
+              generators/php/**
+              seed/php-sdk/seed.yml
+              seed/php-model/seed.yml
+            generator-name: php
+          - files: |
+              generators/swift/**
+              seed/swift-sdk/seed.yml
+            generator-name: swift
+          - files: |
+              generators/rust/**
+              seed/rust-model/seed.yml
+              seed/rust-sdk/seed.yml
+            generator-name: rust
     outputs:
       # Note: purposely excluding seed. Running every generator at once will lock up all of our runners.
-      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
-      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
-      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
-      python: ${{ steps.get-generator-changes.outputs.python }}
-      postman: ${{ steps.get-generator-changes.outputs.postman }}
-      java: ${{ steps.get-generator-changes.outputs.java }}
-      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
-      go: ${{ steps.get-generator-changes.outputs.go }}
-      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
-      php: ${{ steps.get-generator-changes.outputs.php }}
-      swift: ${{ steps.get-generator-changes.outputs.swift }}
-      rust: ${{ steps.get-generator-changes.outputs.rust }}
+      ruby: ${{ steps.set-output.outputs.ruby-changes }}
+      ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
+      openapi: ${{ steps.set-output.outputs.openapi-changes }}
+      python: ${{ steps.set-output.outputs.python-changes }}
+      postman: ${{ steps.set-output.outputs.postman-changes }}
+      java: ${{ steps.set-output.outputs.java-changes }}
+      typescript: ${{ steps.set-output.outputs.typescript-changes }}
+      go: ${{ steps.set-output.outputs.go-changes }}
+      csharp: ${{ steps.set-output.outputs.csharp-changes }}
+      php: ${{ steps.set-output.outputs.php-changes }}
+      swift: ${{ steps.set-output.outputs.swift-changes }}
+      rust: ${{ steps.set-output.outputs.rust-changes }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
-          fetch-depth: 200 
-        
-      - name: Get generator changes
-        id: get-generator-changes
-        uses: ./.github/actions/get-generator-changes
+          fetch-depth: 200
+          filter: |
+            ${{ matrix.files }}
 
+      - name: Get generator changes for ${{ matrix.generator-name }}
+        id: get-generator-changes
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: ${{ matrix.files }}
+
+      - name: Set output
+        id: set-output
+        run: |
+          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+
+  # temporarily disabled
   get-all-test-matrices:
+    if: false 
     runs-on: ubuntu-latest
     outputs:
       ruby-model: ${{ steps.get-test-matrices.outputs.ruby-model }}
