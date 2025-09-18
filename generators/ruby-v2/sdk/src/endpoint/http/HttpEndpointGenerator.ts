@@ -43,7 +43,7 @@ export class HttpEndpointGenerator {
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom":
-                    throw "custom pagination not yet supported";
+                    break; // custom pagination not yet supported
                 case "cursor":
                     statements = [
                         ruby.invokeMethod({
@@ -54,17 +54,21 @@ export class HttpEndpointGenerator {
                             method: "new",
                             arguments_: [],
                             keywordArguments: [
-                                // TODO: Fix
-                                ["item_field", ruby.codeblock(`:cards`)],
-                                // TODO: Fix
-                                ["initial_cursor", ruby.codeblock(`params[:cursor]`)]
+                                [
+                                    "item_field",
+                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                ],
+                                [
+                                    "initial_cursor",
+                                    ruby.codeblock(`params[:${endpoint.pagination.next.property.name.wireValue}]`)
+                                ]
                             ],
                             block: statements
                         })
                     ];
                     break;
                 case "offset":
-                    throw "offset pagination not yet supported";
+                    break; // offset pagination not yet supported
                 default:
                     assertNever(endpoint.pagination);
             }
