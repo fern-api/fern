@@ -478,7 +478,7 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          echo "test-data="['accept-header'],['alias'],['alias-extends']" >> $GITHUB_OUTPUT
+          echo "test-data=\"['accept-header'],['alias'],['alias-extends']\"" >> $GITHUB_OUTPUT
 
   typescript-sdk:
     runs-on: ubuntu-latest
