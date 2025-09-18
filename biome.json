@@ -394,6 +394,8 @@
         ".turbo",
         ".nx",
         "**/node_modules/**",
+        "**/.venv/**",
+        "**/.mypy_cache/**",
         "packages/**/build/**",
         "packages/**/lib/**",
         "packages/**/dist/**",
