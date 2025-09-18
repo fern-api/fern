@@ -1,7 +1,7 @@
 import { RequestHandlerOptions } from "msw";
 import type { SetupServer } from "msw/node";
 
-import { mockEndpointBuilder } from "./mockEndpointBuilder.js";
+import { mockEndpointBuilder } from "./mockEndpointBuilder";
 
 export interface MockServerOptions {
     baseUrl: string;

@@ -26,6 +26,7 @@ export declare namespace TypescriptProject {
         outputJsr: boolean;
         exportSerde: boolean;
         packagePath?: string;
+        testPath: string;
         packageManager: "yarn" | "pnpm";
     }
 }
@@ -85,6 +86,7 @@ export abstract class TypescriptProject {
     protected readonly extraPeerDependencies: Record<string, string>;
     protected readonly extraScripts: Record<string, string>;
     protected readonly packagePath: string;
+    protected readonly testPath: string;
     protected readonly packageManager: "yarn" | "pnpm";
 
     private readonly runScripts: boolean;
@@ -104,6 +106,7 @@ export abstract class TypescriptProject {
         exportSerde,
         extraConfigs,
         packagePath,
+        testPath,
         packageManager
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
@@ -120,6 +123,7 @@ export abstract class TypescriptProject {
         this.exportSerde = exportSerde;
         this.extraConfigs = extraConfigs;
         this.packagePath = packagePath ?? TypescriptProject.DEFAULT_SRC_DIRECTORY;
+        this.testPath = testPath;
         this.packageManager = packageManager;
     }
 

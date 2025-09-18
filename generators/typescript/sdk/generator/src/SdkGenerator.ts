@@ -673,6 +673,7 @@ export class SdkGenerator {
                   runScripts: this.config.runScripts,
                   exportSerde,
                   packagePath: this.relativePackagePath,
+                  testPath: this.getRelativeTestPath(),
                   packageManager: this.config.packageManager
               })
             : new SimpleTypescriptProject({
@@ -693,6 +694,7 @@ export class SdkGenerator {
                   exportSerde,
                   useLegacyExports: this.config.useLegacyExports,
                   packagePath: this.relativePackagePath,
+                  testPath: this.getRelativeTestPath(),
                   packageManager: this.config.packageManager
               });
     }

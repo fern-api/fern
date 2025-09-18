@@ -12,5 +12,5 @@
         "baseUrl": "src/test-packagePath"
     },
     "include": ["src/test-packagePath"],
-    "exclude": []
+    "exclude": ["src/test-packagePath/tests"]
 }

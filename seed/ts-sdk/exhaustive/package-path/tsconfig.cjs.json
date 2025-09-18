@@ -5,5 +5,5 @@
         "outDir": "dist/cjs"
     },
     "include": ["src/test-packagePath"],
-    "exclude": []
+    "exclude": ["src/test-packagePath/tests"]
 }
