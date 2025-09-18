@@ -495,8 +495,8 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
+        include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
         # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
-        fixtures: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -506,7 +506,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          echo: ${{ matrix.fixtures.package }}
+          echo: ${{ matrix.package }}
           # fixtures-to-run: ${{ matrix.fixtures }}
 
   typescript-express:
