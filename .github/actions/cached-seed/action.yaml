@@ -49,7 +49,7 @@ runs:
           ${{ inputs.generator-path }} \
           seed/${{ inputs.generator-name }}/seed.yml \
           --exclude versions.yml)
-        echo "hash=${HASH}" >> $GITHUB_OUTPUT # CHRISM - is the quotes in the wrong spot why this is busted?
+        echo "hash=${HASH}" >> $GITHUB_OUTPUT
 
     - name: Check cache
       if: inputs.cache-disabled != 'true'
