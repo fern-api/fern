@@ -2,6 +2,13 @@ package com.seed.pagination;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.pagination.SeedPaginationClient;
+import com.seed.pagination.resources.complex.types.PaginatedConversationResponse;
+import com.seed.pagination.resources.complex.types.SearchRequest;
+import com.seed.pagination.resources.complex.types.SearchRequestQuery;
+import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
+import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
+import com.seed.pagination.resources.complex.types.StartingAfterPaging;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

@@ -57,7 +57,7 @@ client.admin().updateTestSubmissionStatus(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -114,7 +114,7 @@ client.admin().sendTestSubmissionUpdate(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -165,7 +165,7 @@ client.admin().updateWorkspaceSubmissionStatus(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -222,7 +222,7 @@ client.admin().sendWorkspaceSubmissionUpdate(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -398,7 +398,7 @@ client.admin().storeTracedTestCase(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -579,7 +579,7 @@ client.admin().storeTracedTestCaseV2(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -766,7 +766,7 @@ client.admin().storeTracedWorkspace(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -938,7 +938,7 @@ client.admin().storeTracedWorkspaceV2(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
