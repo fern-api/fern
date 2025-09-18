@@ -17,7 +17,7 @@ module Seed
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: params[:starting_after]
@@ -53,7 +53,7 @@ module Seed
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :data,
           initial_cursor: params[:cursor]
@@ -82,7 +82,7 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
           initial_cursor: params[:cursor]
@@ -116,25 +116,32 @@ module Seed
           %i[page per_page order starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: _query
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :page,
+          item_field: :data,
+          initial_page: params[:page]
+        ) do |next_page|
+          params[:page] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users",
+            query: _query
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
 
@@ -145,47 +152,61 @@ module Seed
           %i[page per_page order starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: _query
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :page,
+          item_field: :data,
+          initial_page: params[:page]
+        ) do |next_page|
+          params[:page] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users",
+            query: _query
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "/users",
-          body: params
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :page,
+          item_field: :data,
+          initial_page: params[:page]
+        ) do |next_page|
+          params[:page] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/users",
+            body: params
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
 
@@ -196,25 +217,32 @@ module Seed
           %i[page limit order]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: _query
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :page,
+          item_field: :data,
+          initial_page: params[:page]
+        ) do |next_page|
+          params[:page] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users",
+            query: _query
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
 
@@ -225,25 +253,32 @@ module Seed
           %i[page limit order]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: _query
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :page,
+          item_field: :data,
+          initial_page: params[:page]
+        ) do |next_page|
+          params[:page] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users",
+            query: _query
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersPaginationResponse.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
 
@@ -256,7 +291,7 @@ module Seed
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :users,
           initial_cursor: params[:cursor]
@@ -292,7 +327,7 @@ module Seed
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :users,
           initial_cursor: params[:cursor]
@@ -328,7 +363,7 @@ module Seed
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
-        Seed::Internal::ItemIterator.new(
+        Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
           initial_cursor: params[:starting_after]
@@ -362,25 +397,32 @@ module Seed
           %i[offset]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params.except(*_query_param_names)
+        params = params.except(*_query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: _query
-        )
-        begin
-          _response = @client.send(_request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = _response.code.to_i
-        if code.between?(200, 299)
-          Seed::Users::Types::UsernameContainer.load(_response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+        Seed::Internal::OffsetItemIterator.new(
+          page_field: :offset,
+          item_field: :results,
+          initial_page: params[:offset]
+        ) do |next_page|
+          params[:offset] = next_page
+          _request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users",
+            query: _query
+          )
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::UsernameContainer.load(_response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
+          end
         end
       end
     end
