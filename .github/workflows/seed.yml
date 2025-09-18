@@ -478,7 +478,7 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          echo 'test-data=[{"package": ["accept-header"]},{"package": ["alias-extends"]}]' >> $GITHUB_OUTPUT
+          echo 'test-data=[{"package": ["accept-header alias"]},{"package": ["alias-extends"]}]' >> $GITHUB_OUTPUT
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -500,16 +500,16 @@ jobs:
     steps:
       - name: Echo package
         run: echo ${{ join(matrix.package, ' ') }}
-    # steps:
-    #   - name: Checkout repo
-    #     uses: actions/checkout@v4
+    
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    #   - name: Run seed
-    #     uses: ./.github/actions/cached-seed
-    #     with:
-    #       generator-name: ts-sdk
-    #       generator-path: generators/typescript
-    #       fixtures-to-run: ${{ join(matrix.package, ' ') }}
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-sdk
+          generator-path: generators/typescript
+          fixtures-to-run: ${{ join(matrix.package, ' ') }}
 
   typescript-express:
     runs-on: ubuntu-latest
