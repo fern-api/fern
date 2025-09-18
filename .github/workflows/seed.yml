@@ -106,7 +106,7 @@ jobs:
         with:
           # Get sufficient history to check for changes
           fetch-depth: 200
-          filter: |
+          sparse-checkout: |
             ${{ matrix.files }}
 
       - name: Get generator changes for ${{ matrix.generator-name }}
