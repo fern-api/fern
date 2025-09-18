@@ -26,7 +26,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        custom-readme-sections:
+        customReadmeSections:
           - title: "Override Section"
             content: "Override Content"
           - title: "Generator Invocation Custom Section"

@@ -57,6 +57,7 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
+            customSections: getCustomSections(context),
             features,
             requirements: ["PHP ^8.1"]
         };
@@ -73,9 +74,7 @@ export class ReadmeConfigBuilder {
 
 function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
-    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.[
-        "custom-readme-sections"
-    ];
+    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
     for (const section of irCustomSections ?? []) {
