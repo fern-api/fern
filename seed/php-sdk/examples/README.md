@@ -30,7 +30,7 @@ $client = new SeedClient(
     token: '<token>',
 );
 $client->echo_(
-    'string',
+    'Hello world!\n\nwith\n\tnewlines',
 );
 
 ```

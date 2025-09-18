@@ -7,7 +7,7 @@ async fn main() {
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_with_extended_results(ListUsersExtendedRequest {
+        .inline_users_inline_users_list_with_extended_results(ListUsersExtendedRequest {
             cursor: Some(todo!("Unhandled primitive: UUID")),
         })
         .await;

@@ -29,10 +29,10 @@ use Seed\Types\EchoRequest;
 
 $client = new SeedClient();
 $client->echo_(
-    'id',
+    'id-ksfd9c1',
     new EchoRequest([
-        'name' => 'name',
-        'size' => 1,
+        'name' => 'Hello world!',
+        'size' => 20,
     ]),
 );
 

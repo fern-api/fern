@@ -30,8 +30,8 @@ use Seed\Dummy\Requests\GenerateRequest;
 $client = new SeedClient();
 $client->dummy->generate(
     new GenerateRequest([
-        'stream' => true,
-        'numEvents' => 1,
+        'stream' => false,
+        'numEvents' => 5,
     ]),
 );
 

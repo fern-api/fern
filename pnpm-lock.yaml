@@ -199,8 +199,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -232,8 +232,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.7.0
+        version: 59.7.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -363,8 +363,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -414,14 +414,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.33
-        version: 0.0.33
+        specifier: 0.1.1
+        version: 0.1.1
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
