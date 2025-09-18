@@ -318,7 +318,9 @@ async function uploadFiles(
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
                         headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
+                            // Set max cache control for S3 uploads
+                            "Cache-Control": "public, max-age=31536000, immutable"
                         }
                     });
                 } catch (e) {
