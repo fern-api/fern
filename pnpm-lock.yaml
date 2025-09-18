@@ -86,8 +86,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/base:
     dependencies:
@@ -138,8 +138,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/browser-compatible-base:
     dependencies:
@@ -175,8 +175,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/csharp/base:
     devDependencies:
@@ -217,8 +217,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/csharp/codegen:
     dependencies:
@@ -257,8 +257,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/csharp/dynamic-snippets:
     devDependencies:
@@ -308,8 +308,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/csharp/formatter:
     dependencies:
@@ -336,8 +336,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/csharp/model:
     devDependencies:
@@ -378,8 +378,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -438,8 +438,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -468,8 +468,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -519,8 +519,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
@@ -567,8 +567,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/go-v2/formatter:
     dependencies:
@@ -592,8 +592,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/go-v2/model:
     devDependencies:
@@ -631,8 +631,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/go-v2/sdk:
     devDependencies:
@@ -688,8 +688,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/java-v2/ast:
     dependencies:
@@ -716,8 +716,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/java-v2/base:
     devDependencies:
@@ -746,8 +746,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/java-v2/dynamic-snippets:
     devDependencies:
@@ -797,8 +797,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/java-v2/sdk:
     devDependencies:
@@ -857,8 +857,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/openapi:
     devDependencies:
@@ -908,8 +908,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/php/base:
     devDependencies:
@@ -953,8 +953,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/php/codegen:
     dependencies:
@@ -984,8 +984,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1074,8 +1074,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1137,8 +1137,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1185,8 +1185,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1212,8 +1212,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/python-v2/base:
     dependencies:
@@ -1258,8 +1258,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/python-v2/browser-compatible-base:
     devDependencies:
@@ -1276,8 +1276,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1333,8 +1333,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/python-v2/fastapi:
     devDependencies:
@@ -1354,8 +1354,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/python-v2/formatter:
     devDependencies:
@@ -1378,8 +1378,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1420,8 +1420,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1462,8 +1462,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1493,8 +1493,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby-v2/base:
     devDependencies:
@@ -1547,8 +1547,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby-v2/dynamic-snippets:
     devDependencies:
@@ -1592,8 +1592,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby-v2/model:
     devDependencies:
@@ -1631,8 +1631,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby-v2/sdk:
     devDependencies:
@@ -1703,8 +1703,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby/cli:
     dependencies:
@@ -1740,8 +1740,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby/codegen:
     dependencies:
@@ -1780,8 +1780,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/ruby/model:
     devDependencies:
@@ -1822,8 +1822,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1870,8 +1870,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1910,8 +1910,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/rust/codegen:
     dependencies:
@@ -1977,8 +1977,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/rust/model:
     devDependencies:
@@ -2022,8 +2022,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2083,8 +2083,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2119,8 +2119,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/swift/codegen:
     dependencies:
@@ -2156,8 +2156,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/swift/dynamic-snippets:
     devDependencies:
@@ -2207,8 +2207,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/swift/model:
     dependencies:
@@ -2256,8 +2256,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2319,8 +2319,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2364,8 +2364,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-mcp/model:
     devDependencies:
@@ -2400,8 +2400,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-mcp/server:
     devDependencies:
@@ -2445,8 +2445,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-v2/ast:
     dependencies:
@@ -2473,8 +2473,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-v2/base:
     devDependencies:
@@ -2491,8 +2491,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
@@ -2515,8 +2515,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-v2/dynamic-snippets:
     devDependencies:
@@ -2563,8 +2563,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript-v2/formatter:
     dependencies:
@@ -2591,8 +2591,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2639,8 +2639,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2679,8 +2679,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -2713,8 +2713,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -2750,8 +2750,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -2778,8 +2778,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -2812,8 +2812,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -2852,8 +2852,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -2886,8 +2886,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/generator:
     dependencies:
@@ -2965,8 +2965,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -2996,8 +2996,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -3030,8 +3030,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -3064,8 +3064,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -3098,8 +3098,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -3135,8 +3135,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -3169,8 +3169,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -3203,8 +3203,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/playground/browser:
     dependencies:
@@ -3267,8 +3267,8 @@ importers:
         specifier: ^0.6.4
         version: 0.6.4(eslint@8.57.1)(meow@9.0.0)(optionator@0.9.4)(stylelint@14.16.1)(typescript@5.9.2)(vite@5.4.19(@types/node@18.15.3)(sass@1.92.0))
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -3318,8 +3318,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/client-class-generator:
     dependencies:
@@ -3364,8 +3364,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -3401,8 +3401,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -3432,8 +3432,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -3547,8 +3547,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -3578,8 +3578,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -3612,8 +3612,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -3655,8 +3655,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -3689,8 +3689,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -3726,8 +3726,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -3760,8 +3760,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/sdk/websocket-type-schema-generator:
     dependencies:
@@ -3794,8 +3794,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -3822,8 +3822,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -3865,8 +3865,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -3893,8 +3893,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/commons:
     dependencies:
@@ -3978,8 +3978,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -4015,8 +4015,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   generators/typescript/utils/resolvers:
     dependencies:
@@ -4040,8 +4040,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4080,8 +4080,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -4117,8 +4117,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -4135,8 +4135,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/conjure/conjure-to-fern:
     dependencies:
@@ -4175,8 +4175,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -4203,8 +4203,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
@@ -4249,8 +4249,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
@@ -4274,8 +4274,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -4326,8 +4326,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -4375,8 +4375,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -4418,8 +4418,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
@@ -4455,8 +4455,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
@@ -4522,8 +4522,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/api-importers/v3-importer-tests:
     dependencies:
@@ -4559,8 +4559,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/auth:
     dependencies:
@@ -4602,8 +4602,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/cli:
     devDependencies:
@@ -4854,8 +4854,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -4882,8 +4882,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/cli-migrations:
     dependencies:
@@ -4952,8 +4952,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/cli-source-resolver:
     dependencies:
@@ -4986,8 +4986,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/configuration:
     dependencies:
@@ -5023,8 +5023,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/configuration-loader:
     dependencies:
@@ -5102,8 +5102,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -5139,8 +5139,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -5182,8 +5182,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/docs-importers/readme:
     dependencies:
@@ -5261,8 +5261,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/docs-markdown-utils:
     dependencies:
@@ -5340,8 +5340,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5434,8 +5434,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/docs-resolver:
     dependencies:
@@ -5537,8 +5537,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/ete-tests:
     dependencies:
@@ -5601,8 +5601,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -5644,8 +5644,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
@@ -5699,8 +5699,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -5724,8 +5724,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -5794,8 +5794,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/ir-generator:
     devDependencies:
@@ -5863,8 +5863,8 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/ir-generator-tests:
     dependencies:
@@ -5912,8 +5912,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -6144,8 +6144,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -6178,8 +6178,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -6299,8 +6299,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/protoc-gen-fern:
     dependencies:
@@ -6348,8 +6348,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
@@ -6474,8 +6474,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/generation/source-resolver:
     dependencies:
@@ -6499,8 +6499,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/init:
     dependencies:
@@ -6575,8 +6575,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/logger:
     dependencies:
@@ -6597,8 +6597,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/login:
     dependencies:
@@ -6655,8 +6655,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/mock:
     dependencies:
@@ -6701,8 +6701,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/posthog-manager:
     dependencies:
@@ -6738,8 +6738,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/project-loader:
     dependencies:
@@ -6775,8 +6775,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/register:
     dependencies:
@@ -6842,8 +6842,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/semver-utils:
     dependencies:
@@ -6864,8 +6864,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/task-context:
     dependencies:
@@ -6886,8 +6886,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/workspace/browser-compatible-fern-workspace:
     dependencies:
@@ -6929,8 +6929,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/workspace/commons:
     dependencies:
@@ -6990,8 +6990,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/workspace/lazy-fern-workspace:
     dependencies:
@@ -7132,8 +7132,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/workspace/loader:
     dependencies:
@@ -7190,8 +7190,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/workspace/oss-validator:
     dependencies:
@@ -7230,8 +7230,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -7354,8 +7354,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/cli/yaml/generators-validator:
     dependencies:
@@ -7409,8 +7409,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/casings-generator:
     dependencies:
@@ -7443,8 +7443,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/core-utils:
     dependencies:
@@ -7510,8 +7510,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/fs-utils:
     dependencies:
@@ -7550,8 +7550,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/ir-utils:
     dependencies:
@@ -7590,8 +7590,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/loadable:
     dependencies:
@@ -7612,8 +7612,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/logging-execa:
     dependencies:
@@ -7640,8 +7640,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/path-utils:
     devDependencies:
@@ -7658,8 +7658,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/commons/test-utils:
     devDependencies:
@@ -7700,14 +7700,14 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/configs:
     devDependencies:
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/core:
     dependencies:
@@ -7740,8 +7740,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/ir-sdk:
     devDependencies:
@@ -7758,8 +7758,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
   packages/scripts:
     devDependencies:
@@ -7785,8 +7785,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -7893,8 +7893,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -7950,8 +7950,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0)
 
 packages:
 
@@ -10124,6 +10124,9 @@ packages:
     resolution: {integrity: sha512-5O+dAJuahjV1PiRRYBRAJkpyCk9UjoWzdmhftmEwafoYx0DhPBT9qIwrKCCIpt/DdcG1g7/UD5lrf4qmHkp8TQ==}
     deprecated: This is a stub types definition. boxen provides its own type definitions, so you do not need this installed.
 
+  '@types/chai@5.2.2':
+    resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
+
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
@@ -10135,6 +10138,9 @@ packages:
 
   '@types/decompress@4.2.7':
     resolution: {integrity: sha512-9z+8yjKr5Wn73Pt17/ldnmQToaFHZxK0N1GHysuk/JIPT8RIdQeoInM01wWPgypRcvb6VH1drjuFpQ4zmY437g==}
+
+  '@types/deep-eql@4.0.2':
+    resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
   '@types/diff@5.2.3':
     resolution: {integrity: sha512-K0Oqlrq3kQMaO2RhfrNQX5trmt+XLyom88zS0u84nnIcLvFnRUMRRHmrGny5GSM+kNO9IZLARsdQHDzkhAgmrQ==}
@@ -10392,6 +10398,9 @@ packages:
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
 
+  '@vitest/expect@3.2.4':
+    resolution: {integrity: sha512-Io0yyORnB6sikFlt8QW5K7slY4OjqNX9jmJQ02QDda8lyM6B5oNgVWoSoKPac8/kgnCUzuHQKrSLtu/uOqqrig==}
+
   '@vitest/mocker@2.1.9':
     resolution: {integrity: sha512-tVL6uJgoUdi6icpxmdrn5YNo3g3Dxv+IHJBr0GXHaEdTcw3F+cPKnsXFhli6nO+f/6SDKPHEK1UN+k+TQv0Ehg==}
     peerDependencies:
@@ -10403,20 +10412,46 @@ packages:
       vite:
         optional: true
 
+  '@vitest/mocker@3.2.4':
+    resolution: {integrity: sha512-46ryTE9RZO/rfDd7pEqFl7etuyzekzEhUbTW3BvmeO/BcCMEgq59BKhek3dXDWgAj4oMK6OZi+vRr1wPW6qjEQ==}
+    peerDependencies:
+      msw: ^2.4.9
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0-0
+    peerDependenciesMeta:
+      msw:
+        optional: true
+      vite:
+        optional: true
+
   '@vitest/pretty-format@2.1.9':
     resolution: {integrity: sha512-KhRIdGV2U9HOUzxfiHmY8IFHTdqtOhIzCpd8WRdJiE7D/HUcZVD0EgQCVjm+Q9gkUXWgBvMmTtZgIG48wq7sOQ==}
+
+  '@vitest/pretty-format@3.2.4':
+    resolution: {integrity: sha512-IVNZik8IVRJRTr9fxlitMKeJeXFFFN0JaB9PHPGQ8NKQbGpfjlTx9zO4RefN8gp7eqjNy8nyK3NZmBzOPeIxtA==}
 
   '@vitest/runner@2.1.9':
     resolution: {integrity: sha512-ZXSSqTFIrzduD63btIfEyOmNcBmQvgOVsPNPe0jYtESiXkhd8u2erDLnMxmGrDCwHCCHE7hxwRDCT3pt0esT4g==}
 
+  '@vitest/runner@3.2.4':
+    resolution: {integrity: sha512-oukfKT9Mk41LreEW09vt45f8wx7DordoWUZMYdY/cyAk7w5TWkTRCNZYF7sX7n2wB7jyGAl74OxgwhPgKaqDMQ==}
+
   '@vitest/snapshot@2.1.9':
     resolution: {integrity: sha512-oBO82rEjsxLNJincVhLhaxxZdEtV0EFHMK5Kmx5sJ6H9L183dHECjiefOAdnqpIgT5eZwT04PoggUnW88vOBNQ==}
+
+  '@vitest/snapshot@3.2.4':
+    resolution: {integrity: sha512-dEYtS7qQP2CjU27QBC5oUOxLE/v5eLkGqPE0ZKEIDGMs4vKWe7IjgLOeauHsR0D5YuuycGRO5oSRXnwnmA78fQ==}
 
   '@vitest/spy@2.1.9':
     resolution: {integrity: sha512-E1B35FwzXXTs9FHNK6bDszs7mtydNi5MIfUWpceJ8Xbfb1gBMscAnwLbEu+B44ed6W3XjL9/ehLPHR1fkf1KLQ==}
 
+  '@vitest/spy@3.2.4':
+    resolution: {integrity: sha512-vAfasCOe6AIK70iP5UD11Ac4siNUNJ9i/9PZ3NKx07sG6sUxeag1LWdNrMWeKKYBLlzuK+Gn65Yd5nyL6ds+nw==}
+
   '@vitest/utils@2.1.9':
     resolution: {integrity: sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ==}
+
+  '@vitest/utils@3.2.4':
+    resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
   '@vue/compiler-core@3.5.21':
     resolution: {integrity: sha512-8i+LZ0vf6ZgII5Z9XmUvrCyEzocvWT+TeR2VBUVlzIH6Tyv57E20mPZ1bCS+tbejgUgmjrEh7q/0F0bibskAmw==}
@@ -12384,6 +12419,9 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
+  js-tokens@9.0.1:
+    resolution: {integrity: sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ==}
+
   js-yaml-source-map@0.2.2:
     resolution: {integrity: sha512-z45Aww8oXJh9GuWUnwmvHsAkB7I/oWrkoHU554UQ8Ik4dyhVrk/nwClTI435feU7QIy7E0XaW8jHvZ4QxaAjog==}
     peerDependencies:
@@ -13974,6 +14012,9 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
+  strip-literal@3.0.0:
+    resolution: {integrity: sha512-TcccoMhJOM3OebGhSBEmp3UZ2SfDMZUEBdRA/9ynfLi8yYajyWX3JiXArcJt4Umh4vISpspkQIY8ZZoCqjbviA==}
+
   strtok3@9.1.1:
     resolution: {integrity: sha512-FhwotcEqjr241ZbjFzjlIYg6c5/L/s4yBGWSMvJ9UoExiSqL+FnFA/CaeZx17WGaZMS/4SOZp8wH18jSS4R4lw==}
     engines: {node: '>=16'}
@@ -14131,8 +14172,16 @@ packages:
     resolution: {integrity: sha512-weEDEq7Z5eTHPDh4xjX789+fHfF+P8boiFB+0vbWzpbnbsEr/GRaohi/uMKxg8RZMXnl1ItAi/IUHWMsjDV7kQ==}
     engines: {node: '>=14.0.0'}
 
+  tinyrainbow@2.0.0:
+    resolution: {integrity: sha512-op4nsTR47R6p0vMUUoYl/a+ljLFVtlfaXkLQmqfLR1qHma1h/ysYk4hEXZ880bf2CYgTskvTa/e196Vd5dDQXw==}
+    engines: {node: '>=14.0.0'}
+
   tinyspy@3.0.2:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
+    engines: {node: '>=14.0.0'}
+
+  tinyspy@4.0.4:
+    resolution: {integrity: sha512-azl+t0z7pw/z958Gy9svOTuzqIk6xq+NSheJzn5MMWtWTFywIacg2wUlzKFGtt3cthx0r2SxMK0yzJOR0IES7Q==}
     engines: {node: '>=14.0.0'}
 
   title@3.5.3:
@@ -14498,6 +14547,11 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
+  vite-node@3.2.4:
+    resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+
   vite-plugin-checker@0.6.4:
     resolution: {integrity: sha512-2zKHH5oxr+ye43nReRbC2fny1nyARwhxdm0uNYp/ERy4YvU9iZpNOsueoi/luXw5gnpqRSvjcEPxXbS153O2wA==}
     engines: {node: '>=14.16'}
@@ -14573,6 +14627,34 @@ packages:
       jsdom: '*'
     peerDependenciesMeta:
       '@edge-runtime/vm':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+
+  vitest@3.2.4:
+    resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/debug': ^4.1.12
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      '@vitest/browser': 3.2.4
+      '@vitest/ui': 3.2.4
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/debug':
         optional: true
       '@types/node':
         optional: true
@@ -17050,6 +17132,10 @@ snapshots:
     dependencies:
       boxen: 7.1.1
 
+  '@types/chai@5.2.2':
+    dependencies:
+      '@types/deep-eql': 4.0.2
+
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 18.15.3
@@ -17065,6 +17151,8 @@ snapshots:
   '@types/decompress@4.2.7':
     dependencies:
       '@types/node': 18.15.3
+
+  '@types/deep-eql@4.0.2': {}
 
   '@types/diff@5.2.3': {}
 
@@ -17278,7 +17366,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.42.0(typescript@5.8.3)
       '@typescript-eslint/types': 8.42.0
-      debug: 4.4.1
+      debug: 4.4.3
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
@@ -17354,9 +17442,25 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
+  '@vitest/expect@3.2.4':
+    dependencies:
+      '@types/chai': 5.2.2
+      '@vitest/spy': 3.2.4
+      '@vitest/utils': 3.2.4
+      chai: 5.3.3
+      tinyrainbow: 2.0.0
+
   '@vitest/mocker@2.1.9(vite@5.4.19(@types/node@18.15.3)(sass@1.92.0))':
     dependencies:
       '@vitest/spy': 2.1.9
+      estree-walker: 3.0.3
+      magic-string: 0.30.18
+    optionalDependencies:
+      vite: 5.4.19(@types/node@18.15.3)(sass@1.92.0)
+
+  '@vitest/mocker@3.2.4(vite@5.4.19(@types/node@18.15.3)(sass@1.92.0))':
+    dependencies:
+      '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.18
     optionalDependencies:
@@ -17366,10 +17470,20 @@ snapshots:
     dependencies:
       tinyrainbow: 1.2.0
 
+  '@vitest/pretty-format@3.2.4':
+    dependencies:
+      tinyrainbow: 2.0.0
+
   '@vitest/runner@2.1.9':
     dependencies:
       '@vitest/utils': 2.1.9
       pathe: 1.1.2
+
+  '@vitest/runner@3.2.4':
+    dependencies:
+      '@vitest/utils': 3.2.4
+      pathe: 2.0.3
+      strip-literal: 3.0.0
 
   '@vitest/snapshot@2.1.9':
     dependencies:
@@ -17377,15 +17491,31 @@ snapshots:
       magic-string: 0.30.18
       pathe: 1.1.2
 
+  '@vitest/snapshot@3.2.4':
+    dependencies:
+      '@vitest/pretty-format': 3.2.4
+      magic-string: 0.30.18
+      pathe: 2.0.3
+
   '@vitest/spy@2.1.9':
     dependencies:
       tinyspy: 3.0.2
+
+  '@vitest/spy@3.2.4':
+    dependencies:
+      tinyspy: 4.0.4
 
   '@vitest/utils@2.1.9':
     dependencies:
       '@vitest/pretty-format': 2.1.9
       loupe: 3.2.1
       tinyrainbow: 1.2.0
+
+  '@vitest/utils@3.2.4':
+    dependencies:
+      '@vitest/pretty-format': 3.2.4
+      loupe: 3.2.1
+      tinyrainbow: 2.0.0
 
   '@vue/compiler-core@3.5.21':
     dependencies:
@@ -19683,6 +19813,8 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
+  js-tokens@9.0.1: {}
+
   js-yaml-source-map@0.2.2(js-yaml@4.1.0):
     dependencies:
       js-yaml: 4.1.0
@@ -21756,6 +21888,10 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
+  strip-literal@3.0.0:
+    dependencies:
+      js-tokens: 9.0.1
+
   strtok3@9.1.1:
     dependencies:
       '@tokenizer/token': 0.3.0
@@ -22000,7 +22136,11 @@ snapshots:
 
   tinyrainbow@1.2.0: {}
 
+  tinyrainbow@2.0.0: {}
+
   tinyspy@3.0.2: {}
+
+  tinyspy@4.0.4: {}
 
   title@3.5.3:
     dependencies:
@@ -22408,6 +22548,24 @@ snapshots:
       - supports-color
       - terser
 
+  vite-node@3.2.4(@types/node@18.15.3)(sass@1.92.0):
+    dependencies:
+      cac: 6.7.14
+      debug: 4.4.3
+      es-module-lexer: 1.7.0
+      pathe: 2.0.3
+      vite: 5.4.19(@types/node@18.15.3)(sass@1.92.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+
   vite-plugin-checker@0.6.4(eslint@8.57.1)(meow@9.0.0)(optionator@0.9.4)(stylelint@14.16.1)(typescript@5.9.2)(vite@5.4.19(@types/node@18.15.3)(sass@1.92.0)):
     dependencies:
       '@babel/code-frame': 7.27.1
@@ -22466,6 +22624,45 @@ snapshots:
       vite-node: 2.1.9(@types/node@18.15.3)(sass@1.92.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
+      '@types/node': 18.15.3
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+
+  vitest@3.2.4(@types/debug@4.1.12)(@types/node@18.15.3)(sass@1.92.0):
+    dependencies:
+      '@types/chai': 5.2.2
+      '@vitest/expect': 3.2.4
+      '@vitest/mocker': 3.2.4(vite@5.4.19(@types/node@18.15.3)(sass@1.92.0))
+      '@vitest/pretty-format': 3.2.4
+      '@vitest/runner': 3.2.4
+      '@vitest/snapshot': 3.2.4
+      '@vitest/spy': 3.2.4
+      '@vitest/utils': 3.2.4
+      chai: 5.3.3
+      debug: 4.4.3
+      expect-type: 1.2.2
+      magic-string: 0.30.18
+      pathe: 2.0.3
+      picomatch: 4.0.3
+      std-env: 3.9.0
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.14
+      tinypool: 1.1.1
+      tinyrainbow: 2.0.0
+      vite: 5.4.19(@types/node@18.15.3)(sass@1.92.0)
+      vite-node: 3.2.4(@types/node@18.15.3)(sass@1.92.0)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/debug': 4.1.12
       '@types/node': 18.15.3
     transitivePeerDependencies:
       - less
