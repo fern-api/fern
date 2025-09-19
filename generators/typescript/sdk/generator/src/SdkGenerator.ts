@@ -728,25 +728,30 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
-        const typeDeclarations = Object.values(this.getTypesToGenerate());
+        const typesByFile = new Map<string, TypeDeclaration[]>();
 
-        const firstType = typeDeclarations[0];
-        if (!firstType) {
-            return;
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            const filepath = this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name);
+            const filepathKey = JSON.stringify(filepath);
+
+            const types = typesByFile.get(filepathKey) ?? [];
+            types.push(typeDeclaration);
+            typesByFile.set(filepathKey, types);
         }
 
-        this.withSourceFile({
-            filepath: this.typeDeclarationReferencer.getExportedFilepath(firstType.name),
-            run: ({ sourceFile, importsManager }) => {
-                const context = this.generateSdkContext({ sourceFile, importsManager });
-
-                for (const typeDeclaration of typeDeclarations) {
-                    const currentStatementCount = context.sourceFile.getStatements().length;
-                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                    context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
+        for (const [filepathKey, typeDeclarations] of typesByFile.entries()) {
+            this.withSourceFile({
+                filepath: JSON.parse(filepathKey),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    for (const typeDeclaration of typeDeclarations) {
+                        const currentStatementCount = context.sourceFile.getStatements().length;
+                        context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                        context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private generateTypeSchemas(): { generated: boolean } {

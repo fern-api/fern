@@ -1,5 +1,6 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
-import { ExportedFilePath, Reference } from "@fern-typescript/commons";
+import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
@@ -11,6 +12,14 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
         return {
             directories: [
                 ...this.containingDirectory,
+                ...getExportedDirectoriesForFernFilepath({
+                    fernFilepath: typeName.fernFilepath,
+                    subExports: {
+                        [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
+                            exportAll: true
+                        }
+                    }
+                }),
                 {
                     nameOnDisk: TYPES_DIRECTORY_NAME,
                     exportDeclaration: { exportAll: true }
