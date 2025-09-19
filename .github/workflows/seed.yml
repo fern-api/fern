@@ -517,23 +517,24 @@ jobs:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
 
-      # - name: JSON to String
-      #   id: json-to-string
-      #   run: |
-      #     json_data='${{toJson(matrix.package)}}'
-      #     string_result=$(echo "$json_data" | jq -r 'join(" ")')
-      #     echo "$string_result"
-      #     echo "as-string="$string_result"" >> $GITHUB_OUTPUT
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.package)}}'
+          string_result=$(echo "$json_data" | jq -r 'join(" ")')
+          echo "$string_result"
+          echo "as-string="$string_result"" >> $GITHUB_OUTPUT
     
-      # - name: Checkout repo
-      #   uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      # - name: Run seed
-      #   uses: ./.github/actions/cached-seed
-      #   with:
-      #     generator-name: ts-sdk
-      #     generator-path: generators/typescript
-      #     fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ts-sdk
+          generator-path: generators/typescript
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   typescript-express:
     runs-on: ubuntu-latest
