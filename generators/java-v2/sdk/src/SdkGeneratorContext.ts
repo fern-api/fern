@@ -41,13 +41,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
-    /**
-     * Gets the return type for an HTTP endpoint.
-     * Note: This always returns raw response types. Callers that need pagination wrappers
-     * (like ReadmeSnippetBuilder) apply them independently.
-     * @param httpEndpoint - The endpoint to get the return type for
-     * @returns The Java type for the endpoint's return value
-     */
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
         const responseBody = httpEndpoint.response?.body;
 
@@ -77,8 +70,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                     default:
                         assertNever(responseBody.value);
                 }
-                // This break is unreachable due to assertNever() but required by biome linter
-                // to satisfy exhaustive switch checking
                 break;
             }
             case "fileDownload":

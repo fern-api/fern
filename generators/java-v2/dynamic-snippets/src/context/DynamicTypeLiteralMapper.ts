@@ -24,33 +24,11 @@ export class DynamicTypeLiteralMapper {
         this.context = context;
     }
 
-    /**
-     * Checks if a TypeLiteral is a nop (no-operation) type.
-     * Nop types represent absent or undefined values that should not be wrapped.
-     * This method uses type casting to access internal implementation details
-     * until a proper API is exposed by the java.TypeLiteral class.
-     *
-     * @internal This is a temporary workaround that accesses internal implementation.
-     * TEST: Add unit test to catch if TypeLiteral internal structure changes.
-     * TODO: Replace with java.TypeLiteral.isNop() when available.
-     */
     private isNopTypeLiteral(value: java.TypeLiteral): boolean {
-        // This is a temporary workaround that accesses internal implementation
-        // details. We need this to prevent wrapping nop values in Optional,
-        // which would generate invalid code like Optional.of() without arguments.
         const valueWithInternal = value as unknown as { internalType?: { type?: string } };
         return valueWithInternal.internalType?.type === "nop";
     }
 
-    /**
-     * Helper method to wrap a TypeLiteral in Optional only if it's not a nop.
-     * Nop (no-operation) values represent absent or undefined values that should
-     * not be wrapped in Optional as they're already representing absence.
-     *
-     * @param value - The TypeLiteral to potentially wrap
-     * @param useOf - Whether to use Optional.of() (true) or Optional.ofNullable() (false)
-     * @returns The original value if nop, otherwise wrapped in Optional
-     */
     private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
         if (this.isNopTypeLiteral(value)) {
             return value;
