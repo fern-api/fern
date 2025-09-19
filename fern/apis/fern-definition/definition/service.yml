@@ -42,7 +42,7 @@ types:
       path: string
       url: optional<string>
       path-parameters: optional<map<string, HttpPathParameterSchema>>
-      auth: optional<boolean>
+      auth: optional<HttpEndpointAuth>
       idempotent: optional<boolean>
       stream-condition: optional<string>
       request: optional<HttpRequest>
@@ -54,6 +54,28 @@ types:
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
       retries: optional<RetriesConfiguration>
+
+  HttpEndpointAuth:
+    discriminated: false
+    union:
+      - boolean
+      - HttpEndpointAuthSchemes
+
+  HttpEndpointAuthSchemes:
+    properties:
+      schemes:
+        type: list<HttpEndpointAuthScheme>
+        docs: |
+          The list of auth schemes that should be applied to this endpoint.
+
+  HttpEndpointAuthScheme:
+    properties:
+      scheme:
+        type: string
+        docs: The key of the auth scheme to apply to this endpoint.
+      scopes:
+        type: optional<list<string>>
+        docs: The OAuth scopes to apply to this endpoint. Only applicable for OAuth auth schemes.
 
   RetriesConfiguration:
     discriminated: false
