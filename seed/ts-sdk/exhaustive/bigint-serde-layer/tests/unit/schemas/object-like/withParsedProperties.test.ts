@@ -44,7 +44,7 @@ describe("withParsedProperties", () => {
     });
 
     describe("compile", () => {
-        // eslint-disable-next-line vi/expect-expect
+        // eslint-disable-next-line jest/expect-expect
         it("doesn't compile with non-object schema", () => {
             () =>
                 object({

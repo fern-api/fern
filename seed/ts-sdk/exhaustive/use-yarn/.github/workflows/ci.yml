@@ -28,10 +28,6 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v3
-                
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Install dependencies
         run: yarn install
@@ -54,7 +50,7 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: pnpm build
+        run: yarn build
 
       - name: Publish to npm
         run: |

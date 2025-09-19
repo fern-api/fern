@@ -7,7 +7,7 @@ describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "test-file.txt");
 
     beforeEach(() => {
-        vi.clearAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("Buffer input", () => {

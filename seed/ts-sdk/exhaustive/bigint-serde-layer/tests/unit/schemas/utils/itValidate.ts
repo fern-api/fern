@@ -1,4 +1,4 @@
-/* eslint-disable vi/no-export */
+/* eslint-disable jest/no-export */
 import { Schema, SchemaOptions, ValidationError } from "../../../../src/core/schemas/Schema";
 
 export function itValidate<Raw, Parsed>(
@@ -8,7 +8,7 @@ export function itValidate<Raw, Parsed>(
     errors: ValidationError[],
     opts?: SchemaOptions,
 ): void {
-    // eslint-disable-next-line vi/valid-title
+    // eslint-disable-next-line jest/valid-title
     describe("parse()", () => {
         itValidateParse(title, schema, input, errors, opts);
     });
@@ -25,7 +25,7 @@ export function itValidateParse<Raw, Parsed>(
     opts?: SchemaOptions,
 ): void {
     describe("parse", () => {
-        // eslint-disable-next-line vi/valid-title
+        // eslint-disable-next-line jest/valid-title
         it(title, async () => {
             const maybeValid = await schema.parse(raw, opts);
             if (maybeValid.ok) {
@@ -44,7 +44,7 @@ export function itValidateJson<Raw, Parsed>(
     opts?: SchemaOptions,
 ): void {
     describe("json", () => {
-        // eslint-disable-next-line vi/valid-title
+        // eslint-disable-next-line jest/valid-title
         it(title, async () => {
             const maybeValid = await schema.json(parsed, opts);
             if (maybeValid.ok) {
