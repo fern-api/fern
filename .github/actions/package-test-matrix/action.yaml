@@ -27,11 +27,11 @@ runs:
         # Get package amount from input
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
 
-        # Parse JSON array and convert to bash array
-        FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
+        # # Parse JSON array and convert to bash array
+        # FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
 
         # Get total number of fixtures
-        TOTAL_FIXTURES=${#FIXTURES[@]}
+        TOTAL_FIXTURES=${#FIXTURE_ARRAY[@]}
         echo "Total fixtures: $TOTAL_FIXTURES"
         echo "Package amount: $PACKAGE_AMOUNT"
 
