@@ -200,7 +200,7 @@ jobs:
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
-          BASH_VAR = ${{ steps.package-test-matrices.outputs.packaged }}
+          BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
           echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
           
           # Echo the data to command line for visibility
