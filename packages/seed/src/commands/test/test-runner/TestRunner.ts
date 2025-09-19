@@ -1,7 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { TaskContext, TaskResult } from "@fern-api/task-context";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -219,6 +219,17 @@ export abstract class TestRunner {
 
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
+
+                if (taskContext.getResult() === TaskResult.Failure) {
+                    taskContext.logger.error("Generation failed");
+                    return {
+                        type: "failure",
+                        cause: "generation",
+                        id: fixture,
+                        outputFolder,
+                        metrics
+                    };
+                }
             } catch (error) {
                 taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
                 taskContext.logger.error(`${(error as Error)?.stack}`);

@@ -15,7 +15,7 @@ describe("requestWithRetries", () => {
         vi.useFakeTimers({ 
         	toFake: [
         		"setTimeout",
-        		"clearTimeout", 
+        		"clearTimeout",
         		"setInterval",
         		"clearInterval",
         		"setImmediate",

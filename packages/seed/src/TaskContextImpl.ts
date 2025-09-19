@@ -90,7 +90,15 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public getResult(): TaskResult {
-        return this.result;
+        if (this.result === TaskResult.Failure) {
+            return TaskResult.Failure;
+        }
+        for (const subtask of this.subtasks) {
+            if (subtask.getResult() === TaskResult.Failure) {
+                return TaskResult.Failure;
+            }
+        }
+        return TaskResult.Success;
     }
 
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
@@ -248,17 +256,5 @@ export class InteractiveTaskContextImpl
                         return chalk.red("x");
                 }
         }
-    }
-
-    public getResult(): TaskResult {
-        if (this.result === TaskResult.Failure) {
-            return TaskResult.Failure;
-        }
-        for (const subtask of this.subtasks) {
-            if (subtask.getResult() === TaskResult.Failure) {
-                return TaskResult.Failure;
-            }
-        }
-        return TaskResult.Success;
     }
 }
