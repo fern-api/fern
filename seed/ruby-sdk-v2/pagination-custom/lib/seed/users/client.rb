@@ -10,10 +10,8 @@ module Seed
 
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)
-        _query_param_names = [
-          ["starting_after"],
-          %i[starting_after]
-        ].flatten
+        params =
+          _query_param_names = ["starting_after"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
