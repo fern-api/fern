@@ -22,13 +22,13 @@ runs:
       shell: bash
       run: |
         # Input JSON array (this would come from your data source)
-        FIXTURE_ARRAY="${{ inputs.full-fixture-matrix }}"
+        FIXTURE_ARRAY='${{ inputs.full-fixture-matrix }}'
 
         # Get package amount from input
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
 
-        # # Parse JSON array and convert to bash array
-        # FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
+        # Parse JSON array and convert to bash array
+        FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
 
         # Get total number of fixtures
         TOTAL_FIXTURES=${#FIXTURE_ARRAY[@]}
