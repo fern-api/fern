@@ -177,7 +177,7 @@ describe("QueryParameterGenerator", () => {
         const methodBody = method.body;
         const fullMethod = `${methodSignature} {\n    ${methodBody}\n}`;
 
-        // await expect(fullMethod).toMatchFileSnapshot("snapshots/method-without-query-params.rs");
+        await expect(fullMethod).toMatchFileSnapshot("snapshots/method-without-query-params.rs");
     });
 
     it("should generate method with single query parameter correctly", async () => {

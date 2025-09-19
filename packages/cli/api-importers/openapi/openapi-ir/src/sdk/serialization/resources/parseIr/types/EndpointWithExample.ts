@@ -18,6 +18,7 @@ import { HttpErrorWithExample } from "./HttpErrorWithExample";
 import { HttpEndpointServer } from "../../finalIr/types/HttpEndpointServer";
 import { EndpointExample } from "../../finalIr/types/EndpointExample";
 import { Pagination } from "../../finalIr/types/Pagination";
+import { RetriesConfiguration } from "../../finalIr/types/RetriesConfiguration";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
@@ -49,6 +50,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         servers: core.serialization.list(HttpEndpointServer),
         examples: core.serialization.list(EndpointExample),
         pagination: Pagination.optional(),
+        retries: RetriesConfiguration.optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -78,5 +80,6 @@ export declare namespace EndpointWithExample {
         servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

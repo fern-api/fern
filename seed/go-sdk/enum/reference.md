@@ -164,7 +164,7 @@ client.InlinedRequest.Send(
 ```go
 client.PathParam.Send(
         context.TODO(),
-        fern.OperandGreaterThan,
+        fern.OperandGreaterThan.Ptr(),
         &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },

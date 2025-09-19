@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use crate::{AsyncPaginator, PaginationResult};
 use reqwest::Method;
 
@@ -19,13 +19,9 @@ impl UsersClient {
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-        let base_query_params = {
-            let mut query_params = Vec::new();
-            if let Some(value) = starting_after {
-                query_params.push(("starting_after".to_string(), value.clone()));
-            }
-            Some(query_params)
-        };
+        let base_query_params = QueryBuilder::new()
+            .string("starting_after", starting_after)
+            .build();
         let options_clone = options.clone();
 
         AsyncPaginator::new(

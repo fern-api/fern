@@ -1,5 +1,5 @@
 use crate::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
 pub struct PlaylistClient {
@@ -25,16 +25,10 @@ impl PlaylistClient {
                 Method::POST,
                 &format!("/v2/playlist/{}", service_param),
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = datetime {
-                        query_params.push(("datetime".to_string(), value.to_rfc3339()));
-                    }
-                    if let Some(value) = optional_datetime {
-                        query_params.push(("optionalDatetime".to_string(), value.to_rfc3339()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .datetime("datetime", datetime)
+                    .datetime("optionalDatetime", optional_datetime)
+                    .build(),
                 options,
             )
             .await
@@ -55,28 +49,13 @@ impl PlaylistClient {
                 Method::GET,
                 &format!("/v2/playlist/{}", service_param),
                 None,
-                {
-                    let mut query_params = Vec::new();
-                    if let Some(value) = limit {
-                        query_params.push((
-                            "limit".to_string(),
-                            serde_json::to_string(&value).unwrap_or_default(),
-                        ));
-                    }
-                    if let Some(value) = other_field {
-                        query_params.push(("otherField".to_string(), value.clone()));
-                    }
-                    if let Some(value) = multi_line_docs {
-                        query_params.push(("multiLineDocs".to_string(), value.clone()));
-                    }
-                    if let Some(value) = optional_multiple_field {
-                        query_params.push(("optionalMultipleField".to_string(), value.clone()));
-                    }
-                    if let Some(value) = multiple_field {
-                        query_params.push(("multipleField".to_string(), value.clone()));
-                    }
-                    Some(query_params)
-                },
+                QueryBuilder::new()
+                    .int("limit", limit)
+                    .string("otherField", other_field)
+                    .string("multiLineDocs", multi_line_docs)
+                    .string("optionalMultipleField", optional_multiple_field)
+                    .string("multipleField", multiple_field)
+                    .build(),
                 options,
             )
             .await
