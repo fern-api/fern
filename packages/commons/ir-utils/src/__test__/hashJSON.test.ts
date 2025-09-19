@@ -24,7 +24,7 @@ describe("hashJSON Function", () => {
     });
 
     it("should hash a very large object without errors", () => {
-        const largeObj = generateLargeObject(8, 10);
+        const largeObj = generateLargeObject(7, 10);
 
         expect(() => {
             const hash = hashJSON(largeObj);

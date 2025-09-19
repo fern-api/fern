@@ -10,7 +10,6 @@ export default defineConfig({
             }
         },
         maxConcurrency: 10,
-        passWithNoTests: true,
-        testTimeout: 90000
+        passWithNoTests: true
     }
 });
