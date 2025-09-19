@@ -629,18 +629,6 @@ jobs:
           string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
           echo "Generated string: '$string_result'"
           echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
     
       - name: Checkout repo
         uses: actions/checkout@v4
