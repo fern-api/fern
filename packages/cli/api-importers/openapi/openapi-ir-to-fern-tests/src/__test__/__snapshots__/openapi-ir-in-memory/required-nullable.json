@@ -42,13 +42,43 @@
           "operationId": "getFoo",
           "parameters": [
             {
-              "name": "baz",
+              "name": "optional_baz",
               "in": "query",
               "description": "An optional baz",
               "required": false,
               "schema": {
                 "type": "string",
                 "nullable": false
+              }
+            },
+            {
+              "name": "required_baz",
+              "in": "query",
+              "description": "A required baz",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "nullable": false
+              }
+            },
+            {
+              "name": "optional_nullable_baz",
+              "in": "query",
+              "description": "An optional baz",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            {
+              "name": "required_nullable_baz",
+              "in": "query",
+              "description": "A required baz",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "nullable": true
               }
             }
           ],
@@ -57,7 +87,9 @@
               "description": "successful operation",
               "content": {
                 "application/json": {
-                  "$ref": "#/components/schemas/Foo"
+                  "schema": {
+                    "$ref": "#/components/schemas/Foo"
+                  }
                 }
               }
             }

@@ -16,14 +16,72 @@
       "queryParameters": [
         {
           "description": "An optional baz",
-          "name": "baz",
+          "name": "optional_baz",
           "schema": {
-            "generatedName": "GetFooRequestBaz",
+            "generatedName": "GetFooRequestOptionalBaz",
             "value": {
               "schema": {
                 "type": "string"
               },
-              "generatedName": "GetFooRequestBaz",
+              "generatedName": "GetFooRequestOptionalBaz",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "A required baz",
+          "name": "required_baz",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetFooRequestRequiredBaz",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "An optional baz",
+          "name": "optional_nullable_baz",
+          "schema": {
+            "generatedName": "GetFooRequestOptionalNullableBaz",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetFooRequestOptionalNullableBaz",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "A required baz",
+          "name": "required_nullable_baz",
+          "schema": {
+            "generatedName": "GetFooRequestRequiredNullableBaz",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetFooRequestRequiredNullableBaz",
               "groupName": [],
               "type": "primitive"
             },
@@ -42,7 +100,12 @@
         "description": "successful operation",
         "schema": {
           "generatedName": "GetFooResponse",
-          "type": "unknown"
+          "schema": "Foo",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
         },
         "fullExamples": [],
         "source": {
@@ -60,26 +123,52 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "required_baz",
+              "value": {
+                "value": {
+                  "value": "required_baz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
-              "value": [
-                {
-                  "key": {
-                    "value": "key",
+              "properties": {
+                "nullable_required_bar": {
+                  "value": {
+                    "value": "nullable_required_bar",
                     "type": "string"
                   },
+                  "type": "primitive"
+                },
+                "nullable_bar": {
                   "value": {
-                    "value": {
-                      "value": "value",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
+                    "value": "nullable_bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "required_bar": {
+                  "value": {
+                    "value": "required_bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "bar": {
+                  "value": {
+                    "value": "bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
                 }
-              ],
-              "type": "map"
+              },
+              "type": "object"
             },
             "type": "withoutStreaming"
           },
