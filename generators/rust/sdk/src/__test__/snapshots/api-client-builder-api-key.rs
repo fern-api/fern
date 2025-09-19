@@ -1,4 +1,4 @@
-use crate::client::{{CLIENT_NAME}};
+use crate::api::resources::{{CLIENT_NAME}};
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -38,8 +38,8 @@ impl ApiClientBuilder {
     }
 
     /// Set the bearer token for authentication
-    pub fn bearer_token(mut self, token: impl Into<String>) -> Self {
-        self.config.bearer_token = Some(token.into());
+    pub fn token(mut self, token: impl Into<String>) -> Self {
+        self.config.token = Some(token.into());
         self
     }
 
@@ -87,7 +87,6 @@ impl ApiClientBuilder {
 
     /// Build the client with validation
     pub fn build(self) -> Result<{{CLIENT_NAME}}, ApiError> {
-        // Call the client constructor with all authentication parameters
         {{CLIENT_NAME}}::new(self.config)
     }
 }

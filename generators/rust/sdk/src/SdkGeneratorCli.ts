@@ -240,6 +240,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -262,13 +263,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(
-            new UseStatement({
-                path: "api::resources",
-                items: ["*"],
-                isPublic: true
-            })
-        );
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
@@ -283,6 +277,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         useStatements.push(new UseStatement({ path: "core", items: ["*"], isPublic: true }));
         useStatements.push(new UseStatement({ path: "config", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,

@@ -26,7 +26,8 @@ export class ClientGeneratorContext {
     private getSubClients(): { fieldName: string; clientName: string }[] {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
-            .map(([subpackageId, subpackage]) => {
+            .filter(([, subpackage]) => subpackage.service != null || subpackage.hasEndpointsInTree)
+            .map(([, subpackage]) => {
                 const clientName = this.sdkGeneratorContext.getUniqueClientNameForSubpackage(subpackage);
                 const fieldName = subpackage.name.snakeCase.safeName;
                 return {

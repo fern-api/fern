@@ -153,7 +153,9 @@ export class RootClientGenerator {
         };
     }
 
-    /* very specific to rust 
+    /* 
+    Bellow 2 function are very specific to rust :
+
         - Directory traversal logic is inherently complex
         - Module detection across nested structures requires this scanning
         - Rust's module system demands both declarations and re-exports

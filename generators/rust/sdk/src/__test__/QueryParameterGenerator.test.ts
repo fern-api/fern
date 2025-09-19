@@ -116,7 +116,31 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         ir,
         getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
-        getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService
+        getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService,
+        getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages],
+        getSubpackagesOrThrow: (packageOrSubpackage: any) => {
+            return (
+                packageOrSubpackage.subpackages?.map((subpackageId: string) => [
+                    subpackageId,
+                    ir.subpackages[subpackageId as keyof typeof ir.subpackages]
+                ]) || []
+            );
+        },
+        getUniqueFilenameForSubpackage: (subpackage: {
+            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+        }) => {
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            return `${pathParts.join("_")}.rs`;
+        },
+        getUniqueClientNameForSubpackage: (subpackage: {
+            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        }) => {
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            return pathParts.join("") + "Client";
+        },
+        getDirectoryForFernFilepath: (fernFilepath: any) => {
+            return fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("/");
+        }
     } as unknown as SdkGeneratorContext;
 }
 

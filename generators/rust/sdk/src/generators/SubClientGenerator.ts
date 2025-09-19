@@ -189,11 +189,9 @@ export class SubClientGenerator {
         fieldAssignments.push({
             name: this.clientGeneratorContext.httpClient.fieldName,
             value: rust.Expression.try(
-                rust.Expression.methodCall({
-                    target: rust.Expression.reference(this.clientGeneratorContext.httpClient.clientName),
-                    method: "new",
-                    args: [rust.Expression.reference("config")]
-                })
+                rust.Expression.functionCall(`${this.clientGeneratorContext.httpClient.clientName}::new`, [
+                    rust.Expression.reference("config")
+                ])
             )
         });
 
@@ -202,17 +200,13 @@ export class SubClientGenerator {
             fieldAssignments.push({
                 name: fieldName,
                 value: rust.Expression.try(
-                    rust.Expression.methodCall({
-                        target: rust.Expression.reference(clientName),
-                        method: "new",
-                        args: [
-                            rust.Expression.methodCall({
-                                target: rust.Expression.reference("config"),
-                                method: "clone",
-                                args: []
-                            })
-                        ]
-                    })
+                    rust.Expression.functionCall(`${clientName}::new`, [
+                        rust.Expression.methodCall({
+                            target: rust.Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
                 )
             });
         });
