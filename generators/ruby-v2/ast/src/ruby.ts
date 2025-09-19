@@ -45,6 +45,18 @@ export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
 }
 
+export function trueValue(): CodeBlock {
+    return codeblock("true");
+}
+
+export function falseValue(): CodeBlock {
+    return codeblock("false");
+}
+
+export function nilValue(): CodeBlock {
+    return codeblock("nil");
+}
+
 export const parameters = {
     positional(args: PositionalParameter.Args): PositionalParameter {
         return new PositionalParameter(args);

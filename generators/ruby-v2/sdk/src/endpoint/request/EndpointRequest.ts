@@ -35,7 +35,7 @@ export abstract class EndpointRequest {
 
     public abstract getParameterType(): ruby.Type;
 
-    public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
+    public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;
 
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
 

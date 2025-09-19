@@ -11,6 +11,13 @@ export const AsIsFiles = {
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
 
+    // Iterator classes
+    ItemIterator: "internal/iterators/item_iterator.Template.rb",
+    CursorItemIterator: "internal/iterators/cursor_item_iterator.Template.rb",
+    OffsetItemIterator: "internal/iterators/offset_item_iterator.Template.rb",
+    CursorPageIterator: "internal/iterators/cursor_page_iterator.Template.rb",
+    OffsetPageIterator: "internal/iterators/offset_page_iterator.Template.rb",
+
     // HTTP
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
@@ -78,5 +85,10 @@ const asIsTopoValue = {
     [AsIsFiles.ClientError]: 22,
     [AsIsFiles.RedirectError]: 23,
     [AsIsFiles.ServerError]: 24,
-    [AsIsFiles.TimeoutError]: 25
+    [AsIsFiles.TimeoutError]: 25,
+    [AsIsFiles.ItemIterator]: 26,
+    [AsIsFiles.CursorItemIterator]: 27,
+    [AsIsFiles.OffsetItemIterator]: 28,
+    [AsIsFiles.CursorPageIterator]: 29,
+    [AsIsFiles.OffsetPageIterator]: 30
 };
