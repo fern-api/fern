@@ -476,8 +476,8 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          test_data='{"fixture": ["accept-header","alias"]},{"fixture": ["accept-header2","alias2"]}'
-          echo "test-data="$test_data"" >> $GITHUB_OUTPUT
+          test_data=$(echo '{"fixture": ["accept-header","alias"]} {"fixture": ["accept-header2","alias2"]}' | jq -s .)
+          echo "test-data=$test_data" >> $GITHUB_OUTPUT
           echo "$test_data" | jq .
 
   forced-test-pickup:
