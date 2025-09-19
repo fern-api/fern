@@ -9,6 +9,7 @@ imports:
   proto: proto.yml
   types: types.yml
   variables: variables.yml
+  auth: auth.yml
 
 types:
   HttpService:
@@ -61,7 +62,7 @@ types:
       response: optional<HttpResponse>
       v2Responses: optional<V2HttpResponses>
       errors: ResponseErrors
-      auth: boolean
+      auth: auth.EndpointAuth
       idempotent: boolean
       pagination: optional<Pagination>
       userSpecifiedExamples: list<UserSpecifiedEndpointExample>
