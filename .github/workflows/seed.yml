@@ -521,7 +521,7 @@ jobs:
       - name: JSON to String
         id: json-to-string
         run: |
-          json_data='${{toJson(matrix.package)}}'
+          json_data='${{toJson(matrix.fixtures)}}'
           string_result=$(echo "$json_data" | jq -r 'join(" ")')
           echo "$string_result"
           echo "as-string="$string_result"" >> $GITHUB_OUTPUT
