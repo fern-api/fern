@@ -494,8 +494,8 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
-    # needs: forced-test
-    needs: get-all-test-matrices
+    needs: forced-test
+    # needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
@@ -506,29 +506,30 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        fixtures: ${{ fromJson(needs.forced-test.outputs.test-data) }}
+        # include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
         # include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Echo package
-        run: echo '${{toJson(matrix.package)}}' | jq .
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
 
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.package)}}'
-          string_result=$(echo "$json_data" | jq -r 'join(" ")')
-          echo "$string_result"
-          echo "as-string="$string_result"" >> $GITHUB_OUTPUT
+      # - name: JSON to String
+      #   id: json-to-string
+      #   run: |
+      #     json_data='${{toJson(matrix.package)}}'
+      #     string_result=$(echo "$json_data" | jq -r 'join(" ")')
+      #     echo "$string_result"
+      #     echo "as-string="$string_result"" >> $GITHUB_OUTPUT
     
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
-        with:
-          generator-name: ts-sdk
-          generator-path: generators/typescript
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+      # - name: Run seed
+      #   uses: ./.github/actions/cached-seed
+      #   with:
+      #     generator-name: ts-sdk
+      #     generator-path: generators/typescript
+      #     fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   typescript-express:
     runs-on: ubuntu-latest
