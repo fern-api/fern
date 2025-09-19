@@ -21,14 +21,16 @@ runs:
       id: package-test-matrix
       shell: bash
       run: |
-        # Input JSON array (this would come from your data source)
-        FIXTURE_ARRAY='${{ inputs.full-fixture-matrix }}'
+        # Input JSON object with "fixtures" key
+        FIXTURE_INPUT='${{ inputs.full-fixture-matrix }}'
 
         # Get package amount from input
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
 
+        # Extract the fixtures array from the input JSON object
+        FIXTURE_ARRAY=$(echo "$FIXTURE_INPUT" | jq -c '.fixtures')
+
         # Parse JSON array and convert to bash array
-        # Create array by reading each line and filtering out empty ones
         FIXTURES=()
         while IFS= read -r line; do
             if [[ -n "$line" ]]; then
@@ -62,8 +64,8 @@ runs:
           # Convert package to JSON array (compact format)
           PACKAGE_JSON=$(printf '%s\n' "${PACKAGE[@]}" | jq -R . | jq -s -c .)
           
-          # Create package object in the format: {"package": ["fixture1", "fixture2"]}
-          PACKAGE_OBJECT=$(echo "{\"package\": $PACKAGE_JSON}")
+          # Create package object in the format: {"fixtures": ["fixture1", "fixture2"]}
+          PACKAGE_OBJECT=$(echo "{\"fixtures\": $PACKAGE_JSON}")
           PACKAGE_OBJECTS+=("$PACKAGE_OBJECT")
           
           echo "Package $((i+1)): $PACKAGE_OBJECT"
@@ -73,4 +75,4 @@ runs:
         PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -s -c .)
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
-        echo "packaged="$PACKAGED_MATRIX"" >> $GITHUB_OUTPUT
+        echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT

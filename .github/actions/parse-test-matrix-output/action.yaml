@@ -34,6 +34,6 @@ runs:
         # Extract fixtures to JSON array
         FIXTURES_FLAT_JSON=$(echo "${JSON_OUTPUT}" | jq -c '.fixtures')
 
-        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON"
+        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON | jq ."
 
         echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT
