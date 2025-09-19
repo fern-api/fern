@@ -29,7 +29,7 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
 
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
         if (this.exportAllRequestsAtRoot) {
-			return this.getAggregatedRequestsFilepath();
+            return this.getAggregatedRequestsFilepath();
         }
 
         return {
@@ -66,7 +66,9 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
 
     public getAggregatedRequestsFilepath(): ExportedFilePath {
         if (!this.exportAllRequestsAtRoot) {
-            throw new Error("getAggregatedRequestsFilepath() should only be called when exportAllRequestsAtRoot is true");
+            throw new Error(
+                "getAggregatedRequestsFilepath() should only be called when exportAllRequestsAtRoot is true"
+            );
         }
 
         return {
