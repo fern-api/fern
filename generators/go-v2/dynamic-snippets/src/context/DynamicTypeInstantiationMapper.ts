@@ -146,10 +146,10 @@ export class DynamicTypeInstantiationMapper {
     }): go.TypeInstantiation {
         switch (named.type) {
             case "alias":
-                // return this.convert({ typeReference: named.typeReference, value, as });
                 return this.convertAlias({
                     aliasType: named,
-                    literalValue: named.typeReference
+                    value,
+                    as
                 });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
@@ -167,7 +167,15 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private convertAlias({ aliasType }: { aliasType: FernIr.dynamic.NamedType.Alias }): go.TypeInstantiation {
+    private convertAlias({
+        aliasType,
+        value,
+        as
+    }: {
+        aliasType: FernIr.dynamic.NamedType.Alias;
+        value: unknown;
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+    }): go.TypeInstantiation {
         switch (aliasType.typeReference.type) {
             case "literal":
                 return go.TypeInstantiation.reference(
@@ -180,7 +188,7 @@ export class DynamicTypeInstantiationMapper {
                     })
                 );
             default:
-                return go.TypeInstantiation.nop();
+                return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
     }
 
@@ -191,7 +199,7 @@ export class DynamicTypeInstantiationMapper {
             case "string":
                 return go.TypeInstantiation.string(literal.value);
             default:
-                return go.TypeInstantiation.nop();
+                assertNever(literal);
         }
     }
 

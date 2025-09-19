@@ -62,11 +62,8 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        // TODO: maybe only return a default fileValue if the property is required??
+        // fix(williammcadams): always return a string reader even if no example was provided
         const fileValue = this.context.getSingleFileValue({ property, record }) || "";
-        // if (fileValue == null) {
-        //     return go.TypeInstantiation.nop();
-        // }
         return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue));
     }
 
