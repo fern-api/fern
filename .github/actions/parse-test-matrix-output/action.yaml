@@ -5,7 +5,7 @@ inputs:
   generator-name:
     description: "Generator to get fixtures for"
     required: true
-  #  CHRISM - add back eventually
+  #  TODO - add back eventually when CLI is updated for this
   # include-output-folders:
   #   description: "Whether to include output folders as unique tests"
   #   required: false
@@ -23,16 +23,17 @@ runs:
       id: parse-test-set-matrix
       shell: bash
       run: |
-        # Get starting point from output of get-available-fixtures command
-        MESSY_DATA=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders | awk '/"fixtures/,0')
+        # Get JSON output from get-available-fixtures command
+        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}})
 
-        # Remove newlines and spaces so next portion of filtering is easier
-        PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+        echo "${COMMAND_OUTPUT}"
 
-        # Extract just the fixtures
-        FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+        # Extract the fixtures array from the JSON output using jq
+        # First extract just the JSON part (skip pnpm output lines)
+        JSON_OUTPUT=$(echo "${COMMAND_OUTPUT}" | sed -n '/^{/,/^}/p')
+        # Extract fixtures to JSON array
+        FIXTURES_FLAT_JSON=$(echo "${JSON_OUTPUT}" | jq -c '.fixtures')
 
-        MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON | jq ."
 
-        echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
-        echo "${fixture_list}"
+        echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT

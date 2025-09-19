@@ -21,14 +21,21 @@ runs:
       id: package-test-matrix
       shell: bash
       run: |
-        # Input JSON array (this would come from your data source)
-        FIXTURE_ARRAY='${{ inputs.full-fixture-matrix }}'
+        # Unpacked JSON array for processing
+        PARSED_NAME=$(echo '${{ inputs.full-fixture-matrix }}' | jq -r '.[]')
+        echo "Parsed name: $PARSED_NAME"
 
-        # Get package amount from input
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
 
-        # Parse JSON array and convert to bash array
-        FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
+        # UNPACKED
+
+        # Convert newline-separated data to bash array
+        FIXTURES=()
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                FIXTURES+=("$line")
+            fi
+        done <<< "$PARSED_NAME"
 
         # Get total number of fixtures
         TOTAL_FIXTURES=${#FIXTURES[@]}
@@ -39,15 +46,15 @@ runs:
         NUM_PACKAGES=$(( (TOTAL_FIXTURES + PACKAGE_AMOUNT - 1) / PACKAGE_AMOUNT ))
         echo "Number of packages needed: $NUM_PACKAGES"
 
-        # Create array to store all packages
-        PACKAGES=()
+        # Create array to store all package objects
+        PACKAGE_OBJECTS=()
 
         # Split fixtures into packages
         for ((i=0; i<NUM_PACKAGES; i++)); do
           START_INDEX=$((i * PACKAGE_AMOUNT))
           END_INDEX=$((START_INDEX + PACKAGE_AMOUNT))
           
-          # Create package array
+          # Create package array for this batch
           PACKAGE=()
           for ((j=START_INDEX; j<END_INDEX && j<TOTAL_FIXTURES; j++)); do
             PACKAGE+=("${FIXTURES[j]}")
@@ -55,13 +62,16 @@ runs:
           
           # Convert package to JSON array (compact format)
           PACKAGE_JSON=$(printf '%s\n' "${PACKAGE[@]}" | jq -R . | jq -s -c .)
-          PACKAGES+=("$PACKAGE_JSON")
           
-          echo "Package $((i+1)): $PACKAGE_JSON"
+          # Create package object
+          PACKAGE_OBJECT=$(echo "{\"fixtures\": $PACKAGE_JSON}")
+          PACKAGE_OBJECTS+=("$PACKAGE_OBJECT")
+          
+          echo "Package $((i+1)): $PACKAGE_OBJECT"
         done
 
-        # Convert all packages to JSON array (compact format, no newlines)
-        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGES[@]}" | jq -s -c .)
+        # Convert all package objects to final JSON array (compact format)
+        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -s -c .)
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
         echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT

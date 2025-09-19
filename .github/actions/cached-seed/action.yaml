@@ -84,38 +84,10 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
-        # Check if a fixture set was provided, set defaults to empty strings
-        FIXTURE=""
-        SUBFOLDER=""
-        if [[ "${{ inputs.fixtures-to-run }}" != "" ]]; then
-          echo "Set to run: ${{ inputs.fixtures-to-run }}"
-          SET_TO_RUN=${{ inputs.fixtures-to-run }}
-          # Check if the value contains the ':' character
-          if grep -q ":" <<< "$SET_TO_RUN"; then
-            # Extract the part before the colon and set as the fixture to run
-            FIXTURE="${SET_TO_RUN%:*}"
-            # Extract the part after the colon and set as the subfolder to run
-            SUBFOLDER="${SET_TO_RUN#*:}"
-          else
-            FIXTURE="${SET_TO_RUN}"
-            SUBFOLDER=""
-          fi
-        fi
-
-        echo "Fixture: ${FIXTURE}"
-        echo "Subfolder: ${SUBFOLDER}"
-
-        # Hack fix
-        SUBFOLDER_STRING=""
-        if [[ "$SUBFOLDER" != ""  ]]; then
-          SUBFOLDER_STRING="--outputFolder ${SUBFOLDER}"
-        fi
-
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${FIXTURE} \
-          ${SUBFOLDER_STRING} \
+          --fixture ${{ inputs.fixtures-to-run }} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
