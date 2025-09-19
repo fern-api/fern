@@ -523,7 +523,7 @@ jobs:
         run: |
           json_data='${{toJson(matrix.fixtures)}}'
           # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[] | .fixtures[]' | tr '\n' ' ' | sed 's/ $//')
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
           echo "Generated string: '$string_result'"
           echo "as-string=$string_result" >> $GITHUB_OUTPUT
     
