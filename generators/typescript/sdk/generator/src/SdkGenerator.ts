@@ -505,8 +505,7 @@ export class SdkGenerator {
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath,
-            testFramework: config.testFramework
+            relativeTestPath: this.relativeTestPath
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -674,6 +673,7 @@ export class SdkGenerator {
                   runScripts: this.config.runScripts,
                   exportSerde,
                   packagePath: this.relativePackagePath,
+                  testPath: this.getRelativeTestPath(),
                   packageManager: this.config.packageManager
               })
             : new SimpleTypescriptProject({
@@ -694,6 +694,7 @@ export class SdkGenerator {
                   exportSerde,
                   useLegacyExports: this.config.useLegacyExports,
                   packagePath: this.relativePackagePath,
+                  testPath: this.getRelativeTestPath(),
                   packageManager: this.config.packageManager
               });
     }

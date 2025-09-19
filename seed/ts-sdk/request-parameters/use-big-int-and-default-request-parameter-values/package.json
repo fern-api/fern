@@ -33,10 +33,9 @@
         "build": "pnpm build:cjs && pnpm build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
-        "test": "vitest",
-        "test:unit": "vitest --project unit",
-        "test:browser": "vitest --project browser",
-        "test:wire": "vitest --project wire"
+        "test": "jest --config jest.config.mjs",
+        "test:unit": "jest --selectProjects unit",
+        "test:wire": "jest --selectProjects wire"
     },
     "devDependencies": {
         "webpack": "^5.97.1",

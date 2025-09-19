@@ -9,16 +9,7 @@ export default defineConfig({
                     environment: "node",
                     root: "./src/test-packagePath/tests",
                     include: ["**/*.test.{js,ts,jsx,tsx}"],
-                    exclude: ["**/*.browser.(spec|test).[jt]sx?", "wire/**"],
-                },
-            },
-            {
-                test: {
-                    globals: true,
-                    name: "browser",
-                    environment: "happy-dom",
-                    root: "./src/test-packagePath/tests",
-                    include: ["unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
+                    exclude: ["wire/**"],
                 },
             },
             {
@@ -26,8 +17,8 @@ export default defineConfig({
                     globals: true,
                     name: "wire",
                     environment: "node",
-                    root: "./tests/wire",
-                    setupFiles: ["./mock-server/setup.ts"],
+                    root: "./src/test-packagePath/tests/wire",
+                    setupFiles: ["../mock-server/setup.ts"],
                 },
             },
         ],
