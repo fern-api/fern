@@ -500,6 +500,14 @@ jobs:
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixture)}}' | jq .
+
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixture)}}'
+          string_result=$(echo "$json_data" | jq -r 'join(" ")')
+          echo "$string_result"
+          echo "as-string="$string_result"" >> $GITHUB_OUTPUT
     
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -509,7 +517,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ matrix.fixture }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   typescript-express:
     runs-on: ubuntu-latest
