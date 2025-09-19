@@ -39,7 +39,7 @@ export class Union {
     }
 
     /**
-     * @param {SeedExhaustive.Animal} request
+     * @param {SeedExhaustive.types.Animal} request
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -50,16 +50,16 @@ export class Union {
      *     })
      */
     public getAndReturnUnion(
-        request: SeedExhaustive.Animal,
+        request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.Animal> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(
-        request: SeedExhaustive.Animal,
+        request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.Animal>> {
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -82,7 +82,7 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.Animal, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedExhaustive.types.Animal, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

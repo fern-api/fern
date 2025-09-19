@@ -7,7 +7,7 @@ import * as SeedExhaustive from "../../../../../index.js";
 import * as core from "../../../../../../core/index.js";
 
 export class ErrorWithUnionBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.Animal, rawResponse?: core.RawResponse) {
+    constructor(body: SeedExhaustive.types.Animal, rawResponse?: core.RawResponse) {
         super({
             message: "ErrorWithUnionBody",
             statusCode: 400,

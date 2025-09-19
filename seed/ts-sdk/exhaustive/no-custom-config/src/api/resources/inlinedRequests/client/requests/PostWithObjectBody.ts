@@ -31,5 +31,5 @@ import * as SeedExhaustive from "../../../../index.js";
 export interface PostWithObjectBody {
     string: string;
     integer: number;
-    NestedObject: SeedExhaustive.ObjectWithOptionalField;
+    NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }

@@ -50,14 +50,14 @@ export class Put {
     public add(
         request: SeedExhaustive.endpoints.PutRequest,
         requestOptions?: Put.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.PutResponse> {
+    ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
     private async __add(
         request: SeedExhaustive.endpoints.PutRequest,
         requestOptions?: Put.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.PutResponse>> {
+    ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const { id } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -78,7 +78,7 @@ export class Put {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.PutResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedExhaustive.endpoints.PutResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

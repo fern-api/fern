@@ -39,7 +39,7 @@ export class ContentType {
     }
 
     /**
-     * @param {SeedExhaustive.ObjectWithOptionalField} request
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -62,14 +62,14 @@ export class ContentType {
      *     })
      */
     public postJsonPatchContentType(
-        request: SeedExhaustive.ObjectWithOptionalField,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
     private async __postJsonPatchContentType(
-        request: SeedExhaustive.ObjectWithOptionalField,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -123,7 +123,7 @@ export class ContentType {
     }
 
     /**
-     * @param {SeedExhaustive.ObjectWithOptionalField} request
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -146,7 +146,7 @@ export class ContentType {
      *     })
      */
     public postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.ObjectWithOptionalField,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -155,7 +155,7 @@ export class ContentType {
     }
 
     private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.ObjectWithOptionalField,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
