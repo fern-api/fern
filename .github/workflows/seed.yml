@@ -478,7 +478,7 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          echo 'test-data=[{"package": ["accept-header alias"]},{"package": ["alias-extends"]}]' >> $GITHUB_OUTPUT
+          echo 'test-data=[{["accept-header alias"]},{["alias-extends"]}]' >> $GITHUB_OUTPUT
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -499,7 +499,7 @@ jobs:
         # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Echo package
-        run: echo ${{ join(matrix.package, ' ') }}
+        run: echo ${{ join(matrix, ' ') }}
     
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -509,7 +509,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ join(matrix.package, ' ') }}
+          fixtures-to-run: ${{ join(matrix, ' ') }}
 
   typescript-express:
     runs-on: ubuntu-latest
