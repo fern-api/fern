@@ -499,7 +499,7 @@ jobs:
         include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Echo package
-        run: echo "$test_data" | jq .
+        run: echo "$${{matrix.fixture}}" | jq .
     
       - name: Checkout repo
         uses: actions/checkout@v4
