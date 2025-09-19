@@ -32,7 +32,7 @@ export class RootClientGenerator {
 
         return new RustFile({
             filename: "mod.rs",
-            directory: RelativeFilePath.of("src/client"),
+            directory: RelativeFilePath.of("src/api/resources"),
             fileContents: module.toString()
         });
     }

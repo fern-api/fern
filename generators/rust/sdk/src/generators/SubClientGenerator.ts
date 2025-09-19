@@ -58,7 +58,7 @@ export class SubClientGenerator {
         });
         return new RustFile({
             filename,
-            directory: RelativeFilePath.of("src/client"),
+            directory: RelativeFilePath.of("src/api/resources"),
             fileContents: module.toString()
         });
     }
@@ -99,8 +99,8 @@ export class SubClientGenerator {
         if (hasTypes) {
             imports.push(
                 new UseStatement({
-                    path: "crate",
-                    items: ["types::*"]
+                    path: "crate::api::types",
+                    items: ["*"]
                 })
             );
         }

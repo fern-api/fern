@@ -1,4 +1,4 @@
-use crate::client::{{CLIENT_NAME}};
+use crate::api::resources::{{CLIENT_NAME}};
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
