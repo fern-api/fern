@@ -871,9 +871,7 @@ export class SdkGenerator {
     }
 
     private generateAggregatedRequestWrappers() {
-        // Collect all request wrappers
         const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
-
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -881,23 +879,14 @@ export class SdkGenerator {
                 }
             }
         });
-
-        // Generate a single file with all request wrappers
-        // Use the first request wrapper to get the global filepath
-        const firstWrapper = requestWrappers[0];
-        if (!firstWrapper) {
+        if (requestWrappers.length === 0) {
             return;
         }
 
         this.withSourceFile({
-            filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
-                packageId: firstWrapper.packageId,
-                endpoint: firstWrapper.endpoint
-            }),
+            filepath: this.requestWrapperDeclarationReferencer.getAggregatedRequestsFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-
-                // Generate all request wrappers in the single file
                 for (const { packageId, endpoint } of requestWrappers) {
                     context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
                 }

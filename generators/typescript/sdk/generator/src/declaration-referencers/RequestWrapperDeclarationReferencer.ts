@@ -29,23 +29,9 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
 
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
         if (this.exportAllRequestsAtRoot) {
-            // When exporting all requests at root, use a global requests.ts file
-            return {
-                directories: [
-                    ...this.containingDirectory,
-                    {
-                        nameOnDisk: REQUESTS_DIRECTORY_NAME,
-                        exportDeclaration: { exportAll: true }
-                    }
-                ],
-                file: {
-                    nameOnDisk: `${REQUESTS_DIRECTORY_NAME}.ts`,
-                    exportDeclaration: { exportAll: true }
-                }
-            };
+			return this.getAggregatedRequestsFilepath();
         }
 
-        // Default behavior - individual files per subpackage
         return {
             directories: [
                 ...this.getExportedDirectory(name, {
@@ -76,6 +62,26 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
             throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
         }
         return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;
+    }
+
+    public getAggregatedRequestsFilepath(): ExportedFilePath {
+        if (!this.exportAllRequestsAtRoot) {
+            throw new Error("getAggregatedRequestsFilepath() should only be called when exportAllRequestsAtRoot is true");
+        }
+
+        return {
+            directories: [
+                ...this.containingDirectory,
+                {
+                    nameOnDisk: REQUESTS_DIRECTORY_NAME,
+                    exportDeclaration: { exportAll: true }
+                }
+            ],
+            file: {
+                nameOnDisk: `${REQUESTS_DIRECTORY_NAME}.ts`,
+                exportDeclaration: { exportAll: true }
+            }
+        };
     }
 
     public getReferenceToRequestWrapperType(
