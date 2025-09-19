@@ -476,7 +476,7 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          test_data=$(echo '{"fixture": ["accept-header","alias"]} {"fixture": ["accept-header2","alias2"]}' | jq -c .)
+          test_data=$(echo '{"fixture": ["accept-header","alias"]} {"fixture": ["accept-header2","alias2"]}' | jq -s -c .)
           echo "test-data=$test_data" >> $GITHUB_OUTPUT
           echo "$test_data" | jq .
 
