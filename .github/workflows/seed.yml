@@ -468,20 +468,21 @@ jobs:
           generator-path: generators/java
           fixtures-to-run: ${{ matrix.fixtures }}
 
-  # forced-test:
-  #   runs-on: ubuntu-latest
-  #   outputs:  
-  #     test-data: ${{ steps.output-test-data.outputs.test-data }}
-  #   steps:
-  #     - name: Output test data
-  #       id: output-test-data
-  #       run: |
-  #         echo 'test-data=[{"package": ["accept-header alias"]},{"package": ["alias-extends"]}]' >> $GITHUB_OUTPUT
+  forced-test:
+    runs-on: ubuntu-latest
+    outputs:  
+      test-data: ${{ steps.output-test-data.outputs.test-data }}
+    steps:
+      - name: Output test data
+        id: output-test-data
+        run: |
+          echo "test-data=["accept-header","alias","alias-extends","any-auth","api-wide-base-path","audiences:no-custom-config"]" >> $GITHUB_OUTPUT
 
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
-    needs: get-all-test-matrices
+    needs: forced-test
+    # needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
@@ -492,7 +493,8 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        # include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Echo package
         run: echo ${{ join(matrix.package, ' ') }}

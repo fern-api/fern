@@ -27,9 +27,16 @@ runs:
         COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders)
 
         # Extract the fixtures array from the JSON output using jq
-        MATRIX_FORMATTED=$(echo "$COMMAND_OUTPUT" | jq -r '.fixtures')
+        # Extract fixtures to JSON array
+        FIXTURES_FLAT_JSON=$(echo "$cmd" | \
+            awk '/fixtures: \[/,/\]/' | \
+            sed '1d;$d' | \
+            sed 's/^[[:space:]]*//' | \
+            sed 's/,$//' | \
+            awk 'NF {print "\"" $0 "\""}' | \
+            paste -sd',' - | \
+            sed 's/.*/[&]/')
 
-        echo "Debug: Raw command output: $COMMAND_OUTPUT"
-        echo "Debug: Extracted fixtures: $MATRIX_FORMATTED"
+        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON"
 
-        echo "fixture_list=$MATRIX_FORMATTED" >> $GITHUB_OUTPUT
+        echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT
