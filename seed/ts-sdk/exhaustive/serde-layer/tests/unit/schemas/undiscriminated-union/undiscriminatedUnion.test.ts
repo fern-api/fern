@@ -35,7 +35,7 @@ describe("undiscriminatedUnion", () => {
     });
 
     describe("compile", () => {
-        // eslint-disable-next-line jest/expect-expect
+        // eslint-disable-next-line vi/expect-expect
         it("doesn't compile with zero members", () => {
             // @ts-expect-error
             () => undiscriminatedUnion([]);

@@ -31,7 +31,6 @@ export declare namespace SdkClientClassGenerator {
         exportsManager: ExportsManager;
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
-        exportAllRequestsAtRoot: boolean;
     }
 
     export namespace generateService {
@@ -68,7 +67,6 @@ export class SdkClientClassGenerator {
     private exportsManager: ExportsManager;
     private omitFernHeaders: boolean;
     private useDefaultRequestParameterValues: boolean;
-    private exportAllRequestsAtRoot: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -92,8 +90,7 @@ export class SdkClientClassGenerator {
         exportsManager,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
-        exportAllRequestsAtRoot
+        useDefaultRequestParameterValues
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -118,7 +115,6 @@ export class SdkClientClassGenerator {
         this.formDataSupport = formDataSupport;
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
-        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
     }
 
     public generateService({
@@ -154,8 +150,7 @@ export class SdkClientClassGenerator {
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
-            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
-            exportAllRequestsAtRoot: this.exportAllRequestsAtRoot
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
         });
     }
 }

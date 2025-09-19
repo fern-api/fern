@@ -185,7 +185,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 {
                     compilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4

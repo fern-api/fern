@@ -304,7 +304,8 @@ function visitEndpoint({
         },
         pagination: noop,
         source: noop,
-        transport: noop
+        transport: noop,
+        retries: noop
     });
 }
 
