@@ -957,7 +957,7 @@ export class EndpointSnippetGenerator {
                                   //Exclude optional since it appears that optional query params do not automatically get mocked in the dynamic snippet invocation (for now)
                                   .filter(
                                       (queryParameter: FernIr.dynamic.NamedParameter) =>
-                                          queryParameter.typeReference.type !== "optional"
+                                          !this.context.isOptional(queryParameter.typeReference)
                                   )
                                   .map((queryParameter: FernIr.dynamic.NamedParameter) => ({
                                       method: "WithQueryParam",
