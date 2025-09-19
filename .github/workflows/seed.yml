@@ -21,6 +21,7 @@ concurrency:
 
 jobs:
   changes:
+    # Trigger a change everywhere for test
     runs-on: ubuntu-latest
     outputs:
       seed: ${{ steps.get-generator-changes.outputs.seed }}
