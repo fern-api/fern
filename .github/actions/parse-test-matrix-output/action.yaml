@@ -26,6 +26,8 @@ runs:
         # Get JSON output from get-available-fixtures command
         COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders)
 
+        echo "${COMMAND_OUTPUT}"
+
         # Extract the fixtures array from the JSON output using jq
         # Extract fixtures to JSON array
         FIXTURES_FLAT_JSON=$(echo "$COMMAND_OUTPUT" | \
