@@ -28,7 +28,13 @@ runs:
         PACKAGE_AMOUNT=${{ inputs.package-amount }}
 
         # Parse JSON array and convert to bash array
-        FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
+        # Create array by reading each line and filtering out empty ones
+        FIXTURES=()
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                FIXTURES+=("$line")
+            fi
+        done < <(echo "$FIXTURE_ARRAY" | jq -r '.[]')
 
         # Get total number of fixtures
         TOTAL_FIXTURES=${#FIXTURES[@]}
