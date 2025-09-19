@@ -21,9 +21,27 @@ runs:
       id: package-test-matrix
       shell: bash
       run: |
+        # Unpacked JSON array for processing
         PARSED_NAME=$(echo '${{ inputs.full-fixture-matrix }}' | jq -r '.[]')
         echo "Parsed name: $PARSED_NAME"
-        echo "$PARSED_NAME" | jq .
+
+        # UNPACKED
+
+        # Convert newline-separated data to bash array
+        FIXTURES=()
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                FIXTURES+=("$line")
+            fi
+        done <<< "$PARSED_NAME"
+
+        # Get total number of fixtures
+        TOTAL_FIXTURES=${#FIXTURES[@]}
+        echo "Total fixtures: $TOTAL_FIXTURES"
+        echo "Package amount: $PACKAGE_AMOUNT"
+
+
+
         # # Input JSON object with "fixtures" key
         # FIXTURE_INPUT='${{ inputs.full-fixture-matrix }}'
 
