@@ -30,7 +30,7 @@
     ],
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
-        "build": "pnpm build:cjs && pnpm build:esm",
+        "build": "yarn build:cjs && yarn build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
         "test": "vitest",
@@ -52,7 +52,7 @@
         "path": false,
         "stream": false
     },
-    "packageManager": "pnpm@10.14.0",
+    "packageManager": "yarn@1.22.22",
     "engines": {
         "node": ">=18.0.0"
     },
