@@ -230,12 +230,15 @@ export class DocsDefinitionResolver {
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
+        
+        // store root here so we only process once
+        const root = await this.toRootNode();
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
         // TODO: include more (canonical) slugs from the navigation tree
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
-            await this.getMarkdownFilesToFullyQualifiedPathNames();
+            await this.getMarkdownFilesToFullyQualifiedPathNames(root);
 
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
@@ -263,7 +266,7 @@ export class DocsDefinitionResolver {
             };
         });
 
-        const config = await this.convertDocsConfiguration();
+        const config = await this.convertDocsConfiguration(root);
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
@@ -390,9 +393,9 @@ export class DocsDefinitionResolver {
      * FernNavigation NodeCollector already includes basepath in slugmap
      * @returns a map of markdown files to their fully qualified pathnames
      */
-    private async getMarkdownFilesToFullyQualifiedPathNames(): Promise<Record<AbsoluteFilePath, string>> {
+    private async getMarkdownFilesToFullyQualifiedPathNames(initialRoot: FernNavigation.V1.RootNode): Promise<Record<AbsoluteFilePath, string>> {
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(await this.toRootNode());
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(initialRoot);
 
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);
@@ -417,8 +420,7 @@ export class DocsDefinitionResolver {
         return url.pathname;
     }
 
-    private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
-        const root = await this.toRootNode();
+    private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
         const config: DocsV1Write.DocsConfig = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
