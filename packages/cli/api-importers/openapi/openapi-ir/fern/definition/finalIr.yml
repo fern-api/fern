@@ -171,6 +171,7 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
+      security: EndpointSecurity
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: HttpMethod
@@ -206,6 +207,8 @@ types:
       examples: list<EndpointExample>
       pagination: optional<Pagination>
       retries: optional<RetriesConfiguration>
+
+  EndpointSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 
   RetriesConfiguration:
     union:

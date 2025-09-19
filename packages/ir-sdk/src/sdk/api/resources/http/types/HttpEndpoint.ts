@@ -26,6 +26,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     v2Responses: FernIr.V2HttpResponses | undefined;
     errors: FernIr.ResponseErrors;
     auth: boolean;
+    security: Record<FernIr.AuthSchemeKey, string[]>[] | undefined;
     idempotent: boolean;
     pagination: FernIr.Pagination | undefined;
     userSpecifiedExamples: FernIr.UserSpecifiedEndpointExample[];

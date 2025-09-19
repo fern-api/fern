@@ -2,6 +2,7 @@ export * from "./HttpServiceSchema";
 export * from "./ServiceTransport";
 export * from "./GrpcTransport";
 export * from "./HttpEndpointSchema";
+export * from "./HttpEndpointAuth";
 export * from "./RetriesConfiguration";
 export * from "./RetriesDisabledSchema";
 export * from "./HttpMethodSchema";
