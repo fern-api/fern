@@ -477,7 +477,7 @@ jobs:
         id: output-test-data
         run: |
           echo "test-data=["accept-header","alias","alias-extends","any-auth","api-wide-base-path","audiences:no-custom-config"]" >> $GITHUB_OUTPUT
-
+          echo "${test-data}"
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
