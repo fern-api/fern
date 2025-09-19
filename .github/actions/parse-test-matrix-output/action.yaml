@@ -28,7 +28,7 @@ runs:
 
         # Extract the fixtures array from the JSON output using jq
         # Extract fixtures to JSON array
-        FIXTURES_FLAT_JSON=$(echo "$cmd" | \
+        FIXTURES_FLAT_JSON=$(echo "$COMMAND_OUTPUT" | \
             awk '/fixtures: \[/,/\]/' | \
             sed '1d;$d' | \
             sed 's/^[[:space:]]*//' | \

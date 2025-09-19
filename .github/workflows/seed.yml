@@ -483,8 +483,8 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
-    needs: forced-test
-    # needs: get-all-test-matrices
+    # needs: forced-test
+    needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
@@ -495,8 +495,8 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        # include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
-        include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
+        include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
+        # include: ${{ fromJson(needs.forced-test.outputs.test-data) }}
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixture)}}' | jq .
