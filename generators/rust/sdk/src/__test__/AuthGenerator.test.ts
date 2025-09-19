@@ -287,7 +287,7 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: (serviceId: string) => ir.services[serviceId as keyof typeof ir.services],
         getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages],
-        getSubpackagesOrThrow: (packageOrSubpackage: any) => {
+        getSubpackagesOrThrow: (packageOrSubpackage: { subpackages: string[] }) => {
             return packageOrSubpackage.subpackages.map((subpackageId: string) => [
                 subpackageId,
                 ir.subpackages[subpackageId as keyof typeof ir.subpackages]
@@ -309,8 +309,8 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         configManager: {
             escapeRustKeyword: (name: string) => name // Simple mock implementation
         },
-        getDirectoryForFernFilepath: (fernFilepath: any) => {
-            return fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("/");
+        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
+            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
         }
     } as SdkGeneratorContext;
 }

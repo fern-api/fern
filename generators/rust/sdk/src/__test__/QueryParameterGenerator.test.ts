@@ -118,7 +118,7 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService,
         getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages],
-        getSubpackagesOrThrow: (packageOrSubpackage: any) => {
+        getSubpackagesOrThrow: (packageOrSubpackage: { subpackages?: string[] }) => {
             return (
                 packageOrSubpackage.subpackages?.map((subpackageId: string) => [
                     subpackageId,
@@ -138,8 +138,8 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
             const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
             return pathParts.join("") + "Client";
         },
-        getDirectoryForFernFilepath: (fernFilepath: any) => {
-            return fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("/");
+        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
+            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
         }
     } as unknown as SdkGeneratorContext;
 }
