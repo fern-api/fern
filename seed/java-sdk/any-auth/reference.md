@@ -106,3 +106,28 @@ client.user().get();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.user.getAdmins() -> List&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getAdmins();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
