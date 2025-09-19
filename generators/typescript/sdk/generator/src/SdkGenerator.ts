@@ -762,7 +762,9 @@ export class SdkGenerator {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     for (const typeDeclaration of typeDeclarations) {
+                        const currentStatementCount = context.sourceFile.getStatements().length;
                         context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                        context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
                     }
                 }
             });
