@@ -13,6 +13,7 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
+const QUERY_PARAMETER_BAG_NAME = "_query";
 export const HTTP_RESPONSE_VN = "_response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
@@ -53,7 +54,7 @@ export class HttpEndpointGenerator {
             statements.push(requestBodyCodeBlock.code);
         }
 
-        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         if (queryParameterCodeBlock?.code != null) {
             statements.push(queryParameterCodeBlock.code);
         }
@@ -119,21 +120,29 @@ export class HttpEndpointGenerator {
                             method: "new",
                             arguments_: [],
                             keywordArguments: [
-                                ["page_field", ruby.codeblock(`:${endpoint.pagination.page.property.name.wireValue}`)],
+                                [
+                                    "initial_page",
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                    )
+                                ],
                                 [
                                     "item_field",
                                     ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
                                 ],
                                 [
-                                    "initial_page",
-                                    ruby.codeblock(`params[:${endpoint.pagination.page.property.name.wireValue}]`)
-                                ]
+                                    "has_next_field",
+                                    endpoint.pagination.hasNextPage
+                                        ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
+                                        : ruby.codeblock(`nil`)
+                                ],
+                                ["step", endpoint.pagination.step ? ruby.codeblock(`true`) : ruby.codeblock(`false`)]
                             ],
                             block: [
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
-                                        `params[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
                                     ),
                                     ...requestStatements
                                 ]
