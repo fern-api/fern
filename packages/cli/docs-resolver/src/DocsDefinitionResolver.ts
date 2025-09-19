@@ -10,7 +10,6 @@ import {
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import {
     AbsoluteFilePath,
-    doesPathExist,
     join,
     listFiles,
     RelativeFilePath,
@@ -29,13 +28,10 @@ import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
-import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
-import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
