@@ -126,15 +126,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getDefaultBaseUrl(endpoint: HttpEndpoint): EnvironmentUrl | undefined {
         if (endpoint.baseUrl != null) {
-            return this.getEnvironmnetUrlFromId(endpoint.baseUrl);
+            return this.getEnvironmentUrlFromId(endpoint.baseUrl);
         }
         if (this.ir.environments?.defaultEnvironment != null) {
-            return this.getEnvironmnetUrlFromId(this.ir.environments.defaultEnvironment);
+            return this.getEnvironmentUrlFromId(this.ir.environments.defaultEnvironment);
         }
         return undefined;
     }
 
-    public getEnvironmnetUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
+    public getEnvironmentUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
         if (this.ir.environments == null) {
             return undefined;
         }

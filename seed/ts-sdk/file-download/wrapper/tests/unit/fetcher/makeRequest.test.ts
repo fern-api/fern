@@ -6,10 +6,10 @@ describe("Test makeRequest", () => {
     const mockHeaders = { "Content-Type": "application/json" };
     const mockBody = JSON.stringify({ key: "value" });
 
-    let mockFetch: import("vitest").Mock;
+    let mockFetch: jest.Mock;
 
     beforeEach(() => {
-        mockFetch = vi.fn();
+        mockFetch = jest.fn();
         mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
     });
 

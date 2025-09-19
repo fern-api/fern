@@ -1,4 +1,4 @@
-import { expect } from "vitest";
+import { expect } from "@jest/globals";
 
 expect.addEqualityTesters([
     (a: any, b: any) => {
