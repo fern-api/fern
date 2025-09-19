@@ -8,15 +8,7 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import {
-    AbsoluteFilePath,
-    doesPathExist,
-    join,
-    listFiles,
-    RelativeFilePath,
-    relative,
-    resolve
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -29,13 +21,10 @@ import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
-import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace";
-import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
@@ -838,73 +827,6 @@ export class DocsDefinitionResolver {
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
-        if (item.openrpc != null) {
-            const absoluteFilepathToOpenrpc = resolve(
-                this.docsWorkspace.absoluteFilePath,
-                RelativeFilePath.of(item.openrpc)
-            );
-            if (!(await doesPathExist(absoluteFilepathToOpenrpc))) {
-                throw new Error(`OpenRPC file does not exist at path: ${absoluteFilepathToOpenrpc}`);
-            }
-            const api = await generateFdrFromOpenrpc(absoluteFilepathToOpenrpc, this.taskContext);
-            if (api == null) {
-                throw new Error("Failed to generate API Definition from OpenRPC document");
-            }
-            await this.registerApiV2({
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                api: api as any,
-                apiName: item.apiName,
-                snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
-            });
-            const node = new ApiReferenceNodeConverterLatest(
-                item,
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                api as any,
-                parentSlug,
-                undefined,
-                this.docsWorkspace,
-                this.taskContext,
-                this.markdownFilesToFullSlugs,
-                this.markdownFilesToNoIndex,
-                this.markdownFilesToTags,
-                this.#idgen,
-                hideChildren,
-                parentAvailability ?? item.availability
-            );
-            return node.get();
-        }
-
-        if (this.parsedDocsConfig.experimental?.openapiParserV2) {
-            const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-            const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext);
-            if (api == null) {
-                throw new Error("Failed to generate API Definition from OpenAPI workspace");
-            }
-            await this.registerApiV2({
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                api: api as any,
-                snippetsConfig,
-                apiName: item.apiName
-            });
-            const node = new ApiReferenceNodeConverterLatest(
-                item,
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                api as any,
-                parentSlug,
-                workspace,
-                this.docsWorkspace,
-                this.taskContext,
-                this.markdownFilesToFullSlugs,
-                this.markdownFilesToNoIndex,
-                this.markdownFilesToTags,
-                this.#idgen,
-                hideChildren,
-                parentAvailability ?? item.availability
-            );
-            return node.get();
-        }
-
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
