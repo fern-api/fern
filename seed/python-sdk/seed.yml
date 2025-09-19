@@ -84,7 +84,12 @@ fixtures:
           exported_class_name: SeedExhaustive
         use_inheritance_for_extended_models: false
       outputFolder: client-filename
-    - customConfig: null
+    - customConfig:
+        custom_readme_sections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -95,6 +100,13 @@ fixtures:
         introduction: |
           This is a test introduction
           split across multiple lines.
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: python
+            content: "Base Readme Custom Content for {{ packageName }}"
+          - title: "Override Section"
+            language: python
+            content: "Base Content"
         features:
           asyncClient:
             - GET /movie/{movieId}
