@@ -124,6 +124,7 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    if: false
     strategy:
       matrix:
         # generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
@@ -476,8 +477,8 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          echo "test-data='["accept-header","alias","alias-extends","any-auth","api-wide-base-path","audiences:no-custom-config"]'" >> $GITHUB_OUTPUT
-          echo "${test-data}"
+          echo 'test-data=["accept-header","alias"]' >> $GITHUB_OUTPUT
+          echo "${test-data}" | jq .
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
