@@ -460,7 +460,7 @@ client.service().createBigEntity(
     BigEntity
         .builder()
         .castMember(
-            CastMember.ofActor(
+            CastMember.of(
                 Actor
                     .builder()
                     .name("name")
@@ -496,13 +496,13 @@ client.service().createBigEntity(
             Entity
                 .builder()
                 .type(
-                    Type.ofBasicType(BasicType.PRIMITIVE)
+                    Type.of(BasicType.PRIMITIVE)
                 )
                 .name("name")
                 .build()
         )
         .metadata(
-            Metadata.html()
+            Metadata.of()
         )
         .commonMetadata(
             Metadata
@@ -517,7 +517,7 @@ client.service().createBigEntity(
                 .build()
         )
         .eventInfo(
-            EventInfo.metadata(
+            EventInfo.of(
                 Metadata
                     .builder()
                     .id("id")
@@ -531,7 +531,7 @@ client.service().createBigEntity(
             )
         )
         .data(
-            Data.string()
+            Data.of()
         )
         .migration(
             Migration
@@ -541,7 +541,7 @@ client.service().createBigEntity(
                 .build()
         )
         .exception(
-            Exception.generic(
+            Exception.of(
                 ExceptionInfo
                     .builder()
                     .exceptionType("exceptionType")
@@ -551,7 +551,7 @@ client.service().createBigEntity(
             )
         )
         .test(
-            Test.and()
+            Test.of()
         )
         .node(
             Node

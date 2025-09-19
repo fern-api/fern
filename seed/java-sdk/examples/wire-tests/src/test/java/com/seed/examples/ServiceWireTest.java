@@ -294,7 +294,7 @@ public class ServiceWireTest {
             BigEntity
                 .builder()
                 .castMember(
-                    CastMember.ofActor(
+                    CastMember.of(
                         Actor
                             .builder()
                             .name("name")
@@ -330,13 +330,13 @@ public class ServiceWireTest {
                     Entity
                         .builder()
                         .type(
-                            Type.ofBasicType(BasicType.PRIMITIVE)
+                            Type.of(BasicType.PRIMITIVE)
                         )
                         .name("name")
                         .build()
                 )
                 .metadata(
-                    Metadata.html()
+                    Metadata.of()
                 )
                 .commonMetadata(
                     Metadata
@@ -351,7 +351,7 @@ public class ServiceWireTest {
                         .build()
                 )
                 .eventInfo(
-                    EventInfo.metadata(
+                    EventInfo.of(
                         Metadata
                             .builder()
                             .id("id")
@@ -365,7 +365,7 @@ public class ServiceWireTest {
                     )
                 )
                 .data(
-                    Data.string()
+                    Data.of()
                 )
                 .migration(
                     Migration
@@ -375,7 +375,7 @@ public class ServiceWireTest {
                         .build()
                 )
                 .exception(
-                    Exception.generic(
+                    Exception.of(
                         ExceptionInfo
                             .builder()
                             .exceptionType("exceptionType")
@@ -385,7 +385,7 @@ public class ServiceWireTest {
                     )
                 )
                 .test(
-                    Test.and()
+                    Test.of()
                 )
                 .node(
                     Node
