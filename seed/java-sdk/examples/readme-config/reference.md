@@ -502,7 +502,7 @@ client.service().createBigEntity(
                 .build()
         )
         .metadata(
-            Metadata.of()
+            Metadata.html()
         )
         .commonMetadata(
             Metadata
@@ -517,7 +517,7 @@ client.service().createBigEntity(
                 .build()
         )
         .eventInfo(
-            EventInfo.of(
+            EventInfo.metadata(
                 Metadata
                     .builder()
                     .id("id")
@@ -531,7 +531,7 @@ client.service().createBigEntity(
             )
         )
         .data(
-            Data.of()
+            Data.string()
         )
         .migration(
             Migration
@@ -541,7 +541,7 @@ client.service().createBigEntity(
                 .build()
         )
         .exception(
-            Exception.of(
+            Exception.generic(
                 ExceptionInfo
                     .builder()
                     .exceptionType("exceptionType")
@@ -551,7 +551,7 @@ client.service().createBigEntity(
             )
         )
         .test(
-            Test.of()
+            Test.and()
         )
         .node(
             Node

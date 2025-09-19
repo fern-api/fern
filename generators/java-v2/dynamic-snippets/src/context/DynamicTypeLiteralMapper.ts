@@ -29,9 +29,15 @@ export class DynamicTypeLiteralMapper {
      * Nop types represent absent or undefined values that should not be wrapped.
      * This method uses type casting to access internal implementation details
      * until a proper API is exposed by the java.TypeLiteral class.
+     *
+     * @internal This is a temporary workaround that accesses internal implementation.
+     * TEST: Add unit test to catch if TypeLiteral internal structure changes.
+     * TODO: Replace with java.TypeLiteral.isNop() when available.
      */
     private isNopTypeLiteral(value: java.TypeLiteral): boolean {
-        // TODO: Replace with java.TypeLiteral.isNop() when available
+        // This is a temporary workaround that accesses internal implementation
+        // details. We need this to prevent wrapping nop values in Optional,
+        // which would generate invalid code like Optional.of() without arguments.
         const valueWithInternal = value as unknown as { internalType?: { type?: string } };
         return valueWithInternal.internalType?.type === "nop";
     }
@@ -83,6 +89,25 @@ export class DynamicTypeLiteralMapper {
             }
             case "nullable":
             case "optional": {
+                if (
+                    args.value === undefined ||
+                    (typeof args.value === "object" &&
+                        args.value !== null &&
+                        Object.keys(args.value).length === 0 &&
+                        args.typeReference.value.type === "named")
+                ) {
+                    return java.TypeLiteral.reference(
+                        java.invokeMethod({
+                            on: java.classReference({
+                                name: "Optional",
+                                packageName: "java.util"
+                            }),
+                            method: "empty",
+                            arguments_: []
+                        })
+                    );
+                }
+
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
                     return this.wrapInOptionalIfNotNop(listLiteral, true);
@@ -268,7 +293,7 @@ export class DynamicTypeLiteralMapper {
                 return java.TypeLiteral.reference(
                     java.invokeMethod({
                         on: classReference,
-                        method: "of",
+                        method: this.context.getPropertyName(unionVariant.discriminantValue.name),
                         arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
                     })
                 );
@@ -283,7 +308,7 @@ export class DynamicTypeLiteralMapper {
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: classReference,
-                            method: "of",
+                            method: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
@@ -300,7 +325,7 @@ export class DynamicTypeLiteralMapper {
                 return java.TypeLiteral.reference(
                     java.invokeMethod({
                         on: classReference,
-                        method: "of",
+                        method: this.context.getPropertyName(unionVariant.discriminantValue.name),
                         arguments_: []
                     })
                 );

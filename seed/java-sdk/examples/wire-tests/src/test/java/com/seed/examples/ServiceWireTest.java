@@ -336,7 +336,7 @@ public class ServiceWireTest {
                         .build()
                 )
                 .metadata(
-                    Metadata.of()
+                    Metadata.html()
                 )
                 .commonMetadata(
                     Metadata
@@ -351,7 +351,7 @@ public class ServiceWireTest {
                         .build()
                 )
                 .eventInfo(
-                    EventInfo.of(
+                    EventInfo.metadata(
                         Metadata
                             .builder()
                             .id("id")
@@ -365,7 +365,7 @@ public class ServiceWireTest {
                     )
                 )
                 .data(
-                    Data.of()
+                    Data.string()
                 )
                 .migration(
                     Migration
@@ -375,7 +375,7 @@ public class ServiceWireTest {
                         .build()
                 )
                 .exception(
-                    Exception.of(
+                    Exception.generic(
                         ExceptionInfo
                             .builder()
                             .exceptionType("exceptionType")
@@ -385,7 +385,7 @@ public class ServiceWireTest {
                     )
                 )
                 .test(
-                    Test.of()
+                    Test.and()
                 )
                 .node(
                     Node
