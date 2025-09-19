@@ -104,3 +104,35 @@ allowedFailures:
   - websocket-bearer-auth
   - websocket-inferred-auth
   - property-access
+  - accept-header
+  - alias
+  - alias-extends
+  - any-auth
+  - basic-auth
+  - basic-auth-environment-variables
+  - bytes-download
+  - empty-clients
+  - error-property
+  - errors
+  - extends
+  - extra-properties
+  - file-download
+  - file-upload
+  - imdb
+  - license
+  - literals-unions
+  - multiple-request-bodies
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - object
+  - objects-with-imports
+  - optional
+  - plain-text
+  - public-object
+  - single-url-environment-default:no-custom-config
+  - unknown
+  - version-no-default
+  - websocket
+

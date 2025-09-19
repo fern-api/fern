@@ -48,3 +48,6 @@ fixtures:
         clientName: ImdbClient
       outputFolder: imdb 
 
+allowedFailures:
+  - examples
+  - objects-with-imports

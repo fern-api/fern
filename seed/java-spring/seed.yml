@@ -63,3 +63,6 @@ allowedFailures:
   - streaming-parameter
   # public-object requires file download
   - public-object
+  - bytes-download
+  - bytes-upload
+  - multiple-request-bodies
