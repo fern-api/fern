@@ -8,6 +8,7 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+<<<<<<< HEAD
 import {
     AbsoluteFilePath,
     join,
@@ -16,6 +17,9 @@ import {
     relative,
     resolve
 } from "@fern-api/fs-utils";
+=======
+import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+>>>>>>> 314dcf6d26 (fix)
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
