@@ -95,14 +95,16 @@ export class HttpEndpointGenerator {
                                 ],
                                 [
                                     "initial_cursor",
-                                    ruby.codeblock(`params[:${endpoint.pagination.page.property.name.wireValue}]`)
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                    )
                                 ]
                             ],
                             block: [
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
-                                        `params[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
                                     ),
                                     ...requestStatements
                                 ]
@@ -134,9 +136,9 @@ export class HttpEndpointGenerator {
                                     "has_next_field",
                                     endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
-                                        : ruby.codeblock(`nil`)
+                                        : ruby.nilValue()
                                 ],
-                                ["step", endpoint.pagination.step ? ruby.codeblock(`true`) : ruby.codeblock(`false`)]
+                                ["step", endpoint.pagination.step ? ruby.trueValue() : ruby.falseValue()]
                             ],
                             block: [
                                 ["next_page"],

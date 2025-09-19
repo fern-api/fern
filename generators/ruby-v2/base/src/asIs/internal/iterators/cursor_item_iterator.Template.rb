@@ -6,6 +6,8 @@ module <%= gem_namespace %>
       # @param initial_cursor [String] The initial cursor to use when iterating, if any.
       # @param cursor_field [Symbol] The field in API responses to extract the next cursor from.
       # @param item_field [Symbol] The field in API responses to extract the items to iterate over.
+      # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
+      # @return [<%= gem_namespace %>::Internal::CursorItemIterator]
       def initialize(initial_cursor:, cursor_field:, item_field:, &block)
         @item_field = item_field
         @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &block)

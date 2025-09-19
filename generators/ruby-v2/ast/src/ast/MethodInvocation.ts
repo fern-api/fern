@@ -46,7 +46,7 @@ export class MethodInvocation extends AstNode {
         // Otherwise, write the arguments inline (on the same line).
         writer.write("(");
 
-        var allArguments: PositionalOrKeywordArgument[] = [];
+        const allArguments: PositionalOrKeywordArgument[] = [];
         for (const node of this.arguments_) {
             allArguments.push({ kind: "positional", node });
         }

@@ -6,7 +6,7 @@ module <%= gem_namespace %>
       # Iterates over each item returned by the API.
       #
       # @param block [Proc] The block which each retrieved item is yielded to.
-      # @return [nil]
+      # @return [NilClass]
       def each(&block)
         while item = get_next do
           block.call(item)
@@ -26,8 +26,6 @@ module <%= gem_namespace %>
       end
 
       # Retrieves the next item from the API.
-      #
-      # @return [Boolean]
       def get_next
         item = next_item_from_cached_page
         return item if item

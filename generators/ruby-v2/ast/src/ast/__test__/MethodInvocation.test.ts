@@ -6,7 +6,7 @@ describe("MethodInvocation", () => {
     let writerConfig: Writer.Args;
 
     beforeEach(() => {
-        writerConfig = { customConfig: BaseRubyCustomConfigSchema.parse({ clientClassName: "Example" }) };
+        writerConfig = { customConfig: BaseRubyCustomConfigSchema.parse({}) };
     });
 
     test("writes method invocation with no arguments", () => {
