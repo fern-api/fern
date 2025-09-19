@@ -122,8 +122,6 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
-    # CHRISM - forcing test
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -157,13 +155,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        # with:
-        #   # Checkout github actions folder and folders to build and run pnpm seed commands
-        #   sparse-checkout: |
-        #     .github/
-        #     generators/
-        #     packages/
-        #     seed/
 
       - name: Install
         uses: ./.github/actions/install
@@ -201,8 +192,12 @@ jobs:
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
-          echo "${{ matrix.generator-name }}-test-matrix=${{ steps.package-test-matrices.outputs.packaged }}" >> $GITHUB_OUTPUT
-
+          BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
+          echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+          
+          # Echo the data to command line for visibility
+          echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
+          echo "$BASH_VAR" | jq .
   ruby-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
@@ -215,8 +210,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -225,7 +232,7 @@ jobs:
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -239,8 +246,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -249,7 +268,7 @@ jobs:
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -263,8 +282,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -274,7 +305,7 @@ jobs:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
           validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -288,8 +319,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -298,7 +341,7 @@ jobs:
         with:
           generator-name: pydantic
           generator-path: generators/python
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -307,13 +350,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     if: >-
       ${{
         (needs.changes.outputs.python == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -323,7 +378,7 @@ jobs:
           generator-name: python-sdk
           generator-path: generators/python
           validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   fastapi:
     runs-on: ubuntu-latest
@@ -332,13 +387,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     if: >-
       ${{
         (needs.changes.outputs.python == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -347,7 +414,7 @@ jobs:
         with:
           generator-name: fastapi
           generator-path: generators/python
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -361,8 +428,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -371,7 +450,7 @@ jobs:
         with:
           generator-name: openapi
           generator-path: generators/openapi
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   postman:
     runs-on: ubuntu-latest
@@ -380,13 +459,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     if: >-
       ${{
         (needs.changes.outputs.postman == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -395,7 +486,7 @@ jobs:
         with:
           generator-name: postman
           generator-path: generators/postman
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -404,13 +495,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -419,7 +522,7 @@ jobs:
         with:
           generator-name: java-sdk
           generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -428,13 +531,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -443,7 +558,7 @@ jobs:
         with:
           generator-name: java-model
           generator-path: generators/java
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   java-spring:
     runs-on: ubuntu-latest
@@ -452,13 +567,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -467,25 +594,35 @@ jobs:
         with:
           generator-name: java-spring
           generator-path: generators/java
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   typescript-sdk:
     runs-on: ubuntu-latest
-    # CHRISM - forcing test
-    # needs: get-all-test-matrices
-    # needs: [changes, get-all-test-matrices]
-    # if: >-
-    #   ${{
-    #     (needs.changes.outputs.typescript == 'true' 
-    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-    #   }}
+    needs: [changes, get-all-test-matrices]
+    if: >-
+      ${{
+        (needs.changes.outputs.typescript == 'true' 
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
-        fixtures: [{"accept-header"},{"alias"},{"alias-extends"}]
+        include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+    
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -494,7 +631,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -503,13 +640,25 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     if: >-
       ${{
         (needs.changes.outputs.typescript == 'true' 
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -518,7 +667,7 @@ jobs:
         with:
           generator-name: ts-express
           generator-path: generators/typescript
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -532,8 +681,21 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -542,7 +704,7 @@ jobs:
         with:
           generator-name: go-fiber
           generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -556,8 +718,21 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -566,7 +741,7 @@ jobs:
         with:
           generator-name: go-model
           generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -580,8 +755,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -591,7 +778,7 @@ jobs:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
           validation-exclude-paths: "seed/*/.mock/*"
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -605,8 +792,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -615,7 +814,7 @@ jobs:
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -629,8 +828,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -639,7 +850,7 @@ jobs:
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   php-model:
     runs-on: ubuntu-latest
@@ -653,8 +864,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -663,7 +886,7 @@ jobs:
         with:
           generator-name: php-model
           generator-path: generators/php
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -677,8 +900,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -687,7 +922,7 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -701,8 +936,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -711,7 +958,7 @@ jobs:
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   rust-model:
     runs-on: ubuntu-latest
@@ -725,8 +972,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -735,7 +994,7 @@ jobs:
         with:
           generator-name: rust-model
           generator-path: generators/rust
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -749,8 +1008,20 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        fixtures: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -759,4 +1030,4 @@ jobs:
         with:
           generator-name: rust-sdk
           generator-path: generators/rust
-          fixtures-to-run: ${{ matrix.fixtures }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}

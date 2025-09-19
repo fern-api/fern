@@ -33,9 +33,7 @@ env:
 
 jobs:
   setup:
-    # CHRISM - Temporarily disabled
-    # if: github.repository == 'fern-api/fern'
-    if: false 
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
