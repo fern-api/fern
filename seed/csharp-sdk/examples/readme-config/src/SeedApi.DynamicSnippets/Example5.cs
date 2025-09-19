@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedExamples;
-using SeedExamples.File;
+using System.Threading.Tasks;
+using SeedExamples.File_;
 
 namespace Usage;
 
 public class Example5
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions{

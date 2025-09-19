@@ -36,6 +36,8 @@ type fileWriter struct {
 	inlinePathParameters         bool
 	inlineFileProperties         bool
 	useReaderForBytesRequest     bool
+	gettersPassByValue           bool
+	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
@@ -55,6 +57,8 @@ func newFileWriter(
 	inlinePathParameters bool,
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
+	gettersPassByValue bool,
+	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -79,6 +83,7 @@ func newFileWriter(
 	scope.AddImport("strings")
 	scope.AddImport("testing")
 	scope.AddImport("time")
+	scope.AddImport("math/big")
 	scope.AddImport("github.com/google/uuid")
 	scope.AddImport("github.com/stretchr/testify/assert")
 	scope.AddImport("github.com/stretchr/testify/require")
@@ -98,6 +103,8 @@ func newFileWriter(
 		inlinePathParameters:         inlinePathParameters,
 		inlineFileProperties:         inlineFileProperties,
 		useReaderForBytesRequest:     useReaderForBytesRequest,
+		gettersPassByValue:           gettersPassByValue,
+		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
@@ -166,6 +173,74 @@ func (f *fileWriter) WriteRaw(s string) {
 	fmt.Fprint(f.buffer, s)
 }
 
+// WriteStructPropertyBitConstants writes bigint constants for each property of a struct;
+// these are used when interfacing with explicitFields.
+func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNames []string) {
+	if len(propertyNames) == 0 {
+		return
+	}
+
+	f.P("var (")
+	for i, propertyName := range propertyNames {
+		constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+		// Convert to camelCase for the constant name (not exported)
+		constantName = strings.ToLower(constantName[:1]) + constantName[1:]
+		if i < 63 {
+			f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
+		} else {
+			f.P("\t", constantName, " = big.NewInt(0).Lsh(big.NewInt(1), ", i, ")")
+		}
+	}
+	f.P(")")
+	f.P()
+}
+
+// WriteSetterMethods writes setter methods for each field.
+func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string) {
+	if len(propertyNames) == 0 {
+		return
+	}
+
+	receiver := typeNameToReceiver(typeName)
+	for i, propertyName := range propertyNames {
+		setterName := fmt.Sprintf("Set%s", propertyName)
+		fieldConstantName := fmt.Sprintf("%sField%s", typeName, propertyName)
+		// Convert to camelCase for the constant name
+		fieldConstantName = strings.ToLower(fieldConstantName[:1]) + fieldConstantName[1:]
+
+		// Use safe name for parameter to avoid reserved keywords
+		paramName := propertySafeNames[i]
+		propertyType := propertyTypes[i]
+
+		f.P("// ", setterName, " sets the ", propertyName, " field and marks it as non-optional;")
+		f.P("// ", "this prevents an empty or null value for this field from being omitted during serialization.")
+		f.P("func (", receiver, " *", typeName, ") ", setterName, "(", paramName, " ", propertyType, ") {")
+		f.P("\t", receiver, ".", propertyName, " = ", paramName)
+		f.P("\t", receiver, ".require(", fieldConstantName, ")")
+		f.P("}")
+		f.P()
+	}
+}
+
+// WriteRequireMethod writes the require helper method for explicit field tracking.
+func (f *fileWriter) WriteRequireMethod(typeName string) {
+	receiver := typeNameToReceiver(typeName)
+	f.P("func (", receiver, " *", typeName, ") require(field *big.Int) {")
+	f.P("\tif ", receiver, ".explicitFields == nil {")
+	f.P("\t\t", receiver, ".explicitFields = big.NewInt(0)")
+	f.P("\t}")
+	f.P("\t", receiver, ".explicitFields.Or(", receiver, ".explicitFields, field)")
+	f.P("}")
+	f.P()
+}
+
+// WriteExplicitFields writes the explicitFields field into the file.
+func (f *fileWriter) WriteExplicitFields() {
+	f.P()
+	f.P("// Private bitmask of fields set to an explicit value and therefore not to be omitted")
+	f.P("explicitFields *big.Int `json:\"-\" url:\"-\"`")
+}
+
 // clone returns a clone of this fileWriter.
 func (f *fileWriter) clone() *fileWriter {
 	return newFileWriter(
@@ -177,6 +252,8 @@ func (f *fileWriter) clone() *fileWriter {
 		f.inlinePathParameters,
 		f.inlineFileProperties,
 		f.useReaderForBytesRequest,
+		f.gettersPassByValue,
+		f.exportAllRequestsAtRoot,
 		f.unionVersion,
 		f.types,
 		f.errors,

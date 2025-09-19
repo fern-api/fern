@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 use crate::{types::*};
 
@@ -17,22 +17,8 @@ impl QueryParamClient {
             Method::POST,
             "query",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = operand {
-                query_params.push(("operand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = maybe_operand {
-                query_params.push(("maybeOperand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = operand_or_color {
-                query_params.push(("operandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = maybe_operand_or_color {
-                query_params.push(("maybeOperandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().serialize("operand", operand).serialize("maybeOperand", maybe_operand).serialize("operandOrColor", operand_or_color).serialize("maybeOperandOrColor", maybe_operand_or_color)
+            .build(),
             options,
         ).await
     }
@@ -42,22 +28,8 @@ impl QueryParamClient {
             Method::POST,
             "query-list",
             None,
-            {
-            let mut query_params = Vec::new();
-            if let Some(value) = operand {
-                query_params.push(("operand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = maybe_operand {
-                query_params.push(("maybeOperand".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = operand_or_color {
-                query_params.push(("operandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            if let Some(value) = maybe_operand_or_color {
-                query_params.push(("maybeOperandOrColor".to_string(), serde_json::to_string(&value).unwrap_or_default()));
-            }
-            Some(query_params)
-        },
+            QueryBuilder::new().serialize("operand", operand).serialize("maybeOperand", maybe_operand).serialize("operandOrColor", operand_or_color).serialize("maybeOperandOrColor", maybe_operand_or_color)
+            .build(),
             options,
         ).await
     }

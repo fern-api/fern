@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedBasicAuthEnvironmentVariables;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example3
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedBasicAuthEnvironmentVariablesClient(
             username: "<username>",
             accessToken: "<password>",

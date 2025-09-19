@@ -1,7 +1,7 @@
-use crate::commons_node_id::NodeId;
 use crate::commons_doubly_linked_list_node_value::DoublyLinkedListNodeValue;
-use std::collections::HashMap;
+use crate::commons_node_id::NodeId;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DoublyLinkedListValue {

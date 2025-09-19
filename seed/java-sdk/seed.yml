@@ -80,6 +80,10 @@ fixtures:
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - customConfig:
+        inline-path-parameters: true
+        enable-wire-tests: true
+      outputFolder: wire-tests
+    - customConfig:
         publish-to: central
       outputFolder: publish-to
     - publishConfig:
@@ -140,6 +144,17 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  pagination:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  unions:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   accept-header:
     - outputFolder: accept-header
   client-side-params:
@@ -166,6 +181,11 @@ fixtures:
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
     - customConfig:
+        custom-readme-sections:
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}"
+          - title: "Override Section"
+            content: "Override Content"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -173,6 +193,14 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        customSections:
+          - title: "Custom Section"
+            language: java
+            content: |
+              This is a custom section. Latest package info is {{ group }}:{{ artifact }}:{{ version }}
+          - title: "Override Section"
+            language: java
+            content: "Base Content"
         features:
           timeouts:
             - GET /movie/{movieId}
@@ -184,6 +212,10 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
+  java-nullable-named-request-types:
+    - outputFolder: custom-config
+      customConfig:
+        respect-nullable-schemas: true
   enum:
     - customConfig:
         enable-forward-compatible-enums: true
@@ -202,6 +234,18 @@ fixtures:
         client-class-name: BaseClient
         enable-extensible-builders: true
       outputFolder: extensible-builders
+  basic-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: basic-auth
+  oauth-client-credentials:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: oauth-client-credentials
+  custom-auth:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: custom-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true
@@ -236,7 +280,6 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - java-pagination-deep-cursor-path
   - literal
-  - literals-unions
   - nullable-optional:with-nullable-annotation
   - nullable-optional:legacy
   - oauth-client-credentials-custom

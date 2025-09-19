@@ -223,7 +223,7 @@ public record UnionWithPrimitive
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Integer(int value) => new(value);
+        public static implicit operator UnionWithPrimitive.Integer(int value) => new(value);
     }
 
     /// <summary>
@@ -241,6 +241,6 @@ public record UnionWithPrimitive
 
         public override string ToString() => Value;
 
-        public static implicit operator String(string value) => new(value);
+        public static implicit operator UnionWithPrimitive.String(string value) => new(value);
     }
 }

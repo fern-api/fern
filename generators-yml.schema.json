@@ -2176,6 +2176,40 @@
         }
       ]
     },
+    "generators.Language": {
+      "type": "string",
+      "enum": [
+        "java",
+        "python",
+        "go",
+        "ruby",
+        "csharp",
+        "typescript",
+        "php",
+        "rust",
+        "swift"
+      ]
+    },
+    "generators.ReadmeCustomSectionSchema": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "language": {
+          "$ref": "#/definitions/generators.Language"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "language",
+        "content"
+      ],
+      "additionalProperties": false
+    },
     "generators.ReadmeSchema": {
       "type": "object",
       "properties": {
@@ -2251,6 +2285,19 @@
                 "items": {
                   "$ref": "#/definitions/generators.ReadmeEndpointSchema"
                 }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customSections": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.ReadmeCustomSectionSchema"
               }
             },
             {

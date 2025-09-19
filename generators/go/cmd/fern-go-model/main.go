@@ -32,6 +32,8 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.InlinePathParameters,
 		config.InlineFileProperties,
 		config.UseReaderForBytesRequest,
+		config.GettersPassByValue,
+		config.ExportAllRequestsAtRoot,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

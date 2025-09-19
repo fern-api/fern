@@ -29,6 +29,9 @@ const (
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
 
+	// inlinedRequestsFilename is the filename for the inlined requests file.
+	inlinedRequestsFilename = "requests.go"
+
 	// defaultExportedClientName is the default name for the generated client.
 	defaultExportedClientName = "Client"
 )
@@ -156,6 +159,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		ir.ServiceTypeReferenceInfo,
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
+		g.config.ExportAllRequestsAtRoot,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -172,6 +176,8 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -283,6 +289,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -305,6 +313,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -330,6 +340,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
+	files = append(files, newExplicitFieldsFile(g.coordinator))
+	files = append(files, newExplicitFieldsTestFile(g.coordinator))
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
@@ -354,6 +366,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -386,6 +400,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
+				g.config.GettersPassByValue,
+				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -412,6 +428,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -432,7 +450,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedEnvironment,
 			exportedClientName,
 			g.config.ClientConstructorName,
-			
+
 		)
 		if len(ir.IdempotencyHeaders) > 0 {
 			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
@@ -445,6 +463,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
+				g.config.GettersPassByValue,
+				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -468,6 +488,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
+				g.config.GettersPassByValue,
+				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -494,6 +516,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
+				g.config.GettersPassByValue,
+				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -519,6 +543,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.InlinePathParameters,
 			g.config.InlineFileProperties,
 			g.config.UseReaderForBytesRequest,
+			g.config.GettersPassByValue,
+			g.config.ExportAllRequestsAtRoot,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -578,6 +604,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlinePathParameters,
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
+				g.config.GettersPassByValue,
+				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -746,6 +774,8 @@ func (g *Generator) generateRootService(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -794,6 +824,8 @@ func (g *Generator) generateService(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -845,6 +877,8 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -891,6 +925,8 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -1155,6 +1191,8 @@ func newClientTestFile(
 		false,
 		false,
 		false,
+		false,
+		false,
 		UnionVersionUnspecified,
 		nil,
 		nil,
@@ -1346,6 +1384,22 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/time.go",
 		[]byte(timeFile),
+	)
+}
+
+func newExplicitFieldsFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/explicit_fields.go",
+		[]byte(explicitFieldsFile),
+	)
+}
+
+func newExplicitFieldsTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/explicit_fields_test.go",
+		[]byte(explicitFieldsTestFile),
 	)
 }
 
@@ -1644,16 +1698,31 @@ func fileInfoToTypes(
 	irServiceTypeReferenceInfo *fernir.ServiceTypeReferenceInfo,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	exportAllRequestsAtRoot bool,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
+
 	for _, irService := range irServices {
-		fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
+		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 		for _, irEndpoint := range irService.Endpoints {
 			if shouldSkipRequestType(irEndpoint, inlinePathParameters, inlineFileProperties) {
 				continue
 			}
-			result[fileInfo] = append(
-				result[fileInfo],
+
+			var targetFileInfo fileInfo
+			if exportAllRequestsAtRoot {
+				// Route all inlined request types to the root package requests.go file
+				targetFileInfo = fileInfo{
+					filename:    inlinedRequestsFilename,
+					packageName: rootPackageName,
+				}
+			} else {
+				// Route to the service's subpackage
+				targetFileInfo = subpackageFileInfo
+			}
+
+			result[targetFileInfo] = append(
+				result[targetFileInfo],
 				&typeToGenerate{
 					ID:           irEndpoint.Name.OriginalName,
 					FernFilepath: irService.Name.FernFilepath,
@@ -1926,11 +1995,12 @@ func isReservedFilename(filename string) bool {
 }
 
 var reservedFilenames = map[string]struct{}{
-	"environments.go": struct{}{},
-	"errors.go":       struct{}{},
-	"file_param.go":   struct{}{},
-	"optional.go":     struct{}{},
-	"pointer.go":      struct{}{},
+	"environments.go":         struct{}{},
+	"errors.go":               struct{}{},
+	"file_param.go":           struct{}{},
+	"optional.go":             struct{}{},
+	"pointer.go":              struct{}{},
+	inlinedRequestsFilename:   struct{}{},
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

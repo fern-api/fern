@@ -20,6 +20,8 @@ allocationa
 amckinney
 amespac
 AMPM
+anduril
+andurilapis
 ansi
 antoniomdk
 anyapi
@@ -91,6 +93,7 @@ chardet
 chatv
 chdeskur
 Chdeskur
+chrono
 circleci
 CIRCLECI
 claude
@@ -139,6 +142,7 @@ Deel
 definitionid
 deno
 depcheckrc
+Deque
 descs
 devrev
 DEVREV
@@ -165,6 +169,7 @@ elems
 EMEA
 endent
 Entra
+Errorf
 errormsg
 esac
 esbuild
@@ -205,7 +210,9 @@ fibonacci
 FINRA
 Fira
 FISMA
+flac
 FLAC
+flate
 flowise
 folderb
 folderc
@@ -218,6 +225,7 @@ friday
 friendsofphp
 fset
 fsmonitor
+functools
 Gantt
 GAPI
 Gare
@@ -237,14 +245,18 @@ gograph
 goog
 gopkg
 gospec
+gowiremock
 gradlew
+gregorian
 groq
+grpcs
 GUIDS
 guzzlehttp
 HATEOAS
 Hauptbahnhof
 Hayao
 Hdvcmsu
+heroku
 hmac
 HMAC
 HNSW
@@ -277,14 +289,19 @@ infty
 initializers
 inlinedrequest
 inlinedrequests
+inlines
+Instantiator
 insteadof
 ints
 Invalidenstraße
 isin
 isinstance
+isize
 isnt
 isort
 ITAR
+itertools
+Itoa
 jakarta
 jamsadr
 Janessa
@@ -312,6 +329,8 @@ Jsonify
 jsonld
 jupiter
 jwks
+kafkas
+katex
 Katex
 kbps
 Kenzo
@@ -329,6 +348,7 @@ LATAM
 layerfi
 LCEL
 ldflags
+levenshtein
 linkedin
 linq
 Linq
@@ -342,6 +362,7 @@ ltcbch
 ltcbtc
 ltceth
 ltcusd
+Lucene
 maticusd
 matt
 mbue
@@ -358,6 +379,7 @@ Miyazaki
 mktime
 mmolash
 mockito
+mozilla
 MPLS
 mrlint
 MSAL
@@ -365,6 +387,8 @@ msbuild
 mscolnick
 MSRP
 msvc
+msvideo
+msword
 msys
 MVVM
 mwalbeck
@@ -377,6 +401,7 @@ nanos
 ndjson
 neeeeeeeeeed
 neopets
+nevil
 nextjs
 ngpg
 ngrok
@@ -436,6 +461,7 @@ OQRDWB
 Origina
 osano
 OSSAPI
+ossrh
 OSSRH
 ostruct
 OURCYGPATTERN
@@ -453,6 +479,7 @@ permissioned
 perserv
 Phila
 phpstan
+phpunit
 pirsch
 Pirsch
 pjpeg
@@ -460,9 +487,12 @@ pkce
 plex
 plugh
 pmezard
+pnpmfile
+popen
 POSTOHG
 ppod
 prefs
+presentationml
 println
 Println
 printoper
@@ -527,6 +557,7 @@ rubocop
 Rubocop
 Ruult
 saas
+samlp
 samsung
 Sayari
 sbue
@@ -546,11 +577,14 @@ sniffio
 Snipppet
 snxusd
 sonatype
+spreadsheetml
+Sprintf
 sqlite
 squareup
 squidex
 starlette
 storjusd
+strconv
 strenum
 stretchr
 Stringifier
@@ -563,12 +597,15 @@ tailwindcss
 tbody
 Teis
 templ
+textproto
 thead
 thollander
 tiangolo
 tina
+tlsv
 tmpl
 Tokenid
+tokio
 TOTP
 trevorblades
 trippable
@@ -576,6 +613,7 @@ trivago
 tsconfg
 tsup
 ttlock
+TVOS
 twilio
 TWRGXXWS
 typeddicts
@@ -583,6 +621,8 @@ typer
 typesript
 uber
 UIDS
+uintptr
+Uintptr
 unaliased
 Unarchived
 unbolded
@@ -614,6 +654,7 @@ untransform
 updateduk
 upserted
 urllib
+usize
 utdodtn
 utdsp
 uuid
@@ -650,6 +691,8 @@ whos
 wifi
 Willem
 williamluer
+wiremocktestcontainersgo
+wordprocessingml
 workerd
 workos
 WXCSO
@@ -672,3 +715,4 @@ zrxusd
 zurg
 Zurg
 zurg's
+مرحبا

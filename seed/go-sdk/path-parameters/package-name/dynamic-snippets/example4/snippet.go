@@ -4,7 +4,7 @@ import (
     client "github.com/fern-api/path-parameters-go/client"
     option "github.com/fern-api/path-parameters-go/option"
     context "context"
-    path "github.com/fern-api/path-parameters-go"
+    pathparametersgo "github.com/fern-api/path-parameters-go"
 )
 
 func do() {
@@ -16,7 +16,7 @@ func do() {
     client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &path.User{
+        &pathparametersgo.User{
             Name: "name",
             Tags: []string{
                 "tags",

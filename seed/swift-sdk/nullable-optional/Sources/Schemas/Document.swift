@@ -4,7 +4,7 @@ public struct Document: Codable, Hashable, Sendable {
     public let id: String
     public let title: String
     public let content: String
-    public let author: JSONValue
+    public let author: Nullable<String>
     public let tags: [String]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
@@ -13,7 +13,7 @@ public struct Document: Codable, Hashable, Sendable {
         id: String,
         title: String,
         content: String,
-        author: JSONValue,
+        author: Nullable<String>,
         tags: [String]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -30,7 +30,7 @@ public struct Document: Codable, Hashable, Sendable {
         self.id = try container.decode(String.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.content = try container.decode(String.self, forKey: .content)
-        self.author = try container.decode(JSONValue.self, forKey: .author)
+        self.author = try container.decode(Nullable<String>.self, forKey: .author)
         self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

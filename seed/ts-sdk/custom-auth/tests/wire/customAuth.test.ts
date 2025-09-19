@@ -7,7 +7,7 @@ import { SeedCustomAuthClient } from "../../src/Client";
 import * as SeedCustomAuth from "../../src/api/index";
 
 describe("CustomAuth", () => {
-    test("getWithCustomAuth (14b143fa)", async () => {
+    test("getWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
@@ -18,7 +18,7 @@ describe("CustomAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("getWithCustomAuth (135b91bb)", async () => {
+    test("getWithCustomAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
@@ -27,14 +27,10 @@ describe("CustomAuth", () => {
 
         await expect(async () => {
             return await client.customAuth.getWithCustomAuth();
-        }).rejects.toThrow(
-            new SeedCustomAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedCustomAuth.UnauthorizedRequest);
     });
 
-    test("postWithCustomAuth (91843eb7)", async () => {
+    test("postWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -54,7 +50,7 @@ describe("CustomAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithCustomAuth (8264039e)", async () => {
+    test("postWithCustomAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -72,14 +68,10 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            new SeedCustomAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedCustomAuth.UnauthorizedRequest);
     });
 
-    test("postWithCustomAuth (7eabe5c4)", async () => {
+    test("postWithCustomAuth (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -90,6 +82,6 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(new SeedCustomAuth.BadRequest());
+        }).rejects.toThrow(SeedCustomAuth.BadRequest);
     });
 });

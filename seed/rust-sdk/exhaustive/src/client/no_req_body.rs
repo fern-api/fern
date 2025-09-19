@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use reqwest::Method;
 
 pub struct NoReqBodyClient {
     pub http_client: HttpClient,
@@ -12,25 +12,21 @@ impl NoReqBodyClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get_with_no_request_body(&self, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            "/no-req-body",
-            None,
-            None,
-            options,
-        ).await
+    pub async fn get_with_no_request_body(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithOptionalField, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "/no-req-body", None, None, options)
+            .await
     }
 
-    pub async fn post_with_no_request_body(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "/no-req-body",
-            None,
-            None,
-            options,
-        ).await
+    pub async fn post_with_no_request_body(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(Method::POST, "/no-req-body", None, None, options)
+            .await
     }
-
 }
-

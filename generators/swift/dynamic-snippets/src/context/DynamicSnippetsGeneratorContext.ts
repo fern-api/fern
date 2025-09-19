@@ -28,7 +28,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
     }) {
-        super({ ir, config, options });
+        super({ ir: ir, config, options });
         this.ir = ir;
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseSwiftCustomConfigSchema) : undefined;

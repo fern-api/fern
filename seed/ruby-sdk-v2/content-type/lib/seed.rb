@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,10 +24,12 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
-
-# Client Types
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
 require_relative "seed/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/patch_proxy_request"
@@ -36,4 +37,3 @@ require_relative "seed/service/types/patch_complex_request"
 require_relative "seed/service/types/named_mixed_patch_request"
 require_relative "seed/service/types/optional_merge_patch_request"
 require_relative "seed/service/types/regular_patch_request"
-require_relative "../README.md"

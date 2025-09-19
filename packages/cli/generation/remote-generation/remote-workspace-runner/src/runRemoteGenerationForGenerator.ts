@@ -248,6 +248,12 @@ async function computeSemanticVersion({
         case "typescript":
             language = "TypeScript";
             break;
+        case "php":
+            language = "Php";
+            break;
+        case "swift":
+            language = "Swift";
+            break;
         default:
             return undefined;
     }

@@ -6,6 +6,14 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/multiple-request-bodies/fern/internal"
+	big "math/big"
+)
+
+var (
+	documentMetadataFieldAuthor = big.NewInt(1 << 0)
+	documentMetadataFieldId     = big.NewInt(1 << 1)
+	documentMetadataFieldTags   = big.NewInt(1 << 2)
+	documentMetadataFieldTitle  = big.NewInt(1 << 3)
 )
 
 type DocumentMetadata struct {
@@ -13,6 +21,9 @@ type DocumentMetadata struct {
 	Id     *int          `json:"id,omitempty" url:"id,omitempty"`
 	Tags   []interface{} `json:"tags,omitempty" url:"tags,omitempty"`
 	Title  *string       `json:"title,omitempty" url:"title,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -50,6 +61,41 @@ func (d *DocumentMetadata) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *DocumentMetadata) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentMetadata) SetAuthor(author *string) {
+	d.Author = author
+	d.require(documentMetadataFieldAuthor)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentMetadata) SetId(id *int) {
+	d.Id = id
+	d.require(documentMetadataFieldId)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentMetadata) SetTags(tags []interface{}) {
+	d.Tags = tags
+	d.require(documentMetadataFieldTags)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentMetadata) SetTitle(title *string) {
+	d.Title = title
+	d.require(documentMetadataFieldTitle)
+}
+
 func (d *DocumentMetadata) UnmarshalJSON(data []byte) error {
 	type unmarshaler DocumentMetadata
 	var value unmarshaler
@@ -66,6 +112,17 @@ func (d *DocumentMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *DocumentMetadata) MarshalJSON() ([]byte, error) {
+	type embed DocumentMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *DocumentMetadata) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -78,9 +135,17 @@ func (d *DocumentMetadata) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	documentUploadResultFieldFileId = big.NewInt(1 << 0)
+	documentUploadResultFieldStatus = big.NewInt(1 << 1)
+)
+
 type DocumentUploadResult struct {
 	FileId *string `json:"fileId,omitempty" url:"fileId,omitempty"`
 	Status *string `json:"status,omitempty" url:"status,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -104,6 +169,27 @@ func (d *DocumentUploadResult) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *DocumentUploadResult) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetFileId sets the FileId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentUploadResult) SetFileId(fileId *string) {
+	d.FileId = fileId
+	d.require(documentUploadResultFieldFileId)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DocumentUploadResult) SetStatus(status *string) {
+	d.Status = status
+	d.require(documentUploadResultFieldStatus)
+}
+
 func (d *DocumentUploadResult) UnmarshalJSON(data []byte) error {
 	type unmarshaler DocumentUploadResult
 	var value unmarshaler
@@ -118,6 +204,17 @@ func (d *DocumentUploadResult) UnmarshalJSON(data []byte) error {
 	d.extraProperties = extraProperties
 	d.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (d *DocumentUploadResult) MarshalJSON() ([]byte, error) {
+	type embed DocumentUploadResult
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DocumentUploadResult) String() string {
@@ -194,8 +291,45 @@ func (u *UploadDocumentResponse) Accept(visitor UploadDocumentResponseVisitor) e
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+var (
+	uploadDocumentRequestFieldAuthor = big.NewInt(1 << 0)
+	uploadDocumentRequestFieldTags   = big.NewInt(1 << 1)
+	uploadDocumentRequestFieldTitle  = big.NewInt(1 << 2)
+)
+
 type UploadDocumentRequest struct {
 	Author *string  `json:"author,omitempty" url:"-"`
 	Tags   []string `json:"tags,omitempty" url:"-"`
 	Title  *string  `json:"title,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UploadDocumentRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetAuthor sets the Author field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UploadDocumentRequest) SetAuthor(author *string) {
+	u.Author = author
+	u.require(uploadDocumentRequestFieldAuthor)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UploadDocumentRequest) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(uploadDocumentRequestFieldTags)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UploadDocumentRequest) SetTitle(title *string) {
+	u.Title = title
+	u.require(uploadDocumentRequestFieldTitle)
 }

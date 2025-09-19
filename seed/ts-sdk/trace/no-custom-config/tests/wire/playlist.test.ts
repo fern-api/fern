@@ -75,7 +75,7 @@ describe("Playlist", () => {
         ]);
     });
 
-    test("getPlaylist (11bcd5f5)", async () => {
+    test("getPlaylist (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
@@ -102,7 +102,7 @@ describe("Playlist", () => {
         });
     });
 
-    test("getPlaylist (df2e9f4b)", async () => {
+    test("getPlaylist (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
@@ -117,15 +117,10 @@ describe("Playlist", () => {
 
         await expect(async () => {
             return await client.playlist.getPlaylist(1, "playlistId");
-        }).rejects.toThrow(
-            new SeedTrace.PlaylistIdNotFoundError({
-                type: "playlistId",
-                value: "string",
-            }),
-        );
+        }).rejects.toThrow(SeedTrace.PlaylistIdNotFoundError);
     });
 
-    test("getPlaylist (560124c6)", async () => {
+    test("getPlaylist (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
@@ -133,10 +128,10 @@ describe("Playlist", () => {
 
         await expect(async () => {
             return await client.playlist.getPlaylist(1, "playlistId");
-        }).rejects.toThrow(new SeedTrace.UnauthorizedError());
+        }).rejects.toThrow(SeedTrace.UnauthorizedError);
     });
 
-    test("updatePlaylist (44610b90)", async () => {
+    test("updatePlaylist (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
@@ -167,7 +162,7 @@ describe("Playlist", () => {
         });
     });
 
-    test("updatePlaylist (7681d277)", async () => {
+    test("updatePlaylist (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
@@ -186,12 +181,7 @@ describe("Playlist", () => {
                 name: "name",
                 problems: ["problems", "problems"],
             });
-        }).rejects.toThrow(
-            new SeedTrace.PlaylistIdNotFoundError({
-                type: "playlistId",
-                value: "string",
-            }),
-        );
+        }).rejects.toThrow(SeedTrace.PlaylistIdNotFoundError);
     });
 
     test("deletePlaylist", async () => {

@@ -49,7 +49,7 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.echo("string");
+        client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
     }
 }
 ```

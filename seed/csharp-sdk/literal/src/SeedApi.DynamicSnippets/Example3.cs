@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedLiteral;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example3
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedLiteralClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

@@ -1,6 +1,10 @@
 package com.seed.examples;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.resources.file.service.requests.GetFileRequest;
+import com.seed.examples.resources.types.types.File;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -29,9 +33,9 @@ public class FileServiceWireTest {
     @Test
     public void testGetFile() throws Exception {
         server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
-        client.file().service().getFile(
+            .setResponseCode(404)
+            .setBody("\"A file with that name was not found!\""));
+        File response = client.file().service().getFile(
             "file.txt",
             GetFileRequest
                 .builder()
@@ -41,5 +45,15 @@ public class FileServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+        
+        // Validate headers
+        Assertions.assertEquals("0.0.2", request.getHeader("X-File-API-Version"), "Header 'X-File-API-Version' should match expected value");
+        
+        // Validate response deserialization
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Verify the response can be serialized back to JSON
+        String responseJson = objectMapper.writeValueAsString(response);
+        Assertions.assertNotNull(responseJson);
+        Assertions.assertFalse(responseJson.isEmpty());
     }
 }

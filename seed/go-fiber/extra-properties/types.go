@@ -6,10 +6,14 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/extra-properties/fern/internal"
+	big "math/big"
 )
 
 type Failure struct {
-	status string
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	status         string
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 }
@@ -20,6 +24,13 @@ func (f *Failure) Status() string {
 
 func (f *Failure) GetExtraProperties() map[string]interface{} {
 	return f.ExtraProperties
+}
+
+func (f *Failure) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 func (f *Failure) UnmarshalJSON(data []byte) error {
@@ -55,7 +66,8 @@ func (f *Failure) MarshalJSON() ([]byte, error) {
 		embed:  embed(*f),
 		Status: "failure",
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, f.ExtraProperties)
 }
 
 func (f *Failure) String() string {

@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedPagination;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example7
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -13,11 +13,11 @@ public class Example7
             }
         );
 
-        await client.Users.ListWithOffsetStepPaginationAsync(
-            new ListUsersOffsetStepPaginationRequest{
+        await client.InlineUsers.InlineUsers.ListWithOffsetStepPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersOffsetStepPaginationRequest{
                 Page = 1,
                 Limit = 1,
-                Order = Order.Asc
+                Order = SeedPagination.InlineUsers.Order.Asc
             }
         );
     }

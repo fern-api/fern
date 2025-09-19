@@ -34,7 +34,7 @@ public final class Key {
         if (this.type == 0) {
             return visitor.visit((KeyType) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit2((String) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -69,7 +69,7 @@ public final class Key {
      * <li>"default"</li>
      * </ul>
      */
-    public static Key of(String value) {
+    public static Key of2(String value) {
         return new Key(value, 1);
     }
 
@@ -82,7 +82,7 @@ public final class Key {
          * <li>"default"</li>
          * </ul>
          */
-        T visit(String value);
+        T visit2(String value);
     }
 
     static final class Deserializer extends StdDeserializer<Key> {
@@ -98,7 +98,7 @@ public final class Key {
             } catch (RuntimeException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of2(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

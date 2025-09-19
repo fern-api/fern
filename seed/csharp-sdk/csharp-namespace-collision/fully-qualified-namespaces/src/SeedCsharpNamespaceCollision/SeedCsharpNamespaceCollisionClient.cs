@@ -46,7 +46,7 @@ public partial class SeedCsharpNamespaceCollisionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<User> CreateUserAsync(
+    public async global::System.Threading.Tasks.Task<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -102,7 +102,7 @@ public partial class SeedCsharpNamespaceCollisionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Task> CreateTaskAsync(
+    public async global::System.Threading.Tasks.Task<Task> CreateTaskAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

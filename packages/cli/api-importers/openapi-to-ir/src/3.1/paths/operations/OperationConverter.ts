@@ -11,7 +11,8 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
+import { FernOpenAPIExtension } from "../../../../../openapi/openapi-ir-parser/src/openapi/v3/extensions/fernExtensions";
+import { ServerFromOperationNameExtension } from "../../../../../v3-importer-commons/src/extensions/x-fern-server-name-from-operation";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
@@ -190,7 +191,8 @@ export class OperationConverter extends AbstractOperationConverter {
             pagination: undefined,
             transport: undefined,
             source: HttpEndpointSource.openapi(),
-            audiences
+            audiences,
+            retries: undefined
         };
 
         const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];
@@ -565,6 +567,19 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrl(): string | undefined {
+        const serverFromOperationNameExtension = new ServerFromOperationNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            context: this.context
+        });
+        const serverFromOperationName = serverFromOperationNameExtension.convert();
+        if (serverFromOperationName != null) {
+            this.context.logger.debug(
+                `[getEndpointBaseUrl] Endpoint ${this.method.toUpperCase()} ${this.path} specifies a server with "${FernOpenAPIExtension.SERVER_NAME_V2}" extension. Returning server type: ${serverFromOperationName}`
+            );
+            return serverFromOperationName;
+        }
+
         const operationServer = this.operation.servers?.[0];
         if (operationServer == null) {
             return undefined;

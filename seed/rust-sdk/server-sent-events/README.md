@@ -25,12 +25,15 @@ cargo add seed_server_sent_events
 Instantiate and use the client with the following:
 
 ```rust
-use seed_server_sent_events::{ClientConfig, ServerSentEventsClient};
+use seed_server_sent_events::{ClientConfig, ServerSentEventsClient, StreamCompletionRequest};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    client
+        .completions_stream(StreamCompletionRequest { query: "query" })
+        .await;
 }
 ```
 

@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/extra-properties/fern/internal"
+	big "math/big"
 )
 
 type CreateUserRequest struct {
@@ -48,8 +49,15 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(marshaler)
 }
 
+var (
+	userFieldName = big.NewInt(1 << 0)
+)
+
 type User struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 }
@@ -63,6 +71,20 @@ func (u *User) GetName() string {
 
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -91,7 +113,8 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *User) String() string {

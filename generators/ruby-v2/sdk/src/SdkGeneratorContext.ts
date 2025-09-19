@@ -79,7 +79,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getModuleNamesForTypeId(typeId: TypeId): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return [this.getRootModule().name, ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
+        return [this.getRootModuleName(), ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
     }
 
     public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
@@ -146,7 +146,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getRawClientClassReference(): ClassReference {
         return ruby.classReference({
             name: "RawClient",
-            modules: [this.getRootModule().name, "Internal", "Http"],
+            modules: [this.getRootModuleName(), "Internal", "Http"],
             fullyQualified: true
         });
     }
@@ -154,15 +154,29 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getEnvironmentsClassReference(): ruby.ClassReference {
         return ruby.classReference({
             name: "Environment",
-            modules: [this.getRootModule().name]
+            modules: [this.getRootModuleName()]
         });
     }
 
-    public getDefaultEnvironmentClassReference(): ruby.ClassReference {
-        const defaultEnvironmentName = this.ir.environments?.defaultEnvironment ?? "SANDBOX";
+    public getDefaultEnvironmentClassReference() {
+        const defaultEnvironmentId = this.ir.environments?.defaultEnvironment;
+        if (defaultEnvironmentId == null) {
+            return undefined;
+        }
+
+        // Lookup the default environment by id
+        const defaultEnvironment = this.ir.environments?.environments.environments.find(
+            (env) => env.id === defaultEnvironmentId
+        );
+        if (defaultEnvironment == null) {
+            this.logger.warn(`Default environment ${defaultEnvironmentId} not found`);
+            return undefined;
+        }
+
+        // Return the class reference, performing the same casing as the SingleUrlEnvironmentGenerator
         return ruby.classReference({
-            name: defaultEnvironmentName,
-            modules: [this.getRootModule().name, "Environment"]
+            name: defaultEnvironment.name.screamingSnakeCase.safeName,
+            modules: [this.getRootModuleName(), "Environment"]
         });
     }
 
@@ -173,14 +187,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
-            modules: [this.getRootModule().name, "Internal", "JSON"]
+            modules: [this.getRootModuleName(), "Internal", "JSON"]
         });
     }
 
     public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
-            modules: [this.getRootModule().name, "Internal", "Multipart"]
+            modules: [this.getRootModuleName(), "Internal", "Multipart"]
         });
     }
 
@@ -189,7 +203,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: typeDeclaration.name.name.pascalCase.safeName,
             modules: [
-                this.getRootModule().name,
+                this.getRootModuleName(),
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
                 "Types"
             ]
@@ -198,7 +212,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getModuleNamesForServiceId(serviceId: ServiceId): string[] {
         return [
-            this.getRootModule().name,
+            this.getRootModuleName(),
             ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => part.pascalCase.safeName),
             this.getTypesModule().name
         ];
@@ -217,7 +231,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            // Errors
+            // Public errors
+            AsIsFiles.ApiError,
+            AsIsFiles.ClientError,
+            AsIsFiles.RedirectError,
+            AsIsFiles.ResponseError,
+            AsIsFiles.ServerError,
+            AsIsFiles.TimeoutError,
+
+            // Internal errors
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 

@@ -1,4 +1,4 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
@@ -6,7 +6,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace TestClass {
     interface TestInput {
-        objectInstantiationSnippet: csharp.CodeBlock;
+        objectInstantiationSnippet: ast.CodeBlock;
         json: unknown;
     }
 }
@@ -14,12 +14,16 @@ export declare namespace TestClass {
 export class MockEndpointGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
-    public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): csharp.CodeBlock {
+    public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
         return this.generateForExamples(endpoint, [example]);
     }
 
-    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): csharp.CodeBlock {
-        return csharp.codeblock((writer) => {
+    private get csharp() {
+        return this.context.csharp;
+    }
+
+    public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
                 let responseSupported = false;

@@ -6,7 +6,7 @@ namespace SeedRequestParameters.Test.Unit.MockServer;
 [TestFixture]
 public class CreateUsernameTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

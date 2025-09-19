@@ -1,0 +1,7 @@
+service:
+  auth: false
+  base-path: /nested-no-auth
+  endpoints:
+    getSomething:
+      path: /get-something
+      method: GET

@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/pagination-custom/fern/internal"
+	big "math/big"
 )
 
 type ListUsernamesRequestCustom struct {
@@ -14,8 +15,15 @@ type ListUsernamesRequestCustom struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+var (
+	usernameCursorFieldCursor = big.NewInt(1 << 0)
+)
+
 type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor" url:"cursor"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -29,6 +37,20 @@ func (u *UsernameCursor) GetCursor() *UsernamePage {
 
 func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UsernameCursor) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsernameCursor) SetCursor(cursor *UsernamePage) {
+	u.Cursor = cursor
+	u.require(usernameCursorFieldCursor)
 }
 
 func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
@@ -46,6 +68,17 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UsernameCursor) MarshalJSON() ([]byte, error) {
+	type embed UsernameCursor
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UsernameCursor) String() string {
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
@@ -53,9 +86,17 @@ func (u *UsernameCursor) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	usernamePageFieldAfter = big.NewInt(1 << 0)
+	usernamePageFieldData  = big.NewInt(1 << 1)
+)
+
 type UsernamePage struct {
 	After *string  `json:"after,omitempty" url:"after,omitempty"`
 	Data  []string `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -78,6 +119,27 @@ func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *UsernamePage) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetAfter sets the After field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsernamePage) SetAfter(after *string) {
+	u.After = after
+	u.require(usernamePageFieldAfter)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsernamePage) SetData(data []string) {
+	u.Data = data
+	u.require(usernamePageFieldData)
+}
+
 func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 	type unmarshaler UsernamePage
 	var value unmarshaler
@@ -91,6 +153,17 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 	}
 	u.extraProperties = extraProperties
 	return nil
+}
+
+func (u *UsernamePage) MarshalJSON() ([]byte, error) {
+	type embed UsernamePage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UsernamePage) String() string {

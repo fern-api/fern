@@ -44,6 +44,7 @@ export class ReadmeConfigBuilder {
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
             features,
+            referenceMarkdownPath: "./reference.md",
             requirements: [
                 `Swift ${SDKRequirements.minSwiftVersion}+`,
                 `iOS ${SDKRequirements.minIOSVersion}+`,

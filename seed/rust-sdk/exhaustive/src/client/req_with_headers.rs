@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use reqwest::Method;
 
 pub struct ReqWithHeadersClient {
     pub http_client: HttpClient,
@@ -12,15 +12,19 @@ impl ReqWithHeadersClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get_with_custom_header(&self, request: &String, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "/test-headers/custom-header",
-            Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
-            options,
-        ).await
+    pub async fn get_with_custom_header(
+        &self,
+        request: &String,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/test-headers/custom-header",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
     }
-
 }
-

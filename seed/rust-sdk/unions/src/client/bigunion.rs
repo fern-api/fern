@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
-use reqwest::{Method};
-use crate::{types::*};
+use crate::types::*;
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use reqwest::Method;
 
 pub struct BigunionClient {
     pub http_client: HttpClient,
@@ -12,35 +12,45 @@ impl BigunionClient {
         Ok(Self { http_client })
     }
 
-    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<BigUnion, ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            &format!("/{}", id),
-            None,
-            None,
-            options,
-        ).await
+    pub async fn get(
+        &self,
+        id: &String,
+        options: Option<RequestOptions>,
+    ) -> Result<BigUnion, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, &format!("/{}", id), None, None, options)
+            .await
     }
 
-    pub async fn update(&self, request: &BigUnion, options: Option<RequestOptions>) -> Result<bool, ApiError> {
-        self.http_client.execute_request(
-            Method::PATCH,
-            "",
-            Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
-            options,
-        ).await
+    pub async fn update(
+        &self,
+        request: &BigUnion,
+        options: Option<RequestOptions>,
+    ) -> Result<bool, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PATCH,
+                "",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
     }
 
-    pub async fn update_many(&self, request: &Vec<BigUnion>, options: Option<RequestOptions>) -> Result<HashMap<String, bool>, ApiError> {
-        self.http_client.execute_request(
-            Method::PATCH,
-            "/many",
-            Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
-            options,
-        ).await
+    pub async fn update_many(
+        &self,
+        request: &Vec<BigUnion>,
+        options: Option<RequestOptions>,
+    ) -> Result<HashMap<String, bool>, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PATCH,
+                "/many",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
     }
-
 }
-

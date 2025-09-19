@@ -96,7 +96,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         formDataSupport: "Node16" | "Node18";
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
-        exportAllRequestsAtRoot: boolean;
     }
 }
 
@@ -145,7 +144,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
-    private readonly exportAllRequestsAtRoot: boolean;
     private readonly anyEndpointWithAuth: boolean;
 
     constructor({
@@ -175,8 +173,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         fileResponseType,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
-        exportAllRequestsAtRoot
+        useDefaultRequestParameterValues
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -198,7 +195,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
-        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -986,7 +982,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
             const returnsMaybeAuth =
-                !this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme != null;
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                this.basicAuthScheme != null ||
+                this.oauthAuthScheme != null;
             const returnType = returnsMaybeAuth
                 ? ts.factory.createTypeReferenceNode("Promise", [
                       ts.factory.createUnionTypeNode([

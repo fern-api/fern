@@ -39,4 +39,11 @@ export class Writer extends AbstractWriter {
     public addImport(packageName: string): void {
         this.imports.add(packageName);
     }
+
+    /**
+     * Gets the current set of imports.
+     */
+    public getImports(): Set<PackageName> {
+        return new Set(this.imports);
+    }
 }

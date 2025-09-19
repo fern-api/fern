@@ -24,6 +24,10 @@ dependencies: [
 ]
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -44,6 +48,68 @@ private func main() async throws {
 }
 
 try await main()
+```
+
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Validation
+
+let request = Requests.CreateRequest(
+    ...
+)
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
+```swift
+try await client.create(..., requestOptions: .init(
+    additionalHeaders: [
+        "X-Custom-Header": "custom value"
+    ]
+))
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
+```swift
+try await client.create(..., requestOptions: .init(
+    additionalQueryParameters: [
+        "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Timeouts
+
+The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+```swift
+try await client.create(..., requestOptions: .init(
+    timeout: 30
+))
+```
+
+### Custom Networking Client
+
+The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.
+
+```swift
+import Foundation
+import Validation
+
+let client = ValidationClient(
+    ...,
+    urlSession: // Provide your implementation here
+)
 ```
 
 ## Contributing

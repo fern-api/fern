@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedAlias.Core;
 
 namespace SeedAlias;
@@ -34,7 +34,7 @@ public partial class SeedAliasClient
     /// <example><code>
     /// await client.GetAsync("typeId");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetAsync(
+    public async Task GetAsync(
         string typeId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

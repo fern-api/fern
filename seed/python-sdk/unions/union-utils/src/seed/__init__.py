@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
         UnionWithNoProperties,
         UnionWithOptionalTime,
         UnionWithPrimitive,
+        UnionWithSameNumberTypes,
+        UnionWithSameStringTypes,
         UnionWithSingleElement,
         UnionWithSubTypes,
         UnionWithTime,
@@ -59,7 +61,7 @@ if typing.TYPE_CHECKING:
         VibrantExcitement,
     )
     from .client import AsyncSeedUnions, SeedUnions
-    from .union import Circle, GetShapeRequest, Shape, Square
+    from .union import Circle, GetShapeRequest, Shape, Square, WithName
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActiveDiamond": ".bigunion",
@@ -108,6 +110,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".types",
     "UnionWithOptionalTime": ".types",
     "UnionWithPrimitive": ".types",
+    "UnionWithSameNumberTypes": ".types",
+    "UnionWithSameStringTypes": ".types",
     "UnionWithSingleElement": ".types",
     "UnionWithSubTypes": ".types",
     "UnionWithTime": ".types",
@@ -115,6 +119,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UniqueStress": ".bigunion",
     "UnwillingSmoke": ".bigunion",
     "VibrantExcitement": ".bigunion",
+    "WithName": ".union",
     "__version__": ".version",
     "bigunion": ".",
     "types": ".",
@@ -188,6 +193,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",
@@ -195,6 +202,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "__version__",
     "bigunion",
     "types",

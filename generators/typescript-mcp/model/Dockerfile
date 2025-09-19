@@ -32,7 +32,9 @@ RUN echo '{ \
     "form-data-encoder": "^4.0.2", \
     "ts-loader": "^9.5.1", \
     "webpack": "^5.97.1", \
-    "fetch-mock-jest": "^1.5.1" \
+    "fetch-mock-jest": "^1.5.1", \
+    "msw": "^2.8.4", \
+    "vitest": "^3.2.4" \
   } \
 }' > package.json
 
@@ -42,6 +44,9 @@ RUN rm -rf node_modules
 RUN rm -rf yarn.lock
 
 RUN npm install -g pnpm@10.14.0
+
+# make prettier globally available
+RUN npm install -g prettier@^3.4.2
 
 RUN pnpm install
 

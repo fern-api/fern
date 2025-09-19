@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedLicense.Core;
 
 namespace SeedLicense;
@@ -34,7 +34,7 @@ public partial class SeedLicenseClient
     /// <example><code>
     /// await client.GetAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetAsync(
+    public async Task GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

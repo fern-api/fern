@@ -2106,6 +2106,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -9157,6 +9158,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -9239,6 +9241,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -9386,6 +9389,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -12393,6 +12397,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -13686,6 +13691,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -16066,6 +16072,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -16792,6 +16799,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -18879,6 +18887,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "audiences": [
                         "internal"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -22852,6 +22861,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "audiences": [
                         "test"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -31915,6 +31925,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "audiences": [
                         "internal"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -34211,6 +34222,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "audiences": [
                         "test"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37000,6 +37012,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37770,6 +37783,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -40766,6 +40780,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -41056,6 +41071,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -42294,6 +42310,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }

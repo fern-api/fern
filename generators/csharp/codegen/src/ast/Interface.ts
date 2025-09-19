@@ -1,5 +1,6 @@
+import { CSharp } from "../csharp";
 import { Access } from "./Access";
-import { ClassReference } from "./ClassReference";
+import { type ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
@@ -23,8 +24,12 @@ export declare namespace Interface {
 }
 
 export class Interface extends AstNode {
-    public readonly name: string;
-    public readonly namespace: string;
+    public get name() {
+        return this.reference.name;
+    }
+    public get namespace() {
+        return this.reference.namespace;
+    }
     public readonly access: Access;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
@@ -34,19 +39,20 @@ export class Interface extends AstNode {
     private fields: Field[] = [];
     private methods: Method[] = [];
 
-    constructor({ name, namespace, access, partial, isNestedInterface, interfaceReferences }: Interface.Args) {
-        super();
-        this.name = name;
-        this.namespace = namespace;
+    constructor(
+        { name, namespace, access, partial, isNestedInterface, interfaceReferences }: Interface.Args,
+        csharp: CSharp
+    ) {
+        super(csharp);
+        this.reference = this.csharp.classReference({
+            name: name,
+            namespace: namespace
+        });
+
         this.access = access;
         this.partial = partial ?? false;
         this.isNestedInterface = isNestedInterface ?? false;
         this.interfaceReferences = interfaceReferences ?? [];
-
-        this.reference = new ClassReference({
-            name: this.name,
-            namespace: this.namespace
-        });
     }
 
     public addField(field: Field): void {

@@ -33,6 +33,7 @@ func (f *fileWriter) WriteType(
 		unionVersion:                 f.unionVersion,
 		alwaysSendRequiredProperties: f.alwaysSendRequiredProperties,
 		includeRawJSON:               includeRawJSON,
+		gettersPassByValue:           f.gettersPassByValue,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -48,6 +49,7 @@ type typeVisitor struct {
 	unionVersion                 UnionVersion
 	includeRawJSON               bool
 	alwaysSendRequiredProperties bool
+	gettersPassByValue           bool
 }
 
 // Compile-time assertion.
@@ -131,6 +133,34 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
+	// Collect all property names and types for bigint constants and setters
+	var propertyNames []string
+	var propertyTypes []string
+	var propertySafeNames []string
+
+	// Collect property names and types from extended objects recursively
+	var collectProperties func(*ir.ObjectTypeDeclaration)
+	collectProperties = func(obj *ir.ObjectTypeDeclaration) {
+		// First collect from extended objects
+		for _, extend := range obj.Extends {
+			collectProperties(t.writer.types[extend.TypeId].Shape.Object)
+		}
+		// Then collect from this object's properties
+		for _, property := range obj.Properties {
+			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
+				propertyTypes = append(propertyTypes, goType)
+			}
+		}
+	}
+
+	collectProperties(object)
+
+	// Write bigint constants for struct properties
+	t.writer.WriteStructPropertyBitConstants(t.typeName, propertyNames)
+
 	t.writer.P("type ", t.typeName, " struct {")
 	objectProperties := t.visitObjectProperties(
 		object,
@@ -139,6 +169,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		false, // includeOptionals
 		false, // includeLiterals
 	)
+	t.writer.WriteExplicitFields()
 
 	// If the object has a literal, it needs custom [de]serialization logic,
 	// and a getter method to access the field so that it's impossible for
@@ -181,6 +212,12 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
 	t.writer.P("}")
 	t.writer.P()
+
+	// Write the require helper method
+	t.writer.WriteRequireMethod(t.typeName)
+
+	// Write setter methods for all properties
+	t.writer.WriteSetterMethods(t.typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	// Implement the json.Unmarshaler interface.
 	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
@@ -238,34 +275,33 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Marshaler interface.
-	if len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 || object.ExtraProperties {
-		t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
-		t.writer.P("type embed ", t.typeName)
-		t.writer.P("var marshaler = struct{")
-		t.writer.P("embed")
-		for _, date := range objectProperties.dates {
-			t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
-		}
-		for _, literal := range objectProperties.literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
-		}
-		t.writer.P("}{")
-		t.writer.P("embed: embed(*", receiver, "),")
-		for _, date := range objectProperties.dates {
-			t.writer.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
-		}
-		for _, literal := range objectProperties.literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
-		}
-		t.writer.P("}")
-		if object.ExtraProperties {
-			t.writer.P("return internal.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
-		} else {
-			t.writer.P("return json.Marshal(marshaler)")
-		}
-		t.writer.P("}")
-		t.writer.P()
+	t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("type embed ", t.typeName)
+	t.writer.P("var marshaler = struct{")
+	t.writer.P("embed")
+	for _, date := range objectProperties.dates {
+		t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
 	}
+	for _, literal := range objectProperties.literals {
+		t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
+	}
+	t.writer.P("}{")
+	t.writer.P("embed: embed(*", receiver, "),")
+	for _, date := range objectProperties.dates {
+		t.writer.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
+	}
+	for _, literal := range objectProperties.literals {
+		t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+	}
+	t.writer.P("}")
+	t.writer.P("explicitMarshaler := internal.HandleExplicitFields(marshaler, ", receiver, ".explicitFields)")
+	if object.ExtraProperties {
+		t.writer.P("return internal.MarshalJSONWithExtraProperties(explicitMarshaler, ", receiver, ".ExtraProperties)")
+	} else {
+		t.writer.P("return json.Marshal(explicitMarshaler)")
+	}
+	t.writer.P("}")
+	t.writer.P()
 
 	// Implement fmt.Stringer.
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
@@ -1105,20 +1141,100 @@ func (t *typeVisitor) visitObjectProperties(
 // typeField represent a single type field. This is used to generate getter methods for objects,
 // unions, and undiscriminated unions.
 type typeField struct {
-	Name      string
-	GoType    string
-	ZeroValue string
+	Name            string
+	GoType          string
+	ZeroValue       string
+	Optional        bool
+	NeedsDereference bool
 }
 
 func (t *typeVisitor) writeGetterMethod(receiver string, field *typeField) {
 	getterName := fmt.Sprintf("%s%s", "Get", field.Name)
-	t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return ", field.ZeroValue)
-	t.writer.P("}")
-	t.writer.P("return ", receiver, ".", field.Name)
+
+	if field.Optional && t.gettersPassByValue {
+		// For optional fields, GoType is already the correct return type (unwrapped if needed)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil || ", receiver, ".", field.Name, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		if field.NeedsDereference {
+			t.writer.P("return *", receiver, ".", field.Name)
+		} else {
+			t.writer.P("return ", receiver, ".", field.Name)
+		}
+	} else {
+		// For non-optional fields, return the value as-is
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		t.writer.P("return ", receiver, ".", field.Name)
+	}
 	t.writer.P("}")
 	t.writer.P()
+}
+
+// isOptionalOrNullableType checks if a type reference is optional or nullable
+func isOptionalOrNullableType(typeReference *ir.TypeReference) bool {
+	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// processTypeFieldForOptional handles the common logic for processing optional/nullable type fields
+// Returns the Go type, zero value, whether the field needs dereferencing, and whether the field is optional
+func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
+	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false)
+	isOptional = isOptionalOrNullableType(typeReference)
+
+	if isOptional && gettersPassByValue {
+		// Get the unwrapped type to check if it needs dereferencing
+		underlyingGoType := strings.TrimPrefix(originalGoType, "*")
+		needsDereference = strings.HasPrefix(originalGoType, "*")
+
+		// For optional fields that need dereferencing, return the unwrapped type
+		if needsDereference {
+			underlyingType := unwrapOptionalAndOrNullable(typeReference)
+			zeroValue = zeroValueForDereferencedType(underlyingType, types, scope, baseImportPath, importPath)
+			return underlyingGoType, zeroValue, needsDereference, isOptional
+		}
+	}
+
+	zeroValue = zeroValueForTypeReference(typeReference, types)
+	return originalGoType, zeroValue, needsDereference, isOptional
+}
+
+// unwrapOptionalAndOrNullable returns the type with one level of optional or nullable unwrapped.
+// Also handles the special case of optional<nullable<T>>.
+func unwrapOptionalAndOrNullable(typeReference *ir.TypeReference) *ir.TypeReference {
+	container := getOptionalOrNullableContainer(typeReference)
+	if container != nil {
+		// Check if this is optional<nullable<T>> pattern and unwrap both levels
+        if typeReference.Container != nil && typeReference.Container.Optional != nil {
+            innerContainer := getOptionalOrNullableContainer(typeReference.Container.Optional)
+            if innerContainer != nil {
+                return innerContainer
+            }
+        }
+		return container
+	}
+	return typeReference
+}
+
+// zeroValueForDereferencedType returns the zero value for the given type, handling
+// the special case of objects and unions that can take a default struct initialization.
+func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string) string {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias == nil && typeDeclaration.Shape.Enum == nil {
+			name := typeDeclaration.Name.Name.PascalCase.UnsafeName
+			// Check if we need to qualify the name with package prefix
+			if typeImportPath := fernFilepathToImportPath(baseImportPath, typeDeclaration.Name.FernFilepath); typeImportPath != importPath {
+				packageName := scope.AddImport(typeImportPath)
+				name = packageName + "." + name
+			}
+			return fmt.Sprintf("%s{}", name)
+		}
+	}
+	return zeroValueForTypeReference(typeReference, types)
 }
 
 // getTypeFieldsForObject retrieves the type fields for the given object.
@@ -1132,10 +1248,13 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:            property.Name.Name.PascalCase.UnsafeName,
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return fields
@@ -1147,9 +1266,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:      union.Discriminant.Name.PascalCase.UnsafeName,
-			GoType:    "string",
-			ZeroValue: `""`,
+			Name:            union.Discriminant.Name.PascalCase.UnsafeName,
+			GoType:          "string",
+			ZeroValue:       `""`,
+			Optional:        false,
+			NeedsDereference: false,
 		},
 	)
 	for _, extend := range union.Extends {
@@ -1160,10 +1281,13 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:            property.Name.Name.PascalCase.UnsafeName,
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	for _, property := range union.Types {
@@ -1178,9 +1302,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
 	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 	return &typeField{
-		Name:      singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
-		GoType:    singleUnionProperty.goType,
-		ZeroValue: singleUnionProperty.zeroValue,
+		Name:            singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		GoType:          singleUnionProperty.goType,
+		ZeroValue:       singleUnionProperty.zeroValue,
+		Optional:        false, // Single union types are typically not optional
+		NeedsDereference: false,
 	}
 }
 
@@ -1190,10 +1316,13 @@ func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion 
 		if isLiteralType(member.Type, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		typeFields = append(typeFields, &typeField{
-			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
-			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
+			Name:            typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
+			GoType:          goType,
+			ZeroValue:       zeroValue,
+			Optional:        isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return typeFields
@@ -1457,7 +1586,6 @@ func typeReferenceToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &typeReferenceVisitor{
 		baseImportPath:   baseImportPath,
@@ -1465,7 +1593,6 @@ func typeReferenceToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -1479,7 +1606,6 @@ func containerTypeToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &containerTypeVisitor{
 		baseImportPath:   baseImportPath,
@@ -1487,7 +1613,6 @@ func containerTypeToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = containerType.Accept(visitor)
 	return visitor.value
@@ -1510,7 +1635,6 @@ func singleUnionTypePropertiesToGoType(
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
-	
 ) *singleUnionProperty {
 	visitor := &singleUnionTypePropertiesVisitor{
 		baseImportPath: baseImportPath,
@@ -1536,7 +1660,6 @@ func singleUnionTypePropertiesToInitializer(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
-	
 	baseImportPath string,
 	importPath string,
 	discriminantName string,
@@ -1549,7 +1672,6 @@ func singleUnionTypePropertiesToInitializer(
 		importPath:       importPath,
 		scope:            scope,
 		types:            types,
-		
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value

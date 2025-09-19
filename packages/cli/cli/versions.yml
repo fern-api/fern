@@ -1,5 +1,115 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.78.0
+
+- changelogEntry:
+    - summary: Apply max cache control for S3 uploads in documentation generation to improve lighthouse scores.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.8
+
+- changelogEntry:
+    - summary: Update dynamic snippets generation to not fail on empty PHP configuration
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.7
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest csharp sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.6
+
+- changelogEntry:
+    - summary: Support running the Rust SDK generator using IR v58.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.5
+
+- changelogEntry:
+    - summary: Respect the `x-fern-server-name`` flag at the endpoint level in the V3 OpenAPI parser
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-16"
+  version: 0.77.4
+
+- changelogEntry:
+    - summary: Support nested folders with x-fern-sdk-group-name in AsyncAPI parsing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.3
+
+- changelogEntry:
+    - summary: Support for PHP dynamic SDK snippets in the docs.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.2
+
+- changelogEntry:
+    - summary: \'upgrades available\' only display on actual upgrade needed
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.1
+
+- changelogEntry:
+    - summary: Add customSections property to ReadmeConfig.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.77.0
+
+- changelogEntry:
+    - summary: |
+        Add missing reserved keywords for Ruby language.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.3
+
+- changelogEntry:
+    - summary: |
+        Additional handling of OpenAPI parsing failures for security schemes.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-12"
+  version: 0.76.2
+
+- changelogEntry:
+    - summary: |
+        Handle OpenAPI parsing failures for security schemes gracefully.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.76.1
+
+- changelogEntry:
+    - summary: |
+        Add Maven publishTarget support for Java generators with local filesystem output.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-11"
+  version: 0.76.0
+
+- changelogEntry:
+    - summary: |
+        Enable dynamic SDK snippets for PHP in docs.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-10"
+  version: 0.75.4
+
+- changelogEntry:
     - summary: |
         Add availability to `products.schema.json`
       type: fix

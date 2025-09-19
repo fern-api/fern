@@ -22,6 +22,8 @@ if typing.TYPE_CHECKING:
         Request,
         TypeWithOptionalUnion,
         UnionWithDuplicateTypes,
+        UnionWithIdenticalPrimitives,
+        UnionWithIdenticalStrings,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -40,6 +42,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedUndiscriminatedUnions": ".client",
     "TypeWithOptionalUnion": ".union",
     "UnionWithDuplicateTypes": ".union",
+    "UnionWithIdenticalPrimitives": ".union",
+    "UnionWithIdenticalStrings": ".union",
     "__version__": ".version",
     "union": ".",
 }
@@ -80,6 +84,8 @@ __all__ = [
     "SeedUndiscriminatedUnions",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
+    "UnionWithIdenticalPrimitives",
+    "UnionWithIdenticalStrings",
     "__version__",
     "union",
 ]

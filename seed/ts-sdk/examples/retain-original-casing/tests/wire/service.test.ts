@@ -486,7 +486,7 @@ describe("Service", () => {
         });
     });
 
-    test("refreshToken (5465b825)", async () => {
+    test("refreshToken (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
@@ -496,7 +496,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("refreshToken (5a535c1a)", async () => {
+    test("refreshToken (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { ttl: 420 };

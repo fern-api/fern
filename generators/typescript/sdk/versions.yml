@@ -1,4 +1,135 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.1.0
+  changelogEntry:
+    - summary: |
+        `consolidateTypeFiles` consolidates all folders of type files into a single file.
+      type: feat
+  createdAt: "2025-09-19"
+  irVersion: 60
+
+- version: 3.0.2
+  changelogEntry:
+    - summary: Update `exportAllRequestsAtRoot` to create an aggregate request file instead of adding imports.
+      type: fix
+  createdAt: "2025-09-19"
+  irVersion: 60
+
+- version: 3.0.1
+  changelogEntry:
+    - summary: Fix incorrect pnpm commands inside of ci.yml
+      type: fix
+    - summary: Delete browser specific tests.
+      type: fix
+    - summary: Make tests more robust across Jest and Vitest.
+      type: fix
+  createdAt: "2025-09-18"
+  irVersion: 60
+
+- version: 3.0.0
+  changelogEntry:
+    - summary: |
+        Change defaults configuration in _generators.yml_ to use pnpm package manager and vitest test framework.
+        To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator in _generators.yml_.
+
+        | Option | Before | Now |
+        |--------|--------|-----|
+        | `packageManager` | `yarn` | `pnpm` |
+        | `testFramework` | `jest` | `vitest` |
+
+        `testFramework: vitest` is not supported alongside `useBigInt: true`, `streamType: wrapper`, or `packagePath`.
+      type: feat
+  createdAt: "2025-09-18"
+  irVersion: 60
+
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Use Vitest instead of Jest for running tests.
+        Enable Vitest by setting `testFramework` to `vitest` in the `config` of your generator configuration.
+      type: feat
+  createdAt: "2025-09-17"
+  irVersion: 60
+
+- version: 2.12.3
+  changelogEntry:
+    - summary: Updated retry strategy; in particular, don't jitter for `retry-after` header.
+      type: chore
+  createdAt: "2025-09-17"
+  irVersion: 60
+
+- version: 2.12.2
+  changelogEntry:
+    - summary: Generate correct types for pagination with inline types.
+      type: fix
+  createdAt: "2025-09-16"
+  irVersion: 60
+
+- version: 2.12.1
+  changelogEntry:
+    - summary: |
+        Generate property accessors for auth and pagination with `?.` if the property is optional or nullable, and `.` if the property is required and non-nullable.
+      type: fix
+  createdAt: "2025-09-16"
+  irVersion: 60
+
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-16"
+  irVersion: 59
+
+- version: 2.11.2
+  changelogEntry:
+    - summary: |
+        Websocket client generation compiles when there are no query parameters and when the auth
+        scheme has custom authentication headers.
+      type: fix
+
+  createdAt: "2025-09-16"
+  irVersion: 59
+
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled.
+        This prevents compilation errors in the TypeScript SDK.
+      type: fix
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Generate `Request` and `Response` types variations for types that have readonly and/or writeonly properties.
+        For example, a type `User` will have a `User.Request` type that omits readonly properties and a `User.Response` type that omits writeonly properties.
+
+        Set `experimentalGenerateReadWriteOnlyTypes` to `true` in the `config` of your generator configuration to enable this feature.
+        ```ts
+        import { User, FooClient } from "foo";
+
+        const client = new FooClient(...);
+        const createUser: User.Request = {
+          name: "Jon",
+          // id: "123", // Error: id is read-only and thus omitted
+        };
+        const createdUser: User.Response = await client.createUser(createUser);
+        // createdUser.id is available here
+        ```
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 2.10.4
+  changelogEntry:
+    - summary: Use cached `prettier` to format project instead of yarn/pnpm installing all dependencies during generation.
+      type: feat
+    - summary: Generate lockfile without installing dependencies and using `--prefer-offline` to avoid network requests.
+      type: feat
+  createdAt: "2025-09-12"
+  irVersion: 59
+
 - version: 2.10.3
   changelogEntry:
     - summary: Retries now check `Retry-After` and `X-RateLimit-Reset` before defaulting to exponential backoff.
