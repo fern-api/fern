@@ -478,7 +478,7 @@ jobs:
         id: output-test-data
         run: |
           test_data='[{"fixture": ["accept-header","alias"]},{"fixture": ["accept-header2","alias2"]}]'
-          echo 'test-data=$test_data' >> $GITHUB_OUTPUT
+          echo "test-data="$test_data"" >> $GITHUB_OUTPUT
           echo "$test_data" | jq .
   typescript-sdk:
     runs-on: ubuntu-latest
