@@ -59,23 +59,7 @@ types:
     discriminated: false
     union:
       - boolean
-      - HttpEndpointAuthSchemes
-
-  HttpEndpointAuthSchemes:
-    properties:
-      schemes:
-        type: list<HttpEndpointAuthScheme>
-        docs: |
-          The list of auth schemes that should be applied to this endpoint.
-
-  HttpEndpointAuthScheme:
-    properties:
-      scheme:
-        type: string
-        docs: The key of the auth scheme to apply to this endpoint.
-      scopes:
-        type: optional<list<string>>
-        docs: The OAuth scopes to apply to this endpoint. Only applicable for OAuth auth schemes.
+      - map<string, list<string>>
 
   RetriesConfiguration:
     discriminated: false
