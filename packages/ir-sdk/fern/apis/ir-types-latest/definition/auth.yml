@@ -139,7 +139,7 @@ types:
       refreshToken: http.RequestProperty
 
   BasicAuthScheme:
-    extends: commons.WithDocs
+    extends: BaseAuthScheme
     properties:
       username: commons.Name
       usernameEnvVar:
@@ -159,16 +159,3 @@ types:
       headerEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the header.
-
-  EndpointAuth:
-    properties:
-      schemes: list<EndpointAuthScheme>
-
-  EndpointAuthScheme:
-    properties:
-      scheme:
-        type: AuthSchemeKey
-        docs: The key of the auth scheme to apply.
-      scopes:
-        type: optional<list<string>>
-        docs: Only applicable for OAuth schemes. The scopes to request when retrieving an OAuth token.

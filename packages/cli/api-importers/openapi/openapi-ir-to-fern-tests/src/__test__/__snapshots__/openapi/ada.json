@@ -700,7 +700,11 @@ types:
           "base-path": "",
           "endpoints": {
             "getEndUserById": {
-              "auth": true,
+              "auth": [
+                {
+                  "BearerAuth": [],
+                },
+              ],
               "display-name": "Get an end user by ID",
               "docs": "Get a specific end user",
               "errors": [
@@ -767,7 +771,11 @@ types:
               },
             },
             "getEndUsers": {
-              "auth": true,
+              "auth": [
+                {
+                  "BearerAuth": [],
+                },
+              ],
               "display-name": "Get multiple end users by ID",
               "docs": "Get multiple end users",
               "errors": [
@@ -856,7 +864,11 @@ types:
               },
             },
             "updateEndUserById": {
-              "auth": true,
+              "auth": [
+                {
+                  "BearerAuth": [],
+                },
+              ],
               "display-name": "Update an end user by ID",
               "docs": "Update an end user. Request data is limited to 4KB in size total.",
               "errors": [
@@ -998,7 +1010,8 @@ service:
     getEndUserById:
       path: /end-users/v1/{end_user_id}
       method: GET
-      auth: true
+      auth:
+        - BearerAuth: []
       docs: Get a specific end user
       source:
         openapi: ../openapi.json
@@ -1052,7 +1065,8 @@ service:
     updateEndUserById:
       path: /end-users/v1/{end_user_id}
       method: PATCH
-      auth: true
+      auth:
+        - BearerAuth: []
       docs: Update an end user. Request data is limited to 4KB in size total.
       source:
         openapi: ../openapi.json
@@ -1126,7 +1140,8 @@ service:
     getEndUsers:
       path: /end-users/v1
       method: GET
-      auth: true
+      auth:
+        - BearerAuth: []
       docs: Get multiple end users
       source:
         openapi: ../openapi.json

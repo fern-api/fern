@@ -10995,7 +10995,17 @@ errors:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "accounting:read",
+                    "accounting:write",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a payment breakdown",
               "docs": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
               "errors": [
@@ -11069,7 +11079,16 @@ errors:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "accounting:read",
+                  ],
+                },
+              ],
               "display-name": "Download Deel invoice PDF",
               "docs": "Get a link to download the Deel billing invoice PDF.",
               "errors": [
@@ -11119,7 +11138,16 @@ errors:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "accounting:read",
+                  ],
+                },
+              ],
               "display-name": "Download invoice PDF",
               "docs": "Get link to download the invoice PDF.",
               "errors": [
@@ -11169,7 +11197,16 @@ errors:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "accounting:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve invoices",
               "docs": "Retrieve a list of paid invoices for your workforce.",
               "errors": [
@@ -11245,7 +11282,16 @@ errors:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "accounting:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve payment reciepts",
               "docs": "Retrieve a list of payments made to Deel.",
               "errors": [
@@ -11340,7 +11386,10 @@ service:
     getInvoiceList:
       path: /invoices
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - accounting:read
       docs: Retrieve a list of paid invoices for your workforce.
       source:
         openapi: ../openapi.yml
@@ -11394,7 +11443,10 @@ service:
     getInvoiceDownloadLink:
       path: /invoices/{invoice_id}/download
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - accounting:read
       docs: Get link to download the invoice PDF.
       source:
         openapi: ../openapi.yml
@@ -11429,7 +11481,10 @@ service:
     getBillingInvoiceDownloadLink:
       path: /billing/{invoice_id}/download
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - accounting:read
       docs: Get a link to download the Deel billing invoice PDF.
       source:
         openapi: ../openapi.yml
@@ -11464,7 +11519,10 @@ service:
     getPaymentList:
       path: /payments
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - accounting:read
       docs: Retrieve a list of payments made to Deel.
       source:
         openapi: ../openapi.yml
@@ -11526,7 +11584,11 @@ service:
     GetPaymentsBreakDownById:
       path: /payments/{payment_id}/breakdown
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - accounting:read
+            - accounting:write
       docs: >-
         Get a full breakdown of a payment made to Deel. Breakdown will include
         individual invoices and Deel fee as line items.
@@ -11600,7 +11662,21 @@ docs: End-points to retrieve paid invoices and reciepts.
           "base-path": "",
           "endpoints": {
             "createFileRef": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "invoice-adjustments:write",
+                    "milestones:write",
+                    "off-cycle-payments:write",
+                    "tasks:write",
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Upload file to Deel",
               "docs": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
               "errors": [
@@ -11686,7 +11762,15 @@ service:
     createFileRef:
       path: /attachments
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - invoice-adjustments:write
+            - milestones:write
+            - off-cycle-payments:write
+            - tasks:write
+            - timesheets:write
       docs: >-
         Upload file to Deel storage to use the file attachment feature for other
         endpoints.
@@ -11737,7 +11821,17 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "profile:read",
+                    "people:read",
+                  ],
+                },
+              ],
               "display-name": "Get my current profile",
               "docs": undefined,
               "errors": [
@@ -11789,7 +11883,17 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "profile:read",
+                    "people:read",
+                  ],
+                },
+              ],
               "display-name": "Get people list",
               "docs": undefined,
               "errors": [
@@ -11914,7 +12018,11 @@ service:
     getPeopleList:
       path: /people
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - profile:read
+            - people:read
       source:
         openapi: ../openapi.yml
       display-name: Get people list
@@ -11996,7 +12104,11 @@ service:
     getPeople:
       path: /people/me
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - profile:read
+            - people:read
       source:
         openapi: ../openapi.yml
       display-name: Get my current profile
@@ -12053,7 +12165,16 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Upgrade to Premium",
               "docs": "Add additional protection against misclassification by upgrading to Deel Premium.",
               "errors": [
@@ -12129,7 +12250,16 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Amend contract",
               "docs": "Amend payment details of a contract.",
               "errors": [
@@ -12192,7 +12322,16 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create a new contract",
               "docs": "Create a new Deel contract.",
               "errors": [
@@ -12361,7 +12500,16 @@ service:
               },
             },
             "createContractFixedRate": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create a new contract (fixed-rate)",
               "docs": undefined,
               "errors": [
@@ -12530,7 +12678,16 @@ service:
               },
             },
             "createContractMilestoneBased": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create a new contract (milestone-based)",
               "docs": undefined,
               "errors": [
@@ -12697,7 +12854,16 @@ service:
               },
             },
             "createContractTaskBased": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create a new contract (task-based)",
               "docs": undefined,
               "errors": [
@@ -12864,7 +13030,16 @@ service:
               },
             },
             "createContractTimeBased": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create a new contract (time-based)",
               "docs": undefined,
               "errors": [
@@ -13036,7 +13211,17 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Preview a contract agreement",
               "docs": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
               "errors": [
@@ -13081,7 +13266,16 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Downgrade from Premium",
               "docs": "Remove Deel Premium from an existing contract.",
               "errors": [
@@ -13138,7 +13332,16 @@ service:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Terminate contract",
               "docs": "Terminate an active contract.",
               "errors": [
@@ -13213,7 +13416,10 @@ service:
     createContractTimeBased:
       path: /contracts/time-based
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       source:
         openapi: ../openapi.yml
       display-name: Create a new contract (time-based)
@@ -13341,7 +13547,10 @@ service:
     createContractTaskBased:
       path: /contracts/task-based
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       source:
         openapi: ../openapi.yml
       display-name: Create a new contract (task-based)
@@ -13467,7 +13676,10 @@ service:
     createContractMilestoneBased:
       path: /contracts/milestone-based
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       source:
         openapi: ../openapi.yml
       display-name: Create a new contract (milestone-based)
@@ -13593,7 +13805,10 @@ service:
     createContractFixedRate:
       path: /contracts/fixed-rate
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       source:
         openapi: ../openapi.yml
       display-name: Create a new contract (fixed-rate)
@@ -13721,7 +13936,10 @@ service:
     createContract:
       path: /contracts
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Create a new Deel contract.
       source:
         openapi: ../openapi.yml
@@ -13852,7 +14070,11 @@ service:
     getContractPreview:
       path: /contracts/{contract_id}/preview
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: >-
         Retrieve an IC contract agreement content in HTML. If no template is
         specified, the default or currently assigned template will be used. This
@@ -13886,7 +14108,10 @@ service:
     amendContractDetails:
       path: /contracts/{contract_id}/amendments
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Amend payment details of a contract.
       source:
         openapi: ../openapi.yml
@@ -13927,7 +14152,10 @@ service:
     terminateContract:
       path: /contracts/{contract_id}/terminations
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Terminate an active contract.
       source:
         openapi: ../openapi.yml
@@ -13969,7 +14197,10 @@ service:
     addPremium:
       path: /contracts/{contract_id}/premium
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: >-
         Add additional protection against misclassification by upgrading to Deel
         Premium.
@@ -14021,7 +14252,10 @@ service:
     removePremiumFromContract:
       path: /contracts/{contract_id}/premium
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Remove Deel Premium from an existing contract.
       source:
         openapi: ../openapi.yml
@@ -14079,7 +14313,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Add documents",
               "docs": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
               "errors": [
@@ -14145,7 +14389,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Archive a contract",
               "docs": "Archive a terminated, cancelled or completed contract.",
               "errors": [
@@ -14191,7 +14444,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "External Id",
               "docs": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
               "errors": [
@@ -14253,7 +14515,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
             },
             "calculateFinalPayment": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Calculate final payment",
               "docs": "Calculate the final payment due to the contractor when ending the contract.",
               "errors": [
@@ -14329,7 +14601,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Edit the file attached to contract document.",
               "docs": "Overwrite the file currently attached to contract document.",
               "errors": [
@@ -14395,7 +14677,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Find contract emails by ID",
               "docs": "Returns an array of alternate email objects",
               "errors": [
@@ -14442,7 +14734,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a single contract",
               "docs": "Retrieve a single contract.",
               "errors": [
@@ -14583,7 +14885,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "List of contracts",
               "docs": "Retrieve a list of contracts.",
               "errors": [
@@ -14706,7 +15018,17 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               },
             },
             "getContractTemplates": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Get contract templates",
               "docs": "Retrieve a list of contract templates in your organization.",
               "errors": [
@@ -14747,7 +15069,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Send contract to worker",
               "docs": "Invite a worker to sign the contract. Worker will be notified via email.",
               "errors": [
@@ -14813,7 +15144,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Calculate first payment amount",
               "docs": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
               "errors": [
@@ -14884,7 +15224,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Sign a contract",
               "docs": "Sign a contract as a client.",
               "errors": [
@@ -14949,7 +15298,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Remove invite",
               "docs": "Remove invite in order to re-invite a worker to sign the contract.",
               "errors": [
@@ -15022,7 +15380,11 @@ service:
     getContractList:
       path: /contracts
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Retrieve a list of contracts.
       source:
         openapi: ../openapi.yml
@@ -15122,7 +15484,11 @@ service:
     getContractById:
       path: /contracts/{contract_id}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Retrieve a single contract.
       source:
         openapi: ../openapi.yml
@@ -15232,7 +15598,10 @@ service:
     attachExternalId:
       path: /contracts/{contract_id}
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: >-
         Add an external Id to a Deel contract. You can use this to add a Deel
         contract's refernece Id in your platform. External Id can be passed as a
@@ -15277,7 +15646,11 @@ service:
     addContractDocument:
       path: /contracts/{contract_id}/documents
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: >-
         Attach document to a contract. You can only add one document at a time.
         If you need to attach more documents please attach a Zip file.
@@ -15323,7 +15696,11 @@ service:
     editContractDocument:
       path: /contracts/{contract_id}/documents
       method: PUT
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Overwrite the file currently attached to contract document.
       source:
         openapi: ../openapi.yml
@@ -15367,7 +15744,11 @@ service:
     getAlternateEmailsByContractId:
       path: /contracts/{contract_id}/alternate_emails
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Returns an array of alternate email objects
       source:
         openapi: ../openapi.yml
@@ -15398,7 +15779,10 @@ service:
     signContract:
       path: /contracts/{contract_id}/signatures
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Sign a contract as a client.
       source:
         openapi: ../openapi.yml
@@ -15440,7 +15824,10 @@ service:
     archiveContract:
       path: /contracts/{contract_id}/archive
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Archive a terminated, cancelled or completed contract.
       source:
         openapi: ../openapi.yml
@@ -15471,7 +15858,10 @@ service:
     inviteToSignContract:
       path: /contracts/{contract_id}/invitations
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Invite a worker to sign the contract. Worker will be notified via email.
       source:
         openapi: ../openapi.yml
@@ -15514,7 +15904,10 @@ service:
     uninviteToSignContract:
       path: /contracts/{contract_id}/invitations
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Remove invite in order to re-invite a worker to sign the contract.
       source:
         openapi: ../openapi.yml
@@ -15547,7 +15940,11 @@ service:
     calculateFinalPayment:
       path: /contracts/{contract_id}/final-payments
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: >-
         Calculate the final payment due to the contractor when ending the
         contract.
@@ -15601,7 +15998,10 @@ service:
     postContractEstimate:
       path: /contracts/estimate
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: >-
         First payment is calculated from the number of working/calendar days
         between their start date and the start of the payment cycle.
@@ -15650,7 +16050,11 @@ service:
     getContractTemplates:
       path: /contract-templates
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Retrieve a list of contract templates in your organization.
       source:
         openapi: ../openapi.yml
@@ -15703,7 +16107,17 @@ types:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:read",
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create an EOR contract",
               "docs": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
               "errors": [
@@ -15795,7 +16209,16 @@ types:
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve country guide",
               "docs": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
               "errors": [
@@ -15902,7 +16325,10 @@ service:
     getEorCountryValidations:
       path: /eor/validations/{country_code}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:read
       docs: >-
         Retrieve the hiring guide data for a country. This data can be used to
         create Employee of Record (EOR) contract quotes.
@@ -15973,7 +16399,11 @@ service:
     createEorContract:
       path: /eor
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:read
+            - contracts:write
       docs: >-
         Create an Employee of Record (EOR) contract quote. The endpoints creates
         a contract quote request. Deel will process the information and get back
@@ -16066,7 +16496,7 @@ docs: Employee of Record (EOR).
               "audiences": [
                 "external",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a new Hris direct employee",
               "docs": undefined,
               "errors": [
@@ -16180,7 +16610,6 @@ service:
     createDirectEmployee:
       path: /hris/direct-employees
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a new Hris direct employee
@@ -16276,7 +16705,16 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                  ],
+                },
+              ],
               "display-name": "Create an invoice adjustment",
               "docs": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
               "errors": [
@@ -16339,7 +16777,16 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                  ],
+                },
+              ],
               "display-name": "Review an invoice adjustment",
               "docs": "Review an invoice adjustment to approve or decline it.",
               "errors": [
@@ -16404,7 +16851,16 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                  ],
+                },
+              ],
               "display-name": "Bulk review invoice adjustments",
               "docs": "Review multiple invoice adjustments to approve or decline a batch.",
               "errors": [
@@ -16463,7 +16919,16 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                  ],
+                },
+              ],
               "display-name": "Delete an invoice adjustment",
               "docs": "Update an existing invoice adjustment.",
               "errors": [
@@ -16520,7 +16985,17 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                    "invoice-adjustments:read",
+                  ],
+                },
+              ],
               "display-name": "List of invoice details",
               "docs": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
               "errors": [
@@ -16663,7 +17138,17 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                    "invoice-adjustments:read",
+                  ],
+                },
+              ],
               "display-name": "Invoice details by contract",
               "docs": "Retrieve a list of invoice details for the given contract id.",
               "errors": [
@@ -16811,7 +17296,16 @@ docs: API end-points related to HRIS data.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "invoice-adjustments:write",
+                  ],
+                },
+              ],
               "display-name": "Update an invoice adjustment",
               "docs": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
               "errors": [
@@ -16887,7 +17381,11 @@ service:
     getInvoiceAdjustmentsByContractId:
       path: /contracts/{contract_id}/invoice-adjustments
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
+            - invoice-adjustments:read
       docs: Retrieve a list of invoice details for the given contract id.
       source:
         openapi: ../openapi.yml
@@ -17008,7 +17506,11 @@ service:
     getInvoiceAdjustments:
       path: /invoice-adjustments
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
+            - invoice-adjustments:read
       docs: >-
         Retrieve a list of invoice details. You can filter the list by providing
         additional paramters e.g. contract_id, contract_type etc.
@@ -17128,7 +17630,10 @@ service:
     createInvoiceAdjustment:
       path: /invoice-adjustments
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
       docs: >-
         Create an invoice adjustment using this endpoint. For example, you can
         add a bonus, commission, VAT %, deduction etc. to an invoice.
@@ -17173,7 +17678,10 @@ service:
     deleteInvoiceAdjustmentById:
       path: /invoice-adjustments/{invoice_adjustment_id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
       docs: Update an existing invoice adjustment.
       source:
         openapi: ../openapi.yml
@@ -17212,7 +17720,10 @@ service:
     updateInvoiceAdjustmentById:
       path: /invoice-adjustments/{invoice_adjustment_id}
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
       docs: >-
         Update an existing invoice adjustment. It is not possible to update VAT
         adjustments, we recommend you to delete the existing VAT adjust and
@@ -17257,7 +17768,10 @@ service:
     createInvoiceAdjustmentReview:
       path: /invoice-adjustments/{invoice_adjustment_id}/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
       docs: Review an invoice adjustment to approve or decline it.
       source:
         openapi: ../openapi.yml
@@ -17299,7 +17813,10 @@ service:
     createInvoiceAdjustmentReviews:
       path: /invoice-adjustments/many/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - invoice-adjustments:write
       docs: Review multiple invoice adjustments to approve or decline a batch.
       source:
         openapi: ../openapi.yml
@@ -17358,7 +17875,14 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [],
+                },
+              ],
               "display-name": "Country list",
               "docs": "Retrieve a list of countries supported by Deel.",
               "errors": [
@@ -17409,7 +17933,14 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [],
+                },
+              ],
               "display-name": "Currency list",
               "docs": "Retrieve the list of currencies used by Deel.",
               "errors": [
@@ -17451,7 +17982,14 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [],
+                },
+              ],
               "display-name": "Job titles list",
               "docs": "Retrieve a list of pre-defined job titles in Deel platform.",
               "errors": [
@@ -17510,7 +18048,14 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [],
+                },
+              ],
               "display-name": "Seniority levels",
               "docs": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
               "errors": [
@@ -17563,7 +18108,14 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [],
+                },
+              ],
               "display-name": "Time-off types",
               "docs": "Retrieve a list of pre-defined time off types to register in Deel platform.",
               "errors": [
@@ -17615,7 +18167,9 @@ service:
     getCountries:
       path: /lookups/countries
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2: []
       docs: Retrieve a list of countries supported by Deel.
       source:
         openapi: ../openapi.yml
@@ -17649,7 +18203,9 @@ service:
     getCurrencies:
       path: /lookups/currencies
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2: []
       docs: Retrieve the list of currencies used by Deel.
       source:
         openapi: ../openapi.yml
@@ -17677,7 +18233,9 @@ service:
     getJobTitleList:
       path: /lookups/job-titles
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2: []
       docs: Retrieve a list of pre-defined job titles in Deel platform.
       source:
         openapi: ../openapi.yml
@@ -17719,7 +18277,9 @@ service:
     getSeniorityList:
       path: /lookups/seniorities
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2: []
       docs: >-
         Retrieve a list of pre-defined seniority level for roles in Deel
         platform.
@@ -17759,7 +18319,9 @@ service:
     getTimeoffTypeList:
       path: /lookups/time-off-types
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2: []
       docs: >-
         Retrieve a list of pre-defined time off types to register in Deel
         platform.
@@ -17809,7 +18371,16 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "milestones:write",
+                  ],
+                },
+              ],
               "display-name": "Create a milestone",
               "docs": "Add a new milestone to contract.",
               "errors": [
@@ -17876,7 +18447,16 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "milestones:write",
+                  ],
+                },
+              ],
               "display-name": "Review a single milestone",
               "docs": "Review a milestone to approve or decline submitted work.",
               "errors": [
@@ -17946,7 +18526,16 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Review multiple milestones",
               "docs": "Review a batch of milestones to approve or reject submitted work.",
               "errors": [
@@ -18014,7 +18603,16 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "milestones:write",
+                  ],
+                },
+              ],
               "display-name": "Delete a milestone",
               "docs": "Delete a single milestone from a contract.",
               "errors": [
@@ -18067,7 +18665,17 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "milestones:write",
+                    "milestones:read",
+                  ],
+                },
+              ],
               "display-name": "List of milestones by contract",
               "docs": "Retrieve a list of milestones found for a contract.",
               "errors": [
@@ -18131,7 +18739,17 @@ docs: Helper end-points for choosing options for other operations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "milestones:write",
+                    "milestones:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a single milestone",
               "docs": "Retrieve a single milestone.",
               "errors": [
@@ -18209,7 +18827,11 @@ service:
     getMilestonesByContract:
       path: /contracts/{contract_id}/milestones
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - milestones:write
+            - milestones:read
       docs: Retrieve a list of milestones found for a contract.
       source:
         openapi: ../openapi.yml
@@ -18254,7 +18876,10 @@ service:
     createMilestone:
       path: /contracts/{contract_id}/milestones
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - milestones:write
       docs: Add a new milestone to contract.
       source:
         openapi: ../openapi.yml
@@ -18298,7 +18923,11 @@ service:
     getMilestonesByContractAndId:
       path: /contracts/{contract_id}/milestones/{milestone_id}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - milestones:write
+            - milestones:read
       docs: Retrieve a single milestone.
       source:
         openapi: ../openapi.yml
@@ -18347,7 +18976,10 @@ service:
     deleteMilestoneById:
       path: /contracts/{contract_id}/milestones/{milestone_id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - milestones:write
       docs: Delete a single milestone from a contract.
       source:
         openapi: ../openapi.yml
@@ -18384,7 +19016,10 @@ service:
     createMilestoneReview:
       path: /contracts/{contract_id}/milestones/{milestone_id}/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - milestones:write
       docs: Review a milestone to approve or decline submitted work.
       source:
         openapi: ../openapi.yml
@@ -18430,7 +19065,10 @@ service:
     createMilestoneReviews:
       path: /contracts/{contract_id}/milestones/many/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Review a batch of milestones to approve or reject submitted work.
       source:
         openapi: ../openapi.yml
@@ -18493,7 +19131,16 @@ docs: Helper end-points for managing milestones of Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "off-cycle-payments:write",
+                  ],
+                },
+              ],
               "display-name": "Add off-cycle payment",
               "docs": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
               "errors": [
@@ -18559,7 +19206,17 @@ docs: Helper end-points for managing milestones of Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "off-cycle-payments:write",
+                    "off-cycle-payments:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a single off-cycle payment",
               "docs": "Retrieve a single off-cycle payment.",
               "errors": [
@@ -18629,7 +19286,17 @@ docs: Helper end-points for managing milestones of Deel contracts
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "off-cycle-payments:write",
+                    "off-cycle-payments:read",
+                  ],
+                },
+              ],
               "display-name": "List of off-cycle payments",
               "docs": "Retrieve a list of off-cycle payments for the given contract id.",
               "errors": [
@@ -18707,7 +19374,11 @@ service:
     getOffCyclePaymentsByContract:
       path: /contracts/{contract_id}/off-cycle-payments
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - off-cycle-payments:write
+            - off-cycle-payments:read
       docs: Retrieve a list of off-cycle payments for the given contract id.
       source:
         openapi: ../openapi.yml
@@ -18755,7 +19426,10 @@ service:
     createOffCyclePayment:
       path: /contracts/{contract_id}/off-cycle-payments
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - off-cycle-payments:write
       docs: >-
         Add a new invoice line-item for the purpose of off-cycle payment for a
         given contract.
@@ -18800,7 +19474,11 @@ service:
     getOffCyclePaymentByContractAndId:
       path: /contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - off-cycle-payments:write
+            - off-cycle-payments:read
       docs: Retrieve a single off-cycle payment.
       source:
         openapi: ../openapi.yml
@@ -18868,7 +19546,16 @@ docs: End-points to manage off-cycle payments for a given contract
           "display-name": "Organizations",
           "endpoints": {
             "getAgreements": {
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "organizations:read",
+                  ],
+                },
+              ],
               "display-name": "Get agreements with Deel.",
               "docs": "This end-point returns a list of your agreements with Deel.",
               "errors": [
@@ -18945,7 +19632,17 @@ docs: End-points to manage off-cycle payments for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "organizations:read",
+                    "accounting:read",
+                  ],
+                },
+              ],
               "display-name": "List of legal entities",
               "docs": "Retrieve a list of legal entities in your account.",
               "errors": [
@@ -18989,7 +19686,16 @@ docs: End-points to manage off-cycle payments for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "organizations:read",
+                  ],
+                },
+              ],
               "display-name": "Get current organization",
               "docs": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
               "errors": [
@@ -19031,7 +19737,16 @@ docs: End-points to manage off-cycle payments for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "organizations:read",
+                  ],
+                },
+              ],
               "display-name": "Get team list",
               "docs": "Retrieve a list of teams in your organization.",
               "errors": [
@@ -19084,7 +19799,11 @@ service:
     getLegalEntityList:
       path: /legal-entities
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - organizations:read
+            - accounting:read
       docs: Retrieve a list of legal entities in your account.
       source:
         openapi: ../openapi.yml
@@ -19114,7 +19833,10 @@ service:
     getOrganizations:
       path: /organizations
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - organizations:read
       docs: >-
         Retrieve the current organization details. Organization is automatically
         detected from the auth token.
@@ -19144,7 +19866,10 @@ service:
     getTeams:
       path: /teams
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - organizations:read
       docs: Retrieve a list of teams in your organization.
       source:
         openapi: ../openapi.yml
@@ -19172,7 +19897,10 @@ service:
     getAgreements:
       path: /agreements
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - organizations:read
       docs: This end-point returns a list of your agreements with Deel.
       source:
         openapi: ../openapi.yml
@@ -19242,7 +19970,16 @@ docs: Helper end-points for additional information about your organizations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Create new task",
               "docs": "Create a new task for the contractor.",
               "errors": [
@@ -19308,7 +20045,16 @@ docs: Helper end-points for additional information about your organizations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Review multiple tasks",
               "docs": "Review multiple tasks to approve or decline the submitted work.",
               "errors": [
@@ -19387,7 +20133,16 @@ docs: Helper end-points for additional information about your organizations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Review a single task",
               "docs": "Review a single task to approve or decline the submitted work.",
               "errors": [
@@ -19467,7 +20222,16 @@ docs: Helper end-points for additional information about your organizations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Delete task",
               "docs": "Delete task from the contract.",
               "errors": [
@@ -19529,7 +20293,17 @@ docs: Helper end-points for additional information about your organizations
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                    "contracts:read",
+                  ],
+                },
+              ],
               "display-name": "List of tasks",
               "docs": "Retrieve a list of tasks for a given contract.",
               "errors": [
@@ -19598,7 +20372,11 @@ service:
     getTasksByContract:
       path: /contracts/{contract_id}/tasks
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
+            - contracts:read
       docs: Retrieve a list of tasks for a given contract.
       source:
         openapi: ../openapi.yml
@@ -19638,7 +20416,10 @@ service:
     createContractPgoTak:
       path: /contracts/{contract_id}/tasks
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Create a new task for the contractor.
       source:
         openapi: ../openapi.yml
@@ -19681,7 +20462,10 @@ service:
     createTaskManyReview:
       path: /contracts/{contract_id}/tasks/many/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Review multiple tasks to approve or decline the submitted work.
       source:
         openapi: ../openapi.yml
@@ -19733,7 +20517,10 @@ service:
     createTaskReviewById:
       path: /contracts/{contract_id}/tasks/{task_id}/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Review a single task to approve or decline the submitted work.
       source:
         openapi: ../openapi.yml
@@ -19786,7 +20573,10 @@ service:
     deleteContractPgoTak:
       path: /contracts/{contract_id}/tasks/{task_id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Delete task from the contract.
       source:
         openapi: ../openapi.yml
@@ -19848,7 +20638,16 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Add a time off request",
               "docs": "Add a time off request for a full-time employee.",
               "errors": [
@@ -19982,7 +20781,16 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Cancel a time off request",
               "docs": "Cancel a time off request for an employee.",
               "errors": [
@@ -20032,7 +20840,16 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Edit a time off request",
               "docs": "Edit a time off request for a full-time employee.",
               "errors": [
@@ -20171,7 +20988,7 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "List of time offs",
               "docs": "List of time offs for all employees in your organization.",
               "errors": [
@@ -20270,7 +21087,17 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:read",
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "List time off entitlements",
               "docs": "Retrieve a list of time off entitlements for a full-time employee.",
               "errors": [
@@ -20334,7 +21161,17 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:read",
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "List time off by contract",
               "docs": "Retrieve the list of time off requests by an employee.",
               "errors": [
@@ -20434,7 +21271,16 @@ docs: End-points to manage tasks for a given contract
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "contracts:write",
+                  ],
+                },
+              ],
               "display-name": "Review a time off request",
               "docs": "Approve or decline an employee's time off request.",
               "errors": [
@@ -20510,7 +21356,11 @@ service:
     getEorTimeOffs:
       path: /contracts/{contract_id}/time-offs
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:read
+            - contracts:write
       docs: Retrieve the list of time off requests by an employee.
       source:
         openapi: ../openapi.yml
@@ -20586,7 +21436,10 @@ service:
     createEorTimeOffs:
       path: /contracts/{contract_id}/time-offs
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Add a time off request for a full-time employee.
       source:
         openapi: ../openapi.yml
@@ -20692,7 +21545,10 @@ service:
     editEorTimeOffs:
       path: /contracts/{contract_id}/time-offs/{timeoff_id}
       method: PUT
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Edit a time off request for a full-time employee.
       source:
         openapi: ../openapi.yml
@@ -20802,7 +21658,10 @@ service:
     deleteEorTimeOffs:
       path: /contracts/{contract_id}/time-offs/{timeoff_id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Cancel a time off request for an employee.
       source:
         openapi: ../openapi.yml
@@ -20836,7 +21695,11 @@ service:
     getEorEntitlements:
       path: /contracts/{contract_id}/entitlements
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:read
+            - contracts:write
       docs: Retrieve a list of time off entitlements for a full-time employee.
       source:
         openapi: ../openapi.yml
@@ -20882,7 +21745,6 @@ service:
     getEorClientTimeOffs:
       path: /time-offs/
       method: GET
-      auth: false
       docs: List of time offs for all employees in your organization.
       source:
         openapi: ../openapi.yml
@@ -20948,7 +21810,10 @@ service:
     reviewTimeoff:
       path: /time-offs/{timeoff_id}/review
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - contracts:write
       docs: Approve or decline an employee's time off request.
       source:
         openapi: ../openapi.yml
@@ -21009,7 +21874,16 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Create a timesheet entry",
               "docs": "Submit work for a contractor.",
               "errors": [
@@ -21072,7 +21946,16 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Review a single timesheet",
               "docs": "Review a timesheet to approve or decline submitted work.",
               "errors": [
@@ -21137,7 +22020,16 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Review multiple timesheets",
               "docs": "Review a batch of timesheets to approve or reject submitted work.",
               "errors": [
@@ -21196,7 +22088,16 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Delete a timesheet entry",
               "docs": "Delete a single timesheet entry.",
               "errors": [
@@ -21253,7 +22154,17 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                    "timesheets:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a single timesheet entry",
               "docs": "Retrieve a single timesheet entry by Id.",
               "errors": [
@@ -21348,7 +22259,17 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                    "timesheets:read",
+                  ],
+                },
+              ],
               "display-name": "List of timesheets",
               "docs": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
               "errors": [
@@ -21469,7 +22390,17 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                    "timesheets:read",
+                  ],
+                },
+              ],
               "display-name": "List of timesheets by contract",
               "docs": "Retrieve a list of timesheets found for a contract.",
               "errors": [
@@ -21595,7 +22526,16 @@ docs: Manage time off requests.
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "timesheets:write",
+                  ],
+                },
+              ],
               "display-name": "Update a timesheet entry",
               "docs": "Update a single timesheet entry.",
               "errors": [
@@ -21672,7 +22612,11 @@ service:
     getTimesheetsByContract:
       path: /contracts/{contract_id}/timesheets
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
+            - timesheets:read
       docs: Retrieve a list of timesheets found for a contract.
       source:
         openapi: ../openapi.yml
@@ -21774,7 +22718,11 @@ service:
     getTimesheets:
       path: /timesheets
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
+            - timesheets:read
       docs: >-
         Retrieve a list of timesheets in your Deel account. You can filter the
         list by providing additional paramters e.g. contract_id, contract_type
@@ -21876,7 +22824,10 @@ service:
     createTimesheet:
       path: /timesheets
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Submit work for a contractor.
       source:
         openapi: ../openapi.yml
@@ -21919,7 +22870,11 @@ service:
     getTimesheetById:
       path: /timesheets/{timesheet_id}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
+            - timesheets:read
       docs: Retrieve a single timesheet entry by Id.
       source:
         openapi: ../openapi.yml
@@ -21990,7 +22945,10 @@ service:
     deleteTimesheetById:
       path: /timesheets/{timesheet_id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Delete a single timesheet entry.
       source:
         openapi: ../openapi.yml
@@ -22029,7 +22987,10 @@ service:
     updateTimesheetById:
       path: /timesheets/{timesheet_id}
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Update a single timesheet entry.
       source:
         openapi: ../openapi.yml
@@ -22072,7 +23033,10 @@ service:
     createTimesheetReview:
       path: /timesheets/{timesheet_id}/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Review a timesheet to approve or decline submitted work.
       source:
         openapi: ../openapi.yml
@@ -22114,7 +23078,10 @@ service:
     createTimesheetReviews:
       path: /timesheets/many/reviews
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - timesheets:write
       docs: Review a batch of timesheets to approve or reject submitted work.
       source:
         openapi: ../openapi.yml
@@ -22171,7 +23138,16 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "webhooks:write",
+                  ],
+                },
+              ],
               "display-name": "Delete a webhook",
               "docs": "Delete a webhook subscription.",
               "errors": [
@@ -22204,7 +23180,16 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "webhooks:write",
+                  ],
+                },
+              ],
               "display-name": "Edit a webhook",
               "docs": "Edit a webhook subscription.",
               "errors": [
@@ -22303,7 +23288,16 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "webhooks:read",
+                  ],
+                },
+              ],
               "display-name": "Retrieve a single webhook",
               "docs": "Retrieve a single webhook subscription.",
               "errors": [
@@ -22360,7 +23354,16 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "webhooks:write",
+                  ],
+                },
+              ],
               "display-name": "Create a webhook",
               "docs": "Create a new webhooks subscription.",
               "errors": [
@@ -22458,7 +23461,16 @@ docs: >-
               "audiences": [
                 "external",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "deelToken": [],
+                },
+                {
+                  "oauth2": [
+                    "webhooks:read",
+                  ],
+                },
+              ],
               "display-name": "List of webhooks",
               "docs": "Retrieve a list of webhook subscriptions.",
               "errors": [
@@ -22546,7 +23558,10 @@ service:
     getAllWebhooks:
       path: /webhooks
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - webhooks:read
       docs: Retrieve a list of webhook subscriptions.
       source:
         openapi: ../openapi.yml
@@ -22584,7 +23599,10 @@ service:
     createWebhook:
       path: /webhooks
       method: POST
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - webhooks:write
       docs: Create a new webhooks subscription.
       source:
         openapi: ../openapi.yml
@@ -22654,7 +23672,10 @@ service:
     WebhookController_getById:
       path: /webhooks/{id}
       method: GET
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - webhooks:read
       docs: Retrieve a single webhook subscription.
       source:
         openapi: ../openapi.yml
@@ -22696,7 +23717,10 @@ service:
     WebhookController_deleteById:
       path: /webhooks/{id}
       method: DELETE
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - webhooks:write
       docs: Delete a webhook subscription.
       source:
         openapi: ../openapi.yml
@@ -22719,7 +23743,10 @@ service:
     WebhookController_editById:
       path: /webhooks/{id}
       method: PATCH
-      auth: true
+      auth:
+        - deelToken: []
+        - oauth2:
+            - webhooks:write
       docs: Edit a webhook subscription.
       source:
         openapi: ../openapi.yml

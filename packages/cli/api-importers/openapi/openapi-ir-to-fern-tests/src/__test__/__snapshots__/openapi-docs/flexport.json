@@ -10524,7 +10524,7 @@ errors:
           "display-name": "Booking",
           "endpoints": {
             "bookings_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all bookings",
               "docs": "Returns a list of bookings.",
               "errors": [
@@ -10868,7 +10868,7 @@ errors:
               },
             },
             "create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create and return a booking",
               "docs": undefined,
               "errors": [
@@ -11315,7 +11315,7 @@ errors:
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a booking",
               "docs": "Retrieves the details of a single booking.
 ",
@@ -11771,7 +11771,6 @@ service:
     bookings_index:
       path: /bookings
       method: GET
-      auth: false
       docs: Returns a list of bookings.
       source:
         openapi: ../openapi.yml
@@ -12045,7 +12044,6 @@ service:
     create:
       path: /bookings
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create and return a booking
@@ -12420,7 +12418,6 @@ service:
     show:
       path: /bookings/{id}
       method: GET
-      auth: false
       docs: |
         Retrieves the details of a single booking.
       source:
@@ -12653,7 +12650,7 @@ docs: Endpoints relating to Booking objects
           "display-name": "BookingAmendment",
           "endpoints": {
             "booking_amendment_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a new booking amendment.",
               "docs": undefined,
               "errors": [
@@ -12979,7 +12976,6 @@ service:
     booking_amendment_create:
       path: /booking_amendments
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a new booking amendment.
@@ -13234,7 +13230,7 @@ docs: >-
           "display-name": "BookingLineItem",
           "endpoints": {
             "booking_line_item_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a booking line item",
               "docs": "Creates and returns a booking line item",
               "errors": [
@@ -13310,7 +13306,7 @@ docs: >-
               },
             },
             "booking_line_item_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all booking line items",
               "docs": "Returns a list of booking line items linked to submitted bookings",
               "errors": [
@@ -13417,7 +13413,7 @@ docs: >-
               },
             },
             "booking_line_item_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieves the details of a single booking line item.",
               "docs": "Returns a list of booking line items",
               "errors": [
@@ -13594,7 +13590,6 @@ service:
     booking_line_item_index:
       path: /booking_line_items
       method: GET
-      auth: false
       docs: Returns a list of booking line items linked to submitted bookings
       source:
         openapi: ../openapi.yml
@@ -13672,7 +13667,6 @@ service:
     booking_line_item_create:
       path: /booking_line_items
       method: POST
-      auth: false
       docs: Creates and returns a booking line item
       source:
         openapi: ../openapi.yml
@@ -13727,7 +13721,6 @@ service:
     booking_line_item_show:
       path: /booking_line_items/{id}
       method: GET
-      auth: false
       docs: Returns a list of booking line items
       source:
         openapi: ../openapi.yml
@@ -13787,7 +13780,7 @@ docs: >-
           "display-name": "Carbon Calculation",
           "endpoints": {
             "create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Calculate carbon emissions",
               "docs": "Rate limited to 2,000 requests per hour",
               "errors": [
@@ -14035,7 +14028,6 @@ service:
     create:
       path: /carbon_calculation
       method: POST
-      auth: false
       docs: Rate limited to 2,000 requests per hour
       source:
         openapi: ../openapi.yml
@@ -14179,7 +14171,7 @@ docs: Endpoints relating to Carbon Calculations
           "display-name": "Commercial Invoices",
           "endpoints": {
             "create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create and return a new commercial invoice",
               "docs": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
               "errors": [
@@ -14376,7 +14368,7 @@ docs: Endpoints relating to Carbon Calculations
               },
             },
             "index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List commercial invoices",
               "docs": "Returns a list of commercial invoices",
               "examples": [
@@ -14560,7 +14552,7 @@ docs: Endpoints relating to Carbon Calculations
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a commercial invoice",
               "docs": "Retrieves the details of a single commercial invoice.",
               "errors": [
@@ -14710,7 +14702,7 @@ docs: Endpoints relating to Carbon Calculations
               },
             },
             "update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update an existing commercial invoice",
               "docs": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
               "errors": [
@@ -15002,7 +14994,6 @@ service:
     index:
       path: /commercial_invoices
       method: GET
-      auth: false
       docs: Returns a list of commercial invoices
       source:
         openapi: ../openapi.yml
@@ -15135,7 +15126,6 @@ service:
     create:
       path: /commercial_invoices
       method: POST
-      auth: false
       docs: >-
         **The Commercial Invoices POST endpoint needs special permission to
         access. Please contact your Flexport Sales representative if you are
@@ -15295,7 +15285,6 @@ service:
     update:
       path: /commercial_invoices
       method: PATCH
-      auth: false
       docs: >-
         **The Commercial Invoices PATCH endpoint needs special permission to
         access. Please contact your Flexport Sales representative if you are
@@ -15428,7 +15417,6 @@ service:
     show:
       path: /commercial_invoices/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single commercial invoice.
       source:
         openapi: ../openapi.yml
@@ -15555,7 +15543,7 @@ docs: Endpoints relating to Commercial Invoice objects
           "display-name": "Company",
           "endpoints": {
             "network_company_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a new company object",
               "docs": undefined,
               "errors": [
@@ -15661,7 +15649,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
             },
             "network_company_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List company objects",
               "docs": "Returns a list of companies in the network.",
               "errors": [
@@ -15788,7 +15776,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
             },
             "network_company_me": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve your company",
               "docs": "Retrieves the details of your own organization.",
               "errors": [
@@ -15872,7 +15860,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
             },
             "network_company_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a company",
               "docs": "Retrieves the details of a single company.",
               "examples": [
@@ -15957,7 +15945,7 @@ docs: Endpoints relating to Commercial Invoice objects
               },
             },
             "network_company_update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update an existing company",
               "docs": undefined,
               "errors": [
@@ -16216,7 +16204,6 @@ service:
     network_company_index:
       path: /network/companies
       method: GET
-      auth: false
       docs: Returns a list of companies in the network.
       source:
         openapi: ../openapi.yml
@@ -16310,7 +16297,6 @@ service:
     network_company_create:
       path: /network/companies
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a new company object
@@ -16385,7 +16371,6 @@ service:
     network_company_show:
       path: /network/companies/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single company.
       source:
         openapi: ../openapi.yml
@@ -16447,7 +16432,6 @@ service:
     network_company_update:
       path: /network/companies/{id}
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -16527,7 +16511,6 @@ service:
     network_company_me:
       path: /network/me/companies
       method: GET
-      auth: false
       docs: Retrieves the details of your own organization.
       source:
         openapi: ../openapi.yml
@@ -16604,7 +16587,7 @@ docs: Endpoints relating to Company objects
           "display-name": "CompanyEntity",
           "endpoints": {
             "company_entity_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List of company entity objects",
               "docs": "Returns a list of the company entity objects in the network.",
               "errors": [
@@ -16713,7 +16696,7 @@ docs: Endpoints relating to Company objects
               },
             },
             "network_company_entity_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create and return a new company entity",
               "docs": undefined,
               "errors": [
@@ -16809,7 +16792,7 @@ docs: Endpoints relating to Company objects
               },
             },
             "network_company_entity_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a company entity",
               "docs": "Retrieves the details of a single company entity",
               "errors": [
@@ -16875,7 +16858,7 @@ docs: Endpoints relating to Company objects
               },
             },
             "network_company_entity_update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update a company entity",
               "docs": undefined,
               "errors": [
@@ -17091,7 +17074,6 @@ service:
     company_entity_index:
       path: /network/company_entities
       method: GET
-      auth: false
       docs: Returns a list of the company entity objects in the network.
       source:
         openapi: ../openapi.yml
@@ -17168,7 +17150,6 @@ service:
     network_company_entity_create:
       path: /network/company_entities
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create and return a new company entity
@@ -17245,7 +17226,6 @@ service:
     network_company_entity_show:
       path: /network/company_entities/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single company entity
       source:
         openapi: ../openapi.yml
@@ -17293,7 +17273,6 @@ service:
     network_company_entity_update:
       path: /network/company_entities/{id}
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17374,7 +17353,7 @@ docs: Endpoints relating to CompanyEntity objects
           "display-name": "Contact",
           "endpoints": {
             "network_contact_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a new contact object",
               "docs": undefined,
               "errors": [
@@ -17455,7 +17434,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
             },
             "network_contact_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List contact objects",
               "docs": "Returns a list of contacts in the network.",
               "errors": [
@@ -17556,7 +17535,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
             },
             "network_contact_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a contact",
               "docs": "Retrieves the details of a single contact.",
               "errors": [
@@ -17614,7 +17593,7 @@ docs: Endpoints relating to CompanyEntity objects
               },
             },
             "network_contact_update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update an existing contact",
               "docs": undefined,
               "errors": [
@@ -17821,7 +17800,6 @@ service:
     network_contact_index:
       path: /network/contacts
       method: GET
-      auth: false
       docs: Returns a list of contacts in the network.
       source:
         openapi: ../openapi.yml
@@ -17892,7 +17870,6 @@ service:
     network_contact_create:
       path: /network/contacts
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a new contact object
@@ -17952,7 +17929,6 @@ service:
     network_contact_show:
       path: /network/contacts/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single contact.
       source:
         openapi: ../openapi.yml
@@ -17995,7 +17971,6 @@ service:
     network_contact_update:
       path: /network/contacts/{id}
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18069,7 +18044,7 @@ docs: Endpoints relating to Contact objects
           "display-name": "Container",
           "endpoints": {
             "list": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all containers.",
               "docs": "Returns a list of containers. The containers are sorted descending by creation date.",
               "errors": [
@@ -18215,7 +18190,7 @@ docs: Endpoints relating to Contact objects
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a container.",
               "docs": "Retrieves the details of a single container.",
               "errors": [
@@ -18400,7 +18375,6 @@ service:
     list:
       path: /ocean/shipment_containers
       method: GET
-      auth: false
       docs: >-
         Returns a list of containers. The containers are sorted descending by
         creation date.
@@ -18518,7 +18492,6 @@ service:
     show:
       path: /ocean/shipment_containers/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single container.
       source:
         openapi: ../openapi.yml
@@ -18616,7 +18589,7 @@ docs: Endpoints relating to Container objects
           "display-name": "ContainerLeg",
           "endpoints": {
             "ocean_container_legs_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all container legs",
               "docs": undefined,
               "errors": [
@@ -18719,7 +18692,7 @@ docs: Endpoints relating to Container objects
               },
             },
             "ocean_container_legs_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a container leg on an Ocean shipment",
               "docs": undefined,
               "errors": [
@@ -18860,7 +18833,6 @@ service:
     ocean_container_legs_index:
       path: /ocean/shipment_container_legs
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: List all container legs
@@ -18934,7 +18906,6 @@ service:
     ocean_container_legs_show:
       path: /ocean/shipment_container_legs/{id}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18990,7 +18961,7 @@ docs: Endpoints relating to ContainerLeg objects
           "display-name": "Customs Entries",
           "endpoints": {
             "customs_entry_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List customs entry objects",
               "docs": "Returns a list of customs entries.",
               "errors": [
@@ -19077,7 +19048,7 @@ docs: Endpoints relating to ContainerLeg objects
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a customs entry",
               "docs": "Retrieves the details of a single customs entry.",
               "errors": [
@@ -19211,7 +19182,6 @@ service:
     customs_entry_index:
       path: /customs_entries
       method: GET
-      auth: false
       docs: Returns a list of customs entries.
       source:
         openapi: ../openapi.yml
@@ -19270,7 +19240,6 @@ service:
     show:
       path: /customs_entries/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single customs entry.
       source:
         openapi: ../openapi.yml
@@ -19324,7 +19293,7 @@ docs: Endpoints relating to Customs Entry objects
           "display-name": "Document",
           "endpoints": {
             "documents_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a document",
               "docs": "Create a new document for this client using the request payload",
               "errors": [
@@ -19375,7 +19344,7 @@ docs: Endpoints relating to Customs Entry objects
               },
             },
             "documents_download": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Download a document",
               "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
               "errors": [
@@ -19400,7 +19369,7 @@ docs: Endpoints relating to Customs Entry objects
               },
             },
             "documents_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List document objects",
               "docs": "Returns a list of all documents associated with shipments.",
               "errors": [
@@ -19517,7 +19486,7 @@ docs: Endpoints relating to Customs Entry objects
               },
             },
             "documents_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a document",
               "docs": "Retrieves the details of a single document.",
               "errors": [
@@ -19679,7 +19648,6 @@ service:
     documents_index:
       path: /documents
       method: GET
-      auth: false
       docs: Returns a list of all documents associated with shipments.
       source:
         openapi: ../openapi.yml
@@ -19769,7 +19737,6 @@ service:
     documents_create:
       path: /documents
       method: POST
-      auth: false
       docs: Create a new document for this client using the request payload
       source:
         openapi: ../openapi.yml
@@ -19807,7 +19774,6 @@ service:
     documents_show:
       path: /documents/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single document.
       source:
         openapi: ../openapi.yml
@@ -19849,7 +19815,6 @@ service:
     documents_download:
       path: /documents/{id}/download
       method: GET
-      auth: false
       docs: >-
         Retrieves the contents of a specified file. Returns the file as a stream
         of bytes.
@@ -19885,7 +19850,7 @@ docs: Endpoints relating to Document objects
           "display-name": "Event",
           "endpoints": {
             "events_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all webhook events",
               "docs": "Returns a list of all events delivered to any webhook registered by this client",
               "errors": [
@@ -19960,7 +19925,7 @@ docs: Endpoints relating to Document objects
               },
             },
             "events_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a single webhook event",
               "docs": "Returns the webhook event with ID ":id"",
               "errors": [
@@ -20214,7 +20179,6 @@ service:
     events_index:
       path: /events
       method: GET
-      auth: false
       docs: >-
         Returns a list of all events delivered to any webhook registered by this
         client
@@ -20271,7 +20235,6 @@ service:
     events_show:
       path: /events/{id}
       method: GET
-      auth: false
       docs: Returns the webhook event with ID ":id"
       source:
         openapi: ../openapi.yml
@@ -20380,7 +20343,7 @@ docs: Endpoints relating to Event objects
           "display-name": "Invoices",
           "endpoints": {
             "invoice_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all invoices",
               "docs": "Returns a list of invoices.",
               "errors": [
@@ -20744,7 +20707,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve an invoice",
               "docs": "Retrieves the details of a single invoice",
               "errors": [
@@ -21127,7 +21090,6 @@ service:
     invoice_index:
       path: /invoices
       method: GET
-      auth: false
       docs: Returns a list of invoices.
       source:
         openapi: ../openapi.yml
@@ -21418,7 +21380,6 @@ service:
     show:
       path: /invoices/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single invoice
       source:
         openapi: ../openapi.yml
@@ -21635,7 +21596,7 @@ docs: Endpoints relating to Invoice objects
           "display-name": "Location",
           "endpoints": {
             "index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List of location objects",
               "docs": "Returns a list of location objects in the network.",
               "errors": [
@@ -21759,7 +21720,7 @@ docs: Endpoints relating to Invoice objects
               },
             },
             "network_location_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create and return a new location",
               "docs": undefined,
               "errors": [
@@ -21862,7 +21823,7 @@ docs: Endpoints relating to Invoice objects
               },
             },
             "network_location_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a location by id",
               "docs": "Retrieves the details of a single location",
               "errors": [
@@ -21937,7 +21898,7 @@ docs: Endpoints relating to Invoice objects
               },
             },
             "update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update a network location",
               "docs": undefined,
               "errors": [
@@ -22165,7 +22126,6 @@ service:
     index:
       path: /network/locations
       method: GET
-      auth: false
       docs: Returns a list of location objects in the network.
       source:
         openapi: ../openapi.yml
@@ -22260,7 +22220,6 @@ service:
     network_location_create:
       path: /network/locations
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create and return a new location
@@ -22338,7 +22297,6 @@ service:
     network_location_show:
       path: /network/locations/{id}
       method: GET
-      auth: false
       docs: Retrieves the details of a single location
       source:
         openapi: ../openapi.yml
@@ -22396,7 +22354,6 @@ service:
     update:
       path: /network/locations/{id}
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -22491,7 +22448,7 @@ docs: Endpoints relating to Location objects
           "display-name": "Ports",
           "endpoints": {
             "index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List of ports",
               "docs": undefined,
               "errors": [
@@ -22714,7 +22671,6 @@ service:
     index:
       path: /ports
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: List of ports
@@ -22826,7 +22782,7 @@ docs: Endpoints relating to Ports objects
           "display-name": "Product",
           "endpoints": {
             "create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a product",
               "docs": "Create a new product for this client using the request payload",
               "errors": [
@@ -22937,7 +22893,7 @@ docs: Endpoints relating to Ports objects
               },
             },
             "index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all products for a client",
               "docs": "Returns a list of all products belonging to this client",
               "errors": [
@@ -23018,7 +22974,7 @@ docs: Endpoints relating to Ports objects
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a single product",
               "docs": "Returns the client's product with this ID",
               "errors": [
@@ -23084,7 +23040,7 @@ docs: Endpoints relating to Ports objects
               },
             },
             "update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update a product",
               "docs": "Update this product to represent the request payload",
               "errors": [
@@ -23321,7 +23277,6 @@ service:
     index:
       path: /products
       method: GET
-      auth: false
       docs: Returns a list of all products belonging to this client
       source:
         openapi: ../openapi.yml
@@ -23385,7 +23340,6 @@ service:
     create:
       path: /products
       method: POST
-      auth: false
       docs: Create a new product for this client using the request payload
       source:
         openapi: ../openapi.yml
@@ -23469,7 +23423,6 @@ service:
     show:
       path: /products/{id}
       method: GET
-      auth: false
       docs: Returns the client's product with this ID
       source:
         openapi: ../openapi.yml
@@ -23514,7 +23467,6 @@ service:
     update:
       path: /products/{id}
       method: PATCH
-      auth: false
       docs: Update this product to represent the request payload
       source:
         openapi: ../openapi.yml
@@ -23615,7 +23567,7 @@ docs: Endpoints relating to Product objects
           "display-name": "PurchaseOrder",
           "endpoints": {
             "purchase_order_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create and return a purchase order",
               "docs": undefined,
               "errors": [
@@ -23905,7 +23857,7 @@ docs: Endpoints relating to Product objects
               },
             },
             "purchase_order_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all purchase orders",
               "docs": "Returns a list of purchase orders",
               "errors": [
@@ -24231,7 +24183,7 @@ docs: Endpoints relating to Product objects
               },
             },
             "purchase_order_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a purchase order",
               "docs": "Retrieves the details of a single purchase order.
 ",
@@ -24384,7 +24336,7 @@ docs: Endpoints relating to Product objects
               },
             },
             "purchase_order_update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update and return a purchase order",
               "docs": undefined,
               "errors": [
@@ -24766,7 +24718,6 @@ service:
     purchase_order_index:
       path: /purchase_orders
       method: GET
-      auth: false
       docs: Returns a list of purchase orders
       source:
         openapi: ../openapi.yml
@@ -25008,7 +24959,6 @@ service:
     purchase_order_create:
       path: /purchase_orders
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create and return a purchase order
@@ -25229,7 +25179,6 @@ service:
     purchase_order_show:
       path: /purchase_orders/{id}
       method: GET
-      auth: false
       docs: |
         Retrieves the details of a single purchase order.
       source:
@@ -25349,7 +25298,6 @@ service:
     purchase_order_update:
       path: /purchase_orders/{id}
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -25544,7 +25492,7 @@ docs: >-
           "display-name": "PurchaseOrderLineItem",
           "endpoints": {
             "purchase_order_line_item_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all purchase order line items.",
               "docs": "Returns a list of purchase order line items",
               "errors": [
@@ -25738,7 +25686,7 @@ docs: >-
               },
             },
             "purchase_order_line_item_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a purchase order line item",
               "docs": "Returns the details of a purchase order line item",
               "errors": [
@@ -25978,7 +25926,6 @@ service:
     purchase_order_line_item_index:
       path: /purchase_order_line_items
       method: GET
-      auth: false
       docs: Returns a list of purchase order line items
       source:
         openapi: ../openapi.yml
@@ -26123,7 +26070,6 @@ service:
     purchase_order_line_item_show:
       path: /purchase_order_line_items/{id}
       method: GET
-      auth: false
       docs: Returns the details of a purchase order line item
       source:
         openapi: ../openapi.yml
@@ -26249,7 +26195,7 @@ docs: >-
           "display-name": "Shipment",
           "endpoints": {
             "index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all shipments",
               "docs": "Returns a list of shipments.",
               "errors": [
@@ -26703,7 +26649,7 @@ docs: >-
               },
             },
             "shipments_shareable": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create shareable URLs for shipments",
               "docs": "Returns a list of shipments status shareable url",
               "errors": [
@@ -26770,7 +26716,7 @@ docs: >-
               },
             },
             "show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a shipment",
               "docs": "Retrieves the details of a single shipment.
 ",
@@ -27077,7 +27023,7 @@ docs: >-
               },
             },
             "update": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update an existing shipment",
               "docs": undefined,
               "errors": [
@@ -27618,7 +27564,6 @@ service:
     index:
       path: /shipments
       method: GET
-      auth: false
       docs: Returns a list of shipments.
       source:
         openapi: ../openapi.yml
@@ -28010,7 +27955,6 @@ service:
     show:
       path: /shipments/{id}
       method: GET
-      auth: false
       docs: |
         Retrieves the details of a single shipment.
       source:
@@ -28252,7 +28196,6 @@ service:
     update:
       path: /shipments/{id}
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -28515,7 +28458,6 @@ service:
     shipments_shareable:
       path: /shipments_shareable
       method: POST
-      auth: false
       docs: Returns a list of shipments status shareable url
       source:
         openapi: ../openapi.yml
@@ -28575,7 +28517,7 @@ docs: Endpoints relating to Shipment objects
           "display-name": "ShipmentLeg",
           "endpoints": {
             "shipment_leg_index": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all shipment route legs",
               "docs": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
               "errors": [
@@ -28785,7 +28727,7 @@ docs: Endpoints relating to Shipment objects
               },
             },
             "shipment_leg_show": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Retrieve a shipment route leg",
               "docs": undefined,
               "errors": [
@@ -29044,7 +28986,6 @@ service:
     shipment_leg_index:
       path: /shipment_legs
       method: GET
-      auth: false
       docs: >-
         Returns a list of shipment route legs. The legs are sorted descending by
         creation date.
@@ -29204,7 +29145,6 @@ service:
     shipment_leg_show:
       path: /shipment_legs/{id}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:

@@ -27,7 +27,11 @@
           "base-path": "",
           "endpoints": {
             "get-business-user-userId": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Retrieve a Business User",
               "docs": "### GET Business User
 
@@ -375,7 +379,11 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
               },
             },
             "get-consumer-transaction": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Retrieve a Transaction",
               "docs": "### GET Transactions
 
@@ -547,7 +555,11 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
               },
             },
             "get-consumer-user": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Retrieve a Consumer User",
               "docs": "### GET Consumer User
 
@@ -706,7 +718,11 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
               },
             },
             "post-business-user": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Create a Business User",
               "docs": "## POST Business User
 
@@ -786,7 +802,11 @@ Each consumer Business entity needs three mandatory fields:
               },
             },
             "post-business-user-event": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Create a Business User Event",
               "docs": "## POST Business User Events
 
@@ -1218,7 +1238,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
             },
             "post-consumer-transaction": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Verify a Transaction",
               "docs": "## POST Transactions
 
@@ -1363,7 +1387,11 @@ Here are some of the most used payload fields explained (you can find the full p
               },
             },
             "post-consumer-user": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Create a Consumer User",
               "docs": "## POST Consumer User
 
@@ -1503,7 +1531,11 @@ Each consumer User entity needs three mandatory fields:
               },
             },
             "post-transaction-event": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Create a Transaction Event",
               "docs": "## POST Transaction Events
 
@@ -1723,7 +1755,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
             },
             "post-user-event": {
-              "auth": true,
+              "auth": [
+                {
+                  "x-api-key": [],
+                },
+              ],
               "display-name": "Create a Consumer User Event",
               "docs": "## POST Consumer User Events
 
@@ -7464,7 +7500,8 @@ service:
     post-consumer-transaction:
       path: /transactions
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >-
         ## POST Transactions
 
@@ -7633,7 +7670,8 @@ service:
     get-consumer-transaction:
       path: /transactions/{transactionId}
       method: GET
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >-
         ### GET Transactions
 
@@ -7779,7 +7817,8 @@ service:
     post-transaction-event:
       path: /events/transaction
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >
         ## POST Transaction Events
 
@@ -7973,7 +8012,8 @@ service:
     post-consumer-user:
       path: /consumer/users
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >
         ## POST Consumer User
 
@@ -8085,7 +8125,8 @@ service:
     get-consumer-user:
       path: /consumer/users/{userId}
       method: GET
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >-
         ### GET Consumer User
 
@@ -8200,7 +8241,8 @@ service:
     post-business-user:
       path: /business/users
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >-
         ## POST Business User
 
@@ -8279,7 +8321,8 @@ service:
     get-business-user-userId:
       path: /business/users/{userId}
       method: GET
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >-
         ### GET Business User
 
@@ -8512,7 +8555,8 @@ service:
     post-user-event:
       path: /events/consumer/user
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >
         ## POST Consumer User Events
 
@@ -8701,7 +8745,8 @@ service:
     post-business-user-event:
       path: /events/business/user
       method: POST
-      auth: true
+      auth:
+        - x-api-key: []
       docs: >
         ## POST Business User Events
 

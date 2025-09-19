@@ -59,7 +59,7 @@ types:
     discriminated: false
     union:
       - boolean
-      - map<string, list<string>>
+      - list<map<string, list<string>>>
 
   RetriesConfiguration:
     discriminated: false

@@ -164,6 +164,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             v2BaseUrls,
             basePath: undefined,
             auth: false,
+            security: undefined,
             method: "POST",
             id: this.method.name,
             docs: this.method.description,

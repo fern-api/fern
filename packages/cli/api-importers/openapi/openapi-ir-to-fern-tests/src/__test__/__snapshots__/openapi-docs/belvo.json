@@ -29233,7 +29233,7 @@ client.accounts.list(params: {
           "display-name": "Accounts",
           "endpoints": {
             "DestroyAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an account",
               "docs": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
               "errors": [
@@ -29336,7 +29336,7 @@ client.connect()
               },
             },
             "DetailAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an account's details",
               "docs": "Get the details of a specific account.
 
@@ -30178,7 +30178,7 @@ client.connect()
               },
             },
             "ListAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all accounts",
               "docs": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -30550,7 +30550,7 @@ client.connect()
               },
             },
             "PatchAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an accounts request",
               "docs": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
 
@@ -31491,7 +31491,7 @@ client.connect()
               },
             },
             "RetrieveAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve accounts for a link",
               "docs": "Retrieve accounts from an existing link.
 
@@ -32401,7 +32401,6 @@ service:
     ListAccounts:
       path: /api/accounts/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing accounts in your Belvo account. By
         default, we return up to 100 results per page.
@@ -32772,7 +32771,6 @@ service:
     RetrieveAccounts:
       path: /api/accounts/
       method: POST
-      auth: true
       docs: |-
         Retrieve accounts from an existing link.
 
@@ -33502,7 +33500,6 @@ service:
     PatchAccounts:
       path: /api/accounts/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Account retrieve session that was paused because an
         MFA token was required by the institution.
@@ -34278,7 +34275,6 @@ service:
     DetailAccount:
       path: /api/accounts/{id}/
       method: GET
-      auth: true
       docs: |-
         Get the details of a specific account.
 
@@ -34962,7 +34958,6 @@ service:
     DestroyAccount:
       path: /api/accounts/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific account and all associated transactions, as well as
         owners, from your Belvo account.
@@ -35283,7 +35278,7 @@ client.balances.list(params: {
           "display-name": "Balances",
           "endpoints": {
             "DestroyBalance": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a balance",
               "docs": "Delete a specific balance from your Belvo account.",
               "errors": [
@@ -35386,7 +35381,7 @@ client.connect()
               },
             },
             "DetailBalance": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a balance's details",
               "docs": "Get the details of a specific balance.",
               "errors": [
@@ -35587,7 +35582,7 @@ client.connect()
               },
             },
             "ListBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all balances",
               "docs": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -35905,7 +35900,7 @@ client.connect()
               },
             },
             "PatchBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a balances request",
               "docs": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -36105,7 +36100,7 @@ client.connect()
               },
             },
             "RetrieveBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve balances for a link",
               "docs": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
               "errors": [
@@ -36380,7 +36375,6 @@ service:
     ListBalances:
       path: /api/balances/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing balances in your Belvo account. By
         default, we return up to 100 results per page.
@@ -36670,7 +36664,6 @@ service:
     RetrieveBalances:
       path: /api/balances/
       method: POST
-      auth: true
       docs: >-
         Retrieve balances from one or more accounts for a specific link within a
         specified date range.
@@ -36891,7 +36884,6 @@ service:
     PatchBalances:
       path: /api/balances/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Balance retrieve session that was paused because an MFA
         token was required by the institution.
@@ -37063,7 +37055,6 @@ service:
     DetailBalance:
       path: /api/balances/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific balance.
       source:
         openapi: ../openapi.yml
@@ -37228,7 +37219,6 @@ service:
     DestroyBalance:
       path: /api/balances/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific balance from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -37464,7 +37454,7 @@ docs: >-
           "display-name": "Bank Accounts",
           "endpoints": {
             "CreateBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new bank account",
               "docs": "Create a new bank account from which to send or request funds.",
               "errors": [
@@ -37617,7 +37607,7 @@ docs: >-
               },
             },
             "DetailBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a bank account",
               "docs": "Get the details about a specific bank account",
               "errors": [
@@ -37729,7 +37719,7 @@ docs: >-
               },
             },
             "ListBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all bank accounts",
               "docs": "List all bank accounts associated with your Belvo account.",
               "errors": [
@@ -38022,7 +38012,6 @@ service:
     ListBankAccount:
       path: /payments/bank-accounts/
       method: GET
-      auth: true
       docs: List all bank accounts associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -38204,7 +38193,6 @@ service:
     CreateBankAccount:
       path: /payments/bank-accounts/
       method: POST
-      auth: true
       docs: Create a new bank account from which to send or request funds.
       source:
         openapi: ../openapi.yml
@@ -38314,7 +38302,6 @@ service:
     DetailBankAccount:
       path: /payments/bank-accounts/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific bank account
       source:
         openapi: ../openapi.yml
@@ -38442,7 +38429,7 @@ types:
           "display-name": "Categorization",
           "endpoints": {
             "CategorizeTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Categorize transactions",
               "docs": "Send through your raw transaction data and receive enriched information for each of your transactions.
 
@@ -38573,7 +38560,6 @@ service:
     CategorizeTransactions:
       path: /api/categorization/
       method: POST
-      auth: true
       docs: >-
         Send through your raw transaction data and receive enriched information
         for each of your transactions.
@@ -38700,7 +38686,7 @@ docs: >-
           "display-name": "Customers",
           "endpoints": {
             "CreateCustomer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new customer",
               "docs": "Create a new customer to send or request funds.",
               "errors": [
@@ -38807,7 +38793,7 @@ docs: >-
               },
             },
             "DetailCustomer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a customer",
               "docs": "Get the details about a specific customer",
               "errors": [
@@ -38898,7 +38884,7 @@ docs: >-
               },
             },
             "ListCustomers": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all customers",
               "docs": "List all customers associated with your Belvo account.",
               "errors": [
@@ -39184,7 +39170,6 @@ service:
     ListCustomers:
       path: /payments/customers/
       method: GET
-      auth: true
       docs: List all customers associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -39371,7 +39356,6 @@ service:
     CreateCustomer:
       path: /payments/customers/
       method: POST
-      auth: true
       docs: Create a new customer to send or request funds.
       source:
         openapi: ../openapi.yml
@@ -39456,7 +39440,6 @@ service:
     DetailCustomer:
       path: /payments/customers/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific customer
       source:
         openapi: ../openapi.yml
@@ -39578,7 +39561,7 @@ At the moment, the employment records resource is available for:
           "display-name": "Employment Records",
           "endpoints": {
             "DestroyEmploymentRecord": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an employment record",
               "docs": "Delete a specific employment record from your Belvo account.",
               "errors": [
@@ -39606,7 +39589,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "DetailEmploymentRecord": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an employment record's details",
               "docs": "Get the details of a specific employment record.",
               "errors": [
@@ -39713,7 +39696,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "ListEmploymentRecords": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all employment records",
               "docs": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -39810,7 +39793,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "RetrieveEmploymentRecordDetails": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve employment record details",
               "docs": "Retrieve employment record details for an individual.
 ",
@@ -39950,7 +39933,6 @@ service:
     ListEmploymentRecords:
       path: /api/employment-records/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing employment records in your Belvo
         account. By default, we return up to 100 results per page.
@@ -40031,7 +40013,6 @@ service:
     RetrieveEmploymentRecordDetails:
       path: /api/employment-records/
       method: POST
-      auth: true
       docs: |
         Retrieve employment record details for an individual.
       source:
@@ -40133,7 +40114,6 @@ service:
     DetailEmploymentRecord:
       path: /api/employment-records/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific employment record.
       source:
         openapi: ../openapi.yml
@@ -40219,7 +40199,6 @@ service:
     DestroyEmploymentRecord:
       path: /api/employment-records/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific employment record from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -40257,7 +40236,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
           "display-name": "Income Verification",
           "endpoints": {
             "VerifyIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Verify incomes",
               "docs": "Send through your raw data and receive enriched information for each of your user's income streams.
 
@@ -40431,7 +40410,6 @@ service:
     VerifyIncome:
       path: /api/enrich/incomes/
       method: POST
-      auth: true
       docs: >-
         Send through your raw data and receive enriched information for each of
         your user's income streams.
@@ -40659,7 +40637,7 @@ client.incomes.list(params: {
           "display-name": "Incomes",
           "endpoints": {
             "DestroyIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an income",
               "docs": "Delete a specific income from your Belvo account.",
               "errors": [
@@ -40762,7 +40740,7 @@ client.connect()
               },
             },
             "DetailIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an income's details",
               "docs": "Get the details of a specific income.",
               "errors": [
@@ -40911,7 +40889,7 @@ client.connect()
               },
             },
             "ListIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all incomes",
               "docs": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -41110,7 +41088,7 @@ client.connect()
               },
             },
             "PatchIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an incomes request",
               "docs": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -41276,7 +41254,7 @@ client.connect()
               },
             },
             "RetrieveIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve incomes for a link",
               "docs": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
               "errors": [
@@ -41522,7 +41500,6 @@ service:
     ListIncomes:
       path: /api/incomes/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all incomes in your Belvo account. By default,
         we return up to 100 results per page.
@@ -41698,7 +41675,6 @@ service:
     RetrieveIncome:
       path: /api/incomes/
       method: POST
-      auth: true
       docs: >-
         Retrieve income insights for <b>checking and savings accounts</b> from a
         specific link. You can receive insights for a period of up to 365 days,
@@ -41907,7 +41883,6 @@ service:
     PatchIncomes:
       path: /api/incomes/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Income retrieve session that was paused because an MFA
         token was required by the institution.
@@ -42053,7 +42028,6 @@ service:
     DetailIncome:
       path: /api/incomes/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific income.
       source:
         openapi: ../openapi.yml
@@ -42178,7 +42152,6 @@ service:
     DestroyIncomes:
       path: /api/incomes/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific income from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -42383,7 +42356,7 @@ You can see a complete list of institutions by either consulting our [Institutio
           "display-name": "Institutions",
           "endpoints": {
             "DetailInstitution": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an institution's details",
               "docs": "Get the details of a specific institution.",
               "errors": [
@@ -42559,7 +42532,7 @@ client.connect()
               },
             },
             "ListInstitutions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all institutions",
               "docs": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
               "errors": [
@@ -42810,7 +42783,6 @@ service:
     ListInstitutions:
       path: /api/institutions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the institutions currently supported by
         Belvo. By default, we return up to 100 results per page.
@@ -43024,7 +42996,6 @@ service:
     DetailInstitution:
       path: /api/institutions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific institution.
       source:
         openapi: ../openapi.yml
@@ -43248,7 +43219,7 @@ client. investments_portfolio.list(params: {
           "display-name": "Investment Portfolios",
           "endpoints": {
             "DestroyPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a portfolio",
               "docs": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
               "errors": [
@@ -43342,7 +43313,7 @@ client.connect()
               },
             },
             "DetailPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a portfolio's details",
               "docs": "Get the details of a specific portfolio.",
               "errors": [
@@ -43510,7 +43481,7 @@ client.connect()
               },
             },
             "ListPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all portfolios",
               "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -43698,7 +43669,7 @@ client.connect()
               },
             },
             "PatchPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a portfolios request",
               "docs": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -43873,7 +43844,7 @@ client.connect()
               },
             },
             "RetrievePortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve portfolios for a link",
               "docs": "Retrieve all portfolios for an existing link.",
               "errors": [
@@ -44055,7 +44026,6 @@ service:
     ListPortfolio:
       path: /investments/portfolios/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing portfolios (and their
         instruments) in your Belvo account. By default, we return up to 100
@@ -44220,7 +44190,6 @@ service:
     RetrievePortfolio:
       path: /investments/portfolios/
       method: POST
-      auth: true
       docs: Retrieve all portfolios for an existing link.
       source:
         openapi: ../openapi.yml
@@ -44359,7 +44328,6 @@ service:
     PatchPortfolio:
       path: /investments/portfolios/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a portfolio retrieve session that was paused because an
         MFA token was required by the institution.
@@ -44507,7 +44475,6 @@ service:
     DetailPortfolio:
       path: /investments/portfolios/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific portfolio.
       source:
         openapi: ../openapi.yml
@@ -44649,7 +44616,6 @@ service:
     DestroyPortfolio:
       path: /investments/portfolios/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific investment portfolio and all associated instruments,
         transactions, and owners from your Belvo account.
@@ -44905,7 +44871,7 @@ client.invoices.list(params: {
           "display-name": "Invoices",
           "endpoints": {
             "DestroyInvoice": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an invoice",
               "docs": "Delete a specific invoice from your Belvo account.",
               "errors": [
@@ -45009,7 +44975,7 @@ client.connect()
               },
             },
             "DetailInvoice": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an invoice's details",
               "docs": "Get the details of a specific invoice.",
               "errors": [
@@ -45968,7 +45934,7 @@ client.connect()
               },
             },
             "ListInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all invoices",
               "docs": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
               "errors": [
@@ -47208,7 +47174,7 @@ client.connect()
               },
             },
             "PatchInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an invoices request",
               "docs": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -47440,7 +47406,7 @@ client.connect()
               },
             },
             "RetrieveInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve invoices for a link",
               "docs": "Retrieve invoice information from a specific fiscal link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>
@@ -48612,7 +48578,6 @@ service:
     ListInvoices:
       path: /api/invoices/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing invoices in your Belvo account. By
         default, we return 100 results per page.
@@ -49704,7 +49669,6 @@ service:
     RetrieveInvoices:
       path: /api/invoices/
       method: POST
-      auth: true
       docs: >
         Retrieve invoice information from a specific fiscal link.
 
@@ -50645,7 +50609,6 @@ service:
     PatchInvoices:
       path: /api/invoices/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Invoice retrieve session that was paused because an
         MFA token was required by the institution.
@@ -50850,7 +50813,6 @@ service:
     DetailInvoice:
       path: /api/invoices/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific invoice.
       source:
         openapi: ../openapi.yml
@@ -51655,7 +51617,6 @@ service:
     DestroyInvoice:
       path: /api/invoices/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific invoice from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -51920,7 +51881,7 @@ For single links, you have to perform POST calls to an institution **every time*
           "display-name": "Links",
           "endpoints": {
             "ChangeLinkAccessMode": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Change a link's access mode",
               "docs": "Change a link's access mode from `single` to `recurrent` or from `recurrent` to single.
 ℹ️ **Note**: When you change a link from `single`` to `recurrent`, they will only be updated the next day at the scheduled interval.",
@@ -51999,7 +51960,7 @@ For single links, you have to perform POST calls to an institution **every time*
               },
             },
             "DestroyLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a link",
               "docs": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
 # Deleting links in batches
@@ -52109,7 +52070,7 @@ client.connect()
               },
             },
             "DetailLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a link's details",
               "docs": "Get the details of a specific link.",
               "errors": [
@@ -52246,7 +52207,7 @@ client.connect()
               },
             },
             "ListLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all links",
               "docs": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -52498,7 +52459,7 @@ client.connect()
               },
             },
             "PatchLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a links request",
               "docs": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -52651,7 +52612,7 @@ client.connect()
               },
             },
             "RegisterLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Register a new link",
               "docs": "Register a new link with your Belvo account.
 
@@ -52950,7 +52911,7 @@ For a list of standards codes, see the table below.
               },
             },
             "UpdateLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a link's credentials",
               "docs": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>
@@ -53197,7 +53158,6 @@ service:
     ListLinks:
       path: /api/links/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing links in your Belvo account. By
         default, we return up to 100 results per page.
@@ -53438,7 +53398,6 @@ service:
     RegisterLink:
       path: /api/links/
       method: POST
-      auth: true
       docs: >
         Register a new link with your Belvo account.
 
@@ -53793,7 +53752,6 @@ service:
     PatchLinks:
       path: /api/links/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Link register session that was paused because an MFA
         token was required by the institution.
@@ -53929,7 +53887,6 @@ service:
     DetailLink:
       path: /api/links/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific link.
       source:
         openapi: ../openapi.yml
@@ -54045,7 +54002,6 @@ service:
     UpdateLink:
       path: /api/links/{id}/
       method: PUT
-      auth: true
       docs: >
         Update the credentials of a specific link. If the successfully updated
         link is a recurrent one, we automatically trigger an update of the link.
@@ -54271,7 +54227,6 @@ service:
     DestroyLink:
       path: /api/links/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific link and all associated accounts, transactions, and
         owners from your Belvo account.
@@ -54364,7 +54319,6 @@ service:
     ChangeLinkAccessMode:
       path: /api/links/{id}/
       method: PATCH
-      auth: true
       docs: >-
         Change a link's access mode from `single` to `recurrent` or from
         `recurrent` to single.
@@ -54558,7 +54512,7 @@ client.owners.list(params: {
           "display-name": "Owners",
           "endpoints": {
             "DestroyOwner": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an owner",
               "docs": "Delete a specific owner from your Belvo account.",
               "errors": [
@@ -54661,7 +54615,7 @@ client.connect()
               },
             },
             "DetailOwner": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an owner's details",
               "docs": "Get the details of a specific owner.",
               "errors": [
@@ -54803,7 +54757,7 @@ Cancun, COL 10447",
               },
             },
             "ListOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all owners",
               "docs": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -55019,7 +54973,7 @@ Cancun, COL 10447",
               },
             },
             "PatchOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an owners request",
               "docs": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -55180,7 +55134,7 @@ Cancun, COL 10447",
               },
             },
             "RetrieveOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve owners for a link",
               "docs": "Retrieve owner information from a specific link.",
               "errors": [
@@ -55346,7 +55300,6 @@ service:
     ListOwners:
       path: /api/owners/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing owners in your Belvo account. We
         return up to 100 results per page.
@@ -55546,7 +55499,6 @@ service:
     RetrieveOwners:
       path: /api/owners/
       method: POST
-      auth: true
       docs: Retrieve owner information from a specific link.
       source:
         openapi: ../openapi.yml
@@ -55677,7 +55629,6 @@ service:
     PatchOwners:
       path: /api/owners/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Owner retrieve session that was paused because an MFA
         token was required by the institution.
@@ -55819,7 +55770,6 @@ service:
     DetailOwner:
       path: /api/owners/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific owner.
       source:
         openapi: ../openapi.yml
@@ -55940,7 +55890,6 @@ service:
     DestroyOwner:
       path: /api/owners/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific owner from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -56119,7 +56068,7 @@ docs: >-
           "display-name": "Payment Institutions",
           "endpoints": {
             "DetailPaymentInstitution": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment institution",
               "docs": "Get the details about a specific payment institution",
               "errors": [
@@ -56188,7 +56137,7 @@ docs: >-
               },
             },
             "ListPaymentInstitutions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment institutions",
               "docs": "List all available payment institutions.",
               "errors": [
@@ -56311,7 +56260,6 @@ service:
     ListPaymentInstitutions:
       path: /payments/institutions/
       method: GET
-      auth: true
       docs: List all available payment institutions.
       source:
         openapi: ../openapi.yml
@@ -56399,7 +56347,6 @@ service:
     DetailPaymentInstitution:
       path: /payments/institutions/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment institution
       source:
         openapi: ../openapi.yml
@@ -56477,7 +56424,7 @@ A payment intent captures all payment information (such as the amount to be char
           "display-name": "Payment Intents",
           "endpoints": {
             "CreatePaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new payment intent",
               "docs": "Create a payment intent.",
               "errors": [
@@ -56638,7 +56585,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "DetailPaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment intent",
               "docs": "Get the details about a specific payment intent.",
               "errors": [
@@ -56743,7 +56690,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "ListPaymentIntents": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment intents",
               "docs": "List all payment intents associated with your Belvo account.",
               "errors": [
@@ -56918,7 +56865,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "PatchPaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a payment intent",
               "docs": "Complete a new payment intent.
 
@@ -57088,7 +57035,6 @@ service:
     ListPaymentIntents:
       path: /payments/payment-intents/
       method: GET
-      auth: true
       docs: List all payment intents associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -57232,7 +57178,6 @@ service:
     CreatePaymentIntent:
       path: /payments/payment-intents/
       method: POST
-      auth: true
       docs: Create a payment intent.
       source:
         openapi: ../openapi.yml
@@ -57365,7 +57310,6 @@ service:
     DetailPaymentIntent:
       path: /payments/payment-intents/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment intent.
       source:
         openapi: ../openapi.yml
@@ -57445,7 +57389,6 @@ service:
     PatchPaymentIntent:
       path: /payments/payment-intents/{id}/
       method: PATCH
-      auth: true
       docs: >-
         Complete a new payment intent.
 
@@ -57600,7 +57543,7 @@ types:
           "display-name": "Payment Links",
           "endpoints": {
             "CreatePaymentlink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a payment link",
               "docs": "Create a new payment link to start a hosted-widget payment.",
               "errors": [
@@ -57698,7 +57641,7 @@ types:
               },
             },
             "DetailCreatePaymentlink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment link",
               "docs": "Get the details about a payment link.",
               "errors": [
@@ -57787,7 +57730,7 @@ types:
               },
             },
             "ListPaymentLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment links",
               "docs": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -58043,7 +57986,6 @@ service:
     ListPaymentLinks:
       path: /payments/payment-links/
       method: GET
-      auth: true
       docs: >-
         List all payment links associated with your Belvo account. By default,
         we return up to 100 results per page.
@@ -58157,7 +58099,6 @@ service:
     CreatePaymentlink:
       path: /payments/payment-links/
       method: POST
-      auth: true
       docs: Create a new payment link to start a hosted-widget payment.
       source:
         openapi: ../openapi.yml
@@ -58232,7 +58173,6 @@ service:
     DetailCreatePaymentlink:
       path: /payments/payment-links/{access_token}/
       method: GET
-      auth: true
       docs: Get the details about a payment link.
       source:
         openapi: ../openapi.yml
@@ -58326,7 +58266,7 @@ You can use the Payment Transactions resource in order to get useful information
           "display-name": "Payment Transactions",
           "endpoints": {
             "DetailPaymentTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment transaction",
               "docs": "Get the details about a specific payment transaction.",
               "errors": [
@@ -58376,7 +58316,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             },
             "ListPaymentTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment transactions",
               "docs": "List all payment transactions associated with your Belvo account.",
               "errors": [
@@ -58559,7 +58499,6 @@ service:
     ListPaymentTransactions:
       path: /payments/transactions/
       method: GET
-      auth: true
       docs: List all payment transactions associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -58704,7 +58643,6 @@ service:
     DetailPaymentTransactions:
       path: /payments/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment transaction.
       source:
         openapi: ../openapi.yml
@@ -58765,7 +58703,7 @@ docs: >
           "display-name": "Payment Webhooks",
           "endpoints": {
             "DeletePaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a payment webhook",
               "docs": "Delete a specific payment webhook from your Belvo account.",
               "errors": [
@@ -58793,7 +58731,7 @@ docs: >
               },
             },
             "DetailPaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment webhook",
               "docs": "Get the details about a specific payment webhook.",
               "errors": [
@@ -58839,7 +58777,7 @@ docs: >
               },
             },
             "ListPaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment webhooks",
               "docs": "List all payment webhooks associated with your Belvo account.",
               "errors": [
@@ -58882,7 +58820,7 @@ docs: >
               },
             },
             "RegisterPaymentWebhook": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Register a new payment webhook",
               "docs": "Register a new payments webhook for your Belvo account.
 ",
@@ -58973,7 +58911,6 @@ service:
     ListPaymentWebhooks:
       path: /payments/webhooks/
       method: GET
-      auth: true
       docs: List all payment webhooks associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -59002,7 +58939,6 @@ service:
     RegisterPaymentWebhook:
       path: /payments/webhooks/
       method: POST
-      auth: true
       docs: |
         Register a new payments webhook for your Belvo account.
       source:
@@ -59059,7 +58995,6 @@ service:
     DetailPaymentWebhooks:
       path: /payments/webhooks/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment webhook.
       source:
         openapi: ../openapi.yml
@@ -59091,7 +59026,6 @@ service:
     DeletePaymentWebhooks:
       path: /payments/webhooks/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific payment webhook from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -59136,7 +59070,7 @@ docs: >+
           "display-name": "Receivable Transactions",
           "endpoints": {
             "DestroyReceivableTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a receivable transaction",
               "docs": "Delete a specific receivable transaction from your Belvo account.",
               "errors": [
@@ -59164,7 +59098,7 @@ docs: >+
               },
             },
             "DetailReceivableTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a receivable transaction's details",
               "docs": "Get the details of a specific receivable transaction.",
               "errors": [
@@ -59246,7 +59180,7 @@ docs: >+
               },
             },
             "ListReceivableTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all receivable transactions",
               "docs": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -59437,7 +59371,7 @@ docs: >+
               },
             },
             "RetrieveReceivableTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve receivable transactions for a link",
               "docs": "Retrieve all receivable transactions for an existing link.",
               "errors": [
@@ -59582,7 +59516,6 @@ service:
     ListReceivableTransactions:
       path: /receivables/transactions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing receivable transactions in your
         Belvo account. We return up to 100 results per page.
@@ -59767,7 +59700,6 @@ service:
     RetrieveReceivableTransactions:
       path: /receivables/transactions/
       method: POST
-      auth: true
       docs: Retrieve all receivable transactions for an existing link.
       source:
         openapi: ../openapi.yml
@@ -59875,7 +59807,6 @@ service:
     DetailReceivableTransaction:
       path: /receivables/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific receivable transaction.
       source:
         openapi: ../openapi.yml
@@ -59941,7 +59872,6 @@ service:
     DestroyReceivableTransaction:
       path: /receivables/transactions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific receivable transaction from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -60027,7 +59957,7 @@ client. recurring_expenses.list(params: {
           "display-name": "Recurring Expenses",
           "endpoints": {
             "DestroyRecurringExpense": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a recurring expense",
               "docs": "Delete a specific recurring expense from your Belvo account.",
               "errors": [
@@ -60121,7 +60051,7 @@ client.connect()
               },
             },
             "DetailRecurringExpense": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a recurring expense's details",
               "docs": "Get the details of a specific recurring expense.",
               "errors": [
@@ -60306,7 +60236,7 @@ client.connect()
               },
             },
             "ListRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all recurring expenses",
               "docs": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -60532,7 +60462,7 @@ client.connect()
               },
             },
             "PatchRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a recurring expenses request",
               "docs": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -60725,7 +60655,7 @@ client.connect()
               },
             },
             "RetrieveRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve recurring expenses for a link",
               "docs": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
               "errors": [
@@ -60978,7 +60908,6 @@ service:
     ListRecurringExpenses:
       path: /api/recurring-expenses/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all recurring expenses in your Belvo account. By
         default, we return up to 100 results per page.
@@ -61176,7 +61105,6 @@ service:
     RetrieveRecurringExpenses:
       path: /api/recurring-expenses/
       method: POST
-      auth: true
       docs: >-
         Retrieve recurring expense insights for <b>checking and savings
         accounts</b> from a specific link. You can receive insights for a period
@@ -61384,7 +61312,6 @@ service:
     PatchRecurringExpenses:
       path: /api/recurring-expenses/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Recurring Expenses retrieve session that was paused
         because an MFA token was required by the institution.
@@ -61551,7 +61478,6 @@ service:
     DetailRecurringExpense:
       path: /api/recurring-expenses/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific recurring expense.
       source:
         openapi: ../openapi.yml
@@ -61708,7 +61634,6 @@ service:
     DestroyRecurringExpense:
       path: /api/recurring-expenses/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific recurring expense from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -61911,7 +61836,7 @@ client. risk_insights.list(params: {
           "display-name": "Risk Insights",
           "endpoints": {
             "DestroyRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a risk insight",
               "docs": "Delete a specific risk insight from your Belvo account.",
               "errors": [
@@ -62016,7 +61941,7 @@ client.connect()
               },
             },
             "DetailRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a risk insight's details",
               "docs": "Get the details of a specific risk insight.",
               "errors": [
@@ -62222,7 +62147,7 @@ client.connect()
               },
             },
             "ListRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all risk insights",
               "docs": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -62475,7 +62400,7 @@ client.connect()
               },
             },
             "PatchRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a risk insights request",
               "docs": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -62698,7 +62623,7 @@ client.connect()
               },
             },
             "RetrieveRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve risk insights for a link",
               "docs": "Request the risk insights for a given link ID.
 
@@ -62928,7 +62853,6 @@ service:
     ListRiskInsights:
       path: /api/risk-insights/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all risk insight analyses in your Belvo account.
         By default, we return up to 100 results per page.
@@ -63153,7 +63077,6 @@ service:
     RetrieveRiskInsights:
       path: /api/risk-insights/
       method: POST
-      auth: true
       docs: >-
         Request the risk insights for a given link ID.
 
@@ -63347,7 +63270,6 @@ service:
     PatchRiskInsights:
       path: /api/risk-insights/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Risk insights retrieve session that was paused because
         an MFA token was required by the institution.
@@ -63546,7 +63468,6 @@ service:
     DetailRiskInsights:
       path: /api/risk-insights/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific risk insight.
       source:
         openapi: ../openapi.yml
@@ -63724,7 +63645,6 @@ service:
     DestroyRiskInsights:
       path: /api/risk-insights/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific risk insight from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -63926,7 +63846,7 @@ If you have entered your credentials correctly, you will receive a **201 Respons
           "display-name": "Secret Keys",
           "endpoints": {
             "CreateSecretKeys": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Request API keys",
               "docs": "Request API keys to use with Belvo's Payments API.
 
@@ -63970,7 +63890,7 @@ For example:
               },
             },
             "ListSecretKeys": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all secret keys",
               "docs": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
 
@@ -64025,7 +63945,6 @@ service:
     ListSecretKeys:
       path: /payments/secret-keys/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing secret keys in your Belvo account.
         We return up to 100 results per page.
@@ -64055,7 +63974,6 @@ service:
     CreateSecretKeys:
       path: /payments/secret-keys/
       method: POST
-      auth: true
       docs: >
         Request API keys to use with Belvo's Payments API.
 
@@ -64201,7 +64119,7 @@ client.tax_compliance_status.list(params: {
           "display-name": "Tax compliance status",
           "endpoints": {
             "DestroyTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax compliance status",
               "docs": "Delete a specific Tax compliance status from your Belvo account.",
               "errors": [
@@ -64304,7 +64222,7 @@ client.connect()
               },
             },
             "DetailTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax compliance status's details",
               "docs": "Get the details of a specific Tax compliance status.",
               "errors": [
@@ -64438,7 +64356,7 @@ client.connect()
               },
             },
             "ListTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax compliance statuses",
               "docs": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -64644,7 +64562,7 @@ client.connect()
               },
             },
             "RetrieveTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax compliance statuses for a link",
               "docs": "Retrieve the Tax compliance status information for a specific fiscal link.",
               "errors": [
@@ -64826,7 +64744,6 @@ service:
     ListTaxComplianceStatus:
       path: /api/tax-compliance-status/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing Tax compliance statuses in your
         Belvo account. By default, we return up to 100 results per page.
@@ -65017,7 +64934,6 @@ service:
     RetrieveTaxComplianceStatus:
       path: /api/tax-compliance-status/
       method: POST
-      auth: true
       docs: >-
         Retrieve the Tax compliance status information for a specific fiscal
         link.
@@ -65164,7 +65080,6 @@ service:
     DetailTaxComplianceStatus:
       path: /api/tax-compliance-status/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific Tax compliance status.
       source:
         openapi: ../openapi.yml
@@ -65279,7 +65194,6 @@ service:
     DestroyTaxComplianceStatus:
       path: /api/tax-compliance-status/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific Tax compliance status from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -65478,7 +65392,7 @@ At the moment, the Tax Declaration resource is available for:
           "display-name": "Tax declarations",
           "endpoints": {
             "DestroyTaxDeclaration": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax declration",
               "docs": "Delete a specific Tax declaration from your Belvo account.",
               "errors": [
@@ -65581,7 +65495,7 @@ client.connect()
               },
             },
             "DetailTaxDeclaration": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax declaration's details",
               "docs": "Get the details of a specific Tax declaration.",
               "errors": [
@@ -65781,7 +65695,7 @@ client.connect()
               },
             },
             "ListTaxDeclarations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax declarations",
               "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -66085,7 +65999,7 @@ client.connect()
               },
             },
             "RetrieveTaxDeclarations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax declarations for a link",
               "docs": "Retrieve tax declaration information for a specific fiscal link.",
               "errors": [
@@ -66422,7 +66336,6 @@ service:
     ListTaxDeclarations:
       path: /api/tax-declarations/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax declarations in your Belvo
         account. By default, we return up to 100 results per page.
@@ -66694,7 +66607,6 @@ service:
     RetrieveTaxDeclarations:
       path: /api/tax-declarations/
       method: POST
-      auth: true
       docs: Retrieve tax declaration information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -66918,7 +66830,6 @@ service:
     DetailTaxDeclaration:
       path: /api/tax-declarations/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific Tax declaration.
       source:
         openapi: ../openapi.yml
@@ -67089,7 +67000,6 @@ service:
     DestroyTaxDeclaration:
       path: /api/tax-declarations/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific Tax declaration from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -67255,7 +67165,7 @@ client.tax_retentions.list(params: {
           "display-name": "Tax retentions",
           "endpoints": {
             "DestroyTaxRetention": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax retention",
               "docs": "Delete a specific tax retention from your Belvo account.",
               "errors": [
@@ -67283,7 +67193,7 @@ client.tax_retentions.list(params: {
               },
             },
             "DetailTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax retention's details",
               "docs": "Get the details of a specific tax retention.",
               "errors": [
@@ -67365,7 +67275,7 @@ client.tax_retentions.list(params: {
               },
             },
             "ListTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax retentions",
               "docs": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -67508,7 +67418,7 @@ client.tax_retentions.list(params: {
               },
             },
             "RetrieveTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax retentions for a link",
               "docs": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
               "errors": [
@@ -67660,7 +67570,6 @@ service:
     ListTaxRetentions:
       path: /api/tax-retentions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax retentions in your Belvo
         account. We return up to 100 results per page.
@@ -67793,7 +67702,6 @@ service:
     RetrieveTaxRetentions:
       path: /api/tax-retentions/
       method: POST
-      auth: true
       docs: >-
         Retrieve tax retention information from a specific link. The maximum
         number of tax retentions that can be returned for a period is 500.
@@ -67911,7 +67819,6 @@ service:
     DetailTaxRetentions:
       path: /api/tax-retentions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax retention.
       source:
         openapi: ../openapi.yml
@@ -67980,7 +67887,6 @@ service:
     DestroyTaxRetention:
       path: /api/tax-retentions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax retention from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -68175,7 +68081,7 @@ client.tax_returns.list(params: {
           "display-name": "Tax returns",
           "endpoints": {
             "DestroyTaxReturn": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax return",
               "docs": "Delete a specific tax return from your Belvo account.",
               "errors": [
@@ -68278,7 +68184,7 @@ client.connect()
               },
             },
             "DetailTaxReturn": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax return's details",
               "docs": "Get the details of a specific tax return.",
               "errors": [
@@ -69699,7 +69605,7 @@ client.connect()
               },
             },
             "ListTaxReturns": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax returns",
               "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
               "errors": [
@@ -70997,7 +70903,7 @@ client.connect()
               },
             },
             "RetrieveTaxReturns": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax returns for a link",
               "docs": "Retrieve tax return information for a specific fiscal link.",
               "errors": [
@@ -72908,7 +72814,6 @@ service:
     ListTaxReturns:
       path: /api/tax-returns/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax returns in your Belvo account.
         By default, we return up to 100 results per page. The results will
@@ -73994,7 +73899,6 @@ service:
     RetrieveTaxReturns:
       path: /api/tax-returns/
       method: POST
-      auth: true
       docs: Retrieve tax return information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -75459,7 +75363,6 @@ service:
     DetailTaxReturn:
       path: /api/tax-returns/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax return.
       source:
         openapi: ../openapi.yml
@@ -76554,7 +76457,6 @@ service:
     DestroyTaxReturn:
       path: /api/tax-returns/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax return from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -76797,7 +76699,7 @@ client.tax_status.list(params: {
           "display-name": "Tax status",
           "endpoints": {
             "DestroyTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax status",
               "docs": "Delete a specific tax status from your Belvo account.",
               "errors": [
@@ -76900,7 +76802,7 @@ client.connect()
               },
             },
             "DetailTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax status's details",
               "docs": "Get the details of a specific tax status.",
               "errors": [
@@ -77243,7 +77145,7 @@ client.connect()
               },
             },
             "ListTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax statuses",
               "docs": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -77669,7 +77571,7 @@ client.connect()
               },
             },
             "RetrieveTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax statuses for a link",
               "docs": "Retrieve tax status information for a specific fiscal link.",
               "errors": [
@@ -78106,7 +78008,6 @@ service:
     ListTaxStatus:
       path: /api/tax-status/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax status in your Belvo account.
         By default, we return up to 100 results per page.
@@ -78476,7 +78377,6 @@ service:
     RetrieveTaxStatus:
       path: /api/tax-status/
       method: POST
-      auth: true
       docs: Retrieve tax status information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -78803,7 +78703,6 @@ service:
     DetailTaxStatus:
       path: /api/tax-status/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax status.
       source:
         openapi: ../openapi.yml
@@ -79088,7 +78987,6 @@ service:
     DestroyTaxStatus:
       path: /api/tax-status/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax status from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -79342,7 +79240,7 @@ client.transactions.list(params: {
           "display-name": "Transactions",
           "endpoints": {
             "DestroyTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a transaction",
               "docs": "Delete a specific transaction from your Belvo account.",
               "errors": [
@@ -79445,7 +79343,7 @@ client.connect()
               },
             },
             "DetailTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a transaction's details",
               "docs": "Get the details of a specific transaction.",
               "errors": [
@@ -80036,7 +79934,7 @@ client.connect()
               },
             },
             "ListTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all transactions",
               "docs": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -80934,7 +80832,7 @@ client.connect()
               },
             },
             "PatchTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a transactions request",
               "docs": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -81524,7 +81422,7 @@ client.connect()
               },
             },
             "RetrieveTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve transactions for a link",
               "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -82132,7 +82030,7 @@ client.connect()
               },
             },
             "RetrieveTransactions_async": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve transactions for a link",
               "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -82308,7 +82206,6 @@ service:
     ListTransactions:
       path: /api/transactions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing transactions in your Belvo account.
         By default, we return up to 100 results per page.
@@ -83164,7 +83061,6 @@ service:
     RetrieveTransactions:
       path: /api/transactions/
       method: POST
-      auth: true
       docs: >
         Retrieve transactions for one or more accounts from a specific link.
 
@@ -83693,7 +83589,6 @@ service:
     RetrieveTransactions_async:
       path: /api/transactions/
       method: POST
-      auth: true
       docs: >
         Retrieve transactions for one or more accounts from a specific link.
 
@@ -83843,7 +83738,6 @@ service:
     PatchTransactions:
       path: /api/transactions/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Transaction retrieve session that was paused because an
         MFA token was required by the institution.
@@ -84346,7 +84240,6 @@ service:
     DetailTransaction:
       path: /api/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific transaction.
       source:
         openapi: ../openapi.yml
@@ -84834,7 +84727,6 @@ service:
     DestroyTransaction:
       path: /api/transactions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific transaction from your Belvo account.
       source:
         openapi: ../openapi.yml

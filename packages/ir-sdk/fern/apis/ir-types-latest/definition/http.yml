@@ -62,7 +62,8 @@ types:
       response: optional<HttpResponse>
       v2Responses: optional<V2HttpResponses>
       errors: ResponseErrors
-      auth: auth.EndpointAuth
+      auth: boolean
+      security: optional<list<map<auth.AuthSchemeKey, list<string>>>>
       idempotent: boolean
       pagination: optional<Pagination>
       userSpecifiedExamples: list<UserSpecifiedEndpointExample>

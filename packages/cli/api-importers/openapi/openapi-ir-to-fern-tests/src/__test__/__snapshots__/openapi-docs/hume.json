@@ -10,7 +10,11 @@
           "base-path": "",
           "endpoints": {
             "Get Job Predictions": {
-              "auth": true,
+              "auth": [
+                {
+                  "Authentication": [],
+                },
+              ],
               "display-name": "Get Job Predictions",
               "docs": "Get the JSON predictions of a completed job.",
               "examples": [
@@ -61,7 +65,11 @@
               },
             },
             "List Jobs": {
-              "auth": true,
+              "auth": [
+                {
+                  "Authentication": [],
+                },
+              ],
               "display-name": "List Jobs",
               "docs": "Sort and filter jobs.",
               "examples": [
@@ -136,7 +144,11 @@
               },
             },
             "Start Job": {
-              "auth": true,
+              "auth": [
+                {
+                  "Authentication": [],
+                },
+              ],
               "display-name": "Start Job",
               "docs": "Start a new batch job.",
               "examples": [
@@ -2121,7 +2133,8 @@ This message indicates the user has interrupted the assistant’s response. EVI 
     List Jobs:
       path: /v0/batch/jobs
       method: GET
-      auth: true
+      auth:
+        - Authentication: []
       docs: Sort and filter jobs.
       source:
         openapi: ../openapi.yaml
@@ -2173,7 +2186,8 @@ This message indicates the user has interrupted the assistant’s response. EVI 
     Start Job:
       path: /v0/batch/jobs
       method: POST
-      auth: true
+      auth:
+        - Authentication: []
       docs: Start a new batch job.
       source:
         openapi: ../openapi.yaml
@@ -2220,7 +2234,8 @@ This message indicates the user has interrupted the assistant’s response. EVI 
     Get Job Predictions:
       path: /v0/batch/jobs/{id}/predictions
       method: GET
-      auth: true
+      auth:
+        - Authentication: []
       docs: Get the JSON predictions of a completed job.
       source:
         openapi: ../openapi.yaml
@@ -4240,7 +4255,11 @@ types:
           "display-name": "Get Job Predictions",
           "endpoints": {
             "get_job": {
-              "auth": true,
+              "auth": [
+                {
+                  "Authentication": [],
+                },
+              ],
               "display-name": "Get Job Details",
               "docs": "Get the request details and state of a given job.",
               "examples": [
@@ -4299,7 +4318,11 @@ types:
               },
             },
             "get_job_artifacts": {
-              "auth": true,
+              "auth": [
+                {
+                  "Authentication": [],
+                },
+              ],
               "display-name": "Get Job Artifacts",
               "docs": "Get the artifacts ZIP of a completed job.",
               "method": "GET",
@@ -4330,7 +4353,8 @@ types:
     get_job_artifacts:
       path: /v0/batch/jobs/{id}/artifacts
       method: GET
-      auth: true
+      auth:
+        - Authentication: []
       docs: Get the artifacts ZIP of a completed job.
       source:
         openapi: ../openapi.yaml
@@ -4344,7 +4368,8 @@ types:
     get_job:
       path: /v0/batch/jobs/{id}
       method: GET
-      auth: true
+      auth:
+        - Authentication: []
       docs: Get the request details and state of a given job.
       source:
         openapi: ../openapi.yaml

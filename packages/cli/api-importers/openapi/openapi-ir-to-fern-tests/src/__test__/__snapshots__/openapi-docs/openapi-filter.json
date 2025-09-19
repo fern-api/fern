@@ -261,7 +261,7 @@ types:
           "display-name": "Companies",
           "endpoints": {
             "createOrUpdateCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create or Update a company",
               "docs": "You can create or update a company.
 
@@ -505,7 +505,6 @@ service:
     createOrUpdateCompany:
       path: /companies
       method: POST
-      auth: true
       docs: >
         You can create or update a company.
 
