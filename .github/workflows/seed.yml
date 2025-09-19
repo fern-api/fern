@@ -123,8 +123,6 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
-    # CHRISM - forcing test
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -470,21 +468,20 @@ jobs:
           generator-path: generators/java
           fixtures-to-run: ${{ matrix.fixtures }}
 
-  forced-test:
-    runs-on: ubuntu-latest
-    outputs:  
-      test-data: ${{ steps.output-test-data.outputs.test-data }}
-    steps:
-      - name: Output test data
-        id: output-test-data
-        run: |
-          echo 'test-data=[{["accept-header alias"]},{["alias-extends"]}]' >> $GITHUB_OUTPUT
+  # forced-test:
+  #   runs-on: ubuntu-latest
+  #   outputs:  
+  #     test-data: ${{ steps.output-test-data.outputs.test-data }}
+  #   steps:
+  #     - name: Output test data
+  #       id: output-test-data
+  #       run: |
+  #         echo 'test-data=[{"package": ["accept-header alias"]},{"package": ["alias-extends"]}]' >> $GITHUB_OUTPUT
 
   typescript-sdk:
     runs-on: ubuntu-latest
-    needs: forced-test
     # CHRISM - forcing test
-    # needs: get-all-test-matrices
+    needs: get-all-test-matrices
     # needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
@@ -499,7 +496,7 @@ jobs:
         # fixtures: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Echo package
-        run: echo ${{ join(matrix, ' ') }}
+        run: echo ${{ join(matrix.package, ' ') }}
     
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -509,7 +506,7 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ join(matrix, ' ') }}
+          fixtures-to-run: ${{ join(matrix.package, ' ') }}
 
   typescript-express:
     runs-on: ubuntu-latest
