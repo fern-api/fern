@@ -27,7 +27,7 @@ describe("compatible-ir-versions", () => {
         ];
 
         expect(violations).toEqual(expectedViolations);
-    }, 10_000);
+    }, 20_000);
 
     it("simple success", async () => {
         process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
@@ -45,5 +45,5 @@ describe("compatible-ir-versions", () => {
         const expectedViolations: ValidationViolation[] = [];
 
         expect(violations).toEqual(expectedViolations);
-    }, 10_000);
+    }, 20_000);
 });
