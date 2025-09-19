@@ -102,9 +102,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
 
-        // Client.rs
+        // Client.rs and nested mod.rs files
         const rootClientGenerator = new RootClientGenerator(context);
-        files.push(rootClientGenerator.generate());
+        files.push(...rootClientGenerator.generateAllFiles());
 
         // Services/**/*.rs
         this.generateSubClientFiles(context, files);
@@ -181,6 +181,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         Object.values(context.ir.subpackages).forEach((subpackage) => {
             if (subpackage.service != null || subpackage.hasEndpointsInTree) {
                 const subClientGenerator = new SubClientGenerator(context, subpackage);
+
+                // Generate the client file
                 files.push(subClientGenerator.generate());
             }
         });
@@ -237,7 +239,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -280,7 +282,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Add re-exports
 
         useStatements.push(new UseStatement({ path: "core", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "config", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,

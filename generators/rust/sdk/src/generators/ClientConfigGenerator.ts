@@ -20,7 +20,7 @@ export class ClientConfigGenerator {
         });
 
         return new RustFile({
-            filename: "client.rs",
+            filename: "config.rs",
             directory: RelativeFilePath.of("src"),
             fileContents: module.toString()
         });

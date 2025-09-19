@@ -24,8 +24,8 @@ interface AsIsFileSpec {
 const AsIsFileSpecs = {
     // Core infrastructure templates
     ApiClientBuilder: {
-        relativePathToDir: "src/core",
-        filename: "api_client_builder.rs"
+        relativePathToDir: "src",
+        filename: "client.rs"
     },
     HttpClient: {
         relativePathToDir: "src/core",
