@@ -23,17 +23,13 @@ runs:
       id: parse-test-set-matrix
       shell: bash
       run: |
-        # Get starting point from output of get-available-fixtures command
-        MESSY_DATA=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders | awk '/"fixtures/,0')
+        # Get JSON output from get-available-fixtures command
+        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} --include-subfolders)
 
-        # Remove newlines and spaces so next portion of filtering is easier
-        PARTIALLY_CLEAN=$(echo "${MESSY_DATA}" | tr -d '\n ')
+        # Extract the fixtures array from the JSON output using jq
+        MATRIX_FORMATTED=$(echo "$COMMAND_OUTPUT" | jq -r '.fixtures')
 
-        # Extract just the fixtures
-        FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
+        echo "Debug: Raw command output: $COMMAND_OUTPUT"
+        echo "Debug: Extracted fixtures: $MATRIX_FORMATTED"
 
-        # Convert to proper JSON array with quoted strings using jq
-        MATRIX_FORMATTED=$(echo "$FIXTURE_LIST" | tr ',' '\n' | jq -R . | jq -s .)
-
-        echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
-        echo "${fixture_list}"
+        echo "fixture_list=$MATRIX_FORMATTED" >> $GITHUB_OUTPUT
