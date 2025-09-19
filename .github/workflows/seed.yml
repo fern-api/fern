@@ -476,9 +476,21 @@ jobs:
       - name: Output test data
         id: output-test-data
         run: |
-          test_data='[{"fixture": ["accept-header","alias"]},{"fixture": ["accept-header2","alias2"]}]'
+          test_data='{"fixture": ["accept-header","alias"]},{"fixture": ["accept-header2","alias2"]}'
           echo "test-data="$test_data"" >> $GITHUB_OUTPUT
           echo "$test_data" | jq .
+
+  forced-test-pickup:
+    runs-on: ubuntu-latest
+    needs: forced-test
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix: 
+        fixtures: ${{ fromJson(needs.forced-test.outputs.test-data) }}
+    steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
   typescript-sdk:
     runs-on: ubuntu-latest
     # CHRISM - forcing test
