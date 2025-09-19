@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -125,7 +125,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
+        generator-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     outputs:
       ruby-model: ${{ steps.set-test-matrices.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.set-test-matrices.outputs.ruby-sdk-test-matrix }}
@@ -192,7 +217,7 @@ jobs:
         run: |
           BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
           echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-          
+
           # Echo the data to command line for visibility
           echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
           echo "$BASH_VAR" | jq .
@@ -207,7 +232,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
       - name: Echo package
@@ -243,7 +268,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
     steps:
       - name: Echo package
@@ -279,7 +304,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
       - name: Echo package
@@ -316,7 +341,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
       - name: Echo package
@@ -347,7 +372,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     if: >-
       ${{
@@ -384,7 +409,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     if: >-
       ${{
@@ -425,7 +450,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
       - name: Echo package
@@ -456,7 +481,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     if: >-
       ${{
@@ -492,7 +517,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     if: >-
       ${{
@@ -528,7 +553,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     if: >-
       ${{
@@ -564,7 +589,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     if: >-
       ${{
@@ -605,7 +630,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Echo package
@@ -620,7 +645,7 @@ jobs:
           string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
           echo "Generated string: '$string_result'"
           echo "as-string=$string_result" >> $GITHUB_OUTPUT
-    
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -637,7 +662,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     if: >-
       ${{
@@ -678,7 +703,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
     steps:
       - name: Echo package
@@ -715,7 +740,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
       - name: Echo package
@@ -752,7 +777,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
       - name: Echo package
@@ -789,7 +814,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
       - name: Echo package
@@ -825,7 +850,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
       - name: Echo package
@@ -861,7 +886,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
       - name: Echo package
@@ -897,7 +922,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
       - name: Echo package
@@ -933,7 +958,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
       - name: Echo package
@@ -969,7 +994,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
       - name: Echo package
@@ -1005,7 +1030,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix: 
+      matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
       - name: Echo package
