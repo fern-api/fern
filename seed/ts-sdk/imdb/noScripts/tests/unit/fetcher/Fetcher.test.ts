@@ -17,7 +17,7 @@ describe("Test fetcherImpl", () => {
             responseType: "json",
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(JSON.stringify({ data: "test" }), {
                 status: 200,
                 statusText: "OK",
@@ -52,7 +52,7 @@ describe("Test fetcherImpl", () => {
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(JSON.stringify({ data: "test" }), {
                 status: 200,
                 statusText: "OK",
@@ -86,7 +86,7 @@ describe("Test fetcherImpl", () => {
             responseType: "binary-response",
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(
                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
@@ -131,7 +131,7 @@ describe("Test fetcherImpl", () => {
             responseType: "binary-response",
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(
                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
@@ -176,7 +176,7 @@ describe("Test fetcherImpl", () => {
             responseType: "binary-response",
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(
                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
@@ -219,7 +219,7 @@ describe("Test fetcherImpl", () => {
             responseType: "binary-response",
         };
 
-        global.fetch = jest.fn().mockResolvedValue(
+        global.fetch = vi.fn().mockResolvedValue(
             new Response(
                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {

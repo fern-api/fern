@@ -13,8 +13,12 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Compile
-        run: yarn && yarn build
+        run: pnpm && pnpm build
 
   test:
     runs-on: ubuntu-latest
@@ -25,9 +29,13 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v3
+                
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Compile
-        run: yarn && yarn test    
+        run: pnpm && pnpm test    
 
   publish:
     needs: [ compile, test ]
@@ -38,10 +46,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up node
         uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Publish to npm
         run: |
