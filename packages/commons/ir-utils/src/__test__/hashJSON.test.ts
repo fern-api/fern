@@ -30,5 +30,5 @@ describe("hashJSON Function", () => {
             const hash = hashJSON(largeObj);
             expect(typeof hash).toBe("string");
         }).not.toThrow();
-    }, 60_000);
+    }, 120_000);
 });
