@@ -26,7 +26,9 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
                 }
             ],
             file: {
-                nameOnDisk: `${TYPES_DIRECTORY_NAME}.ts`,
+                nameOnDisk: this.consolidateTypeFiles
+                    ? `${TYPES_DIRECTORY_NAME}.ts`
+					: this.getFilename(typeName),
                 exportDeclaration: { exportAll: true }
             }
         };
