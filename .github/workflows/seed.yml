@@ -529,9 +529,6 @@ jobs:
     
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/
 
       - name: Run seed
         uses: ./.github/actions/cached-seed
