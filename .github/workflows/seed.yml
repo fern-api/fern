@@ -125,9 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
-        # Just for testing
-        generator-name: [ts-sdk]
+        generator-name: [ruby-model, ruby-sdk, ruby-sdk-v2, pydantic, python-sdk, fastapi, openapi, postman, java-sdk, java-model, java-spring, ts-sdk, ts-express, go-fiber, go-model, go-sdk, csharp-model, csharp-sdk, php-model, php-sdk, swift-sdk, rust-model, rust-sdk]
     outputs:
       ruby-model: ${{ steps.set-test-matrices.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.set-test-matrices.outputs.ruby-sdk-test-matrix }}
@@ -201,11 +199,13 @@ jobs:
   ruby-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby == 'true'
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true'
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -237,11 +237,13 @@ jobs:
   ruby-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -273,11 +275,13 @@ jobs:
   ruby-sdk-v2:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby-v2 == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -310,11 +314,13 @@ jobs:
   pydantic-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -351,11 +357,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -388,11 +396,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -419,11 +429,13 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.openapi == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -460,11 +472,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.postman == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -496,11 +510,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -532,11 +548,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -568,11 +586,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -599,11 +619,13 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.typescript == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -641,11 +663,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.typescript == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -672,11 +696,13 @@ jobs:
   go-fiber:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -709,11 +735,13 @@ jobs:
   go-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -746,11 +774,13 @@ jobs:
   go-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -783,11 +813,13 @@ jobs:
   csharp-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.csharp == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -819,11 +851,13 @@ jobs:
   csharp-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.csharp == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -855,11 +889,13 @@ jobs:
   php-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.php == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -891,11 +927,13 @@ jobs:
   php-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.php == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -927,11 +965,13 @@ jobs:
   swift-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.swift == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -963,11 +1003,13 @@ jobs:
   rust-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.rust == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -999,11 +1041,13 @@ jobs:
   rust-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.rust == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # Force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
