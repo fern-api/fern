@@ -1,0 +1,225 @@
+{
+  "apiVersion": {
+    "header": "X-API-Version",
+    "default": "2.0.0",
+    "values": [
+      "1.0.0",
+      "2.0.0",
+      "Latest"
+    ]
+  },
+  "title": "Test extension `x-fern-retries`.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "update-status",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "status"
+        ],
+        "methodName": "update"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "StatusUpdateRequest",
+      "request": {
+        "schema": {
+          "generatedName": "StatusUpdateRequest",
+          "schema": "Update",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/status",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      },
+      "retries": {
+        "value": true,
+        "type": "disabled"
+      }
+    },
+    {
+      "audiences": [
+        "private"
+      ],
+      "operationId": "update-status2",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "status2"
+        ],
+        "methodName": "update"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "Status2UpdateRequest",
+      "request": {
+        "schema": {
+          "generatedName": "Status2UpdateRequest",
+          "schema": "Update",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/status2",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Update": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "updateStream",
+            "key": "stream",
+            "schema": {
+              "generatedName": "updateStream",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "UpdateStream",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "updateMessage",
+            "key": "message",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UpdateMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Update",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "api_key": {
+      "type": "bearer"
+    },
+    "custom_header": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    },
+    "access_token": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

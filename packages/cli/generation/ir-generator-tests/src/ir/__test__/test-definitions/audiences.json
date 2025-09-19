@@ -2801,6 +2801,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3363,6 +3364,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -4232,6 +4234,7 @@
                         "public",
                         "private"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }

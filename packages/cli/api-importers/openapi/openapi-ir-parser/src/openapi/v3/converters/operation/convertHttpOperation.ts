@@ -16,6 +16,7 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
+import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
@@ -234,6 +235,7 @@ export function convertHttpOperation({
         source
     });
 
+    const retries = getFernRetriesExtension(operation);
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
@@ -275,7 +277,8 @@ export function convertHttpOperation({
         path,
         examples,
         pagination: operationContext.pagination,
-        source
+        source,
+        retries
     }));
 }
 
