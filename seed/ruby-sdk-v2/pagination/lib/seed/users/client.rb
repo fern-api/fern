@@ -15,14 +15,14 @@ module Seed
           %i[page per_page order starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: params[:starting_after]
+          initial_cursor: _query[:starting_after]
         ) do |next_cursor|
-          params[:starting_after] = next_cursor
+          _query[:starting_after] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -51,14 +51,14 @@ module Seed
           %i[cursor]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :data,
-          initial_cursor: params[:cursor]
+          initial_cursor: _query[:cursor]
         ) do |next_cursor|
-          params[:cursor] = next_cursor
+          _query[:cursor] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -85,9 +85,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: params[:cursor]
+          initial_cursor: _query[:cursor]
         ) do |next_cursor|
-          params[:cursor] = next_cursor
+          _query[:cursor] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -294,14 +294,14 @@ module Seed
           %i[cursor]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :users,
-          initial_cursor: params[:cursor]
+          initial_cursor: _query[:cursor]
         ) do |next_cursor|
-          params[:cursor] = next_cursor
+          _query[:cursor] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -330,14 +330,14 @@ module Seed
           %i[cursor]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next,
           item_field: :users,
-          initial_cursor: params[:cursor]
+          initial_cursor: _query[:cursor]
         ) do |next_cursor|
-          params[:cursor] = next_cursor
+          _query[:cursor] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -366,14 +366,14 @@ module Seed
           %i[starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
-          initial_cursor: params[:starting_after]
+          initial_cursor: _query[:starting_after]
         ) do |next_cursor|
-          params[:starting_after] = next_cursor
+          _query[:starting_after] = next_cursor
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",

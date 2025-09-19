@@ -11,22 +11,25 @@ module Seed
       # @param item_field [Symbol] The field to pull the list of items to iterate over.
       # @param has_next_field [Symbol] The field to pull the boolean of whether a next page exists from, if any.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
+      # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       # @return [Seed::Internal::OffsetPageIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
         @page_number = initial_page || (step ? 0 : 1)
         @item_field = item_field
+        @has_next_field = has_next_field
+        @step = step
         @get_next_page = block
 
+        # A cache of whether the API has another page, if it gives us that information...
         @next_page = nil
-        @has_next_field = has_next_field
+        # ...or the actual next page, preloaded, if it doesn't.
         @has_next_page = nil
-        @step = step
       end
 
       # Iterates over each page returned by the API.
       #
       # @param block [Proc] The block which each retrieved page is yielded to.
-      # @return [nil]
+      # @return [NilClass]
       def each(&block)
         while (page = get_next)
           block.call(page)
@@ -50,13 +53,10 @@ module Seed
         end
       end
 
-      # Retrieves the next page from the API.
-      #
-      # @return [Boolean]
+      # Returns the next page from the API.
       def get_next
         return nil if @page_number.nil?
 
-        # We sometimes preload the next page so that has_next? will be accurate even when we don't have has_next_field.
         if @next_page
           this_page = @next_page
           @next_page = nil
