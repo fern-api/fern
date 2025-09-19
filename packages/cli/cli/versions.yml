@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Punch through failures of subtasks in the CLI.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-19"
+  version: 0.78.1
+
+- changelogEntry:
     - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
       type: feat
   irVersion: 59
