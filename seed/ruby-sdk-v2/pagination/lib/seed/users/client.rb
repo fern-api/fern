@@ -116,14 +116,15 @@ module Seed
           %i[page per_page order starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :page,
+          initial_page: _query[:page],
           item_field: :data,
-          initial_page: params[:page]
+          has_next_field: nil,
+          step: false
         ) do |next_page|
-          params[:page] = next_page
+          _query[:page] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -152,14 +153,15 @@ module Seed
           %i[page per_page order starting_after]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :page,
+          initial_page: _query[:page],
           item_field: :data,
-          initial_page: params[:page]
+          has_next_field: nil,
+          step: false
         ) do |next_page|
-          params[:page] = next_page
+          _query[:page] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -184,11 +186,12 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :page,
+          initial_page: _query[:page],
           item_field: :data,
-          initial_page: params[:page]
+          has_next_field: nil,
+          step: false
         ) do |next_page|
-          params[:page] = next_page
+          _query[:page] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -217,14 +220,15 @@ module Seed
           %i[page limit order]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :page,
+          initial_page: _query[:page],
           item_field: :data,
-          initial_page: params[:page]
+          has_next_field: nil,
+          step: true
         ) do |next_page|
-          params[:page] = next_page
+          _query[:page] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -253,14 +257,15 @@ module Seed
           %i[page limit order]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :page,
+          initial_page: _query[:page],
           item_field: :data,
-          initial_page: params[:page]
+          has_next_field: :hasNextPage,
+          step: true
         ) do |next_page|
-          params[:page] = next_page
+          _query[:page] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -397,14 +402,15 @@ module Seed
           %i[offset]
         ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          page_field: :offset,
+          initial_page: _query[:offset],
           item_field: :results,
-          initial_page: params[:offset]
+          has_next_field: nil,
+          step: false
         ) do |next_page|
-          params[:offset] = next_page
+          _query[:offset] = next_page
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
