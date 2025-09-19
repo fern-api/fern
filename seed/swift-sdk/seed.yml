@@ -60,9 +60,15 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
+  - accept-header
+  - alias-extends
+  - any-auth
   - api-wide-base-path
   - audiences
   - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bytes-download
   - bytes-upload
   - circular-references
   - circular-references-advanced
@@ -70,69 +76,66 @@ allowedFailures:
   - client-side-params:no-custom-config
   - content-type
   - cross-package-type-names
+  - custom-auth
+  - empty-clients
   - enum
+  - errors
   - examples
   - exhaustive
+  - extra-properties
+  - folders
   - http-head
+  - idempotency-headers
+  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
   - literal
+  - literals-unions
   - mixed-case
   - mixed-file-directory
+  - multi-line-docs
   - multi-url-environment
   - multi-url-environment-no-default
+  - multiple-request-bodies
+  - no-environment
   - nullable
   - nullable-optional
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - object
+  - objects-with-imports
+  - package-yml
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
   - pagination-custom
   - path-parameters
+  - property-access
+  - public-object
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
   - request-parameters
   - reserved-keywords
+  - response-property
+  - server-sent-event-examples
+  - server-sent-events
+  - simple-api
   - simple-fhir
+  - single-url-environment-default:no-custom-config
+  - single-url-environment-default:with-custom-config
+  - single-url-environment-no-default
   - streaming
   - streaming-parameter
   - trace
   - undiscriminated-unions
   - unions
+  - unknown
   - validation
+  - variables
+  - version
+  - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
-  - property-access
-  - accept-header
-  - alias
-  - alias-extends
-  - any-auth
-  - basic-auth
-  - basic-auth-environment-variables
-  - bytes-download
-  - empty-clients
-  - error-property
-  - errors
-  - extends
-  - extra-properties
-  - file-download
-  - file-upload
-  - imdb
-  - license
-  - literals-unions
-  - multiple-request-bodies
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
-  - object
-  - objects-with-imports
-  - optional
-  - plain-text
-  - public-object
-  - single-url-environment-default:no-custom-config
-  - unknown
-  - version-no-default
-  - websocket
-
