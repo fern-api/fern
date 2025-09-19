@@ -71,9 +71,7 @@ runs:
         done
 
         # Convert all package objects to final JSON array (compact format)
-        # PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -s -c .)
-        # Create package object using jq to ensure proper formatting
-        PACKAGE_OBJECT=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -R . | jq -s -c . | jq -c '{fixtures: .}')
+        PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -s -c .)
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
-        echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT
+        echo "packaged='$PACKAGED_MATRIX'" >> $GITHUB_OUTPUT
