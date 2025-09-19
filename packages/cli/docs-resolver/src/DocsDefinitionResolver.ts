@@ -230,7 +230,7 @@ export class DocsDefinitionResolver {
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
-        
+
         // store root here so we only process once
         const root = await this.toRootNode();
 
@@ -393,7 +393,9 @@ export class DocsDefinitionResolver {
      * FernNavigation NodeCollector already includes basepath in slugmap
      * @returns a map of markdown files to their fully qualified pathnames
      */
-    private async getMarkdownFilesToFullyQualifiedPathNames(initialRoot: FernNavigation.V1.RootNode): Promise<Record<AbsoluteFilePath, string>> {
+    private async getMarkdownFilesToFullyQualifiedPathNames(
+        initialRoot: FernNavigation.V1.RootNode
+    ): Promise<Record<AbsoluteFilePath, string>> {
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
         const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(initialRoot);
 
