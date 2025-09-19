@@ -1,4 +1,4 @@
-import { toQueryString } from "../../../../../src/test-packagePath/core/url/index.js";
+import { toQueryString } from "../../../../../src/test-packagePath/core/url/index";
 
 describe("Test qs toQueryString", () => {
     describe("Basic functionality", () => {

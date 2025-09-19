@@ -4,7 +4,7 @@ describe("UndiciStreamWrapper", () => {
     it("should set encoding to utf-8", async () => {
         const rawStream = new ReadableStream();
         const stream = new UndiciStreamWrapper(rawStream);
-        const setEncodingSpy = jest.spyOn(stream, "setEncoding");
+        const setEncodingSpy = vi.spyOn(stream, "setEncoding");
 
         stream.setEncoding("utf-8");
 
@@ -14,7 +14,7 @@ describe("UndiciStreamWrapper", () => {
     it("should register an event listener for readable", async () => {
         const rawStream = new ReadableStream();
         const stream = new UndiciStreamWrapper(rawStream);
-        const onSpy = jest.spyOn(stream, "on");
+        const onSpy = vi.spyOn(stream, "on");
 
         stream.on("readable", () => {});
 
@@ -24,7 +24,7 @@ describe("UndiciStreamWrapper", () => {
     it("should remove an event listener for data", async () => {
         const rawStream = new ReadableStream();
         const stream = new UndiciStreamWrapper(rawStream);
-        const offSpy = jest.spyOn(stream, "off");
+        const offSpy = vi.spyOn(stream, "off");
 
         const fn = () => {};
         stream.on("data", fn);
@@ -69,7 +69,7 @@ describe("UndiciStreamWrapper", () => {
     it("should destroy the stream", async () => {
         const rawStream = new ReadableStream();
         const stream = new UndiciStreamWrapper(rawStream);
-        const destroySpy = jest.spyOn(stream, "destroy");
+        const destroySpy = vi.spyOn(stream, "destroy");
 
         stream.destroy();
 
@@ -79,8 +79,8 @@ describe("UndiciStreamWrapper", () => {
     it("should pause and resume the stream", async () => {
         const rawStream = new ReadableStream();
         const stream = new UndiciStreamWrapper(rawStream);
-        const pauseSpy = jest.spyOn(stream, "pause");
-        const resumeSpy = jest.spyOn(stream, "resume");
+        const pauseSpy = vi.spyOn(stream, "pause");
+        const resumeSpy = vi.spyOn(stream, "resume");
 
         expect(stream.isPaused).toBe(false);
         stream.pause();

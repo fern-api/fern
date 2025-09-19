@@ -1,9 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.28.6
+- version: 4.29.1
   changelogEntry:
     - summary: Fixes issue where colliding classes were not lazily imported correctly.
       type: fix
+  createdAt: "2025-09-18"
+  irVersion: 59
+
+- version: 4.29.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via customSections config option
+      type: feat
   createdAt: "2025-09-18"
   irVersion: 59
 
