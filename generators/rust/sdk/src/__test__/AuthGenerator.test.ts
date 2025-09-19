@@ -224,6 +224,8 @@ function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresent
     };
 
     return {
+        fdrApiDefinitionId: undefined,
+        apiVersion: undefined,
         apiName: {
             originalName: "TestAPI",
             camelCase: { unsafeName: "testApi", safeName: "testApi" },
@@ -231,15 +233,24 @@ function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresent
             screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" },
             pascalCase: { unsafeName: "TestAPI", safeName: "TestAPI" }
         },
-        apiVersion: "1.0.0",
+        apiDisplayName: undefined,
+        apiDocs: undefined,
         auth: {
             requirement: authConfig.type === "or" ? "ANY" : "ALL",
-            schemes: authConfig.requiresAuth ? createAuthSchemesFromConfig(authConfig) : []
+            schemes: authConfig.requiresAuth ? createAuthSchemesFromConfig(authConfig) : [],
+            docs: undefined
         },
-        errors: {},
+        headers: [],
+        idempotencyHeaders: [],
         types: {},
         services: {
             UserService: service
+        },
+        webhookGroups: {},
+        websocketChannels: undefined,
+        errors: {},
+        subpackages: {
+            user: subpackage
         },
         rootPackage: {
             types: [],
@@ -253,17 +264,26 @@ function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresent
             },
             docs: undefined,
             navigationConfig: undefined,
-            service: undefined
+            service: undefined,
+            webhooks: undefined,
+            websocket: undefined
         },
-        subpackages: {
-            user: subpackage
+        constants: {
+            errorInstanceIdKey: {
+                name: {
+                    originalName: "errorInstanceId",
+                    camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
+                    snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
+                    screamingSnakeCase: { unsafeName: "ERROR_INSTANCE_ID", safeName: "ERROR_INSTANCE_ID" },
+                    pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" }
+                },
+                wireValue: "errorInstanceId"
+            }
         },
-        constants: {},
         environments: undefined,
         basePath: undefined,
         pathParameters: [],
-        headers: [],
-        idempotencyHeaders: [],
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
         sdkConfig: {
             isAuthMandatory: authConfig.requiresAuth || false,
             hasStreamingEndpoints: false,
@@ -271,20 +291,69 @@ function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresent
             hasPaginatedEndpoints: false,
             platformHeaders: {
                 language: "rust",
-                sdkType: "client",
-                sdkVersion: "0.1.0"
+                sdkName: "test-client",
+                sdkVersion: "0.1.0",
+                userAgent: undefined
             }
         },
-        variables: []
-    } as unknown as IntermediateRepresentation;
+        variables: [],
+        serviceTypeReferenceInfo: {
+            typesReferencedOnlyByService: {},
+            sharedTypes: []
+        },
+        readmeConfig: undefined,
+        sourceConfig: undefined,
+        publishConfig: undefined,
+        dynamic: undefined,
+        selfHosted: undefined,
+        audiences: undefined
+    } as IntermediateRepresentation;
 }
 
 // Mock function to create context
 function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext {
-    return {
+    const mockContext: Partial<SdkGeneratorContext> = {
         ir,
-        getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
+        config: {
+            organization: "test-org",
+            workspaceName: "test-workspace"
+        },
+        generatorNotificationService: {
+            sendUpdate: () => {
+                // Mock implementation
+            },
+            sendError: () => {
+                // Mock implementation
+            }
+        },
+        logger: {
+            debug: () => {
+                // Mock implementation
+            },
+            info: () => {
+                // Mock implementation
+            },
+            warn: () => {
+                // Mock implementation
+            },
+            error: () => {
+                // Mock implementation
+            }
+        },
+        project: {
+            directory: "/tmp/test",
+            packageName: "test-client",
+            packageVersion: "0.1.0"
+        },
+        generatorAgent: {
+            getAllTypes: () => [],
+            getTypeById: () => undefined
+        },
+        getClientName: () => "TestClient",
+        getApiClientBuilderClientName: () => "TestClient",
+        getClientBuilderName: () => "TestClientBuilder",
+        getCoreAsIsFiles: () => [],
         getHttpServiceOrThrow: (serviceId: string) => ir.services[serviceId as keyof typeof ir.services],
         getSubpackageOrThrow: (subpackageId: string) => ir.subpackages[subpackageId as keyof typeof ir.subpackages],
         getSubpackagesOrThrow: (packageOrSubpackage: { subpackages: string[] }) => {
@@ -292,6 +361,9 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
                 subpackageId,
                 ir.subpackages[subpackageId as keyof typeof ir.subpackages]
             ]);
+        },
+        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
+            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
         },
         // Add the centralized methods that SubClientGenerator expects
         getUniqueFilenameForSubpackage: (subpackage: {
@@ -306,13 +378,52 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
             const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
             return pathParts.join("") + "Client";
         },
-        configManager: {
-            escapeRustKeyword: (name: string) => name // Simple mock implementation
+        getUniqueFilenameForType: (typeDeclaration: {
+            name: {
+                fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+                name: { snakeCase: { safeName: string } };
+            };
+        }) => {
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const typeName = typeDeclaration.name.name.snakeCase.safeName;
+            const fullPath = [...pathParts, typeName];
+            return `${fullPath.join("_")}.rs`;
         },
-        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
-            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
-        }
-    } as SdkGeneratorContext;
+        getModulePathForType: (typeNameSnake: string) => typeNameSnake,
+        configManager: {
+            get: (key: string, defaultValue?: unknown) => {
+                const configs: Record<string, unknown> = {
+                    clientName: "TestClient",
+                    packageName: "test-client",
+                    packageVersion: "0.1.0",
+                    extraDependencies: {},
+                    extraDevDependencies: {}
+                };
+                return configs[key] ?? defaultValue;
+            },
+            getPackageName: () => "test-client",
+            getPackageVersion: () => "0.1.0",
+            escapeRustKeyword: (name: string) => name,
+            escapeRustReservedType: (name: string) => name
+        },
+        toModelGeneratorContext: () => ({
+            ir,
+            config: mockContext.config,
+            customConfig: {
+                packageName: "test-client",
+                packageVersion: "0.1.0",
+                extraDependencies: {},
+                extraDevDependencies: {},
+                generateBuilders: false,
+                deriveDebug: true,
+                deriveClone: true
+            },
+            generatorNotificationService: mockContext.generatorNotificationService,
+            configManager: mockContext.configManager,
+            project: mockContext.project
+        })
+    };
+    return mockContext as SdkGeneratorContext;
 }
 
 describe("AuthGenerator - Client Generation", () => {
@@ -320,6 +431,7 @@ describe("AuthGenerator - Client Generation", () => {
         it("should generate client with API key authentication support", async () => {
             const authConfig = {
                 type: "header",
+
                 name: "X-API-Key",
                 valueType: FernIr.TypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined }),
                 requiresAuth: true
