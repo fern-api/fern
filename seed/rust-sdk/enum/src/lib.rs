@@ -6,6 +6,7 @@ pub mod http_client;
 pub mod request_options;
 pub mod pagination;
 pub mod query_parameter_builder;
+pub mod utils;
 pub mod types;
 
 pub use client::{*};
@@ -17,4 +18,5 @@ pub use http_client::{*};
 pub use request_options::{*};
 pub use pagination::{*};
 pub use query_parameter_builder::{*};
+pub use utils::{*};
 

@@ -501,8 +501,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^59.4.0
-        version: 59.6.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -616,8 +616,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: ^59.4.0
-        version: 59.6.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -664,14 +664,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.42
-        version: 0.0.42
+        specifier: 0.1.1
+        version: 0.1.1
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^59.4.0
-        version: 59.6.0
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -9390,9 +9390,6 @@ packages:
   '@fern-fern/ir-sdk@59.0.0':
     resolution: {integrity: sha512-Cd26neNEuPlY7cczTw16gsZeTc9GfbhwC3q0IZMYuZRqWuq5Qd55vcEDnkCqewEuem7wyopxT1MBJ48GNrqk1A==}
 
-  '@fern-fern/ir-sdk@59.6.0':
-    resolution: {integrity: sha512-F3krYF6puSsN5uPcX/XG0nDnW3bO0Hc4uc7uKAANlk2G+P8sL3haMOJp/UmdfT++SUF369y0sq41kOxq61upZA==}
-
   '@fern-fern/ir-sdk@59.7.0':
     resolution: {integrity: sha512-4KuS8z/Kw3uuGdQeB4GpGsCdw21/TCXR+DeJOLLvmrHdK5cjdqVUEl/GfOk9LG3J46sMSZwHIreQ/MlnDB16Wg==}
 
@@ -16367,16 +16364,6 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@59.0.0':
-    dependencies:
-      form-data: 4.0.4
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.14.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/ir-sdk@59.6.0':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3

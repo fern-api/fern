@@ -48,6 +48,6 @@ describe("Service", () => {
             return await client.folder.service.unknownRequest({
                 key: "value",
             });
-        }).rejects.toThrow(new SeedApi.folder.NotFoundError("string"));
+        }).rejects.toThrow(SeedApi.folder.NotFoundError);
     });
 });

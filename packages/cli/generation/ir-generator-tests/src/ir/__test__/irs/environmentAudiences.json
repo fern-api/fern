@@ -2126,6 +2126,7 @@
                     "audiences": [
                         "external"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -4728,6 +4729,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }

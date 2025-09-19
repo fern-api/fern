@@ -44,11 +44,11 @@ module Seed
         # @return [Class]
         private def resolve_member(value)
           if discriminated? && value.is_a?(::Hash)
-            disciminant_value = value.fetch(@discriminant, nil)
+            discriminant_value = value.fetch(@discriminant, nil)
 
-            return if disciminant_value.nil?
+            return if discriminant_value.nil?
 
-            members.to_h[disciminant_value]&.call
+            members.to_h[discriminant_value]&.call
           else
             members.find do |_key, mem|
               member_type = Utils.unwrap_type(mem)

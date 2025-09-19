@@ -21,11 +21,13 @@ export class AsIsManager {
     private readonly generateWireTests: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+
     constructor({ useBigInt, generateWireTests, relativePackagePath, relativeTestPath }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        console.log("relativeTestPath", this.relativeTestPath);
     }
 
     /**
@@ -44,10 +46,7 @@ export class AsIsManager {
                 mockServer: {
                     ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
-                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
-                BrowserEnvironment: {
-                    ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
-                }
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` }
             },
             scripts: {
                 renameToEsmFiles: {
@@ -63,7 +62,6 @@ export class AsIsManager {
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-        filesToCopy.push(asIsFiles.tests.BrowserEnvironment);
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
             filesToCopy.push(asIsFiles.core.json.bigint);
@@ -103,7 +101,6 @@ export class AsIsManager {
                             );
                         }
                     }
-
                     project.createSourceFile(targetFilePath, fileContent, { overwrite: true });
                 }
             } else {

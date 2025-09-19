@@ -33,6 +33,7 @@ export * from "./referencing";
 export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode";
 export { type TypeReferenceNode } from "./TypeReferenceNode";
 export * from "./typescript-project";
+export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";
 export { FernWriters, ObjectWriter } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";

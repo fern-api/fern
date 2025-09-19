@@ -185,7 +185,11 @@ func (f *fileWriter) WriteStructPropertyBitConstants(typeName string, propertyNa
 		constantName := fmt.Sprintf("%sField%s", typeName, propertyName)
 		// Convert to camelCase for the constant name (not exported)
 		constantName = strings.ToLower(constantName[:1]) + constantName[1:]
-		f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
+		if i < 63 {
+			f.P("\t", constantName, " = big.NewInt(1 << ", i, ")")
+		} else {
+			f.P("\t", constantName, " = big.NewInt(0).Lsh(big.NewInt(1), ", i, ")")
+		}
 	}
 	f.P(")")
 	f.P()

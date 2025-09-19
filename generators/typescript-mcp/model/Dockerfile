@@ -33,7 +33,8 @@ RUN echo '{ \
     "ts-loader": "^9.5.1", \
     "webpack": "^5.97.1", \
     "fetch-mock-jest": "^1.5.1", \
-    "msw": "^2.8.4" \
+    "msw": "^2.8.4", \
+    "vitest": "^3.2.4" \
   } \
 }' > package.json
 

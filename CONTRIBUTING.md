@@ -18,7 +18,7 @@ receive the attention you expect.
 
 The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
-The repo relies on git-lfs to hande large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
+The repo relies on git-lfs to handle large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
 ```sh
 brew install git-lfs
 ```
