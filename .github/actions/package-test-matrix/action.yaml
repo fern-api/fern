@@ -31,7 +31,7 @@ runs:
         FIXTURES=($(echo "$FIXTURE_ARRAY" | jq -r '.[]'))
 
         # Get total number of fixtures
-        TOTAL_FIXTURES=${#FIXTURE_ARRAY[@]}
+        TOTAL_FIXTURES=${#FIXTURES[@]}
         echo "Total fixtures: $TOTAL_FIXTURES"
         echo "Package amount: $PACKAGE_AMOUNT"
 
