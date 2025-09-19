@@ -32,7 +32,8 @@ runs:
         # Extract just the fixtures
         FIXTURE_LIST=$(echo "${PARTIALLY_CLEAN}" | awk -F"[][]" '{print $2}')
 
-        MATRIX_FORMATTED=$(echo "[${FIXTURE_LIST}]")
+        # Convert to proper JSON array with quoted strings using jq
+        MATRIX_FORMATTED=$(echo "$FIXTURE_LIST" | tr ',' '\n' | jq -R . | jq -s .)
 
         echo "fixture_list=${MATRIX_FORMATTED}" >> $GITHUB_OUTPUT
         echo "${fixture_list}"
