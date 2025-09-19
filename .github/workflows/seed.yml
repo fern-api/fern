@@ -200,8 +200,8 @@ jobs:
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
-          echo "${{ matrix.generator-name }}-test-matrix=${{ steps.package-test-matrices.outputs.packaged }}" >> $GITHUB_OUTPUT
-
+          #echo "${{ matrix.generator-name }}-test-matrix=${{ steps.package-test-matrices.outputs.packaged }}" >> $GITHUB_OUTPUT
+          printf "ts-sdk-test-matrix=%s\n" "$(jq -c . <<<"$PACKAGED_MATRIX")" >> "$GITHUB_OUTPUT"
   ruby-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]

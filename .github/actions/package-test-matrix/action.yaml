@@ -74,4 +74,4 @@ runs:
         PACKAGED_MATRIX=$(printf '%s\n' "${PACKAGE_OBJECTS[@]}" | jq -s -c .)
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
-        echo "packaged='$PACKAGED_MATRIX'" >> $GITHUB_OUTPUT
+        echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT
