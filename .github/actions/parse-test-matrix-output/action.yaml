@@ -30,14 +30,7 @@ runs:
 
         # Extract the fixtures array from the JSON output using jq
         # Extract fixtures to JSON array
-        FIXTURES_FLAT_JSON=$(echo "${COMMAND_OUTPUT}" | \
-            awk '/fixtures: \[/,/\]/' | \
-            sed '1d;$d' | \
-            sed 's/^[[:space:]]*//' | \
-            sed 's/,$//' | \
-            awk 'NF {print "\"" $0 "\""}' | \
-            paste -sd',' - | \
-            sed 's/.*/[&]/')
+        FIXTURES_FLAT_JSON=$(echo "${COMMAND_OUTPUT}" | sed -n '/^{$/,/^}$/p' | jq -c '.fixtures')
 
         echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON"
 
