@@ -29,8 +29,10 @@ runs:
         echo "${COMMAND_OUTPUT}"
 
         # Extract the fixtures array from the JSON output using jq
+        # First extract just the JSON part (skip pnpm output lines)
+        JSON_OUTPUT=$(echo "${COMMAND_OUTPUT}" | sed -n '/^{/,/^}/p')
         # Extract fixtures to JSON array
-        FIXTURES_FLAT_JSON=$(echo "${COMMAND_OUTPUT}" | sed -n '/^{$/,/^}$/p' | jq -c '.fixtures')
+        FIXTURES_FLAT_JSON=$(echo "${JSON_OUTPUT}" | jq -c '.fixtures')
 
         echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON"
 
