@@ -2,6 +2,7 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 
@@ -38,6 +39,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             ir: this.ir,
             config: this.config
         });
+    }
+
+    public isOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "optional":
+            case "map":
+                return true;
+            case "nullable":
+            case "list":
+            case "set":
+                return this.isOptional(typeReference.value);
+            case "named":
+            case "literal":
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
     }
 
     public getMethodName(name: FernIr.Name): string {

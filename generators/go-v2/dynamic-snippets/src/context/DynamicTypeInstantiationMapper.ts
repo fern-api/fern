@@ -146,7 +146,11 @@ export class DynamicTypeInstantiationMapper {
     }): go.TypeInstantiation {
         switch (named.type) {
             case "alias":
-                return this.convert({ typeReference: named.typeReference, value, as });
+                return this.convertAlias({
+                    aliasType: named,
+                    value,
+                    as
+                });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
@@ -160,6 +164,42 @@ export class DynamicTypeInstantiationMapper {
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
+        }
+    }
+
+    private convertAlias({
+        aliasType,
+        value,
+        as
+    }: {
+        aliasType: FernIr.dynamic.NamedType.Alias;
+        value: unknown;
+        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+    }): go.TypeInstantiation {
+        switch (aliasType.typeReference.type) {
+            case "literal":
+                return go.TypeInstantiation.reference(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: this.context.getTypeName(aliasType.declaration.name),
+                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+                        }),
+                        arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
+                    })
+                );
+            default:
+                return this.convert({ typeReference: aliasType.typeReference, value, as });
+        }
+    }
+
+    private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        switch (literal.type) {
+            case "boolean":
+                return go.TypeInstantiation.bool(literal.value);
+            case "string":
+                return go.TypeInstantiation.string(literal.value);
+            default:
+                assertNever(literal);
         }
     }
 

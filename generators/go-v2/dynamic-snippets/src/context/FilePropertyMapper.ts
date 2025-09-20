@@ -62,10 +62,8 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
-        const fileValue = this.context.getSingleFileValue({ property, record });
-        if (fileValue == null) {
-            return go.TypeInstantiation.nop();
-        }
+        // fix(williammcadams): always return a string reader even if no example was provided
+        const fileValue = this.context.getSingleFileValue({ property, record }) || "";
         return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue));
     }
 
