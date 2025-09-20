@@ -187,11 +187,12 @@ jobs:
             turbo.json
             tsconfig.json
             .github/actions/
-            packages/seed/
-            packages/fs-utils/
-            packages/logger/
-            packages/workspace-loader/
-            packages/configuration/
+            packages/
+            # packages/seed/
+            # packages/fs-utils/
+            # packages/logger/
+            # packages/workspace-loader/
+            # packages/configuration/
             seed/
 
       - name: Install
