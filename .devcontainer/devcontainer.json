@@ -1,0 +1,82 @@
+{
+  "name": "Fern Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.23"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "jdkDistro": "ms"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "golang.go",
+        "redhat.java",
+        "ms-python.python",
+        "rust-lang.rust-analyzer",
+        "ms-dotnettools.csharp",
+        "ms-vscode.powershell",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "yzhang.markdown-all-in-one",
+        "ms-vscode.vscode-yaml",
+        "github.copilot",
+        "github.copilot-chat",
+        "biomejs.biome",
+        "stylelint.vscode-stylelint",
+        "ms-vscode.vscode-scss",
+        "vitest.explorer",
+        "ms-vscode.test-adapter-converter"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "go.useLanguageServer": true,
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "rust-analyzer.checkOnSave.command": "clippy",
+        "biome.lspBin": "/workspaces/fern/node_modules/.bin/biome",
+        "stylelint.enable": true,
+        "css.validate": false,
+        "scss.validate": false,
+        "less.validate": false,
+        "[typescript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=/var/run/docker-host.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "runArgs": [
+    "--init"
+  ]
+}
