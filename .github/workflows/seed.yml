@@ -196,6 +196,7 @@ jobs:
             packages/workspace-loader/
             packages/configuration/
             seed/
+            test-definitions/
 
       - name: Install
         uses: ./.github/actions/install
