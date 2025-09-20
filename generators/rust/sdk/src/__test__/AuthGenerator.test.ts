@@ -86,6 +86,7 @@ function createSingleAuthScheme(config: MockAuthConfig): FernIr.AuthScheme {
 function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresentation {
     const service: HttpService = {
         availability: undefined,
+        audiences: undefined,
         name: {
             fernFilepath: {
                 allParts: [],
@@ -194,12 +195,16 @@ function createMockIRWithAuth(authConfig: MockAuthConfig): IntermediateRepresent
                 v2Examples: undefined,
                 transport: undefined,
                 source: undefined,
-                pagination: undefined
+                pagination: undefined,
+                v2RequestBodies: undefined,
+                v2Responses: undefined,
+                audiences: undefined
             } as HttpEndpoint
         ]
     };
 
     const subpackage: Subpackage = {
+        displayName: undefined,
         name: {
             originalName: "user",
             camelCase: { unsafeName: "user", safeName: "user" },
@@ -459,6 +464,7 @@ describe("AuthGenerator - Root Client Generation", () => {
             ir.rootPackage.subpackages.push("admin");
             ir.subpackages.admin = {
                 ...ir.subpackages.user,
+                displayName: undefined,
                 name: {
                     originalName: "admin",
                     camelCase: { unsafeName: "admin", safeName: "admin" },
@@ -485,6 +491,7 @@ describe("AuthGenerator - Root Client Generation", () => {
                 ...ir.services.UserService,
                 availability: undefined,
                 displayName: undefined,
+                audiences: undefined,
                 basePath: {
                     head: "/admin",
                     parts: []

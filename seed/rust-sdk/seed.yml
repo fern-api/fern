@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -43,6 +43,33 @@ fixtures:
   simple:
     - customConfig: null
       outputFolder: basic
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}:{{ version }}"
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - apiReference
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: rust
+            content: "Base Readme Custom Content for {{ packageName }}:{{ version }}"
+          - title: "Override Section"
+            language: rust
+            content: "Base Content"
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+      outputFolder: readme-config
   imdb:
     - customConfig:
         clientName: ImdbClient
