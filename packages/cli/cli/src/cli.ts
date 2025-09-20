@@ -605,8 +605,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
-                    disableTemplates: argv.disableSnippets,
-                    disableDynamicSnippets: argv.disableDynamicSnippets
+                    disableTemplates: argv.disableSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior

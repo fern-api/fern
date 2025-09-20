@@ -18,4 +18,10 @@ export interface ExperimentalConfig {
     openapiParserV2?: boolean;
     /** OpenAPI parser in alpha. */
     openapiParserV3?: boolean;
+    /**
+     * If `dynamic-snippets` is set to true, snippets will be created using a dynamic method.
+     *
+     * This allows users to generate snippets for all SDK languages.
+     */
+    dynamicSnippets?: boolean;
 }

@@ -15,8 +15,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     token,
     instanceUrl,
     preview,
-    disableTemplates,
-    disableDynamicSnippets
+    disableTemplates
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -27,7 +26,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     instanceUrl: string | undefined;
     preview: boolean;
     disableTemplates: boolean | undefined;
-    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
@@ -88,8 +86,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             preview,
             editThisPage: maybeInstance.editThisPage,
             isPrivate: maybeInstance.private,
-            disableTemplates,
-            disableDynamicSnippets
+            disableTemplates
         });
     });
     return;
