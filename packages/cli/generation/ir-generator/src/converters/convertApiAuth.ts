@@ -89,6 +89,7 @@ function convertSchemeReference({
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
+                    key: reference,
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
@@ -100,18 +101,21 @@ function convertSchemeReference({
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
+                    key: reference,
                     file,
                     docs,
                     rawScheme
                 }),
             tokenBearer: (rawScheme) =>
                 generateBearerAuth({
+                    key: reference,
                     file,
                     docs,
                     rawScheme
                 }),
             inferredBearer: (rawScheme) =>
                 generateInferredAuth({
+                    key: reference,
                     file,
                     docs,
                     rawScheme,
@@ -120,6 +124,7 @@ function convertSchemeReference({
                 }),
             oauth: (rawScheme) =>
                 generateOAuth({
+                    key: reference,
                     file,
                     docs,
                     rawScheme,
@@ -134,18 +139,21 @@ function convertSchemeReference({
     switch (scheme) {
         case "bearer":
             return generateBearerAuth({
+                key: scheme,
                 file,
                 docs: undefined,
                 rawScheme: undefined
             });
         case "basic":
             return generateBasicAuth({
+                key: scheme,
                 file,
                 docs: undefined,
                 rawScheme: undefined
             });
         case "oauth":
             return generateOAuth({
+                key: scheme,
                 file,
                 docs: undefined,
                 rawScheme: undefined,
@@ -158,15 +166,18 @@ function convertSchemeReference({
 }
 
 function generateBearerAuth({
+    key,
     file,
     docs,
     rawScheme
 }: {
+    key: string;
     file: FernFileContext;
     docs: string | undefined;
     rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
+        key,
         docs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
@@ -174,15 +185,18 @@ function generateBearerAuth({
 }
 
 function generateBasicAuth({
+    key,
     file,
     docs,
     rawScheme
 }: {
+    key: string;
     file: FernFileContext;
     docs: string | undefined;
     rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
+        key,
         docs,
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
@@ -192,12 +206,14 @@ function generateBasicAuth({
 }
 
 function generateOAuth({
+    key,
     file,
     docs,
     rawScheme,
     propertyResolver,
     endpointResolver
 }: {
+    key: string;
     file: FernFileContext;
     docs: string | undefined;
     rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
@@ -207,6 +223,7 @@ function generateOAuth({
     switch (rawScheme?.type) {
         case "client-credentials":
             return AuthScheme.oauth({
+                key,
                 docs,
                 configuration: OAuthConfiguration.clientCredentials(
                     convertOAuthClientCredentials({
@@ -225,12 +242,14 @@ function generateOAuth({
 }
 
 function generateInferredAuth({
+    key,
     file,
     docs,
     rawScheme,
     propertyResolver,
     endpointResolver
 }: {
+    key: string;
     file: FernFileContext;
     docs: string | undefined;
     rawScheme: RawSchemas.InferredBearerAuthSchema;
@@ -238,6 +257,7 @@ function generateInferredAuth({
     endpointResolver: EndpointResolver;
 }): AuthScheme.Inferred {
     return AuthScheme.inferred({
+        key,
         docs,
         tokenEndpoint: getInferredTokenEndpoint({
             file,

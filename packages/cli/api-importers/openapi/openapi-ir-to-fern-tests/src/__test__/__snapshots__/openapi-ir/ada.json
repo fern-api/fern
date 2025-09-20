@@ -349,6 +349,11 @@
       "servers": [],
       "description": "Get a specific end user",
       "authed": true,
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/end-users/v1/{end_user_id}",
       "examples": [
@@ -1065,6 +1070,11 @@
       "servers": [],
       "description": "Update an end user. Request data is limited to 4KB in size total.",
       "authed": true,
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ],
       "method": "PATCH",
       "path": "/end-users/v1/{end_user_id}",
       "examples": [
@@ -1745,6 +1755,11 @@
       "servers": [],
       "description": "Get multiple end users",
       "authed": true,
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/end-users/v1",
       "examples": [

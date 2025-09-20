@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -3043,6 +3044,11 @@
           },
           "displayName": "List All Agents",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -3098,6 +3104,11 @@
           },
           "displayName": "Create Agent",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -3573,6 +3584,11 @@
           },
           "displayName": "Get Agent",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -3739,6 +3755,11 @@
           },
           "displayName": "Delete Agent",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -3905,6 +3926,11 @@
           },
           "displayName": "Patch Agent",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -4138,6 +4164,11 @@
           },
           "displayName": "Prompt Agent",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -5200,6 +5231,11 @@
           },
           "displayName": "Read User Me",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -5481,6 +5517,11 @@
           },
           "displayName": "List Api Tokens",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -5536,6 +5577,11 @@
           },
           "displayName": "Create Api Token",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -5749,6 +5795,11 @@
           },
           "displayName": "Get Api Token",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -5915,6 +5966,11 @@
           },
           "displayName": "Delete Api Token",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -6142,6 +6198,11 @@
           },
           "displayName": "List Documents",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -6197,6 +6258,11 @@
           },
           "displayName": "Create Document",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -6677,6 +6743,11 @@
           },
           "displayName": "Get Document",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -6843,6 +6914,11 @@
           },
           "displayName": "Delete Document",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -7070,6 +7146,11 @@
           },
           "displayName": "List Prompts",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -7125,6 +7206,11 @@
           },
           "displayName": "Create A Prompt",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -7412,6 +7498,11 @@
           },
           "displayName": "Get Prompt",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -7578,6 +7669,11 @@
           },
           "displayName": "Delete Prompt",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -7744,6 +7840,11 @@
           },
           "displayName": "Patch Prompt",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -8038,6 +8139,11 @@
           },
           "displayName": "List Tools",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -8093,6 +8199,11 @@
           },
           "displayName": "Create A Tool",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -8395,6 +8506,11 @@
           },
           "displayName": "Get Tool",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -8561,6 +8677,11 @@
           },
           "displayName": "Delete Tool",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -8788,6 +8909,11 @@
           },
           "displayName": "List Agent Traces",
           "auth": true,
+          "security": [
+            {
+              "JWTBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -9119,6 +9245,7 @@
     "endpoints": {
       "endpoint_agent.listAllAgents": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9219,6 +9346,7 @@
       },
       "endpoint_agent.createAgent": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9611,6 +9739,7 @@
       },
       "endpoint_agent.getAgent": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9740,6 +9869,7 @@
       },
       "endpoint_agent.deleteAgent": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9869,6 +9999,7 @@
       },
       "endpoint_agent.patchAgent": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10011,6 +10142,7 @@
       },
       "endpoint_agent.promptAgent": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10280,6 +10412,7 @@
       },
       "endpoint_auth.signIn": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10511,6 +10644,7 @@
       },
       "endpoint_auth.signUp": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10810,6 +10944,7 @@
       },
       "endpoint_user.readUserMe": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10910,6 +11045,7 @@
       },
       "endpoint_user.readUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11039,6 +11175,7 @@
       },
       "endpoint_apiToken.listApiTokens": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11139,6 +11276,7 @@
       },
       "endpoint_apiToken.createApiToken": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11342,6 +11480,7 @@
       },
       "endpoint_apiToken.getApiToken": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11471,6 +11610,7 @@
       },
       "endpoint_apiToken.deleteApiToken": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11600,6 +11740,7 @@
       },
       "endpoint_documents.listDocuments": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11700,6 +11841,7 @@
       },
       "endpoint_documents.createDocument": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12095,6 +12237,7 @@
       },
       "endpoint_documents.getDocument": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12224,6 +12367,7 @@
       },
       "endpoint_documents.deleteDocument": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12353,6 +12497,7 @@
       },
       "endpoint_prompts.listPrompts": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12453,6 +12598,7 @@
       },
       "endpoint_prompts.createAPrompt": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12714,6 +12860,7 @@
       },
       "endpoint_prompts.getPrompt": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12843,6 +12990,7 @@
       },
       "endpoint_prompts.deletePrompt": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12972,6 +13120,7 @@
       },
       "endpoint_prompts.patchPrompt": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13114,6 +13263,7 @@
       },
       "endpoint_tools.listTools": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13214,6 +13364,7 @@
       },
       "endpoint_tools.createATool": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13482,6 +13633,7 @@
       },
       "endpoint_tools.getTool": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13611,6 +13763,7 @@
       },
       "endpoint_tools.deleteTool": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13740,6 +13893,7 @@
       },
       "endpoint_traces.listAgentTraces": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {

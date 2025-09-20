@@ -31,6 +31,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "bearer",
         "_visit": [Function],
         "docs": undefined,
+        "key": "bearer",
         "token": {
           "camelCase": {
             "safeName": "token",

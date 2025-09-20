@@ -50,6 +50,7 @@
         }
       ],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/pets",
       "examples": [

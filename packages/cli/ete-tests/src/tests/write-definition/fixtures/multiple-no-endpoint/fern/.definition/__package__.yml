@@ -3,7 +3,6 @@ service:
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string

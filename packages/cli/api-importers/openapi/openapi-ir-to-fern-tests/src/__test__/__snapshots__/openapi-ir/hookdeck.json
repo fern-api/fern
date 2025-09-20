@@ -648,6 +648,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-triggers",
       "examples": [
@@ -1056,6 +1057,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-triggers",
       "examples": [
@@ -1431,6 +1433,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/issue-triggers",
       "examples": [
@@ -1656,6 +1659,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-triggers/{id}",
       "examples": [
@@ -2069,6 +2073,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/issue-triggers/{id}",
       "examples": [
@@ -2293,6 +2298,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-triggers/{id}",
       "examples": [
@@ -2434,6 +2440,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/issue-triggers/{id}/disable",
       "examples": [
@@ -2654,6 +2661,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/issue-triggers/{id}/enable",
       "examples": [
@@ -3148,6 +3156,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/attempts",
       "examples": [
@@ -3453,6 +3462,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/attempts/{id}",
       "examples": [
@@ -4383,6 +4393,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bookmarks",
       "examples": [
@@ -4759,6 +4770,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bookmarks",
       "examples": [
@@ -5018,6 +5030,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bookmarks/{id}",
       "examples": [
@@ -5465,6 +5478,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/bookmarks/{id}",
       "examples": [
@@ -5713,6 +5727,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/bookmarks/{id}",
       "examples": [
@@ -6005,6 +6020,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bookmarks/{id}/trigger",
       "examples": [
@@ -7093,6 +7109,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/destinations",
       "examples": [
@@ -7551,6 +7568,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/destinations",
       "examples": [
@@ -7967,6 +7985,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/destinations",
       "examples": [
@@ -8176,6 +8195,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/destinations/{id}",
       "examples": [
@@ -8681,6 +8701,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/destinations/{id}",
       "examples": [
@@ -8901,6 +8922,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/destinations/{id}/archive",
       "examples": [
@@ -9109,6 +9131,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/destinations/{id}/unarchive",
       "examples": [
@@ -11147,6 +11170,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/events",
       "examples": [
@@ -11459,6 +11483,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/events/{id}",
       "examples": [
@@ -11763,6 +11788,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/events/{id}/raw_body",
       "examples": [
@@ -11904,6 +11930,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/events/{id}/retry",
       "examples": [
@@ -12346,6 +12373,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/events/{id}/mute",
       "examples": [
@@ -15287,6 +15315,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/events/retry",
       "examples": [
@@ -17210,6 +17239,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/events/retry",
       "examples": [
@@ -19062,6 +19092,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/events/retry/plan",
       "examples": [
@@ -19206,6 +19237,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/events/retry/{id}",
       "examples": [
@@ -19459,6 +19491,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/events/retry/{id}/cancel",
       "examples": [
@@ -20687,6 +20720,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/ignored-events/retry",
       "examples": [
@@ -21182,6 +21216,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/ignored-events/retry",
       "examples": [
@@ -21606,6 +21641,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/ignored-events/retry/plan",
       "examples": [
@@ -21750,6 +21786,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/ignored-events/retry/{id}",
       "examples": [
@@ -22003,6 +22040,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/ignored-events/retry/{id}/cancel",
       "examples": [
@@ -22329,6 +22367,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/integrations",
       "examples": [
@@ -22766,6 +22805,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/integrations",
       "examples": [
@@ -23028,6 +23068,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/integrations/{id}",
       "examples": [
@@ -23506,6 +23547,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/integrations/{id}",
       "examples": [
@@ -23731,6 +23773,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/integrations/{id}",
       "examples": [
@@ -23935,6 +23978,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/integrations/{id}/attach/{source_id}",
       "examples": [
@@ -24149,6 +24193,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/integrations/{id}/detach/{source_id}",
       "examples": [
@@ -25762,6 +25807,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issues",
       "examples": [
@@ -27541,6 +27587,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issues/count",
       "examples": [
@@ -27702,6 +27749,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issues/{id}",
       "examples": [
@@ -28371,6 +28419,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/issues/{id}",
       "examples": [
@@ -28662,6 +28711,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issues/{id}",
       "examples": [
@@ -30429,6 +30479,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/requests",
       "examples": [
@@ -30724,6 +30775,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/requests/{id}",
       "examples": [
@@ -31011,6 +31063,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/requests/{id}/raw_body",
       "examples": [
@@ -31292,6 +31345,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/requests/{id}/retry",
       "examples": [
@@ -33640,6 +33694,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/requests/{id}/events",
       "examples": [
@@ -34301,6 +34356,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/requests/{id}/ignored_events",
       "examples": [
@@ -36822,6 +36878,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/requests/retry",
       "examples": [
@@ -38405,6 +38462,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/requests/retry",
       "examples": [
@@ -39917,6 +39975,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/requests/retry/plan",
       "examples": [
@@ -40061,6 +40120,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/bulk/requests/retry/{id}",
       "examples": [
@@ -40314,6 +40374,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/bulk/requests/retry/{id}/cancel",
       "examples": [
@@ -41441,6 +41502,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/rulesets",
       "examples": [
@@ -41807,6 +41869,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/rulesets",
       "examples": [
@@ -42145,6 +42208,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/rulesets",
       "examples": [
@@ -42367,6 +42431,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/rulesets/{id}",
       "examples": [
@@ -42799,6 +42864,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/rulesets/{id}",
       "examples": [
@@ -43024,6 +43090,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/rulesets/{id}/archive",
       "examples": [
@@ -43245,6 +43312,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/rulesets/{id}/unarchive",
       "examples": [
@@ -44180,6 +44248,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/sources",
       "examples": [
@@ -44516,6 +44585,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/sources",
       "examples": [
@@ -44810,6 +44880,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/sources",
       "examples": [
@@ -45033,6 +45104,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/sources/{id}",
       "examples": [
@@ -45421,6 +45493,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/sources/{id}",
       "examples": [
@@ -45647,6 +45720,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/sources/{id}/archive",
       "examples": [
@@ -45869,6 +45943,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/sources/{id}/unarchive",
       "examples": [
@@ -46116,6 +46191,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/notifications/webhooks",
       "examples": [
@@ -46601,6 +46677,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transformations",
       "examples": [
@@ -46976,6 +47053,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transformations",
       "examples": [
@@ -47334,6 +47412,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/transformations",
       "examples": [
@@ -47550,6 +47629,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transformations/{id}",
       "examples": [
@@ -47974,6 +48054,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/transformations/{id}",
       "examples": [
@@ -48522,6 +48603,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/transformations/run",
       "examples": [
@@ -49327,6 +49409,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transformations/{id}/executions",
       "examples": [
@@ -49643,6 +49726,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transformations/{id}/executions/{execution_id}",
       "examples": [
@@ -50905,6 +50989,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/webhooks",
       "examples": [
@@ -51825,6 +51910,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/webhooks",
       "examples": [
@@ -52823,6 +52909,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks",
       "examples": [
@@ -53333,6 +53420,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/webhooks/{id}",
       "examples": [
@@ -54123,6 +54211,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks/{id}",
       "examples": [
@@ -54636,6 +54725,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks/{id}/archive",
       "examples": [
@@ -55145,6 +55235,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks/{id}/unarchive",
       "examples": [
@@ -55654,6 +55745,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks/{id}/pause",
       "examples": [
@@ -56163,6 +56255,7 @@
       "servers": [],
       "description": "",
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/webhooks/{id}/unpause",
       "examples": [

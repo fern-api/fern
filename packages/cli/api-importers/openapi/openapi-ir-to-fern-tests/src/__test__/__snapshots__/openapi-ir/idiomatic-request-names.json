@@ -96,6 +96,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/organizations/{organizationId}/users",
       "examples": [
@@ -242,6 +243,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [
@@ -350,6 +352,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users/{userId}",
       "examples": [

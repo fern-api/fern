@@ -59,6 +59,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/with-additional-properties-explicit",
       "examples": [
@@ -146,6 +147,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/without-additional-properties-explicit",
       "examples": [
@@ -233,6 +235,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/implicit",
       "examples": [
@@ -320,6 +323,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/with-additional-properties-explicit",
       "examples": [
@@ -407,6 +411,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/without-additional-properties-explicit",
       "examples": [
@@ -494,6 +499,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/implicit",
       "examples": [

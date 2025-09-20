@@ -52,7 +52,7 @@
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -93,7 +93,7 @@
               },
             },
             "create_stream": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -150,7 +150,6 @@ service:
     create_stream:
       path: /completions/chat
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -174,7 +173,6 @@ service:
     create:
       path: /completions/chat
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

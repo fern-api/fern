@@ -25,6 +25,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().get();\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().get();\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "a145549c",
+            "id": {
+                "method": "GET",
+                "path": "/admins",
+                "identifier_override": "endpoint_user.getAdmins"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getAdmins();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getAdmins();\n    }\n}\n"
+            }
         }
     ],
     "types": {}

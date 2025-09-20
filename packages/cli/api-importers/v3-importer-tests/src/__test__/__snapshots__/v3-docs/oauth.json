@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "oauth2",
         "token": {
           "originalName": "token",
           "camelCase": {

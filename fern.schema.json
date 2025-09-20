@@ -1503,6 +1503,25 @@
         }
       ]
     },
+    "service.HttpEndpointAuth": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
     "service.QueryParameterTypeReferenceDetailed": {
       "type": "object",
       "properties": {
@@ -2719,7 +2738,7 @@
         "auth": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/service.HttpEndpointAuth"
             },
             {
               "type": "null"

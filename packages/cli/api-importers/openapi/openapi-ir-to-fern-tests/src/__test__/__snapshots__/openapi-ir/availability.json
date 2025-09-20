@@ -275,6 +275,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
       "examples": [
@@ -395,6 +396,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/success-ref",
       "examples": [
@@ -524,6 +526,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/success-inline-property-deprecation",
       "examples": [
@@ -632,6 +635,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/success-inline-object-deprecation",
@@ -741,6 +745,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Beta",
       "method": "POST",
       "path": "/success-inline-beta-body",

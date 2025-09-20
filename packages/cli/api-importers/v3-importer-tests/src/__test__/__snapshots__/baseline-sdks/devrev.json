@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "auth-token",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -36861,7 +36862,7 @@
               "safeName": "Locate"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -37240,7 +37241,7 @@
               "safeName": "Prepare"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -37679,7 +37680,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -38532,7 +38533,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -38907,7 +38908,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39286,7 +39287,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39779,7 +39780,7 @@
               "safeName": "SelfDelete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -40171,7 +40172,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -40676,7 +40677,7 @@
               "safeName": "DevOrgAuthConnectionsCreate"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -41008,7 +41009,7 @@
               "safeName": "DevOrgAuthConnectionsDelete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -41377,7 +41378,7 @@
               "safeName": "DevOrgAuthConnectionsGet"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -41756,7 +41757,7 @@
               "safeName": "DevOrgAuthConnectionsList"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -42003,7 +42004,7 @@
               "safeName": "DevOrgAuthConnectionsToggle"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -42433,7 +42434,7 @@
               "safeName": "DevOrgAuthConnectionsUpdate"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -42855,7 +42856,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -43473,7 +43474,7 @@
               "safeName": "Self"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -43782,7 +43783,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -44114,7 +44115,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -44519,7 +44520,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -44898,7 +44899,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -45561,7 +45562,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -45983,7 +45984,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -46597,7 +46598,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -47002,7 +47003,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -47381,7 +47382,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -48177,7 +48178,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -48925,7 +48926,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -49396,7 +49397,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -49801,7 +49802,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -50180,7 +50181,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -50645,7 +50646,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -51261,7 +51262,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -51593,7 +51594,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -51972,7 +51973,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -52504,7 +52505,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -52898,7 +52899,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -53390,7 +53391,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -53795,7 +53796,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -54174,7 +54175,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -54421,7 +54422,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -55101,7 +55102,7 @@
               "safeName": "Create"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -55433,7 +55434,7 @@
               "safeName": "Delete"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -55838,7 +55839,7 @@
               "safeName": "Export"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -56654,7 +56655,7 @@
               "safeName": "Get"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -57033,7 +57034,7 @@
               "safeName": "List"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -57957,7 +57958,7 @@
               "safeName": "Update"
             }
           },
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -95539,7 +95540,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": true,
+    "isAuthMandatory": false,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/admins",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getAdmins"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/any-auth/fern/client\"\n\toption \"github.com/any-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetAdmins(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/token",
                 "method": "POST",
                 "identifier_override": "endpoint_auth.getToken"

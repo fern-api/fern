@@ -6,17 +6,17 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { OAuthConfiguration } from "./OAuthConfiguration";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { BaseAuthScheme } from "./BaseAuthScheme";
 
 export const OAuthScheme: core.serialization.ObjectSchema<serializers.OAuthScheme.Raw, FernIr.OAuthScheme> =
     core.serialization
         .objectWithoutOptionalProperties({
             configuration: OAuthConfiguration,
         })
-        .extend(WithDocs);
+        .extend(BaseAuthScheme);
 
 export declare namespace OAuthScheme {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends BaseAuthScheme.Raw {
         configuration: OAuthConfiguration.Raw;
     }
 }

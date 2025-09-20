@@ -16,7 +16,7 @@
           "base-path": "",
           "endpoints": {
             "implicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -53,7 +53,7 @@
               },
             },
             "with-additional-properties-explicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -90,7 +90,7 @@
               },
             },
             "without-additional-properties-explicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -172,7 +172,6 @@
     with-additional-properties-explicit:
       path: /with-additional-properties-explicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
@@ -193,7 +192,6 @@
     without-additional-properties-explicit:
       path: /without-additional-properties-explicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
@@ -214,7 +212,6 @@
     implicit:
       path: /implicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
@@ -261,7 +258,7 @@ types:
           "base-path": "",
           "endpoints": {
             "implicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -298,7 +295,7 @@ types:
               },
             },
             "with-additional-properties-explicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -335,7 +332,7 @@ types:
               },
             },
             "without-additional-properties-explicit": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -418,7 +415,6 @@ types:
     with-additional-properties-explicit:
       path: /with-additional-properties-explicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:
@@ -439,7 +435,6 @@ types:
     without-additional-properties-explicit:
       path: /without-additional-properties-explicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:
@@ -460,7 +455,6 @@ types:
     implicit:
       path: /implicit
       method: POST
-      auth: false
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:

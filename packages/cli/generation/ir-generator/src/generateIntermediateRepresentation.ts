@@ -292,7 +292,8 @@ export function generateIntermediateRepresentation({
                     sourceResolver,
                     globalErrors,
                     variableResolver,
-                    workspace
+                    workspace,
+                    auth: intermediateRepresentation.auth
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);

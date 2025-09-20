@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -10104,6 +10105,14 @@
           },
           "displayName": "Add a new pet to the store.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -10525,6 +10534,14 @@
           },
           "displayName": "Update an existing pet.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "PUT",
           "path": {
@@ -11014,6 +11031,14 @@
           },
           "displayName": "Finds Pets by status.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -11414,6 +11439,14 @@
           },
           "displayName": "Finds Pets by tags.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -11718,6 +11751,17 @@
           },
           "displayName": "Find pet by ID.",
           "auth": true,
+          "security": [
+            {
+              "api_key": []
+            },
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -12058,6 +12102,14 @@
           },
           "displayName": "Updates a pet in the store with form data.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -12485,6 +12537,14 @@
           },
           "displayName": "Deletes a pet.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -12681,6 +12741,14 @@
           },
           "displayName": "Uploads an image.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -13237,6 +13305,11 @@
           },
           "displayName": "Returns pet inventories by status.",
           "auth": true,
+          "security": [
+            {
+              "api_key": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -16481,6 +16554,14 @@
           },
           "displayName": "Add a new pet to the store.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -16902,6 +16983,14 @@
           },
           "displayName": "Update an existing pet.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "PUT",
           "path": {
@@ -17391,6 +17480,14 @@
           },
           "displayName": "Finds Pets by status.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -17791,6 +17888,14 @@
           },
           "displayName": "Finds Pets by tags.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -18095,6 +18200,17 @@
           },
           "displayName": "Find pet by ID.",
           "auth": true,
+          "security": [
+            {
+              "api_key": []
+            },
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -18435,6 +18551,14 @@
           },
           "displayName": "Updates a pet in the store with form data.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -18862,6 +18986,14 @@
           },
           "displayName": "Deletes a pet.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -19058,6 +19190,14 @@
           },
           "displayName": "Uploads an image.",
           "auth": true,
+          "security": [
+            {
+              "petstore_auth": [
+                "write:pets",
+                "read:pets"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -19614,6 +19754,11 @@
           },
           "displayName": "Returns pet inventories by status.",
           "auth": true,
+          "security": [
+            {
+              "api_key": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -26364,6 +26509,7 @@
     "endpoints": {
       "endpoint_petsV1/pet.addPet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26510,6 +26656,7 @@
       },
       "endpoint_petsV1/pet.updatePet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26656,6 +26803,7 @@
       },
       "endpoint_petsV1/pet.findPetsByStatus": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26936,6 +27084,7 @@
       },
       "endpoint_petsV1/pet.findPetsByTags": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27219,6 +27368,7 @@
       },
       "endpoint_petsV1/pet.getPetById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27387,6 +27537,7 @@
       },
       "endpoint_petsV1/pet.updatePetWithForm": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27727,6 +27878,7 @@
       },
       "endpoint_petsV1/pet.deletePet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27895,6 +28047,7 @@
       },
       "endpoint_petsV1/pet.uploadFile": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28229,6 +28382,7 @@
       },
       "endpoint_petsV1/store.getInventory": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28368,6 +28522,7 @@
       },
       "endpoint_petsV1/store.placeOrder": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28514,6 +28669,7 @@
       },
       "endpoint_petsV1/store.getOrderById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28682,6 +28838,7 @@
       },
       "endpoint_petsV1/store.deleteOrder": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28850,6 +29007,7 @@
       },
       "endpoint_petsV1/user.createUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28996,6 +29154,7 @@
       },
       "endpoint_petsV1/user.createUsersWithListInput": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29145,6 +29304,7 @@
       },
       "endpoint_petsV1/user.loginUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29456,6 +29616,7 @@
       },
       "endpoint_petsV1/user.logoutUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29595,6 +29756,7 @@
       },
       "endpoint_petsV1/user.getUserByName": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29763,6 +29925,7 @@
       },
       "endpoint_petsV1/user.updateUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29938,6 +30101,7 @@
       },
       "endpoint_petsV1/user.deleteUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30106,6 +30270,7 @@
       },
       "endpoint_petsV2/pet.addPet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30252,6 +30417,7 @@
       },
       "endpoint_petsV2/pet.updatePet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30398,6 +30564,7 @@
       },
       "endpoint_petsV2/pet.findPetsByStatus": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30678,6 +30845,7 @@
       },
       "endpoint_petsV2/pet.findPetsByTags": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30961,6 +31129,7 @@
       },
       "endpoint_petsV2/pet.getPetById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31129,6 +31298,7 @@
       },
       "endpoint_petsV2/pet.updatePetWithForm": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31469,6 +31639,7 @@
       },
       "endpoint_petsV2/pet.deletePet": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31637,6 +31808,7 @@
       },
       "endpoint_petsV2/pet.uploadFile": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31971,6 +32143,7 @@
       },
       "endpoint_petsV2/store.getInventory": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32110,6 +32283,7 @@
       },
       "endpoint_petsV2/store.placeOrder": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32256,6 +32430,7 @@
       },
       "endpoint_petsV2/store.getOrderById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32424,6 +32599,7 @@
       },
       "endpoint_petsV2/store.deleteOrder": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32592,6 +32768,7 @@
       },
       "endpoint_petsV2/user.createUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32738,6 +32915,7 @@
       },
       "endpoint_petsV2/user.createUsersWithListInput": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -32887,6 +33065,7 @@
       },
       "endpoint_petsV2/user.loginUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33198,6 +33377,7 @@
       },
       "endpoint_petsV2/user.logoutUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33337,6 +33517,7 @@
       },
       "endpoint_petsV2/user.getUserByName": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33505,6 +33686,7 @@
       },
       "endpoint_petsV2/user.updateUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -33680,6 +33862,7 @@
       },
       "endpoint_petsV2/user.deleteUser": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {

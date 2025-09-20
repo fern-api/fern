@@ -675,6 +675,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/booking_amendments",
       "examples": [
@@ -2267,6 +2268,7 @@
       "servers": [],
       "description": "Returns a list of booking line items linked to submitted bookings",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/booking_line_items",
       "examples": [
@@ -2818,6 +2820,7 @@
       "servers": [],
       "description": "Creates and returns a booking line item",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/booking_line_items",
       "examples": [
@@ -3310,6 +3313,7 @@
       "servers": [],
       "description": "Returns a list of booking line items",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/booking_line_items/{id}",
       "examples": [
@@ -4538,6 +4542,7 @@
       "servers": [],
       "description": "Returns a list of bookings.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/bookings",
       "examples": [
@@ -6339,6 +6344,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/bookings",
       "examples": [
@@ -8591,6 +8597,7 @@
       "servers": [],
       "description": "Retrieves the details of a single booking.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/bookings/{id}",
       "examples": [
@@ -10251,6 +10258,7 @@
       "servers": [],
       "description": "Rate limited to 2,000 requests per hour",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/carbon_calculation",
       "examples": [
@@ -10838,6 +10846,7 @@
       "servers": [],
       "description": "Returns a list of commercial invoices",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/commercial_invoices",
       "examples": [
@@ -11865,6 +11874,7 @@
       "servers": [],
       "description": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/commercial_invoices",
       "examples": [
@@ -12956,6 +12966,7 @@
       "servers": [],
       "description": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/commercial_invoices",
       "examples": [
@@ -13986,6 +13997,7 @@
       "servers": [],
       "description": "Retrieves the details of a single commercial invoice.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/commercial_invoices/{id}",
       "examples": [
@@ -15110,6 +15122,7 @@
       "servers": [],
       "description": "Returns a list of customs entries.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/customs_entries",
       "examples": [
@@ -15595,6 +15608,7 @@
       "servers": [],
       "description": "Retrieves the details of a single customs entry.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/customs_entries/{id}",
       "examples": [
@@ -16358,6 +16372,7 @@
       "servers": [],
       "description": "Returns a list of all documents associated with shipments.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents",
       "examples": [
@@ -16890,6 +16905,7 @@
       "servers": [],
       "description": "Create a new document for this client using the request payload",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/documents",
       "examples": [
@@ -17361,6 +17377,7 @@
       "servers": [],
       "description": "Retrieves the details of a single document.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents/{id}",
       "examples": [
@@ -17721,6 +17738,7 @@
       "servers": [],
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents/{id}/download",
       "examples": [],
@@ -18251,6 +18269,7 @@
       "servers": [],
       "description": "Returns a list of all events delivered to any webhook registered by this client",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/events",
       "examples": [
@@ -18706,6 +18725,7 @@
       "servers": [],
       "description": "Returns the webhook event with ID \":id\"",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/events/{id}",
       "examples": [
@@ -20280,6 +20300,7 @@
       "servers": [],
       "description": "Returns a list of invoices.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/invoices",
       "examples": [
@@ -22140,6 +22161,7 @@
       "servers": [],
       "description": "Retrieves the details of a single invoice",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/invoices/{id}",
       "examples": [
@@ -23883,6 +23905,7 @@
       "servers": [],
       "description": "Returns a list of companies in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/companies",
       "examples": [
@@ -24595,6 +24618,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/companies",
       "examples": [
@@ -25137,6 +25161,7 @@
       "servers": [],
       "description": "Retrieves the details of a single company.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/companies/{id}",
       "examples": [
@@ -25827,6 +25852,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/companies/{id}",
       "examples": [
@@ -26737,6 +26763,7 @@
       "servers": [],
       "description": "Returns a list of the company entity objects in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/company_entities",
       "examples": [
@@ -27319,6 +27346,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/company_entities",
       "examples": [
@@ -27863,6 +27891,7 @@
       "servers": [],
       "description": "Retrieves the details of a single company entity",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/company_entities/{id}",
       "examples": [
@@ -28421,6 +28450,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/company_entities/{id}",
       "examples": [
@@ -29178,6 +29208,7 @@
       "servers": [],
       "description": "Returns a list of contacts in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/contacts",
       "examples": [
@@ -29705,6 +29736,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/contacts",
       "examples": [
@@ -30205,6 +30237,7 @@
       "servers": [],
       "description": "Retrieves the details of a single contact.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/contacts/{id}",
       "examples": [
@@ -30709,6 +30742,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/contacts/{id}",
       "examples": [
@@ -31475,6 +31509,7 @@
       "servers": [],
       "description": "Returns a list of location objects in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/locations",
       "examples": [
@@ -32111,6 +32146,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/locations",
       "examples": [
@@ -32730,6 +32766,7 @@
       "servers": [],
       "description": "Retrieves the details of a single location",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/locations/{id}",
       "examples": [
@@ -33356,6 +33393,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/locations/{id}",
       "examples": [
@@ -33952,6 +33990,7 @@
       "servers": [],
       "description": "Retrieves the details of your own organization.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/me/companies",
       "examples": [
@@ -34819,6 +34858,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_container_legs",
       "examples": [
@@ -35351,6 +35391,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_container_legs/{id}",
       "examples": [
@@ -36082,6 +36123,7 @@
       "servers": [],
       "description": "Returns a list of containers. The containers are sorted descending by creation date.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_containers",
       "examples": [
@@ -36906,6 +36948,7 @@
       "servers": [],
       "description": "Retrieves the details of a single container.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_containers/{id}",
       "examples": [
@@ -37921,6 +37964,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ports",
       "examples": [
@@ -38839,6 +38883,7 @@
       "servers": [],
       "description": "Returns a list of all products belonging to this client",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/products",
       "examples": [
@@ -39390,6 +39435,7 @@
       "servers": [],
       "description": "Create a new product for this client using the request payload",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/products",
       "examples": [
@@ -39941,6 +39987,7 @@
       "servers": [],
       "description": "Returns the client's product with this ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/products/{id}",
       "examples": [
@@ -40489,6 +40536,7 @@
       "servers": [],
       "description": "Update this product to represent the request payload",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/products/{id}",
       "examples": [
@@ -41365,6 +41413,7 @@
       "servers": [],
       "description": "Returns a list of purchase order line items",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_order_line_items",
       "examples": [
@@ -42450,6 +42499,7 @@
       "servers": [],
       "description": "Returns the details of a purchase order line item",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_order_line_items/{id}",
       "examples": [
@@ -44087,6 +44137,7 @@
       "servers": [],
       "description": "Returns a list of purchase orders",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_orders",
       "examples": [
@@ -45791,6 +45842,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/purchase_orders",
       "examples": [
@@ -47710,6 +47762,7 @@
       "servers": [],
       "description": "Retrieves the details of a single purchase order.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_orders/{id}",
       "examples": [
@@ -48911,6 +48964,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/purchase_orders/{id}",
       "examples": [
@@ -50595,6 +50649,7 @@
       "servers": [],
       "description": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipment_legs",
       "examples": [
@@ -51840,6 +51895,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipment_legs/{id}",
       "examples": [
@@ -53962,6 +54018,7 @@
       "servers": [],
       "description": "Returns a list of shipments.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipments",
       "examples": [
@@ -56089,6 +56146,7 @@
       "servers": [],
       "description": "Retrieves the details of a single shipment.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipments/{id}",
       "examples": [
@@ -58185,6 +58243,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/shipments/{id}",
       "examples": [
@@ -60258,6 +60317,7 @@
       "servers": [],
       "description": "Returns a list of shipments status shareable url",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/shipments_shareable",
       "examples": [

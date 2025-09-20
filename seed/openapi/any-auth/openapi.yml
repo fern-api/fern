@@ -60,6 +60,25 @@ paths:
         - BearerAuth: []
         - ApiKeyAuth: []
         - BearerAuth: []
+  /admins:
+    get:
+      operationId: user_getAdmins
+      tags:
+        - User
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+        - BearerAuth: []
 components:
   schemas:
     TokenResponse:

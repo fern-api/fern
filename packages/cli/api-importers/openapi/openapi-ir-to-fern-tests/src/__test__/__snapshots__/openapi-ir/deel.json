@@ -284,6 +284,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/hris/direct-employees",
       "examples": [
@@ -798,6 +799,16 @@
       "servers": [],
       "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/eor/validations/{country_code}",
       "examples": [
@@ -1230,6 +1241,17 @@
       "servers": [],
       "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/eor",
       "examples": [
@@ -1722,6 +1744,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/time-based",
       "examples": [
@@ -2615,6 +2647,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/task-based",
       "examples": [
@@ -3497,6 +3539,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/milestone-based",
       "examples": [
@@ -4379,6 +4431,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/fixed-rate",
       "examples": [
@@ -5487,6 +5549,17 @@
       "servers": [],
       "description": "Retrieve a list of contracts.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts",
       "examples": [
@@ -5890,6 +5963,16 @@
       "servers": [],
       "description": "Create a new Deel contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts",
       "examples": [
@@ -6782,6 +6865,17 @@
       "servers": [],
       "description": "Retrieve a single contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}",
       "examples": [
@@ -7586,6 +7680,16 @@
       "servers": [],
       "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/contracts/{contract_id}",
       "examples": [
@@ -7899,6 +8003,17 @@
       "servers": [],
       "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/documents",
       "examples": [
@@ -8206,6 +8321,17 @@
       "servers": [],
       "description": "Overwrite the file currently attached to contract document.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/contracts/{contract_id}/documents",
       "examples": [
@@ -8495,6 +8621,17 @@
       "servers": [],
       "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/preview",
       "examples": [
@@ -8750,6 +8887,17 @@
       "servers": [],
       "description": "Retrieve a list of tasks for a given contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/tasks",
       "examples": [
@@ -9096,6 +9244,16 @@
       "servers": [],
       "description": "Create a new task for the contractor.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks",
       "examples": [
@@ -9345,6 +9503,17 @@
       "servers": [],
       "description": "Returns an array of alternate email objects",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/alternate_emails",
       "examples": [
@@ -9646,6 +9815,16 @@
       "servers": [],
       "description": "Review multiple tasks to approve or decline the submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks/many/reviews",
       "examples": [
@@ -10041,6 +10220,16 @@
       "servers": [],
       "description": "Review a single task to approve or decline the submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
       "examples": [
@@ -10430,6 +10619,16 @@
       "servers": [],
       "description": "Delete task from the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/tasks/{task_id}",
       "examples": [
@@ -10734,6 +10933,16 @@
       "servers": [],
       "description": "Amend payment details of a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/amendments",
       "examples": [
@@ -11037,6 +11246,16 @@
       "servers": [],
       "description": "Terminate an active contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/terminations",
       "examples": [
@@ -11347,6 +11566,16 @@
       "servers": [],
       "description": "Sign a contract as a client.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/signatures",
       "examples": [
@@ -11589,6 +11818,16 @@
       "servers": [],
       "description": "Archive a terminated, cancelled or completed contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/contracts/{contract_id}/archive",
       "examples": [
@@ -11883,6 +12122,16 @@
       "servers": [],
       "description": "Invite a worker to sign the contract. Worker will be notified via email.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/invitations",
       "examples": [
@@ -12182,6 +12431,16 @@
       "servers": [],
       "description": "Remove invite in order to re-invite a worker to sign the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/invitations",
       "examples": [
@@ -12607,6 +12866,17 @@
       "servers": [],
       "description": "Retrieve a list of timesheets found for a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/timesheets",
       "examples": [
@@ -13103,6 +13373,17 @@
       "servers": [],
       "description": "Retrieve a list of milestones found for a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write",
+            "milestones:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/milestones",
       "examples": [
@@ -13482,6 +13763,16 @@
       "servers": [],
       "description": "Add a new milestone to contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones",
       "examples": [
@@ -13804,6 +14095,17 @@
       "servers": [],
       "description": "Retrieve a single milestone.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write",
+            "milestones:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "examples": [
@@ -14185,6 +14487,16 @@
       "servers": [],
       "description": "Delete a single milestone from a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "examples": [
@@ -14505,6 +14817,16 @@
       "servers": [],
       "description": "Review a milestone to approve or decline submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
       "examples": [
@@ -14823,6 +15145,16 @@
       "servers": [],
       "description": "Review a batch of milestones to approve or reject submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones/many/reviews",
       "examples": [
@@ -15124,6 +15456,17 @@
       "servers": [],
       "description": "Retrieve a list of off-cycle payments for the given contract id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write",
+            "off-cycle-payments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "examples": [
@@ -15524,6 +15867,16 @@
       "servers": [],
       "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "examples": [
@@ -15839,6 +16192,17 @@
       "servers": [],
       "description": "Retrieve a single off-cycle payment.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write",
+            "off-cycle-payments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
       "examples": [
@@ -16169,6 +16533,16 @@
       "servers": [],
       "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/premium",
       "examples": [
@@ -16554,6 +16928,16 @@
       "servers": [],
       "description": "Remove Deel Premium from an existing contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/premium",
       "examples": [
@@ -16863,6 +17247,17 @@
       "servers": [],
       "description": "Calculate the final payment due to the contractor when ending the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/final-payments",
       "examples": [
@@ -17122,6 +17517,16 @@
       "servers": [],
       "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/estimate",
       "examples": [
@@ -17412,6 +17817,17 @@
       "servers": [],
       "description": "Retrieve the list of time off requests by an employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/time-offs",
       "examples": [
@@ -17926,6 +18342,16 @@
       "servers": [],
       "description": "Add a time off request for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/time-offs",
       "examples": [
@@ -18619,6 +19045,16 @@
       "servers": [],
       "description": "Edit a time off request for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "examples": [
@@ -19303,6 +19739,16 @@
       "servers": [],
       "description": "Cancel a time off request for an employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "examples": [
@@ -19741,6 +20187,17 @@
       "servers": [],
       "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/timesheets",
       "examples": [
@@ -20227,6 +20684,16 @@
       "servers": [],
       "description": "Submit work for a contractor.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets",
       "examples": [
@@ -20556,6 +21023,17 @@
       "servers": [],
       "description": "Retrieve a single timesheet entry by Id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -21106,6 +21584,16 @@
       "servers": [],
       "description": "Delete a single timesheet entry.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -21399,6 +21887,16 @@
       "servers": [],
       "description": "Update a single timesheet entry.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -21716,6 +22214,16 @@
       "servers": [],
       "description": "Review a timesheet to approve or decline submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets/{timesheet_id}/reviews",
       "examples": [
@@ -22006,6 +22514,16 @@
       "servers": [],
       "description": "Review a batch of timesheets to approve or reject submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets/many/reviews",
       "examples": [
@@ -22490,6 +23008,17 @@
       "servers": [],
       "description": "Retrieve a list of invoice details for the given contract id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write",
+            "invoice-adjustments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/invoice-adjustments",
       "examples": [
@@ -23213,6 +23742,17 @@
       "servers": [],
       "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write",
+            "invoice-adjustments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoice-adjustments",
       "examples": [
@@ -23729,6 +24269,16 @@
       "servers": [],
       "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments",
       "examples": [
@@ -24077,6 +24627,16 @@
       "servers": [],
       "description": "Update an existing invoice adjustment.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "examples": [
@@ -24370,6 +24930,16 @@
       "servers": [],
       "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "examples": [
@@ -24680,6 +25250,16 @@
       "servers": [],
       "description": "Review an invoice adjustment to approve or decline it.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
       "examples": [
@@ -24970,6 +25550,16 @@
       "servers": [],
       "description": "Review multiple invoice adjustments to approve or decline a batch.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments/many/reviews",
       "examples": [
@@ -25242,6 +25832,17 @@
       "servers": [],
       "description": "Retrieve a list of legal entities in your account.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read",
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/legal-entities",
       "examples": [
@@ -25511,6 +26112,14 @@
       "servers": [],
       "description": "Retrieve a list of countries supported by Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/countries",
       "examples": [
@@ -25814,6 +26423,14 @@
       "servers": [],
       "description": "Retrieve the list of currencies used by Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/currencies",
       "examples": [
@@ -26116,6 +26733,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined job titles in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/job-titles",
       "examples": [
@@ -26409,6 +27034,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/seniorities",
       "examples": [
@@ -26675,6 +27308,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/time-off-types",
       "examples": [
@@ -26935,6 +27576,16 @@
       "servers": [],
       "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/organizations",
       "examples": [
@@ -27193,6 +27844,16 @@
       "servers": [],
       "description": "Retrieve a list of teams in your organization.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/teams",
       "examples": [
@@ -27446,6 +28107,21 @@
       "servers": [],
       "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "invoice-adjustments:write",
+            "milestones:write",
+            "off-cycle-payments:write",
+            "tasks:write",
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/attachments",
       "examples": [
@@ -27754,6 +28430,16 @@
       "servers": [],
       "description": "This end-point returns a list of your agreements with Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/agreements",
       "examples": [
@@ -28075,6 +28761,17 @@
       "servers": [],
       "description": "Retrieve a list of contract templates in your organization.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contract-templates",
       "examples": [
@@ -28276,6 +28973,17 @@
       "servers": [],
       "description": "Retrieve a list of time off entitlements for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/entitlements",
       "examples": [
@@ -28573,6 +29281,7 @@
       "servers": [],
       "description": "List of time offs for all employees in your organization.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/time-offs/",
       "examples": [
@@ -29153,6 +29862,16 @@
       "servers": [],
       "description": "Approve or decline an employee's time off request.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/time-offs/{timeoff_id}/review",
       "examples": [
@@ -29462,6 +30181,16 @@
       "servers": [],
       "description": "Retrieve a list of paid invoices for your workforce.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoices",
       "examples": [
@@ -29807,6 +30536,16 @@
       "servers": [],
       "description": "Get link to download the invoice PDF.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoices/{invoice_id}/download",
       "examples": [
@@ -30095,6 +30834,16 @@
       "servers": [],
       "description": "Get a link to download the Deel billing invoice PDF.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/billing/{invoice_id}/download",
       "examples": [
@@ -30422,6 +31171,16 @@
       "servers": [],
       "description": "Retrieve a list of payments made to Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/payments",
       "examples": [
@@ -30795,6 +31554,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "profile:read",
+            "people:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/people",
       "examples": [
@@ -31337,6 +32107,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "profile:read",
+            "people:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/people/me",
       "examples": [
@@ -31680,6 +32461,16 @@
       "servers": [],
       "description": "Retrieve a list of webhook subscriptions.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/webhooks",
       "examples": [
@@ -32022,6 +32813,16 @@
       "servers": [],
       "description": "Create a new webhooks subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/webhooks",
       "examples": [
@@ -32391,6 +33192,16 @@
       "servers": [],
       "description": "Retrieve a single webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/webhooks/{id}",
       "examples": [
@@ -32717,6 +33528,16 @@
       "servers": [],
       "description": "Delete a webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/webhooks/{id}",
       "examples": [
@@ -32989,6 +33810,16 @@
       "servers": [],
       "description": "Edit a webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/webhooks/{id}",
       "examples": [
@@ -33362,6 +34193,17 @@
       "servers": [],
       "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read",
+            "accounting:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/payments/{payment_id}/breakdown",
       "examples": [

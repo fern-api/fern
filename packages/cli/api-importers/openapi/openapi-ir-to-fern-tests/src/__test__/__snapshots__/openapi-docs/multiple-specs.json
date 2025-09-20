@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "upload-file": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload a file",
               "docs": undefined,
               "examples": [
@@ -45,7 +45,7 @@
               },
             },
             "upload-list": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload a list of files",
               "docs": undefined,
               "examples": [
@@ -80,7 +80,7 @@
               },
             },
             "upload-with-content-type": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload a file with a content type",
               "docs": undefined,
               "examples": [
@@ -150,7 +150,6 @@
     upload-file:
       path: /upload
       method: POST
-      auth: false
       source:
         openapi: ../openapi-v1.yml
       display-name: Upload a file
@@ -170,7 +169,6 @@
     upload-list:
       path: /upload-list
       method: POST
-      auth: false
       source:
         openapi: ../openapi-v2.yml
       display-name: Upload a list of files
@@ -190,7 +188,6 @@
     upload-with-content-type:
       path: /upload-with-content-type
       method: POST
-      auth: false
       source:
         openapi: ../openapi-v3.yml
       display-name: Upload a file with a content type

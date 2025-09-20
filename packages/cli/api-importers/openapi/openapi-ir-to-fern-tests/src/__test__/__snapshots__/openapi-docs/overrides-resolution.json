@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "createAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a user",
               "docs": undefined,
               "examples": [
@@ -63,7 +63,7 @@
               },
             },
             "updateAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update a user",
               "docs": undefined,
               "examples": [
@@ -182,7 +182,6 @@
     createAUser:
       path: /users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a user
@@ -217,7 +216,6 @@
     updateAUser:
       path: /users
       method: PUT
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Update a user

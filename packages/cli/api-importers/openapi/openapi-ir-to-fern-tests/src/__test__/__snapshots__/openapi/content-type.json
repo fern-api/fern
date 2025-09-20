@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "testUpload": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Test upload",
               "docs": "Test multipart request with different content types.
 ",
@@ -69,7 +69,7 @@
               },
             },
             "testWithDualContentTypeRequestTypes": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Test with dual Content-Type request types",
               "docs": "Test request with dual content types.
 ",
@@ -130,7 +130,6 @@
     testUpload:
       path: /test
       method: POST
-      auth: false
       docs: |
         Test multipart request with different content types.
       source:
@@ -173,7 +172,6 @@
     testWithDualContentTypeRequestTypes:
       path: /example
       method: POST
-      auth: false
       docs: |
         Test request with dual content types.
       source:

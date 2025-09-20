@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { InferredAuthSchemeTokenEndpoint } from "./InferredAuthSchemeTokenEndpoint";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { BaseAuthScheme } from "./BaseAuthScheme";
 
 export const InferredAuthScheme: core.serialization.ObjectSchema<
     serializers.InferredAuthScheme.Raw,
@@ -15,10 +15,10 @@ export const InferredAuthScheme: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         tokenEndpoint: InferredAuthSchemeTokenEndpoint,
     })
-    .extend(WithDocs);
+    .extend(BaseAuthScheme);
 
 export declare namespace InferredAuthScheme {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends BaseAuthScheme.Raw {
         tokenEndpoint: InferredAuthSchemeTokenEndpoint.Raw;
     }
 }

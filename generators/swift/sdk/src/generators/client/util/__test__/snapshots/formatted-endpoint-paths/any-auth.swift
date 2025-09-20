@@ -3,3 +3,4 @@
 
 // service_user
 "/users"
+"/admins"

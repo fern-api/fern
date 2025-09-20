@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": "SEED_API_KEY",
+                "key": "Bearer",
                 "docs": null
             }
         ],

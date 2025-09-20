@@ -15,4 +15,13 @@ public final class UserClient: Sendable {
             responseType: [User].self
         )
     }
+
+    public func getAdmins(requestOptions: RequestOptions? = nil) async throws -> [User] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/admins",
+            requestOptions: requestOptions,
+            responseType: [User].self
+        )
+    }
 }

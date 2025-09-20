@@ -3958,7 +3958,11 @@ Complete guide: [Account Holders](../../../account-holders).
           "display-name": "Account Holders",
           "endpoints": {
             "createAccountHolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Create an account holder.",
               "docs": undefined,
               "errors": [
@@ -4056,7 +4060,11 @@ ah = sdk.account_holders.create(
               },
             },
             "deleteAccountHolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Deletes an account holder and their transactions",
               "docs": "Deletes all of the transactions in the account holder's history. This operation is permanent and irreversible",
               "errors": [
@@ -4103,7 +4111,11 @@ ah = sdk.account_holders.delete("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               },
             },
             "getAccountHolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve an account holder.",
               "docs": undefined,
               "errors": [
@@ -4163,7 +4175,11 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               },
             },
             "getAccountHolders": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all account holders.",
               "docs": undefined,
               "errors": [
@@ -4264,7 +4280,8 @@ service:
     getAccountHolder:
       path: /v3/account_holders/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -4307,7 +4324,8 @@ service:
     deleteAccountHolder:
       path: /v3/account_holders/{id}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Deletes all of the transactions in the account holder's history. This
         operation is permanent and irreversible
@@ -4343,7 +4361,8 @@ service:
     getAccountHolders:
       path: /v3/account_holders
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       display-name: List all account holders.
@@ -4402,7 +4421,8 @@ service:
     createAccountHolder:
       path: /v3/account_holders
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       display-name: Create an account holder.
@@ -4521,7 +4541,11 @@ Complete guide: [Bank Statements](../../../bank-statements).
           "display-name": "Bank statements",
           "endpoints": {
             "deleteBankStatement": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Deletes a bank statement",
               "docs": undefined,
               "errors": [
@@ -4546,7 +4570,11 @@ Complete guide: [Bank Statements](../../../bank-statements).
               },
             },
             "getBankStatement": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve a bank statement",
               "docs": undefined,
               "errors": [
@@ -4614,7 +4642,11 @@ bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") ",
               },
             },
             "getBankStatementResult": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve the extraction results",
               "docs": "Return the extracted account information and associated transactions from a bank statement PDF. The results are accessible once the statement's status is `completed`.",
               "errors": [
@@ -4696,7 +4728,11 @@ results = sdk.bank_statements.wait_for_results(
               },
             },
             "getBankStatementStatementInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Quickly extract account holder, institution and first account",
               "docs": "Extracts account holder, bank and account information extracted from the first page of the bank statement, which is typically available before the full results. This is a synchronous call.
 
@@ -4779,7 +4815,11 @@ overview = sdk.bank_statements.overview(
               },
             },
             "getBankStatements": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all bank statements",
               "docs": "Return a list of submitted bank statements starting with the most recent one.",
               "errors": [
@@ -4879,7 +4919,11 @@ for bs in sdk.bank_statements.list().auto_paginate():
               },
             },
             "postBankStatement": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Submit a bank statement PDF",
               "docs": "Upload a PDF file and queue it for extraction.",
               "errors": [
@@ -4971,7 +5015,8 @@ service:
     getBankStatements:
       path: /v3/bank_statements
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Return a list of submitted bank statements starting with the most recent
         one.
@@ -5040,7 +5085,8 @@ service:
     postBankStatement:
       path: /v3/bank_statements
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Upload a PDF file and queue it for extraction.
       source:
         openapi: ../openapi.yml
@@ -5093,7 +5139,8 @@ service:
     getBankStatement:
       path: /v3/bank_statements/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5142,7 +5189,8 @@ service:
     deleteBankStatement:
       path: /v3/bank_statements/{id}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5157,7 +5205,8 @@ service:
     getBankStatementStatementInfo:
       path: /v3/bank_statements/{id}/overview
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Extracts account holder, bank and account information extracted from the
         first page of the bank statement, which is typically available before
@@ -5220,7 +5269,8 @@ service:
     getBankStatementResult:
       path: /v3/bank_statements/{id}/results
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Return the extracted account information and associated transactions
         from a bank statement PDF. The results are accessible once the
@@ -5338,7 +5388,11 @@ docs: >
           "base-path": "",
           "endpoints": {
             "getBatchResults": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve the results of a batch",
               "docs": "Returns the results of the enrichment request. The resulting enriched transactions are returned in the same order they were submitted. Results are available after the batch has finished processing.",
               "errors": [
@@ -5448,7 +5502,11 @@ results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
               },
             },
             "getBatches": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all batches",
               "docs": "Returns a list of submitted batches starting with the most recent one.",
               "errors": [
@@ -5541,7 +5599,11 @@ for batch in sdk.batches.list().auto_paginate():
               },
             },
             "getSingleBatch": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve a batch",
               "docs": undefined,
               "errors": [
@@ -5603,7 +5665,11 @@ batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") ",
               },
             },
             "postBatch": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Submit a batch of transactions",
               "docs": "Creates a batch of transactions and enriches it in an asynchronous fashion. A batch, representing the status of the 
 enrichment progress is returned as a result of the submission. 
@@ -5736,7 +5802,8 @@ service:
     getBatches:
       path: /v3/batches
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Returns a list of submitted batches starting with the most recent one.
       source:
         openapi: ../openapi.yml
@@ -5798,7 +5865,8 @@ service:
     postBatch:
       path: /v3/batches
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Creates a batch of transactions and enriches it in an asynchronous
         fashion. A batch, representing the status of the 
@@ -5897,7 +5965,8 @@ service:
     getSingleBatch:
       path: /v3/batches/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5942,7 +6011,8 @@ service:
     getBatchResults:
       path: /v3/batches/{id}/results
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Returns the results of the enrichment request. The resulting enriched
         transactions are returned in the same order they were submitted. Results
@@ -6037,7 +6107,11 @@ service:
           "base-path": "",
           "endpoints": {
             "customCategoriesPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Set a custom set of categories",
               "docs": "Sets a custom set of categories. Transactions that don't match a category will be categorized `not enough information` regardless of whether it is present in the set.",
               "errors": [
@@ -6166,7 +6240,11 @@ sdk.categories.set("consumer", {
               },
             },
             "deleteCustomCategorySet": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Reset category set to original values",
               "docs": "Resets the set of categories of the specified account holder type to the original values.",
               "errors": [
@@ -6249,7 +6327,11 @@ sdk.categories.reset("consumer")
               },
             },
             "getCategorySet": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve category set",
               "docs": "Retrieves the set of categories. Category sets are different per account holder type.",
               "errors": [
@@ -6346,7 +6428,8 @@ service:
     getCategorySet:
       path: /v3/categories/{account_holder_type}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Retrieves the set of categories. Category sets are different per account
         holder type.
@@ -6409,7 +6492,8 @@ service:
     customCategoriesPost:
       path: /v3/categories/{account_holder_type}
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Sets a custom set of categories. Transactions that don't match a
         category will be categorized `not enough information` regardless of
@@ -6514,7 +6598,8 @@ service:
     deleteCustomCategorySet:
       path: /v3/categories/{account_holder_type}/reset
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Resets the set of categories of the specified account holder type to the
         original values.
@@ -6589,7 +6674,11 @@ service:
           "base-path": "",
           "endpoints": {
             "getEntityById": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve an entity",
               "docs": "Retrieve more information about an entity by using its unique ID.",
               "errors": [
@@ -6656,7 +6745,11 @@ sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") ",
               },
             },
             "searchEntity": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Searches for an entity",
               "docs": "Resolves a query into an entity by querying our entity resolution system. 
     The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using 
@@ -6747,7 +6840,8 @@ service:
     searchEntity:
       path: /v3/entities/lookup
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Resolves a query into an entity by querying our entity resolution
         system. 
@@ -6803,7 +6897,8 @@ service:
     getEntityById:
       path: /v3/entities/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Retrieve more information about an entity by using its unique ID.
       source:
         openapi: ../openapi.yml
@@ -6867,7 +6962,11 @@ uploading a set of rules. For more information, see our documentation on
           "display-name": "Personalization",
           "endpoints": {
             "filterAppend": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Append a rule.",
               "docs": "Append a rule to the personalization ruleset.",
               "errors": [
@@ -6932,7 +7031,11 @@ sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
               },
             },
             "filterDelete": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Delete a rule.",
               "docs": "Delete the rule at the specified index from the personalization ruleset.",
               "errors": [
@@ -6990,7 +7093,11 @@ sdk.rules.delete(0)
               },
             },
             "filterGet": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Get the current personalization ruleset.",
               "docs": "Get the current personalization ruleset.",
               "errors": [
@@ -7045,7 +7152,11 @@ rules = sdk.rules.get()
               },
             },
             "filterPatch": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Modify an existing rule.",
               "docs": "Modify an existing rule at the specified index on the ruleset.",
               "errors": [
@@ -7115,7 +7226,11 @@ sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
               },
             },
             "filterPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Set the personalization ruleset.",
               "docs": "Set the personalization ruleset.",
               "errors": [
@@ -7224,7 +7339,8 @@ service:
     filterGet:
       path: /v3/rules
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Get the current personalization ruleset.
       source:
         openapi: ../openapi.yml
@@ -7258,7 +7374,8 @@ service:
     filterPost:
       path: /v3/rules
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Set the personalization ruleset.
       source:
         openapi: ../openapi.yml
@@ -7328,7 +7445,8 @@ service:
     filterAppend:
       path: /v3/rules/append
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Append a rule to the personalization ruleset.
       source:
         openapi: ../openapi.yml
@@ -7374,7 +7492,8 @@ service:
     filterDelete:
       path: /v3/rules/{index}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Delete the rule at the specified index from the personalization ruleset.
       source:
         openapi: ../openapi.yml
@@ -7412,7 +7531,8 @@ service:
     filterPatch:
       path: /v3/rules/{index}
       method: PATCH
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Modify an existing rule at the specified index on the ruleset.
       source:
         openapi: ../openapi.yml
@@ -7492,7 +7612,11 @@ Complete guide: [Recurrence](../../../enrichment/recurrence).
           "display-name": "Recurrence",
           "endpoints": {
             "getAccountHolderRecurringPayments": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Find recurring groups in a transaction history",
               "docs": "Identifies and categorizes recurring patterns found in the transaction history of the account holder, such as periodic payments or subscriptions. These patterns are called recurrence groups.",
               "errors": [
@@ -7592,7 +7716,8 @@ service:
     getAccountHolderRecurringPayments:
       path: /v3/account_holders/{id}/recurring_groups
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Identifies and categorizes recurring patterns found in the transaction
         history of the account holder, such as periodic payments or
@@ -7698,7 +7823,11 @@ report either through the API or using [webhooks](#tag/Webhooks).
           "display-name": "Reports",
           "endpoints": {
             "deleteReport": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Delete a report",
               "docs": "Delete a report",
               "errors": [
@@ -7723,7 +7852,11 @@ report either through the API or using [webhooks](#tag/Webhooks).
               },
             },
             "getReport": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve a report",
               "docs": "Retrieve a report",
               "errors": [
@@ -7789,7 +7922,11 @@ report = sdk.reports.get("a652285d-de1b-4a6f-b6ce-45efa9be7952")
               },
             },
             "getReports": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all reports",
               "docs": "List all reports",
               "errors": [
@@ -7886,7 +8023,11 @@ reports = sdk.reports.list()
               },
             },
             "postReport": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Create a report",
               "docs": "Report a transaction with incorrect fields.",
               "errors": [
@@ -8008,7 +8149,8 @@ service:
     getReports:
       path: /v3/reports
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: List all reports
       source:
         openapi: ../openapi.yml
@@ -8073,7 +8215,8 @@ service:
     postReport:
       path: /v3/reports
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Report a transaction with incorrect fields.
       source:
         openapi: ../openapi.yml
@@ -8147,7 +8290,8 @@ service:
     getReport:
       path: /v3/reports/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Retrieve a report
       source:
         openapi: ../openapi.yml
@@ -8193,7 +8337,8 @@ service:
     deleteReport:
       path: /v3/reports/{id}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Delete a report
       source:
         openapi: ../openapi.yml
@@ -8234,7 +8379,11 @@ both the enrichment fields and the original input fields. They are made availabl
           "display-name": "Transactions",
           "endpoints": {
             "deleteTransaction": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Deletes a transaction",
               "docs": "Deleting a transaction will also delete it from our systems. This operation is permanent.",
               "errors": [
@@ -8281,7 +8430,11 @@ tx = sdk.transactions.delete("xbx8YP14g565Xk") ",
               },
             },
             "getTransaction": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve a transaction",
               "docs": undefined,
               "errors": [
@@ -8396,7 +8549,11 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
               },
             },
             "listTransactions": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all transactions",
               "docs": "Return a list of enriched transactions starting with the most recent one.",
               "errors": [
@@ -8541,7 +8698,11 @@ for tx in sdk.transactions.list().auto_paginate():
               },
             },
             "postTransactions": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Synchronously enrich transactions",
               "docs": "Enriches a list of transactions in synchronous fashion. The enriched transactions returned in
 the order that they were submitted. Webhook events are not triggered for this operation. 
@@ -8701,7 +8862,11 @@ enriched = sdk.transactions.create([
               },
             },
             "setTransactionAh": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Assign a transaction to an account holder",
               "docs": "Changes the account holder associated with the transaction. The old and new account holder must share the same categories",
               "errors": [
@@ -8853,7 +9018,8 @@ service:
     getTransaction:
       path: /v3/transactions/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8937,7 +9103,8 @@ service:
     deleteTransaction:
       path: /v3/transactions/{id}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Deleting a transaction will also delete it from our systems. This
         operation is permanent.
@@ -8970,7 +9137,8 @@ service:
     listTransactions:
       path: /v3/transactions
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Return a list of enriched transactions starting with the most recent
         one.
@@ -9075,7 +9243,8 @@ service:
     postTransactions:
       path: /v3/transactions
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Enriches a list of transactions in synchronous fashion. The enriched
         transactions returned in
@@ -9201,7 +9370,8 @@ service:
     setTransactionAh:
       path: /v3/transactions/{id}/assign
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Changes the account holder associated with the transaction. The old and
         new account holder must share the same categories
@@ -9336,7 +9506,11 @@ seconds, so any processing of the event
           "display-name": "Webhooks",
           "endpoints": {
             "deleteWebhook": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Delete a webhook",
               "docs": "Delete a webhook",
               "errors": [
@@ -9383,7 +9557,11 @@ sdk.webhooks.delete("e94a150d-40af-4e96-8aa7-2948a6b4d8d3") ",
               },
             },
             "getWebhook": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Retrieve a webhook",
               "docs": "Retrieve a webhook",
               "errors": [
@@ -9448,7 +9626,11 @@ webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
               },
             },
             "getWebhooks": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "List all webhooks",
               "docs": "List all webhooks",
               "errors": [
@@ -9512,7 +9694,11 @@ for webhook in sdk.webhooks.list().auto_paginate():
               },
             },
             "patchWebhook": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Update a webhook",
               "docs": "Update a webhook. Fields that aren't specified in the body will remain unchanged",
               "errors": [
@@ -9630,7 +9816,11 @@ wh = sdk.webhooks.patch(
               },
             },
             "postWebhook": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Create a webhook",
               "docs": "Create a webhook to be called when certain events occur.",
               "errors": [
@@ -9831,7 +10021,8 @@ service:
     getWebhooks:
       path: /v3/webhooks
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: List all webhooks
       source:
         openapi: ../openapi.yml
@@ -9874,7 +10065,8 @@ service:
     postWebhook:
       path: /v3/webhooks
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Create a webhook to be called when certain events occur.
       source:
         openapi: ../openapi.yml
@@ -9955,7 +10147,8 @@ service:
     getWebhook:
       path: /v3/webhooks/{id}
       method: GET
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Retrieve a webhook
       source:
         openapi: ../openapi.yml
@@ -10002,7 +10195,8 @@ service:
     deleteWebhook:
       path: /v3/webhooks/{id}
       method: DELETE
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Delete a webhook
       source:
         openapi: ../openapi.yml
@@ -10033,7 +10227,8 @@ service:
     patchWebhook:
       path: /v3/webhooks/{id}
       method: PATCH
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: >-
         Update a webhook. Fields that aren't specified in the body will remain
         unchanged

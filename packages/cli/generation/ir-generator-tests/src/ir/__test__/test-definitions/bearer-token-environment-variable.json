@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": "COURIER_API_KEY",
+                "key": "Bearer",
                 "docs": null
             }
         ],
@@ -185,6 +186,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "Bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,

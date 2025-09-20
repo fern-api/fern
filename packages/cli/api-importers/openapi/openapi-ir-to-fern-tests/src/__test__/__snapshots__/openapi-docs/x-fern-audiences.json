@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "postV1Users": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -79,7 +79,6 @@
     postV1Users:
       path: /v1/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

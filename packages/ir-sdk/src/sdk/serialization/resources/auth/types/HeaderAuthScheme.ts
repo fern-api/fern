@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { EnvironmentVariable } from "./EnvironmentVariable";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { BaseAuthScheme } from "./BaseAuthScheme";
 
 export const HeaderAuthScheme: core.serialization.ObjectSchema<
     serializers.HeaderAuthScheme.Raw,
@@ -19,10 +19,10 @@ export const HeaderAuthScheme: core.serialization.ObjectSchema<
         prefix: core.serialization.string().optional(),
         headerEnvVar: EnvironmentVariable.optional(),
     })
-    .extend(WithDocs);
+    .extend(BaseAuthScheme);
 
 export declare namespace HeaderAuthScheme {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends BaseAuthScheme.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         prefix?: string | null;

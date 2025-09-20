@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "user": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -53,7 +53,7 @@
               },
             },
             "user_stream": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -98,7 +98,7 @@
               },
             },
             "user_v2": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -143,7 +143,7 @@
               },
             },
             "user_v2_stream": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -190,7 +190,7 @@
               },
             },
             "user_v3": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -234,7 +234,7 @@
               },
             },
             "user_v3_stream": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -410,7 +410,6 @@
     user_stream:
       path: /v1/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -435,7 +434,6 @@
     user:
       path: /v1/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -460,7 +458,6 @@
     user_v2_stream:
       path: /v2/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -487,7 +484,6 @@
     user_v2:
       path: /v2/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -514,7 +510,6 @@
     user_v3_stream:
       path: /v3/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -541,7 +536,6 @@
     user_v3:
       path: /v3/users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

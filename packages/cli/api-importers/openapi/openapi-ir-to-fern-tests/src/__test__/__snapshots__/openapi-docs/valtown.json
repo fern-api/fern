@@ -1028,7 +1028,7 @@ API endpoints",
           "display-name": "alias",
           "endpoints": {
             "username": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get basic details about a user, given their username",
               "examples": [
                 {
@@ -1068,7 +1068,7 @@ API endpoints",
               },
             },
             "val": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get a val",
               "examples": [
                 {
@@ -1319,7 +1319,6 @@ service:
     username:
       path: /v1/alias/{username}
       method: GET
-      auth: false
       docs: Get basic details about a user, given their username
       source:
         openapi: ../openapi.yml
@@ -1346,7 +1345,6 @@ service:
     val:
       path: /v1/alias/{username}/{val_name}
       method: GET
-      auth: false
       docs: Get a val
       source:
         openapi: ../openapi.yml
@@ -1523,7 +1521,11 @@ types:
           "display-name": "blobs",
           "endpoints": {
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Delete a blob",
               "examples": [
                 {
@@ -1546,7 +1548,7 @@ types:
               },
             },
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get a blob’s contents.",
               "method": "GET",
               "pagination": undefined,
@@ -1567,7 +1569,7 @@ types:
               },
             },
             "list": {
-              "auth": false,
+              "auth": undefined,
               "docs": "List blobs in your account",
               "examples": [
                 {
@@ -1604,7 +1606,11 @@ types:
               },
             },
             "store": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Store data in blob storage",
               "examples": [
                 {
@@ -1685,7 +1691,6 @@ service:
     list:
       path: /v1/blob
       method: GET
-      auth: false
       docs: List blobs in your account
       source:
         openapi: ../openapi.yml
@@ -1708,7 +1713,6 @@ service:
     get:
       path: /v1/blob/{key}
       method: GET
-      auth: false
       docs: Get a blob’s contents.
       source:
         openapi: ../openapi.yml
@@ -1723,7 +1727,8 @@ service:
     store:
       path: /v1/blob/{key}
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Store data in blob storage
       source:
         openapi: ../openapi.yml
@@ -1745,7 +1750,8 @@ service:
     delete:
       path: /v1/blob/{key}
       method: DELETE
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Delete a blob
       source:
         openapi: ../openapi.yml
@@ -1775,7 +1781,11 @@ docs: Blobs
           "display-name": "emails",
           "endpoints": {
             "send": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Send emails",
               "errors": [
                 "root.EmailsSendRequestInternalServerError",
@@ -2020,7 +2030,8 @@ service:
     send:
       path: /v1/email
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Send emails
       source:
         openapi: ../openapi.yml
@@ -2090,7 +2101,7 @@ give access to details and data from the requesting user.",
           "display-name": "me",
           "endpoints": {
             "comments": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get comments related to current user, either given or received",
               "examples": [
                 {
@@ -2181,7 +2192,7 @@ give access to details and data from the requesting user.",
               },
             },
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get profile information for the current user",
               "examples": [
                 {
@@ -2214,7 +2225,7 @@ give access to details and data from the requesting user.",
               },
             },
             "likes": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get vals liked by the current user",
               "examples": [
                 {
@@ -2297,7 +2308,7 @@ give access to details and data from the requesting user.",
               },
             },
             "references": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get vals that depend on any of the user's vals",
               "examples": [
                 {
@@ -2946,7 +2957,6 @@ service:
     get:
       path: /v1/me
       method: GET
-      auth: false
       docs: Get profile information for the current user
       source:
         openapi: ../openapi.yml
@@ -2969,7 +2979,6 @@ service:
     likes:
       path: /v1/me/likes
       method: GET
-      auth: false
       docs: Get vals liked by the current user
       source:
         openapi: ../openapi.yml
@@ -3023,7 +3032,6 @@ service:
     comments:
       path: /v1/me/comments
       method: GET
-      auth: false
       docs: Get comments related to current user, either given or received
       source:
         openapi: ../openapi.yml
@@ -3082,7 +3090,6 @@ service:
     references:
       path: /v1/me/references
       method: GET
-      auth: false
       docs: Get vals that depend on any of the user's vals
       source:
         openapi: ../openapi.yml
@@ -3153,7 +3160,7 @@ imports:
           "display-name": "search",
           "endpoints": {
             "vals": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Search for vals across the platform",
               "examples": [
                 {
@@ -3282,7 +3289,6 @@ service:
     vals:
       path: /v1/search/vals
       method: GET
-      auth: false
       docs: Search for vals across the platform
       source:
         openapi: ../openapi.yml
@@ -3359,7 +3365,11 @@ docs: Search
           "display-name": "sqlite",
           "endpoints": {
             "batch": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Execute a batch of SQLite statements and return results for all of them",
               "examples": [
                 {
@@ -3415,7 +3425,11 @@ docs: Search
               },
             },
             "execute": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Execute a single SQLite statement and return results",
               "examples": [
                 {
@@ -3678,7 +3692,8 @@ service:
     execute:
       path: /v1/sqlite/execute
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Execute a single SQLite statement and return results
       source:
         openapi: ../openapi.yml
@@ -3725,7 +3740,8 @@ service:
     batch:
       path: /v1/sqlite/batch
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Execute a batch of SQLite statements and return results for all of them
       source:
         openapi: ../openapi.yml
@@ -3773,7 +3789,7 @@ docs: SQLite
           "display-name": "users",
           "endpoints": {
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get basic information about a user",
               "examples": [
                 {
@@ -3813,7 +3829,7 @@ docs: SQLite
               },
             },
             "vals": {
-              "auth": false,
+              "auth": undefined,
               "docs": "List a user's vals",
               "examples": [
                 {
@@ -3932,7 +3948,6 @@ service:
     get:
       path: /v1/users/{user_id}
       method: GET
-      auth: false
       docs: Get basic information about a user
       source:
         openapi: ../openapi.yml
@@ -3959,7 +3974,6 @@ service:
     vals:
       path: /v1/users/{user_id}/vals
       method: GET
-      auth: false
       docs: List a user's vals
       source:
         openapi: ../openapi.yml
@@ -4044,7 +4058,11 @@ let you get, create, and run vals.",
           "display-name": "vals",
           "endpoints": {
             "cancel": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Cancel a running val",
               "errors": [
                 "root.ValsCancelRequestNotFoundError",
@@ -4085,7 +4103,11 @@ let you get, create, and run vals.",
               },
             },
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Create a new val",
               "examples": [
                 {
@@ -4186,7 +4208,11 @@ let you get, create, and run vals.",
               },
             },
             "createVersion": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Create a new version of a val",
               "examples": [
                 {
@@ -4296,7 +4322,11 @@ let you get, create, and run vals.",
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Delete a val",
               "errors": [
                 "root.ValsDeleteRequestNotFoundError",
@@ -4322,7 +4352,11 @@ let you get, create, and run vals.",
               },
             },
             "deleteVersion": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Delete a specific version of a val",
               "errors": [
                 "root.ValsDeleteVersionRequestNotFoundError",
@@ -4353,7 +4387,7 @@ let you get, create, and run vals.",
               },
             },
             "evalGet": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Run JavaScript or TypeScript without saving it permanently as a val",
               "errors": [
                 "root.EvalGetRequestBadRequestError",
@@ -4393,7 +4427,7 @@ let you get, create, and run vals.",
               },
             },
             "evalPost": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Run JavaScript or TypeScript without saving it permanently as a val",
               "errors": [
                 "root.EvalPostRequestBadRequestError",
@@ -4459,7 +4493,7 @@ let you get, create, and run vals.",
               },
             },
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get a val by id",
               "examples": [
                 {
@@ -4512,7 +4546,7 @@ let you get, create, and run vals.",
               },
             },
             "getVersion": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Get a specific version of a val",
               "examples": [
                 {
@@ -4603,7 +4637,7 @@ let you get, create, and run vals.",
               },
             },
             "list": {
-              "auth": false,
+              "auth": undefined,
               "docs": "List versions of a val",
               "examples": [
                 {
@@ -4680,7 +4714,11 @@ let you get, create, and run vals.",
               },
             },
             "put": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Run an existing val or create a new one",
               "examples": [
                 {
@@ -4729,7 +4767,7 @@ let you get, create, and run vals.",
               },
             },
             "runGet": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": "Run a val, specify any parameters in a querystring",
               "examples": [
@@ -4762,7 +4800,7 @@ let you get, create, and run vals.",
               },
             },
             "runPost": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": "Run a val, with arguments in the request body",
               "examples": [
@@ -4803,7 +4841,11 @@ let you get, create, and run vals.",
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Update an existing val",
               "examples": [
                 {
@@ -5178,7 +5220,6 @@ service:
     evalPost:
       path: /v1/eval
       method: POST
-      auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
       source:
         openapi: ../openapi.yml
@@ -5223,7 +5264,6 @@ service:
     evalGet:
       path: /v1/eval/{code}
       method: GET
-      auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
       source:
         openapi: ../openapi.yml
@@ -5249,7 +5289,6 @@ service:
     runGet:
       path: /v1/run/{valname}
       method: GET
-      auth: false
       docs: Run a val, specify any parameters in a querystring
       source:
         openapi: ../openapi.yml
@@ -5272,7 +5311,6 @@ service:
     runPost:
       path: /v1/run/{valname}
       method: POST
-      auth: false
       docs: Run a val, with arguments in the request body
       source:
         openapi: ../openapi.yml
@@ -5296,7 +5334,8 @@ service:
     create:
       path: /v1/vals
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Create a new val
       source:
         openapi: ../openapi.yml
@@ -5369,7 +5408,8 @@ service:
     put:
       path: /v1/vals
       method: PUT
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Run an existing val or create a new one
       source:
         openapi: ../openapi.yml
@@ -5397,7 +5437,6 @@ service:
     get:
       path: /v1/vals/{val_id}
       method: GET
-      auth: false
       docs: Get a val by id
       source:
         openapi: ../openapi.yml
@@ -5436,7 +5475,8 @@ service:
     update:
       path: /v1/vals/{val_id}
       method: PUT
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Update an existing val
       source:
         openapi: ../openapi.yml
@@ -5486,7 +5526,8 @@ service:
     delete:
       path: /v1/vals/{val_id}
       method: DELETE
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Delete a val
       source:
         openapi: ../openapi.yml
@@ -5502,7 +5543,6 @@ service:
     list:
       path: /v1/vals/{val_id}/versions
       method: GET
-      auth: false
       docs: List versions of a val
       source:
         openapi: ../openapi.yml
@@ -5549,7 +5589,8 @@ service:
     createVersion:
       path: /v1/vals/{val_id}/versions
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Create a new version of a val
       source:
         openapi: ../openapi.yml
@@ -5628,7 +5669,6 @@ service:
     getVersion:
       path: /v1/vals/{val_id}/versions/{version}
       method: GET
-      auth: false
       docs: Get a specific version of a val
       source:
         openapi: ../openapi.yml
@@ -5690,7 +5730,8 @@ service:
     deleteVersion:
       path: /v1/vals/{val_id}/versions/{version}
       method: DELETE
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Delete a specific version of a val
       source:
         openapi: ../openapi.yml
@@ -5710,7 +5751,8 @@ service:
     cancel:
       path: /v1/vals/{val_id}/evaluations/{evaluation_id}/cancel
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Cancel a running val
       source:
         openapi: ../openapi.yml

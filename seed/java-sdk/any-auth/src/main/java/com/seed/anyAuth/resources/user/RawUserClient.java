@@ -64,4 +64,41 @@ public class RawUserClient {
             throw new SeedAnyAuthException("Network error executing HTTP request", e);
         }
     }
+
+    public SeedAnyAuthHttpResponse<List<User>> getAdmins() {
+        return getAdmins(null);
+    }
+
+    public SeedAnyAuthHttpResponse<List<User>> getAdmins(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("admins")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedAnyAuthHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<User>>() {}),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedAnyAuthApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedAnyAuthException("Network error executing HTTP request", e);
+        }
+    }
 }

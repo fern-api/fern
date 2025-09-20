@@ -37,7 +37,7 @@
           "base-path": "",
           "endpoints": {
             "GenerateContent": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -80,7 +80,6 @@ service:
     GenerateContent:
       path: /generateContent
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:

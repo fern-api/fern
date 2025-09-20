@@ -11610,7 +11610,7 @@ imports:
           "display-name": "Admins",
           "endpoints": {
             "identifyAdmin": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Identify an admin",
               "docs": "
 You can view the currently authorised admin along with the embedded app object (a "workspace" in legacy terminology).
@@ -11669,7 +11669,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
             },
             "listActivityLogs": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all activity logs",
               "docs": "You can get a log of activities by all admins in an app.",
               "errors": [
@@ -11750,7 +11750,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
             },
             "listAdmins": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all admins",
               "docs": "You can fetch a list of admins for a given workspace.",
               "errors": [
@@ -11798,7 +11798,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
             },
             "retrieveAdmin": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve an admin",
               "docs": "You can retrieve the details of a single admin.",
               "errors": [
@@ -11859,7 +11859,7 @@ You can view the currently authorised admin along with the embedded app object (
               },
             },
             "setAwayAdmin": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set an admin to away",
               "docs": "You can set an Admin as away for the Inbox.",
               "errors": [
@@ -12093,7 +12093,6 @@ service:
     identifyAdmin:
       path: /me
       method: GET
-      auth: true
       docs: >
 
         You can view the currently authorised admin along with the embedded app
@@ -12147,7 +12146,6 @@ service:
     setAwayAdmin:
       path: /admins/{id}/away
       method: PUT
-      auth: true
       docs: You can set an Admin as away for the Inbox.
       source:
         openapi: ../openapi.yml
@@ -12260,7 +12258,6 @@ service:
     listActivityLogs:
       path: /admins/activity_logs
       method: GET
-      auth: true
       docs: You can get a log of activities by all admins in an app.
       source:
         openapi: ../openapi.yml
@@ -12323,7 +12320,6 @@ service:
     listAdmins:
       path: /admins
       method: GET
-      auth: true
       docs: You can fetch a list of admins for a given workspace.
       source:
         openapi: ../openapi.yml
@@ -12356,7 +12352,6 @@ service:
     retrieveAdmin:
       path: /admins/{id}
       method: GET
-      auth: true
       docs: You can retrieve the details of a single admin.
       source:
         openapi: ../openapi.yml
@@ -12646,7 +12641,7 @@ imports:
           "display-name": "Articles",
           "endpoints": {
             "createArticle": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create an article",
               "docs": "You can create a new article by making a POST request to `https://api.intercom.io/articles`.",
               "errors": [
@@ -13593,7 +13588,7 @@ imports:
               },
             },
             "deleteArticle": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an article",
               "docs": "You can delete a single article by making a DELETE request to `https://api.intercom.io/articles/<id>`.",
               "errors": [
@@ -13637,7 +13632,7 @@ imports:
               },
             },
             "listArticles": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all articles",
               "docs": "You can fetch a list of all articles by making a GET request to `https://api.intercom.io/articles`.
 
@@ -13707,7 +13702,7 @@ imports:
               },
             },
             "retrieveArticle": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve an article",
               "docs": "You can fetch the details of a single article by making a GET request to `https://api.intercom.io/articles/<id>`.",
               "errors": [
@@ -14185,7 +14180,7 @@ imports:
               },
             },
             "searchArticles": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search for articles",
               "docs": "You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.",
               "errors": [
@@ -14279,7 +14274,7 @@ imports:
               },
             },
             "updateArticle": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update an article",
               "docs": "You can update the details of a single article by making a PUT request to `https://api.intercom.io/articles/<id>`.",
               "errors": [
@@ -15455,7 +15450,6 @@ service:
     listArticles:
       path: /articles
       method: GET
-      auth: true
       docs: >
         You can fetch a list of all articles by making a GET request to
         `https://api.intercom.io/articles`.
@@ -15515,7 +15509,6 @@ service:
     createArticle:
       path: /articles
       method: POST
-      auth: true
       docs: >-
         You can create a new article by making a POST request to
         `https://api.intercom.io/articles`.
@@ -16364,7 +16357,6 @@ service:
     retrieveArticle:
       path: /articles/{id}
       method: GET
-      auth: true
       docs: >-
         You can fetch the details of a single article by making a GET request to
         `https://api.intercom.io/articles/<id>`.
@@ -16791,7 +16783,6 @@ service:
     updateArticle:
       path: /articles/{id}
       method: PUT
-      auth: true
       docs: >-
         You can update the details of a single article by making a PUT request
         to `https://api.intercom.io/articles/<id>`.
@@ -17633,7 +17624,6 @@ service:
     deleteArticle:
       path: /articles/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can delete a single article by making a DELETE request to
         `https://api.intercom.io/articles/<id>`.
@@ -17665,7 +17655,6 @@ service:
     searchArticles:
       path: /articles/search
       method: GET
-      auth: true
       docs: >-
         You can search for articles by making a GET request to
         `https://api.intercom.io/articles/search`.
@@ -17941,7 +17930,7 @@ types:
           "display-name": "Companies",
           "endpoints": {
             "ListAttachedContacts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List attached contacts",
               "docs": "You can fetch a list of all contacts that belong to a company.",
               "errors": [
@@ -18058,7 +18047,7 @@ types:
               },
             },
             "ListAttachedSegmentsForCompanies": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List attached segments for companies",
               "docs": "You can fetch a list of all segments that belong to a company.",
               "errors": [
@@ -18111,7 +18100,7 @@ types:
               },
             },
             "RetrieveACompanyById": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a company by ID",
               "docs": "You can fetch a single company.",
               "errors": [
@@ -18194,7 +18183,7 @@ types:
               },
             },
             "UpdateCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a company",
               "docs": "You can update a single company using the Intercom provisioned `id`.
 
@@ -18282,7 +18271,7 @@ types:
               },
             },
             "attachContactToACompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Attach a Contact to a Company",
               "docs": "You can attach a company to a single contact.",
               "errors": [
@@ -18502,7 +18491,7 @@ types:
               },
             },
             "createOrUpdateCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create or Update a company",
               "docs": "You can create or update a company.
 
@@ -18596,7 +18585,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
             },
             "deleteCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a company",
               "docs": "You can delete a single company.",
               "errors": [
@@ -18640,7 +18629,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
             },
             "detachContactFromACompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Detach a contact from a company",
               "docs": "You can detach a company from a single contact.",
               "errors": [
@@ -18728,7 +18717,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
             },
             "listAllCompanies": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all companies",
               "docs": "You can list companies. The company list is sorted by the `last_request_at` field and by default is ordered descending, most recently requested first.
 
@@ -18837,7 +18826,7 @@ When using the Companies endpoint and the pages object to iterate through the re
               },
             },
             "retrieveCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve companies",
               "docs": "You can fetch a single company by passing in `company_id` or `name`.
 
@@ -18964,7 +18953,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
             },
             "scrollOverAllCompanies": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Scroll over all companies",
               "docs": "      The `list all companies` functionality does not work well for huge datasets, and can result in errors and performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all companies in a dataset.
 
@@ -19212,7 +19201,6 @@ service:
     retrieveCompany:
       path: /companies
       method: GET
-      auth: true
       docs: >
         You can fetch a single company by passing in `company_id` or `name`.
 
@@ -19309,7 +19297,6 @@ service:
     createOrUpdateCompany:
       path: /companies
       method: POST
-      auth: true
       docs: >
         You can create or update a company.
 
@@ -19385,7 +19372,6 @@ service:
     RetrieveACompanyById:
       path: /companies/{id}
       method: GET
-      auth: true
       docs: You can fetch a single company.
       source:
         openapi: ../openapi.yml
@@ -19444,7 +19430,6 @@ service:
     UpdateCompany:
       path: /companies/{id}
       method: PUT
-      auth: true
       docs: |
         You can update a single company using the Intercom provisioned `id`.
 
@@ -19508,7 +19493,6 @@ service:
     deleteCompany:
       path: /companies/{id}
       method: DELETE
-      auth: true
       docs: You can delete a single company.
       source:
         openapi: ../openapi.yml
@@ -19538,7 +19522,6 @@ service:
     ListAttachedContacts:
       path: /companies/{id}/contacts
       method: GET
-      auth: true
       docs: You can fetch a list of all contacts that belong to a company.
       source:
         openapi: ../openapi.yml
@@ -19631,7 +19614,6 @@ service:
     ListAttachedSegmentsForCompanies:
       path: /companies/{id}/segments
       method: GET
-      auth: true
       docs: You can fetch a list of all segments that belong to a company.
       source:
         openapi: ../openapi.yml
@@ -19667,7 +19649,6 @@ service:
     listAllCompanies:
       path: /companies/list
       method: POST
-      auth: true
       docs: >
         You can list companies. The company list is sorted by the
         `last_request_at` field and by default is ordered descending, most
@@ -19760,7 +19741,6 @@ service:
     scrollOverAllCompanies:
       path: /companies/scroll
       method: GET
-      auth: true
       docs: >2
               The `list all companies` functionality does not work well for huge datasets, and can result in errors and performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all companies in a dataset.
 
@@ -19841,7 +19821,6 @@ service:
     attachContactToACompany:
       path: /contacts/{id}/companies
       method: POST
-      auth: true
       docs: You can attach a company to a single contact.
       source:
         openapi: ../openapi.yml
@@ -19994,7 +19973,6 @@ service:
     detachContactFromACompany:
       path: /contacts/{contact_id}/companies/{id}
       method: DELETE
-      auth: true
       docs: You can detach a company from a single contact.
       source:
         openapi: ../openapi.yml
@@ -20174,7 +20152,7 @@ types:
           "display-name": "Contacts",
           "endpoints": {
             "ArchiveContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Archive contact",
               "docs": "You can archive a single contact.",
               "examples": [
@@ -20215,7 +20193,7 @@ types:
               },
             },
             "CreateContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create contact",
               "docs": "You can create a new contact (ie. user or lead).",
               "errors": [
@@ -20309,7 +20287,7 @@ types:
               },
             },
             "DeleteContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a contact",
               "docs": "You can delete a single contact.",
               "errors": [
@@ -20353,7 +20331,7 @@ types:
               },
             },
             "ListContacts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all contacts",
               "docs": "You can fetch a list of all contacts (ie. users or leads) in your workspace.
 {% admonition type="warning" name="Pagination" %}
@@ -20465,7 +20443,7 @@ types:
               },
             },
             "MergeContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Merge a lead and a user",
               "docs": "You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`.",
               "errors": [
@@ -20578,7 +20556,7 @@ types:
               },
             },
             "SearchContacts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search contacts",
               "docs": "You can search for multiple contacts by the value of their attributes in order to fetch exactly who you want.
 
@@ -20806,7 +20784,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "ShowContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a contact",
               "docs": "You can fetch the details of a single contact.",
               "errors": [
@@ -20905,7 +20883,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "UnarchiveContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Unarchive contact",
               "docs": "You can unarchive a single contact.",
               "examples": [
@@ -20946,7 +20924,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "UpdateContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a contact",
               "docs": "You can update an existing contact (ie. user or lead).",
               "errors": [
@@ -21104,7 +21082,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "listCompaniesForAContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List attached companies for contact",
               "docs": "You can fetch a list of companies that are associated to a contact.",
               "errors": [
@@ -21182,7 +21160,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "listSegmentsForAContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List attached segments for contact",
               "docs": "You can fetch a list of segments that are associated to a contact.",
               "errors": [
@@ -21235,7 +21213,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "listSubscriptionsForAContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List subscriptions for a contact",
               "docs": "You can fetch a list of subscription types that are attached to a contact. These can be subscriptions that a user has 'opted-in' to or has 'opted-out' from, depending on the subscription type.
 This will return a list of Subscription Type objects that the contact is associated with.
@@ -21328,7 +21306,7 @@ The data property will show a combined list of:
               },
             },
             "listTagsForAContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List tags attached to a contact",
               "docs": "You can fetch a list of all tags that are attached to a specific contact.",
               "errors": [
@@ -21607,7 +21585,6 @@ service:
     listCompaniesForAContact:
       path: /contacts/{id}/companies
       method: GET
-      auth: true
       docs: You can fetch a list of companies that are associated to a contact.
       source:
         openapi: ../openapi.yml
@@ -21665,7 +21642,6 @@ service:
     listSegmentsForAContact:
       path: /contacts/{contact_id}/segments
       method: GET
-      auth: true
       docs: You can fetch a list of segments that are associated to a contact.
       source:
         openapi: ../openapi.yml
@@ -21701,7 +21677,6 @@ service:
     listSubscriptionsForAContact:
       path: /contacts/{contact_id}/subscriptions
       method: GET
-      auth: true
       docs: >
         You can fetch a list of subscription types that are attached to a
         contact. These can be subscriptions that a user has 'opted-in' to or has
@@ -21770,7 +21745,6 @@ service:
     listTagsForAContact:
       path: /contacts/{contact_id}/tags
       method: GET
-      auth: true
       docs: >-
         You can fetch a list of all tags that are attached to a specific
         contact.
@@ -21807,7 +21781,6 @@ service:
     ShowContact:
       path: /contacts/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single contact.
       source:
         openapi: ../openapi.yml
@@ -21877,7 +21850,6 @@ service:
     UpdateContact:
       path: /contacts/{id}
       method: PUT
-      auth: true
       docs: You can update an existing contact (ie. user or lead).
       source:
         openapi: ../openapi.yml
@@ -21992,7 +21964,6 @@ service:
     DeleteContact:
       path: /contacts/{id}
       method: DELETE
-      auth: true
       docs: You can delete a single contact.
       source:
         openapi: ../openapi.yml
@@ -22022,7 +21993,6 @@ service:
     MergeContact:
       path: /contacts/merge
       method: POST
-      auth: true
       docs: >-
         You can merge a contact with a `role` of `lead` into a contact with a
         `role` of `user`.
@@ -22106,7 +22076,6 @@ service:
     SearchContacts:
       path: /contacts/search
       method: POST
-      auth: true
       docs: >
         You can search for multiple contacts by the value of their attributes in
         order to fetch exactly who you want.
@@ -22420,7 +22389,6 @@ service:
     ListContacts:
       path: /contacts
       method: GET
-      auth: true
       docs: >
         You can fetch a list of all contacts (ie. users or leads) in your
         workspace.
@@ -22513,7 +22481,6 @@ service:
     CreateContact:
       path: /contacts
       method: POST
-      auth: true
       docs: You can create a new contact (ie. user or lead).
       source:
         openapi: ../openapi.yml
@@ -22579,7 +22546,6 @@ service:
     ArchiveContact:
       path: /contacts/{id}/archive
       method: POST
-      auth: true
       docs: You can archive a single contact.
       source:
         openapi: ../openapi.yml
@@ -22607,7 +22573,6 @@ service:
     UnarchiveContact:
       path: /contacts/{id}/unarchive
       method: POST
-      auth: true
       docs: You can unarchive a single contact.
       source:
         openapi: ../openapi.yml
@@ -22815,7 +22780,7 @@ types:
           "display-name": "Conversations",
           "endpoints": {
             "attachContactToConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Attach a contact to a conversation",
               "docs": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.
 
@@ -23224,7 +23189,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               },
             },
             "autoAssignConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Run Assignment Rules on a conversation",
               "docs": "You can let a conversation be automatically assigned following assignment rules.
 {% admonition type="attention" name="When using workflows" %}
@@ -23373,7 +23338,7 @@ It is not possible to use this endpoint with Workflows.
               },
             },
             "convertConversationToTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Convert a conversation to a ticket",
               "docs": "You can convert a conversation to a ticket.",
               "errors": [
@@ -23672,7 +23637,7 @@ It is not possible to use this endpoint with Workflows.
               },
             },
             "createConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Creates a conversation",
               "docs": "You can create a conversation that has been initiated by a contact (ie. user or lead).
 The conversation can be an in-app message only.
@@ -23769,7 +23734,7 @@ This will return the Message model that has been created.
               },
             },
             "detachContactFromConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Detach a contact from a group conversation",
               "docs": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.
 
@@ -24528,7 +24493,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
               },
             },
             "listConversations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all conversations",
               "docs": "You can fetch a list of all conversations.
 
@@ -24627,7 +24592,7 @@ You can optionally request the result page size and the cursor to start after to
               },
             },
             "manageConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Manage a conversation",
               "docs": "For managing conversations you can:
 - Close a conversation
@@ -25264,7 +25229,7 @@ You can optionally request the result page size and the cursor to start after to
               },
             },
             "redactConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Redact a conversation part",
               "docs": "You can redact a conversation part or the source message of a conversation (as seen in the source object).
 
@@ -25538,7 +25503,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               },
             },
             "replyConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Reply to a conversation",
               "docs": "You can reply to a conversation with a message from an admin or on behalf of a contact, or with a note for admins.",
               "errors": [
@@ -26077,7 +26042,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               },
             },
             "retrieveConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a conversation",
               "docs": "
 You can fetch the details of a single conversation.
@@ -26224,7 +26189,7 @@ For AI agent conversation metadata, please note that you need to have the agent 
               },
             },
             "searchConversations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search conversations",
               "docs": "You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones you want.
 
@@ -26458,7 +26423,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "updateConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a conversation",
               "docs": "
 You can update an existing conversation.
@@ -27087,7 +27052,6 @@ service:
     listConversations:
       path: /conversations
       method: GET
-      auth: true
       docs: >
         You can fetch a list of all conversations.
 
@@ -27163,7 +27127,6 @@ service:
     createConversation:
       path: /conversations
       method: POST
-      auth: true
       docs: >+
         You can create a conversation that has been initiated by a contact (ie.
         user or lead).
@@ -27243,7 +27206,6 @@ service:
     retrieveConversation:
       path: /conversations/{id}
       method: GET
-      auth: true
       docs: >
 
         You can fetch the details of a single conversation.
@@ -27360,7 +27322,6 @@ service:
     updateConversation:
       path: /conversations/{id}
       method: PUT
-      auth: true
       docs: >+
 
         You can update an existing conversation.
@@ -27629,7 +27590,6 @@ service:
     searchConversations:
       path: /conversations/search
       method: POST
-      auth: true
       docs: >
         You can search for multiple conversations by the value of their
         attributes in order to fetch exactly which ones you want.
@@ -28042,7 +28002,6 @@ service:
     replyConversation:
       path: /conversations/{id}/reply
       method: POST
-      auth: true
       docs: >-
         You can reply to a conversation with a message from an admin or on
         behalf of a contact, or with a note for admins.
@@ -28446,7 +28405,6 @@ service:
     manageConversation:
       path: /conversations/{id}/parts
       method: POST
-      auth: true
       docs: |
         For managing conversations you can:
         - Close a conversation
@@ -28908,7 +28866,6 @@ service:
     autoAssignConversation:
       path: /conversations/{id}/run_assignment_rules
       method: POST
-      auth: true
       docs: >
         You can let a conversation be automatically assigned following
         assignment rules.
@@ -29021,7 +28978,6 @@ service:
     attachContactToConversation:
       path: /conversations/{id}/customers
       method: POST
-      auth: true
       docs: >+
         You can add participants who are contacts to a conversation, on behalf
         of either another contact or an admin.
@@ -29330,7 +29286,6 @@ service:
     detachContactFromConversation:
       path: /conversations/{conversation_id}/customers/{contact_id}
       method: DELETE
-      auth: true
       docs: >+
         You can add participants who are contacts to a conversation, on behalf
         of either another contact or an admin.
@@ -29903,7 +29858,6 @@ service:
     redactConversation:
       path: /conversations/redact
       method: POST
-      auth: true
       docs: >+
         You can redact a conversation part or the source message of a
         conversation (as seen in the source object).
@@ -30111,7 +30065,6 @@ service:
     convertConversationToTicket:
       path: /conversations/{id}/convert
       method: POST
-      auth: true
       docs: You can convert a conversation to a ticket.
       source:
         openapi: ../openapi.yml
@@ -30591,7 +30544,7 @@ types:
           "display-name": "Data Attributes",
           "endpoints": {
             "createDataAttribute": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a data attribute",
               "docs": "You can create a data attributes for a `contact` or a `company`.",
               "errors": [
@@ -30862,7 +30815,7 @@ types:
               },
             },
             "lisDataAttributes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all data attributes",
               "docs": "You can fetch a list of all data attributes belonging to a workspace for contacts, companies or conversations.",
               "errors": [
@@ -31283,7 +31236,7 @@ types:
               },
             },
             "updateDataAttribute": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a data attribute",
               "docs": "
 You can update a data attribute.
@@ -31778,7 +31731,6 @@ service:
     lisDataAttributes:
       path: /data_attributes
       method: GET
-      auth: true
       docs: >-
         You can fetch a list of all data attributes belonging to a workspace for
         contacts, companies or conversations.
@@ -32146,7 +32098,6 @@ service:
     createDataAttribute:
       path: /data_attributes
       method: POST
-      auth: true
       docs: You can create a data attributes for a `contact` or a `company`.
       source:
         openapi: ../openapi.yml
@@ -32359,7 +32310,6 @@ service:
     updateDataAttribute:
       path: /data_attributes/{id}
       method: PUT
-      auth: true
       docs: >
 
         You can update a data attribute.
@@ -32553,7 +32503,7 @@ docs: Everything about your Data Attributes
           "display-name": "Data Events",
           "endpoints": {
             "createDataEvent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Submit a data event",
               "docs": "
 You will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`.
@@ -32613,7 +32563,7 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               },
             },
             "dataEventSummaries": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create event summaries",
               "docs": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.
 
@@ -32656,7 +32606,7 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               },
             },
             "lisDataEvents": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all data events",
               "docs": "
 > 🚧
@@ -32922,7 +32872,6 @@ service:
     lisDataEvents:
       path: /events
       method: GET
-      auth: true
       docs: >
 
         > 🚧
@@ -32978,7 +32927,6 @@ service:
     createDataEvent:
       path: /events
       method: POST
-      auth: true
       docs: >+
 
         You will need an Access Token that has write permissions to send Events.
@@ -33123,7 +33071,6 @@ service:
     dataEventSummaries:
       path: /events/summaries
       method: POST
-      auth: true
       docs: >+
         Create event summaries for a user. Event summaries are used to track the
         number of times an event has occurred, the first time it occurred and
@@ -33170,7 +33117,7 @@ docs: Everything about your Data Events
           "display-name": "Data Export",
           "endpoints": {
             "cancelDataExport": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Cancel content data export",
               "docs": "You can cancel your job",
               "examples": [
@@ -33211,7 +33158,7 @@ docs: Everything about your Data Events
               },
             },
             "createDataExport": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create content data export",
               "docs": "To create your export job, you need to send a `POST` request to the export endpoint `https://api.intercom.io/export/content/data`.
 
@@ -33281,7 +33228,7 @@ The only parameters you need to provide are the range of dates that you want exp
               },
             },
             "downloadDataExport": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Download content data export",
               "docs": "When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234.
 
@@ -33315,7 +33262,7 @@ Your exported message data will be streamed continuously back down to you in a g
               },
             },
             "getDataExport": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Show content data export",
               "docs": "You can view the status of your job by sending a `GET` request to the URL
 `https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in the response when you first created the export job. More on it can be seen in the Export Job Model.
@@ -33415,7 +33362,6 @@ Your exported message data will be streamed continuously back down to you in a g
     createDataExport:
       path: /export/content/data
       method: POST
-      auth: true
       docs: >
         To create your export job, you need to send a `POST` request to the
         export endpoint `https://api.intercom.io/export/content/data`.
@@ -33491,7 +33437,6 @@ Your exported message data will be streamed continuously back down to you in a g
     getDataExport:
       path: /export/content/data/{job_identifier}
       method: GET
-      auth: true
       docs: >
         You can view the status of your job by sending a `GET` request to the
         URL
@@ -33533,7 +33478,6 @@ Your exported message data will be streamed continuously back down to you in a g
     cancelDataExport:
       path: /export/cancel/{job_identifier}
       method: POST
-      auth: true
       docs: You can cancel your job
       source:
         openapi: ../openapi.yml
@@ -33561,7 +33505,6 @@ Your exported message data will be streamed continuously back down to you in a g
     downloadDataExport:
       path: /download/content/data/{job_identifier}
       method: GET
-      auth: true
       docs: >
         When a job has a status of complete, and thus a filled download_url, you
         can download your data by hitting that provided URL, formatted like so:
@@ -33641,7 +33584,7 @@ types:
           "display-name": "Help Center",
           "endpoints": {
             "createCollection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a collection",
               "docs": "You can create a new collection by making a POST request to `https://api.intercom.io/help_center/collections.`",
               "errors": [
@@ -34118,7 +34061,7 @@ types:
               },
             },
             "deleteCollection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a collection",
               "docs": "You can delete a single collection by making a DELETE request to `https://api.intercom.io/collections/<id>`.",
               "errors": [
@@ -34162,7 +34105,7 @@ types:
               },
             },
             "listAllCollections": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all collections",
               "docs": "You can fetch a list of all collections by making a GET request to `https://api.intercom.io/help_center/collections`.
 
@@ -34235,7 +34178,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
             },
             "listHelpCenters": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all Help Centers",
               "docs": "You can list all Help Centers by making a GET request to `https://api.intercom.io/help_center/help_centers`.",
               "errors": [
@@ -34278,7 +34221,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
             },
             "retrieveCollection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a collection",
               "docs": "You can fetch the details of a single collection by making a GET request to `https://api.intercom.io/help_center/collections/<id>`.",
               "errors": [
@@ -34518,7 +34461,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
             },
             "retrieveHelpCenter": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a Help Center",
               "docs": "You can fetch the details of a single Help Center by making a GET request to `https://api.intercom.io/help_center/help_center/<id>`.",
               "errors": [
@@ -34566,7 +34509,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
             },
             "updateCollection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a collection",
               "docs": "You can update the details of a single collection by making a PUT request to `https://api.intercom.io/collections/<id>`.",
               "errors": [
@@ -35180,7 +35123,6 @@ service:
     listAllCollections:
       path: /help_center/collections
       method: GET
-      auth: true
       docs: >
         You can fetch a list of all collections by making a GET request to
         `https://api.intercom.io/help_center/collections`.
@@ -35239,7 +35181,6 @@ service:
     createCollection:
       path: /help_center/collections
       method: POST
-      auth: true
       docs: >-
         You can create a new collection by making a POST request to
         `https://api.intercom.io/help_center/collections.`
@@ -35621,7 +35562,6 @@ service:
     retrieveCollection:
       path: /help_center/collections/{id}
       method: GET
-      auth: true
       docs: >-
         You can fetch the details of a single collection by making a GET request
         to `https://api.intercom.io/help_center/collections/<id>`.
@@ -35811,7 +35751,6 @@ service:
     updateCollection:
       path: /help_center/collections/{id}
       method: PUT
-      auth: true
       docs: >-
         You can update the details of a single collection by making a PUT
         request to `https://api.intercom.io/collections/<id>`.
@@ -36195,7 +36134,6 @@ service:
     deleteCollection:
       path: /help_center/collections/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can delete a single collection by making a DELETE request to
         `https://api.intercom.io/collections/<id>`.
@@ -36227,7 +36165,6 @@ service:
     retrieveHelpCenter:
       path: /help_center/help_centers/{id}
       method: GET
-      auth: true
       docs: >-
         You can fetch the details of a single Help Center by making a GET
         request to `https://api.intercom.io/help_center/help_center/<id>`.
@@ -36263,7 +36200,6 @@ service:
     listHelpCenters:
       path: /help_center/help_centers
       method: GET
-      auth: true
       docs: >-
         You can list all Help Centers by making a GET request to
         `https://api.intercom.io/help_center/help_centers`.
@@ -36414,7 +36350,7 @@ types:
           "display-name": "Messages",
           "endpoints": {
             "createMessage": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a message",
               "docs": "You can create a message that has been initiated by an admin. The conversation can be either an in-app message or an email.
 
@@ -36685,7 +36621,6 @@ service:
     createMessage:
       path: /messages
       method: POST
-      auth: true
       docs: >
         You can create a message that has been initiated by an admin. The
         conversation can be either an in-app message or an email.
@@ -36908,7 +36843,7 @@ types:
           "display-name": "News",
           "endpoints": {
             "createNewsItem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a news item",
               "docs": "You can create a news item",
               "errors": [
@@ -36991,7 +36926,7 @@ types:
               },
             },
             "deleteNewsItem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a news item",
               "docs": "You can delete a single news item.",
               "errors": [
@@ -37035,7 +36970,7 @@ types:
               },
             },
             "listLiveNewsfeedItems": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all live newsfeed items",
               "docs": "You can fetch a list of all news items that are live on a given newsfeed",
               "errors": [
@@ -37114,7 +37049,7 @@ types:
               },
             },
             "listNewsItems": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all news items",
               "docs": "You can fetch a list of all news items",
               "errors": [
@@ -37209,7 +37144,7 @@ types:
               },
             },
             "listNewsfeeds": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all newsfeeds",
               "docs": "You can fetch a list of all newsfeeds",
               "errors": [
@@ -37268,7 +37203,7 @@ types:
               },
             },
             "retrieveNewsItem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a news item",
               "docs": "You can fetch the details of a single news item.",
               "errors": [
@@ -37333,7 +37268,7 @@ types:
               },
             },
             "retrieveNewsfeed": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a newsfeed",
               "docs": "You can fetch the details of a single newsfeed",
               "errors": [
@@ -37377,7 +37312,7 @@ types:
               },
             },
             "updateNewsItem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a news item",
               "docs": undefined,
               "errors": [
@@ -37638,7 +37573,6 @@ service:
     listNewsItems:
       path: /news/news_items
       method: GET
-      auth: true
       docs: You can fetch a list of all news items
       source:
         openapi: ../openapi.yml
@@ -37713,7 +37647,6 @@ service:
     createNewsItem:
       path: /news/news_items
       method: POST
-      auth: true
       docs: You can create a news item
       source:
         openapi: ../openapi.yml
@@ -37772,7 +37705,6 @@ service:
     retrieveNewsItem:
       path: /news/news_items/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single news item.
       source:
         openapi: ../openapi.yml
@@ -37818,7 +37750,6 @@ service:
     updateNewsItem:
       path: /news/news_items/{id}
       method: PUT
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -37903,7 +37834,6 @@ service:
     deleteNewsItem:
       path: /news/news_items/{id}
       method: DELETE
-      auth: true
       docs: You can delete a single news item.
       source:
         openapi: ../openapi.yml
@@ -37933,7 +37863,6 @@ service:
     listLiveNewsfeedItems:
       path: /news/newsfeeds/{id}/items
       method: GET
-      auth: true
       docs: You can fetch a list of all news items that are live on a given newsfeed
       source:
         openapi: ../openapi.yml
@@ -37994,7 +37923,6 @@ service:
     listNewsfeeds:
       path: /news/newsfeeds
       method: GET
-      auth: true
       docs: You can fetch a list of all newsfeeds
       source:
         openapi: ../openapi.yml
@@ -38035,7 +37963,6 @@ service:
     retrieveNewsfeed:
       path: /news/newsfeeds/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single newsfeed
       source:
         openapi: ../openapi.yml
@@ -38195,7 +38122,7 @@ types:
           "display-name": "Notes",
           "endpoints": {
             "createNote": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a note",
               "docs": "You can add a note to a single contact.",
               "errors": [
@@ -38389,7 +38316,7 @@ types:
               },
             },
             "listNotes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all notes",
               "docs": "You can fetch a list of notes that are associated to a contact.",
               "errors": [
@@ -38499,7 +38426,7 @@ types:
               },
             },
             "retrieveNote": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a note",
               "docs": "You can fetch the details of a single note.",
               "errors": [
@@ -38637,7 +38564,6 @@ service:
     listNotes:
       path: /contacts/{id}/notes
       method: GET
-      auth: true
       docs: You can fetch a list of notes that are associated to a contact.
       source:
         openapi: ../openapi.yml
@@ -38719,7 +38645,6 @@ service:
     createNote:
       path: /contacts/{id}/notes
       method: POST
-      auth: true
       docs: You can add a note to a single contact.
       source:
         openapi: ../openapi.yml
@@ -38857,7 +38782,6 @@ service:
     retrieveNote:
       path: /notes/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single note.
       source:
         openapi: ../openapi.yml
@@ -38960,7 +38884,7 @@ types:
           "display-name": "Segments",
           "endpoints": {
             "listSegments": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all segments",
               "docs": "You can fetch a list of all segments.",
               "errors": [
@@ -39024,7 +38948,7 @@ types:
               },
             },
             "retrieveSegment": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a segment",
               "docs": "You can fetch the details of a single segment.",
               "errors": [
@@ -39136,7 +39060,6 @@ service:
     listSegments:
       path: /segments
       method: GET
-      auth: true
       docs: You can fetch a list of all segments.
       source:
         openapi: ../openapi.yml
@@ -39180,7 +39103,6 @@ service:
     retrieveSegment:
       path: /segments/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single segment.
       source:
         openapi: ../openapi.yml
@@ -39267,7 +39189,7 @@ types:
           "display-name": "Subscription Types",
           "endpoints": {
             "attachSubscriptionTypeToContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Add subscription to a contact",
               "docs": "You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in:
 
@@ -39429,7 +39351,7 @@ This will return a subscription type model for the subscription type that was ad
               },
             },
             "detachSubscriptionTypeToContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove subscription from a contact",
               "docs": "You can remove a specific subscription from a contact. This will return a subscription type model for the subscription type that was removed from the contact.",
               "errors": [
@@ -39494,7 +39416,7 @@ This will return a subscription type model for the subscription type that was ad
               },
             },
             "listSubscriptionTypes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List subscription types",
               "docs": "You can list all subscription types. A list of subscription type objects will be returned.",
               "errors": [
@@ -39634,7 +39556,6 @@ service:
     attachSubscriptionTypeToContact:
       path: /contacts/{contact_id}/subscriptions
       method: POST
-      auth: true
       docs: >
         You can add a specific subscription to a contact. In Intercom, we have
         two different subscription types based on user consent - opt-out and
@@ -39749,7 +39670,6 @@ service:
     detachSubscriptionTypeToContact:
       path: /contacts/{contact_id}/subscriptions/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can remove a specific subscription from a contact. This will return
         a subscription type model for the subscription type that was removed
@@ -39799,7 +39719,6 @@ service:
     listSubscriptionTypes:
       path: /subscription_types
       method: GET
-      auth: true
       docs: >-
         You can list all subscription types. A list of subscription type objects
         will be returned.
@@ -39910,7 +39829,7 @@ types:
           "display-name": "Switch",
           "endpoints": {
             "createPhoneSwitch": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a phone Switch",
               "docs": "You can use the API to deflect phone calls to the Intercom Messenger.
 Calling this endpoint will send an SMS with a link to the Messenger to the phone number specified.
@@ -40033,7 +39952,6 @@ service:
     createPhoneSwitch:
       path: /phone_call_redirects
       method: POST
-      auth: true
       docs: >
         You can use the API to deflect phone calls to the Intercom Messenger.
 
@@ -40126,7 +40044,7 @@ docs: Everything about Switch
           "display-name": "Tags",
           "endpoints": {
             "attachTagToContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Add tag to a contact",
               "docs": "You can tag a specific contact. This will return a tag object for the tag that was added to the contact.",
               "errors": [
@@ -40241,7 +40159,7 @@ docs: Everything about Switch
               },
             },
             "attachTagToConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Add tag to a conversation",
               "docs": "You can tag a specific conversation. This will return a tag object for the tag that was added to the conversation.",
               "errors": [
@@ -40338,7 +40256,7 @@ docs: Everything about Switch
               },
             },
             "attachTagToTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Add tag to a ticket",
               "docs": "You can tag a specific ticket. This will return a tag object for the tag that was added to the ticket.",
               "errors": [
@@ -40435,7 +40353,7 @@ docs: Everything about Switch
               },
             },
             "createTag": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create or update a tag, Tag or untag companies, Tag contacts",
               "docs": "You can use this endpoint to perform the following operations:
 
@@ -40569,7 +40487,7 @@ Each operation will return a tag object.
               },
             },
             "deleteTag": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete tag",
               "docs": "You can delete the details of tags that are on the workspace by passing in the id.",
               "errors": [
@@ -40601,7 +40519,7 @@ Each operation will return a tag object.
               },
             },
             "detachTagFromContact": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove tag from a contact",
               "docs": "You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the contact.",
               "errors": [
@@ -40655,7 +40573,7 @@ Each operation will return a tag object.
               },
             },
             "detachTagFromConversation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove tag from a conversation",
               "docs": "You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from the conversation.",
               "errors": [
@@ -40777,7 +40695,7 @@ Each operation will return a tag object.
               },
             },
             "detachTagFromTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove tag from a ticket",
               "docs": "You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.",
               "errors": [
@@ -40899,7 +40817,7 @@ Each operation will return a tag object.
               },
             },
             "findTag": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Find a specific tag",
               "docs": "You can fetch the details of tags that are on the workspace by their id.
 This will return a tag object.
@@ -40950,7 +40868,7 @@ This will return a tag object.
               },
             },
             "listTags": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tags",
               "docs": "You can fetch a list of all tags for a given workspace.
 
@@ -41062,7 +40980,6 @@ service:
     attachTagToContact:
       path: /contacts/{contact_id}/tags
       method: POST
-      auth: true
       docs: >-
         You can tag a specific contact. This will return a tag object for the
         tag that was added to the contact.
@@ -41140,7 +41057,6 @@ service:
     detachTagFromContact:
       path: /contacts/{contact_id}/tags/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can remove tag from a specific contact. This will return a tag
         object for the tag that was removed from the contact.
@@ -41180,7 +41096,6 @@ service:
     attachTagToConversation:
       path: /conversations/{conversation_id}/tags
       method: POST
-      auth: true
       docs: >-
         You can tag a specific conversation. This will return a tag object for
         the tag that was added to the conversation.
@@ -41247,7 +41162,6 @@ service:
     detachTagFromConversation:
       path: /conversations/{conversation_id}/tags/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can remove tag from a specific conversation. This will return a tag
         object for the tag that was removed from the conversation.
@@ -41331,7 +41245,6 @@ service:
     listTags:
       path: /tags
       method: GET
-      auth: true
       docs: |+
         You can fetch a list of all tags for a given workspace.
 
@@ -41361,7 +41274,6 @@ service:
     createTag:
       path: /tags
       method: POST
-      auth: true
       docs: |
         You can use this endpoint to perform the following operations:
 
@@ -41454,7 +41366,6 @@ service:
     findTag:
       path: /tags/{id}
       method: GET
-      auth: true
       docs: |
         You can fetch the details of tags that are on the workspace by their id.
         This will return a tag object.
@@ -41490,7 +41401,6 @@ service:
     deleteTag:
       path: /tags/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can delete the details of tags that are on the workspace by passing
         in the id.
@@ -41513,7 +41423,6 @@ service:
     attachTagToTicket:
       path: /tickets/{ticket_id}/tags
       method: POST
-      auth: true
       docs: >-
         You can tag a specific ticket. This will return a tag object for the tag
         that was added to the ticket.
@@ -41580,7 +41489,6 @@ service:
     detachTagFromTicket:
       path: /tickets/{ticket_id}/tags/{id}
       method: DELETE
-      auth: true
       docs: >-
         You can remove tag from a specific ticket. This will return a tag object
         for the tag that was removed from the ticket.
@@ -41711,7 +41619,7 @@ types:
           "display-name": "Teams",
           "endpoints": {
             "listTeams": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all teams",
               "docs": "This will return a list of team objects for the App.",
               "errors": [
@@ -41753,7 +41661,7 @@ types:
               },
             },
             "retrieveTeam": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a team",
               "docs": "You can fetch the details of a single team, containing an array of admins that belong to this team.",
               "errors": [
@@ -41852,7 +41760,6 @@ service:
     listTeams:
       path: /teams
       method: GET
-      auth: true
       docs: This will return a list of team objects for the App.
       source:
         openapi: ../openapi.yml
@@ -41879,7 +41786,6 @@ service:
     retrieveTeam:
       path: /teams/{id}
       method: GET
-      auth: true
       docs: >-
         You can fetch the details of a single team, containing an array of
         admins that belong to this team.
@@ -41954,7 +41860,7 @@ types:
           "display-name": "Ticket Type Attributes",
           "endpoints": {
             "createTicketTypeAttribute": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new attribute for a ticket type",
               "docs": "You can create a new attribute for a ticket type.",
               "errors": [
@@ -42074,7 +41980,7 @@ types:
               },
             },
             "updateTicketTypeAttribute": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update an existing attribute for a ticket type",
               "docs": "You can update an existing attribute for a ticket type.",
               "errors": [
@@ -42242,7 +42148,6 @@ service:
     createTicketTypeAttribute:
       path: /ticket_types/{ticket_type_id}/attributes
       method: POST
-      auth: true
       docs: You can create a new attribute for a ticket type.
       source:
         openapi: ../openapi.yml
@@ -42348,7 +42253,6 @@ service:
     updateTicketTypeAttribute:
       path: /ticket_types/{ticket_type_id}/attributes/{id}
       method: PUT
-      auth: true
       docs: You can update an existing attribute for a ticket type.
       source:
         openapi: ../openapi.yml
@@ -42477,7 +42381,7 @@ docs: Everything about your ticket type attributes
           "display-name": "Ticket Types",
           "endpoints": {
             "createTicketType": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a ticket type",
               "docs": "You can create a new ticket type.
 > 📘 Creating ticket types.
@@ -42559,7 +42463,7 @@ docs: Everything about your ticket type attributes
               },
             },
             "getTicketType": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a ticket type",
               "docs": "You can fetch the details of a single ticket type.",
               "errors": [
@@ -42633,7 +42537,7 @@ docs: Everything about your ticket type attributes
               },
             },
             "listTicketTypes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all ticket types",
               "docs": "You can get a list of all ticket types for a workspace.",
               "errors": [
@@ -42679,7 +42583,7 @@ docs: Everything about your ticket type attributes
               },
             },
             "updateTicketType": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a ticket type",
               "docs": "
 You can update a ticket type.
@@ -42783,7 +42687,6 @@ service:
     listTicketTypes:
       path: /ticket_types
       method: GET
-      auth: true
       docs: You can get a list of all ticket types for a workspace.
       source:
         openapi: ../openapi.yml
@@ -42815,7 +42718,6 @@ service:
     createTicketType:
       path: /ticket_types
       method: POST
-      auth: true
       docs: >
         You can create a new ticket type.
 
@@ -42884,7 +42786,6 @@ service:
     getTicketType:
       path: /ticket_types/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single ticket type.
       source:
         openapi: ../openapi.yml
@@ -42941,7 +42842,6 @@ service:
     updateTicketType:
       path: /ticket_types/{id}
       method: PUT
-      auth: true
       docs: >
 
         You can update a ticket type.
@@ -43030,7 +42930,7 @@ docs: Everything about your ticket types
           "display-name": "Tickets",
           "endpoints": {
             "createTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a ticket",
               "docs": "You can create a new ticket.",
               "errors": [
@@ -43189,7 +43089,7 @@ docs: Everything about your ticket types
               },
             },
             "getTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a ticket",
               "docs": "You can fetch the details of a single ticket.",
               "errors": [
@@ -43315,7 +43215,7 @@ docs: Everything about your ticket types
               },
             },
             "replyTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Reply to a ticket",
               "docs": "You can reply to a ticket with a message from an admin or on behalf of a contact, or with a note for admins.",
               "errors": [
@@ -43559,7 +43459,7 @@ docs: Everything about your ticket types
               },
             },
             "searchTickets": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search tickets",
               "docs": "You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want.
 
@@ -43770,7 +43670,7 @@ The table below shows the operators you can use to define how you want to search
               },
             },
             "updateTicket": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a ticket",
               "docs": "You can update a ticket.",
               "errors": [
@@ -45234,7 +45134,6 @@ service:
     replyTicket:
       path: /tickets/{id}/reply
       method: POST
-      auth: true
       docs: >-
         You can reply to a ticket with a message from an admin or on behalf of a
         contact, or with a note for admins.
@@ -45430,7 +45329,6 @@ service:
     createTicket:
       path: /tickets
       method: POST
-      auth: true
       docs: You can create a new ticket.
       source:
         openapi: ../openapi.yml
@@ -45550,7 +45448,6 @@ service:
     getTicket:
       path: /tickets/{id}
       method: GET
-      auth: true
       docs: You can fetch the details of a single ticket.
       source:
         openapi: ../openapi.yml
@@ -45643,7 +45540,6 @@ service:
     updateTicket:
       path: /tickets/{id}
       method: PUT
-      auth: true
       docs: You can update a ticket.
       source:
         openapi: ../openapi.yml
@@ -46247,7 +46143,6 @@ service:
     searchTickets:
       path: /tickets/search
       method: POST
-      auth: true
       docs: >
         You can search for multiple tickets by the value of their attributes in
         order to fetch exactly which ones you want.
@@ -46531,7 +46426,7 @@ docs: Everything about your tickets
           "display-name": "Visitors",
           "endpoints": {
             "convertVisitor": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Convert a visitor",
               "docs": "You can merge a Visitor to a Contact of role type `lead` or `user`.
 
@@ -46650,7 +46545,7 @@ docs: Everything about your tickets
               },
             },
             "retrieveVisitorWithUserId": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve a visitor with User ID",
               "docs": "You can fetch the details of a single visitor.",
               "errors": [
@@ -46772,7 +46667,7 @@ docs: Everything about your tickets
               },
             },
             "updateVisitor": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a visitor",
               "docs": "Sending a PUT request to `/visitors` will result in an update of an existing Visitor.
 
@@ -47008,7 +46903,6 @@ service:
     retrieveVisitorWithUserId:
       path: /visitors
       method: GET
-      auth: true
       docs: You can fetch the details of a single visitor.
       source:
         openapi: ../openapi.yml
@@ -47099,7 +46993,6 @@ service:
     updateVisitor:
       path: /visitors
       method: PUT
-      auth: true
       docs: >
         Sending a PUT request to `/visitors` will result in an update of an
         existing Visitor.
@@ -47276,7 +47169,6 @@ service:
     convertVisitor:
       path: /visitors/convert
       method: POST
-      auth: true
       docs: >
         You can merge a Visitor to a Contact of role type `lead` or `user`.
 

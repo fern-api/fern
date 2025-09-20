@@ -1,3 +1,4 @@
+import { CONSOLE_LOGGER, Logger } from "@fern-api/logger";
 import { loggingExeca, runExeca } from "@fern-api/logging-execa";
 import { Options } from "execa";
 import path from "path";
@@ -13,7 +14,7 @@ export async function runFernCli(
     };
 
     return loggingExeca(
-        undefined,
+        CONSOLE_LOGGER,
         "node",
         ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
         {
@@ -24,13 +25,17 @@ export async function runFernCli(
     );
 }
 
-export async function runFernCliWithoutAuthToken(args: string[], options?: Options): Promise<loggingExeca.ReturnValue> {
+export async function runFernCliWithoutAuthToken(
+    args: string[],
+    options?: Options,
+    logger?: Logger
+): Promise<loggingExeca.ReturnValue> {
     return runFernCli(args, options, false);
 }
 
 export function captureFernCli(args: string[], options?: Options): import("execa").ExecaChildProcess {
     return runExeca(
-        undefined,
+        CONSOLE_LOGGER,
         "node",
         ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
         {

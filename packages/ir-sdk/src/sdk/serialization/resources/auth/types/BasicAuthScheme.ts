@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 import { EnvironmentVariable } from "./EnvironmentVariable";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { BaseAuthScheme } from "./BaseAuthScheme";
 
 export const BasicAuthScheme: core.serialization.ObjectSchema<serializers.BasicAuthScheme.Raw, FernIr.BasicAuthScheme> =
     core.serialization
@@ -17,10 +17,10 @@ export const BasicAuthScheme: core.serialization.ObjectSchema<serializers.BasicA
             password: Name,
             passwordEnvVar: EnvironmentVariable.optional(),
         })
-        .extend(WithDocs);
+        .extend(BaseAuthScheme);
 
 export declare namespace BasicAuthScheme {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends BaseAuthScheme.Raw {
         username: Name.Raw;
         usernameEnvVar?: EnvironmentVariable.Raw | null;
         password: Name.Raw;

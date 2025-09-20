@@ -839,7 +839,7 @@
           "base-path": "",
           "endpoints": {
             "listAccounts": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -881,7 +881,7 @@
               },
             },
             "listGames": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -959,7 +959,7 @@
               },
             },
             "listGroups": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1046,7 +1046,7 @@
               },
             },
             "listLocations": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1088,7 +1088,7 @@
               },
             },
             "listPhotos": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1135,7 +1135,7 @@
               },
             },
             "listPlayers": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1188,7 +1188,7 @@
               },
             },
             "retrieveAccount": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1223,7 +1223,7 @@
               },
             },
             "retrieveGame": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1310,7 +1310,7 @@
               },
             },
             "retrieveGroup": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1411,7 +1411,7 @@
               },
             },
             "retrieveLocation": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1446,7 +1446,7 @@
               },
             },
             "retrievePhoto": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1491,7 +1491,7 @@
               },
             },
             "retrievePlayer": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1553,7 +1553,6 @@
     listAccounts:
       path: /api/v2/accounts/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1580,7 +1579,6 @@
     retrieveAccount:
       path: /api/v2/accounts/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1603,7 +1601,6 @@
     listGames:
       path: /api/v2/games/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1655,7 +1652,6 @@
     retrieveGame:
       path: /api/v2/games/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1716,7 +1712,6 @@
     listGroups:
       path: /api/v2/groups/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1770,7 +1765,6 @@
     retrieveGroup:
       path: /api/v2/groups/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1839,7 +1833,6 @@
     listPlayers:
       path: /api/v2/players/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1874,7 +1867,6 @@
     retrievePlayer:
       path: /api/v2/players/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1908,7 +1900,6 @@
     listLocations:
       path: /api/v2/rooms/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1935,7 +1926,6 @@
     retrieveLocation:
       path: /api/v2/rooms/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1958,7 +1948,6 @@
     listPhotos:
       path: /api/v2/photos/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1987,7 +1976,6 @@
     retrievePhoto:
       path: /api/v2/photos/{photo_id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml

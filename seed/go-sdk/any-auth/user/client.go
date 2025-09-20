@@ -52,3 +52,17 @@ func (c *Client) Get(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) GetAdmins(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*fern.User, error) {
+	response, err := c.WithRawResponse.GetAdmins(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

@@ -12,3 +12,9 @@ service:
       path: /users
       method: POST
       response: list<User>
+    getAdmins:
+      path: /admins
+      method: GET
+      response: list<User>
+      auth:
+        - OAuth: ["admin"]

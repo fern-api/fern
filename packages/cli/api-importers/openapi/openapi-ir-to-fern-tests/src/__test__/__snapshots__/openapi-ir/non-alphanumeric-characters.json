@@ -55,6 +55,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/settings",
       "examples": [

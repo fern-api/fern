@@ -69,6 +69,7 @@ function convertSchemeReference({
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
+                    key: reference,
                     docs,
                     name: casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
@@ -83,12 +84,14 @@ function convertSchemeReference({
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
+                    key: reference,
                     casingsGenerator,
                     docs,
                     rawScheme
                 }),
             tokenBearer: (rawScheme) =>
                 generateBearerAuth({
+                    key: reference,
                     casingsGenerator,
                     docs,
                     rawScheme
@@ -96,6 +99,7 @@ function convertSchemeReference({
             inferredBearer(authScheme) {
                 // TODO: implement
                 return generateBearerAuth({
+                    key: reference,
                     casingsGenerator,
                     docs,
                     rawScheme: undefined
@@ -105,6 +109,7 @@ function convertSchemeReference({
                 rawScheme // TODO: implement
             ) =>
                 generateBearerAuth({
+                    key: reference,
                     casingsGenerator,
                     docs,
                     rawScheme: undefined
@@ -118,12 +123,14 @@ function convertSchemeReference({
         case "bearer":
         case "oauth":
             return generateBearerAuth({
+                key: scheme,
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
             });
         case "basic":
             return generateBasicAuth({
+                key: scheme,
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
@@ -134,15 +141,18 @@ function convertSchemeReference({
 }
 
 function generateBearerAuth({
+    key,
     casingsGenerator,
     docs,
     rawScheme
 }: {
+    key: string;
     casingsGenerator: CasingsGenerator;
     docs: string | undefined;
     rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
+        key,
         docs,
         token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
@@ -150,15 +160,18 @@ function generateBearerAuth({
 }
 
 function generateBasicAuth({
+    key,
     casingsGenerator,
     docs,
     rawScheme
 }: {
+    key: string;
     casingsGenerator: CasingsGenerator;
     docs: string | undefined;
     rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
+        key,
         docs,
         username: casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,

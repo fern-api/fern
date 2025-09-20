@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 import { EnvironmentVariable } from "./EnvironmentVariable";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { BaseAuthScheme } from "./BaseAuthScheme";
 
 export const BearerAuthScheme: core.serialization.ObjectSchema<
     serializers.BearerAuthScheme.Raw,
@@ -17,10 +17,10 @@ export const BearerAuthScheme: core.serialization.ObjectSchema<
         token: Name,
         tokenEnvVar: EnvironmentVariable.optional(),
     })
-    .extend(WithDocs);
+    .extend(BaseAuthScheme);
 
 export declare namespace BearerAuthScheme {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends BaseAuthScheme.Raw {
         token: Name.Raw;
         tokenEnvVar?: EnvironmentVariable.Raw | null;
     }

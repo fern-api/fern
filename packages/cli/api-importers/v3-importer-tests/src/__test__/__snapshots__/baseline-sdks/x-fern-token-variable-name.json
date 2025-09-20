@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "apiKey",
           "camelCase": {
@@ -753,6 +754,7 @@
     "endpoints": {
       "endpoint_chatCompletions.create": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "apiKey",
             "camelCase": {

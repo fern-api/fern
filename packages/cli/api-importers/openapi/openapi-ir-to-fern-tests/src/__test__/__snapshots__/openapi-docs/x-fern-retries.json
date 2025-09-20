@@ -39,7 +39,7 @@
           "base-path": "",
           "endpoints": {
             "update": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -80,7 +80,6 @@ service:
     update:
       path: /status
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -111,7 +110,7 @@ service:
               "audiences": [
                 "private",
               ],
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -149,7 +148,6 @@ service:
     update:
       path: /status2
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

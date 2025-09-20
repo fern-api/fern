@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "Authentication",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -20756,6 +20757,11 @@
           },
           "displayName": "Get Job Artifacts",
           "auth": true,
+          "security": [
+            {
+              "Authentication": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -20888,6 +20894,11 @@
           },
           "displayName": "Get Job Details",
           "auth": true,
+          "security": [
+            {
+              "Authentication": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -21072,6 +21083,11 @@
           },
           "displayName": "List Jobs",
           "auth": true,
+          "security": [
+            {
+              "Authentication": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -21566,6 +21582,11 @@
           },
           "displayName": "Start Job",
           "auth": true,
+          "security": [
+            {
+              "Authentication": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -21999,6 +22020,11 @@
           },
           "displayName": "Get Job Predictions",
           "auth": true,
+          "security": [
+            {
+              "Authentication": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",

@@ -24,6 +24,18 @@
                 "type": "csharp",
                 "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.User.GetAsync();\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admins",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getAdmins"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.User.GetAdminsAsync();\n"
+            }
         }
     ]
 }
