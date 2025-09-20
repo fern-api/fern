@@ -79,12 +79,12 @@ impl HttpClient {
         }
 
         // Apply bearer token (request options override config)
-        let bearer_token = options
+        let token = options
             .as_ref()
-            .and_then(|opts| opts.bearer_token.as_ref())
-            .or(self.config.bearer_token.as_ref());
+            .and_then(|opts| opts.token.as_ref())
+            .or(self.config.token.as_ref());
 
-        if let Some(token) = bearer_token {
+        if let Some(token) = token {
             let auth_value = format!("Bearer {}", token);
             headers.insert(
                 "Authorization",

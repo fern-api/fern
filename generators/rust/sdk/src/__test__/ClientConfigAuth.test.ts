@@ -16,7 +16,7 @@ const clientConfigGenerator = new ClientConfigGenerator(context);
 const CLIENT_CONFIG = clientConfigGenerator.generate().fileContents;
 
 // Read AsIs files for testing
-const API_CLIENT_BUILDER = readAsIsFile("api_client_builder.rs");
+const API_CLIENT_BUILDER = readAsIsFile("client.rs");
 const HTTP_CLIENT = readAsIsFile("http_client.rs");
 const REQUEST_OPTIONS = readAsIsFile("request_options.rs");
 
