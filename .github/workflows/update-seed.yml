@@ -55,7 +55,9 @@ jobs:
             echo "create-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
-    if: github.repository == 'fern-api/fern'
+    # if: github.repository == 'fern-api/fern'
+    # CHRISM - force skip for now
+    if: false
     runs-on: ubuntu-latest
     outputs:
       seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed }}
