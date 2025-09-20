@@ -23,6 +23,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "http": {
                 if (this.securityScheme.scheme === "bearer") {
                     return AuthScheme.bearer({
+                        key: this.securityScheme.scheme,
                         token: this.context.casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: this.securityScheme.description
@@ -30,6 +31,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 }
                 if (this.securityScheme.scheme === "basic") {
                     return AuthScheme.basic({
+                        key: this.securityScheme.scheme,
                         username: this.context.casingsGenerator.generateName("username"),
                         password: this.context.casingsGenerator.generateName("password"),
                         usernameEnvVar: undefined,
@@ -42,6 +44,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "apiKey": {
                 if (this.securityScheme.in === "header") {
                     return AuthScheme.header({
+                        key: this.securityScheme.in,
                         name: {
                             name: this.context.casingsGenerator.generateName("apiKey"),
                             wireValue: this.securityScheme.name
@@ -57,6 +60,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "oauth2": {
                 // TODO: Correctly implement OAuth.
                 return AuthScheme.bearer({
+                    key: this.securityScheme.type,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
                     docs: this.securityScheme.description

@@ -4,6 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface InferredAuthScheme extends FernIr.WithDocs {
+export interface InferredAuthScheme extends FernIr.BaseAuthScheme {
     tokenEndpoint: FernIr.InferredAuthSchemeTokenEndpoint;
 }

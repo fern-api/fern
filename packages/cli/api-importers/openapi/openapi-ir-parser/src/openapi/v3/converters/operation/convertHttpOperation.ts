@@ -1,5 +1,6 @@
 import {
     EndpointSdkName,
+    EndpointSecurity,
     EndpointWithExample,
     PrimitiveSchemaValueWithExample,
     RequestWithExample,
@@ -272,6 +273,7 @@ export function convertHttpOperation({
                   ),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
+        security: generateSecurity(operation),
         availability,
         method,
         path,
@@ -325,6 +327,10 @@ function createOperationSdkMethodName({
         groupName: [],
         methodName: request.sdkMethodName
     };
+}
+
+function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity {
+    return operation.security ?? [];
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

@@ -16,6 +16,7 @@ export * from "./WebsocketMessageExample";
 export * from "./WebhookHttpMethod";
 export * from "./Availability";
 export * from "./Endpoint";
+export * from "./EndpointSecurity";
 export * from "./RetriesConfiguration";
 export * from "./HttpEndpointServer";
 export * from "./WebsocketServer";

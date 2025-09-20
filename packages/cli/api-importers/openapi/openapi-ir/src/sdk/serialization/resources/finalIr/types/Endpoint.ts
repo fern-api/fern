@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { EndpointSecurity } from "./EndpointSecurity";
 import { HttpMethod } from "./HttpMethod";
 import { TagId } from "../../commons/types/TagId";
 import { PathParameter } from "./PathParameter";
@@ -28,6 +29,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
     core.serialization
         .objectWithoutOptionalProperties({
             authed: core.serialization.boolean(),
+            security: EndpointSecurity,
             internal: core.serialization.boolean().optional(),
             idempotent: core.serialization.boolean().optional(),
             method: HttpMethod,
@@ -58,6 +60,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
 export declare namespace Endpoint {
     export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
+        security: EndpointSecurity.Raw;
         internal?: boolean | null;
         idempotent?: boolean | null;
         method: HttpMethod.Raw;
