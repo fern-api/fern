@@ -9,5 +9,6 @@ export interface GithubPublish {
     repo: string;
     uri: string | undefined;
     token: string | undefined;
+    mode: "pull-request" | undefined;
     target: FernIr.PublishTarget;
 }
