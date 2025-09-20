@@ -188,11 +188,13 @@ jobs:
             tsconfig.json
             .github/actions/
             packages/
-            # packages/seed/
-            # packages/fs-utils/
-            # packages/logger/
-            # packages/workspace-loader/
-            # packages/configuration/
+            generators/
+            packages/cli/
+            packages/seed/
+            packages/fs-utils/
+            packages/logger/
+            packages/workspace-loader/
+            packages/configuration/
             seed/
 
       - name: Install
