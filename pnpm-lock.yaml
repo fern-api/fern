@@ -1891,8 +1891,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2007,8 +2007,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2044,8 +2044,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/configs
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^58.2.0
-        version: 58.3.0
+        specifier: ^59.0.0
+        version: 59.6.1
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -2068,8 +2068,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
