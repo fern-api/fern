@@ -10,10 +10,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_cursor_pagination(request_options: {}, **params)
-        _query_param_names = [
-          %w[page per_page order starting_after],
-          %i[page per_page order starting_after]
-        ].flatten
+        params =
+          _query_param_names = %w[page per_page order starting_after]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -46,10 +44,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
-        _query_param_names = [
-          ["cursor"],
-          %i[cursor]
-        ].flatten
+        params =
+          _query_param_names = ["cursor"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -111,10 +107,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination(request_options: {}, **params)
-        _query_param_names = [
-          %w[page per_page order starting_after],
-          %i[page per_page order starting_after]
-        ].flatten
+        params =
+          _query_param_names = %w[page per_page order starting_after]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -148,10 +142,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_double_offset_pagination(request_options: {}, **params)
-        _query_param_names = [
-          %w[page per_page order starting_after],
-          %i[page per_page order starting_after]
-        ].flatten
+        params =
+          _query_param_names = %w[page per_page order starting_after]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -215,10 +207,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_step_pagination(request_options: {}, **params)
-        _query_param_names = [
-          %w[page limit order],
-          %i[page limit order]
-        ].flatten
+        params =
+          _query_param_names = %w[page limit order]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -252,10 +242,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination_has_next_page(request_options: {}, **params)
-        _query_param_names = [
-          %w[page limit order],
-          %i[page limit order]
-        ].flatten
+        params =
+          _query_param_names = %w[page limit order]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -289,10 +277,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersExtendedResponse]
       def list_with_extended_results(request_options: {}, **params)
-        _query_param_names = [
-          ["cursor"],
-          %i[cursor]
-        ].flatten
+        params =
+          _query_param_names = ["cursor"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -325,10 +311,8 @@ module Seed
 
       # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
-        _query_param_names = [
-          ["cursor"],
-          %i[cursor]
-        ].flatten
+        params =
+          _query_param_names = ["cursor"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -361,10 +345,8 @@ module Seed
 
       # @return [Seed::Types::UsernameCursor]
       def list_usernames(request_options: {}, **params)
-        _query_param_names = [
-          ["starting_after"],
-          %i[starting_after]
-        ].flatten
+        params =
+          _query_param_names = ["starting_after"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -397,10 +379,8 @@ module Seed
 
       # @return [Seed::Users::Types::UsernameContainer]
       def list_with_global_config(request_options: {}, **params)
-        _query_param_names = [
-          ["offset"],
-          %i[offset]
-        ].flatten
+        params =
+          _query_param_names = ["offset"]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
