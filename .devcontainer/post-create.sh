@@ -38,6 +38,33 @@ if ! command -v protoc-gen-openapi &> /dev/null; then
     go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 fi
 
+# Install NVM and Node.js
+if ! command -v nvm &> /dev/null; then
+    echo "Installing NVM..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi
+
+# Install Node.js 20 (as specified in package.json)
+if ! command -v node &> /dev/null || ! node --version | grep -q "v20"; then
+    echo "Installing Node.js 20..."
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install 20
+    nvm use 20
+    nvm alias default 20
+fi
+
+# Install npm (should come with Node.js, but ensure it's available)
+if ! command -v npm &> /dev/null; then
+    echo "Installing npm..."
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    npm install -g npm@latest
+fi
+
 # Install pnpm globally
 if ! command -v pnpm &> /dev/null; then
     echo "Installing pnpm..."
@@ -116,6 +143,10 @@ echo "Installing project dependencies..."
 cd /workspaces/fern
 pnpm install
 
+# Install fern-api CLI globally
+echo "Installing fern-api CLI..."
+npm install -g @fern-api/cli
+
 # Install global tools that are used by the project
 echo "Installing global development tools..."
 npm install -g @biomejs/biome@2.1.1
@@ -132,6 +163,16 @@ if [ -z "$(git config --global user.name)" ]; then
     echo "Setting up Git configuration..."
     git config --global user.name "Codespace User"
     git config --global user.email "codespace@github.com"
+fi
+
+# Add NVM to shell profiles
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zshrc
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc
 fi
 
 # Add Go bin to PATH if not already there
@@ -161,8 +202,11 @@ fi
 echo "✅ Fern development environment setup complete!"
 echo ""
 echo "Installed tools:"
+echo "  - NVM $(nvm --version 2>/dev/null || echo 'installed')"
 echo "  - Node.js $(node --version)"
+echo "  - npm $(npm --version)"
 echo "  - pnpm $(pnpm --version)"
+echo "  - fern-api CLI $(fern --version 2>/dev/null || echo 'installed')"
 echo "  - Go $(go version)"
 echo "  - Java $(java -version 2>&1 | head -n 1)"
 echo "  - Python $(python3 --version)"
@@ -185,6 +229,7 @@ echo ""
 echo "🎉 Ready to develop with Fern!"
 echo ""
 echo "Common commands:"
+echo "  fern --help      - Show Fern CLI help"
 echo "  pnpm compile     - Compile all generators"
 echo "  pnpm test        - Run tests"
 echo "  pnpm lint:biome  - Run Biome linting"

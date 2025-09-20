@@ -2,9 +2,6 @@
   "name": "Fern Development Environment",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
     "ghcr.io/devcontainers/features/go:1": {
       "version": "1.23"
     },
