@@ -63,6 +63,10 @@ export class PersistedTypescriptProject {
         return this.directory;
     }
 
+    public getTestDirectory(): RelativeFilePath {
+        return this.testDirectory;
+    }
+
     public async generateLockfile(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;

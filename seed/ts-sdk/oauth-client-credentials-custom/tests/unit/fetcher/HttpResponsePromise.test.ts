@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, jest } from "@jest/globals";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
 import { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
@@ -20,7 +20,7 @@ describe("HttpResponsePromise", () => {
 
     describe("fromFunction", () => {
         it("should create an HttpResponsePromise from a function", async () => {
-            const mockFn = jest
+            const mockFn = vi
                 .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
                 .mockResolvedValue(mockWithRawResponse);
 
@@ -111,7 +111,7 @@ describe("HttpResponsePromise", () => {
                 reject(new Error("Test error"));
             });
 
-            const catchSpy = jest.fn();
+            const catchSpy = vi.fn();
             await errorResponsePromise.catch(catchSpy);
 
             expect(catchSpy).toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe("HttpResponsePromise", () => {
         });
 
         it("should support finally() method", async () => {
-            const finallySpy = jest.fn();
+            const finallySpy = vi.fn();
             await responsePromise.finally(finallySpy);
 
             expect(finallySpy).toHaveBeenCalled();

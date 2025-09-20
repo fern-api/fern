@@ -128,8 +128,7 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts),
-        async (opts) => apiCollectorV2.addReferencedAPI(opts)
+        async (opts) => apiCollector.addReferencedAPI(opts)
     );
 
     const writeDocsDefinition = await resolver.resolve();

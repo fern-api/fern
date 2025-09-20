@@ -103,7 +103,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 source: HttpEndpointSource.proto({
                     methodType: this.getGrpcMethodType()
                 }),
-                audiences: []
+                audiences: [],
+                retries: undefined
             }
         };
     }

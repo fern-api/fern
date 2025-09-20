@@ -7,7 +7,3 @@ export * as inlinedRequests from "./inlinedRequests/index.js";
 export * as noAuth from "./noAuth/index.js";
 export * as noReqBody from "./noReqBody/index.js";
 export * as reqWithHeaders from "./reqWithHeaders/index.js";
-export * from "./endpoints/resources/params/client/requests/index.js";
-export * from "./endpoints/resources/put/client/requests/index.js";
-export * from "./inlinedRequests/client/requests/index.js";
-export * from "./reqWithHeaders/client/requests/index.js";

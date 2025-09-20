@@ -12,7 +12,7 @@
     - type: fix
       summary: |
         Enable type disambiguation and renaming during code generation
-        Permits the `examples` test fixtures to compile sucessfully
+        Permits the `examples` test fixtures to compile successfully
   createdAt: "2025-09-05"
   irVersion: 58
 - version: 2.1.15

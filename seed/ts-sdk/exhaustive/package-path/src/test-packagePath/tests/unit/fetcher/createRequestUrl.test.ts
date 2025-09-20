@@ -1,4 +1,4 @@
-import { createRequestUrl } from "../../../../../src/test-packagePath/core/fetcher/createRequestUrl.js";
+import { createRequestUrl } from "../../../../../src/test-packagePath/core/fetcher/createRequestUrl";
 
 describe("Test createRequestUrl", () => {
     it("should return the base URL when no query parameters are provided", () => {

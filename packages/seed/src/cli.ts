@@ -325,7 +325,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
             });
 
             if (argv["include-subfolders"]) {
-                // Add fixtures that have subfolders with their subfoldered version
+                // Add fixtures that have subfolders with their subfolder'ed version
                 const allOptions: string[] = [];
                 for (const fixture of availableFixtures) {
                     const config = generator.workspaceConfig.fixtures?.[fixture];

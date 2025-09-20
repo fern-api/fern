@@ -225,42 +225,6 @@ export async function publishDocs({
                         }
                 }
             }
-        },
-        async ({ api, snippetsConfig, apiName }) => {
-            api.snippetsConfiguration = snippetsConfig;
-            const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
-                definition: undefined,
-                definitionV2: {
-                    ...api,
-                    snippetsConfiguration: disableSnippetGen ? undefined : api.snippetsConfiguration
-                }
-            });
-
-            if (response.ok) {
-                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
-                return response.body.apiDefinitionId;
-            } else {
-                switch (response.error.error) {
-                    case "UnauthorizedError":
-                    case "UserNotInOrgError": {
-                        return context.failAndThrow(
-                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
-                        );
-                    }
-                    default:
-                        if (apiName != null) {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
-                            );
-                        } else {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
-                            );
-                        }
-                }
-            }
         }
     );
 
@@ -318,7 +282,9 @@ async function uploadFiles(
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
                         headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
+                            // Set max cache control for S3 uploads
+                            "Cache-Control": "public, max-age=31536000, immutable"
                         }
                     });
                 } catch (e) {

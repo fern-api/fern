@@ -53,5 +53,4 @@ export interface SdkContext extends BaseContext {
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
     authProvider: AuthProviderContext;
-    exportAllRequestsAtRoot: boolean;
 }

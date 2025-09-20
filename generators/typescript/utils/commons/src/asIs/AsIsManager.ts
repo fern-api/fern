@@ -13,7 +13,6 @@ export namespace AsIsManager {
         generateWireTests: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
-        testFramework: "jest" | "vitest";
     }
 }
 
@@ -22,20 +21,13 @@ export class AsIsManager {
     private readonly generateWireTests: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
-    private readonly testFramework: "jest" | "vitest";
 
-    constructor({
-        useBigInt,
-        generateWireTests,
-        relativePackagePath,
-        relativeTestPath,
-        testFramework
-    }: AsIsManager.Init) {
+    constructor({ useBigInt, generateWireTests, relativePackagePath, relativeTestPath }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
-        this.testFramework = testFramework;
+        console.log("relativeTestPath", this.relativeTestPath);
     }
 
     /**
@@ -54,10 +46,7 @@ export class AsIsManager {
                 mockServer: {
                     ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
-                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
-                BrowserTestEnvironment: {
-                    ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
-                }
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` }
             },
             scripts: {
                 renameToEsmFiles: {
@@ -73,9 +62,6 @@ export class AsIsManager {
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-        if (this.testFramework === "jest") {
-            filesToCopy.push(asIsFiles.tests.BrowserTestEnvironment);
-        }
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
             filesToCopy.push(asIsFiles.core.json.bigint);
@@ -115,7 +101,6 @@ export class AsIsManager {
                             );
                         }
                     }
-
                     project.createSourceFile(targetFilePath, fileContent, { overwrite: true });
                 }
             } else {

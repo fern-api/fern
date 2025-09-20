@@ -70,6 +70,16 @@ types:
       transport: optional<Transport>
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
+      retries: optional<RetriesConfiguration>
+
+  RetriesConfiguration:
+    discriminated: false
+    union:
+      - RetriesDisabledSchema
+
+  RetriesDisabledSchema:
+    properties:
+      disabled: optional<boolean>
 
   HttpEndpointSource:
     union:

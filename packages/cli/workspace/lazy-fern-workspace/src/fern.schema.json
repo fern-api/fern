@@ -2601,6 +2601,29 @@
         }
       ]
     },
+    "service.RetriesDisabledSchema": {
+      "type": "object",
+      "properties": {
+        "disabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "service.RetriesConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/service.RetriesDisabledSchema"
+        }
+      ]
+    },
     "service.HttpEndpointSchema": {
       "type": "object",
       "properties": {
@@ -2800,6 +2823,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retries": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.RetriesConfiguration"
             },
             {
               "type": "null"
