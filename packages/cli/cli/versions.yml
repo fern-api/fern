@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Enable PR mode for self-hosted/local sdk generation
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-20"
+  version: 0.79.0
+
+- changelogEntry:
     - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
       type: feat
   irVersion: 59
