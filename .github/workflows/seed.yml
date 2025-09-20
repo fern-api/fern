@@ -101,6 +101,7 @@ jobs:
       swift: ${{ steps.set-output.outputs.swift-changes }}
       rust: ${{ steps.set-output.outputs.rust-changes }}
     steps:
+      # CHRISM - this still work???? is tj-actions checking at remote?
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
@@ -178,6 +179,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            package.json
+            pnpm-lock.yaml
+            pnpm-workspace.yaml
+            turbo.json
+            tsconfig.json
+            .github/actions/
+            packages/seed/
+            packages/fs-utils/
+            packages/logger/
+            packages/workspace-loader/
+            packages/configuration/
+            seed/
 
       - name: Install
         uses: ./.github/actions/install
