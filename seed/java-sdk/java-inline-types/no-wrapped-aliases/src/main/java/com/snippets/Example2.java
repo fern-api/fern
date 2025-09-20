@@ -18,7 +18,7 @@ public class Example2 {
             GetUndiscriminatedUnionRequest
                 .builder()
                 .bar(
-                    UndiscriminatedUnion1.ofUndiscriminatedUnion1InlineType1(
+                    UndiscriminatedUnion1.of(
                         UndiscriminatedUnion1InlineType1
                             .builder()
                             .foo("foo")

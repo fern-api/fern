@@ -1,6 +1,6 @@
-import { afterAll, beforeAll } from "@jest/globals";
+import { afterAll, beforeAll } from "vitest";
 
-import { mockServerPool } from "./MockServerPool.js";
+import { mockServerPool } from "./MockServerPool";
 
 beforeAll(() => {
     mockServerPool.listen();

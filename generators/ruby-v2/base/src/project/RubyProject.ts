@@ -39,7 +39,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createTestFiles();
         await this.createVersionFile();
         await this.createModuleFile();
-        await this.createRubocoopFile();
+        await this.createRuboCopFile();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -75,11 +75,11 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
-    private async createRubocoopFile(): Promise<void> {
-        const rubocoopFile = new RubocopFile({ context: this.context });
+    private async createRuboCopFile(): Promise<void> {
+        const ruboCopFile = new RubocopFile({ context: this.context });
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
-            await rubocoopFile.toString()
+            await ruboCopFile.toString()
         );
     }
 

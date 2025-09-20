@@ -139,7 +139,6 @@ export declare namespace SdkContextImpl {
         useDefaultRequestParameterValues: boolean;
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
-        exportAllRequestsAtRoot: boolean;
     }
 }
 
@@ -189,7 +188,6 @@ export class SdkContextImpl implements SdkContext {
     public readonly relativeTestPath: string;
     public readonly authProvider: AuthProviderContext;
     public readonly enableInlineTypes: boolean;
-    public readonly exportAllRequestsAtRoot: boolean;
 
     constructor({
         logger,
@@ -255,8 +253,7 @@ export class SdkContextImpl implements SdkContext {
         formDataSupport,
         useDefaultRequestParameterValues,
         generateReadWriteOnlyTypes,
-        flattenRequestParameters,
-        exportAllRequestsAtRoot
+        flattenRequestParameters
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -270,7 +267,6 @@ export class SdkContextImpl implements SdkContext {
         this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
         this.flattenRequestParameters = flattenRequestParameters;
-        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
@@ -282,7 +278,6 @@ export class SdkContextImpl implements SdkContext {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.enableInlineTypes = enableInlineTypes;
-        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

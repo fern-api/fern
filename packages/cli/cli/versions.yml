@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.78.0
+
+- changelogEntry:
+    - summary: Apply max cache control for S3 uploads in documentation generation to improve lighthouse scores.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.8
+
+- changelogEntry:
     - summary: Update dynamic snippets generation to not fail on empty PHP configuration
       type: fix
   irVersion: 59

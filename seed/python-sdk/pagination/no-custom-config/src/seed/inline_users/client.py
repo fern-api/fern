@@ -32,6 +32,10 @@ class InlineUsersClient:
     @property
     def inline_users(self):
         if self._inline_users is None:
+            from .inline_users.client import (
+                InlineUsersClient as inline_users_inline_users_client_InlineUsersClient,  # noqa: E402
+            )
+
             self._inline_users = inline_users_inline_users_client_InlineUsersClient(client_wrapper=self._client_wrapper)
         return self._inline_users
 
@@ -56,6 +60,10 @@ class AsyncInlineUsersClient:
     @property
     def inline_users(self):
         if self._inline_users is None:
+            from .inline_users.client import (
+                AsyncInlineUsersClient as inline_users_inline_users_client_AsyncInlineUsersClient,  # noqa: E402
+            )
+
             self._inline_users = inline_users_inline_users_client_AsyncInlineUsersClient(
                 client_wrapper=self._client_wrapper
             )

@@ -18,6 +18,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.custom_config import SDKCustomConfig
 
 import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
@@ -199,6 +200,7 @@ class GeneratorCli:
             api_name=self._ir.readme_config.api_name if self._ir.readme_config else None,
             disabled_features=self._ir.readme_config.disabled_features if self._ir.readme_config else None,
             white_label=self._ir.readme_config.white_label if self._ir.readme_config else None,
+            custom_sections=self._get_custom_readme_sections(),
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
@@ -255,3 +257,28 @@ class GeneratorCli:
                 )
             )
         )
+
+    def _get_custom_readme_sections(self) -> Optional[List[generatorcli.CustomSection]]:
+        ir_custom_sections = self._ir.readme_config.custom_sections if self._ir.readme_config else None
+        custom_config_sections = SDKCustomConfig.parse_obj(
+            self._context.generator_config.custom_config or {}
+        ).custom_readme_sections
+
+        self._debug_log(message=f"IR custom sections: {ir_custom_sections}")
+        self._debug_log(message=f"Custom config sections: {custom_config_sections}")
+
+        sections = []
+        for ir_section in ir_custom_sections or []:
+            if ir_section.language == "python" and not any(
+                s.title == ir_section.title for s in custom_config_sections or []
+            ):
+                sections.append(
+                    generatorcli.CustomSection(name=ir_section.title, language="PYTHON", content=ir_section.content)
+                )
+
+        for config_section in custom_config_sections or []:
+            sections.append(
+                generatorcli.CustomSection(name=config_section.title, language="PYTHON", content=config_section.content)
+            )
+
+        return sections if len(sections) > 0 else None

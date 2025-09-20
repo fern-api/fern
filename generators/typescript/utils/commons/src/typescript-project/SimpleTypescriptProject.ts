@@ -115,7 +115,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
                         include: [this.packagePath],
-                        exclude: []
+                        exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                     },
                     undefined,
                     4
@@ -131,7 +131,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     compilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4
@@ -150,7 +150,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: cjsCompilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4
@@ -169,7 +169,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: esmCompilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4
