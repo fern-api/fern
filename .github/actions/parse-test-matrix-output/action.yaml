@@ -1,0 +1,39 @@
+name: Parse Test Matrix Output
+description: Take the log output of get-available-fixtures and parse it into a test set matrix ingestible by GitHub Actions.
+
+inputs:
+  generator-name:
+    description: "Generator to get fixtures for"
+    required: true
+  #  TODO - add back eventually when CLI is updated for this
+  # include-output-folders:
+  #   description: "Whether to include output folders as unique tests"
+  #   required: false
+  #   default: "true"
+
+outputs:
+  parsed:
+    description: "Parsed test set matrix"
+    value: ${{ steps.parse-test-set-matrix.outputs.fixture_list }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Parse Test Matrix
+      id: parse-test-set-matrix
+      shell: bash
+      run: |
+        # Get JSON output from get-available-fixtures command
+        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}})
+
+        echo "${COMMAND_OUTPUT}"
+
+        # Extract the fixtures array from the JSON output using jq
+        # First extract just the JSON part (skip pnpm output lines)
+        JSON_OUTPUT=$(echo "${COMMAND_OUTPUT}" | sed -n '/^{/,/^}/p')
+        # Extract fixtures to JSON array
+        FIXTURES_FLAT_JSON=$(echo "${JSON_OUTPUT}" | jq -c '.fixtures')
+
+        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON | jq ."
+
+        echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT

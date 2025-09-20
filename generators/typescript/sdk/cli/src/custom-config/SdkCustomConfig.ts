@@ -50,4 +50,5 @@ export interface SdkCustomConfig {
     flattenRequestParameters: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
+    consolidateTypeFiles: boolean | undefined;
 }
