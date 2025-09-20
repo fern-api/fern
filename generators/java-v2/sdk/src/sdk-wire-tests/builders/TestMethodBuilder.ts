@@ -157,7 +157,19 @@ export class TestMethodBuilder {
             if (endpoint.pagination != null) {
                 const itemType = this.extractPaginationItemType(endpoint);
                 if (itemType) {
-                    return `SyncPagingIterable<${itemType}>`;
+                    // Use a temporary writer to get the item type name
+                    const tempWriter = new java.Writer({
+                        packageName: this.context.getCorePackageName(),
+                        customConfig: this.context.customConfig
+                    });
+
+                    // Write the item type to get its string representation
+                    itemType.write(tempWriter);
+
+                    // Get the type name without package prefix
+                    const itemTypeName = tempWriter.buffer.trim();
+
+                    return `SyncPagingIterable<${itemTypeName}>`;
                 }
             }
 
@@ -184,9 +196,9 @@ export class TestMethodBuilder {
     }
 
     /**
-     * Extracts the item type from a paginated endpoint.
+     * Extracts the item type from a paginated endpoint and returns the java.Type.
      */
-    private extractPaginationItemType(endpoint: HttpEndpoint): string | undefined {
+    private extractPaginationItemType(endpoint: HttpEndpoint): java.Type | undefined {
         if (!endpoint.pagination) {
             return undefined;
         }
@@ -219,7 +231,7 @@ export class TestMethodBuilder {
     /**
      * Recursively extracts the item type from a value type.
      */
-    private extractItemTypeFromValueType(valueType: TypeReference): string | undefined {
+    private extractItemTypeFromValueType(valueType: TypeReference): java.Type | undefined {
         if (!valueType) {
             return undefined;
         }
@@ -229,7 +241,7 @@ export class TestMethodBuilder {
             if (valueType.container.type === "list" && valueType.container.list) {
                 // For list types, get the inner type
                 const innerType = valueType.container.list;
-                return this.convertTypeReferenceToJavaType(innerType);
+                return this.context.javaTypeMapper.convert({ reference: innerType });
             } else if (valueType.container.type === "optional" && valueType.container.optional) {
                 // Handle optional - recursively check the inner type
                 return this.extractItemTypeFromValueType(valueType.container.optional);
@@ -318,17 +330,22 @@ export class TestMethodBuilder {
                     const paginationPackage = this.context.getCorePackageName() + ".pagination";
                     imports.add(`${paginationPackage}.SyncPagingIterable`);
 
-                    // Also get imports for the item type if needed
-                    if (itemType && !this.isPrimitiveType(itemType)) {
-                        try {
-                            const itemTypeImports = this.getImportsForType(endpoint, itemType);
-                            itemTypeImports.forEach(imp => imports.add(imp));
-                        } catch (e) {
-                            // Ignore import errors for item type
-                        }
-                    }
+                    // Use a temporary writer to get the item type name and its imports
+                    const tempWriter = new java.Writer({
+                        packageName: this.context.getCorePackageName(),
+                        customConfig: this.context.customConfig
+                    });
 
-                    return { typeName: `SyncPagingIterable<${itemType}>`, imports };
+                    // Write the item type to collect its imports
+                    itemType.write(tempWriter);
+
+                    // Get the type name without package prefix
+                    const itemTypeName = tempWriter.buffer.trim();
+
+                    // Collect imports that were added when writing the type
+                    tempWriter.getImports().forEach(imp => imports.add(imp));
+
+                    return { typeName: `SyncPagingIterable<${itemTypeName}>`, imports };
                 }
             }
 
@@ -356,57 +373,4 @@ export class TestMethodBuilder {
         }
     }
 
-    /**
-     * Checks if a type name is a primitive Java type.
-     */
-    private isPrimitiveType(typeName: string): boolean {
-        const primitives = ["String", "Integer", "Long", "Double", "Float", "Boolean", "Byte", "Short", "Character", "void"];
-        return primitives.includes(typeName);
-    }
-
-    /**
-     * Gets imports for a specific type name.
-     */
-    private getImportsForType(endpoint: HttpEndpoint, typeName: string): Set<string> {
-        const imports = new Set<string>();
-
-        // If it's a type from the types package, add the import
-        if (!this.isPrimitiveType(typeName)) {
-            // Try to find the type declaration for this type name
-            try {
-                // Search for the type declaration by name
-                for (const typeDecl of Object.values(this.context.ir.types)) {
-                    if (typeDecl.name.name.pascalCase.unsafeName === typeName) {
-                        // Found the type - get its package
-                        const packageName = this.context.getTypesPackageName(typeDecl.name.fernFilepath);
-                        imports.add(`${packageName}.${typeName}`);
-                        break;
-                    }
-                }
-
-                // If not found in regular types, it might be an inline type or from a different package
-                // For now, we'll try to find it in the response type's package if available
-                if (imports.size === 0 && endpoint.response?.body?.type === "json") {
-                    const jsonResponse = endpoint.response.body.value;
-                    if (jsonResponse.type === "response" || jsonResponse.type === "nestedPropertyAsResponse") {
-                        const responseBodyType = jsonResponse.responseBodyType;
-                        if (responseBodyType.type === "named") {
-                            // Try to use the same package as the response type
-                            const responseTypeId = responseBodyType.typeId;
-                            const responseType = this.context.ir.types[responseTypeId];
-                            if (responseType) {
-                                const packageName = this.context.getTypesPackageName(responseType.name.fernFilepath);
-                                imports.add(`${packageName}.${typeName}`);
-                            }
-                        }
-                    }
-                }
-            } catch (e) {
-                // If we can't resolve the type, just continue without the import
-                // The compiler will catch missing imports
-            }
-        }
-
-        return imports;
-    }
 }

@@ -40,7 +40,7 @@ public class Example19 {
             BigEntity
                 .builder()
                 .castMember(
-                    CastMember.of(
+                    CastMember.ofActor(
                         Actor
                             .builder()
                             .name("name")
@@ -76,7 +76,7 @@ public class Example19 {
                     Entity
                         .builder()
                         .type(
-                            Type.of(BasicType.PRIMITIVE)
+                            Type.ofBasicType(BasicType.PRIMITIVE)
                         )
                         .name("name")
                         .build()
