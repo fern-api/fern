@@ -1,6 +1,6 @@
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, TypeReference, ResponseProperty } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SnippetExtractor } from "../extractors/SnippetExtractor";
 import { WireTestExample } from "../extractors/TestDataExtractor";
@@ -203,16 +203,14 @@ export class TestMethodBuilder {
             return undefined;
         }
 
-        let resultsProperty: any;
+        let resultsProperty: ResponseProperty | undefined;
         if (endpoint.pagination.type === "cursor") {
             resultsProperty = endpoint.pagination.results;
         } else if (endpoint.pagination.type === "offset") {
             resultsProperty = endpoint.pagination.results;
-        } else if (endpoint.pagination.type === "custom") {
-            resultsProperty = endpoint.pagination.results;
         }
 
-        if (!resultsProperty || !resultsProperty.property) {
+        if (!resultsProperty?.property) {
             return undefined;
         }
 

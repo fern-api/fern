@@ -15,8 +15,8 @@ public class Example5 {
         client.inlineUsers().inlineUsers().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
-                .page(1)
-                .perPage(1)
+                .page(1.1)
+                .perPage(1.1)
                 .order(Order.ASC)
                 .startingAfter("starting_after")
                 .build()
