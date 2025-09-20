@@ -20,7 +20,7 @@ public class Example0 {
             SearchRequest
                 .builder()
                 .query(
-                    SearchRequestQuery.of(
+                    SearchRequestQuery.ofSingleFilterSearchRequest(
                         SingleFilterSearchRequest
                             .builder()
                             .field("field")

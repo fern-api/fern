@@ -3,7 +3,7 @@ package com.seed.pagination;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.complex.types.PaginatedConversationResponse;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.complex.types.SearchRequest;
 import com.seed.pagination.resources.complex.types.SearchRequestQuery;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
@@ -39,7 +39,7 @@ public class ComplexWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"conversations\":[{\"foo\":\"foo\"},{\"foo\":\"foo\"}],\"pages\":{\"next\":{\"per_page\":1,\"starting_after\":\"starting_after\"},\"page\":1,\"per_page\":1,\"total_pages\":1,\"type\":\"pages\"},\"total_count\":1,\"type\":\"conversation.list\"}"));
-        PaginatedConversationResponse response = client.complex().search(
+        SyncPagingIterable<Conversation> response = client.complex().search(
             "index",
             SearchRequest
                 .builder()

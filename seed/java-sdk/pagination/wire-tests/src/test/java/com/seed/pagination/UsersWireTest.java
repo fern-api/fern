@@ -3,18 +3,13 @@ package com.seed.pagination;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.SeedPaginationClient;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
-import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
-import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
-import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
-import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.Order;
-import com.seed.pagination.resources.users.types.UsernameContainer;
-import com.seed.pagination.types.UsernameCursor;
 import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -46,7 +41,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
                 .page(1)
@@ -122,7 +117,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"next\":\"next\",\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersMixedTypePaginationResponse response = client.users().listWithMixedTypeCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest
                 .builder()
                 .cursor("cursor")
@@ -185,7 +180,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithMixedTypeCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest
                 .builder()
                 .build()
@@ -287,7 +282,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
                 .page(1)
@@ -360,7 +355,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
                 .page(1.1)
@@ -433,7 +428,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithMixedTypeCursorPagination(
+        SyncPagingIterable<User> response = client.users().listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest
                 .builder()
                 .build()
@@ -532,7 +527,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithOffsetStepPagination(
+        SyncPagingIterable<User> response = client.users().listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest
                 .builder()
                 .page(1)
@@ -604,7 +599,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
-        ListUsersPaginationResponse response = client.users().listWithOffsetStepPagination(
+        SyncPagingIterable<User> response = client.users().listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest
                 .builder()
                 .page(1)
@@ -676,7 +671,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
-        ListUsersExtendedResponse response = client.users().listWithExtendedResults(
+        SyncPagingIterable<User> response = client.users().listWithExtendedResults(
             ListUsersExtendedRequest
                 .builder()
                 .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
@@ -742,7 +737,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
-        ListUsersExtendedOptionalListResponse response = client.users().listWithExtendedResults(
+        SyncPagingIterable<User> response = client.users().listWithExtendedResults(
             ListUsersExtendedRequest
                 .builder()
                 .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
@@ -808,7 +803,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
-        UsernameCursor response = client.users().listWithCursorPagination(
+        SyncPagingIterable<String> response = client.users().listWithCursorPagination(
             ListUsersCursorPaginationRequest
                 .builder()
                 .startingAfter("starting_after")
@@ -867,7 +862,7 @@ public class UsersWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"results\":[\"results\",\"results\"]}"));
-        UsernameContainer response = client.users().listWithGlobalConfig(
+        SyncPagingIterable<String> response = client.users().listWithGlobalConfig(
             ListWithGlobalConfigRequest
                 .builder()
                 .offset(1)
