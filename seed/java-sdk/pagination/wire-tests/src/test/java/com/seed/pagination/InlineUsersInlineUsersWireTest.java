@@ -10,6 +10,7 @@ import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersM
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
+import com.seed.pagination.resources.inlineusers.inlineusers.types.User;
 import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;

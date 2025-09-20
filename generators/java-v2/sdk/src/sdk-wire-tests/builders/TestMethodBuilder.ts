@@ -1,6 +1,6 @@
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SnippetExtractor } from "../extractors/SnippetExtractor";
 import { WireTestExample } from "../extractors/TestDataExtractor";
@@ -204,36 +204,60 @@ export class TestMethodBuilder {
             return undefined;
         }
 
+        // Handle nested property paths (e.g., data.users)
+        // The propertyPath tells us if we need to navigate through nested objects
+        // but the actual list type is in the property itself
         const valueType = resultsProperty.property.valueType;
         if (!valueType) {
             return undefined;
         }
 
         // Extract the item type from the list/container type
-        // The valueType should be a container (list) type
+        return this.extractItemTypeFromValueType(valueType);
+    }
+
+    /**
+     * Recursively extracts the item type from a value type.
+     */
+    private extractItemTypeFromValueType(valueType: TypeReference): string | undefined {
+        if (!valueType) {
+            return undefined;
+        }
+
+        // Handle container types
         if (valueType.type === "container" && valueType.container) {
             if (valueType.container.type === "list" && valueType.container.list) {
                 // For list types, get the inner type
                 const innerType = valueType.container.list;
                 return this.convertTypeReferenceToJavaType(innerType);
             } else if (valueType.container.type === "optional" && valueType.container.optional) {
-                // Handle optional list
-                const innerOptional = valueType.container.optional;
-                if (innerOptional.type === "container" && innerOptional.container?.type === "list") {
-                    const listItemType = innerOptional.container.list;
-                    return this.convertTypeReferenceToJavaType(listItemType);
+                // Handle optional - recursively check the inner type
+                return this.extractItemTypeFromValueType(valueType.container.optional);
+            }
+        }
+
+        // If it's a named type, try to resolve it and look for list properties
+        if (valueType.type === "named" && valueType.typeId) {
+            const typeDecl = this.context.ir.types[valueType.typeId];
+            if (typeDecl?.shape.type === "object") {
+                // Look for properties that are lists
+                for (const prop of typeDecl.shape.properties) {
+                    const itemType = this.extractItemTypeFromValueType(prop.valueType);
+                    if (itemType) {
+                        return itemType;
+                    }
                 }
             }
         }
 
-        // Fallback - try to use the raw type name
-        return this.convertTypeReferenceToJavaType(valueType);
+        // Can't extract a list item type
+        return undefined;
     }
 
     /**
      * Converts a TypeReference to a Java type string.
      */
-    private convertTypeReferenceToJavaType(typeRef: any): string {
+    private convertTypeReferenceToJavaType(typeRef: TypeReference): string {
         if (!typeRef) {
             return "Object";
         }
@@ -249,7 +273,7 @@ export class TestMethodBuilder {
         } catch (error) {
             // Fallback to simple type extraction
             if (typeRef.type === "primitive") {
-                switch (typeRef.primitive) {
+                switch (typeRef.primitive.v1) {
                     case "STRING":
                         return "String";
                     case "INTEGER":
@@ -260,11 +284,20 @@ export class TestMethodBuilder {
                         return "Double";
                     case "BOOLEAN":
                         return "Boolean";
+                    case "FLOAT":
+                        return "Float";
+                    case "UUID":
+                        return "UUID";
                     default:
                         return "Object";
                 }
-            } else if (typeRef.type === "named" && typeRef.name) {
-                return typeRef.name.name?.pascalCase?.unsafeName || "Object";
+            } else if (typeRef.type === "named" && typeRef.typeId) {
+                // Try to get the type name from the typeId
+                const typeDecl = this.context.ir.types[typeRef.typeId];
+                if (typeDecl) {
+                    return typeDecl.name.name.pascalCase.unsafeName;
+                }
+                return "Object";
             }
             return "Object";
         }
@@ -339,10 +372,39 @@ export class TestMethodBuilder {
 
         // If it's a type from the types package, add the import
         if (!this.isPrimitiveType(typeName)) {
-            // Since the exact package location varies, let Java's import resolution handle it
-            // The types will be imported by the snippet extractor or test builder
-            // We don't need to add explicit imports here as the types are already
-            // imported through the snippet generation process
+            // Try to find the type declaration for this type name
+            try {
+                // Search for the type declaration by name
+                for (const typeDecl of Object.values(this.context.ir.types)) {
+                    if (typeDecl.name.name.pascalCase.unsafeName === typeName) {
+                        // Found the type - get its package
+                        const packageName = this.context.getTypesPackageName(typeDecl.name.fernFilepath);
+                        imports.add(`${packageName}.${typeName}`);
+                        break;
+                    }
+                }
+
+                // If not found in regular types, it might be an inline type or from a different package
+                // For now, we'll try to find it in the response type's package if available
+                if (imports.size === 0 && endpoint.response?.body?.type === "json") {
+                    const jsonResponse = endpoint.response.body.value;
+                    if (jsonResponse.type === "response" || jsonResponse.type === "nestedPropertyAsResponse") {
+                        const responseBodyType = jsonResponse.responseBodyType;
+                        if (responseBodyType.type === "named") {
+                            // Try to use the same package as the response type
+                            const responseTypeId = responseBodyType.typeId;
+                            const responseType = this.context.ir.types[responseTypeId];
+                            if (responseType) {
+                                const packageName = this.context.getTypesPackageName(responseType.name.fernFilepath);
+                                imports.add(`${packageName}.${typeName}`);
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                // If we can't resolve the type, just continue without the import
+                // The compiler will catch missing imports
+            }
         }
 
         return imports;

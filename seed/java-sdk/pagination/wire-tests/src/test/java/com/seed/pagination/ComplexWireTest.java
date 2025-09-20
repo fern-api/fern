@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
+import com.seed.pagination.resources.complex.types.Conversation;
 import com.seed.pagination.resources.complex.types.SearchRequest;
 import com.seed.pagination.resources.complex.types.SearchRequestQuery;
 import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
