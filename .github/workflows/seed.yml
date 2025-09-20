@@ -191,10 +191,6 @@ jobs:
             generators/
             packages/cli/
             packages/seed/
-            packages/fs-utils/
-            packages/logger/
-            packages/workspace-loader/
-            packages/configuration/
             seed/
             test-definitions/
 
