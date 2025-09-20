@@ -71,7 +71,7 @@ public class Example0 {
                     Arrays.asList(Optional.of("filter"))
                 )
                 .neighborRequired(
-                    SearchRequestNeighborRequired.ofUser(
+                    SearchRequestNeighborRequired.of(
                         User
                             .builder()
                             .name("name")
@@ -119,7 +119,7 @@ public class Example0 {
                         .build()
                 )
                 .neighbor(
-                    SearchRequestNeighbor.ofUser(
+                    SearchRequestNeighbor.of(
                         User
                             .builder()
                             .name("name")
