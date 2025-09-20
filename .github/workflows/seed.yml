@@ -252,7 +252,7 @@ jobs:
             fi
           else
             echo "Set empty json matrix, which will run all tests on a single runner"
-            BASH_VAR='[{\"fixtures\": [\"all\"]}]'
+            BASH_VAR='[{"fixtures":["all"]}]'
             echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
           fi
 
