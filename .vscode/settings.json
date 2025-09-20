@@ -19,6 +19,14 @@
     "pnpm-lock.yaml": true,
     "tests": true
   },
+  "files.watcherExclude": {
+    "seed/**": true,
+    "**/.turbo/**": true,
+    "**/.nx/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/lib/**": true,
+  },
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
