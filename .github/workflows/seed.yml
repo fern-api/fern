@@ -182,24 +182,34 @@ jobs:
           sparse-checkout: |
             .github/
 
-      - name: Read JSON Test Times
-        id: read-json-test-times
-        run: |
-          location=$(pwd)
-          echo "location: $location"
-          BASH_JSON_DATA_VAR=$(cat $GITHUB_WORKSPACE/.github/test-packages.json | jq -r -c '.')
-          echo "json_data=$(echo "$BASH_JSON_DATA_VAR" | jq -s -c .)" >> $GITHUB_OUTPUT
-          echo "$BASH_JSON_DATA_VAR" | jq -r .
+      # - name: Read JSON Test Times
+      #   id: read-json-test-times
+      #   run: |
+      #     location=$(pwd)
+      #     echo "location: $location"
+      #     BASH_JSON_DATA_VAR=$(cat $GITHUB_WORKSPACE/.github/test-packages.json | jq -r -c '.')
+      #     echo "json_data=$(echo "$BASH_JSON_DATA_VAR" | jq -s -c .)" >> $GITHUB_OUTPUT
+      #     echo "$BASH_JSON_DATA_VAR" | jq -r .
+      # - name: Set test matrices for ${{ matrix.generator-name }}
+      #   id: set-test-matrices
+      #   run: |
+      #     PACKAGE_NAME="${{ matrix.generator-name }}-test-packages"
+      #     if jq -e -c 'has("${PACKAGE_NAME}")' .github/test-packages.json > /dev/null 2>&1; then
+      #       PACKAGED_FIXTURES=$(echo "${{ steps.read-json-test-times.outputs.json_data }}" | jq -c -r ".[\"$PACKAGE_NAME\"]" | tr '\n' ' ' | sed 's/ $//')
+      #       echo "${{ matrix.generator-name }}-test-matrix=$PACKAGED_FIXTURES" >> $GITHUB_OUTPUT
+      #     else
+      #       RUN_ALL_FIXTURES='[{"fixtures":["all"]}]'
+      #       echo "${{ matrix.generator-name }}-test-matrix=$RUN_ALL_FIXTURES" >> $GITHUB_OUTPUT
+      #     fi
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
           PACKAGE_NAME="${{ matrix.generator-name }}-test-packages"
-          if jq -e -c 'has("${PACKAGE_NAME}")' .github/test-packages.json > /dev/null 2>&1; then
-            PACKAGED_FIXTURES=$(echo "${{ steps.read-json-test-times.outputs.json_data }}" | jq -c -r ".[\"$PACKAGE_NAME\"]" | tr '\n' ' ' | sed 's/ $//')
+          if jq -e -c "has(\"$PACKAGE_NAME\")" .github/test-packages.json > /dev/null; then
+            PACKAGED_FIXTURES=$(jq -c ".\"$PACKAGE_NAME\"" .github/test-packages.json)
             echo "${{ matrix.generator-name }}-test-matrix=$PACKAGED_FIXTURES" >> $GITHUB_OUTPUT
           else
-            RUN_ALL_FIXTURES='[{"fixtures":["all"]}]'
-            echo "${{ matrix.generator-name }}-test-matrix=$RUN_ALL_FIXTURES" >> $GITHUB_OUTPUT
+            echo "${{ matrix.generator-name }}-test-matrix=[{\"fixtures\":[\"all\"]}]" >> $GITHUB_OUTPUT
           fi
 
       # - name: Checkout repo
