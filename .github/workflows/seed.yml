@@ -192,7 +192,7 @@ jobs:
         id: set-test-matrices
         run: |
           PACKAGE_NAME="${{ matrix.generator-name }}-test-packages"
-          if jq -e -c 'has("${PACKAGE_NAME}")' test-packages.json > /dev/null 2>&1; then
+          if jq -e -c 'has("${PACKAGE_NAME}")' .github/test-packages.json > /dev/null 2>&1; then
             PACKAGED_FIXTURES=$(echo "${{ steps.read-json-test-times.outputs.json_data }}" | jq -c -r ".[\"$PACKAGE_NAME\"]" | tr '\n' ' ' | sed 's/ $//')
             echo "${{ matrix.generator-name }}-test-matrix=$PACKAGED_FIXTURES" >> $GITHUB_OUTPUT
           else
