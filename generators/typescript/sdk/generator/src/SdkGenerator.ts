@@ -52,7 +52,6 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
-import path from "path";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
@@ -153,6 +152,7 @@ export declare namespace SdkGenerator {
         flattenRequestParameters: boolean;
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
+        consolidateTypeFiles: boolean;
     }
 }
 
@@ -225,8 +225,7 @@ export class SdkGenerator {
     private rootDirectoryPath: string;
     private defaultSrcDirectory: string;
     private defaultTestDirectory: string;
-    private defaultApiDirectory: string;
-    private defaultResourcesDirectory: string;
+
     private relativePackagePath: string;
     private relativeTestPath: string;
     private testDirectory: Directory;
@@ -244,8 +243,6 @@ export class SdkGenerator {
         this.rootDirectoryPath = "/";
         this.defaultSrcDirectory = "src";
         this.defaultTestDirectory = "tests";
-        this.defaultApiDirectory = "api";
-        this.defaultResourcesDirectory = "resources";
 
         this.context = context;
         this.namespaceExport = namespaceExport;
@@ -305,7 +302,8 @@ export class SdkGenerator {
         });
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            consolidateTypeFiles: config.consolidateTypeFiles
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
@@ -332,7 +330,8 @@ export class SdkGenerator {
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
@@ -443,8 +442,7 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
-            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -732,12 +730,42 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
+        if (this.config.consolidateTypeFiles) {
+            return this.generateConsolidatedTypeDeclarations();
+        }
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                }
+            });
+        }
+    }
+
+    private generateConsolidatedTypeDeclarations() {
+        const typesByFile = new Map<string, TypeDeclaration[]>();
+
+        for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            const filepath = this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name);
+            const filepathKey = JSON.stringify(filepath);
+
+            const types = typesByFile.get(filepathKey) ?? [];
+            types.push(typeDeclaration);
+            typesByFile.set(filepathKey, types);
+        }
+
+        for (const [filepathKey, typeDeclarations] of typesByFile.entries()) {
+            this.withSourceFile({
+                filepath: JSON.parse(filepathKey),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    for (const typeDeclaration of typeDeclarations) {
+                        const currentStatementCount = context.sourceFile.getStatements().length;
+                        context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
+                        context.sourceFile.insertStatements(currentStatementCount, (writer) => writer.newLine());
+                    }
                 }
             });
         }
@@ -845,6 +873,14 @@ export class SdkGenerator {
     }
 
     private generateRequestWrappers() {
+        if (this.config.exportAllRequestsAtRoot) {
+            this.generateAggregatedRequestWrappers();
+        } else {
+            this.generateIndividualRequestWrappers();
+        }
+    }
+
+    private generateIndividualRequestWrappers() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -859,13 +895,35 @@ export class SdkGenerator {
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
-                        addExportTypeModifier: true,
-                        customExportPaths: this.config.exportAllRequestsAtRoot
-                            ? [path.join(this.defaultApiDirectory, this.defaultResourcesDirectory)]
-                            : undefined
+                        addExportTypeModifier: true
                     });
                 }
             }
+        });
+    }
+
+    private generateAggregatedRequestWrappers() {
+        const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
+        this.forEachService((service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                    requestWrappers.push({ packageId, endpoint });
+                }
+            }
+        });
+        if (requestWrappers.length === 0) {
+            return;
+        }
+
+        this.withSourceFile({
+            filepath: this.requestWrapperDeclarationReferencer.getAggregatedRequestsFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                for (const { packageId, endpoint } of requestWrappers) {
+                    context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
+                }
+            },
+            addExportTypeModifier: true
         });
     }
 
@@ -1431,16 +1489,13 @@ export class SdkGenerator {
         filepath,
         addExportTypeModifier,
         overwrite,
-        packagePath = this.relativePackagePath,
-        customExportPaths: customExportPaths
+        packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         overwrite?: boolean;
         packagePath?: string;
-        // manually ensure there will be an export at these paths
-        customExportPaths?: string[];
     }) {
         filepath.rootDir = packagePath;
         const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
@@ -1458,7 +1513,7 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier, customExportPaths);
+            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
@@ -1598,8 +1653,7 @@ export class SdkGenerator {
             formDataSupport: this.config.formDataSupport,
             useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
             generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
-            flattenRequestParameters: this.config.flattenRequestParameters,
-            exportAllRequestsAtRoot: this.config.exportAllRequestsAtRoot
+            flattenRequestParameters: this.config.flattenRequestParameters
         });
     }
 

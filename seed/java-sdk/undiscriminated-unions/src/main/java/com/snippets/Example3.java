@@ -12,7 +12,7 @@ public class Example3 {
             .build();
 
         client.union().updateMetadata(
-            MetadataUnion.ofOptionalMetadata(
+            MetadataUnion.of(
                 new HashMap<String, Object>() {{
                     put("string", new 
                     HashMap<String, Object>() {{put("key", "value");
