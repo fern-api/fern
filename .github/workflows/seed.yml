@@ -185,9 +185,12 @@ jobs:
       - name: Read JSON Test Times
         id: read-json-test-times
         run: |
-          BASH_JSON_DATA_VAR=$(cat .github/test-packages.json)
+          location=$(pwd)
+          echo "location: $location"
+          BASH_JSON_DATA_VAR=$(cat $GITHUB_WORKSPACE/.github/test-packages.json | jq -r -c '.')
+          BASH_JSON_DATA_VAR=$(jq -r -c '.' .github/test-packages.json)
           echo "json_data=$(echo "$BASH_JSON_DATA_VAR" | jq -s -c .)" >> $GITHUB_OUTPUT
-          echo "$BASH_JSON_DATA_VAR" | jq .
+          echo "$BASH_JSON_DATA_VAR" | jq -r .
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
