@@ -15,6 +15,7 @@ import { ExampleEndpointCallSchema } from "../../examples/types/ExampleEndpointC
 import { Pagination } from "./Pagination";
 import { ServiceTransport } from "./ServiceTransport";
 import { SourceSchema } from "../../source/types/SourceSchema";
+import { RetriesConfiguration } from "./RetriesConfiguration";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 import { ResponseError } from "./ResponseError";
@@ -40,6 +41,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         pagination: Pagination.optional(),
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
+        retries: RetriesConfiguration.optional(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
@@ -62,5 +64,6 @@ export declare namespace HttpEndpointSchema {
         pagination?: Pagination.Raw | null;
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

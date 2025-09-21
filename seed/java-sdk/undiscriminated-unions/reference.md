@@ -81,7 +81,7 @@ client.union().getMetadata();
 
 ```java
 client.union().updateMetadata(
-    MetadataUnion.ofOptionalMetadata(
+    MetadataUnion.of(
         new HashMap<String, Object>() {{
             put("string", new 
             HashMap<String, Object>() {{put("key", "value");
@@ -132,7 +132,7 @@ client.union().call(
     Request
         .builder()
         .union(
-            MetadataUnion.ofOptionalMetadata(
+            MetadataUnion.of(
                 new HashMap<String, Object>() {{
                     put("union", new 
                     HashMap<String, Object>() {{put("key", "value");

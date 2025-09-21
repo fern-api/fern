@@ -997,6 +997,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom auth scheme"
                 },
@@ -1709,6 +1710,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "POST request with custom auth scheme"
                 }

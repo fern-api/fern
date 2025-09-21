@@ -69,7 +69,8 @@
     "update:generators": "pnpm generators:generate && pnpm generators-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
-    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false"
+    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
+    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

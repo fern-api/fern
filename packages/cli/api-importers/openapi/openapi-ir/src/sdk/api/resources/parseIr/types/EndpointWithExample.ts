@@ -44,4 +44,5 @@ export interface EndpointWithExample
      */
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;
+    retries: FernOpenapiIr.RetriesConfiguration | undefined;
 }

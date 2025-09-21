@@ -470,6 +470,7 @@ class SdkGenerator(AbstractGenerator):
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=None,
             imports_manager=source_file.get_imports_manager(),
+            reference_resolver=source_file.get_reference_resolver(),
         )
         root_client_generator.generate(source_file=source_file)
         generated_root_client = root_client_generator.get_generated_root_client()
@@ -492,6 +493,7 @@ class SdkGenerator(AbstractGenerator):
                 endpoint_metadata_collector=endpoint_metadata_collector,
                 websocket=None,
                 imports_manager=raw_client_source_file.get_imports_manager(),
+                reference_resolver=raw_client_source_file.get_reference_resolver(),
             ).generate(source_file=raw_client_source_file)
             project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
@@ -540,6 +542,7 @@ class SdkGenerator(AbstractGenerator):
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
             imports_manager=client_source_file.get_imports_manager(),
+            reference_resolver=client_source_file.get_reference_resolver(),
         ).generate(source_file=client_source_file)
         project.write_source_file(source_file=client_source_file, filepath=client_filepath)
 
@@ -559,6 +562,7 @@ class SdkGenerator(AbstractGenerator):
             endpoint_metadata_collector=endpoint_metadata_collector,
             websocket=websocket,
             imports_manager=raw_client_source_file.get_imports_manager(),
+            reference_resolver=raw_client_source_file.get_reference_resolver(),
         ).generate(source_file=raw_client_source_file)
         project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 

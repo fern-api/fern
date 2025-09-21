@@ -1,4 +1,4 @@
-import { BasicAuth } from "../../../../../src/test-packagePath/core/auth/BasicAuth.js";
+import { BasicAuth } from "../../../../../src/test-packagePath/core/auth/BasicAuth";
 
 describe("BasicAuth", () => {
     describe("toAuthorizationHeader", () => {

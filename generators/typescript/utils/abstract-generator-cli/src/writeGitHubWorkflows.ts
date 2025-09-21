@@ -72,8 +72,11 @@ jobs:
                 : ""
         }
 
+      - name: Install dependencies
+        run: ${packageManager} install
+
       - name: Compile
-        run: ${packageManager} && ${packageManager} build
+        run: ${packageManager} build
 ${getTestJob({ config, packageManager })}`;
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
@@ -89,17 +92,21 @@ ${getTestJob({ config, packageManager })}`;
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Set up node
         uses: actions/setup-node@v3${
             usePnpm
                 ? `
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10`
                 : ""
         }
+
       - name: Install dependencies
         run: ${packageManager} install
+
       - name: Build
         run: ${packageManager} build
 
@@ -163,32 +170,6 @@ function getTestJob({
     packageManager: "pnpm" | "yarn";
 }): string {
     const usePnpm = packageManager === "pnpm";
-    //     if (config.writeUnitTests) {
-    //         return `
-    //   test:
-    //     runs-on: ubuntu-latest
-
-    //     steps:
-    //       - name: Checkout repo
-    //         uses: actions/checkout@v4
-
-    //       - name: Set up node
-    //         uses: actions/setup-node@v3${
-    //       usePnpm
-    //           ? `
-    // - uses: pnpm/action-setup@v4
-    //   with:
-    //     version: 10`
-    //           : ""
-    //   }
-
-    //       - name: Test
-    //         run: |
-    //           ${packageManager}
-    //           ${packageManager} fern test --command='jest --env=node'
-    //           ${packageManager} fern test --command='jest --env=jsdom'
-    // `;
-    //     } else {
     return `
   test:
     runs-on: ubuntu-latest
@@ -208,8 +189,11 @@ function getTestJob({
                 : ""
         }
 
-      - name: Compile
-        run: ${packageManager} && ${packageManager} test    
+      - name: Install dependencies
+        run: ${packageManager} install
+
+      - name: Test
+        run: ${packageManager} test
 `;
     // }
 }
