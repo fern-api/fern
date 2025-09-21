@@ -38,11 +38,15 @@ package com.example.usage;
 
 import com.seed.bytesUpload.SeedBytesUploadClient;
 
-SeedBytesUploadClient client = SeedBytesUploadClient
-    .builder()
-    .build();
+public class Example {
+    public static void main(String[] args) {
+        SeedBytesUploadClient client = SeedBytesUploadClient
+            .builder()
+            .build();
 
-client.service().upload(...);
+        client.service().upload();
+    }
+}
 ```
 
 ## Base Url

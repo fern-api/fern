@@ -22,7 +22,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<BaseRubyCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<BaseRubyCustomConfigSchema>;
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {

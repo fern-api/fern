@@ -13,7 +13,7 @@ const ESCAPE_MAP: Record<string, string> = {
 };
 
 // Single regex that matches all characters that need escaping
-// eslint-disable-next-line
+// biome-ignore lint: ignore next line
 const ESCAPE_REGEX = /[\\\"\n\r\t\0\f\u0007\u0008\v\u0001-\u0006\u000E-\u001F\u007F-\u009F]/g;
 
 export function escapeForCSharpString(input: string): string {

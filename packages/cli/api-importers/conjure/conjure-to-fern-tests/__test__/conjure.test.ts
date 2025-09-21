@@ -37,7 +37,7 @@ describe("ir", () => {
                         `Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                     );
                 }
-                // eslint-disable-next-line jest/no-standalone-expect
+                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(
                     JSON.stringify(await workspace.workspace.getDefinition({ context }), undefined, 2)
                 ).toMatchFileSnapshot(`__snapshots__/${fixture.name}.json`);

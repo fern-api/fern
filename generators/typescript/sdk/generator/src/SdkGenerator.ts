@@ -8,6 +8,7 @@ import {
     ImportsManager,
     NpmPackage,
     PackageId,
+    PublicExportsManager,
     SimpleTypescriptProject,
     TypescriptProject,
     getFullPathForEndpoint,
@@ -167,6 +168,7 @@ export class SdkGenerator {
     private project: Project;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
+    private readonly publicExportsManager: PublicExportsManager;
     private dependencyManager = new DependencyManager();
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
@@ -261,6 +263,7 @@ export class SdkGenerator {
         this.exportsManager = new ExportsManager({
             packagePath: this.relativePackagePath
         });
+        this.publicExportsManager = new PublicExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
             formDataSupport: this.config.formDataSupport,
@@ -696,6 +699,13 @@ export class SdkGenerator {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
+    public async generatePublicExports({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
+        await this.publicExportsManager.generatePublicExportsFiles({
+            pathToSrc
+        });
+        this.context.logger.debug("Generated public exports");
+    }
+
     private generateTypeDeclarations() {
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             this.withSourceFile({
@@ -1023,7 +1033,7 @@ export class SdkGenerator {
             )
         );
         const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(packageId);
-        const endpointInvocation = clientClass.invokeEndpoint({
+        const endpointSample = clientClass.invokeEndpoint({
             context,
             endpointId: endpoint.id,
             example,
@@ -1036,14 +1046,16 @@ export class SdkGenerator {
             clientReference: context.sdkInstanceReferenceForSnippet
         });
 
-        if (endpointInvocation == null) {
+        if (endpointSample == null) {
             return undefined;
         }
 
-        const snippet = maybeLeveragedInvocation ?? [ts.factory.createExpressionStatement(endpointInvocation)];
+        const snippet = maybeLeveragedInvocation ?? [
+            ts.factory.createExpressionStatement(endpointSample.endpointInvocation)
+        ];
 
         if (includeImports) {
-            return [clientAssignment, ...snippet];
+            return [...endpointSample.imports, clientAssignment, ...snippet];
         }
         return snippet;
     }

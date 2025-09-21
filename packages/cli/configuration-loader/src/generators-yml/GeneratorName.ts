@@ -22,6 +22,8 @@ export const GeneratorName = {
     SWIFT_SDK: "fernapi/fern-swift-sdk",
     PHP_MODEL: "fernapi/fern-php-model",
     PHP_SDK: "fernapi/fern-php-sdk",
+    RUST_MODEL: "fernapi/fern-rust-model",
+    RUST_SDK: "fernapi/fern-rust-sdk",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",

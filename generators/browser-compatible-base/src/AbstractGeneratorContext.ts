@@ -30,7 +30,7 @@ export abstract class AbstractGeneratorContext {
                     })
                 );
             } catch (e) {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.warn("Encountered error when sending update", e);
             }
         });

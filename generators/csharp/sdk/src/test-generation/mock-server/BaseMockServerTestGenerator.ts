@@ -319,7 +319,6 @@ function deepSetProperty(
     value: unknown
 ): boolean {
     // Start with the provided object
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let current: Record<string, unknown> | unknown = obj;
     if (!path) {
         path = [];
@@ -346,7 +345,6 @@ function deepSetProperty(
         // Property path doesn't exist, return false
         return false;
     }
-
     // Set the property value
     (current as Record<string, unknown>)[finalProp.originalName] = value;
     return true;

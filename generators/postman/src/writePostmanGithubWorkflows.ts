@@ -23,7 +23,7 @@ export async function writePostmanGithubWorkflows({
         );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
     const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 

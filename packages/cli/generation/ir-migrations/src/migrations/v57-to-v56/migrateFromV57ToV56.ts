@@ -44,7 +44,9 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: "0.14.1"
+        [GeneratorName.PHP_SDK]: "0.14.1",
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V56.IntermediateRepresentation.jsonOrThrow(ir, {

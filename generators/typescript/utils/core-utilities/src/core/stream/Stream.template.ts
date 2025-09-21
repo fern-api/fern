@@ -126,7 +126,7 @@ export class Stream<T> implements AsyncIterable<T> {
 /**
  * Browser polyfill for ReadableStream
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterator<T> {
     if (stream[Symbol.asyncIterator]) {
         return stream;

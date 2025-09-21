@@ -16,7 +16,7 @@ interface VersionFileFailureParseResult {
 }
 
 export async function validateVersionConfigFileSchema({ value }: { value: unknown }): Promise<VersionParseResult> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any);
     if (result.success) {
         return {

@@ -32,7 +32,7 @@ describe("fdr", () => {
                     audiences: fixture.audiences,
                     version: fixture.version
                 });
-                // eslint-disable-next-line jest/no-standalone-expect
+                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(dynamicContents).toMatchSnapshot();
             },
             90_000

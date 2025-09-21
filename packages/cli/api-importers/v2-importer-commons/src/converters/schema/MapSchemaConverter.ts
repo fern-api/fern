@@ -50,7 +50,7 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             return {
                 type: Type.alias({
                     aliasOf: additionalPropertiesType,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     resolvedType: additionalPropertiesType as any
                 }),
                 referencedTypes: new Set(),
@@ -89,7 +89,7 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             return {
                 type: Type.alias({
                     aliasOf: additionalPropertiesType,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     resolvedType: additionalPropertiesType as any
                 }),
                 referencedTypes,

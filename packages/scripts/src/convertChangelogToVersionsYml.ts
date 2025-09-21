@@ -166,7 +166,7 @@ export function formatOutput(newFormat: FormattedEntry[]): string {
 }
 
 export async function convertChangelogToVersions(inputPath: string, generatorName: string): Promise<string> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const absoluteInputPath = resolve(inputPath as any);
     const inputContent = await readFile(absoluteInputPath, "utf8");
     const entries = parseChangelog(inputContent);

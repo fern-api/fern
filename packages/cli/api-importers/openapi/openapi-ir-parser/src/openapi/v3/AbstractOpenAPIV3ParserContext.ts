@@ -105,13 +105,13 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document with all the keys
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolvedSchema: any = this.document;
         for (const key of keys) {
             if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return {
                     "x-fern-type": "unknown"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 } as any as OpenAPIV3.SchemaObject;
             }
 
@@ -121,7 +121,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
                 if (isNaN(index) || index < 0 || index >= resolvedSchema.length) {
                     return {
                         "x-fern-type": "unknown"
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     } as any as OpenAPIV3.SchemaObject;
                 }
                 resolvedSchema = resolvedSchema[index];
@@ -133,7 +133,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
             return {
                 "x-fern-type": "unknown"
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any as OpenAPIV3.SchemaObject;
         }
 
@@ -230,7 +230,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document with all the keys
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolvedSchema: any = this.document;
         for (const key of keys) {
             if (typeof resolvedSchema !== "object" || resolvedSchema == null) {

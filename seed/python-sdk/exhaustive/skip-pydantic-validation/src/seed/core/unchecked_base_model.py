@@ -124,12 +124,50 @@ class UncheckedBaseModel(UniversalBaseModel):
         return m
 
 
+def _validate_collection_items_compatible(collection: typing.Any, target_type: typing.Type[typing.Any]) -> bool:
+    """
+    Validate that all items in a collection are compatible with the target type.
+
+    Args:
+        collection: The collection to validate (list, set, or dict values)
+        target_type: The target type to validate against
+
+    Returns:
+        True if all items are compatible, False otherwise
+    """
+    if inspect.isclass(target_type) and issubclass(target_type, pydantic.BaseModel):
+        for item in collection:
+            try:
+                # Try to validate the item against the target type
+                if isinstance(item, dict):
+                    parse_obj_as(target_type, item)
+                else:
+                    # If it's not a dict, it might already be the right type
+                    if not isinstance(item, target_type):
+                        return False
+            except Exception:
+                return False
+    return True
+
+
 def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     inner_types = get_args(union_type)
     if typing.Any in inner_types:
         return object_
 
     for inner_type in inner_types:
+        # Handle lists of objects that need parsing
+        if get_origin(inner_type) is list and isinstance(object_, list):
+            list_inner_type = get_args(inner_type)[0]
+            try:
+                if inspect.isclass(list_inner_type) and issubclass(list_inner_type, pydantic.BaseModel):
+                    # Validate that all items in the list are compatible with the target type
+                    if _validate_collection_items_compatible(object_, list_inner_type):
+                        parsed_list = [parse_obj_as(object_=item, type_=list_inner_type) for item in object_]
+                        return parsed_list
+            except Exception:
+                pass
+
         try:
             if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
                 # Attempt a validated parse until one works

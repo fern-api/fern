@@ -1,4 +1,27 @@
-# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.5
+  changelogEntry:
+    - summary: |
+        Remove internal OkHttp utility dependency and use a more robust file closing method. 
+      type: chore
+  createdAt: '2025-07-18'
+  irVersion: 58
+
+- version: 2.38.4
+  changelogEntry:
+    - summary: |
+        Fix stream SSE test to use Java 8 compatible stream collection method.
+      type: fix
+  createdAt: '2025-07-17'
+  irVersion: 58
+
+- version: 2.38.3
+  changelogEntry:
+    - summary: |
+        Add reference.md generation for Java SDKs.
+      type: fix
+  createdAt: '2025-07-16'
+  irVersion: 58
+
 - version: 2.38.2
   changelogEntry:
     - summary: |

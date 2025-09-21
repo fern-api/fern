@@ -198,7 +198,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 license: this.npmPackage.license as any
             };
         }
@@ -336,7 +336,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 os: false,
                 path: false,
                 stream: false
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";

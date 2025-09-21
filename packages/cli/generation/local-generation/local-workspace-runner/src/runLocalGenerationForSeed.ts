@@ -220,6 +220,7 @@ export async function writeResolvedSnippetsJson({
                         snippets.push(snippet.sync_client);
                         break;
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             } catch (err) {}
         }
     }

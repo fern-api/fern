@@ -59,7 +59,7 @@ export async function loadAndUpdateGenerators({
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
         // https://eemeli.org/yaml/#creating-nodes
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const groupName = (groupBlock.key as any).value as string;
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;

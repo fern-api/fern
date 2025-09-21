@@ -31,7 +31,7 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     while (i < remainingDirectories.length) {
         let nextI = i + 1;
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const directory = remainingDirectories[i]!;
         let exportDeclaration = directory.exportDeclaration;
 

@@ -34,7 +34,7 @@ export class MethodInvocation extends AstNode {
     private arguments: AstNode[];
     private method: string;
     private on: AstNode | undefined;
-    private async: boolean;
+    private ["async"]: boolean;
     private configureAwait: boolean;
     private generics: csharp.Type[];
     private multiline: boolean;

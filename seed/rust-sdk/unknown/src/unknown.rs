@@ -1,0 +1,8 @@
+use crate::client::UnknownAsAnyClient;
+use crate::error::Error;
+
+impl UnknownAsAnyClient {
+    // Unknown methods
+    
+    // TODO: Generate actual service methods based on endpoints
+}

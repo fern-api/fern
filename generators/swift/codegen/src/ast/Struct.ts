@@ -76,16 +76,6 @@ export class Struct extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.nestedTypes) {
-            writer.newLine();
-            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
-                if (nestedTypeIdx > 0) {
-                    writer.newLine();
-                }
-                nestedType.write(writer);
-                writer.newLine();
-            });
-        }
         if (this.methods) {
             writer.newLine();
             this.methods.forEach((method, methodIdx) => {
@@ -93,6 +83,16 @@ export class Struct extends AstNode {
                     writer.newLine();
                 }
                 method.write(writer);
+                writer.newLine();
+            });
+        }
+        if (this.nestedTypes) {
+            writer.newLine();
+            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
+                if (nestedTypeIdx > 0) {
+                    writer.newLine();
+                }
+                nestedType.write(writer);
                 writer.newLine();
             });
         }

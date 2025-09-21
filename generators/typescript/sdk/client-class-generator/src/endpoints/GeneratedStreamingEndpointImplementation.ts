@@ -1,5 +1,5 @@
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -80,7 +80,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
-    }): ts.Expression | undefined {
+    }): EndpointSampleCode | undefined {
+        const imports = this.request.getExampleEndpointImports({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
@@ -89,18 +94,21 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         if (exampleParameters == null) {
             return undefined;
         }
-        return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: args.clientReference
-                    }),
-                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
-                ),
-                undefined,
-                exampleParameters
+        return {
+            imports,
+            endpointInvocation: ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        this.generatedSdkClientClass.accessFromRootClient({
+                            referenceToRootClient: args.clientReference
+                        }),
+                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                    ),
+                    undefined,
+                    exampleParameters
+                )
             )
-        );
+        };
     }
 
     public maybeLeverageInvocation({

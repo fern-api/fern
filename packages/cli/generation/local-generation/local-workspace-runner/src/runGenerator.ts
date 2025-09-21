@@ -147,9 +147,10 @@ export async function writeFilesToDiskAndRunGenerator({
             ir: latest,
             generatorConfig
         };
-        /* eslint-disable-next-line no-useless-catch */
+        // biome-ignore-start lint/complexity/noUselessCatch: allow
     } catch (e) {
         throw e;
+        // biome-ignore-end lint/complexity/noUselessCatch: allow
     } finally {
         const taskHandler = new LocalTaskHandler({
             context,

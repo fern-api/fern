@@ -1,0 +1,354 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+	"files": { "ignoreUnknown": false, "maxSize": 80000000 },
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "space",
+		"indentWidth": 4,
+		"lineEnding": "lf",
+		"lineWidth": 120,
+		"attributePosition": "auto",
+		"bracketSameLine": false,
+		"bracketSpacing": true,
+		"expand": "auto"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"complexity": {
+				"noAdjacentSpacesInRegex": "error",
+				"noBannedTypes": "error",
+				"noExtraBooleanCast": "error",
+				"noStaticOnlyClass": "error",
+				"noUselessCatch": "error",
+				"noUselessConstructor": "error",
+				"noUselessEscapeInRegex": "error",
+				"noUselessThisAlias": "error",
+				"noUselessTypeConstraint": "error",
+				"useOptionalChain": "off"
+			},
+			"correctness": {
+				"noChildrenProp": "error",
+				"noConstAssign": "error",
+				"noConstantCondition": "error",
+				"noEmptyCharacterClassInRegex": "error",
+				"noEmptyPattern": "error",
+				"noGlobalObjectCalls": "error",
+				"noInnerDeclarations": "error",
+				"noInvalidConstructorSuper": "error",
+				"noNonoctalDecimalEscape": "error",
+				"noPrecisionLoss": "error",
+				"noSelfAssign": "error",
+				"noSetterReturn": "error",
+				"noSwitchDeclarations": "error",
+				"noUndeclaredVariables": "error",
+				"noUnreachable": "error",
+				"noUnreachableSuper": "error",
+				"noUnsafeFinally": "error",
+				"noUnsafeOptionalChaining": "error",
+				"noUnusedLabels": "error",
+				"noUnusedVariables": "off",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error",
+				"useIsNan": "error",
+				"useJsxKeyInIterable": "error",
+				"useValidForDirection": "error",
+				"useValidTypeof": "error",
+				"useYield": "error"
+			},
+			"security": {
+				"noBlankTarget": "error",
+				"noDangerouslySetInnerHtmlWithChildren": "error"
+			},
+			"style": {
+				"noDoneCallback": "error",
+				"noNamespace": "off",
+				"noNonNullAssertion": "error",
+				"useArrayLiterals": "error",
+				"useAsConstAssertion": "error",
+				"useBlockStatements": "error",
+				"useLiteralEnumMembers": "error"
+			},
+			"suspicious": {
+				"noAssignInExpressions": "off",
+				"noAsyncPromiseExecutor": "error",
+				"noCatchAssign": "error",
+				"noClassAssign": "error",
+				"noCommentText": "error",
+				"noCompareNegZero": "error",
+				"noConfusingVoidType": "off",
+				"noConsole": "error",
+				"noControlCharactersInRegex": "error",
+				"noDebugger": "error",
+				"noDoubleEquals": "off",
+				"noDuplicateCase": "error",
+				"noDuplicateClassMembers": "error",
+				"noDuplicateElseIf": "error",
+				"noDuplicateJsxProps": "error",
+				"noDuplicateObjectKeys": "error",
+				"noDuplicateParameters": "error",
+				"noEmptyBlockStatements": "error",
+				"noEmptyInterface": "off",
+				"noExplicitAny": "error",
+				"noExportsInTest": "error",
+				"noExtraNonNullAssertion": "error",
+				"noFallthroughSwitchClause": "error",
+				"noFocusedTests": "error",
+				"noFunctionAssign": "error",
+				"noGlobalAssign": "error",
+				"noImportAssign": "error",
+				"noIrregularWhitespace": "error",
+				"noMisleadingCharacterClass": "error",
+				"noMisleadingInstantiator": "error",
+				"noMisplacedAssertion": "error",
+				"noPrototypeBuiltins": "error",
+				"noRedeclare": "error",
+				"noShadowRestrictedNames": "off",
+				"noSkippedTests": "warn",
+				"noSparseArray": "error",
+				"noUnsafeDeclarationMerging": "error",
+				"noUnsafeNegation": "error",
+				"noWith": "error",
+				"useGetterReturn": "error"
+			}
+		},
+		"includes": [
+			"**",
+			"**/*.js",
+			"**/*.jsx",
+			"**",
+			"!**/lib",
+			"!**/build",
+			"!**/dist",
+			"!**/.yarn",
+			"!**/.husky",
+			"!**/.github",
+			"!**/.turbo",
+			"!**/.vscode",
+			"!**/node_modules",
+			"!**/generated",
+			"!**/__snapshots__",
+			"!**/.pnp*",
+			"!packages/ir-sdk/**",
+			"!packages/cli/api-importers/conjure/conjure-sdk/**",
+			"!packages/docs-config/**",
+			"!packages/cli/api-importers/openapi/openapi-ir/src/sdk/**",
+			"!packages/cli/configuration/src/docs-yml/schemas/**",
+			"!packages/cli/configuration/src/generators-yml/schemas/**",
+			"!packages/cli/fern-definition/schema/src/schemas/**",
+			"!packages/seed/**",
+			"!generators/typescript/**/*.tempate.*",
+			"!generators/typescript/utils/commons/src/core-utilities/**",
+			"!generators/typescript/asIs/**",
+			"!generators/typescript-mcp/base/src/asIs/**",
+			"!seed/**",
+			"!docker/seed/**",
+			"!generators/typescript/utils/**",
+			"!**/example-definition-1.ir.json",
+			"!packages/cli/api-importers/v2-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
+			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json",
+			"!**/fixtures/**/fernconfig.json",
+			"!**/fixtures/**/fern.config.json",
+			"!.eslintrc.js"
+		]
+	},
+	"javascript": {
+		"globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
+		"formatter": {
+			"jsxQuoteStyle": "double",
+			"quoteProperties": "asNeeded",
+			"trailingCommas": "none",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"bracketSameLine": false,
+			"quoteStyle": "double",
+			"attributePosition": "auto",
+			"bracketSpacing": true
+		}
+	},
+	"html": { "formatter": { "selfCloseVoidElements": "always" } },
+	"overrides": [
+		{
+			"includes": [
+				"**/*.test.ts", 
+				"**/*.spec.ts", 
+				"**/example-code.js",
+				"generators/base/src/AbstractGeneratorCli.ts", 
+				"love_fern.js", 
+				"packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
+				"packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js"
+			],
+			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+		},
+		{
+			"includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
+			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
+		},
+		{
+			"includes": ["packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts", "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts"],
+			"linter": { "rules": { "suspicious": { "noMisplacedAssertion": "off" } } }
+		},
+		{
+			"includes": [
+				"packages/cli/docs-resolver/src/__test__/ApiDefinitionHolderLatest.test.ts",
+				"packages/cli/docs-resolver/src/__test__/getApiLatestToNavigationNodeUrlSlug.test.ts",
+				"packages/cli/ete-tests/src/tests/protoc-gen-fern/protoc-gen-fern.test.ts",
+				"packages/cli/ete-tests/src/tests/upgrade-generator/upgrade-generator.test.ts",
+				"packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
+				"packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts"
+			],
+			"linter": { "rules": { "suspicious": { "noSkippedTests": "off" } } }
+		},
+		{
+			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noArguments": "error" },
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidBuiltinInstantiation": "off",
+						"noInvalidConstructorSuper": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": { "useConst": "error" },
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"noVar": "error",
+						"useGetterReturn": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noArguments": "error" },
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidBuiltinInstantiation": "off",
+						"noInvalidConstructorSuper": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": { "useConst": "error" },
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"noVar": "error",
+						"useGetterReturn": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noArguments": "error" },
+					"correctness": {
+						"noConstAssign": "off",
+						"noGlobalObjectCalls": "off",
+						"noInvalidBuiltinInstantiation": "off",
+						"noInvalidConstructorSuper": "off",
+						"noSetterReturn": "off",
+						"noUndeclaredVariables": "off",
+						"noUnreachable": "off",
+						"noUnreachableSuper": "off"
+					},
+					"style": { "useConst": "error" },
+					"suspicious": {
+						"noDuplicateClassMembers": "off",
+						"noDuplicateObjectKeys": "off",
+						"noDuplicateParameters": "off",
+						"noFunctionAssign": "off",
+						"noImportAssign": "off",
+						"noRedeclare": "off",
+						"noUnsafeNegation": "off",
+						"noVar": "error",
+						"useGetterReturn": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/*.yml",
+				"**/*.yaml",
+				"**/*.json",
+				"**/*.md",
+				"**/*.css",
+				"**/*.mdx"
+			],
+			"formatter": { "indentWidth": 2 }
+		},
+		{
+			"includes":[
+				"packages/cli/api-importers/conjure/conjure-sdk/**",
+				"packages/cli/api-importers/openapi/openapi-ir/**",
+				"packages/cli/fern-definition/schema/src/schemas/**",
+				"packages/cli/configuration/src/generators-yml/schemas/**",
+				"packages/ir-sdk/**",
+				"packages/cli/configuration/src/docs-yml/schemas/**",
+				"packages/cli/openapi-ir-sdk/**",
+				"packages/seed/src/config/**",
+				"generators/csharp/codegen/src/asIs/**/*.Template.*",
+				"generators/typescript/**/*.template.*",
+				"seed/**/*",
+				"docker/seed/**",
+				"**/*.yaml",
+				"**/*.yml",
+				"**/*.mdx",
+				"**/*.md",
+				"**/*.json",
+				"**/*.py",
+				"**/*.rb",
+				"**/*.java",
+				"**/*.js",
+				"**/*.zip",
+				"**/*.cjs",
+				"**/*.mjs",
+				"**/*.snap",
+				"**/*.props",
+				"**/*.lock",
+				"**/*.gradle",
+				"**/*.bat",
+				"**/*.sh",
+				"*.d.ts",
+				"__snapshots__",
+				".yarn",
+				".turbo",
+				"node_modules",
+				"fern",
+				"packages/**/lib/**",
+				"generators/**/lib/**"
+			],
+			"formatter": { "enabled": false }
+		}
+	],
+	"assist": {
+		"enabled": true,
+		"actions": { "source": { "organizeImports": "on" } }
+	}
+}

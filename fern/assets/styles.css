@@ -24,12 +24,14 @@
   margin-right: 10px;
 }
 
-.fern-header, .fern-header-tabs { 
+.fern-header,
+.fern-header-tabs {
   backdrop-filter: blur(0.5rem);
   background-color: transparent !important;
 }
 
-:is(.dark) .fern-header, :is(.dark) .fern-header-tabs {
+:is(.dark) .fern-header,
+:is(.dark) .fern-header-tabs {
   background-color: transparent !important;
 }
 

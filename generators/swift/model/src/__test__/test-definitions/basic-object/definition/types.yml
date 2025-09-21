@@ -7,6 +7,6 @@ types:
       name: string
       email: string
       age: optional<integer>
-      isActive: boolean
+      is_active: boolean
       balance: double
       tags: list<string>

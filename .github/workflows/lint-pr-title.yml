@@ -50,6 +50,7 @@ jobs:
             pydantic
             ai-search
             swift
+            rust
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

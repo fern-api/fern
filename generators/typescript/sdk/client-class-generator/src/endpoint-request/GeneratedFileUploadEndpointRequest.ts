@@ -115,6 +115,28 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return this.requestParameter?.getType(context);
     }
 
+    public getExampleEndpointImports(): ts.Statement[] {
+        return [
+            ts.factory.createImportDeclaration(
+                undefined,
+                [],
+                ts.factory.createImportClause(
+                    false,
+                    undefined,
+                    ts.factory.createNamedImports([
+                        ts.factory.createImportSpecifier(
+                            false,
+                            undefined,
+                            ts.factory.createIdentifier("createReadStream")
+                        )
+                    ])
+                ),
+                ts.factory.createStringLiteral("fs"),
+                undefined
+            )
+        ];
+    }
+
     public getExampleEndpointParameters({
         context,
         example,
@@ -129,8 +151,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         if (!context.inlineFileProperties) {
             for (const property of this.requestBody.properties) {
                 if (property.type === "file") {
-                    const createReadStream = context.externalDependencies.fs.createReadStream(
-                        ts.factory.createStringLiteral("/path/to/your/file")
+                    const createReadStream = ts.factory.createCallExpression(
+                        ts.factory.createIdentifier("createReadStream"),
+                        undefined,
+                        [ts.factory.createStringLiteral("path/to/file")]
                     );
                     if (property.value.type === "fileArray") {
                         result.push(ts.factory.createArrayLiteralExpression([createReadStream]));

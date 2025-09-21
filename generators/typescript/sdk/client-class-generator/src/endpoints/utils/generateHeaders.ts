@@ -26,7 +26,8 @@ export function generateHeaders({
     endpoint,
     idempotencyHeaders,
     additionalHeaders = [],
-    additionalSpreadHeaders = []
+    additionalSpreadHeaders = [],
+    headersToMergeAfterClientOptionsHeaders = []
 }: {
     context: SdkContext;
     intermediateRepresentation: IntermediateRepresentation;
@@ -37,6 +38,7 @@ export function generateHeaders({
     idempotencyHeaders: HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
+    headersToMergeAfterClientOptionsHeaders?: ts.Expression[];
 }): ts.Expression {
     const elements: GeneratedHeader[] = [];
 
@@ -113,6 +115,9 @@ export function generateHeaders({
             ])
         );
     }
+
+    mergeHeadersArgs.push(...headersToMergeAfterClientOptionsHeaders);
+
     mergeHeadersArgs.push(
         ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),

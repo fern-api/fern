@@ -12,6 +12,7 @@ import {
 } from "./EndpointRequest";
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
+    // biome-ignore lint/complexity/noUselessConstructor: allow
     public constructor(context: SdkGeneratorContext, sdkRequest: SdkRequest, endpoint: HttpEndpoint) {
         super(context, sdkRequest, endpoint);
     }

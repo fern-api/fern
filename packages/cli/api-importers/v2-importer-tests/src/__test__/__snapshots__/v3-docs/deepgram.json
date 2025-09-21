@@ -8353,6 +8353,7 @@
               },
               "typeId": "text_request_url",
               "inline": false,
+              "displayName": "text_request_url",
               "type": "named"
             }
           },
@@ -8383,6 +8384,7 @@
               },
               "typeId": "text_request_text",
               "inline": false,
+              "displayName": "text_request_text",
               "type": "named"
             }
           }
@@ -16964,7 +16966,8 @@
             "unsafeName": "V1ListenPostParametersModel0",
             "safeName": "V1ListenPostParametersModel0"
           }
-        }
+        },
+        "displayName": "V1ListenPostParametersModel0"
       },
       "shape": {
         "values": [
@@ -17710,6 +17713,7 @@
                 }
               },
               "typeId": "V1ListenPostParametersModel0",
+              "displayName": "V1ListenPostParametersModel0",
               "inline": false,
               "type": "named"
             },
@@ -17882,7 +17886,8 @@
             "unsafeName": "V1ListenPostParametersRedact1",
             "safeName": "V1ListenPostParametersRedact1"
           }
-        }
+        },
+        "displayName": "V1ListenPostParametersRedact1"
       },
       "shape": {
         "aliasOf": {
@@ -18035,6 +18040,7 @@
                 }
               },
               "typeId": "V1ListenPostParametersRedact1",
+              "displayName": "V1ListenPostParametersRedact1",
               "inline": false,
               "type": "named"
             }
@@ -18474,7 +18480,8 @@
             "unsafeName": "V1ListenPostParametersVersion0",
             "safeName": "V1ListenPostParametersVersion0"
           }
-        }
+        },
+        "displayName": "V1ListenPostParametersVersion0"
       },
       "shape": {
         "values": [
@@ -18572,6 +18579,7 @@
                 }
               },
               "typeId": "V1ListenPostParametersVersion0",
+              "displayName": "V1ListenPostParametersVersion0",
               "inline": false,
               "type": "named"
             },
@@ -28022,6 +28030,7 @@
               },
               "typeId": "stt_models",
               "inline": false,
+              "displayName": "stt_models",
               "type": "named"
             }
           },
@@ -28052,6 +28061,7 @@
               },
               "typeId": "tts_models",
               "inline": false,
+              "displayName": "tts_models",
               "type": "named"
             }
           }
@@ -44078,7 +44088,8 @@
             "unsafeName": "ManagementApiGetModelResponse2000",
             "safeName": "ManagementApiGetModelResponse2000"
           }
-        }
+        },
+        "displayName": "ManagementApiGetModelResponse2000"
       },
       "shape": {
         "properties": [
@@ -44834,7 +44845,8 @@
             "unsafeName": "ManagementApiGetModelResponse2001",
             "safeName": "ManagementApiGetModelResponse2001"
           }
-        }
+        },
+        "displayName": "ManagementApiGetModelResponse2001"
       },
       "shape": {
         "properties": [
@@ -45261,6 +45273,7 @@
                 }
               },
               "typeId": "ManagementApiGetModelResponse2000",
+              "displayName": "ManagementApiGetModelResponse2000",
               "inline": false,
               "type": "named"
             }
@@ -45291,6 +45304,7 @@
                 }
               },
               "typeId": "ManagementApiGetModelResponse2001",
+              "displayName": "ManagementApiGetModelResponse2001",
               "inline": false,
               "type": "named"
             }
@@ -51705,7 +51719,8 @@
             "unsafeName": "ListenControlMessagesRequest0",
             "safeName": "ListenControlMessagesRequest0"
           }
-        }
+        },
+        "displayName": "ListenControlMessagesRequest0"
       },
       "shape": {
         "properties": [
@@ -51884,7 +51899,8 @@
             "unsafeName": "ListenControlMessagesRequest1",
             "safeName": "ListenControlMessagesRequest1"
           }
-        }
+        },
+        "displayName": "ListenControlMessagesRequest1"
       },
       "shape": {
         "properties": [
@@ -52063,7 +52079,8 @@
             "unsafeName": "ListenControlMessagesRequest2",
             "safeName": "ListenControlMessagesRequest2"
           }
-        }
+        },
+        "displayName": "ListenControlMessagesRequest2"
       },
       "shape": {
         "properties": [
@@ -52204,6 +52221,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest0",
+              "displayName": "ListenControlMessagesRequest0",
               "inline": false,
               "type": "named"
             }
@@ -52234,6 +52252,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest1",
+              "displayName": "ListenControlMessagesRequest1",
               "inline": false,
               "type": "named"
             }
@@ -52264,6 +52283,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest2",
+              "displayName": "ListenControlMessagesRequest2",
               "inline": false,
               "type": "named"
             }

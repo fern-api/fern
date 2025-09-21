@@ -24,7 +24,9 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<BasePhpCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<BasePhpCustomConfigSchema>;
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {

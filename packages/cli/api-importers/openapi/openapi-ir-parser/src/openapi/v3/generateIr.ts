@@ -166,7 +166,7 @@ export function generateIr({
                         return [
                             key,
                             convertSchema(
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                 { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
                                 context,

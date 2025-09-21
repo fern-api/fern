@@ -300,13 +300,13 @@ describe("Method", () => {
                         unsafeName: "emailAddress",
                         type: Type.string(),
                         optional: true,
-                        defaultRawValue: "nil"
+                        defaultValue: swift.Expression.rawValue("nil")
                     }),
                     swift.functionParameter({
                         argumentLabel: "isActive",
                         unsafeName: "active",
                         type: Type.bool(),
-                        defaultRawValue: "true"
+                        defaultValue: swift.Expression.rawValue("true")
                     })
                 ],
                 returnType: Type.custom("User")

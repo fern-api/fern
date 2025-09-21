@@ -186,7 +186,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 )
             );
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
         } catch (e) {
             // This call tears down generator service
@@ -199,7 +199,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 )
             );
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
             throw e;
         }

@@ -67,7 +67,7 @@ export async function testGenerator({
     const unexpectedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? []);
 
     if (failedFixtures.length === 0) {
-        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
+        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed ✅`);
     } else {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${

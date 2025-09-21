@@ -5,6 +5,6 @@
 import * as core from "../../../../../core/index.js";
 
 export interface OptionalArgsRequest {
-    imageFile?: core.FileLike | undefined;
+    imageFile?: core.file.Uploadable.FileLike | undefined;
     request?: unknown;
 }

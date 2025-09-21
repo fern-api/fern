@@ -34,7 +34,18 @@ type Return = {
     expression: Expression;
 };
 
-type InternalStatement = ConstantDeclaration | VariableDeclaration | VariableAssignment | PropertyAssignment | Return;
+type ExpressionStatement = {
+    type: "expression-statement";
+    expression: Expression;
+};
+
+type InternalStatement =
+    | ConstantDeclaration
+    | VariableDeclaration
+    | VariableAssignment
+    | PropertyAssignment
+    | Return
+    | ExpressionStatement;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -80,6 +91,10 @@ export class Statement extends AstNode {
                 this.internalStatement.expression.write(writer);
                 writer.newLine();
                 break;
+            case "expression-statement":
+                this.internalStatement.expression.write(writer);
+                writer.newLine();
+                break;
             default:
                 assertNever(this.internalStatement);
         }
@@ -103,5 +118,9 @@ export class Statement extends AstNode {
 
     public static return(expression: Expression): Statement {
         return new this({ type: "return", expression });
+    }
+
+    public static expressionStatement(expression: Expression): Statement {
+        return new this({ type: "expression-statement", expression });
     }
 }

@@ -1,0 +1,51 @@
+irVersion: v58
+displayName: Rust Model
+image: fernapi/fern-rust-model
+changelogLocation: ../../generators/rust/model/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - cargo build
+  testScript:
+    commands:
+      - cargo test
+
+test:
+  docker:
+    image: fernapi/fern-rust-model:latest
+    command: pnpm --filter @fern-api/rust-model dist:cli && docker build -f ./generators/rust/model/Dockerfile -t fernapi/fern-rust-model:latest .
+  local:
+    workingDirectory: generators/rust
+    buildCommand:
+      - pnpm --filter @fern-api/rust-model dist:cli
+    runCommand: node ./model/dist/cli.cjs
+
+publish:
+  workingDirectory: generators/rust
+  preBuildCommands:
+    - pnpm --filter @fern-api/rust-model dist:cli
+  docker:
+    file: ./generators/rust/model/Dockerfile
+    image: fernapi/fern-rust-model
+    context: .
+
+language: rust
+generatorType: MODEL
+defaultOutputMode: github
+
+customFixtureConfig:
+  customConfig:
+    packageName: test_models
+    packageVersion: "0.1.0"
+    deriveDebug: true
+    deriveClone: true
+
+fixtures:
+  simple:
+    - customConfig: null
+      outputFolder: basic
+  types:
+    - customConfig:
+        generateBuilders: true
+      outputFolder: with-builders 

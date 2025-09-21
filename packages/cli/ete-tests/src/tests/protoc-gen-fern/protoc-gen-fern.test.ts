@@ -7,7 +7,6 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern protoc-gen-fern", () => {
-    /* eslint-disable jest/no-disabled-tests */
     it.skip("test with buf", async () => {
         const buf = createLoggingExecutable("buf", {
             cwd: FIXTURES_DIR,
@@ -22,21 +21,21 @@ describe("fern protoc-gen-fern", () => {
 
 const createEmptyProtobufLogger = (): Logger => {
     return {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         disable: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         enable: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         trace: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         debug: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         info: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         warn: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         error: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         log: () => {}
     };
 };

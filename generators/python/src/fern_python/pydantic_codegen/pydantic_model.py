@@ -40,7 +40,7 @@ class PydanticModel:
         parent: Optional[ClassParent] = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        extra_fields: Optional[Literal["allow", "forbid"]] = None,
+        extra_fields: Optional[Literal["allow", "forbid", "ignore"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
         is_root_model: bool = False,
     ):
@@ -324,7 +324,7 @@ class PydanticModel:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
         if not self._is_root_model:
-            if extra_fields == "allow" or extra_fields == "forbid":
+            if extra_fields in {"allow", "forbid", "extra"}:
                 config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
@@ -460,6 +460,13 @@ class PydanticModel:
                         initializer=Pydantic(self._version).extra.allow(),
                     )
                 )
+            elif self._extra_fields == "ignore":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic(self._version).extra.ignore(),
+                    )
+                ) 
 
         if len(config.class_vars) > 0:
             return config

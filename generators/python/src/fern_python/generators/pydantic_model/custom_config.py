@@ -76,7 +76,7 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     include_validators: bool = False
     # DEPRECATED: use `extra_fields` instead
     forbid_extra_fields: bool = False
-    extra_fields: Optional[Literal["allow", "forbid"]] = "allow"
+    extra_fields: Optional[Literal["allow", "forbid", "ignore"]] = "allow"
     skip_formatting: bool = False
     include_union_utils: bool = False
     package_name: Optional[str] = None
