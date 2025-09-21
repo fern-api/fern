@@ -176,85 +176,99 @@ jobs:
       rust-model: ${{ steps.set-test-matrices.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.set-test-matrices.outputs.rust-sdk-test-matrix }}
     steps:
-      - name: Checkout repo
+      - name: Checkout test package file
         uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
         with:
-          github_token: ${{ github.token }}
+          sparse-checkout: |
+            .github/
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        shell: bash
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
-
-      - name: Build seed
-        shell: bash
+      - name: Read JSON Test Times
+        id: read-json-test-times
         run: |
-          pnpm seed:build
-
-      # Several generators are already running within target time. Run all of their tests at once
-      # to save on runner count. Eventually this will be done dynamically
-      - name: Determine test setups
-        id: determine-test-setups
-        run: |
-          if [[ "${{ matrix.generator-name }}" == "fastapi" || \
-                "${{ matrix.generator-name }}" == "go-fiber" || \
-                "${{ matrix.generator-name }}" == "go-model" || \
-                "${{ matrix.generator-name }}" == "java-spring" || \
-                "${{ matrix.generator-name }}" == "openapi" || \
-                "${{ matrix.generator-name }}" == "php-model" || \
-                "${{ matrix.generator-name }}" == "postman" || \
-                "${{ matrix.generator-name }}" == "ruby-sdk" || \
-                "${{ matrix.generator-name }}" == "rust-model" || \
-                "${{ matrix.generator-name }}" == "typescript-express" ]]; then
-            echo "split-tests=false" >> $GITHUB_OUTPUT
-          else
-            echo "split-tests=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Get test matrices for ${{ matrix.generator-name }}
-        if: steps.determine-test-setups.outputs.split-tests == 'true'
-        id: get-test-matrices
-        uses: ./.github/actions/parse-test-matrix-output
-        with:
-          generator-name: ${{ matrix.generator-name }}
-
-      - name: Package test matrices for ${{ matrix.generator-name }}
-        if: steps.determine-test-setups.outputs.split-tests == 'true'
-        id: package-test-matrices
-        uses: ./.github/actions/package-test-matrix
-        with:
-          full-fixture-matrix: ${{ steps.get-test-matrices.outputs.parsed }}
-          package-amount: 10
-
+          BASH_JSON_DATA_VAR=$(cat .github/test-packages.json)
+          echo "json_data=$BASH_JSON_DATA_VAR" >> $GITHUB_OUTPUT
+          echo "$BASH_JSON_DATA_VAR" | jq .
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
-          if [[ "${{ steps.determine-test-setups.outputs.split-tests }}" == "true" ]]; then
-            if [[ "${{ matrix.generator-name }}" == "java-sdk" ]]; then
-              echo "Force test of java-sdk for proof of concept"
-              BASH_VAR='[{"fixtures":["exhaustive","reserved-keywords"]},{"fixtures":["java-inline-types","error-property","auth-environment-variables","imdb","websocket-bearer-auth","variables","request-parameters","oauth-client-credentials-default","inferred-auth-implicit-no-expiry"]},{"fixtures":["examples","response-property","undiscriminated-unions","extends","basic-auth","folders","unknown","idempotency-headers","alias-extends","websocket-inferred-auth"]},{"fixtures":["nullable","multi-line-docs","custom-auth","java-single-property-endpoint","enum","websocket","single-url-environment-no-default","oauth-client-credentials-nested-root","oauth-client-credentials","inferred-auth-implicit"]},{"fixtures":["java-pagination-deep-cursor-path","java-nullable-named-request-types","alias","any-auth","trace","literal","multi-url-environment","server-sent-event-examples","oauth-client-credentials-custom","streaming-parameter"]},{"fixtures":["version","literals-unions","extra-properties","multi-url-environment-no-default","file-download","streaming","pagination","server-sent-events","oauth-client-credentials-environment-variables","pagination-custom"]},{"fixtures":["file-upload","api-wide-base-path","license","java-builder-extension","java-custom-package-prefix","single-url-environment-default","simple-api","objects-with-imports","empty-clients","property-access"]},{"fixtures":["nullable-optional","query-parameters-openapi","circular-references-advanced","validation","optional","basic-auth-environment-variables","oauth-client-credentials-with-variables","simple-fhir","object","bytes-download","inferred-auth-explicit"]},{"fixtures":["bearer-token-environment-variable","query-parameters-openapi-as-objects","path-parameters","bytes-upload","accept-header","errors","no-environment","audiences","unions","http-head","query-parameters"]},{"fixtures":["client-side-params","content-type","multiple-request-bodies","version-no-default","plain-text","mixed-case","cross-package-type-names","mixed-file-directory","package-yml","circular-references","public-object"]}]'
-              echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-            else
-              BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
-              echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-
-              # Echo the data to command line for visibility
-              echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
-              echo "$BASH_VAR" | jq .
-            fi
+          PACKAGE_NAME="${{ matrix.generator-name }}-test-packages"
+          if [[ echo "${{ steps.read-json-test-times.outputs.json_data }} | jq -e 'has("${PACKAGE_NAME}")' > /dev/null ]]; then
+            PACKAGED_FIXTURES=$(echo "$json_data" | jq -r '.${PACKAGE_NAME}' | tr '\n' ' ' | sed 's/ $//')
+            echo "${{ matrix.generator-name }}-test-matrix=$PACKAGED_FIXTURES" >> $GITHUB_OUTPUT
           else
-            echo "Set empty json matrix, which will run all tests on a single runner"
-            BASH_VAR='[{"fixtures":["all"]}]'
-            echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+            RUN_ALL_FIXTURES='[{"fixtures":["all"]}]'
+            echo "${{ matrix.generator-name }}-test-matrix=$RUN_ALL_FIXTURES" >> $GITHUB_OUTPUT
           fi
+
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
+
+      # - name: Install
+      #   uses: ./.github/actions/install
+
+      # - uses: bufbuild/buf-setup-action@v1.34.0
+      #   with:
+      #     github_token: ${{ github.token }}
+
+      # - uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "stable"
+
+      # - name: Install protoc-gen-openapi
+      #   shell: bash
+      #   run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      # - name: Build seed
+      #   shell: bash
+      #   run: |
+      #     pnpm seed:build
+
+      # # Several generators are already running within target time. Run all of their tests at once
+      # # to save on runner count. Eventually this will be done dynamically
+      # - name: Determine test setups
+      #   id: determine-test-setups
+      #   run: 
+      #       echo "split-tests=false" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "split-tests=true" >> $GITHUB_OUTPUT
+      #     fi
+
+      # - name: Get test matrices for ${{ matrix.generator-name }}
+      #   if: steps.determine-test-setups.outputs.split-tests == 'true'
+      #   id: get-test-matrices
+      #   uses: ./.github/actions/parse-test-matrix-output
+      #   with:
+      #     generator-name: ${{ matrix.generator-name }}
+
+      # - name: Package test matrices for ${{ matrix.generator-name }}
+      #   if: steps.determine-test-setups.outputs.split-tests == 'true'
+      #   id: package-test-matrices
+      #   uses: ./.github/actions/package-test-matrix
+      #   with:
+      #     full-fixture-matrix: ${{ steps.get-test-matrices.outputs.parsed }}
+      #     package-amount: 10
+
+      # - name: Set test matrices for ${{ matrix.generator-name }}
+      #   id: set-test-matrices
+      #   run: |
+      #     if [[ "${{ steps.determine-test-setups.outputs.split-tests }}" == "true" ]]; then
+      #       if [[ "${{ matrix.generator-name }}" == "java-sdk" ]]; then
+      #         echo "Force test of java-sdk for proof of concept"
+      #         BASH_VAR='[{"fixtures":["exhaustive","reserved-keywords"]},{"fixtures":["java-inline-types","error-property","auth-environment-variables","imdb","websocket-bearer-auth","variables","request-parameters","oauth-client-credentials-default","inferred-auth-implicit-no-expiry"]},{"fixtures":["examples","response-property","undiscriminated-unions","extends","basic-auth","folders","unknown","idempotency-headers","alias-extends","websocket-inferred-auth"]},{"fixtures":["nullable","multi-line-docs","custom-auth","java-single-property-endpoint","enum","websocket","single-url-environment-no-default","oauth-client-credentials-nested-root","oauth-client-credentials","inferred-auth-implicit"]},{"fixtures":["java-pagination-deep-cursor-path","java-nullable-named-request-types","alias","any-auth","trace","literal","multi-url-environment","server-sent-event-examples","oauth-client-credentials-custom","streaming-parameter"]},{"fixtures":["version","literals-unions","extra-properties","multi-url-environment-no-default","file-download","streaming","pagination","server-sent-events","oauth-client-credentials-environment-variables","pagination-custom"]},{"fixtures":["file-upload","api-wide-base-path","license","java-builder-extension","java-custom-package-prefix","single-url-environment-default","simple-api","objects-with-imports","empty-clients","property-access"]},{"fixtures":["nullable-optional","query-parameters-openapi","circular-references-advanced","validation","optional","basic-auth-environment-variables","oauth-client-credentials-with-variables","simple-fhir","object","bytes-download","inferred-auth-explicit"]},{"fixtures":["bearer-token-environment-variable","query-parameters-openapi-as-objects","path-parameters","bytes-upload","accept-header","errors","no-environment","audiences","unions","http-head","query-parameters"]},{"fixtures":["client-side-params","content-type","multiple-request-bodies","version-no-default","plain-text","mixed-case","cross-package-type-names","mixed-file-directory","package-yml","circular-references","public-object"]}]'
+      #         echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+      #       else
+      #         BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
+      #         echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+
+      #         # Echo the data to command line for visibility
+      #         echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
+      #         echo "$BASH_VAR" | jq .
+      #       fi
+      #     else
+      #       echo "Set empty json matrix, which will run all tests on a single runner"
+      #       BASH_VAR='[{"fixtures":["all"]}]'
+      #       echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+      #     fi
 
   ruby-model:
     runs-on: ubuntu-latest
