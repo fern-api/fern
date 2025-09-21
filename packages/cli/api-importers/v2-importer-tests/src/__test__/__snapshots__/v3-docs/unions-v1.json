@@ -61,6 +61,7 @@
               },
               "typeId": "Triangle",
               "inline": false,
+              "displayName": "Triangle",
               "type": "named"
             }
           },
@@ -91,6 +92,7 @@
               },
               "typeId": "Square",
               "inline": false,
+              "displayName": "Square",
               "type": "named"
             }
           }

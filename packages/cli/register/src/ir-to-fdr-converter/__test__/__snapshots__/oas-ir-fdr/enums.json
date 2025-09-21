@@ -10,21 +10,24 @@
             "type": {
               "type": "id",
               "value": "StatusEnum"
-            }
+            },
+            "displayName": "StatusEnum"
           },
           {
             "typeName": "PriorityEnum",
             "type": {
               "type": "id",
               "value": "PriorityEnum"
-            }
+            },
+            "displayName": "PriorityEnum"
           },
           {
             "typeName": "ErrorCodeEnum",
             "type": {
               "type": "id",
               "value": "ErrorCodeEnum"
-            }
+            },
+            "displayName": "ErrorCodeEnum"
           }
         ]
       }

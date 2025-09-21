@@ -135,7 +135,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
             .map((key) => key.replace(/~1/g, "/"));
 
         // Step 2: Index recursively into the document
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolved: any = this.document;
         for (const key of keys) {
             if (typeof resolved !== "object" || resolved == null) {

@@ -173,7 +173,7 @@ function getRequestBody({
                 type: "boolean",
                 "x-fern-boolean-literal": isStreaming,
                 ...(streamingProperty ?? {})
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any
         },
         // Set to undefined because we inline both the streaming and non-streaming request schemas

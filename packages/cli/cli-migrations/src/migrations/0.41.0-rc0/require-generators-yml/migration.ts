@@ -101,7 +101,7 @@ async function addApiConfigurationToSingleWorkspace({
         }
     } else {
         const generatorsYmlContents = yaml.load(existingGeneratorsYml.contents);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         if ((generatorsYmlContents as any)?.api != null) {
             // api config is already defined
         } else if (openapiDirectory != null && openapiDirectory.contents[0] != null) {

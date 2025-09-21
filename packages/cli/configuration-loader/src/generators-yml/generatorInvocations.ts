@@ -161,5 +161,19 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             location: "local-file-system",
             path: "../sdks/php/sdk"
         }
+    },
+    [GeneratorName.RUST_MODEL]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../models/rust"
+        }
+    },
+    [GeneratorName.RUST_SDK]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/rust"
+        }
     }
 };

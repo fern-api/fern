@@ -46,6 +46,7 @@ export class DynamicSnippetsTestGenerator {
         typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },
         python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
         ruby: undefined,
+        rust: undefined,
         swift: undefined
     };
 

@@ -45,7 +45,7 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
         const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
         workspaces.push({
             absolutePathToWorkspace,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             workspaceConfig: yaml.load(seedConfig.toString()) as any as FernSeedConfig.SeedWorkspaceConfiguration,
             workspaceName: workspace
         });

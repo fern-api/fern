@@ -61,6 +61,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     if (this.getChannelPathFromOperation(operation) === this.channelPath) {
                         acc[operationId] = operation;
                     }
+                    // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
                 } catch {}
                 return acc;
             },

@@ -137,7 +137,7 @@ export class MockServer {
 
     public async keepAlive(): Promise<void> {
         // await infinitely
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         await new Promise(() => {});
     }
 }

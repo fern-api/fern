@@ -186,6 +186,7 @@ async function visitNavigationItem({
                         [...nodePath, navigationItem.path]
                     );
                 }
+                // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             } catch (err) {}
         }
     }

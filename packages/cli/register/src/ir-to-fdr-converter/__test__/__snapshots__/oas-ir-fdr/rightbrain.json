@@ -1233,7 +1233,8 @@
             "value": "source_validation"
           }
         ]
-      }
+      },
+      "displayName": "ChatGuardrailId0"
     },
     "ChatGuardrailId1": {
       "name": "ChatGuardrailId1",
@@ -1247,7 +1248,8 @@
             "value": "pii_policy"
           }
         ]
-      }
+      },
+      "displayName": "ChatGuardrailId1"
     },
     "ChatGuardrailId": {
       "name": "ChatGuardrailId",
@@ -1259,14 +1261,16 @@
             "type": {
               "type": "id",
               "value": "ChatGuardrailId0"
-            }
+            },
+            "displayName": "ChatGuardrailId0"
           },
           {
             "typeName": "ChatGuardrailId1",
             "type": {
               "type": "id",
               "value": "ChatGuardrailId1"
-            }
+            },
+            "displayName": "ChatGuardrailId1"
           }
         ]
       }

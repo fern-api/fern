@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-disabled-tests */
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 
 import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavigationNodeUrlSlug";

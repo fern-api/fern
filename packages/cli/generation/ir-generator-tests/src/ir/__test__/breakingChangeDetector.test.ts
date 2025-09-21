@@ -1,5 +1,4 @@
 /* eslint-disable jest/expect-expect */
-/* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { readdir } from "fs/promises";

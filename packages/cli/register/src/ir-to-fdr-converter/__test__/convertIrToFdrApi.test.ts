@@ -28,7 +28,9 @@ describe("fdr", async () => {
         })),
         ...(
             await Promise.all(
-                (await readdir(FIXTURES_DIR, { withFileTypes: true }))
+                (
+                    await readdir(FIXTURES_DIR, { withFileTypes: true })
+                )
                     .filter((fixture) => fixture.isDirectory())
                     .flatMap(async (fixture) => {
                         return await loadApis({
@@ -105,57 +107,53 @@ describe("oas-ir-fdr", async () => {
             continue;
         }
 
-        it(
-            fixture.name,
-            async () => {
-                const fixturePath = join(
-                    AbsoluteFilePath.of(FIXTURES_DIR),
-                    RelativeFilePath.of(fixture.name),
-                    RelativeFilePath.of("fern")
+        it(fixture.name, async () => {
+            const fixturePath = join(
+                AbsoluteFilePath.of(FIXTURES_DIR),
+                RelativeFilePath.of(fixture.name),
+                RelativeFilePath.of("fern")
+            );
+            const context = createMockTaskContext();
+            const workspace = await loadAPIWorkspace({
+                absolutePathToWorkspace: fixturePath,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: fixture.name
+            });
+            if (!workspace.didSucceed) {
+                throw new Error(
+                    `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                 );
-                const context = createMockTaskContext();
-                const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: fixturePath,
+            }
+
+            if (workspace.workspace instanceof OSSWorkspace) {
+                const ossWorkspace = workspace.workspace as OSSWorkspace;
+                const intermediateRepresentation = await ossWorkspace.getIntermediateRepresentation({
                     context,
-                    cliVersion: "0.0.0",
-                    workspaceName: fixture.name
+                    audiences: { type: "all" },
+                    enableUniqueErrorsPerEndpoint: true,
+                    generateV1Examples: false
                 });
-                if (!workspace.didSucceed) {
-                    throw new Error(
-                        `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
-                    );
-                }
 
-                if (workspace.workspace instanceof OSSWorkspace) {
-                    const ossWorkspace = workspace.workspace as OSSWorkspace;
-                    const intermediateRepresentation = await ossWorkspace.getIntermediateRepresentation({
-                        context,
-                        audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: true,
-                        generateV1Examples: false
-                    });
+                const fdr = convertIrToFdrApi({
+                    ir: intermediateRepresentation,
+                    snippetsConfig: {
+                        typescriptSdk: undefined,
+                        pythonSdk: undefined,
+                        javaSdk: undefined,
+                        rubySdk: undefined,
+                        goSdk: undefined,
+                        csharpSdk: undefined
+                    },
+                    playgroundConfig: {
+                        oauth: true
+                    }
+                });
 
-                    const fdr = convertIrToFdrApi({
-                        ir: intermediateRepresentation,
-                        snippetsConfig: {
-                            typescriptSdk: undefined,
-                            pythonSdk: undefined,
-                            javaSdk: undefined,
-                            rubySdk: undefined,
-                            goSdk: undefined,
-                            csharpSdk: undefined
-                        },
-                        playgroundConfig: {
-                            oauth: true
-                        }
-                    });
-
-                    await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
-                        `./__snapshots__/oas-ir-fdr/${fixture.name}.json`
-                    );
-                }
-            },
-            90_000
-        );
+                await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
+                    `./__snapshots__/oas-ir-fdr/${fixture.name}.json`
+                );
+            }
+        }, 90_000);
     }
 });

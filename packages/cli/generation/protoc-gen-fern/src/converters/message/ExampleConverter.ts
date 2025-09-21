@@ -112,7 +112,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
 
         // Select one field per oneof
         for (const field of this.message.field) {
-            const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
                 if (!oneofChoices.has(field.oneofIndex)) {
                     oneofChoices.set(field.oneofIndex, field);
@@ -126,7 +126,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                 continue;
             }
 
-            const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
                 const chosenField = oneofChoices.get(field.oneofIndex);
                 if (chosenField !== field) {
@@ -167,7 +167,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                 continue;
             }
 
-            const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null && oneofGroups.has(field.oneofIndex)) {
                 const groupName = oneofGroups.get(field.oneofIndex) ?? undefined;
                 if (groupName != null) {

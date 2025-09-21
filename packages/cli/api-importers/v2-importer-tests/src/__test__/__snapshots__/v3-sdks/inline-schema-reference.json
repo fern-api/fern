@@ -306,7 +306,8 @@
             "unsafeName": "GetExampleResponse2003",
             "safeName": "GetExampleResponse2003"
           }
-        }
+        },
+        "displayName": "GetExampleResponse2003"
       },
       "shape": {
         "properties": [
@@ -429,6 +430,7 @@
               },
               "typeId": "Schema1",
               "inline": false,
+              "displayName": "Schema1",
               "type": "named"
             }
           },
@@ -459,6 +461,7 @@
               },
               "typeId": "Schema2",
               "inline": false,
+              "displayName": "Schema2",
               "type": "named"
             }
           },
@@ -488,6 +491,7 @@
                 }
               },
               "typeId": "GetExampleResponse2003",
+              "displayName": "GetExampleResponse2003",
               "inline": false,
               "type": "named"
             }

@@ -43,7 +43,9 @@ export const V54_TO_V53_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V53.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -78,7 +80,7 @@ function convertHttpResponse(
                 ? IrVersions.V53.HttpResponseBody.fileDownload({
                       docs: undefined
                   })
-                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                   (response.body as any)
     };
 }

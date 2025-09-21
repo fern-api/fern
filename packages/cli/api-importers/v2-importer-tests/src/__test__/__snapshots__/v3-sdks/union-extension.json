@@ -61,6 +61,7 @@
               },
               "typeId": "IbanField",
               "inline": false,
+              "displayName": "IbanField",
               "type": "named"
             }
           },
@@ -91,6 +92,7 @@
               },
               "typeId": "OtherField",
               "inline": false,
+              "displayName": "OtherField",
               "type": "named"
             }
           }

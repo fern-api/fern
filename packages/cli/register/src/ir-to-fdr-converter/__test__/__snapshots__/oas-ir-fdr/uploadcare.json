@@ -2440,14 +2440,16 @@
             "type": {
               "type": "id",
               "value": "fromURLUploadResponseSchema"
-            }
+            },
+            "displayName": "fromURLUploadResponseSchema"
           },
           {
             "typeName": "fileUploadInfoFromURL",
             "type": {
               "type": "id",
               "value": "fileUploadInfoFromURL"
-            }
+            },
+            "displayName": "fileUploadInfoFromURL"
           }
         ]
       }
@@ -2462,35 +2464,40 @@
             "type": {
               "type": "id",
               "value": "fileUploadInfoWaitingStatus"
-            }
+            },
+            "displayName": "fileUploadInfoWaitingStatus"
           },
           {
             "typeName": "fileUploadInfoProgressStatus",
             "type": {
               "type": "id",
               "value": "fileUploadInfoProgressStatus"
-            }
+            },
+            "displayName": "fileUploadInfoProgressStatus"
           },
           {
             "typeName": "fileUploadInfoSuccessStatus",
             "type": {
               "type": "id",
               "value": "fileUploadInfoSuccessStatus"
-            }
+            },
+            "displayName": "fileUploadInfoSuccessStatus"
           },
           {
             "typeName": "fileUploadInfoErrorStatus",
             "type": {
               "type": "id",
               "value": "fileUploadInfoErrorStatus"
-            }
+            },
+            "displayName": "fileUploadInfoErrorStatus"
           },
           {
             "typeName": "fileUploadInfoUnknownStatus",
             "type": {
               "type": "id",
               "value": "fileUploadInfoUnknownStatus"
-            }
+            },
+            "displayName": "fileUploadInfoUnknownStatus"
           }
         ]
       }

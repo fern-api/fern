@@ -400,7 +400,7 @@ export function convertImageToFileIdOrUrl(
 }
 
 function replaceFrontmatterImagesforLogo(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     data: Record<string, any>,
     mapImage: (image: string | undefined) => string | undefined
 ) {

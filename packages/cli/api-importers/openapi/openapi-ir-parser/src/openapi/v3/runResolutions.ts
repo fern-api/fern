@@ -47,7 +47,7 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
         .split("/")
         .map((key) => key.replaceAll("~1", "/"));
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     let value = openapi as any;
     for (const key of keys) {
         const nextValue = value[key];
@@ -55,7 +55,7 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
             return openapi;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         value = nextValue as any;
     }
 
@@ -108,14 +108,14 @@ function replaceWithSchemaReference({
         .split("/")
         .map((key) => key.replaceAll("~1", "/"));
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     let value = openapi as any;
     for (const key of keys.slice(0, -1)) {
         const nextValue = value[key];
         if (nextValue == null) {
             return openapi;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         value = nextValue as any;
     }
 

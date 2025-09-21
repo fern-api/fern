@@ -213,6 +213,7 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
                 images
             }
         };
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch (error) {}
 
     return { success: false };

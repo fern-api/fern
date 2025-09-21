@@ -200,6 +200,7 @@ export async function loadAPIWorkspace({
     let changelog = undefined;
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch (err) {}
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {

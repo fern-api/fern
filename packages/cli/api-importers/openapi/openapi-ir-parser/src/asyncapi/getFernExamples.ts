@@ -7,7 +7,7 @@ export interface WebsocketSessionExampleMessage {
     type: string;
     channelId?: string;
     messageId: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     value: any;
 }
 

@@ -230,7 +230,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     typeDeclaration: this.createTypeDeclaration({
                         shape: FernIr.Type.alias({
                             aliasOf: primitiveType,
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                             resolvedType: primitiveType as any
                         }),
                         referencedTypes: new Set()
@@ -258,7 +258,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         typeDeclaration: this.createTypeDeclaration({
                             shape: FernIr.Type.alias({
                                 aliasOf: arrayType.typeReference,
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                 resolvedType: arrayType.typeReference as any
                             }),
                             referencedTypes: arrayType.referencedTypes
@@ -381,7 +381,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     typeDeclaration: this.createTypeDeclaration({
                         shape: FernIr.Type.alias({
                             aliasOf: FernIr.TypeReference.unknown(),
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                             resolvedType: FernIr.TypeReference.unknown() as any
                         }),
                         referencedTypes: new Set()
@@ -414,7 +414,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 typeDeclaration: this.createTypeDeclaration({
                     shape: FernIr.Type.alias({
                         aliasOf: typeReference,
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                         resolvedType: typeReference as any
                     }),
                     referencedTypes: new Set(),

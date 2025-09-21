@@ -17,53 +17,48 @@ describe("openapi-v2-baseline-docs", async () => {
             continue;
         }
 
-        it(
-            fixture.name,
-            async () => {
-                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
-                const context = createMockTaskContext();
-                const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: fixturePath,
-                    context,
-                    cliVersion: "0.0.0",
-                    workspaceName: fixture.name
-                });
-                if (!workspace.didSucceed) {
-                    console.warn(
-                        `Test Failed: Unable to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
-                    );
-                    return;
-                }
+        it(fixture.name, async () => {
+            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
+            const context = createMockTaskContext();
+            const workspace = await loadAPIWorkspace({
+                absolutePathToWorkspace: fixturePath,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: fixture.name
+            });
+            if (!workspace.didSucceed) {
+                console.warn(
+                    `Test Failed: Unable to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
+                );
+                return;
+            }
 
-                if (workspace.workspace instanceof OSSWorkspace) {
-                    try {
-                        const fernWorkspace = await (workspace.workspace as OSSWorkspace).toFernWorkspace(
-                            { context },
-                            { enableUniqueErrorsPerEndpoint: true }
-                        );
-                        const intermediateRepresentation = generateIntermediateRepresentation({
-                            workspace: fernWorkspace,
-                            generationLanguage: undefined,
-                            audiences: { type: "all" },
-                            keywords: undefined,
-                            smartCasing: true,
-                            exampleGeneration: { disabled: true },
-                            readme: undefined,
-                            version: undefined,
-                            packageName: undefined,
-                            context,
-                            sourceResolver: new SourceResolverImpl(context, fernWorkspace)
-                        });
-                        // eslint-disable-next-line jest/no-standalone-expect
-                        await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
-                            `./__snapshots__/baseline-docs/${fixture.name}.json`
-                        );
-                    } catch (error) {
-                        console.warn(`Test Failed: Error processing fixture ${fixture.name}:`, error);
-                    }
+            if (workspace.workspace instanceof OSSWorkspace) {
+                try {
+                    const fernWorkspace = await (workspace.workspace as OSSWorkspace).toFernWorkspace(
+                        { context },
+                        { enableUniqueErrorsPerEndpoint: true }
+                    );
+                    const intermediateRepresentation = generateIntermediateRepresentation({
+                        workspace: fernWorkspace,
+                        generationLanguage: undefined,
+                        audiences: { type: "all" },
+                        keywords: undefined,
+                        smartCasing: true,
+                        exampleGeneration: { disabled: true },
+                        readme: undefined,
+                        version: undefined,
+                        packageName: undefined,
+                        context,
+                        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    });
+                    await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
+                        `./__snapshots__/baseline-docs/${fixture.name}.json`
+                    );
+                } catch (error) {
+                    console.warn(`Test Failed: Error processing fixture ${fixture.name}:`, error);
                 }
-            },
-            90_000
-        );
+            }
+        }, 90_000);
     }
 });

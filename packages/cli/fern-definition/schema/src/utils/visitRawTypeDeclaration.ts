@@ -52,7 +52,7 @@ export function isRawDiscriminatedUnionDefinition(
     return (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (rawTypeDeclaration as DiscriminatedUnionSchema).union != null &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (rawTypeDeclaration as any).discriminated == null
     );
 }
