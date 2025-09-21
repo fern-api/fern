@@ -61,7 +61,7 @@ async function validateGeneratorChangelog({
                 } else {
                     context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
                 }
-                // eslint-disable-next-line
+                // biome-ignore lint: ignore next line
                 context.logger.error((e as Error)?.message);
             }
         }

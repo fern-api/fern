@@ -44,6 +44,7 @@ export const ValidMarkdownFileReferences: Rule = {
                                             ? `File ${href.href} does not exit`
                                             : `File ${href.href} exists but is not specified in docs.yml`
                                     });
+                                    // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
                                 } catch (err) {}
                             }
                         }

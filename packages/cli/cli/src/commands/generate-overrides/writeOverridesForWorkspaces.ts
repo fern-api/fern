@@ -68,7 +68,7 @@ async function writeDefinitionForOpenAPIWorkspace({
             context,
             documents: await loader.loadDocuments({ context, specs: [spec] })
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let existingOverrides: any = {};
         if (spec.absoluteFilepathToOverrides !== undefined) {
             existingOverrides = await readExistingOverrides(spec.absoluteFilepathToOverrides, context);
@@ -88,7 +88,7 @@ async function writeDefinitionForOpenAPIWorkspace({
                     .split("/")
                     .map((part) => part.replace(".yml", ""))
                     .filter((part) => part !== "__package__");
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 const sdkMethodNameExtensions: Record<string, any> = {};
                 if (groupName.length > 0) {
                     sdkMethodNameExtensions["x-fern-sdk-group-name"] = groupName;
@@ -122,7 +122,7 @@ function writeModels(existingSchemas: Record<string, Record<string, unknown>>, s
         if (schemaId in existingSchemas) {
             continue;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const typeNameOverride: Record<string, any> = {};
         typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? (schema.nameOverride ?? schemaId) : schemaId;
         existingSchemas[schemaId] = typeNameOverride;

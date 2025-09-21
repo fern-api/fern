@@ -158,7 +158,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             pathParameters[pathParameter] =
                                 typeof pathParameterType === "string"
                                     ? pathParameterType
-                                    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                       { type: pathParameterType.type as any };
                         }
                     }

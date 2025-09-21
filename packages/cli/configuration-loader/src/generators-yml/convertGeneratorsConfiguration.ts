@@ -357,7 +357,7 @@ async function parseApiConfigurationV2Schema({
         }
         if ("namespace" in spec && spec.namespace != null) {
             namespacedDefinitions[spec.namespace] ??= [];
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             namespacedDefinitions[spec.namespace]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);

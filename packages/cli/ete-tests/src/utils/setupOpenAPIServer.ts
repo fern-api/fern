@@ -57,7 +57,7 @@ const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
 export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Promise<void> } {
     const app = express();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     app.get("/openapi.json", (req: any, res: any) => {
         res.json(TEST_OPENAPI_DOCUMENT);
     });

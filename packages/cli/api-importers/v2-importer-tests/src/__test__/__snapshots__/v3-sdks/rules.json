@@ -362,7 +362,8 @@
             "unsafeName": "DefaultAndValidationRulesResponse2001",
             "safeName": "DefaultAndValidationRulesResponse2001"
           }
-        }
+        },
+        "displayName": "DefaultAndValidationRulesResponse2001"
       },
       "shape": {
         "properties": [
@@ -485,6 +486,7 @@
               },
               "typeId": "Schema",
               "inline": false,
+              "displayName": "Schema",
               "type": "named"
             }
           },
@@ -514,6 +516,7 @@
                 }
               },
               "typeId": "DefaultAndValidationRulesResponse2001",
+              "displayName": "DefaultAndValidationRulesResponse2001",
               "inline": false,
               "type": "named"
             }

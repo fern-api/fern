@@ -12,19 +12,15 @@ describe("overrides", () => {
 });
 
 function itFixture(fixtureName: string) {
-    it(
-        // eslint-disable-next-line jest/valid-title
-        fixtureName,
-        async () => {
-            const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            for (const filename of ["openapi.yml", "openapi.json"]) {
-                const outputPath = path.join(fixturePath, "output", filename);
-                await runFernCli(["export", outputPath], {
-                    cwd: fixturePath
-                });
-                expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
-            }
-        },
-        90_000
-    );
+    it(// eslint-disable-next-line jest/valid-title
+    fixtureName, async () => {
+        const fixturePath = path.join(FIXTURES_DIR, fixtureName);
+        for (const filename of ["openapi.yml", "openapi.json"]) {
+            const outputPath = path.join(fixturePath, "output", filename);
+            await runFernCli(["export", outputPath], {
+                cwd: fixturePath
+            });
+            expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
+        }
+    }, 90_000);
 }

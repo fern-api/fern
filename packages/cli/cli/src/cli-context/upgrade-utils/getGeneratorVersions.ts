@@ -78,7 +78,7 @@ export async function getLatestGeneratorVersions({
                 });
 
                 if (latestVersion != null) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    // biome-ignore lint/style/noNonNullAssertion: allow
                     versions.versions[group]![generator.name] = {
                         previousVersion: generator.version,
                         latestVersion
@@ -103,9 +103,9 @@ export async function getLatestGeneratorVersions({
             if (versions.versions[api] == null) {
                 versions.versions[api] = {};
             }
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             if (versions.versions[api]![group] == null) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/style/noNonNullAssertion: allow
                 versions.versions[api]![group] = {};
             }
 
@@ -120,7 +120,7 @@ export async function getLatestGeneratorVersions({
             });
 
             if (latestVersion != null) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/style/noNonNullAssertion: allow
                 versions.versions[api]![group]![generator.name] = {
                     previousVersion: generator.version,
                     latestVersion

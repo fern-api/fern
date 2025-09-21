@@ -1493,14 +1493,16 @@
             "type": {
               "type": "id",
               "value": "StartingConnectionInfo"
-            }
+            },
+            "displayName": "StartingConnectionInfo"
           },
           {
             "typeName": "ActiveConnectionInfo",
             "type": {
               "type": "id",
               "value": "ActiveConnectionInfo"
-            }
+            },
+            "displayName": "ActiveConnectionInfo"
           }
         ]
       }

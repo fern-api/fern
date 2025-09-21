@@ -58,9 +58,11 @@ describe("fern generate --local", () => {
 });
 
 async function expectPathDoesNotExist(absoluteFilePath: AbsoluteFilePath): Promise<void> {
+    // biome-ignore lint/suspicious/noMisplacedAssertion: allow
     expect(await doesPathExist(absoluteFilePath)).toBe(false);
 }
 
 async function expectPathExists(absoluteFilePath: AbsoluteFilePath): Promise<void> {
+    // biome-ignore lint/suspicious/noMisplacedAssertion: allow
     expect(await doesPathExist(absoluteFilePath)).toBe(true);
 }

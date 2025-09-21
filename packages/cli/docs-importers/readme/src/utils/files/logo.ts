@@ -27,6 +27,7 @@ export async function getLogos(
             htmls.push(await page.content());
             await page.click(".rm-ThemeToggle");
             htmls.push(await page.content());
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         } catch {}
 
         await Promise.all(

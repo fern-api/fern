@@ -25,7 +25,7 @@ export function matchPath(pattern: string, path: string): ReturnType<ReturnType<
     try {
         return match(pattern)(path);
     } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.error(e, { pattern, path });
         return false;
     }
@@ -38,7 +38,7 @@ function safeCompile(
     try {
         return compile(destination)(match.params);
     } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.error(e, { match, destination });
         return destination;
     }
@@ -66,7 +66,7 @@ export function getRedirectForPath(
                 try {
                     new URL(destination);
                 } catch (e) {
-                    // eslint-disable-next-line no-console
+                    // biome-ignore lint/suspicious/noConsole: allow console
                     console.error("Invalid redirect destination:", destination);
                     return undefined;
                 }

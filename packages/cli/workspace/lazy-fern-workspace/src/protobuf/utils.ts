@@ -34,22 +34,16 @@ fern protoc-gen-fern "$@"
 
 export const createEmptyProtobufLogger = (): Logger => {
     return {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore-start lint/suspicious/noEmptyBlockStatements: allow
         disable: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         enable: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         trace: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         debug: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         info: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         warn: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         error: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         log: () => {}
+        // biome-ignore-end lint/suspicious/noEmptyBlockStatements: allow
     };
 };
 

@@ -23,7 +23,7 @@ export function getMigrationsToRun({
 function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number {
     let index;
     for (index = 0; index < ALL_MIGRATIONS.length; index++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const versionOfMigration = ALL_MIGRATIONS[index]!.version;
         if (versionOfMigration === version || isVersionAhead(versionOfMigration, version)) {
             break;

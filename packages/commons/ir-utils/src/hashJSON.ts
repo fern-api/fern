@@ -3,7 +3,7 @@ const MAX_DEPTH = 64;
 export function hashJSON(obj: unknown): string {
     let hash = 0x811c9dc5;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     function traverse(value: any, currentDepth: number) {
         if (typeof value === "object" && value != null) {
             if (currentDepth > MAX_DEPTH) {

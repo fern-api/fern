@@ -18993,6 +18993,7 @@
                 }
               },
               "typeId": "SessionBegins",
+              "displayName": "SessionBegins",
               "inline": false,
               "type": "named"
             }
@@ -19023,6 +19024,7 @@
                 }
               },
               "typeId": "PartialTranscript",
+              "displayName": "PartialTranscript",
               "inline": false,
               "type": "named"
             }
@@ -19053,6 +19055,7 @@
                 }
               },
               "typeId": "FinalTranscript",
+              "displayName": "FinalTranscript",
               "inline": false,
               "type": "named"
             }
@@ -19083,6 +19086,7 @@
                 }
               },
               "typeId": "SessionTerminated",
+              "displayName": "SessionTerminated",
               "inline": false,
               "type": "named"
             }
@@ -19113,6 +19117,7 @@
                 }
               },
               "typeId": "RealtimeError",
+              "displayName": "RealtimeError",
               "inline": false,
               "type": "named"
             }
@@ -19420,6 +19425,7 @@
                 }
               },
               "typeId": "PartialTranscript",
+              "displayName": "PartialTranscript",
               "inline": false,
               "type": "named"
             }
@@ -19450,6 +19456,7 @@
                 }
               },
               "typeId": "FinalTranscript",
+              "displayName": "FinalTranscript",
               "inline": false,
               "type": "named"
             }

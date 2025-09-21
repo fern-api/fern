@@ -11,7 +11,7 @@ import { generateFdrFromOpenApiWorkspace } from "../utils/generateFdrFromOpenApi
 
 const context = createMockTaskContext();
 
-// eslint-disable-next-line jest/no-disabled-tests
+// biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference latest node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/openapi-latest/fern"),
@@ -66,7 +66,7 @@ it.skip("converts to api reference latest node", async () => {
 
     const node = new ApiReferenceNodeConverterLatest(
         apiSection,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         api as any,
         slug,
         apiWorkspace,

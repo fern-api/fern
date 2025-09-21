@@ -3944,35 +3944,40 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
@@ -4021,14 +4026,16 @@
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           }
         ]
       }
