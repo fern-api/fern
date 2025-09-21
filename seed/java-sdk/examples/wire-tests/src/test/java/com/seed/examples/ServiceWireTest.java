@@ -294,7 +294,7 @@ public class ServiceWireTest {
             BigEntity
                 .builder()
                 .castMember(
-                    CastMember.ofActor(
+                    CastMember.of(
                         Actor
                             .builder()
                             .name("name")
@@ -330,7 +330,7 @@ public class ServiceWireTest {
                     Entity
                         .builder()
                         .type(
-                            Type.ofBasicType(BasicType.PRIMITIVE)
+                            Type.of(BasicType.PRIMITIVE)
                         )
                         .name("name")
                         .build()

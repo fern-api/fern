@@ -12,7 +12,7 @@ export function writeArguments({
     multiline?: boolean;
 }): void {
     const modifiedArguments = arguments_.map((argument) => {
-        // A nop argument (optional type reference) cannot be ommitted (like in a struct literal type instantation with omitempty)
+        // A nop argument (optional type reference) cannot be omitted (like in a struct literal type instantation with omitempty)
         // but must be replaced with nil
         if (argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument)) {
             return TypeInstantiation.nil();

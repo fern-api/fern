@@ -26,6 +26,7 @@ import { V2HttpEndpointExamples } from "../../examples/types/V2HttpEndpointExamp
 import { Transport } from "./Transport";
 import { HttpEndpointSource } from "./HttpEndpointSource";
 import { AudienceReference } from "../../audience/types/AudienceReference";
+import { RetriesConfiguration } from "./RetriesConfiguration";
 import { Declaration } from "../../commons/types/Declaration";
 import { ResponseError } from "./ResponseError";
 
@@ -60,6 +61,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             transport: Transport.optional(),
             source: HttpEndpointSource.optional(),
             audiences: core.serialization.list(AudienceReference).optional(),
+            retries: RetriesConfiguration.optional(),
         })
         .extend(Declaration);
 
@@ -93,5 +95,6 @@ export declare namespace HttpEndpoint {
         transport?: Transport.Raw | null;
         source?: HttpEndpointSource.Raw | null;
         audiences?: AudienceReference.Raw[] | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

@@ -327,6 +327,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -582,6 +583,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }

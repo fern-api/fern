@@ -19,7 +19,7 @@ export declare namespace TestRunner {
         lock: Semaphore;
         taskContextFactory: TaskContextFactory;
         skipScripts: boolean;
-        scriptRunner: ScriptRunner;
+        scriptRunner: ScriptRunner | undefined;
         keepDocker: boolean;
         inspect: boolean;
     }
@@ -106,7 +106,7 @@ export abstract class TestRunner {
     protected readonly taskContextFactory: TaskContextFactory;
     private readonly skipScripts: boolean;
     private readonly keepDocker: boolean;
-    private scriptRunner: ScriptRunner;
+    private scriptRunner: ScriptRunner | undefined;
 
     constructor({ generator, lock, taskContextFactory, skipScripts, keepDocker, scriptRunner }: TestRunner.Args) {
         this.generator = generator;
@@ -243,7 +243,7 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({
+            const scriptResponse = await this.scriptRunner?.run({
                 taskContext,
                 outputDir,
                 id
@@ -252,7 +252,7 @@ export abstract class TestRunner {
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();
 
-            if (scriptResponse.type === "failure") {
+            if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",
                     cause: "compile",

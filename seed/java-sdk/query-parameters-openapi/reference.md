@@ -65,7 +65,7 @@ client.search(
             Arrays.asList(Optional.of("filter"))
         )
         .neighborRequired(
-            SearchRequestNeighborRequired.ofUser(
+            SearchRequestNeighborRequired.of(
                 User
                     .builder()
                     .name("name")

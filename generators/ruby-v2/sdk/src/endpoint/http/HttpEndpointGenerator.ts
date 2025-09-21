@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -12,6 +13,7 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
+const QUERY_PARAMETER_BAG_NAME = "_query";
 export const HTTP_RESPONSE_VN = "_response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
@@ -52,7 +54,7 @@ export class HttpEndpointGenerator {
             statements.push(requestBodyCodeBlock.code);
         }
 
-        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         if (queryParameterCodeBlock?.code != null) {
             statements.push(queryParameterCodeBlock.code);
         }
@@ -66,6 +68,124 @@ export class HttpEndpointGenerator {
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
             bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
+
+        let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
+
+        if (endpoint.pagination) {
+            switch (endpoint.pagination.type) {
+                case "custom":
+                    break;
+                case "cursor":
+                    requestStatements = [
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: "CursorItemIterator",
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [],
+                            keywordArguments: [
+                                [
+                                    "cursor_field",
+                                    ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
+                                ],
+                                [
+                                    "item_field",
+                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                ],
+                                [
+                                    "initial_cursor",
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                    )
+                                ]
+                            ],
+                            block: [
+                                ["next_cursor"],
+                                [
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
+                                    ),
+                                    ...requestStatements
+                                ]
+                            ]
+                        })
+                    ];
+                    break;
+                case "offset":
+                    requestStatements = [
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: "OffsetItemIterator",
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [],
+                            keywordArguments: [
+                                [
+                                    "initial_page",
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                    )
+                                ],
+                                [
+                                    "item_field",
+                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                ],
+                                [
+                                    "has_next_field",
+                                    endpoint.pagination.hasNextPage
+                                        ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
+                                        : ruby.nilValue()
+                                ],
+                                ["step", endpoint.pagination.step ? ruby.trueValue() : ruby.falseValue()]
+                            ],
+                            block: [
+                                ["next_page"],
+                                [
+                                    ruby.codeblock(
+                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
+                                    ),
+                                    ...requestStatements
+                                ]
+                            ]
+                        })
+                    ];
+                    break;
+                default:
+                    assertNever(endpoint.pagination);
+            }
+        }
+
+        statements.push(...requestStatements);
+
+        return ruby.method({
+            name: endpoint.name.snakeCase.safeName,
+            docstring: endpoint.docs,
+            returnType,
+            parameters: {
+                keyword: [
+                    ruby.parameters.keyword({
+                        name: "request_options",
+                        initializer: ruby.TypeLiteral.hash([])
+                    })
+                ],
+                keywordSplat: ruby.parameters.keywordSplat({
+                    name: PARAMS_VN
+                })
+            },
+            statements
+        });
+    }
+
+    private generateRequestProcedure({
+        endpoint,
+        sendRequestCodeBlock
+    }: {
+        endpoint: HttpEndpoint;
+        sendRequestCodeBlock?: ruby.CodeBlock;
+    }): ruby.AstNode[] {
+        const statements: ruby.AstNode[] = [];
 
         if (sendRequestCodeBlock != null) {
             statements.push(sendRequestCodeBlock);
@@ -132,23 +252,7 @@ export class HttpEndpointGenerator {
             })
         );
 
-        return ruby.method({
-            name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
-            returnType,
-            parameters: {
-                keyword: [
-                    ruby.parameters.keyword({
-                        name: "request_options",
-                        initializer: ruby.TypeLiteral.hash([])
-                    })
-                ],
-                keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN
-                })
-            },
-            statements
-        });
+        return statements;
     }
 
     private getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {

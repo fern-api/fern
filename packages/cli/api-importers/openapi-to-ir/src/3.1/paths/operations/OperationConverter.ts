@@ -191,7 +191,8 @@ export class OperationConverter extends AbstractOperationConverter {
             pagination: undefined,
             transport: undefined,
             source: HttpEndpointSource.openapi(),
-            audiences
+            audiences,
+            retries: undefined
         };
 
         const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];

@@ -2,6 +2,7 @@ from collections import defaultdict
 from typing import DefaultDict, Set
 
 from . import AST
+from .reference_resolver import ReferenceResolver
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
 from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
@@ -50,7 +51,7 @@ class ImportsManager:
         self._has_written_top_imports = True
 
     def write_top_imports_for_statement(
-        self, *, statement_id: StatementId, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
+        self, *, statement_id: StatementId, writer: AST.NodeWriter, reference_resolver: ReferenceResolver
     ) -> None:
         if not self._has_written_top_imports:
             raise RuntimeError("Top imports haven't been written yet")
@@ -96,12 +97,12 @@ class ImportsManager:
 
         self._has_written_any_statements = True
 
-    def write_remaining_imports(self, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl) -> None:
+    def write_remaining_imports(self, writer: AST.NodeWriter, reference_resolver: ReferenceResolver) -> None:
         for import_ in self._import_to_statements_that_must_precede_it:
             self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
 
     def _write_import(
-        self, import_: AST.ReferenceImport, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
+        self, import_: AST.ReferenceImport, writer: AST.NodeWriter, reference_resolver: ReferenceResolver
     ) -> None:
         resolved_import = reference_resolver.resolve_import(import_)
         if resolved_import.import_ is not None:
@@ -110,6 +111,14 @@ class ImportsManager:
                     import_=resolved_import.import_,
                 )
             )
+
+    def get_resolved_import_as_string(
+        self, import_: AST.ReferenceImport, reference_resolver: ReferenceResolver, noqas: list[str] = []
+    ) -> str:
+        resolved_import = reference_resolver.resolve_import(import_)
+        if resolved_import.import_ is not None:
+            return self.get_import_as_string(import_=resolved_import.import_, noqas=noqas)
+        raise RuntimeError("Import is not resolved")
 
     def get_import_as_string(self, import_: AST.ReferenceImport, noqas: list[str] = []) -> str:
         module_str = (

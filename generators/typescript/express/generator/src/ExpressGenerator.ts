@@ -291,7 +291,8 @@ export class ExpressGenerator {
             outputJsr: false,
             exportSerde: false,
             useLegacyExports: true,
-            packageManager: this.config.packageManager
+            packageManager: this.config.packageManager,
+            testPath: this.getRelativeTestPath()
         });
     }
 

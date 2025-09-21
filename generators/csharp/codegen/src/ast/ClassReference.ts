@@ -93,7 +93,7 @@ export class ClassReference extends AstNode {
         const shouldGlobal =
             // if the type is global, then we need to globally qualify the type
             this.global ||
-            // if the first segment in a fqname is ambiguous, then we need to globally qualify the type if it gets expanded
+            // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
             this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
             // or we always are going to be using fully qualified namespaces
             writer.shouldUseFullyQualifiedNamespaces();

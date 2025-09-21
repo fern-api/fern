@@ -7,7 +7,7 @@ describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "test-file.txt");
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     describe("Buffer input", () => {
@@ -393,48 +393,6 @@ describe("toBinaryUploadRequest", () => {
                 "Content-Disposition": 'attachment; filename="test-file.txt"', // Should extract from path
                 "Content-Length": "21", // Should determine from file system (test file is 21 bytes)
             });
-        });
-
-        it("should handle Windows-style paths", async () => {
-            const input: Uploadable.FromPath = {
-                path: "C:\\Users\\test\\file.txt",
-            };
-
-            // Mock fs methods to avoid actual file system access
-            const mockStats = { size: 123 };
-            const mockReadStream = {} as fs.ReadStream;
-
-            const createReadStreamSpy = jest.spyOn(fs, "createReadStream").mockReturnValue(mockReadStream);
-            const statSpy = jest.spyOn(fs.promises, "stat").mockResolvedValue(mockStats as fs.Stats);
-
-            const result = await toBinaryUploadRequest(input);
-
-            expect(result.body).toBe(mockReadStream);
-            expect(result.headers).toEqual({
-                "Content-Disposition": 'attachment; filename="file.txt"', // Should extract from Windows path
-                "Content-Length": "123",
-            });
-
-            // Restore mocks
-            createReadStreamSpy.mockRestore();
-            statSpy.mockRestore();
-        });
-
-        it("should handle file path when fs is not available", async () => {
-            const input: Uploadable.FromPath = {
-                path: TEST_FILE_PATH,
-            };
-
-            // Mock import to simulate environment without fs
-            const originalImport = jest.requireActual("fs");
-            jest.doMock("fs", () => null);
-
-            await expect(toBinaryUploadRequest(input)).rejects.toThrow(
-                "File path uploads are not supported in this environment.",
-            );
-
-            // Restore fs
-            jest.doMock("fs", () => originalImport);
         });
     });
 
