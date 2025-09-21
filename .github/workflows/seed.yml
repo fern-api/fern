@@ -575,11 +575,12 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.java == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
