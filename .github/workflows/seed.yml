@@ -181,26 +181,6 @@ jobs:
         with:
           sparse-checkout: |
             .github/
-
-      # - name: Read JSON Test Times
-      #   id: read-json-test-times
-      #   run: |
-      #     location=$(pwd)
-      #     echo "location: $location"
-      #     BASH_JSON_DATA_VAR=$(cat $GITHUB_WORKSPACE/.github/test-packages.json | jq -r -c '.')
-      #     echo "json_data=$(echo "$BASH_JSON_DATA_VAR" | jq -s -c .)" >> $GITHUB_OUTPUT
-      #     echo "$BASH_JSON_DATA_VAR" | jq -r .
-      # - name: Set test matrices for ${{ matrix.generator-name }}
-      #   id: set-test-matrices
-      #   run: |
-      #     PACKAGE_NAME="${{ matrix.generator-name }}-test-packages"
-      #     if jq -e -c 'has("${PACKAGE_NAME}")' .github/test-packages.json > /dev/null 2>&1; then
-      #       PACKAGED_FIXTURES=$(echo "${{ steps.read-json-test-times.outputs.json_data }}" | jq -c -r ".[\"$PACKAGE_NAME\"]" | tr '\n' ' ' | sed 's/ $//')
-      #       echo "${{ matrix.generator-name }}-test-matrix=$PACKAGED_FIXTURES" >> $GITHUB_OUTPUT
-      #     else
-      #       RUN_ALL_FIXTURES='[{"fixtures":["all"]}]'
-      #       echo "${{ matrix.generator-name }}-test-matrix=$RUN_ALL_FIXTURES" >> $GITHUB_OUTPUT
-      #     fi
       - name: Set test matrices for ${{ matrix.generator-name }}
         id: set-test-matrices
         run: |
@@ -285,11 +265,13 @@ jobs:
   ruby-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby == 'true'
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true'
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -364,11 +346,13 @@ jobs:
   ruby-sdk-v2:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby-v2 == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby-v2 == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -401,11 +385,13 @@ jobs:
   pydantic-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+      # ${{
+      #   (needs.changes.outputs.python == 'true' 
+      #   && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      # }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -442,11 +428,14 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.python == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -479,11 +468,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.python == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -510,11 +501,13 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.openapi == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.openapi == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -551,11 +544,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.postman == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.postman == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -592,6 +587,7 @@ jobs:
     #     (needs.changes.outputs.java == 'true' 
     #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
     #   }}
+    # CHRISM - force test
     if: true
     steps:
       - name: Echo package
@@ -624,11 +620,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.java == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -660,11 +658,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.java == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -691,11 +691,13 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.typescript == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.typescript == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -733,11 +735,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.typescript == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.typescript == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -764,11 +768,13 @@ jobs:
   go-fiber:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.go == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -801,11 +807,13 @@ jobs:
   go-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.go == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -838,11 +846,13 @@ jobs:
   go-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.go == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.go == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -875,11 +885,13 @@ jobs:
   csharp-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.csharp == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.csharp == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -911,11 +923,13 @@ jobs:
   csharp-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.csharp == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.csharp == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -947,11 +961,13 @@ jobs:
   php-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.php == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.php == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -983,11 +999,13 @@ jobs:
   php-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.php == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.php == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1019,11 +1037,13 @@ jobs:
   swift-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.swift == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.swift == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1055,11 +1075,13 @@ jobs:
   rust-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.rust == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.rust == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1091,11 +1113,13 @@ jobs:
   rust-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.rust == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.rust == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - force test
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
