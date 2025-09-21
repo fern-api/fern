@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-21"
+  irVersion: 59
+
 - version: 1.16.10
   changelogEntry:
     - summary: |

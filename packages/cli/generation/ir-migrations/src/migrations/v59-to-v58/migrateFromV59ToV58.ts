@@ -41,7 +41,7 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: "0.6.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PHP_SDK]: "1.17.0",
         [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
