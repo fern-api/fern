@@ -11,6 +11,7 @@ import {
     getInnerTypeFromOptional,
     isCollectionType,
     isDateTimeType,
+    isFloatingPointType,
     isOptionalType,
     isUnknownType,
     isUuidType,
@@ -92,6 +93,11 @@ export class StructGenerator {
             writer.writeLine("use std::collections::HashMap;");
         }
 
+        // Add ordered_float if we have floating-point sets
+        if (this.hasFloatingPointSets()) {
+            writer.writeLine("use ordered_float::OrderedFloat;");
+        }
+
         // Add uuid if we have UUID fields
         if (this.hasUuidFields()) {
             writer.writeLine("use uuid::Uuid;");
@@ -128,8 +134,13 @@ export class StructGenerator {
     private generateStructAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Basic derives - start with essential ones
-        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Build derives conditionally based on actual needs
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+
+        // PartialEq - for equality comparisons
+        if (this.needsPartialEq()) {
+            derives.push("PartialEq");
+        }
 
         // Only add Hash and Eq if all field types support them
         if (this.canDeriveHashAndEq()) {
@@ -240,6 +251,19 @@ export class StructGenerator {
         });
     }
 
+    private hasFloatingPointSets(): boolean {
+        return this.objectTypeDeclaration.properties.some((prop) => {
+            const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+
+            // Check if this is a set of floating point numbers
+            if (typeRef.type === "container" && typeRef.container.type === "set") {
+                const setElementType = typeRef.container.set;
+                return isFloatingPointType(setElementType);
+            }
+            return false;
+        });
+    }
+
     private getCustomTypesUsedInFields(): {
         snakeCase: { unsafeName: string };
         pascalCase: { unsafeName: string };
@@ -254,7 +278,17 @@ export class StructGenerator {
             extractNamedTypesFromTypeReference(property.valueType, customTypeNames, visited);
         });
 
-        return customTypeNames;
+        // Filter out the current type itself to prevent self-imports
+        const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    }
+
+    private needsPartialEq(): boolean {
+        // PartialEq is useful for testing and comparisons
+        // Include it unless there are fields that can't support it
+        return this.objectTypeDeclaration.properties.every((property) => {
+            return typeSupportsHashAndEq(property.valueType, this.context);
+        });
     }
 
     private canDeriveHashAndEq(): boolean {

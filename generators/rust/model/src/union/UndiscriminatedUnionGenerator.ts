@@ -305,7 +305,9 @@ export class UndiscriminatedUnionGenerator {
             extractNamedTypesFromTypeReference(member.type, variantTypeNames, visited);
         });
 
-        return variantTypeNames;
+        // Filter out the current type itself to prevent self-imports
+        const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
     }
 
     private canDeriveHashAndEq(): boolean {

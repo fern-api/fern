@@ -179,12 +179,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
-                const subClientGenerator = new SubClientGenerator(context, subpackage);
-
-                // Generate the client file
-                files.push(subClientGenerator.generate());
-            }
+            // Always generate client files, even for subpackages without services/endpoints
+            const subClientGenerator = new SubClientGenerator(context, subpackage);
+            files.push(subClientGenerator.generate());
         });
     }
 
@@ -248,9 +245,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add re-exports
         const clientExports = [];
-        const subpackages = Object.values(context.ir.subpackages).filter(
-            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
-        );
+        const subpackages = Object.values(context.ir.subpackages);
 
         // Only add root client if there are multiple services
         if (subpackages.length > 1) {

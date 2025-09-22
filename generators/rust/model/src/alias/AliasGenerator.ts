@@ -4,7 +4,13 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isChronoType, isCollectionType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
+import {
+    isChronoType,
+    isCollectionType,
+    isUnknownType,
+    isUuidType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -106,12 +112,23 @@ export class AliasGenerator {
 
         // Always add basic derives
         const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Eq and Hash if the aliased type supports them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // DateTime aliases will use default RFC 3339 string serialization
         // No special serde handling needed for datetime aliases
 
         return attributes;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if the aliased type can support Hash and Eq derives
+        return typeSupportsHashAndEq(this.aliasTypeDeclaration.aliasOf, this.context);
     }
 
     private getCustomTypesUsedInAlias(): {
