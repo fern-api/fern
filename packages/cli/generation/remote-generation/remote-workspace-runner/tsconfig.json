@@ -5,7 +5,7 @@
     "outDir": "lib",
     "rootDir": "src",
     "types": ["vitest/globals"],
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
   "references": [
