@@ -104,7 +104,9 @@ public final class BinaryTreeValue {
         @JsonSetter(value = "nodes", nulls = Nulls.SKIP)
         public Builder nodes(Map<String, BinaryTreeNodeValue> nodes) {
             this.nodes.clear();
-            this.nodes.putAll(nodes);
+            if (nodes != null) {
+                this.nodes.putAll(nodes);
+            }
             return this;
         }
 

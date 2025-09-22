@@ -128,7 +128,9 @@ public final class TestCase {
     )
     public _FinalStage params(List<VariableValue> params) {
       this.params.clear();
-      this.params.addAll(params);
+      if (params != null) {
+        this.params.addAll(params);
+      }
       return this;
     }
 

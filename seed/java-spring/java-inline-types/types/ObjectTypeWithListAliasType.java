@@ -77,7 +77,9 @@ public final class ObjectTypeWithListAliasType {
     )
     public Builder prop(List<AliasProperty> prop) {
       this.prop.clear();
-      this.prop.addAll(prop);
+      if (prop != null) {
+        this.prop.addAll(prop);
+      }
       return this;
     }
 

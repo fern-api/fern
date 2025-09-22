@@ -128,7 +128,9 @@ public final class Response {
     )
     public _FinalStage identifiers(List<Identifier> identifiers) {
       this.identifiers.clear();
-      this.identifiers.addAll(identifiers);
+      if (identifiers != null) {
+        this.identifiers.addAll(identifiers);
+      }
       return this;
     }
 

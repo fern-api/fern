@@ -81,7 +81,9 @@ public final class DebugMapValue {
         @JsonSetter(value = "keyValuePairs", nulls = Nulls.SKIP)
         public Builder keyValuePairs(List<DebugKeyValuePairs> keyValuePairs) {
             this.keyValuePairs.clear();
-            this.keyValuePairs.addAll(keyValuePairs);
+            if (keyValuePairs != null) {
+                this.keyValuePairs.addAll(keyValuePairs);
+            }
             return this;
         }
 

@@ -83,7 +83,9 @@ public final class FunctionImplementationForMultipleLanguages {
         @JsonSetter(value = "codeByLanguage", nulls = Nulls.SKIP)
         public Builder codeByLanguage(Map<Language, FunctionImplementation> codeByLanguage) {
             this.codeByLanguage.clear();
-            this.codeByLanguage.putAll(codeByLanguage);
+            if (codeByLanguage != null) {
+                this.codeByLanguage.putAll(codeByLanguage);
+            }
             return this;
         }
 
