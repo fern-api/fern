@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Correct `nullable<>` wrapping of nullable schemas referenced via `$ref`.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.5
+
+- changelogEntry:
     - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
       type: fix
   irVersion: 59
