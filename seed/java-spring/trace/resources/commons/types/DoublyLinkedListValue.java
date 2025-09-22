@@ -104,7 +104,9 @@ public final class DoublyLinkedListValue {
     )
     public Builder nodes(Map<NodeId, DoublyLinkedListNodeValue> nodes) {
       this.nodes.clear();
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

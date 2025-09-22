@@ -113,7 +113,9 @@ public final class TraceResponsesPage {
         @JsonSetter(value = "traceResponses", nulls = Nulls.SKIP)
         public Builder traceResponses(List<TraceResponse> traceResponses) {
             this.traceResponses.clear();
-            this.traceResponses.addAll(traceResponses);
+            if (traceResponses != null) {
+                this.traceResponses.addAll(traceResponses);
+            }
             return this;
         }
 

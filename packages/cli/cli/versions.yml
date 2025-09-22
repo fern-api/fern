@@ -1,5 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Support `null` in an `enum` (functionality is delegated to `nullable<>`).
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.6
+
+- changelogEntry:
+    - summary: |
+        Correct `nullable<>` wrapping of nullable schemas referenced via `$ref`.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.5
+
+- changelogEntry:
+    - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.4
+
+- changelogEntry:
+    - summary: Support IR v59 in the Rust SDK generator.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.3
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest ruby sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.2
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest php sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.1
+
+- changelogEntry:
     - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
       type: feat
   irVersion: 59
@@ -167,8 +211,8 @@
 
 - changelogEntry:
     - summary: |
-        Introduces `group-multi-api-environments` flag for multi-API environment support. SDKs can now handle 
-        multiple API products with per-environment base URLs, featuring automatic environment grouping and 
+        Introduces `group-multi-api-environments` flag for multi-API environment support. SDKs can now handle
+        multiple API products with per-environment base URLs, featuring automatic environment grouping and
         service-aware URL routing.
       type: feat
   irVersion: 59

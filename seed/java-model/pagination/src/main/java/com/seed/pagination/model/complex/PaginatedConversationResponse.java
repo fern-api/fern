@@ -151,7 +151,9 @@ public final class PaginatedConversationResponse {
         @JsonSetter(value = "conversations", nulls = Nulls.SKIP)
         public _FinalStage conversations(List<Conversation> conversations) {
             this.conversations.clear();
-            this.conversations.addAll(conversations);
+            if (conversations != null) {
+                this.conversations.addAll(conversations);
+            }
             return this;
         }
 

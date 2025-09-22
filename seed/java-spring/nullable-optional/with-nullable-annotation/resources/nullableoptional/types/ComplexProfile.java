@@ -493,7 +493,9 @@ public final class ComplexProfile {
     )
     public _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions) {
       this.nullableListOfUnions.clear();
-      this.nullableListOfUnions.addAll(nullableListOfUnions);
+      if (nullableListOfUnions != null) {
+        this.nullableListOfUnions.addAll(nullableListOfUnions);
+      }
       return this;
     }
 
@@ -518,7 +520,9 @@ public final class ComplexProfile {
     )
     public _FinalStage nullableMapOfNullables(Map<String, Address> nullableMapOfNullables) {
       this.nullableMapOfNullables.clear();
-      this.nullableMapOfNullables.putAll(nullableMapOfNullables);
+      if (nullableMapOfNullables != null) {
+        this.nullableMapOfNullables.putAll(nullableMapOfNullables);
+      }
       return this;
     }
 
@@ -543,7 +547,9 @@ public final class ComplexProfile {
     )
     public _FinalStage nullableListOfNullables(List<String> nullableListOfNullables) {
       this.nullableListOfNullables.clear();
-      this.nullableListOfNullables.addAll(nullableListOfNullables);
+      if (nullableListOfNullables != null) {
+        this.nullableListOfNullables.addAll(nullableListOfNullables);
+      }
       return this;
     }
 
@@ -600,7 +606,9 @@ public final class ComplexProfile {
     )
     public _FinalStage nullableArray(List<String> nullableArray) {
       this.nullableArray.clear();
-      this.nullableArray.addAll(nullableArray);
+      if (nullableArray != null) {
+        this.nullableArray.addAll(nullableArray);
+      }
       return this;
     }
 

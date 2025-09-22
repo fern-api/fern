@@ -126,7 +126,9 @@ public final class SendEnumListAsQueryParamRequest {
         @JsonSetter(value = "operand", nulls = Nulls.SKIP)
         public Builder operand(List<Operand> operand) {
             this.operand.clear();
-            this.operand.addAll(operand);
+            if (operand != null) {
+                this.operand.addAll(operand);
+            }
             return this;
         }
 
@@ -166,7 +168,9 @@ public final class SendEnumListAsQueryParamRequest {
         @JsonSetter(value = "operandOrColor", nulls = Nulls.SKIP)
         public Builder operandOrColor(List<ColorOrOperand> operandOrColor) {
             this.operandOrColor.clear();
-            this.operandOrColor.addAll(operandOrColor);
+            if (operandOrColor != null) {
+                this.operandOrColor.addAll(operandOrColor);
+            }
             return this;
         }
 

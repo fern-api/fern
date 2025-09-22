@@ -81,7 +81,9 @@ public final class WithMetadata implements IWithMetadata {
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public Builder metadata(Map<String, String> metadata) {
             this.metadata.clear();
-            this.metadata.putAll(metadata);
+            if (metadata != null) {
+                this.metadata.putAll(metadata);
+            }
             return this;
         }
 

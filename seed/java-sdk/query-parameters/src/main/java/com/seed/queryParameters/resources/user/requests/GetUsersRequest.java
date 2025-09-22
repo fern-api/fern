@@ -447,7 +447,9 @@ public final class GetUsersRequest {
         @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
         public _FinalStage keyValue(Map<String, String> keyValue) {
             this.keyValue.clear();
-            this.keyValue.putAll(keyValue);
+            if (keyValue != null) {
+                this.keyValue.putAll(keyValue);
+            }
             return this;
         }
 
@@ -482,7 +484,9 @@ public final class GetUsersRequest {
         @JsonSetter(value = "userList", nulls = Nulls.SKIP)
         public _FinalStage userList(List<User> userList) {
             this.userList.clear();
-            this.userList.addAll(userList);
+            if (userList != null) {
+                this.userList.addAll(userList);
+            }
             return this;
         }
 
@@ -510,7 +514,9 @@ public final class GetUsersRequest {
         @JsonSetter(value = "filter", nulls = Nulls.SKIP)
         public _FinalStage filter(List<String> filter) {
             this.filter.clear();
-            this.filter.addAll(filter);
+            if (filter != null) {
+                this.filter.addAll(filter);
+            }
             return this;
         }
 
@@ -538,7 +544,9 @@ public final class GetUsersRequest {
         @JsonSetter(value = "excludeUser", nulls = Nulls.SKIP)
         public _FinalStage excludeUser(List<User> excludeUser) {
             this.excludeUser.clear();
-            this.excludeUser.addAll(excludeUser);
+            if (excludeUser != null) {
+                this.excludeUser.addAll(excludeUser);
+            }
             return this;
         }
 

@@ -8831,9 +8831,20 @@
               },
               "variable_compensation_type": {
                 "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
-                "type": "optional<string>",
+                "type": "optional<EorContractToCreateCompensationDetailsVariableCompensationType>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EorContractToCreateCompensationDetailsVariableCompensationType": {
+            "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
+            "enum": [
+              "PERCENTAGE",
+              "FIXED",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10537,7 +10548,18 @@
           },
           "InvoiceAdjustmentStatusEnum": {
             "docs": "status of invoice adjustment",
-            "type": "optional<string>",
+            "enum": [
+              "approved",
+              "declined",
+              "not_payable",
+              "paid",
+              "pending",
+              "processing",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "InvoiceAdjustmentStatusEnumList": "list<optional<InvoiceAdjustmentStatusEnum>>",
           "InvoiceAdjustmentToCreate": {
@@ -12719,7 +12741,18 @@
           },
           "TimesheetStatusEnum": {
             "docs": "Status of this entry.",
-            "type": "optional<string>",
+            "enum": [
+              "approved",
+              "declined",
+              "not_payable",
+              "paid",
+              "pending",
+              "processing",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
           "TimesheetToCreate": "TimesheetSharedProperties",
@@ -14934,8 +14967,16 @@
     docs: Type for Off-cycle payments
   TimesheetStatusEnumList: list<optional<TimesheetStatusEnum>>
   TimesheetStatusEnum:
-    type: optional<string>
+    enum:
+      - approved
+      - declined
+      - not_payable
+      - paid
+      - pending
+      - processing
     docs: Status of this entry.
+    source:
+      openapi: ../openapi.yml
   InvoiceAdjustmentTypeEnumList: list<InvoiceAdjustmentTypeEnum>
   InvoiceAdjustmentTypeEnum:
     enum:
@@ -14989,8 +15030,16 @@
       openapi: ../openapi.yml
   InvoiceAdjustmentStatusEnumList: list<optional<InvoiceAdjustmentStatusEnum>>
   InvoiceAdjustmentStatusEnum:
-    type: optional<string>
+    enum:
+      - approved
+      - declined
+      - not_payable
+      - paid
+      - pending
+      - processing
     docs: status of invoice adjustment
+    source:
+      openapi: ../openapi.yml
   SortDirEnum:
     enum:
       - asc
@@ -15921,6 +15970,16 @@
     source:
       openapi: ../openapi.yml
     inline: true
+  EorContractToCreateCompensationDetailsVariableCompensationType:
+    enum:
+      - PERCENTAGE
+      - FIXED
+    docs: >-
+      Should be set only if variable_compensation is set. It can be PERCENTAGE
+      or FIXED.
+    inline: true
+    source:
+      openapi: ../openapi.yml
   EorContractToCreateCompensationDetails:
     properties:
       salary:
@@ -15935,7 +15994,8 @@
           Varable compensation. For example, if the person will earn 5% of the
           gross annual salary as the variable compensation, enter 5.
       variable_compensation_type:
-        type: optional<string>
+        type: >-
+          optional<EorContractToCreateCompensationDetailsVariableCompensationType>
         docs: >-
           Should be set only if variable_compensation is set. It can be
           PERCENTAGE or FIXED.
@@ -20821,7 +20881,6 @@ errors:
                               "id": "rhCTiRd9Mad41RwjsFWw-",
                               "name": "Lisandro Shanahan-Dynamic Web Specialist",
                             },
-                            "created_at": "2022-05-24T09:38:46Z",
                             "currency": "USD",
                             "id": 5586317,
                             "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
@@ -20892,10 +20951,8 @@ errors:
                       "data": {
                         "rows": [
                           {
-                            "created_at": "2022-05-24T09:38:46Z",
                             "id": 12345,
                             "label": "label",
-                            "paid_at": "2022-05-24T09:38:46Z",
                             "payment_currency": "USD",
                             "payment_method": {
                               "type": "stripe_bacs_debit",
@@ -21016,7 +21073,6 @@ service:
                       id: rhCTiRd9Mad41RwjsFWw-
                       name: Lisandro Shanahan-Dynamic Web Specialist
                       contract_type: pay_as_you_go_time_based
-                    created_at: '2022-05-24T09:38:46Z'
                     total: 1000
                 total: 1.1
       audiences:
@@ -21145,8 +21201,6 @@ service:
                     status: paid
                     payment_currency: USD
                     label: label
-                    paid_at: '2022-05-24T09:38:46Z'
-                    created_at: '2022-05-24T09:38:46Z'
                     total: 1015
                     workers:
                       - name: Jane Doe
@@ -21463,10 +21517,8 @@ service:
                           "last_name": "last_name",
                           "payments": [
                             {
-                              "created_at": "2022-05-24T09:38:46Z",
                               "id": 12345,
                               "label": "label",
-                              "paid_at": "2022-05-24T09:38:46Z",
                               "payment_currency": "USD",
                               "payment_method": {
                                 "type": "stripe_bacs_debit",
@@ -21595,8 +21647,6 @@ service:
                       status: paid
                       payment_currency: USD
                       label: label
-                      paid_at: '2022-05-24T09:38:46Z'
-                      created_at: '2022-05-24T09:38:46Z'
                       total: 1015
                       workers:
                         - name: Jane Doe
@@ -24240,9 +24290,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "is_shielded": true,
                           "notice_period": 15,
                           "signatures": {
-                            "client_signed_at": "2022-05-24T09:38:46Z",
                             "worker_signature": "Jane Doe",
-                            "worker_signed_at": "2022-05-24T09:38:46Z",
                           },
                           "status": "new",
                           "termination_date": "2022-05-24T09:38:46Z",
@@ -24734,9 +24782,7 @@ service:
                     full_name: full_name
                   invitations: {}
                   signatures:
-                    client_signed_at: '2022-05-24T09:38:46Z'
                     worker_signature: Jane Doe
-                    worker_signed_at: '2022-05-24T09:38:46Z'
                   is_shielded: true
                   is_archived: true
                   created_at: '2022-05-24T09:38:46Z'
@@ -25935,7 +25981,7 @@ docs: API end-points related to HRIS data.
                         "created_at": "2022-05-24T09:38:46Z",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -26183,10 +26229,7 @@ docs: API end-points related to HRIS data.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "payment_cycle": {
-                            "end_date": "2022-05-24T09:38:46Z",
-                            "start_date": "2022-05-24T09:38:46Z",
-                          },
+                          "payment_cycle": {},
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -26200,7 +26243,7 @@ docs: API end-points related to HRIS data.
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
                           "scale": "custom",
-                          "status": "status",
+                          "status": "approved",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
                           "worksheet": {
@@ -26329,10 +26372,7 @@ docs: API end-points related to HRIS data.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "payment_cycle": {
-                            "end_date": "2022-05-24T09:38:46Z",
-                            "start_date": "2022-05-24T09:38:46Z",
-                          },
+                          "payment_cycle": {},
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -26346,7 +26386,7 @@ docs: API end-points related to HRIS data.
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
                           "scale": "custom",
-                          "status": "status",
+                          "status": "approved",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
                           "worksheet": {
@@ -26597,7 +26637,7 @@ service:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
-                  status: status
+                  status: approved
                   description: description
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -26623,9 +26663,7 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
-                  payment_cycle:
-                    start_date: '2022-05-24T09:38:46Z'
-                    end_date: '2022-05-24T09:38:46Z'
+                  payment_cycle: {}
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -26717,7 +26755,7 @@ service:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
-                  status: status
+                  status: approved
                   description: description
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -26743,9 +26781,7 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
-                  payment_cycle:
-                    start_date: '2022-05-24T09:38:46Z'
-                    end_date: '2022-05-24T09:38:46Z'
+                  payment_cycle: {}
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -26796,7 +26832,7 @@ service:
                 created: true
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external
@@ -28227,7 +28263,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                           "remarks": "SAP Reference id: 123",
                           "reviewed_at": "2022-05-04T03:45:27.899Z",
                         },
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -28297,7 +28333,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                             "remarks": "SAP Reference id: 123",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "status": "status",
+                          "status": "approved",
                         },
                       ],
                     },
@@ -28366,7 +28402,7 @@ service:
               data:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
-                  status: status
+                  status: approved
                   description: Yearly bonus.
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -28463,7 +28499,7 @@ service:
               data:
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 description: Yearly bonus.
                 date_submitted: '2022-05-24T09:38:46Z'
                 currency_code: USD
@@ -29505,7 +29541,6 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -29690,7 +29725,6 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -29826,11 +29860,9 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
-                                    "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -29844,11 +29876,9 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
-                                    "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -29863,11 +29893,9 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
-                                    "created_at": "2022-05-24T09:38:46Z",
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
-                                    "requested_at": "2022-05-24T09:38:46Z",
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -29986,7 +30014,6 @@ docs: End-points to manage tasks for a given contract
                             {
                               "days_used_end_year": "2.00",
                               "days_used_start_year": "2.00",
-                              "requested_at": "2022-05-24T09:38:46Z",
                               "status": "REQUESTED",
                               "total_days_used": "4.00",
                               "type": "VACATION",
@@ -29999,7 +30026,6 @@ docs: End-points to manage tasks for a given contract
                           "change_request": {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
-                            "requested_at": "2022-05-24T09:38:46Z",
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -30199,14 +30225,12 @@ service:
                   is_updated: true
                   change_request:
                     type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
                     total_days_used: '4.00'
                   applied_changes:
                     - type: VACATION
-                      requested_at: '2022-05-24T09:38:46Z'
                       status: REQUESTED
                       days_used_start_year: '2.00'
                       days_used_end_year: '2.00'
@@ -30312,7 +30336,6 @@ service:
                     - {}
                 applied_changes:
                   - type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
@@ -30422,7 +30445,6 @@ service:
                     - {}
                 applied_changes:
                   - type: VACATION
-                    requested_at: '2022-05-24T09:38:46Z'
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
@@ -30539,38 +30561,32 @@ service:
                       - year: 2022
                         requests:
                           - type: VACATION
-                            requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
-                            created_at: '2022-05-24T09:38:46Z'
                     sick_leaves:
                       - year: 2022
                         requests:
                           - type: VACATION
-                            requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
-                            created_at: '2022-05-24T09:38:46Z'
                     others:
                       - year: 2022
                         requests:
                           - type: VACATION
-                            requested_at: '2022-05-24T09:38:46Z'
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
-                            created_at: '2022-05-24T09:38:46Z'
                     time_zones: time_zones
                 total_requests: 1.1
       audiences:
@@ -30668,7 +30684,7 @@ docs: Manage time off requests.
                         "created_at": "2022-05-24T09:38:46Z",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -31542,7 +31558,7 @@ service:
                 created: true
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external

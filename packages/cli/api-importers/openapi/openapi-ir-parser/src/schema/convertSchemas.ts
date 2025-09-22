@@ -122,6 +122,21 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(
               convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
           );
+
+    // if referenced schema would be found nullable in convertSchemaObject(),
+    // wrap it as nullable here
+    if (wrapAsNullable === false) {
+        const referencedSchema = context.resolveSchemaReference(schema);
+        if (
+            referencedSchema.nullable === true ||
+            (Array.isArray(referencedSchema.type) &&
+                referencedSchema.type.length >= 2 &&
+                referencedSchema.type.includes("null"))
+        ) {
+            wrapAsNullable = true;
+        }
+    }
+
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             title: undefined,
@@ -236,18 +251,7 @@ export function convertSchemaObject(
 
         // if a schema is null then we should wrap it as nullable
         if (!wrapAsNullable && schema.nullable === true) {
-            return convertSchemaObject(
-                schema,
-                true,
-                context,
-                breadcrumbs,
-                encoding,
-                source,
-                namespace,
-                propertiesToExclude,
-                referencedAsRequest,
-                fallback
-            );
+            wrapAsNullable = true;
         }
 
         // const
@@ -262,6 +266,9 @@ export function convertSchemaObject(
             schema.enum != null &&
             (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
         ) {
+            // Cut 'null' from enum since functionality is achieved by 'nullable'
+            schema.enum = schema.enum.filter((value) => value !== null);
+
             if (!isListOfStrings(schema.enum)) {
                 // If enum is not a list of strings, just type as a string.
                 // TODO(dsinghvi): Emit a warning we are doing this.

@@ -81,7 +81,9 @@ public final class NodesWrapper {
         @JsonSetter(value = "nodes", nulls = Nulls.SKIP)
         public Builder nodes(List<List<Node>> nodes) {
             this.nodes.clear();
-            this.nodes.addAll(nodes);
+            if (nodes != null) {
+                this.nodes.addAll(nodes);
+            }
             return this;
         }
 
