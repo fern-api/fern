@@ -266,6 +266,9 @@ export function convertSchemaObject(
             schema.enum != null &&
             (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
         ) {
+            // Cut 'null' from enum since functionality is achieved by 'nullable'
+            schema.enum = schema.enum.filter((value) => value !== null);
+
             if (!isListOfStrings(schema.enum)) {
                 // If enum is not a list of strings, just type as a string.
                 // TODO(dsinghvi): Emit a warning we are doing this.
