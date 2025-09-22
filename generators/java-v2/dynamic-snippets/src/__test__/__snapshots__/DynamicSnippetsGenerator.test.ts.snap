@@ -76,7 +76,7 @@ client.service().createBigEntity(
     BigEntity
         .builder()
         .castMember(
-            CastMember.ofActor(
+            CastMember.of(
                 Actor
                     .builder()
                     .id("john.doe")

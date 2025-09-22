@@ -16,7 +16,7 @@ public class Example4 {
             Request
                 .builder()
                 .union(
-                    MetadataUnion.ofOptionalMetadata(
+                    MetadataUnion.of(
                         new HashMap<String, Object>() {{
                             put("union", new 
                             HashMap<String, Object>() {{put("key", "value");
