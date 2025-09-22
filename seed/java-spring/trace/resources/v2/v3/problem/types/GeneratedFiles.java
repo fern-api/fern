@@ -101,7 +101,9 @@ public final class GeneratedFiles {
     )
     public Builder generatedTestCaseFiles(Map<Language, Files> generatedTestCaseFiles) {
       this.generatedTestCaseFiles.clear();
-      this.generatedTestCaseFiles.putAll(generatedTestCaseFiles);
+      if (generatedTestCaseFiles != null) {
+        this.generatedTestCaseFiles.putAll(generatedTestCaseFiles);
+      }
       return this;
     }
 
@@ -123,7 +125,9 @@ public final class GeneratedFiles {
     )
     public Builder generatedTemplateFiles(Map<Language, Files> generatedTemplateFiles) {
       this.generatedTemplateFiles.clear();
-      this.generatedTemplateFiles.putAll(generatedTemplateFiles);
+      if (generatedTemplateFiles != null) {
+        this.generatedTemplateFiles.putAll(generatedTemplateFiles);
+      }
       return this;
     }
 
@@ -145,7 +149,9 @@ public final class GeneratedFiles {
     )
     public Builder other(Map<Language, Files> other) {
       this.other.clear();
-      this.other.putAll(other);
+      if (other != null) {
+        this.other.putAll(other);
+      }
       return this;
     }
 

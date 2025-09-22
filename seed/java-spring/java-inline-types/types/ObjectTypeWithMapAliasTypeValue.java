@@ -77,7 +77,9 @@ public final class ObjectTypeWithMapAliasTypeValue {
     )
     public Builder prop(Map<String, AliasProperty> prop) {
       this.prop.clear();
-      this.prop.putAll(prop);
+      if (prop != null) {
+        this.prop.putAll(prop);
+      }
       return this;
     }
 

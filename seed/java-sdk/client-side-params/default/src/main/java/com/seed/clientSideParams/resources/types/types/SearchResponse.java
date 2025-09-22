@@ -108,7 +108,9 @@ public final class SearchResponse {
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
         public Builder results(List<Resource> results) {
             this.results.clear();
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

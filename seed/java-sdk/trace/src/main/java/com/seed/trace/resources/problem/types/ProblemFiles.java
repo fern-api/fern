@@ -134,7 +134,9 @@ public final class ProblemFiles {
         @JsonSetter(value = "readOnlyFiles", nulls = Nulls.SKIP)
         public _FinalStage readOnlyFiles(List<FileInfo> readOnlyFiles) {
             this.readOnlyFiles.clear();
-            this.readOnlyFiles.addAll(readOnlyFiles);
+            if (readOnlyFiles != null) {
+                this.readOnlyFiles.addAll(readOnlyFiles);
+            }
             return this;
         }
 

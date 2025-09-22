@@ -66,7 +66,9 @@ public final class ContainerObject {
         @JsonSetter(value = "nestedObjects", nulls = Nulls.SKIP)
         public Builder nestedObjects(List<NestedObjectWithLiterals> nestedObjects) {
             this.nestedObjects.clear();
-            this.nestedObjects.addAll(nestedObjects);
+            if (nestedObjects != null) {
+                this.nestedObjects.addAll(nestedObjects);
+            }
             return this;
         }
 

@@ -77,7 +77,9 @@ public final class ProblemDescription {
     )
     public Builder boards(List<ProblemDescriptionBoard> boards) {
       this.boards.clear();
-      this.boards.addAll(boards);
+      if (boards != null) {
+        this.boards.addAll(boards);
+      }
       return this;
     }
 

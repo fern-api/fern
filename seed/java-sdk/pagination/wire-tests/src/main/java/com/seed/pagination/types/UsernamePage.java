@@ -104,7 +104,9 @@ public final class UsernamePage {
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public Builder data(List<String> data) {
             this.data.clear();
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

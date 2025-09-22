@@ -165,7 +165,9 @@ public final class PaginatedConversationResponse {
     )
     public _FinalStage conversations(List<Conversation> conversations) {
       this.conversations.clear();
-      this.conversations.addAll(conversations);
+      if (conversations != null) {
+        this.conversations.addAll(conversations);
+      }
       return this;
     }
 

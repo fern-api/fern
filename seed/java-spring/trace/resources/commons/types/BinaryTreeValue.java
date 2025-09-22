@@ -103,7 +103,9 @@ public final class BinaryTreeValue {
     )
     public Builder nodes(Map<NodeId, BinaryTreeNodeValue> nodes) {
       this.nodes.clear();
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

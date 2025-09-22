@@ -258,7 +258,9 @@ public final class CreateProblemRequest {
         @JsonSetter(value = "testcases", nulls = Nulls.SKIP)
         public _FinalStage testcases(List<TestCaseWithExpectedResult> testcases) {
             this.testcases.clear();
-            this.testcases.addAll(testcases);
+            if (testcases != null) {
+                this.testcases.addAll(testcases);
+            }
             return this;
         }
 
@@ -280,7 +282,9 @@ public final class CreateProblemRequest {
         @JsonSetter(value = "inputParams", nulls = Nulls.SKIP)
         public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.clear();
-            this.inputParams.addAll(inputParams);
+            if (inputParams != null) {
+                this.inputParams.addAll(inputParams);
+            }
             return this;
         }
 
@@ -302,7 +306,9 @@ public final class CreateProblemRequest {
         @JsonSetter(value = "files", nulls = Nulls.SKIP)
         public _FinalStage files(Map<Language, ProblemFiles> files) {
             this.files.clear();
-            this.files.putAll(files);
+            if (files != null) {
+                this.files.putAll(files);
+            }
             return this;
         }
 
