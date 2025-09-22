@@ -203,17 +203,17 @@ jobs:
       # to save on runner count. Eventually this will be done dynamically
       - name: Determine test setups
         id: determine-test-setups
-        run: 
+        run: |
           if [[ "${{ matrix.generator-name }}" == "fastapi" || \
-                "${{ matrix.generator-name }}" == "go-fiber" || \
-                "${{ matrix.generator-name }}" == "go-model" || \
-                "${{ matrix.generator-name }}" == "java-spring" || \
-                "${{ matrix.generator-name }}" == "openapi" || \
-                "${{ matrix.generator-name }}" == "php-model" || \
-                "${{ matrix.generator-name }}" == "postman" || \
-                "${{ matrix.generator-name }}" == "ruby-sdk" || \
-                "${{ matrix.generator-name }}" == "rust-model" || \
-                "${{ matrix.generator-name }}" == "typescript-express" ]]; then
+          "${{ matrix.generator-name }}" == "go-fiber" || \
+          "${{ matrix.generator-name }}" == "go-model" || \
+          "${{ matrix.generator-name }}" == "java-spring" || \
+          "${{ matrix.generator-name }}" == "openapi" || \
+          "${{ matrix.generator-name }}" == "php-model" || \
+          "${{ matrix.generator-name }}" == "postman" || \
+          "${{ matrix.generator-name }}" == "ruby-sdk" || \
+          "${{ matrix.generator-name }}" == "rust-model" || \
+          "${{ matrix.generator-name }}" == "ts-express" ]]; then
             echo "split-tests=false" >> $GITHUB_OUTPUT
           else
             echo "split-tests=true" >> $GITHUB_OUTPUT
@@ -296,7 +296,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
-    #     (needs.changes.outputs.ruby == 'true' 
+    #     (needs.changes.outputs.ruby == 'true'
     #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
     #   }}
     if: true
@@ -659,7 +659,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     # if: >-
     #   ${{
-    #     (needs.changes.outputs.typescript == 'true' 
+    #     (needs.changes.outputs.typescript == 'true'
     #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
     #   }}
     if: true
