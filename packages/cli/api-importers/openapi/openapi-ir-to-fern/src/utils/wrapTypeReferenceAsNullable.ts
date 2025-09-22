@@ -8,7 +8,7 @@ export function wrapTypeReferenceAsNullable(
     typeReference: RawSchemas.TypeReferenceSchema
 ): RawSchemas.TypeReferenceSchema {
     const type = getTypeFromTypeReference(typeReference);
-    if (type.includes("nullable<")) {
+    if (type.startsWith("nullable<") || type.startsWith("optional<nullable<")) {
         return typeReference;
     } else if (typeof typeReference === "string") {
         return wrapTypeAsNullable(typeReference);

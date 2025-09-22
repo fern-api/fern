@@ -8,7 +8,7 @@ export function wrapTypeReferenceAsOptional(
     typeReference: RawSchemas.TypeReferenceSchema
 ): RawSchemas.TypeReferenceSchema {
     const type = getTypeFromTypeReference(typeReference);
-    if (type.includes("optional<")) {
+    if (type.startsWith("optional<")) {
         return typeReference;
     } else if (typeof typeReference === "string") {
         return wrapTypeAsOptional(typeReference);
