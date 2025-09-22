@@ -7,9 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import OptionalStringResponse, StringResponse, WithMetadata
-    from . import service
     from .client import AsyncSeedResponseProperty, SeedResponseProperty
-    from .service import Movie, OptionalWithDocs, Response, WithDocs
+    from .service import Movie, OptionalWithDocs, Response, WithDocs, service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedResponseProperty": ".client",
@@ -22,7 +21,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WithDocs": ".service",
     "WithMetadata": ".types",
     "__version__": ".version",
-    "service": ".",
+    "service": ".service",
 }
 
 

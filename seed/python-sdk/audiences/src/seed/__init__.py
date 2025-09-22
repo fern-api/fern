@@ -6,11 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import commons, folder_a, folder_b, folder_c, folder_d, foo
     from .client import AsyncSeedAudiences, SeedAudiences
-    from .commons import Imported
+    from .commons import Imported, commons
     from .environment import SeedAudiencesEnvironment
-    from .foo import FilteredType, ImportingType, OptionalString
+    from .folder_a import folder_a
+    from .folder_b import folder_b
+    from .folder_c import folder_c
+    from .folder_d import folder_d
+    from .foo import FilteredType, ImportingType, OptionalString, foo
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAudiences": ".client",
@@ -21,12 +24,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedAudiences": ".client",
     "SeedAudiencesEnvironment": ".environment",
     "__version__": ".version",
-    "commons": ".",
-    "folder_a": ".",
-    "folder_b": ".",
-    "folder_c": ".",
-    "folder_d": ".",
-    "foo": ".",
+    "commons": ".commons",
+    "folder_a": ".folder_a",
+    "folder_b": ".folder_b",
+    "folder_c": ".folder_c",
+    "folder_d": ".folder_d",
+    "foo": ".foo",
 }
 
 

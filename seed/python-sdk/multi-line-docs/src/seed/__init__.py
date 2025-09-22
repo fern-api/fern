@@ -7,9 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Operand
-    from . import user
     from .client import AsyncSeedMultiLineDocs, SeedMultiLineDocs
-    from .user import User
+    from .user import User, user
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMultiLineDocs": ".client",
@@ -17,7 +16,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedMultiLineDocs": ".client",
     "User": ".user",
     "__version__": ".version",
-    "user": ".",
+    "user": ".user",
 }
 
 

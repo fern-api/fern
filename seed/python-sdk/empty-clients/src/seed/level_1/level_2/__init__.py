@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Address, Person
-    from . import types
-_dynamic_imports: typing.Dict[str, str] = {"Address": ".types", "Person": ".types", "types": "."}
+    from .types import Address, Person, types
+_dynamic_imports: typing.Dict[str, str] = {"Address": ".types", "Person": ".types", "types": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

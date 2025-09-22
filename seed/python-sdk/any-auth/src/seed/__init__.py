@@ -6,10 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import auth, user
-    from .auth import TokenResponse
+    from .auth import TokenResponse, auth
     from .client import AsyncSeedAnyAuth, SeedAnyAuth
-    from .user import User
+    from .user import User, user
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAnyAuth": ".client",
@@ -17,8 +16,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenResponse": ".auth",
     "User": ".user",
     "__version__": ".version",
-    "auth": ".",
-    "user": ".",
+    "auth": ".auth",
+    "user": ".user",
 }
 
 

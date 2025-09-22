@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import inline_users
     from .inline_users import (
         ListUsersExtendedOptionalListResponse,
         ListUsersExtendedResponse,
@@ -24,6 +23,7 @@ if typing.TYPE_CHECKING:
         Users,
         WithCursor,
         WithPage,
+        inline_users,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ListUsersExtendedOptionalListResponse": ".inline_users",
@@ -42,7 +42,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Users": ".inline_users",
     "WithCursor": ".inline_users",
     "WithPage": ".inline_users",
-    "inline_users": ".",
+    "inline_users": ".inline_users",
 }
 
 

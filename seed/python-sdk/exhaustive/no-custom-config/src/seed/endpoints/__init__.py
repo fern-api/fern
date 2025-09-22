@@ -6,23 +6,31 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import container, content_type, enum, http_methods, object, params, primitive, put, union, urls
-    from .put import Error, ErrorCategory, ErrorCode, PutResponse
+    from .container import container
+    from .content_type import content_type
+    from .enum import enum
+    from .http_methods import http_methods
+    from .object import object
+    from .params import params
+    from .primitive import primitive
+    from .put import Error, ErrorCategory, ErrorCode, PutResponse, put
+    from .union import union
+    from .urls import urls
 _dynamic_imports: typing.Dict[str, str] = {
     "Error": ".put",
     "ErrorCategory": ".put",
     "ErrorCode": ".put",
     "PutResponse": ".put",
-    "container": ".",
-    "content_type": ".",
-    "enum": ".",
-    "http_methods": ".",
-    "object": ".",
-    "params": ".",
-    "primitive": ".",
-    "put": ".",
-    "union": ".",
-    "urls": ".",
+    "container": ".container",
+    "content_type": ".content_type",
+    "enum": ".enum",
+    "http_methods": ".http_methods",
+    "object": ".object",
+    "params": ".params",
+    "primitive": ".primitive",
+    "put": ".put",
+    "union": ".union",
+    "urls": ".urls",
 }
 
 

@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import union
     from .client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
     from .union import (
         Key,
@@ -24,6 +23,7 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicateTypes,
         UnionWithIdenticalPrimitives,
         UnionWithIdenticalStrings,
+        union,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -45,7 +45,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithIdenticalPrimitives": ".union",
     "UnionWithIdenticalStrings": ".union",
     "__version__": ".version",
-    "union": ".",
+    "union": ".union",
 }
 
 

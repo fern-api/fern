@@ -43,10 +43,14 @@ if typing.TYPE_CHECKING:
         Test_Or,
         Tree,
         Type,
+        types,
     )
-    from . import commons, file, health, service, types
     from .client import AsyncSeedExamples, SeedExamples
+    from .commons import commons
     from .environment import SeedExamplesEnvironment
+    from .file import file
+    from .health import health
+    from .service import service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "Actor": ".types",
@@ -89,11 +93,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Tree": ".types",
     "Type": ".types",
     "__version__": ".version",
-    "commons": ".",
-    "file": ".",
-    "health": ".",
-    "service": ".",
-    "types": ".",
+    "commons": ".commons",
+    "file": ".file",
+    "health": ".health",
+    "service": ".service",
+    "types": ".types",
 }
 
 

@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import package
     from .client import AsyncSeedNurseryApi, SeedNurseryApi
-    from .package import Package, Record
+    from .package import Package, Record, package
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedNurseryApi": ".client",
@@ -16,7 +15,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Record": ".package",
     "SeedNurseryApi": ".client",
     "__version__": ".version",
-    "package": ".",
+    "package": ".package",
 }
 
 

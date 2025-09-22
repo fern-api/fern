@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import dummy
     from .client import AsyncSeedSingleUrlEnvironmentNoDefault, SeedSingleUrlEnvironmentNoDefault
+    from .dummy import dummy
     from .environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -15,7 +15,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedSingleUrlEnvironmentNoDefault": ".client",
     "SeedSingleUrlEnvironmentNoDefaultEnvironment": ".environment",
     "__version__": ".version",
-    "dummy": ".",
+    "dummy": ".dummy",
 }
 
 

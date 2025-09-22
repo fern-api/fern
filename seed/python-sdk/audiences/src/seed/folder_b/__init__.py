@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import common
-    from .common import Foo
-_dynamic_imports: typing.Dict[str, str] = {"Foo": ".common", "common": "."}
+    from .common import Foo, common
+_dynamic_imports: typing.Dict[str, str] = {"Foo": ".common", "common": ".common"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

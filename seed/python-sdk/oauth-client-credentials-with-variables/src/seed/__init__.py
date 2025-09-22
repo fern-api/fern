@@ -6,20 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import auth, nested, nested_no_auth, service, simple
-    from .auth import TokenResponse
+    from .auth import TokenResponse, auth
     from .client import AsyncSeedOauthClientCredentialsWithVariables, SeedOauthClientCredentialsWithVariables
+    from .nested import nested
+    from .nested_no_auth import nested_no_auth
+    from .service import service
+    from .simple import simple
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedOauthClientCredentialsWithVariables": ".client",
     "SeedOauthClientCredentialsWithVariables": ".client",
     "TokenResponse": ".auth",
     "__version__": ".version",
-    "auth": ".",
-    "nested": ".",
-    "nested_no_auth": ".",
-    "service": ".",
-    "simple": ".",
+    "auth": ".auth",
+    "nested": ".nested",
+    "nested_no_auth": ".nested_no_auth",
+    "service": ".service",
+    "simple": ".simple",
 }
 
 

@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import docs, enum, object, union
-    from .docs import ObjectWithDocs
-    from .enum import ErrorWithEnumBody, WeatherReport
+    from .docs import ObjectWithDocs, docs
+    from .enum import ErrorWithEnumBody, WeatherReport, enum
     from .object import (
         DoubleOptional,
         NestedObjectWithOptionalField,
@@ -21,8 +20,9 @@ if typing.TYPE_CHECKING:
         ObjectWithRequiredField,
         ObjectWithRequiredFieldError,
         OptionalAlias,
+        object,
     )
-    from .union import Animal, Cat, Dog, ErrorWithUnionBody
+    from .union import Animal, Cat, Dog, ErrorWithUnionBody, union
 _dynamic_imports: typing.Dict[str, str] = {
     "Animal": ".union",
     "Cat": ".union",
@@ -42,10 +42,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectWithRequiredFieldError": ".object",
     "OptionalAlias": ".object",
     "WeatherReport": ".enum",
-    "docs": ".",
-    "enum": ".",
-    "object": ".",
-    "union": ".",
+    "docs": ".docs",
+    "enum": ".enum",
+    "object": ".object",
+    "union": ".union",
 }
 
 

@@ -7,7 +7,6 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import UsernameCursor, UsernamePage
-    from . import complex_, inline_users, users
     from .client import AsyncSeedPagination, SeedPagination
     from .complex_ import (
         Conversation,
@@ -21,7 +20,9 @@ if typing.TYPE_CHECKING:
         SingleFilterSearchRequest,
         SingleFilterSearchRequestOperator,
         StartingAfterPaging,
+        complex_,
     )
+    from .inline_users import inline_users
     from .users import (
         ListUsersExtendedOptionalListResponse,
         ListUsersExtendedResponse,
@@ -38,6 +39,7 @@ if typing.TYPE_CHECKING:
         UsernameContainer,
         WithCursor,
         WithPage,
+        users,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -72,9 +74,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WithCursor": ".users",
     "WithPage": ".users",
     "__version__": ".version",
-    "complex_": ".",
-    "inline_users": ".",
-    "users": ".",
+    "complex_": ".complex_",
+    "inline_users": ".inline_users",
+    "users": ".users",
 }
 
 

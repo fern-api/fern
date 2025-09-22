@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import nullable
     from .client import AsyncSeedNullable, SeedNullable
     from .nullable import (
         Email,
@@ -25,6 +24,7 @@ if typing.TYPE_CHECKING:
         UserParams,
         WeirdNumber,
         WeirdNumberParams,
+        nullable,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -47,7 +47,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WeirdNumber": ".nullable",
     "WeirdNumberParams": ".nullable",
     "__version__": ".version",
-    "nullable": ".",
+    "nullable": ".nullable",
 }
 
 

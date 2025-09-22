@@ -6,8 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import b, c, d
-_dynamic_imports: typing.Dict[str, str] = {"b": ".", "c": ".", "d": "."}
+    from .b import b
+    from .c import c
+    from .d import d
+_dynamic_imports: typing.Dict[str, str] = {"b": ".b", "c": ".c", "d": ".d"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

@@ -7,8 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ImportingA, RootType
-    from . import a, ast
-    from .a import A
+    from .a import A, a
     from .ast import (
         ContainerValue,
         ContainerValue_List,
@@ -23,6 +22,7 @@ if typing.TYPE_CHECKING:
         T,
         TorU,
         U,
+        ast,
     )
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
@@ -46,8 +46,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TorU": ".ast",
     "U": ".ast",
     "__version__": ".version",
-    "a": ".",
-    "ast": ".",
+    "a": ".a",
+    "ast": ".ast",
 }
 
 

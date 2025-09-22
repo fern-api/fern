@@ -7,10 +7,9 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Id
-    from . import organization, user
     from .client import AsyncSeedMixedFileDirectory, SeedMixedFileDirectory
-    from .organization import CreateOrganizationRequest, Organization
-    from .user import User
+    from .organization import CreateOrganizationRequest, Organization, organization
+    from .user import User, user
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMixedFileDirectory": ".client",
@@ -20,8 +19,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedMixedFileDirectory": ".client",
     "User": ".user",
     "__version__": ".version",
-    "organization": ".",
-    "user": ".",
+    "organization": ".organization",
+    "user": ".user",
 }
 
 

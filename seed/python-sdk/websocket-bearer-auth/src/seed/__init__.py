@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import realtime
     from .client import AsyncSeedWebsocketBearerAuth, SeedWebsocketBearerAuth
     from .realtime import (
         ReceiveEvent,
@@ -16,6 +15,7 @@ if typing.TYPE_CHECKING:
         SendEvent,
         SendEvent2,
         SendSnakeCase,
+        realtime,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -29,7 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendEvent2": ".realtime",
     "SendSnakeCase": ".realtime",
     "__version__": ".version",
-    "realtime": ".",
+    "realtime": ".realtime",
 }
 
 

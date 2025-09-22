@@ -7,8 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ImportingA, RootType
-    from . import a, ast
-    from .a import A
+    from .a import A, a
     from .ast import (
         Acai,
         Animal,
@@ -32,6 +31,7 @@ if typing.TYPE_CHECKING:
         ObjectFieldValue,
         ObjectValue,
         PrimitiveValue,
+        ast,
     )
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
@@ -64,8 +64,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RootType": ".types",
     "SeedApi": ".client",
     "__version__": ".version",
-    "a": ".",
-    "ast": ".",
+    "a": ".a",
+    "ast": ".ast",
 }
 
 

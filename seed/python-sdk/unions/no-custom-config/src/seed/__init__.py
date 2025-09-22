@@ -63,8 +63,8 @@ if typing.TYPE_CHECKING:
         UnionWithoutKey_Foo,
         Union_Bar,
         Union_Foo,
+        types,
     )
-    from . import bigunion, types, union
     from .bigunion import (
         ActiveDiamond,
         AttractiveScript,
@@ -125,9 +125,10 @@ if typing.TYPE_CHECKING:
         UniqueStress,
         UnwillingSmoke,
         VibrantExcitement,
+        bigunion,
     )
     from .client import AsyncSeedUnions, SeedUnions
-    from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
+    from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName, union
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActiveDiamond": ".bigunion",
@@ -255,9 +256,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VibrantExcitement": ".bigunion",
     "WithName": ".union",
     "__version__": ".version",
-    "bigunion": ".",
-    "types": ".",
-    "union": ".",
+    "bigunion": ".bigunion",
+    "types": ".types",
+    "union": ".union",
 }
 
 

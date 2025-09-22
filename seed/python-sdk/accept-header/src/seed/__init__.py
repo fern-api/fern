@@ -6,16 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import service
     from .client import AsyncSeedAccept, SeedAccept
-    from .service import NotFoundError
+    from .service import NotFoundError, service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAccept": ".client",
     "NotFoundError": ".service",
     "SeedAccept": ".client",
     "__version__": ".version",
-    "service": ".",
+    "service": ".service",
 }
 
 

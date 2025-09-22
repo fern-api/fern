@@ -6,8 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import admin, commons, homepage, lang_server, migration, playlist, problem, submission, sysprop, v_2
-    from .admin import Test, Test_And, Test_Or
+    from .admin import Test, Test_And, Test_Or, admin
     from .client import AsyncSeedTrace, SeedTrace
     from .commons import (
         BinaryTreeNodeAndTreeValue,
@@ -70,10 +69,12 @@ if typing.TYPE_CHECKING:
         VariableValue_NullValue,
         VariableValue_SinglyLinkedListValue,
         VariableValue_StringValue,
+        commons,
     )
     from .environment import SeedTraceEnvironment
-    from .lang_server import LangServerRequest, LangServerResponse
-    from .migration import Migration, MigrationStatus
+    from .homepage import homepage
+    from .lang_server import LangServerRequest, LangServerResponse, lang_server
+    from .migration import Migration, MigrationStatus, migration
     from .playlist import (
         Playlist,
         PlaylistCreateRequest,
@@ -84,6 +85,7 @@ if typing.TYPE_CHECKING:
         ReservedKeywordEnum,
         UnauthorizedError,
         UpdatePlaylistRequest,
+        playlist,
     )
     from .problem import (
         CreateProblemError,
@@ -103,6 +105,7 @@ if typing.TYPE_CHECKING:
         ProblemInfo,
         UpdateProblemResponse,
         VariableTypeAndName,
+        problem,
     )
     from .submission import (
         ActualResult,
@@ -249,7 +252,10 @@ if typing.TYPE_CHECKING:
         WorkspaceSubmissionUpdateInfo_TracedV2,
         WorkspaceSubmitRequest,
         WorkspaceTracedUpdate,
+        submission,
     )
+    from .sysprop import sysprop
+    from .v_2 import v_2
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActualResult": ".submission",
@@ -493,16 +499,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceSubmitRequest": ".submission",
     "WorkspaceTracedUpdate": ".submission",
     "__version__": ".version",
-    "admin": ".",
-    "commons": ".",
-    "homepage": ".",
-    "lang_server": ".",
-    "migration": ".",
-    "playlist": ".",
-    "problem": ".",
-    "submission": ".",
-    "sysprop": ".",
-    "v_2": ".",
+    "admin": ".admin",
+    "commons": ".commons",
+    "homepage": ".homepage",
+    "lang_server": ".lang_server",
+    "migration": ".migration",
+    "playlist": ".playlist",
+    "problem": ".problem",
+    "submission": ".submission",
+    "sysprop": ".sysprop",
+    "v_2": ".v_2",
 }
 
 

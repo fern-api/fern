@@ -6,9 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Address, Person
-    from . import level_2, types
-_dynamic_imports: typing.Dict[str, str] = {"Address": ".types", "Person": ".types", "level_2": ".", "types": "."}
+    from .types import Address, Person, types
+    from .level_2 import level_2
+_dynamic_imports: typing.Dict[str, str] = {
+    "Address": ".types",
+    "Person": ".types",
+    "level_2": ".level_2",
+    "types": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

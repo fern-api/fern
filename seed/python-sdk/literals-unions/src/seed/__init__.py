@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import literals
     from .client import AsyncSeedLiteralsUnions, SeedLiteralsUnions
-    from .literals import LiteralString, UnionOverLiteral
+    from .literals import LiteralString, UnionOverLiteral, literals
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedLiteralsUnions": ".client",
@@ -16,7 +15,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedLiteralsUnions": ".client",
     "UnionOverLiteral": ".literals",
     "__version__": ".version",
-    "literals": ".",
+    "literals": ".literals",
 }
 
 

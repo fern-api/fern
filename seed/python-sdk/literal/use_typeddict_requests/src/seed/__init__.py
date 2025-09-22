@@ -7,8 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import SendResponse
-    from . import headers, inlined, path, query, reference
     from .client import AsyncSeedLiteral, SeedLiteral
+    from .headers import headers
     from .inlined import (
         ANestedLiteral,
         ANestedLiteralParams,
@@ -27,8 +27,10 @@ if typing.TYPE_CHECKING:
         SomeAliasedLiteral,
         UndiscriminatedLiteral,
         UndiscriminatedLiteralParams,
+        inlined,
     )
-    from .query import AliasToPrompt, AliasToStream
+    from .path import path
+    from .query import AliasToPrompt, AliasToStream, query
     from .reference import (
         ContainerObject,
         ContainerObjectParams,
@@ -37,6 +39,7 @@ if typing.TYPE_CHECKING:
         SendRequest,
         SendRequestParams,
         SomeLiteral,
+        reference,
     )
     from .requests import SendResponseParams
     from .version import __version__
@@ -72,11 +75,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UndiscriminatedLiteral": ".inlined",
     "UndiscriminatedLiteralParams": ".inlined",
     "__version__": ".version",
-    "headers": ".",
-    "inlined": ".",
-    "path": ".",
-    "query": ".",
-    "reference": ".",
+    "headers": ".headers",
+    "inlined": ".inlined",
+    "path": ".path",
+    "query": ".query",
+    "reference": ".reference",
 }
 
 

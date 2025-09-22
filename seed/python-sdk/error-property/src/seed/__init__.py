@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .errors import PropertyBasedErrorTest, PropertyBasedErrorTestBody
-    from . import errors, property_based_error
+    from .errors import PropertyBasedErrorTest, PropertyBasedErrorTestBody, errors
     from .client import AsyncSeedErrorProperty, SeedErrorProperty
+    from .property_based_error import property_based_error
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedErrorProperty": ".client",
@@ -16,8 +16,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PropertyBasedErrorTestBody": ".errors",
     "SeedErrorProperty": ".client",
     "__version__": ".version",
-    "errors": ".",
-    "property_based_error": ".",
+    "errors": ".errors",
+    "property_based_error": ".property_based_error",
 }
 
 

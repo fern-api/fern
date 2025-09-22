@@ -7,13 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import File, FileInfo
-    from . import directory
-    from .directory import Directory
+    from .directory import Directory, directory
 _dynamic_imports: typing.Dict[str, str] = {
     "Directory": ".directory",
     "File": ".types",
     "FileInfo": ".types",
-    "directory": ".",
+    "directory": ".directory",
 }
 
 

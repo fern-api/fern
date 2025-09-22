@@ -6,17 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import ec_2, s_3
     from .client import AsyncSeedMultiUrlEnvironmentNoDefault, SeedMultiUrlEnvironmentNoDefault
+    from .ec_2 import ec_2
     from .environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+    from .s_3 import s_3
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMultiUrlEnvironmentNoDefault": ".client",
     "SeedMultiUrlEnvironmentNoDefault": ".client",
     "SeedMultiUrlEnvironmentNoDefaultEnvironment": ".environment",
     "__version__": ".version",
-    "ec_2": ".",
-    "s_3": ".",
+    "ec_2": ".ec_2",
+    "s_3": ".s_3",
 }
 
 

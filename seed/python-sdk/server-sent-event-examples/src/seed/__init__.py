@@ -6,16 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import completions
     from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
-    from .completions import StreamedCompletion
+    from .completions import StreamedCompletion, completions
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedServerSentEvents": ".client",
     "SeedServerSentEvents": ".client",
     "StreamedCompletion": ".completions",
     "__version__": ".version",
-    "completions": ".",
+    "completions": ".completions",
 }
 
 

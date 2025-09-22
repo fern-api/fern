@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import problem
     from .problem import (
         AssertCorrectnessCheck,
         AssertCorrectnessCheck_Custom,
@@ -62,6 +61,7 @@ if typing.TYPE_CHECKING:
         VoidFunctionDefinitionThatTakesActualResult,
         VoidFunctionSignature,
         VoidFunctionSignatureThatTakesActualResult,
+        problem,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "AssertCorrectnessCheck": ".problem",
@@ -118,7 +118,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoidFunctionDefinitionThatTakesActualResult": ".problem",
     "VoidFunctionSignature": ".problem",
     "VoidFunctionSignatureThatTakesActualResult": ".problem",
-    "problem": ".",
+    "problem": ".problem",
 }
 
 

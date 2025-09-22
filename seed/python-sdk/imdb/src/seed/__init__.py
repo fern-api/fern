@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import imdb
     from .client import AsyncSeedApi, SeedApi
-    from .imdb import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId
+    from .imdb import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId, imdb
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
@@ -18,7 +17,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MovieId": ".imdb",
     "SeedApi": ".client",
     "__version__": ".version",
-    "imdb": ".",
+    "imdb": ".imdb",
 }
 
 

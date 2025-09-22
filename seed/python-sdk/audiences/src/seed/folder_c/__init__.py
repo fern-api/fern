@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import common
-    from .common import FolderCFoo
-_dynamic_imports: typing.Dict[str, str] = {"FolderCFoo": ".common", "common": "."}
+    from .common import FolderCFoo, common
+_dynamic_imports: typing.Dict[str, str] = {"FolderCFoo": ".common", "common": ".common"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

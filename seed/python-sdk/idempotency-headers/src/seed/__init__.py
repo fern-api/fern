@@ -6,16 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import payment
     from .client import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
-    from .payment import Currency
+    from .payment import Currency, payment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedIdempotencyHeaders": ".client",
     "Currency": ".payment",
     "SeedIdempotencyHeaders": ".client",
     "__version__": ".version",
-    "payment": ".",
+    "payment": ".payment",
 }
 
 

@@ -6,9 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import unknown
     from .client import AsyncSeedUnknownAsAny, SeedUnknownAsAny
-    from .unknown import MyAlias, MyObject
+    from .unknown import MyAlias, MyObject, unknown
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedUnknownAsAny": ".client",
@@ -16,7 +15,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MyObject": ".unknown",
     "SeedUnknownAsAny": ".client",
     "__version__": ".version",
-    "unknown": ".",
+    "unknown": ".unknown",
 }
 
 

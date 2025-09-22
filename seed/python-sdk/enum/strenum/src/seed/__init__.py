@@ -7,9 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Color, ColorOrOperand, EnumWithCustom, EnumWithSpecialCharacters, Operand, SpecialEnum
-    from . import headers, inlined_request, path_param, query_param, unknown
     from .client import AsyncSeedEnum, SeedEnum
-    from .unknown import Status
+    from .headers import headers
+    from .inlined_request import inlined_request
+    from .path_param import path_param
+    from .query_param import query_param
+    from .unknown import Status, unknown
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedEnum": ".client",
@@ -22,11 +25,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpecialEnum": ".types",
     "Status": ".unknown",
     "__version__": ".version",
-    "headers": ".",
-    "inlined_request": ".",
-    "path_param": ".",
-    "query_param": ".",
-    "unknown": ".",
+    "headers": ".headers",
+    "inlined_request": ".inlined_request",
+    "path_param": ".path_param",
+    "query_param": ".query_param",
+    "unknown": ".unknown",
 }
 
 

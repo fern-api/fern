@@ -94,7 +94,6 @@ class ModuleManager:
         module_being_exported_from: AST.ModulePath = tuple(
             directory.module_name for directory in filepath.directories
         ) + (filepath.file.module_name,)
-
         is_exporting_from_file = True
 
         while len(module_being_exported_from) > 0:
@@ -121,7 +120,7 @@ class ModuleManager:
                 module_info.exports[relative_module_being_exported_from].update(exports)
             if export_strategy.export_as_namespace:
                 namespace_export = set(relative_module_being_exported_from)
-                module_info.exports[()].update(namespace_export)
+                module_info.exports[relative_module_being_exported_from].update(namespace_export)
                 new_exports.update(namespace_export)
             exports = new_exports
 

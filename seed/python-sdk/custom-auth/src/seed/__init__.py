@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
-    from . import custom_auth, errors
+    from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody, errors
     from .client import AsyncSeedCustomAuth, SeedCustomAuth
+    from .custom_auth import custom_auth
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedCustomAuth": ".client",
@@ -17,8 +17,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnauthorizedRequest": ".errors",
     "UnauthorizedRequestErrorBody": ".errors",
     "__version__": ".version",
-    "custom_auth": ".",
-    "errors": ".",
+    "custom_auth": ".custom_auth",
+    "errors": ".errors",
 }
 
 

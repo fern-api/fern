@@ -6,9 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import notification, service
-    from .service import Filename
-_dynamic_imports: typing.Dict[str, str] = {"Filename": ".service", "notification": ".", "service": "."}
+    from .notification import notification
+    from .service import Filename, service
+_dynamic_imports: typing.Dict[str, str] = {
+    "Filename": ".service",
+    "notification": ".notification",
+    "service": ".service",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

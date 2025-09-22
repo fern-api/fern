@@ -6,10 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import organizations, user
     from .client import AsyncSeedPathParameters, SeedPathParameters
-    from .organizations import Organization
-    from .user import User
+    from .organizations import Organization, organizations
+    from .user import User, user
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPathParameters": ".client",
@@ -17,8 +16,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedPathParameters": ".client",
     "User": ".user",
     "__version__": ".version",
-    "organizations": ".",
-    "user": ".",
+    "organizations": ".organizations",
+    "user": ".user",
 }
 
 

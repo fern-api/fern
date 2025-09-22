@@ -6,9 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import service
     from .client import AsyncSeedMixedCase, SeedMixedCase
-    from .service import NestedUser, Organization, Resource, ResourceStatus, Resource_Organization, Resource_User, User
+    from .service import (
+        NestedUser,
+        Organization,
+        Resource,
+        ResourceStatus,
+        Resource_Organization,
+        Resource_User,
+        User,
+        service,
+    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMixedCase": ".client",
@@ -21,7 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedMixedCase": ".client",
     "User": ".service",
     "__version__": ".version",
-    "service": ".",
+    "service": ".service",
 }
 
 

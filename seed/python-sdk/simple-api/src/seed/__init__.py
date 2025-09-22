@@ -6,10 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import user
     from .client import AsyncSeedSimpleApi, SeedSimpleApi
     from .environment import SeedSimpleApiEnvironment
-    from .user import User
+    from .user import User, user
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedSimpleApi": ".client",
@@ -17,7 +16,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedSimpleApiEnvironment": ".environment",
     "User": ".user",
     "__version__": ".version",
-    "user": ".",
+    "user": ".user",
 }
 
 

@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.29.2
+  changelogEntry:
+    - summary: |
+        Exports in init files always reference the submodule instead of the current module.
+        This should fix infinite recursion in libraries that inspect getattr, like freezegun.
+      type: fix
+  createdAt: "2025-09-22"
+  irVersion: 59
+
 - version: 4.29.1
   changelogEntry:
     - summary: Fixes issue where colliding classes were not lazily imported correctly.

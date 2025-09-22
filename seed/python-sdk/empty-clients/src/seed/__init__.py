@@ -6,14 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import level_1
     from .client import AsyncSeedEmptyClients, SeedEmptyClients
+    from .level_1 import level_1
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedEmptyClients": ".client",
     "SeedEmptyClients": ".client",
     "__version__": ".version",
-    "level_1": ".",
+    "level_1": ".level_1",
 }
 
 

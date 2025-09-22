@@ -6,15 +6,16 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import a, folder
+    from .a import a
     from .client import AsyncSeedApi, SeedApi
+    from .folder import folder
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
     "SeedApi": ".client",
     "__version__": ".version",
-    "a": ".",
-    "folder": ".",
+    "a": ".a",
+    "folder": ".folder",
 }
 
 

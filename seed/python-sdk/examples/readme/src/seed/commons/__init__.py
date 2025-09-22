@@ -6,8 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Data, Data_Base64, Data_String, EventInfo, EventInfo_Metadata, EventInfo_Tag, Metadata, Tag
-    from . import types
+    from .types import (
+        Data,
+        Data_Base64,
+        Data_String,
+        EventInfo,
+        EventInfo_Metadata,
+        EventInfo_Tag,
+        Metadata,
+        Tag,
+        types,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "Data": ".types",
     "Data_Base64": ".types",
@@ -17,7 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EventInfo_Tag": ".types",
     "Metadata": ".types",
     "Tag": ".types",
-    "types": ".",
+    "types": ".types",
 }
 
 

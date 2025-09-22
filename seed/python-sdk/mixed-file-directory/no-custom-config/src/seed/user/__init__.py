@@ -7,9 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import User
-    from . import events
-    from .events import Event
-_dynamic_imports: typing.Dict[str, str] = {"Event": ".events", "User": ".types", "events": "."}
+    from .events import Event, events
+_dynamic_imports: typing.Dict[str, str] = {"Event": ".events", "User": ".types", "events": ".events"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:

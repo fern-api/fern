@@ -17,9 +17,10 @@ if typing.TYPE_CHECKING:
         SearchResponse,
         UpdateUserRequest,
         User,
+        types,
     )
-    from . import service, types
     from .client import AsyncSeedClientSideParams, SeedClientSideParams
+    from .service import service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedClientSideParams": ".client",
@@ -35,8 +36,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateUserRequest": ".types",
     "User": ".types",
     "__version__": ".version",
-    "service": ".",
-    "types": ".",
+    "service": ".service",
+    "types": ".types",
 }
 
 

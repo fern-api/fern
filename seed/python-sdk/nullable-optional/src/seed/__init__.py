@@ -6,7 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import nullable_optional
     from .client import AsyncSeedNullableOptional, SeedNullableOptional
     from .nullable_optional import (
         Address,
@@ -34,6 +33,7 @@ if typing.TYPE_CHECKING:
         UserResponse,
         UserRole,
         UserStatus,
+        nullable_optional,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -65,7 +65,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserRole": ".nullable_optional",
     "UserStatus": ".nullable_optional",
     "__version__": ".version",
-    "nullable_optional": ".",
+    "nullable_optional": ".nullable_optional",
 }
 
 

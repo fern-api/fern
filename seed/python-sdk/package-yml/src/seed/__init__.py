@@ -7,15 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import EchoRequest
-    from . import service
     from .client import AsyncSeedPackageYml, SeedPackageYml
+    from .service import service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPackageYml": ".client",
     "EchoRequest": ".types",
     "SeedPackageYml": ".client",
     "__version__": ".version",
-    "service": ".",
+    "service": ".service",
 }
 
 

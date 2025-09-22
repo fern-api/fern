@@ -6,10 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import commons, simple
     from .client import AsyncSeedErrors, SeedErrors
-    from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError
-    from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch
+    from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError, commons
+    from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch, simple
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedErrors": ".client",
@@ -23,8 +22,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NotFoundError": ".commons",
     "SeedErrors": ".client",
     "__version__": ".version",
-    "commons": ".",
-    "simple": ".",
+    "commons": ".commons",
+    "simple": ".simple",
 }
 
 

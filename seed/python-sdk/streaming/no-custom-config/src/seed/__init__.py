@@ -6,16 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import dummy
     from .client import AsyncSeedStreaming, SeedStreaming
-    from .dummy import StreamResponse
+    from .dummy import StreamResponse, dummy
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedStreaming": ".client",
     "SeedStreaming": ".client",
     "StreamResponse": ".dummy",
     "__version__": ".version",
-    "dummy": ".",
+    "dummy": ".dummy",
 }
 
 

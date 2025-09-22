@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
-    from . import basic_auth, errors
+    from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody, errors
+    from .basic_auth import basic_auth
     from .client import AsyncSeedBasicAuthEnvironmentVariables, SeedBasicAuthEnvironmentVariables
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
@@ -17,8 +17,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnauthorizedRequest": ".errors",
     "UnauthorizedRequestErrorBody": ".errors",
     "__version__": ".version",
-    "basic_auth": ".",
-    "errors": ".",
+    "basic_auth": ".basic_auth",
+    "errors": ".errors",
 }
 
 

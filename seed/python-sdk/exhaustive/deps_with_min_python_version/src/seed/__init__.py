@@ -6,9 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
+    from .types import types
     from .client import AsyncSeedExhaustive, SeedExhaustive
-    from .general_errors import BadObjectRequestInfo, BadRequestBody
+    from .endpoints import endpoints
+    from .general_errors import BadObjectRequestInfo, BadRequestBody, general_errors
+    from .inlined_requests import inlined_requests
+    from .no_auth import no_auth
+    from .no_req_body import no_req_body
+    from .req_with_headers import req_with_headers
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedExhaustive": ".client",
@@ -16,13 +21,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BadRequestBody": ".general_errors",
     "SeedExhaustive": ".client",
     "__version__": ".version",
-    "endpoints": ".",
-    "general_errors": ".",
-    "inlined_requests": ".",
-    "no_auth": ".",
-    "no_req_body": ".",
-    "req_with_headers": ".",
-    "types": ".",
+    "endpoints": ".endpoints",
+    "general_errors": ".general_errors",
+    "inlined_requests": ".inlined_requests",
+    "no_auth": ".no_auth",
+    "no_req_body": ".no_req_body",
+    "req_with_headers": ".req_with_headers",
+    "types": ".types",
 }
 
 

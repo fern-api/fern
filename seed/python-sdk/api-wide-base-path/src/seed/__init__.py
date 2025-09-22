@@ -6,14 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import service
     from .client import AsyncSeedApiWideBasePath, SeedApiWideBasePath
+    from .service import service
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApiWideBasePath": ".client",
     "SeedApiWideBasePath": ".client",
     "__version__": ".version",
-    "service": ".",
+    "service": ".service",
 }
 
 
