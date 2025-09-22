@@ -605,7 +605,7 @@ export function buildNullableTypeReference({
         itemValidation == null &&
         schema.title == null
     ) {
-		return wrapTypeReferenceAsOptional(type);
+        return wrapTypeReferenceAsOptional(type);
     }
     const result: RawSchemas.TypeReferenceSchema =
         typeof type === "string"
