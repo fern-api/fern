@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.29.2
+- version: 4.29.2-rc0
   changelogEntry:
     - summary: |
         Exports in init files always reference the submodule instead of the current module.
