@@ -29,3 +29,7 @@ packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-sdks/
 packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-sdks/hookdeck.json filter=lfs diff=lfs merge=lfs -text
 packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-sdks/paradex.json filter=lfs diff=lfs merge=lfs -text
 packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-sdks/nft.json filter=lfs diff=lfs merge=lfs -text
+packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/baseline-docs/openrpc-tuples.json filter=lfs diff=lfs merge=lfs -text
+packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/baseline-sdks/openrpc-tuples.json filter=lfs diff=lfs merge=lfs -text
+packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-docs/openrpc-tuples.json filter=lfs diff=lfs merge=lfs -text
+packages/cli/api-importers/v3-importer-tests/src/__test__/__snapshots__/v3-sdks/openrpc-tuples.json filter=lfs diff=lfs merge=lfs -text

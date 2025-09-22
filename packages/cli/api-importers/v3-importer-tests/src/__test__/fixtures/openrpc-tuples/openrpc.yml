@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://meta.open-rpc.org/
+$schema: https://meta.open-rpc.org/
+openrpc: 1.2.6
+info:
+  title: IMDB API
+  version: 1.0.0
+  description: API for managing movies in the database
+servers:
+  - url: http://localhost:3000
+methods:
+  - name: imdb_searchMovies
+    description: Search for movies with optional filters
+    params:
+      - name: searchRequest
+        required: true
+        schema:
+          $ref: "#/components/schemas/SearchMoviesRequest"
+    result:
+      name: movies
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/Movie"
+    errors:
+      - code: -32600
+        message: Invalid Request
+      - code: -32602
+        message: Invalid params
+      - code: -32603
+        message: Internal error
+    tags:
+      - name: Imdb
+components:
+  schemas:
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        rating:
+          type: number
+          format: double
+          description: The rating scale out of ten stars
+      required:
+        - id
+        - title
+        - rating
+    SearchMoviesRequest:
+      title: SearchMoviesRequest
+      description: Search request that can be either a simple query string or a tuple of query and filters
+      anyOf:
+        - description: Simple search query
+          type: string
+        - description: Search query with genre filters
+          type: array
+          items:
+            - type: string
+              description: Search query
+            - type: array
+              items:
+                type: string
+              description: Genre filters
+          minItems: 2
+          maxItems: 2
+          additionalItems: false
