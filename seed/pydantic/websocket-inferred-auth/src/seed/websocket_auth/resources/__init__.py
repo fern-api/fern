@@ -2,9 +2,17 @@
 
 # isort: skip_file
 
-from . import auth, realtime
-from .auth import TokenResponse
-from .realtime import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, ReceiveSnakeCase, SendEvent, SendEvent2, SendSnakeCase
+from .auth import TokenResponse, auth
+from .realtime import (
+    ReceiveEvent,
+    ReceiveEvent2,
+    ReceiveEvent3,
+    ReceiveSnakeCase,
+    SendEvent,
+    SendEvent2,
+    SendSnakeCase,
+    realtime,
+)
 
 __all__ = [
     "ReceiveEvent",

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import service
-from .service import Movie, OptionalWithDocs, Response, WithDocs
+from .service import Movie, OptionalWithDocs, Response, WithDocs, service
 
 __all__ = ["Movie", "OptionalWithDocs", "Response", "WithDocs", "service"]

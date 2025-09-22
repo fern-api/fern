@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import service
-from .service import NotFoundError
+from .service import NotFoundError, service
 
 __all__ = ["NotFoundError", "service"]

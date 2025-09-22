@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import auth
-from .auth import GetTokenRequest, RefreshTokenRequest, TokenResponse
+from .auth import GetTokenRequest, RefreshTokenRequest, TokenResponse, auth
 
 __all__ = ["GetTokenRequest", "RefreshTokenRequest", "TokenResponse", "auth"]

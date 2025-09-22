@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import types
-from .types import Foo
+from .types import Foo, types
 
 __all__ = ["Foo", "types"]

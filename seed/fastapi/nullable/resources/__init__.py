@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import nullable
-from .nullable import CreateUserRequest, DeleteUserRequest, Email, Metadata, Status, User, UserId, WeirdNumber
+from .nullable import CreateUserRequest, DeleteUserRequest, Email, Metadata, Status, User, UserId, WeirdNumber, nullable
 
 __all__ = [
     "CreateUserRequest",

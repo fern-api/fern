@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import dummy
-from .dummy import StreamResponse
+from .dummy import StreamResponse, dummy
 
 __all__ = ["StreamResponse", "dummy"]

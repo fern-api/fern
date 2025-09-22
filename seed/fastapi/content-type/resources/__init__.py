@@ -2,13 +2,13 @@
 
 # isort: skip_file
 
-from . import service
 from .service import (
     NamedMixedPatchRequest,
     OptionalMergePatchRequest,
     PatchComplexRequest,
     PatchProxyRequest,
     RegularPatchRequest,
+    service,
 )
 
 __all__ = [

@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import auth, user
-from .auth import TokenResponse
-from .user import User
+from .auth import TokenResponse, auth
+from .user import User, user
 
 __all__ = ["TokenResponse", "User", "auth", "user"]

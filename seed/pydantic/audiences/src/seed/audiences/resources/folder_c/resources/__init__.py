@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import common
-from .common import FolderCFoo
+from .common import FolderCFoo, common
 
 __all__ = ["FolderCFoo", "common"]

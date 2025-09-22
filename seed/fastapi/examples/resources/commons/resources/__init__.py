@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import types
-from .types import Data, EventInfo, Metadata, Tag
+from .types import Data, EventInfo, Metadata, Tag, types
 
 __all__ = ["Data", "EventInfo", "Metadata", "Tag", "types"]

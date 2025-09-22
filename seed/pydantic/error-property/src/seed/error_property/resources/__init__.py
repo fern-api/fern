@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import errors
-from .errors import PropertyBasedErrorTestBody
+from .errors import PropertyBasedErrorTestBody, errors
 
 __all__ = ["PropertyBasedErrorTestBody", "errors"]

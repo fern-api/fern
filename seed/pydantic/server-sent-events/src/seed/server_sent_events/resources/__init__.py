@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import completions
-from .completions import StreamedCompletion
+from .completions import StreamedCompletion, completions
 
 __all__ = ["StreamedCompletion", "completions"]

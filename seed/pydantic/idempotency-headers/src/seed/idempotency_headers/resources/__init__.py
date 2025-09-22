@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import payment
-from .payment import Currency
+from .payment import Currency, payment
 
 __all__ = ["Currency", "payment"]

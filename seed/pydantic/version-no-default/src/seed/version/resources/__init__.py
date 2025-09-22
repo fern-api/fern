@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import user
-from .user import User, UserId
+from .user import User, UserId, user
 
 __all__ = ["User", "UserId", "user"]

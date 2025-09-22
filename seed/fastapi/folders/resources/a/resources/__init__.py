@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from . import d
+from .d import d
 
 __all__ = ["d"]

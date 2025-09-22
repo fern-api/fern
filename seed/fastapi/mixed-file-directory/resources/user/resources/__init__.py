@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import events
-from .events import Event
+from .events import Event, events
 
 __all__ = ["Event", "events"]

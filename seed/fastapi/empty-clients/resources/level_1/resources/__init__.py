@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import level_2, types
-from .types import Address, Person
+from .level_2 import level_2
+from .types import Address, Person, types
 
 __all__ = ["Address", "Person", "level_2", "types"]

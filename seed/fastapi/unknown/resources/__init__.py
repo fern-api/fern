@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import unknown
-from .unknown import MyAlias, MyObject
+from .unknown import MyAlias, MyObject, unknown
 
 __all__ = ["MyAlias", "MyObject", "unknown"]

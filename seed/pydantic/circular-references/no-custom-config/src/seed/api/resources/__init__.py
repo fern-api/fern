@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import a, ast
-from .a import A
+from .a import A, a
 from .ast import (
     ContainerValue,
     ContainerValue_List,
@@ -18,6 +17,7 @@ from .ast import (
     T,
     TorU,
     U,
+    ast,
 )
 
 __all__ = [

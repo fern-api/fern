@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import complex_, inline_users, users
 from .complex_ import (
     Conversation,
     CursorPages,
@@ -15,7 +14,9 @@ from .complex_ import (
     SingleFilterSearchRequest,
     SingleFilterSearchRequestOperator,
     StartingAfterPaging,
+    complex_,
 )
+from .inline_users import inline_users
 from .users import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
@@ -32,6 +33,7 @@ from .users import (
     UsernameContainer,
     WithCursor,
     WithPage,
+    users,
 )
 
 __all__ = [

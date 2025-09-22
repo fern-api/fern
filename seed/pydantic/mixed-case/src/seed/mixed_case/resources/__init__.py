@@ -2,8 +2,16 @@
 
 # isort: skip_file
 
-from . import service
-from .service import NestedUser, Organization, Resource, ResourceStatus, Resource_Organization, Resource_User, User
+from .service import (
+    NestedUser,
+    Organization,
+    Resource,
+    ResourceStatus,
+    Resource_Organization,
+    Resource_User,
+    User,
+    service,
+)
 
 __all__ = [
     "NestedUser",

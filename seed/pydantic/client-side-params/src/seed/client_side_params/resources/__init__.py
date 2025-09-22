@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import types
 from .types import (
     Client,
     Connection,
@@ -14,6 +13,7 @@ from .types import (
     SearchResponse,
     UpdateUserRequest,
     User,
+    types,
 )
 
 __all__ = [

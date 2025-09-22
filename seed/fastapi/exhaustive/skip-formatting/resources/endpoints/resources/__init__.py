@@ -2,6 +2,5 @@
 
 # isort: skip_file
 
-from . import put
-from .put import Error, ErrorCategory, ErrorCode, PutResponse
+from .put import Error, ErrorCategory, ErrorCode, PutResponse, put
 __all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse", "put"]

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import nullable_optional
 from .nullable_optional import (
     Address,
     ComplexProfile,
@@ -29,6 +28,7 @@ from .nullable_optional import (
     UserResponse,
     UserRole,
     UserStatus,
+    nullable_optional,
 )
 
 __all__ = [

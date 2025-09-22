@@ -2,8 +2,16 @@
 
 # isort: skip_file
 
-from . import realtime
-from .realtime import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, ReceiveSnakeCase, SendEvent, SendEvent2, SendSnakeCase
+from .realtime import (
+    ReceiveEvent,
+    ReceiveEvent2,
+    ReceiveEvent3,
+    ReceiveSnakeCase,
+    SendEvent,
+    SendEvent2,
+    SendSnakeCase,
+    realtime,
+)
 
 __all__ = [
     "ReceiveEvent",

@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import organizations, user
-from .organizations import Organization
-from .user import User
+from .organizations import Organization, organizations
+from .user import User, user
 
 __all__ = ["Organization", "User", "organizations", "user"]

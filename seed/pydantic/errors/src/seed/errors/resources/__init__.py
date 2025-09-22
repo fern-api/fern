@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import commons, simple
-from .commons import ErrorBody
-from .simple import FooRequest, FooResponse
+from .commons import ErrorBody, commons
+from .simple import FooRequest, FooResponse, simple
 
 __all__ = ["ErrorBody", "FooRequest", "FooResponse", "commons", "simple"]

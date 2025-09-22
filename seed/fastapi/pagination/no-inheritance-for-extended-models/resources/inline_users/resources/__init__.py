@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import inline_users
 from .inline_users import (
     ListUsersBodyCursorPaginationRequest,
     ListUsersBodyOffsetPaginationRequest,
@@ -22,6 +21,7 @@ from .inline_users import (
     Users,
     WithCursor,
     WithPage,
+    inline_users,
 )
 
 __all__ = [

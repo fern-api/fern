@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import problem
 from .problem import (
     AssertCorrectnessCheck,
     AssertCorrectnessCheck_Custom,
@@ -58,6 +57,7 @@ from .problem import (
     VoidFunctionDefinitionThatTakesActualResult,
     VoidFunctionSignature,
     VoidFunctionSignatureThatTakesActualResult,
+    problem,
 )
 
 __all__ = [

@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import admin, commons, lang_server, migration, playlist, problem, submission, v_2
-from .admin import Test, Test_And, Test_Or
+from .admin import Test, Test_And, Test_Or, admin
 from .commons import (
     BinaryTreeNodeAndTreeValue,
     BinaryTreeNodeValue,
@@ -65,9 +64,10 @@ from .commons import (
     VariableValue_NullValue,
     VariableValue_SinglyLinkedListValue,
     VariableValue_StringValue,
+    commons,
 )
-from .lang_server import LangServerRequest, LangServerResponse
-from .migration import Migration, MigrationStatus
+from .lang_server import LangServerRequest, LangServerResponse, lang_server
+from .migration import Migration, MigrationStatus, migration
 from .playlist import (
     Playlist,
     PlaylistCreateRequest,
@@ -76,6 +76,7 @@ from .playlist import (
     PlaylistIdNotFoundErrorBody_PlaylistId,
     ReservedKeywordEnum,
     UpdatePlaylistRequest,
+    playlist,
 )
 from .problem import (
     CreateProblemError,
@@ -95,6 +96,7 @@ from .problem import (
     ProblemInfo,
     UpdateProblemResponse,
     VariableTypeAndName,
+    problem,
 )
 from .submission import (
     ActualResult,
@@ -241,7 +243,9 @@ from .submission import (
     WorkspaceSubmissionUpdateInfo_TracedV2,
     WorkspaceSubmitRequest,
     WorkspaceTracedUpdate,
+    submission,
 )
+from .v_2 import v_2
 
 __all__ = [
     "ActualResult",

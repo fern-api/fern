@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import commons, file
-from .file import File, FileInfo
+from .commons import commons
+from .file import File, FileInfo, file
 
 __all__ = ["File", "FileInfo", "commons", "file"]

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import common
-from .common import Foo
+from .common import Foo, common
 
 __all__ = ["Foo", "common"]

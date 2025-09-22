@@ -2,9 +2,8 @@
 
 # isort: skip_file
 
-from . import commons, simple
-from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError
-from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch
+from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError, commons
+from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch, simple
 
 __all__ = [
     "BadRequestError",

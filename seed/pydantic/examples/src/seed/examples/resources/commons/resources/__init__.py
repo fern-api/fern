@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import types
-from .types import Data, Data_Base64, Data_String, EventInfo, EventInfo_Metadata, EventInfo_Tag, Metadata, Tag
+from .types import Data, Data_Base64, Data_String, EventInfo, EventInfo_Metadata, EventInfo_Tag, Metadata, Tag, types
 
 __all__ = [
     "Data",

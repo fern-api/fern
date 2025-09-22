@@ -2,7 +2,8 @@
 
 # isort: skip_file
 
-from . import commons, file, types
+from .commons import commons
+from .file import file
 from .types import (
     Actor,
     Actress,
@@ -35,6 +36,7 @@ from .types import (
     Test_And,
     Test_Or,
     Tree,
+    types,
 )
 
 __all__ = [

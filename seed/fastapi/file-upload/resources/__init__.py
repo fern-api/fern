@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import service
 from .service import (
     Id,
     MyAliasObject,
@@ -11,6 +10,7 @@ from .service import (
     MyObject,
     MyObjectWithOptional,
     ObjectType,
+    service,
 )
 
 __all__ = [

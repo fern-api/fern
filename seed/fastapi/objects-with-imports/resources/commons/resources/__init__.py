@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import metadata
-from .metadata import Metadata
+from .metadata import Metadata, metadata
 
 __all__ = ["Metadata", "metadata"]

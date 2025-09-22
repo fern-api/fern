@@ -2,9 +2,10 @@
 
 # isort: skip_file
 
-from . import endpoints, general_errors, inlined_requests, types
-from .general_errors import BadObjectRequestInfo, BadRequestBody
-from .inlined_requests import PostWithObjectBody
+from .endpoints import endpoints
+from .general_errors import BadObjectRequestInfo, BadRequestBody, general_errors
+from .inlined_requests import PostWithObjectBody, inlined_requests
+from .types import types
 
 __all__ = [
     "BadObjectRequestInfo",

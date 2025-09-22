@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import literals
-from .literals import LiteralString, UnionOverLiteral
+from .literals import LiteralString, UnionOverLiteral, literals
 
 __all__ = ["LiteralString", "UnionOverLiteral", "literals"]

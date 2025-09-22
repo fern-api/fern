@@ -2,9 +2,8 @@
 
 # isort: skip_file
 
-from . import docs, enum, object, union
-from .docs import ObjectWithDocs
-from .enum import WeatherReport
+from .docs import ObjectWithDocs, docs
+from .enum import WeatherReport, enum
 from .object import (
     DoubleOptional,
     NestedObjectWithOptionalField,
@@ -13,8 +12,9 @@ from .object import (
     ObjectWithOptionalField,
     ObjectWithRequiredField,
     OptionalAlias,
+    object,
 )
-from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog
+from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, union
 
 __all__ = [
     "Animal",

@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import a, ast
-from .a import A
+from .a import A, a
 from .ast import (
     Acai,
     Animal,
@@ -27,6 +26,7 @@ from .ast import (
     ObjectFieldValue,
     ObjectValue,
     PrimitiveValue,
+    ast,
 )
 
 __all__ = [

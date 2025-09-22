@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import service
-from .service import Response
+from .service import Response, service
 
 __all__ = ["Response", "service"]

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import bigunion, types, union
 from .bigunion import (
     ActiveDiamond,
     AttractiveScript,
@@ -63,6 +62,7 @@ from .bigunion import (
     UniqueStress,
     UnwillingSmoke,
     VibrantExcitement,
+    bigunion,
 )
 from .types import (
     Bar,
@@ -121,8 +121,9 @@ from .types import (
     UnionWithoutKey_Foo,
     Union_Bar,
     Union_Foo,
+    types,
 )
-from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
+from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName, union
 
 __all__ = [
     "ActiveDiamond",

@@ -2,9 +2,8 @@
 
 # isort: skip_file
 
-from . import a, ast
-from .a import A
-from .ast import ContainerValue, FieldValue, JsonLike, ObjectValue, PrimitiveValue, T, TorU, U
+from .a import A, a
+from .ast import ContainerValue, FieldValue, JsonLike, ObjectValue, PrimitiveValue, T, TorU, U, ast
 
 __all__ = [
     "A",

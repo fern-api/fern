@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import directory
-from .directory import Directory
+from .directory import Directory, directory
 
 __all__ = ["Directory", "directory"]

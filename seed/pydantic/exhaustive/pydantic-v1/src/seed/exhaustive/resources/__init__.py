@@ -2,7 +2,8 @@
 
 # isort: skip_file
 
-from . import endpoints, general_errors, types
-from .general_errors import BadObjectRequestInfo
+from .endpoints import endpoints
+from .general_errors import BadObjectRequestInfo, general_errors
+from .types import types
 
 __all__ = ["BadObjectRequestInfo", "endpoints", "general_errors", "types"]

@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import package
-from .package import Package, Record
+from .package import Package, Record, package
 
 __all__ = ["Package", "Record", "package"]

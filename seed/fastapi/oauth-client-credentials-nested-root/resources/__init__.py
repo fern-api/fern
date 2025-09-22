@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from . import auth
+from .auth import auth
 
 __all__ = ["auth"]

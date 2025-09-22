@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import union
 from .union import (
     Key,
     KeyType,
@@ -19,6 +18,7 @@ from .union import (
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
     UnionWithIdenticalStrings,
+    union,
 )
 
 __all__ = [

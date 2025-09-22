@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from . import nullable
 from .nullable import (
     Email,
     Metadata,
@@ -13,6 +12,7 @@ from .nullable import (
     User,
     UserId,
     WeirdNumber,
+    nullable,
 )
 
 __all__ = [

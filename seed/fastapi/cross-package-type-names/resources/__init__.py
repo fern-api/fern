@@ -2,9 +2,12 @@
 
 # isort: skip_file
 
-from . import commons, folder_a, folder_b, folder_c, folder_d, foo
-from .commons import Imported
-from .foo import FindRequest, ImportingType, OptionalString
+from .commons import Imported, commons
+from .folder_a import folder_a
+from .folder_b import folder_b
+from .folder_c import folder_c
+from .folder_d import folder_d
+from .foo import FindRequest, ImportingType, OptionalString, foo
 
 __all__ = [
     "FindRequest",

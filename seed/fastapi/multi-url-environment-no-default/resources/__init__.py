@@ -2,8 +2,7 @@
 
 # isort: skip_file
 
-from . import ec_2, s_3
-from .ec_2 import BootInstanceRequest
-from .s_3 import GetPresignedUrlRequest
+from .ec_2 import BootInstanceRequest, ec_2
+from .s_3 import GetPresignedUrlRequest, s_3
 
 __all__ = ["BootInstanceRequest", "GetPresignedUrlRequest", "ec_2", "s_3"]
