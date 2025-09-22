@@ -4,8 +4,8 @@
     - summary: Support IR v59 in the Rust SDK generator.
       type: chore
   irVersion: 59
-  createdAt: "2025-09-21"
-  version: 0.78.1
+  createdAt: "2025-09-22"
+  version: 0.78.3
 
 - changelogEntry:
     - summary: Update ir migration config to support v59 for latest ruby sdk generator version.
