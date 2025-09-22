@@ -950,7 +950,9 @@ client.service().createBigEntity(
 <dd>
 
 ```java
-client.service().refreshToken(Optional.of());
+client.service().refreshToken(
+    Optional.empty()
+);
 ```
 </dd>
 </dl>

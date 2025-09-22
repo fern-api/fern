@@ -1047,7 +1047,9 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-        client.service().refreshToken(Optional.of());
+        client.service().refreshToken(
+            Optional.empty()
+        );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());

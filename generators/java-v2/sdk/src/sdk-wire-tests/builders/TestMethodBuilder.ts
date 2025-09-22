@@ -295,8 +295,8 @@ export class TestMethodBuilder {
             if (endpoint.pagination != null) {
                 const itemType = this.extractPaginationItemType(endpoint);
                 if (itemType) {
-                    const paginationPackage = this.context.getCorePackageName() + ".pagination";
-                    imports.add(`${paginationPackage}.SyncPagingIterable`);
+                    const corePackage = this.context.getCorePackageName();
+                    imports.add(`${corePackage}.SyncPagingIterable`);
 
                     const tempWriter = new java.Writer({
                         packageName: this.context.getCorePackageName(),
