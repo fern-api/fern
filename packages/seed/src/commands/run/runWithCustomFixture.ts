@@ -41,7 +41,11 @@ export async function runWithCustomFixture({
     );
 
     let testRunner: TestRunner;
-    let scriptRunner: ScriptRunner;
+    let scriptRunner: ScriptRunner | undefined = undefined;
+
+    if (!skipScripts) {
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+    }
 
     if (local) {
         if (workspace.workspaceConfig.test.local == null) {
@@ -54,8 +58,6 @@ export async function runWithCustomFixture({
             workspace.workspaceConfig.test.local
         );
 
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
-
         testRunner = new LocalTestRunner({
             generator: workspace,
             lock,
@@ -66,8 +68,6 @@ export async function runWithCustomFixture({
             inspect
         });
     } else {
-        scriptRunner = new DockerScriptRunner(workspace, skipScripts, taskContext);
-
         testRunner = new DockerTestRunner({
             generator: workspace,
             lock,
@@ -112,7 +112,7 @@ export async function runWithCustomFixture({
         };
         console.log(
             `Running custom fixture for ${workspace.workspaceName} with config:`,
-            JSON.stringify(runFixtureConfig)
+            JSON.stringify(runFixtureConfig, undefined, 2)
         );
 
         await testRunner.build();
@@ -136,7 +136,7 @@ export async function runWithCustomFixture({
         );
     } finally {
         if (!skipScripts) {
-            await scriptRunner.stop();
+            await scriptRunner?.stop();
         }
     }
 }

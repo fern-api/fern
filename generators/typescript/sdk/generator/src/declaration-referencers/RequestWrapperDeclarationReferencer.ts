@@ -11,12 +11,27 @@ export declare namespace RequestWrapperDeclarationReferencer {
         packageId: PackageId;
         endpoint: HttpEndpoint;
     }
+
+    export interface Init extends AbstractSdkClientClassDeclarationReferencer.Init {
+        exportAllRequestsAtRoot: boolean;
+    }
 }
 
 const REQUESTS_DIRECTORY_NAME = "requests";
 
 export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
+    private exportAllRequestsAtRoot: boolean;
+
+    constructor({ exportAllRequestsAtRoot, ...superInit }: RequestWrapperDeclarationReferencer.Init) {
+        super(superInit);
+        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
+    }
+
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
+        if (this.exportAllRequestsAtRoot) {
+            return this.getAggregatedRequestsFilepath();
+        }
+
         return {
             directories: [
                 ...this.getExportedDirectory(name, {
@@ -47,6 +62,28 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
             throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
         }
         return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;
+    }
+
+    public getAggregatedRequestsFilepath(): ExportedFilePath {
+        if (!this.exportAllRequestsAtRoot) {
+            throw new Error(
+                "getAggregatedRequestsFilepath() should only be called when exportAllRequestsAtRoot is true"
+            );
+        }
+
+        return {
+            directories: [
+                ...this.containingDirectory,
+                {
+                    nameOnDisk: REQUESTS_DIRECTORY_NAME,
+                    exportDeclaration: { exportAll: true }
+                }
+            ],
+            file: {
+                nameOnDisk: `${REQUESTS_DIRECTORY_NAME}.ts`,
+                exportDeclaration: { exportAll: true }
+            }
+        };
     }
 
     public getReferenceToRequestWrapperType(

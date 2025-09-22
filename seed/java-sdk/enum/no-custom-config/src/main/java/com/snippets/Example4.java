@@ -14,7 +14,7 @@ public class Example4 {
 
         client.pathParam().send(
             Operand.GREATER_THAN,
-            ColorOrOperand.ofColor(Color.RED)
+            ColorOrOperand.of(Color.RED)
         );
     }
 }

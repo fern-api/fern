@@ -123,18 +123,7 @@ export class TestGenerator {
                                 "^(\\.{1,2}/.*)\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}"],
-                            testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
-                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
-                        },
-                        {
-                            displayName: "browser",
-                            preset: "ts-jest",
-                            testEnvironment: "<rootDir>/${this.relativeTestPath}/BrowserTestEnvironment.ts",
-                            moduleNameMapper: {
-                                "^(\\.{1,2}/.*)\\.js$": "$1",
-                            },
-                            roots: ["<rootDir>/${this.relativeTestPath}"],
-                            testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
+                            testPathIgnorePatterns: ["/tests/wire/"],
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                         },`
                                 : ""
@@ -172,7 +161,7 @@ export class TestGenerator {
                         "^(\\.{1,2}/.*)\\.js$": "$1"
                     },
                     roots: ["<rootDir>/${this.relativeTestPath}"],
-                    testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
+                    testPathIgnorePatterns: ["/tests/wire/"],
                     setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                     workerThreads: ${this.useBigInt ? "true" : "false"},
                     passWithNoTests: true
@@ -198,16 +187,7 @@ export class TestGenerator {
                                 environment: "node",
                                 root: "./${this.relativeTestPath}",
                                 include: ["**/*.test.{js,ts,jsx,tsx}"],
-                                exclude: ["**/*.browser.(spec|test).[jt]sx?", "wire/**"]
-                            }
-                        },
-                        {
-                            test: {
-                                globals: true,
-                                name: "browser",
-                                environment: "happy-dom",
-                                root: "./${this.relativeTestPath}",
-                                include: ["unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"]
+                                exclude: ["wire/**"]
                             }
                         },
                         ${
@@ -217,8 +197,8 @@ export class TestGenerator {
                                         globals: true,
                                         name: "wire",
                                         environment: "node",
-                                        root: "./tests/wire",
-                                        setupFiles: ["./mock-server/setup.ts"]
+                                        root: "./${this.relativeTestPath}/wire",
+                                        setupFiles: ["../mock-server/setup.ts"]
                                     }
                                 },`
                                 : ""
@@ -299,7 +279,6 @@ export class TestGenerator {
                 };
                 if (this.writeUnitTests) {
                     scripts["test:unit"] = "jest --selectProjects unit";
-                    scripts["test:browser"] = "jest --selectProjects browser";
                 }
                 if (this.generateWireTests) {
                     scripts["test:wire"] = "jest --selectProjects wire";
@@ -311,7 +290,6 @@ export class TestGenerator {
                     test: "vitest"
                 };
                 scripts["test:unit"] = "vitest --project unit";
-                scripts["test:browser"] = "vitest --project browser";
                 if (this.generateWireTests) {
                     scripts["test:wire"] = "vitest --project wire";
                 }

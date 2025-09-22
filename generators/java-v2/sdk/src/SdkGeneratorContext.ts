@@ -55,7 +55,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                 return java.Type.string();
             case "bytes":
                 throw new Error("Returning bytes is not supported");
-            case "streaming":
+            case "streaming": {
                 switch (responseBody.value.type) {
                     case "text":
                         throw new Error("Returning streamed text is not supported");
@@ -71,6 +71,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                         assertNever(responseBody.value);
                 }
                 break;
+            }
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":

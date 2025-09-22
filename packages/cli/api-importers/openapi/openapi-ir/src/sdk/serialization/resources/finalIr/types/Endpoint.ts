@@ -18,6 +18,7 @@ import { HttpError } from "./HttpError";
 import { HttpEndpointServer } from "./HttpEndpointServer";
 import { EndpointExample } from "./EndpointExample";
 import { Pagination } from "./Pagination";
+import { RetriesConfiguration } from "./RetriesConfiguration";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
@@ -47,6 +48,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             servers: core.serialization.list(HttpEndpointServer),
             examples: core.serialization.list(EndpointExample),
             pagination: Pagination.optional(),
+            retries: RetriesConfiguration.optional(),
         })
         .extend(WithDescription)
         .extend(WithAvailability)
@@ -76,5 +78,6 @@ export declare namespace Endpoint {
         servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

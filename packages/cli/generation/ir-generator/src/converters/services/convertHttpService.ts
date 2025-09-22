@@ -33,6 +33,7 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertRetries } from "./convertRetries";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
 
 export function convertHttpService({
@@ -200,7 +201,10 @@ export function convertHttpService({
                 }),
                 v2Examples: undefined,
                 source: undefined,
-                audiences: endpoint.audiences
+                audiences: endpoint.audiences,
+                retries: convertRetries({
+                    endpointSchema: endpoint
+                })
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
