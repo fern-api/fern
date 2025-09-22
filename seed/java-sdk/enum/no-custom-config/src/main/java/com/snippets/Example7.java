@@ -26,13 +26,13 @@ public class Example7 {
                 )
                 .operandOrColor(
                     Arrays.asList(
-                        ColorOrOperand.ofColor(Color.RED)
+                        ColorOrOperand.of(Color.RED)
                     )
                 )
                 .maybeOperandOrColor(
                     Arrays.asList(
                         Optional.of(
-                            ColorOrOperand.ofColor(Color.RED)
+                            ColorOrOperand.of(Color.RED)
                         )
                     )
                 )

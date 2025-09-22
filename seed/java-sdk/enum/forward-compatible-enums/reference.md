@@ -18,7 +18,7 @@ client.headers().send(
         .builder()
         .operand(Operand.GREATER_THAN)
         .operandOrColor(
-            ColorOrOperand.ofColor(Color.RED)
+            ColorOrOperand.of(Color.RED)
         )
         .maybeOperand(Operand.GREATER_THAN)
         .build()
@@ -92,7 +92,7 @@ client.inlinedRequest().send(
         .builder()
         .operand(Operand.GREATER_THAN)
         .operandOrColor(
-            ColorOrOperand.ofColor(Color.RED)
+            ColorOrOperand.of(Color.RED)
         )
         .build()
 );
@@ -162,7 +162,7 @@ client.inlinedRequest().send(
 ```java
 client.pathParam().send(
     Operand.GREATER_THAN,
-    ColorOrOperand.ofColor(Color.RED)
+    ColorOrOperand.of(Color.RED)
 );
 ```
 </dd>
@@ -217,7 +217,7 @@ client.queryParam().send(
         .builder()
         .operand(Operand.GREATER_THAN)
         .operandOrColor(
-            ColorOrOperand.ofColor(Color.RED)
+            ColorOrOperand.of(Color.RED)
         )
         .build()
 );
@@ -295,13 +295,13 @@ client.queryParam().sendList(
         )
         .operandOrColor(
             Arrays.asList(
-                ColorOrOperand.ofColor(Color.RED)
+                ColorOrOperand.of(Color.RED)
             )
         )
         .maybeOperandOrColor(
             Arrays.asList(
                 Optional.of(
-                    ColorOrOperand.ofColor(Color.RED)
+                    ColorOrOperand.of(Color.RED)
                 )
             )
         )

@@ -5,7 +5,14 @@
   changelogEntry:
     - type: feat
       summary: Restructure Rust SDK to have correct support for sub-client folders and query builder pattern
-  irVersion: 58
+  irVersion: 59
+
+- version: 0.1.1
+  createdAt: "2025-09-20"
+  changelogEntry:
+    - type: chore
+      summary: Upgraded to IR v59.
+  irVersion: 59
 
 - version: 0.1.0
   createdAt: "2025-09-18"

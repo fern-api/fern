@@ -18,7 +18,7 @@ client.complex().search(
     SearchRequest
         .builder()
         .query(
-            SearchRequestQuery.ofSingleFilterSearchRequest(
+            SearchRequestQuery.of(
                 SingleFilterSearchRequest
                     .builder()
                     .field("field")
