@@ -3,7 +3,7 @@ package com.snippets;
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.NonNullableObject;
 
-public class Example2 {
+public class Example3 {
     public static void main(String[] args) {
         SeedApiClient client = SeedApiClient
             .builder()
@@ -14,6 +14,9 @@ public class Example2 {
             "id",
             NonNullableObject
                 .builder()
+                .nonNullableObjectId("id")
+                .name("name")
+                .age(1)
                 .build()
         );
     }

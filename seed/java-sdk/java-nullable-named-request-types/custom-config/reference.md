@@ -16,14 +16,6 @@ client.postWithNullableNamedRequestBodyType(
     "id",
     PostWithNullableNamedRequestBodyTypeRequest
         .builder()
-        .body(
-            NullableObject
-                .builder()
-                .id("id")
-                .name("name")
-                .age(1)
-                .build()
-        )
         .build()
 );
 ```
