@@ -493,16 +493,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceSubmitRequest": ".submission",
     "WorkspaceTracedUpdate": ".submission",
     "__version__": ".version",
-    "admin": ".",
-    "commons": ".",
-    "homepage": ".",
-    "lang_server": ".",
-    "migration": ".",
-    "playlist": ".",
-    "problem": ".",
-    "submission": ".",
-    "sysprop": ".",
-    "v_2": ".",
+    "admin": ".admin",
+    "commons": ".commons",
+    "homepage": ".homepage",
+    "lang_server": ".lang_server",
+    "migration": ".migration",
+    "playlist": ".playlist",
+    "problem": ".problem",
+    "submission": ".submission",
+    "sysprop": ".sysprop",
+    "v_2": ".v_2",
 }
 
 
@@ -512,8 +512,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:

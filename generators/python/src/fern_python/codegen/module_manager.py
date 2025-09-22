@@ -69,7 +69,7 @@ def _write_attr_function(writer: AST.Writer) -> None:
             writer.write_line("module = import_module(module_name, __package__)")
 
             # Check if we're importing a submodule (pattern: attr "foo" maps to ".foo")
-            writer.write_line('if module_name == f"{attr_name}":')
+            writer.write_line('if module_name == f".{attr_name}":')
             with writer.indent():
                 writer.write_line("return module")
             # Otherwise, return specific attribute from the module (like "from .module import Class")
