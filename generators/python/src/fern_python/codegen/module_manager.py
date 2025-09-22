@@ -37,10 +37,19 @@ class ModuleExportsLine:
     exports: List[str]
 
 
+def _format_submodule_import(*, export: str, module: str) -> str:
+    if module == ".":
+        return f".{export}"
+    return module
+
+
 def _write_dynamic_exports_dict(writer: AST.Writer, sorted_export_module_mapping: List[Tuple[str, str]]) -> None:
     writer.write_line(
         "_dynamic_imports: typing.Dict[str, str] = {"
-        + ", ".join(f'"{export}": "{module}"' for export, module in sorted_export_module_mapping)
+        + ", ".join(
+            f'"{export}": "{_format_submodule_import(export=export, module=module)}"'
+            for export, module in sorted_export_module_mapping
+        )
         + "}"
     )
 
@@ -54,11 +63,20 @@ def _write_attr_function(writer: AST.Writer) -> None:
             writer.write_line(
                 'raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")'
             )
+
         writer.write_line("try:")
         with writer.indent():
             writer.write_line("module = import_module(module_name, __package__)")
-            writer.write_line("result = getattr(module, attr_name)")
-            writer.write_line("return result")
+
+            # Check if we're importing a submodule (pattern: attr "foo" maps to ".foo")
+            writer.write_line('if module_name == f"{attr_name}":')
+            with writer.indent():
+                writer.write_line("return module")
+            # Otherwise, return specific attribute from the module (like "from .module import Class")
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write_line("return getattr(module, attr_name)")
+
         writer.write_line("except ImportError as e:")
         with writer.indent():
             writer.write_line('raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e')
