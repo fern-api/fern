@@ -3,6 +3,7 @@ package com.seed.deepCursorPath;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.core.pagination.SyncPagingIterable;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.A;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.B;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
@@ -13,7 +14,6 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
-import com.seed.deepCursorPath.resources.deepcursorpath.types.Response;
 import java.util.Arrays;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -44,7 +44,7 @@ public class DeepCursorPathWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"starting_after\":\"starting_after\",\"results\":[\"results\",\"results\"]}"));
-        Response response = client.deepCursorPath().doThing(
+        SyncPagingIterable<String> response = client.deepCursorPath().doThing(
             A
                 .builder()
                 .b(
@@ -150,7 +150,7 @@ public class DeepCursorPathWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"starting_after\":\"starting_after\",\"results\":[\"results\",\"results\"]}"));
-        Response response = client.deepCursorPath().doThingRequired(
+        SyncPagingIterable<String> response = client.deepCursorPath().doThingRequired(
             MainRequired
                 .builder()
                 .indirection(
@@ -249,7 +249,7 @@ public class DeepCursorPathWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"starting_after\":\"starting_after\",\"results\":[\"results\",\"results\"]}"));
-        Response response = client.deepCursorPath().doThingInline(
+        SyncPagingIterable<String> response = client.deepCursorPath().doThingInline(
             InlineA
                 .builder()
                 .b(

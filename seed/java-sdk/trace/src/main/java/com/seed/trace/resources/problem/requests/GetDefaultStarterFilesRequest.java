@@ -201,7 +201,9 @@ public final class GetDefaultStarterFilesRequest {
         @JsonSetter(value = "inputParams", nulls = Nulls.SKIP)
         public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.clear();
-            this.inputParams.addAll(inputParams);
+            if (inputParams != null) {
+                this.inputParams.addAll(inputParams);
+            }
             return this;
         }
 

@@ -175,7 +175,9 @@ public final class LightweightProblemInfoV2 {
     )
     public _FinalStage variableTypes(Set<VariableType> variableTypes) {
       this.variableTypes.clear();
-      this.variableTypes.addAll(variableTypes);
+      if (variableTypes != null) {
+        this.variableTypes.addAll(variableTypes);
+      }
       return this;
     }
 

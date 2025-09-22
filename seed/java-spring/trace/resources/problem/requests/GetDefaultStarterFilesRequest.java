@@ -192,7 +192,9 @@ public final class GetDefaultStarterFilesRequest {
     )
     public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
       this.inputParams.clear();
-      this.inputParams.addAll(inputParams);
+      if (inputParams != null) {
+        this.inputParams.addAll(inputParams);
+      }
       return this;
     }
 

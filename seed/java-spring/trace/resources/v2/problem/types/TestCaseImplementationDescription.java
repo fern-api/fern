@@ -77,7 +77,9 @@ public final class TestCaseImplementationDescription {
     )
     public Builder boards(List<TestCaseImplementationDescriptionBoard> boards) {
       this.boards.clear();
-      this.boards.addAll(boards);
+      if (boards != null) {
+        this.boards.addAll(boards);
+      }
       return this;
     }
 

@@ -82,7 +82,9 @@ public final class TestCaseImplementationDescription {
         @JsonSetter(value = "boards", nulls = Nulls.SKIP)
         public Builder boards(List<TestCaseImplementationDescriptionBoard> boards) {
             this.boards.clear();
-            this.boards.addAll(boards);
+            if (boards != null) {
+                this.boards.addAll(boards);
+            }
             return this;
         }
 

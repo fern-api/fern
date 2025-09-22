@@ -253,7 +253,9 @@ public final class SubmitRequestV2 {
         @JsonSetter(value = "submissionFiles", nulls = Nulls.SKIP)
         public _FinalStage submissionFiles(List<SubmissionFileInfo> submissionFiles) {
             this.submissionFiles.clear();
-            this.submissionFiles.addAll(submissionFiles);
+            if (submissionFiles != null) {
+                this.submissionFiles.addAll(submissionFiles);
+            }
             return this;
         }
 

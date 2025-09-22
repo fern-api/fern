@@ -116,7 +116,9 @@ public final class Record {
         @JsonSetter(value = "foo", nulls = Nulls.SKIP)
         public _FinalStage foo(Map<String, String> foo) {
             this.foo.clear();
-            this.foo.putAll(foo);
+            if (foo != null) {
+                this.foo.putAll(foo);
+            }
             return this;
         }
 

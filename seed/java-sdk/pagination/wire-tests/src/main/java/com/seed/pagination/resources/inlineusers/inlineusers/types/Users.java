@@ -81,7 +81,9 @@ public final class Users {
         @JsonSetter(value = "users", nulls = Nulls.SKIP)
         public Builder users(List<User> users) {
             this.users.clear();
-            this.users.addAll(users);
+            if (users != null) {
+                this.users.addAll(users);
+            }
             return this;
         }
 

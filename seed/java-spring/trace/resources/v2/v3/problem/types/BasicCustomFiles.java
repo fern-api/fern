@@ -174,7 +174,9 @@ public final class BasicCustomFiles {
     )
     public _FinalStage additionalFiles(Map<Language, Files> additionalFiles) {
       this.additionalFiles.clear();
-      this.additionalFiles.putAll(additionalFiles);
+      if (additionalFiles != null) {
+        this.additionalFiles.putAll(additionalFiles);
+      }
       return this;
     }
 

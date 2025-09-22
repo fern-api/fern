@@ -317,7 +317,9 @@ public final class ExtendedMovie implements IMovie {
     )
     public _FinalStage cast(List<String> cast) {
       this.cast.clear();
-      this.cast.addAll(cast);
+      if (cast != null) {
+        this.cast.addAll(cast);
+      }
       return this;
     }
 
@@ -342,7 +344,9 @@ public final class ExtendedMovie implements IMovie {
     )
     public _FinalStage metadata(Map<String, Object> metadata) {
       this.metadata.clear();
-      this.metadata.putAll(metadata);
+      if (metadata != null) {
+        this.metadata.putAll(metadata);
+      }
       return this;
     }
 
