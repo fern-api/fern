@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+
+- version: 0.4.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed "`import_endent.default` is not a function" error when generating GitHub workflows.
+  createdAt: "2025-09-23"
+  irVersion: 53
+
 - changelogEntry:
     - summary: |
         Introduces a `collection-name` configuration that allows you to control 
