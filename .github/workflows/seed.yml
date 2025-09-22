@@ -294,11 +294,12 @@ jobs:
   ruby-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.ruby == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.ruby == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -656,11 +657,12 @@ jobs:
   typescript-sdk:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.typescript == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.typescript == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: true
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
