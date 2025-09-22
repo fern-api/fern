@@ -1,3 +1,4 @@
+import { ComputedProperty } from "./ComputedProperty";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
@@ -11,6 +12,7 @@ export declare namespace Extension {
         name: string;
         conformances?: Protocol[];
         initializers?: Initializer[];
+        computedProperties?: ComputedProperty[];
         methods?: Method[];
         nestedTypes?: (Struct | EnumWithRawValues)[];
         docs?: DocComment;
@@ -21,15 +23,25 @@ export class Extension extends AstNode {
     public readonly name: string;
     public readonly conformances: string[];
     public readonly initializers: Initializer[];
+    public readonly computedProperties: ComputedProperty[];
     public readonly methods: Method[];
     public readonly nestedTypes: (Struct | EnumWithRawValues)[];
     public readonly docs?: DocComment;
 
-    public constructor({ name, conformances, initializers, methods, nestedTypes, docs }: Extension.Args) {
+    public constructor({
+        name,
+        conformances,
+        initializers,
+        computedProperties,
+        methods,
+        nestedTypes,
+        docs
+    }: Extension.Args) {
         super();
         this.name = name;
         this.conformances = conformances ?? [];
         this.initializers = initializers ?? [];
+        this.computedProperties = computedProperties ?? [];
         this.methods = methods ?? [];
         this.nestedTypes = nestedTypes ?? [];
         this.docs = docs;
@@ -57,6 +69,18 @@ export class Extension extends AstNode {
                     writer.newLine();
                 }
                 initializer.write(writer);
+                writer.newLine();
+            });
+            writer.dedent();
+        }
+        if (this.computedProperties.length > 0) {
+            writer.newLine();
+            writer.indent();
+            this.computedProperties.forEach((computedProperty, computedPropertyIdx) => {
+                if (computedPropertyIdx > 0) {
+                    writer.newLine();
+                }
+                computedProperty.write(writer);
                 writer.newLine();
             });
             writer.dedent();
