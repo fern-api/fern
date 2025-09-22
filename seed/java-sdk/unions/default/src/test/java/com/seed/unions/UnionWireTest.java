@@ -34,7 +34,7 @@ public class UnionWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"type\":\"circle\",\"radius\":1.1,\"id\":\"id\"}"));
-        Shape response = client.bigunion().get("id");
+        Shape response = client.union().get("id");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
