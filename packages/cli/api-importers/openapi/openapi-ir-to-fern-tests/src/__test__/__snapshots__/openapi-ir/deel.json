@@ -8790,11 +8790,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -9719,11 +9716,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -10105,11 +10099,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -12640,11 +12631,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -15150,11 +15138,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -15873,11 +15858,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "description": {
                       "value": {
@@ -19735,11 +19717,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -20257,11 +20236,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "created_at": {
                       "value": {
@@ -20590,11 +20566,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "approved",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "description": {
                       "value": {
@@ -22492,11 +22465,8 @@
                           "type": "enum"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -23189,11 +23159,8 @@
                           "type": "enum"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -23726,11 +23693,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "created_at": {
                       "value": {
@@ -44825,13 +44789,45 @@
         "description": "Status of this entry.",
         "value": {
           "description": "Status of this entry.",
-          "schema": {
-            "example": "approved",
-            "type": "string"
-          },
           "generatedName": "TimesheetStatusEnum",
+          "values": [
+            {
+              "generatedName": "approved",
+              "value": "approved",
+              "casing": {}
+            },
+            {
+              "generatedName": "declined",
+              "value": "declined",
+              "casing": {}
+            },
+            {
+              "generatedName": "not_payable",
+              "value": "not_payable",
+              "casing": {}
+            },
+            {
+              "generatedName": "paid",
+              "value": "paid",
+              "casing": {}
+            },
+            {
+              "generatedName": "pending",
+              "value": "pending",
+              "casing": {}
+            },
+            {
+              "generatedName": "processing",
+              "value": "processing",
+              "casing": {}
+            }
+          ],
           "groupName": [],
-          "type": "primitive"
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "enum"
         },
         "groupName": [],
         "type": "nullable"
@@ -45097,12 +45093,45 @@
         "description": "status of invoice adjustment",
         "value": {
           "description": "status of invoice adjustment",
-          "schema": {
-            "type": "string"
-          },
           "generatedName": "InvoiceAdjustmentStatusEnum",
+          "values": [
+            {
+              "generatedName": "approved",
+              "value": "approved",
+              "casing": {}
+            },
+            {
+              "generatedName": "declined",
+              "value": "declined",
+              "casing": {}
+            },
+            {
+              "generatedName": "not_payable",
+              "value": "not_payable",
+              "casing": {}
+            },
+            {
+              "generatedName": "paid",
+              "value": "paid",
+              "casing": {}
+            },
+            {
+              "generatedName": "pending",
+              "value": "pending",
+              "casing": {}
+            },
+            {
+              "generatedName": "processing",
+              "value": "processing",
+              "casing": {}
+            }
+          ],
           "groupName": [],
-          "type": "primitive"
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "enum"
         },
         "groupName": [],
         "type": "nullable"
@@ -50628,12 +50657,25 @@
                       "description": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
                       "value": {
                         "description": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
-                        "schema": {
-                          "type": "string"
-                        },
                         "generatedName": "EorContractToCreateCompensationDetailsVariableCompensationType",
+                        "values": [
+                          {
+                            "generatedName": "PERCENTAGE",
+                            "value": "PERCENTAGE",
+                            "casing": {}
+                          },
+                          {
+                            "generatedName": "FIXED",
+                            "value": "FIXED",
+                            "casing": {}
+                          }
+                        ],
                         "groupName": [],
-                        "type": "primitive"
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "enum"
                       },
                       "groupName": [],
                       "type": "nullable"
