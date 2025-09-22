@@ -9160,12 +9160,16 @@
             "key": "image_info",
             "schema": {
               "generatedName": "FileUploadInfoImageInfo",
-              "schema": "imageInfo",
-              "source": {
-                "file": "../openapi.json",
-                "type": "openapi"
+              "value": {
+                "generatedName": "FileUploadInfoImageInfo",
+                "schema": "imageInfo",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -9177,12 +9181,16 @@
             "key": "video_info",
             "schema": {
               "generatedName": "FileUploadInfoVideoInfo",
-              "schema": "legacyVideoInfo",
-              "source": {
-                "file": "../openapi.json",
-                "type": "openapi"
+              "value": {
+                "generatedName": "FileUploadInfoVideoInfo",
+                "schema": "legacyVideoInfo",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -9194,12 +9202,16 @@
             "key": "content_info",
             "schema": {
               "generatedName": "FileUploadInfoContentInfo",
-              "schema": "contentInfo",
-              "source": {
-                "file": "../openapi.json",
-                "type": "openapi"
+              "value": {
+                "generatedName": "FileUploadInfoContentInfo",
+                "schema": "contentInfo",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -9211,12 +9223,16 @@
             "key": "metadata",
             "schema": {
               "generatedName": "FileUploadInfoMetadata",
-              "schema": "metadata",
-              "source": {
-                "file": "../openapi.json",
-                "type": "openapi"
+              "value": {
+                "generatedName": "FileUploadInfoMetadata",
+                "schema": "metadata",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,

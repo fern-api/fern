@@ -122,6 +122,21 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(
               convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
           );
+
+    // if referenced schema would be found nullable in convertSchemaObject(),
+    // wrap it as nullable here
+    if (wrapAsNullable === false) {
+        const referencedSchema = context.resolveSchemaReference(schema);
+        if (
+            referencedSchema.nullable === true ||
+            (Array.isArray(referencedSchema.type) &&
+                referencedSchema.type.length >= 2 &&
+                referencedSchema.type.includes("null"))
+        ) {
+            wrapAsNullable = true;
+        }
+    }
+
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             title: undefined,
@@ -236,18 +251,7 @@ export function convertSchemaObject(
 
         // if a schema is null then we should wrap it as nullable
         if (!wrapAsNullable && schema.nullable === true) {
-            return convertSchemaObject(
-                schema,
-                true,
-                context,
-                breadcrumbs,
-                encoding,
-                source,
-                namespace,
-                propertiesToExclude,
-                referencedAsRequest,
-                fallback
-            );
+            wrapAsNullable = true;
         }
 
         // const
