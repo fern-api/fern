@@ -1,3 +1,11 @@
+- version: 3.5.7
+  changelogEntry:
+    - summary: |
+        Fixed NullPointerException in builder setters when collections are null by adding null checks before addAll()/putAll() calls.
+      type: fix
+  createdAt: "2025-09-22"
+  irVersion: 59
+
 - version: 3.5.6
   changelogEntry:
     - summary: |
