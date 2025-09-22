@@ -3262,7 +3262,7 @@
               },
               "type": {
                 "docs": "The type of object - `article_content` .",
-                "type": "optional<string>",
+                "type": "optional<literal<"article_content">>",
               },
               "updated_at": {
                 "docs": "The time when the article was last updated (seconds).",
@@ -3467,7 +3467,7 @@
               },
               "type": {
                 "docs": "The type of object - article_translated_content.",
-                "type": "optional<string>",
+                "type": "optional<literal<"article_translated_content">>",
               },
               "vi": {
                 "docs": "The content of the article in Vietnamese",
@@ -5202,7 +5202,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               },
               "type": {
                 "docs": "The type of object - `group_content` .",
-                "type": "optional<string>",
+                "type": "optional<literal<"group_content">>",
               },
             },
             "source": {
@@ -5351,7 +5351,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               },
               "type": {
                 "docs": "The type of object - group_translated_content.",
-                "type": "optional<string>",
+                "type": "optional<literal<"group_translated_content">>",
               },
               "vi": {
                 "docs": "The content of the group in Vietnamese",
@@ -5455,7 +5455,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
             "properties": {
               "category": {
                 "docs": "Category of the Linked Ticket Object.",
-                "type": "optional<string>",
+                "type": "optional<LinkedObjectCategory>",
               },
               "id": {
                 "docs": "The ID of the linked object",
@@ -5466,6 +5466,21 @@ A "cursor" or pointer is used to keep track of the current position in the resul
                 "type": "optional<LinkedObjectType>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "LinkedObjectCategory": {
+            "docs": "Category of the Linked Ticket Object.",
+            "enum": [
+              "Customer",
+              {
+                "name": "BackOffice",
+                "value": "Back-office",
+              },
+              "Tracker",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8770,7 +8785,7 @@ types:
     docs: The Content of an Article.
     properties:
       type:
-        type: optional<string>
+        type: optional<literal<"article_content">>
         docs: The type of object - `article_content` .
       title:
         type: optional<string>
@@ -8852,7 +8867,7 @@ types:
       the values are the translated content of the article.
     properties:
       type:
-        type: optional<string>
+        type: optional<literal<"article_translated_content">>
         docs: The type of object - article_translated_content.
       ar:
         type: optional<ArticleContent>
@@ -10285,7 +10300,7 @@ types:
     docs: The Content of a Group.
     properties:
       type:
-        type: optional<string>
+        type: optional<literal<"group_content">>
         docs: The type of object - `group_content` .
       name:
         type: optional<string>
@@ -10301,7 +10316,7 @@ types:
       values are the translated content of the Group.
     properties:
       type:
-        type: optional<string>
+        type: optional<literal<"group_translated_content">>
         docs: The type of object - group_translated_content.
       ar:
         type: optional<GroupContent>
@@ -10467,6 +10482,16 @@ types:
     inline: true
     source:
       openapi: ../openapi.yml
+  LinkedObjectCategory:
+    enum:
+      - Customer
+      - value: Back-office
+        name: BackOffice
+      - Tracker
+    docs: Category of the Linked Ticket Object.
+    inline: true
+    source:
+      openapi: ../openapi.yml
   LinkedObject:
     docs: A linked conversation or ticket.
     properties:
@@ -10477,7 +10502,7 @@ types:
         type: optional<string>
         docs: The ID of the linked object
       category:
-        type: optional<string>
+        type: optional<LinkedObjectCategory>
         docs: Category of the Linked Ticket Object.
     source:
       openapi: ../openapi.yml
@@ -12460,7 +12485,7 @@ types:
               },
               "last_answer_type": {
                 "docs": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
-                "type": "optional<string>",
+                "type": "optional<AiAgentLastAnswerType>",
               },
               "rating": {
                 "docs": "The customer satisfaction rating given to AI Agent, from 1-5.",
@@ -12472,7 +12497,7 @@ types:
               },
               "resolution_state": {
                 "docs": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
-                "type": "optional<string>",
+                "type": "optional<AiAgentResolutionState>",
               },
               "source_title": {
                 "docs": "The title of the source that triggered AI Agent involvement in the conversation. If this is `essentials_plan_setup` then it will return `null`.",
@@ -12483,6 +12508,30 @@ types:
                 "type": "optional<AiAgentSourceType>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AiAgentLastAnswerType": {
+            "docs": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
+            "enum": [
+              "ai_answer",
+              "custom_answer",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AiAgentResolutionState": {
+            "docs": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
+            "enum": [
+              "assumed_resolution",
+              "confirmed_resolution",
+              "routed_to_team",
+              "abandoned",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12517,6 +12566,28 @@ types:
     inline: true
     source:
       openapi: ../openapi.yml
+  AiAgentLastAnswerType:
+    enum:
+      - ai_answer
+      - custom_answer
+    docs: >-
+      The type of the last answer delivered by AI Agent. If no answer was
+      delivered then this will return `null`
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  AiAgentResolutionState:
+    enum:
+      - assumed_resolution
+      - confirmed_resolution
+      - routed_to_team
+      - abandoned
+    docs: >-
+      The resolution state of AI Agent. If no AI or custom answer has been
+      delivered then this will return `null`.
+    inline: true
+    source:
+      openapi: ../openapi.yml
   AiAgent:
     docs: Data related to AI Agent involvement in the conversation.
     properties:
@@ -12532,12 +12603,12 @@ types:
           conversation. If this is `essentials_plan_setup` then it will return
           `null`.
       last_answer_type:
-        type: optional<string>
+        type: optional<AiAgentLastAnswerType>
         docs: >-
           The type of the last answer delivered by AI Agent. If no answer was
           delivered then this will return `null`
       resolution_state:
-        type: optional<string>
+        type: optional<AiAgentResolutionState>
         docs: >-
           The resolution state of AI Agent. If no AI or custom answer has been
           delivered then this will return `null`.

@@ -3092,13 +3092,25 @@
                 "description": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
                 "value": {
                   "description": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
-                  "schema": {
-                    "example": "ai_answer",
-                    "type": "string"
-                  },
                   "generatedName": "AiAgentLastAnswerType",
+                  "values": [
+                    {
+                      "generatedName": "ai_answer",
+                      "value": "ai_answer",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "custom_answer",
+                      "value": "custom_answer",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"
@@ -3122,13 +3134,35 @@
                 "description": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
                 "value": {
                   "description": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
-                  "schema": {
-                    "example": "assumed_resolution",
-                    "type": "string"
-                  },
                   "generatedName": "AiAgentResolutionState",
+                  "values": [
+                    {
+                      "generatedName": "assumed_resolution",
+                      "value": "assumed_resolution",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "confirmed_resolution",
+                      "value": "confirmed_resolution",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "routed_to_team",
+                      "value": "routed_to_team",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "abandoned",
+                      "value": "abandoned",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"
@@ -3505,13 +3539,13 @@
                   "description": "The type of object - `article_content` .",
                   "value": {
                     "description": "The type of object - `article_content` .",
-                    "schema": {
-                      "example": "article_content",
+                    "value": {
+                      "value": "article_content",
                       "type": "string"
                     },
                     "generatedName": "ArticleContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -4911,13 +4945,13 @@
                   "description": "The type of object - article_translated_content.",
                   "value": {
                     "description": "The type of object - article_translated_content.",
-                    "schema": {
-                      "example": "article_translated_content",
+                    "value": {
+                      "value": "article_translated_content",
                       "type": "string"
                     },
                     "generatedName": "ArticleTranslatedContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -18915,13 +18949,13 @@
                   "description": "The type of object - `group_content` .",
                   "value": {
                     "description": "The type of object - `group_content` .",
-                    "schema": {
-                      "example": "group_content",
+                    "value": {
+                      "value": "group_content",
                       "type": "string"
                     },
                     "generatedName": "GroupContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -19010,13 +19044,13 @@
                   "description": "The type of object - group_translated_content.",
                   "value": {
                     "description": "The type of object - group_translated_content.",
-                    "schema": {
-                      "example": "group_translated_content",
+                    "value": {
+                      "value": "group_translated_content",
                       "type": "string"
                     },
                     "generatedName": "GroupTranslatedContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -20513,13 +20547,30 @@
                 "description": "Category of the Linked Ticket Object.",
                 "value": {
                   "description": "Category of the Linked Ticket Object.",
-                  "schema": {
-                    "example": "Customer",
-                    "type": "string"
-                  },
                   "generatedName": "LinkedObjectCategory",
+                  "values": [
+                    {
+                      "generatedName": "Customer",
+                      "value": "Customer",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "BackOffice",
+                      "value": "Back-office",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Tracker",
+                      "value": "Tracker",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"

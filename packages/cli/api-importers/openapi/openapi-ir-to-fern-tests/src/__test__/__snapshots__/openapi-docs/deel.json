@@ -8831,9 +8831,20 @@
               },
               "variable_compensation_type": {
                 "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
-                "type": "optional<string>",
+                "type": "optional<EorContractToCreateCompensationDetailsVariableCompensationType>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EorContractToCreateCompensationDetailsVariableCompensationType": {
+            "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
+            "enum": [
+              "PERCENTAGE",
+              "FIXED",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10537,7 +10548,18 @@
           },
           "InvoiceAdjustmentStatusEnum": {
             "docs": "status of invoice adjustment",
-            "type": "optional<string>",
+            "enum": [
+              "approved",
+              "declined",
+              "not_payable",
+              "paid",
+              "pending",
+              "processing",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "InvoiceAdjustmentStatusEnumList": "list<optional<InvoiceAdjustmentStatusEnum>>",
           "InvoiceAdjustmentToCreate": {
@@ -12719,7 +12741,18 @@
           },
           "TimesheetStatusEnum": {
             "docs": "Status of this entry.",
-            "type": "optional<string>",
+            "enum": [
+              "approved",
+              "declined",
+              "not_payable",
+              "paid",
+              "pending",
+              "processing",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
           "TimesheetToCreate": "TimesheetSharedProperties",
@@ -14934,8 +14967,16 @@
     docs: Type for Off-cycle payments
   TimesheetStatusEnumList: list<optional<TimesheetStatusEnum>>
   TimesheetStatusEnum:
-    type: optional<string>
+    enum:
+      - approved
+      - declined
+      - not_payable
+      - paid
+      - pending
+      - processing
     docs: Status of this entry.
+    source:
+      openapi: ../openapi.yml
   InvoiceAdjustmentTypeEnumList: list<InvoiceAdjustmentTypeEnum>
   InvoiceAdjustmentTypeEnum:
     enum:
@@ -14989,8 +15030,16 @@
       openapi: ../openapi.yml
   InvoiceAdjustmentStatusEnumList: list<optional<InvoiceAdjustmentStatusEnum>>
   InvoiceAdjustmentStatusEnum:
-    type: optional<string>
+    enum:
+      - approved
+      - declined
+      - not_payable
+      - paid
+      - pending
+      - processing
     docs: status of invoice adjustment
+    source:
+      openapi: ../openapi.yml
   SortDirEnum:
     enum:
       - asc
@@ -15921,6 +15970,16 @@
     source:
       openapi: ../openapi.yml
     inline: true
+  EorContractToCreateCompensationDetailsVariableCompensationType:
+    enum:
+      - PERCENTAGE
+      - FIXED
+    docs: >-
+      Should be set only if variable_compensation is set. It can be PERCENTAGE
+      or FIXED.
+    inline: true
+    source:
+      openapi: ../openapi.yml
   EorContractToCreateCompensationDetails:
     properties:
       salary:
@@ -15935,7 +15994,8 @@
           Varable compensation. For example, if the person will earn 5% of the
           gross annual salary as the variable compensation, enter 5.
       variable_compensation_type:
-        type: optional<string>
+        type: >-
+          optional<EorContractToCreateCompensationDetailsVariableCompensationType>
         docs: >-
           Should be set only if variable_compensation is set. It can be
           PERCENTAGE or FIXED.
@@ -25921,7 +25981,7 @@ docs: API end-points related to HRIS data.
                         "created_at": "2022-05-24T09:38:46Z",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -26183,7 +26243,7 @@ docs: API end-points related to HRIS data.
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
                           "scale": "custom",
-                          "status": "status",
+                          "status": "approved",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
                           "worksheet": {
@@ -26326,7 +26386,7 @@ docs: API end-points related to HRIS data.
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
                           "scale": "custom",
-                          "status": "status",
+                          "status": "approved",
                           "total_amount": "200.0000",
                           "type": "accrued_holiday",
                           "worksheet": {
@@ -26577,7 +26637,7 @@ service:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
-                  status: status
+                  status: approved
                   description: description
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -26695,7 +26755,7 @@ service:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
                   type: accrued_holiday
-                  status: status
+                  status: approved
                   description: description
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -26772,7 +26832,7 @@ service:
                 created: true
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external
@@ -28203,7 +28263,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                           "remarks": "SAP Reference id: 123",
                           "reviewed_at": "2022-05-04T03:45:27.899Z",
                         },
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -28273,7 +28333,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                             "remarks": "SAP Reference id: 123",
                             "reviewed_at": "2022-05-04T03:45:27.899Z",
                           },
-                          "status": "status",
+                          "status": "approved",
                         },
                       ],
                     },
@@ -28342,7 +28402,7 @@ service:
               data:
                 - id: id
                   public_id: 00000000-0000-0000-0000-000000000000
-                  status: status
+                  status: approved
                   description: Yearly bonus.
                   date_submitted: '2022-05-24T09:38:46Z'
                   currency_code: USD
@@ -28439,7 +28499,7 @@ service:
               data:
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 description: Yearly bonus.
                 date_submitted: '2022-05-24T09:38:46Z'
                 currency_code: USD
@@ -30624,7 +30684,7 @@ docs: Manage time off requests.
                         "created_at": "2022-05-24T09:38:46Z",
                         "id": "id",
                         "public_id": "00000000-0000-0000-0000-000000000000",
-                        "status": "status",
+                        "status": "approved",
                       },
                     },
                   },
@@ -31498,7 +31558,7 @@ service:
                 created: true
                 id: id
                 public_id: 00000000-0000-0000-0000-000000000000
-                status: status
+                status: approved
                 created_at: '2022-05-24T09:38:46Z'
       audiences:
         - external
