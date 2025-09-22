@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: Support IR v59 in the Rust SDK generator.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.1
+
 - changelogEntry:
     - summary: |
         Enable PR mode for self-hosted/local sdk generation
