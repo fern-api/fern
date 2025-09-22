@@ -15,6 +15,7 @@ import {
     isOptionalType,
     isUnknownType,
     isUuidType,
+    namedTypeSupportsHashAndEq,
     typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
@@ -286,15 +287,44 @@ export class StructGenerator {
     private needsPartialEq(): boolean {
         // PartialEq is useful for testing and comparisons
         // Include it unless there are fields that can't support it
-        return this.objectTypeDeclaration.properties.every((property) => {
+        let isTypeSupportsHashAndEq = this.objectTypeDeclaration.properties.every((property) => {
             return typeSupportsHashAndEq(property.valueType, this.context);
         });
+
+        let isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
+            return namedTypeSupportsHashAndEq(
+                {
+                    name: parentType.name,
+                    typeId: parentType.typeId,
+                    default: undefined,
+                    inline: undefined,
+                    fernFilepath: parentType.fernFilepath,
+                    displayName: parentType.name.originalName
+                },
+                this.context
+            );
+        });
+        return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
     }
 
     private canDeriveHashAndEq(): boolean {
         // Check if all field types can support Hash and Eq derives
-        return this.objectTypeDeclaration.properties.every((property) => {
+        let isTypeSupportsHashAndEq = this.objectTypeDeclaration.properties.every((property) => {
             return typeSupportsHashAndEq(property.valueType, this.context);
         });
+        let isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
+            return namedTypeSupportsHashAndEq(
+                {
+                    name: parentType.name,
+                    typeId: parentType.typeId,
+                    default: undefined,
+                    inline: undefined,
+                    fernFilepath: parentType.fernFilepath,
+                    displayName: parentType.name.originalName
+                },
+                this.context
+            );
+        });
+        return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
     }
 }
