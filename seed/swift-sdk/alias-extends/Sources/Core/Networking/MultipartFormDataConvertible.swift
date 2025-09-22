@@ -28,11 +28,7 @@ extension MultipartFormDataConvertible {
                 do {
                     let encodedData = try jsonEncoder.encode(value: encodableValue)
                     if let encodedString = String(data: encodedData, encoding: .utf8) {
-                        // Remove quotes from simple JSON values (strings, numbers, booleans)
-                        let finalValue: String = encodedString.trimmingCharacters(
-                            in: CharacterSet(charactersIn: "\"")
-                        )
-                        multipartData.appendField(finalValue, withName: fieldName)
+                        multipartData.appendField(encodedString, withName: fieldName)
                     }
                 } catch {
                     // Fallback - this should rarely happen with well-formed Encodable types
