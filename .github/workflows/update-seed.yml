@@ -181,7 +181,7 @@ jobs:
           GEN_PATH="generators/ruby"
           LANG_NAME="ruby"
           ALLOW_FAIL="true"
-          BASH_VAR='{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", "language-name": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}'
+          BASH_VAR="{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", \"language-name\": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}"
           echo "ruby_model_matrix=$BASH_VAR" >> $GITHUB_OUTPUT
       - name: Build python-sdk matrix
         id: build-python-sdk-matrix
@@ -190,7 +190,7 @@ jobs:
           GEN_PATH="generators/python"
           LANG_NAME="python"
           ALLOW_FAIL="true"
-          BASH_VAR='[{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", "language-name": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}]'
+          BASH_VAR="{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", \"language-name\": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}"
           echo "python_sdk_matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
           # debug
