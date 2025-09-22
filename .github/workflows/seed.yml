@@ -244,7 +244,6 @@ jobs:
               # Echo the data to command line for visibility
               echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
               echo "$BASH_VAR" | jq .
-            fi
           else
             echo "Set empty json matrix, which will run all tests on a single runner"
             BASH_VAR='[{"fixtures":["all"]}]'
