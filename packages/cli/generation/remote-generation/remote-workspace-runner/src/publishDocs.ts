@@ -184,10 +184,7 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: {
-                    ...apiDefinition,
-                    snippetsConfiguration: disableSnippetGen ? undefined : apiDefinition.snippetsConfiguration
-                },
+                definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage
             });
