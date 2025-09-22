@@ -4,8 +4,22 @@
         Enable PR mode for self-hosted/local sdk generation
       type: feat
   irVersion: 60
-  createdAt: "2025-09-20"
+  createdAt: "2025-09-21"
   version: 0.79.0
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest ruby sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.2
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest php sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.1
 
 - changelogEntry:
     - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
