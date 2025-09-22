@@ -22944,12 +22944,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -23114,12 +23108,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -23491,12 +23479,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -23661,12 +23643,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -23876,12 +23852,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -24037,12 +24007,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -24396,12 +24360,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -24557,12 +24515,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -25104,9 +25056,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -25235,9 +25184,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -25498,9 +25444,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -25650,9 +25593,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -25836,9 +25776,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -25976,9 +25913,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -26257,9 +26191,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -26418,9 +26349,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -27750,12 +27678,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -27959,13 +27881,6 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
                             "name": "Erebor Gold",
                             "number": "7889044-1",
                             "public_identification_name": "AGENCY/ACCOUNT",
@@ -28829,12 +28744,6 @@ service:
                     public_identification_name: AGENCY/ACCOUNT
                     public_identification_value: 0009/7889044-1
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
                   value_date: '2022-04-04'
                   balance: 4.25
           code-samples:
@@ -29381,9 +29290,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -35672,20 +35578,7 @@ client.connect()
                           "balance_gross": 100.09,
                           "balance_net": 99.09,
                           "currency": "USD",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
-                          ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                          "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
-                          ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
                           "price": 10.41,
@@ -35697,12 +35590,6 @@ client.connect()
                             },
                           ],
                           "quantity": 27.46,
-                          "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
-                          ],
                           "subtype": "CBD",
                           "type": "BOND",
                         },
@@ -35839,28 +35726,6 @@ client.connect()
                           "balance_type": "ASSET",
                           "currency": "BRL",
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                          "instruments": [
-                            {
-                              "average_acquisition_price": 10.01,
-                              "balance_gross": 100.09,
-                              "balance_net": 99.09,
-                              "currency": "USD",
-                              "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                              "name": "CBD DIGITAL ESPECIAL",
-                              "open_date": "2021-08-10",
-                              "price": 10.41,
-                              "profit": 3.08,
-                              "public_id": [
-                                {
-                                  "type": "isin",
-                                  "value": "435-3354.3333",
-                                },
-                              ],
-                              "quantity": 27.46,
-                              "subtype": "CBD",
-                              "type": "BOND",
-                            },
-                          ],
                           "name": "Investimento",
                           "type": "FIXED_INCOME",
                         },
@@ -36039,20 +35904,7 @@ client.connect()
                           "balance_gross": 100.09,
                           "balance_net": 99.09,
                           "currency": "USD",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
-                          ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                          "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
-                          ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
                           "price": 10.41,
@@ -36064,12 +35916,6 @@ client.connect()
                             },
                           ],
                           "quantity": 27.46,
-                          "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
-                          ],
                           "subtype": "CBD",
                           "type": "BOND",
                         },
@@ -36207,20 +36053,7 @@ client.connect()
                           "balance_gross": 100.09,
                           "balance_net": 99.09,
                           "currency": "USD",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
-                          ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                          "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
-                          ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
                           "price": 10.41,
@@ -36232,12 +36065,6 @@ client.connect()
                             },
                           ],
                           "quantity": 27.46,
-                          "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
-                          ],
                           "subtype": "CBD",
                           "type": "BOND",
                         },
@@ -36374,22 +36201,6 @@ service:
                   balance_gross: 76000
                   balance_net: 77370.69
                   currency: BRL
-                  instruments:
-                    - id: 30cb4806-6e00-48a4-91c9-ca55968576c8
-                      public_id:
-                        - type: isin
-                          value: 435-3354.3333
-                      type: BOND
-                      subtype: CBD
-                      name: CBD DIGITAL ESPECIAL
-                      currency: USD
-                      price: 10.41
-                      quantity: 27.46
-                      balance_gross: 100.09
-                      balance_net: 99.09
-                      average_acquisition_price: 10.01
-                      profit: 3.08
-                      open_date: '2021-08-10'
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -36519,16 +36330,6 @@ service:
                   average_acquisition_price: 10.01
                   profit: 3.08
                   open_date: '2021-08-10'
-                  redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
-                  interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -36661,16 +36462,6 @@ service:
                   average_acquisition_price: 10.01
                   profit: 3.08
                   open_date: '2021-08-10'
-                  redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
-                  interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -36806,16 +36597,6 @@ service:
                   average_acquisition_price: 10.01
                   profit: 3.08
                   open_date: '2021-08-10'
-                  redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
-                  interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -52640,19 +52421,11 @@ client.connect()
                               "current": 5874.13,
                             },
                             "balance_type": "ASSET",
-                            "category": "CHECKING_ACCOUNT",
                             "collected_at": "2019-09-27T13:01:41Z",
                             "created_at": "2022-02-09T08:45:50Z",
                             "currency": "MXN",
                             "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
                             "name": "Cuenta Perfiles- M.N. - MXN-666",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -52667,13 +52440,7 @@ client.connect()
                           "median_transaction_amount": 32.9,
                           "name": "Netflix",
                           "payment_type": "SUBSCRIPTION",
-                          "transactions": [
-                            {
-                              "amount": 2145.45,
-                              "description": "Netflix.com/march",
-                              "value_date": "2019-10-23",
-                            },
-                          ],
+                          "transactions": [],
                         },
                       ],
                     },
@@ -53318,7 +53085,6 @@ service:
                     id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                     collected_at: '2019-09-27T13:01:41Z'
                     created_at: '2022-02-09T08:45:50Z'
-                    category: CHECKING_ACCOUNT
                     balance_type: ASSET
                     type: Cuentas de efectivo
                     name: Cuenta Perfiles- M.N. - MXN-666
@@ -53329,17 +53095,8 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '150194683119900273'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
                   name: Netflix
-                  transactions:
-                    - amount: 2145.45
-                      description: Netflix.com/march
-                      value_date: '2019-10-23'
+                  transactions: []
                   frequency: MONTHLY
                   average_transaction_amount: 32.9
                   median_transaction_amount: 32.9
@@ -71809,12 +71566,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -71994,12 +71745,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -72174,12 +71919,6 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
-                          ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -72438,13 +72177,6 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
                             "name": "CUENTA NARANJA LITE +",
                             "number": "996685090015",
                             "public_identification_name": "CLABE",
@@ -72637,13 +72369,6 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
                             "name": "Mi ahorro Erebor",
                             "number": "997468860036",
                             "public_identification_name": "CLABE",
@@ -72845,13 +72570,6 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
                             "name": "Erebor Gold",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -74941,12 +74659,6 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000010485108'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -75118,12 +74830,6 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000011543422'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -75303,12 +75009,6 @@ service:
                       minimum_payment: 2400
                       no_interest_payment: 37390.83
                       interest_rate: 4
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:45:50Z'
                   value_date: '2019-10-23'
@@ -76665,9 +76365,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -76816,9 +76513,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -76967,9 +76661,6 @@ service:
                   interest_rates:
                     - name: jurosEfetivo
                       value: 7.85
-                  fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
