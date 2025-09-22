@@ -5105,6 +5105,14 @@ docs: Real-time transcription
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "after_id": "after_id",
+                    "before_id": "before_id",
+                    "created_on": "created_on",
+                    "limit": 1000000,
+                    "status": "queued",
+                    "throttled_only": true,
+                  },
                   "response": {
                     "body": {
                       "page_details": {
@@ -5317,7 +5325,14 @@ service:
         - root.ServiceUnavailableError
         - root.GatewayTimeoutError
       examples:
-        - response:
+        - query-parameters:
+            limit: 1000000
+            status: queued
+            created_on: created_on
+            before_id: before_id
+            after_id: after_id
+            throttled_only: true
+          response:
             body:
               page_details:
                 limit: 1
@@ -6001,6 +6016,9 @@ docs: Transcript related operations
           "auth": false,
           "examples": [
             {
+              "headers": {
+                "Authentication": "Authentication",
+              },
               "messages": [
                 {
                   "body": {
@@ -6016,6 +6034,11 @@ docs: Transcript related operations
                   "type": "publish",
                 },
               ],
+              "query-parameters": {
+                "sample_rate": 1,
+                "token": "token",
+                "word_boost": "word_boost",
+              },
             },
           ],
           "headers": {
@@ -6148,6 +6171,12 @@ The parameter should map to a JSON encoded list of strings.
           body:
             message_type: SessionBegins
             terminate_session: true
+      query-parameters:
+        sample_rate: 1
+        word_boost: word_boost
+        token: token
+      headers:
+        Authentication: Authentication
 imports:
   root: __package__.yml
 types:

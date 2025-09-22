@@ -1015,6 +1015,43 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "account_type",
+              "value": {
+                "value": "CHECKING",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "bank_name",
+              "value": {
+                "value": {
+                  "value": "bank_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -1022,6 +1059,113 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": "-remote_created_at",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "account_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "account_type",
+                  "type": "string"
+                },
+                "type": "literal"
               }
             }
           ],
@@ -1413,7 +1557,48 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "account_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "account_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1898,10 +2083,110 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -2262,7 +2547,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2714,10 +3020,90 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -3047,7 +3433,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3713,11 +4110,158 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ended_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ended_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": "employee",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "payroll_run_id",
+              "value": {
+                "value": {
+                  "value": "payroll_run_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "started_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "started_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
                 },
                 "type": "primitive"
               }
@@ -4277,7 +4821,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": "employee",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -7167,10 +7729,278 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "company_id",
+              "value": {
+                "value": {
+                  "value": "company_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "display_full_name",
+              "value": {
+                "value": {
+                  "value": "display_full_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "employment_status",
+              "value": {
+                "value": "ACTIVE",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": "company",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "first_name",
+              "value": {
+                "value": {
+                  "value": "first_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "groups",
+              "value": {
+                "value": {
+                  "value": "groups",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_sensitive_fields",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_name",
+              "value": {
+                "value": {
+                  "value": "last_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "manager_id",
+              "value": {
+                "value": {
+                  "value": "manager_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "pay_group_id",
+              "value": {
+                "value": {
+                  "value": "pay_group_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "personal_email",
+              "value": {
+                "value": {
+                  "value": "personal_email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "employment_status",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "employment_status",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "started_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "started_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "team_id",
+              "value": {
+                "value": {
+                  "value": "team_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "terminated_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "terminated_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "work_email",
+              "value": {
+                "value": {
+                  "value": "work_email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "work_location_id",
+              "value": {
+                "value": {
+                  "value": "work_location_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -7673,7 +8503,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "is_debug_mode",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "run_async",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9802,7 +10653,49 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": "company",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_sensitive_fields",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "employment_status",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "employment_status",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10974,6 +11867,26 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -10981,6 +11894,104 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": "employee",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": "-effective_date",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "employment_type",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "employment_type",
+                "type": "enum"
               }
             }
           ],
@@ -11559,7 +12570,39 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": "employee",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "employment_type",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "employment_type",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12184,10 +13227,120 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "types",
+              "value": {
+                "value": {
+                  "value": "types",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -12539,7 +13692,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13037,6 +14221,16 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "account_token",
+              "value": {
+                "value": {
+                  "value": "account_token",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -13044,6 +14238,113 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "end_date",
+              "value": {
+                "value": {
+                  "value": "end_date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "end_user_organization_name",
+              "value": {
+                "value": {
+                  "value": "end_user_organization_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "first_incident_time_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "first_incident_time_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_muted",
+              "value": {
+                "value": {
+                  "value": "include_muted",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "integration_name",
+              "value": {
+                "value": {
+                  "value": "integration_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_incident_time_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_incident_time_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start_date",
+              "value": {
+                "value": {
+                  "value": "start_date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "ONGOING",
+                "type": "enum"
               }
             }
           ],
@@ -13817,10 +15118,127 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "category",
+              "value": {
+                "value": "accounting",
+                "type": "enum"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "end_user_email_address",
+              "value": {
+                "value": {
+                  "value": "end_user_email_address",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "end_user_organization_name",
+              "value": {
+                "value": {
+                  "value": "end_user_organization_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "end_user_origin_id",
+              "value": {
+                "value": {
+                  "value": "end_user_origin_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "end_user_origin_ids",
+              "value": {
+                "value": {
+                  "value": "end_user_origin_ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ids",
+              "value": {
+                "value": {
+                  "value": "ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_duplicates",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "integration_name",
+              "value": {
+                "value": {
+                  "value": "integration_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "is_test_account",
+              "value": {
+                "value": {
+                  "value": "is_test_account",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "status",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -14341,6 +15759,26 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -14348,6 +15786,86 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "location_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "location_type",
+                  "type": "string"
+                },
+                "type": "literal"
               }
             }
           ],
@@ -14735,7 +16253,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "location_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "location_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15416,10 +16965,90 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -15716,7 +17345,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16337,11 +17977,152 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ended_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ended_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "run_state",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "run_type",
+              "value": {
+                "value": "CORRECTION",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "run_state",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "started_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "started_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
                 },
                 "type": "primitive"
               }
@@ -16737,7 +18518,32 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "run_state",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "run_state",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17562,11 +19368,31 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "common_model",
+              "value": {
+                "value": {
+                  "value": "common_model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -17813,6 +19639,16 @@
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -18343,10 +20179,110 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "parent_team",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "parent_team_id",
+              "value": {
+                "value": {
+                  "value": "parent_team_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -18672,7 +20608,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "parent_team",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19391,6 +21348,36 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "approver_id",
+              "value": {
+                "value": {
+                  "value": "approver_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -19398,6 +21385,111 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": "approver",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "request_type",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "request_type",
+              "value": {
+                "value": "BEREAVEMENT",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "request_type",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "APPROVED",
+                "type": "enum"
               }
             }
           ],
@@ -19750,7 +21842,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "is_debug_mode",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "run_async",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -20498,6 +22611,26 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -20505,6 +22638,113 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "employee_id",
+              "value": {
+                "value": {
+                  "value": "employee_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_deleted_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "policy_type",
+              "value": {
+                "value": "BEREAVEMENT",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "policy_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "remote_id",
+              "value": {
+                "value": {
+                  "value": "remote_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "policy_type",
+                  "type": "string"
+                },
+                "type": "literal"
               }
             }
           ],
@@ -20882,7 +23122,48 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": {
+                  "value": "employee",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": {
+                  "value": "policy_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": {
+                  "value": "policy_type",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -21324,7 +23605,39 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "value": "approver",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "include_remote_data",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "value": "request_type",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "value": "request_type",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "X-Account-Token",

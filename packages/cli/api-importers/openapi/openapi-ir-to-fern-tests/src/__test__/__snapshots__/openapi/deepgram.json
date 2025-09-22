@@ -5136,6 +5136,8 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "limit": 1,
+                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5464,6 +5466,7 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5537,6 +5540,7 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5985,6 +5989,7 @@ channel:
                     "project_id": "123456-7890-1234-5678-901234",
                   },
                   "query-parameters": {
+                    "limit": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6058,6 +6063,8 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "limit": 1,
+                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -8692,8 +8699,10 @@ service:
         - path-parameters:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
+            limit: 1
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            page: 1
           response:
             body:
               project_id: project_id
@@ -9336,6 +9345,8 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            limit: 1
+            page: 1
           response:
             body:
               page: 1
@@ -9430,6 +9441,7 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            project_filters: alternatives.yml
           response:
             body:
               start: '2024-10-16'
@@ -9554,6 +9566,7 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            project_filters: alternatives.yml
           response:
             body:
               start: '2025-01-16'
@@ -9610,6 +9623,7 @@ service:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
             start: '2024-07-01T00:00:00Z'
+            limit: 1
           response:
             body:
               orders:
@@ -11332,6 +11346,14 @@ docs: Power your apps with world-class speech recognition
                 {
                   "query-parameters": {
                     "callback": "https://example.com",
+                    "callback_method": "POST",
+                    "custom_topic": "custom_topic",
+                    "custom_topic_mode": "extended",
+                    "intents": true,
+                    "read_language": "en",
+                    "read_summarize": true,
+                    "sentiment": true,
+                    "topics": true,
                   },
                   "request": {
                     "url": "url",
@@ -11544,6 +11566,14 @@ service:
       examples:
         - query-parameters:
             callback: https://example.com
+            callback_method: POST
+            custom_topic: custom_topic
+            custom_topic_mode: extended
+            intents: true
+            read_language: en
+            sentiment: true
+            read_summarize: true
+            topics: true
           request:
             url: url
           response:

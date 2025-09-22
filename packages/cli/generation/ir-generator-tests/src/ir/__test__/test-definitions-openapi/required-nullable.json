@@ -365,8 +365,8 @@
                             "valueType": {
                                 "_type": "container",
                                 "container": {
-                                    "_type": "nullable",
-                                    "nullable": {
+                                    "_type": "optional",
+                                    "optional": {
                                         "_type": "primitive",
                                         "primitive": {
                                             "v1": "STRING",
@@ -455,15 +455,21 @@
                             "valueType": {
                                 "_type": "container",
                                 "container": {
-                                    "_type": "nullable",
-                                    "nullable": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                    "_type": "optional",
+                                    "optional": {
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -641,7 +647,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "9e82a09d",
+                                "id": "57765a87",
                                 "name": null,
                                 "url": "/foo",
                                 "rootPathParameters": [],
@@ -684,6 +690,65 @@
                                                 }
                                             },
                                             "jsonExample": "required_baz"
+                                        },
+                                        "shape": {
+                                            "type": "single"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "required_nullable_baz",
+                                                "camelCase": {
+                                                    "unsafeName": "requiredNullableBaz",
+                                                    "safeName": "requiredNullableBaz"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "required_nullable_baz",
+                                                    "safeName": "required_nullable_baz"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REQUIRED_NULLABLE_BAZ",
+                                                    "safeName": "REQUIRED_NULLABLE_BAZ"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "RequiredNullableBaz",
+                                                    "safeName": "RequiredNullableBaz"
+                                                }
+                                            },
+                                            "wireValue": "required_nullable_baz"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "nullable",
+                                                    "nullable": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "required_nullable_baz"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "required_nullable_baz"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "required_nullable_baz"
                                         },
                                         "shape": {
                                             "type": "single"
@@ -1095,59 +1160,12 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "1eb4a283",
+                                "id": "86bf2d47",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
                                 "queryParameters": [
-                                    {
-                                        "name": {
-                                            "name": {
-                                                "originalName": "optional_baz",
-                                                "camelCase": {
-                                                    "unsafeName": "optionalBaz",
-                                                    "safeName": "optionalBaz"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "optional_baz",
-                                                    "safeName": "optional_baz"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OPTIONAL_BAZ",
-                                                    "safeName": "OPTIONAL_BAZ"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "OptionalBaz",
-                                                    "safeName": "OptionalBaz"
-                                                }
-                                            },
-                                            "wireValue": "optional_baz"
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "nullable",
-                                                    "nullable": null,
-                                                    "valueType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
                                     {
                                         "name": {
                                             "name": {
@@ -1185,53 +1203,6 @@
                                                 }
                                             },
                                             "jsonExample": "required_baz"
-                                        }
-                                    },
-                                    {
-                                        "name": {
-                                            "name": {
-                                                "originalName": "optional_nullable_baz",
-                                                "camelCase": {
-                                                    "unsafeName": "optionalNullableBaz",
-                                                    "safeName": "optionalNullableBaz"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "optional_nullable_baz",
-                                                    "safeName": "optional_nullable_baz"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OPTIONAL_NULLABLE_BAZ",
-                                                    "safeName": "OPTIONAL_NULLABLE_BAZ"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "OptionalNullableBaz",
-                                                    "safeName": "OptionalNullableBaz"
-                                                }
-                                            },
-                                            "wireValue": "optional_nullable_baz"
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "nullable",
-                                                    "nullable": null,
-                                                    "valueType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
                                         }
                                     },
                                     {
@@ -1995,7 +1966,7 @@
                                 "wireValue": "optional_baz"
                             },
                             "typeReference": {
-                                "type": "nullable",
+                                "type": "optional",
                                 "value": {
                                     "type": "primitive",
                                     "value": "STRING"
@@ -2056,10 +2027,13 @@
                                 "wireValue": "optional_nullable_baz"
                             },
                             "typeReference": {
-                                "type": "nullable",
+                                "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null

@@ -1513,6 +1513,9 @@ types:
               "docs": "List blobs in your account",
               "examples": [
                 {
+                  "query-parameters": {
+                    "prefix": "prefix",
+                  },
                   "response": {
                     "body": [
                       {
@@ -1642,7 +1645,9 @@ service:
         type: list<BlobListingItem>
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            prefix: prefix
+          response:
             body:
               - key: hello_world
                 size: 20
@@ -2040,6 +2045,8 @@ give access to details and data from the requesting user.",
                     "limit": 1,
                     "offset": 1,
                     "relationship": "any",
+                    "since": "2024-01-15T09:30:00Z",
+                    "until": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -2047,11 +2054,13 @@ give access to details and data from the requesting user.",
                         {
                           "author": {
                             "id": "id",
+                            "username": null,
                           },
                           "comment": "comment",
                           "createdAt": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "val": {
+                            "author": null,
                             "id": "id",
                             "name": "name",
                             "privacy": "public",
@@ -2246,18 +2255,24 @@ give access to details and data from the requesting user.",
                   "query-parameters": {
                     "limit": 1,
                     "offset": 1,
+                    "since": "2024-01-15T09:30:00Z",
+                    "until": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
                       "data": [
                         {
                           "dependsOn": {
+                            "author_id": null,
                             "id": "id",
                             "name": "name",
+                            "username": null,
                           },
                           "reference": {
+                            "author_id": null,
                             "id": "id",
                             "name": "name",
+                            "username": null,
                           },
                           "referencedAt": "2024-01-15T09:30:00Z",
                         },
@@ -3003,6 +3018,8 @@ service:
         - query-parameters:
             offset: 1
             limit: 1
+            since: '2024-01-15T09:30:00Z'
+            until: '2024-01-15T09:30:00Z'
             relationship: any
           response:
             body:
@@ -3012,11 +3029,13 @@ service:
                   createdAt: '2024-01-15T09:30:00Z'
                   author:
                     id: id
+                    username: null
                   val:
                     name: name
                     id: id
                     version: 1
                     privacy: public
+                    author: null
               links:
                 self: self
                 prev: prev
@@ -3058,14 +3077,20 @@ service:
         - query-parameters:
             offset: 1
             limit: 1
+            since: '2024-01-15T09:30:00Z'
+            until: '2024-01-15T09:30:00Z'
           response:
             body:
               data:
                 - reference:
                     id: id
+                    username: null
+                    author_id: null
                     name: name
                   dependsOn:
                     id: id
+                    username: null
+                    author_id: null
                     name: name
                   referencedAt: '2024-01-15T09:30:00Z'
               links:
@@ -4305,6 +4330,9 @@ let you get, create, and run vals.",
                   "path-parameters": {
                     "code": "code",
                   },
+                  "query-parameters": {
+                    "args": "args",
+                  },
                   "response": {
                     "body": "string",
                   },
@@ -4678,6 +4706,9 @@ let you get, create, and run vals.",
                 {
                   "path-parameters": {
                     "valname": "valname",
+                  },
+                  "query-parameters": {
+                    "args": "args",
                   },
                 },
               ],
@@ -5186,6 +5217,8 @@ service:
       examples:
         - path-parameters:
             code: code
+          query-parameters:
+            args: args
           response:
             body: string
     runGet:
@@ -5211,6 +5244,8 @@ service:
       examples:
         - path-parameters:
             valname: valname
+          query-parameters:
+            args: args
     runPost:
       path: /v1/run/{valname}
       method: POST

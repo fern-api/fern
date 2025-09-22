@@ -114,6 +114,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             description: undefined,
             availability: undefined,
             enumVarNames: undefined,
+            wrapAsOptional: false,
             wrapAsNullable: false,
             namespace: undefined,
             groupName: undefined,

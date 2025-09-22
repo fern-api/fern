@@ -653,7 +653,85 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "type",
+              "value": {
+                "value": "delivery",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "disabled_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -3153,7 +3231,68 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "event_id",
+              "value": {
+                "value": {
+                  "value": "event_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4388,7 +4527,118 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "webhook_id",
+              "value": {
+                "value": {
+                  "value": "webhook_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "event_data_id",
+              "value": {
+                "value": {
+                  "value": "event_data_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "label",
+              "value": {
+                "value": {
+                  "value": "label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_used_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7098,7 +7348,118 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "url",
+              "value": {
+                "value": {
+                  "value": "url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cli_path",
+              "value": {
+                "value": {
+                  "value": "cli_path",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -11152,7 +11513,265 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "SCHEDULED",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "issue_id",
+              "value": {
+                "value": {
+                  "value": "issue_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "webhook_id",
+              "value": {
+                "value": {
+                  "value": "webhook_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "destination_id",
+              "value": {
+                "value": {
+                  "value": "destination_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "value": {
+                  "value": "source_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "attempts",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "response_status",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "successful_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "error_code",
+              "value": {
+                "value": {
+                  "value": "error_code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cli_id",
+              "value": {
+                "value": {
+                  "value": "cli_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cli_user_id",
+              "value": {
+                "value": {
+                  "value": "cli_user_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_attempt_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "event_data_id",
+              "value": {
+                "value": {
+                  "value": "event_data_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "headers",
+              "value": {
+                "value": {
+                  "value": "headers",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "body",
+              "value": {
+                "value": {
+                  "value": "body",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "parsed_query",
+              "value": {
+                "value": {
+                  "value": "parsed_query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "bulk_retry_id",
+              "value": {
+                "value": {
+                  "value": "bulk_retry_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "path",
+              "value": {
+                "value": {
+                  "value": "path",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include",
+              "value": {
+                "value": {
+                  "value": "data",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "last_attempt_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -15292,7 +15911,118 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cancelled_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "completed_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query_partial_match",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "in_progress",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -20692,7 +21422,118 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cancelled_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "completed_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query_partial_match",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "in_progress",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -22334,7 +23175,25 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "label",
+              "value": {
+                "value": {
+                  "value": "label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "provider",
+              "value": {
+                "value": "twitter",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -25789,10 +26648,120 @@
               }
             },
             {
+              "name": "type",
+              "value": {
+                "value": {
+                  "value": "delivery",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "OPENED",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
               "name": "merged_with",
               "value": {
                 "value": {
                   "value": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "first_seen_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_seen_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "dismissed_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -27568,10 +28537,120 @@
               }
             },
             {
+              "name": "type",
+              "value": {
+                "value": {
+                  "value": "delivery",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "OPENED",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
               "name": "merged_with",
               "value": {
                 "value": {
                   "value": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "first_seen_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_seen_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "dismissed_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -30434,7 +31513,202 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "accepted",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "rejection_cause",
+              "value": {
+                "value": "SOURCE_ARCHIVED",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "ignored_count",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "events_count",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "value": {
+                  "value": "source_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "verified",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "headers",
+              "value": {
+                "value": {
+                  "value": "headers",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "body",
+              "value": {
+                "value": {
+                  "value": "body",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "parsed_query",
+              "value": {
+                "value": {
+                  "value": "parsed_query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "path",
+              "value": {
+                "value": {
+                  "value": "path",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ingested_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "bulk_retry_id",
+              "value": {
+                "value": {
+                  "value": "bulk_retry_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include",
+              "value": {
+                "value": {
+                  "value": "data",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "ingested_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -33656,7 +34930,265 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "SCHEDULED",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "issue_id",
+              "value": {
+                "value": {
+                  "value": "issue_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "webhook_id",
+              "value": {
+                "value": {
+                  "value": "webhook_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "destination_id",
+              "value": {
+                "value": {
+                  "value": "destination_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "value": {
+                  "value": "source_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "attempts",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "response_status",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "successful_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "error_code",
+              "value": {
+                "value": {
+                  "value": "error_code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cli_id",
+              "value": {
+                "value": {
+                  "value": "cli_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cli_user_id",
+              "value": {
+                "value": {
+                  "value": "cli_user_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "last_attempt_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "event_data_id",
+              "value": {
+                "value": {
+                  "value": "event_data_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "headers",
+              "value": {
+                "value": {
+                  "value": "headers",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "body",
+              "value": {
+                "value": {
+                  "value": "body",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "parsed_query",
+              "value": {
+                "value": {
+                  "value": "parsed_query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "bulk_retry_id",
+              "value": {
+                "value": {
+                  "value": "bulk_retry_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "path",
+              "value": {
+                "value": {
+                  "value": "path",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "include",
+              "value": {
+                "value": {
+                  "value": "data",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "last_attempt_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -34317,7 +35849,68 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36827,7 +38420,118 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cancelled_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "completed_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "in_progress",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query_partial_match",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -41446,7 +43150,98 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -44185,7 +45980,108 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "integration_id",
+              "value": {
+                "value": {
+                  "value": "integration_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -46606,7 +48502,78 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -46700,6 +48667,24 @@
                             "type": "string"
                           },
                           "type": "primitive"
+                        },
+                        "env": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
+                          "type": "map"
                         },
                         "updated_at": {
                           "value": {
@@ -49343,7 +51328,98 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "log_level",
+              "value": {
+                "value": {
+                  "value": "debug",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "webhook_id",
+              "value": {
+                "value": {
+                  "value": "webhook_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "issue_id",
+              "value": {
+                "value": {
+                  "value": "issue_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -50910,7 +52986,138 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "destination_id",
+              "value": {
+                "value": {
+                  "value": "destination_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "value": {
+                  "value": "source_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "archived_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "full_name",
+              "value": {
+                "value": {
+                  "value": "full_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "paused_at",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "value": {
+                  "value": "created_at",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "dir",
+              "value": {
+                "value": {
+                  "value": "asc",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "next",
+              "value": {
+                "value": {
+                  "value": "next",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "prev",
+              "value": {
+                "value": {
+                  "value": "prev",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -65344,18 +67551,12 @@
                             "type": "primitive"
                           },
                           "value": {
-                            "generatedName": "TransformFullTransformationEnvValue",
-                            "value": {
-                              "schema": {
-                                "type": "string"
-                              },
-                              "generatedName": "TransformFullTransformationEnvValue",
-                              "groupName": [],
-                              "type": "primitive"
+                            "schema": {
+                              "type": "string"
                             },
+                            "generatedName": "TransformFullTransformationEnvValue",
                             "groupName": [],
-                            "inline": true,
-                            "type": "nullable"
+                            "type": "primitive"
                           },
                           "generatedName": "TransformFullTransformationEnv",
                           "groupName": [],
@@ -66330,18 +68531,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "TransformationEnvValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "TransformationEnvValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "TransformationEnvValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "generatedName": "TransformationEnv",
                   "groupName": [],

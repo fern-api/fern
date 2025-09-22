@@ -709,7 +709,65 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "queued",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "created_on",
+              "value": {
+                "value": {
+                  "value": "created_on",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "before_id",
+              "value": {
+                "value": {
+                  "value": "before_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "after_id",
+              "value": {
+                "value": {
+                  "value": "after_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "throttled_only",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7928,8 +7986,50 @@
       "path": "/{userId}",
       "examples": [
         {
-          "queryParameters": [],
-          "headers": [],
+          "queryParameters": [
+            {
+              "name": "sample_rate",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "word_boost",
+              "value": {
+                "value": {
+                  "value": "word_boost",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "token",
+              "value": {
+                "value": {
+                  "value": "token",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [
+            {
+              "name": "Authentication",
+              "value": {
+                "value": {
+                  "value": "Authentication",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "messages": [
             {
               "messageType": "publish",

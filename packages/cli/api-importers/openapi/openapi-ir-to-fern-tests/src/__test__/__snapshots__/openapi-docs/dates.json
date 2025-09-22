@@ -15,8 +15,12 @@
               "examples": [
                 {
                   "headers": {
-                    "date_header": "[object Object]",
-                    "date_time_header": "[object Object]",
+                    "date_header": "2023-01-15",
+                    "date_time_header": "2024-01-15T09:30:00Z",
+                  },
+                  "query-parameters": {
+                    "date_query": "2023-01-15",
+                    "date_time_query": "2024-01-15T09:30:00Z",
                   },
                   "request": {},
                   "response": {
@@ -99,9 +103,12 @@
         type: Response
         status-code: 200
       examples:
-        - headers:
-            date_header: '[object Object]'
-            date_time_header: '[object Object]'
+        - query-parameters:
+            date_query: '2023-01-15'
+            date_time_query: '2024-01-15T09:30:00Z'
+          headers:
+            date_header: '2023-01-15'
+            date_time_header: '2024-01-15T09:30:00Z'
           request: {}
           response:
             body:

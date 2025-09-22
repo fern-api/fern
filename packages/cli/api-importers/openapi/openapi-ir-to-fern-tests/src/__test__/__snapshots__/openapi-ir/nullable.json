@@ -423,6 +423,16 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "email",
+              "value": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],

@@ -17,6 +17,7 @@
                 {
                   "query-parameters": {
                     "required_baz": "required_baz",
+                    "required_nullable_baz": "required_nullable_baz",
                   },
                   "response": {
                     "body": {
@@ -36,11 +37,11 @@
                 "query-parameters": {
                   "optional_baz": {
                     "docs": "An optional baz",
-                    "type": "nullable<string>",
+                    "type": "optional<string>",
                   },
                   "optional_nullable_baz": {
                     "docs": "An optional baz",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "required_baz": {
                     "docs": "A required baz",
@@ -97,13 +98,13 @@
         name: GetFooRequest
         query-parameters:
           optional_baz:
-            type: nullable<string>
+            type: optional<string>
             docs: An optional baz
           required_baz:
             type: string
             docs: A required baz
           optional_nullable_baz:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: An optional baz
           required_nullable_baz:
             type: nullable<string>
@@ -115,6 +116,7 @@
       examples:
         - query-parameters:
             required_baz: required_baz
+            required_nullable_baz: required_nullable_baz
           response:
             body:
               nullable_required_bar: nullable_required_bar

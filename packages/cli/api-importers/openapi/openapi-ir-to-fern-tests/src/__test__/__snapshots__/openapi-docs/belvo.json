@@ -29482,6 +29482,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -29632,6 +29633,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -29969,6 +29971,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -30119,6 +30122,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -30339,6 +30343,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -30718,6 +30723,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -30888,6 +30894,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31265,6 +31272,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31435,6 +31443,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31650,6 +31659,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31811,6 +31821,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32170,6 +32181,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32331,6 +32343,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32696,6 +32709,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -32868,6 +32882,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -32999,6 +33014,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -33262,6 +33278,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -33414,6 +33431,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -33600,6 +33618,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -33740,6 +33759,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -34021,6 +34041,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -34182,6 +34203,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -34373,6 +34395,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34495,6 +34518,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34740,6 +34764,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34883,6 +34908,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -35524,6 +35550,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -35716,6 +35743,7 @@ client.connect()
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2022-06-17T03:20:41Z",
                             "created_at": "2021-10-27T16:18:15Z",
+                            "credit_data": null,
                             "currency": "BRL",
                             "id": "26428311-7108-40b8-a22b-c310187dd005",
                             "institution": {
@@ -35727,6 +35755,7 @@ client.connect()
                             "loan_data": {
                               "collected_at": "2022-02-09T08:45:50Z",
                               "contract_end_date": "2027-10-01",
+                              "interest_rates": null,
                               "monthly_payment": 1000,
                               "outstanding_balance": 182000,
                               "principal": 192000,
@@ -36053,6 +36082,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -36255,6 +36285,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -36594,11 +36625,13 @@ service:
                     public_identification_name: AGENCY/ACCOUNT
                     public_identification_value: 0009/7889044-1
                     last_accessed_at: '2021-03-09T10:28:40Z'
+                    credit_data: null
                     loan_data:
                       collected_at: '2022-02-09T08:45:50Z'
                       principal: 192000
                       outstanding_balance: 182000
                       monthly_payment: 1000
+                      interest_rates: null
                       contract_end_date: '2027-10-01'
                   value_date: '2022-04-04'
                   balance: 4.25
@@ -36798,6 +36831,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -36971,6 +37005,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -37145,6 +37180,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -42647,6 +42683,7 @@ client.connect()
                     "country_code__in": "CO,BR",
                     "display_name": "Erebor Bank",
                     "fields": "link,balance,account",
+                    "name": "name",
                     "name__in": "erebor_br_retail,gotham_co_business",
                     "omit": "link,balance",
                     "page": 1,
@@ -42907,6 +42944,7 @@ service:
             country_code: MX
             country_code__in: CO,BR
             display_name: Erebor Bank
+            name: name
             name__in: erebor_br_retail,gotham_co_business
             resources__allin: ACCOUNTS,OWNERS,TRANSACTIONS
             status: healthy
@@ -43586,8 +43624,14 @@ client.connect()
                     },
                   ],
                   "query-parameters": {
+                    "created_at__gt": "created_at__gt",
+                    "created_at__gte": "created_at__gte",
+                    "created_at__lt": "created_at__lt",
+                    "created_at__lte": "created_at__lte",
+                    "created_at__range": "created_at__range",
                     "fields": "link,balance,account",
                     "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                    "link__in": "link__in",
                     "omit": "link,balance",
                     "page": 1,
                     "page_size": 100,
@@ -43610,7 +43654,9 @@ client.connect()
                               "balance_gross": 100.09,
                               "balance_net": 99.09,
                               "currency": "USD",
+                              "fees": null,
                               "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                              "interest_rates": null,
                               "name": "CBD DIGITAL ESPECIAL",
                               "open_date": "2021-08-10",
                               "price": 10.41,
@@ -43622,6 +43668,7 @@ client.connect()
                                 },
                               ],
                               "quantity": 27.46,
+                              "redemption_conditions": null,
                               "subtype": "CBD",
                               "type": "BOND",
                             },
@@ -44126,6 +44173,12 @@ service:
             omit: link,balance
             fields: link,balance,account
             link: 8848bd0c-9c7e-4f53-a732-ec896b11d4c4
+            created_at__gt: created_at__gt
+            created_at__gte: created_at__gte
+            created_at__lt: created_at__lt
+            created_at__lte: created_at__lte
+            created_at__range: created_at__range
+            link__in: link__in
           response:
             body:
               count: 130
@@ -44155,6 +44208,9 @@ service:
                       average_acquisition_price: 10.01
                       profit: 3.08
                       open_date: '2021-08-10'
+                      redemption_conditions: null
+                      fees: null
+                      interest_rates: null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -57802,9 +57858,11 @@ types:
                     "created_at__lt": "2022-09-15",
                     "created_at__lte": "2022-09-15",
                     "created_at__range": "2022-09-15,2022-09-20",
+                    "ordering": "created_at",
                     "page": 1,
                     "page_size": 100,
                     "search": "trai",
+                    "status": "ACTIVE",
                   },
                   "response": {
                     "body": {
@@ -58133,6 +58191,8 @@ service:
             created_at__lt: '2022-09-15'
             created_at__lte: '2022-09-15'
             created_at__range: 2022-09-15,2022-09-20
+            status: ACTIVE
+            ordering: created_at
             search: trai
           response:
             body:
@@ -59293,6 +59353,7 @@ docs: >+
                           "currency": "BRL",
                           "fees": [
                             {
+                              "type": null,
                               "value": 2.21,
                             },
                           ],
@@ -59759,7 +59820,8 @@ service:
                   gross_amount: 106.7
                   net_amount: 104.58
                   fees:
-                    - value: 2.21
+                    - type: null
+                      value: 2.21
                   status: APPROVED
                   number_of_installments:
                     paid: 1
@@ -60238,6 +60300,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -60408,12 +60471,14 @@ client.connect()
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2019-09-27T13:01:41Z",
                             "created_at": "2022-02-09T08:45:50Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "loan_data": {
                               "collected_at": "2022-02-09T08:45:50Z",
                               "contract_end_date": "2027-10-01",
+                              "interest_rates": null,
                               "monthly_payment": 1000,
                               "outstanding_balance": 182000,
                               "principal": 192000,
@@ -60661,6 +60726,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -60847,6 +60913,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -61094,11 +61161,13 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '150194683119900273'
                     last_accessed_at: '2021-03-09T10:28:40Z'
+                    credit_data: null
                     loan_data:
                       collected_at: '2022-02-09T08:45:50Z'
                       principal: 192000
                       outstanding_balance: 182000
                       monthly_payment: 1000
+                      interest_rates: null
                       contract_end_date: '2027-10-01'
                   name: Netflix
                   transactions:
@@ -61300,6 +61369,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -61461,6 +61531,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -61626,6 +61697,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -67408,6 +67480,7 @@ client.tax_retentions.list(params: {
                           "retention_breakdown": [
                             {
                               "base_amount": 0.03,
+                              "payment_status": null,
                               "retained_amount": 0,
                               "tax_type": "01",
                             },
@@ -67547,6 +67620,7 @@ client.tax_retentions.list(params: {
                         "retention_breakdown": [
                           {
                             "base_amount": 0.03,
+                            "payment_status": null,
                             "retained_amount": 0,
                             "tax_type": "01",
                           },
@@ -67789,6 +67863,7 @@ service:
                     - base_amount: 0.03
                       tax_type: '01'
                       retained_amount: 0
+                      payment_status: null
                   xml: '=XML-STRING='
     RetrieveTaxRetentions:
       path: /api/tax-retentions/
@@ -67907,6 +67982,7 @@ service:
                   - base_amount: 0.03
                     tax_type: '01'
                     retained_amount: 0
+                    payment_status: null
                 xml: '=XML-STRING='
     DetailTaxRetentions:
       path: /api/tax-retentions/{id}/
@@ -73169,6 +73245,7 @@ service:
                       - rfc_retenedor: ABC444444A00
                         monto_retenciones: 46000
                         retenciones_isr: 4600
+                  dividendos: {}
                   datos_informativos:
                     credito_fiscal_autorizado_proyectos_investigacion_desarrollo: 0
                     credito_fiscal_autorizado_proyectos_apoyo_deporte_alto_rendimiento: 0
@@ -73180,7 +73257,6 @@ service:
                     saldo_credito_fiscal_anteriores_produccion_distribucion_cinematografica: 0
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
-                  dividendos: {}
                   type: yearly
               previous:
                 key: value
@@ -73282,6 +73358,7 @@ service:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:46:20Z'
+                  informacion_general: {}
                   isr:
                     tipo: PFAE
                     determinacion:
@@ -73321,7 +73398,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-                  informacion_general: {}
               previous:
                 key: value
           code-samples:
@@ -73422,6 +73498,7 @@ service:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:46:20Z'
+                  informacion_general: {}
                   isr:
                     tipo: PFAE
                     determinacion:
@@ -73469,7 +73546,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-                  informacion_general: {}
               previous:
                 key: value
           code-samples:
@@ -77394,6 +77470,7 @@ client.connect()
                           "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                           "regimes": [
                             {
+                              "end_date": null,
                               "initial_date": "2003-01-01",
                               "regimen": "Régimen de Sueldos y Salarios e Ingresos Asimilados a Salarios",
                             },
@@ -77560,6 +77637,7 @@ client.connect()
                           "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                           "regimes": [
                             {
+                              "end_date": null,
                               "initial_date": "2003-01-01",
                               "regimen": "Régimen General de Ley Personas Morales",
                             },
@@ -78258,7 +78336,8 @@ service:
                       order: '1'
                       percentage: '100'
                   regimes:
-                    - initial_date: '2003-01-01'
+                    - end_date: null
+                      initial_date: '2003-01-01'
                       regimen: >-
                         Régimen de Sueldos y Salarios e Ingresos Asimilados a
                         Salarios
@@ -78394,7 +78473,8 @@ service:
                       order: '1'
                       percentage: '100'
                   regimes:
-                    - initial_date: '2003-01-01'
+                    - end_date: null
+                      initial_date: '2003-01-01'
                       regimen: Régimen General de Ley Personas Morales
                   obligations:
                     - obligation: Declaración informativa de IVA con la anual de ISR
@@ -79583,6 +79663,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -79768,6 +79849,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -79948,6 +80030,7 @@ client.connect()
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -80195,6 +80278,7 @@ client.connect()
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "created_at": "2022-02-09T08:46:20Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "02589c41-ba22-4d44-8558-8111cc751318",
                             "institution": {
@@ -80206,6 +80290,7 @@ client.connect()
                             "loan_data": {
                               "collected_at": "2022-02-09T08:45:50Z",
                               "contract_end_date": "2027-10-01",
+                              "interest_rates": null,
                               "monthly_payment": 1000,
                               "outstanding_balance": 182000,
                               "principal": 192000,
@@ -80394,6 +80479,7 @@ client.connect()
                             "category": "SAVINGS_ACCOUNT",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "created_at": "2022-02-09T08:46:20Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "02589c41-ba22-4d44-8558-8111cc751318",
                             "institution": {
@@ -80405,6 +80491,7 @@ client.connect()
                             "loan_data": {
                               "collected_at": "2022-02-09T08:45:50Z",
                               "contract_end_date": "2027-10-01",
+                              "interest_rates": null,
                               "monthly_payment": 1000,
                               "outstanding_balance": 182000,
                               "principal": 192000,
@@ -80613,6 +80700,7 @@ client.connect()
                             "loan_data": {
                               "collected_at": "2022-02-09T08:45:50Z",
                               "contract_end_date": "2027-10-01",
+                              "interest_rates": null,
                               "monthly_payment": 1000,
                               "outstanding_balance": 182000,
                               "principal": 192000,
@@ -81082,6 +81170,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81267,6 +81356,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81447,6 +81537,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81680,6 +81771,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81870,6 +81962,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -82055,6 +82148,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -82706,11 +82800,13 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000010485108'
                     last_accessed_at: '2021-03-09T10:28:40Z'
+                    credit_data: null
                     loan_data:
                       collected_at: '2022-02-09T08:45:50Z'
                       principal: 192000
                       outstanding_balance: 182000
                       monthly_payment: 1000
+                      interest_rates: null
                       contract_end_date: '2027-10-01'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
@@ -82883,11 +82979,13 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000011543422'
                     last_accessed_at: '2021-03-09T10:28:40Z'
+                    credit_data: null
                     loan_data:
                       collected_at: '2022-02-09T08:45:50Z'
                       principal: 192000
                       outstanding_balance: 182000
                       monthly_payment: 1000
+                      interest_rates: null
                       contract_end_date: '2027-10-01'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
@@ -83073,6 +83171,7 @@ service:
                       principal: 192000
                       outstanding_balance: 182000
                       monthly_payment: 1000
+                      interest_rates: null
                       contract_end_date: '2027-10-01'
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:45:50Z'
@@ -83257,6 +83356,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -83417,6 +83517,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -83577,6 +83678,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   receivables_data:
                     current: 2193.83
@@ -83924,6 +84026,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -84079,6 +84182,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -84234,6 +84338,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   receivables_data:
                     current: 2193.83
@@ -84429,6 +84534,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -84580,6 +84686,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE
@@ -84731,6 +84838,7 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
                     - type: OPERATION_FEE

@@ -296,7 +296,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1579,7 +1587,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "membership",
+              "value": {
+                "value": "active",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2736,7 +2772,35 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "show",
+              "value": {
+                "value": "all",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4995,7 +5059,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7082,7 +7167,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -8592,7 +8685,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "title",
+              "value": {
+                "value": {
+                  "value": "title",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -10391,7 +10515,35 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "show",
+              "value": {
+                "value": "all",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -12131,7 +12283,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -13851,7 +14011,75 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "title",
+              "value": {
+                "value": {
+                  "value": "title",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "collection_id",
+              "value": {
+                "value": {
+                  "value": "collection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "source",
+              "value": {
+                "value": "upload",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "strategy",
+              "value": {
+                "value": {
+                  "value": "strategy",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -16728,7 +16956,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -17279,7 +17528,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -18685,7 +18942,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "project_id",
+              "value": {
+                "value": {
+                  "value": "project_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -20666,7 +20934,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -21995,7 +22271,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -22638,7 +22925,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -22881,9 +23189,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -23441,7 +23770,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -24645,7 +24995,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -24848,7 +25219,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -25491,7 +25873,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -25734,9 +26137,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -26294,7 +26718,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -27498,7 +27943,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -27701,7 +28167,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -28344,7 +28821,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -28587,9 +29085,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -29147,7 +29666,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -30351,7 +30891,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -30554,7 +31115,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -31197,7 +31769,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -31440,9 +32033,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -32000,7 +32614,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -33204,7 +33839,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -33407,7 +34063,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -34050,7 +34717,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -34293,9 +34981,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -34853,7 +35562,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36057,7 +36787,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36260,7 +37011,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36903,7 +37665,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -37146,9 +37929,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -37706,7 +38510,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -38910,7 +39735,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -39113,7 +39959,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent_id",
+              "value": {
+                "value": {
+                  "value": "parent_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -39756,7 +40613,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -39999,9 +40877,30 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "redirect_to",
+              "value": {
+                "value": {
+                  "value": "redirect_to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -40559,7 +41458,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -41763,7 +42683,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "code",
+              "value": {
+                "value": {
+                  "value": "code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -43462,7 +44403,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -45319,7 +46281,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -47345,7 +48338,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "task_revision_id",
+              "value": {
+                "value": {
+                  "value": "task_revision_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -48146,7 +49170,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "value": "user",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -49729,7 +50761,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -64955,56 +66008,50 @@
                   },
                   "value": {
                     "generatedName": "TaskUpdateOutputFormatValue",
-                    "value": {
-                      "generatedName": "TaskUpdateOutputFormatValue",
-                      "values": [
-                        {
-                          "generatedName": "str",
-                          "value": "str",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "string",
-                          "value": "string",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "boolean",
-                          "value": "boolean",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "bool",
-                          "value": "bool",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "int",
-                          "value": "int",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "integer",
-                          "value": "integer",
-                          "casing": {}
-                        },
-                        {
-                          "generatedName": "list",
-                          "value": "list",
-                          "casing": {}
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                    "values": [
+                      {
+                        "generatedName": "str",
+                        "value": "str",
+                        "casing": {}
                       },
-                      "inline": true,
-                      "type": "enum"
-                    },
+                      {
+                        "generatedName": "string",
+                        "value": "string",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "boolean",
+                        "value": "boolean",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "bool",
+                        "value": "bool",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "int",
+                        "value": "int",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "integer",
+                        "value": "integer",
+                        "casing": {}
+                      },
+                      {
+                        "generatedName": "list",
+                        "value": "list",
+                        "casing": {}
+                      }
+                    ],
                     "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
                     "inline": true,
-                    "type": "nullable"
+                    "type": "enum"
                   },
                   "generatedName": "TaskUpdateOutputFormat",
                   "groupName": [],

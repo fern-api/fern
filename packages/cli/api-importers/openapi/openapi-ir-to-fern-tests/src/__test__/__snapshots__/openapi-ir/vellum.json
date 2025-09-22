@@ -1064,7 +1064,48 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "document_index_id",
+              "value": {
+                "value": {
+                  "value": "document_index_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ordering",
+              "value": {
+                "value": {
+                  "value": "ordering",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1674,6 +1715,9 @@
                                       },
                                       "type": "primitive"
                                     },
+                                    "finish_reason": {
+                                      "type": "null"
+                                    },
                                     "model_version_id": {
                                       "value": {
                                         "value": "model_version_id",
@@ -1994,6 +2038,9 @@
                                 },
                                 "type": "primitive"
                               },
+                              "finish_reason": {
+                                "type": "null"
+                              },
                               "model_version_id": {
                                 "value": {
                                   "value": "model_version_id",
@@ -2228,6 +2275,24 @@
                             "type": "double"
                           },
                           "type": "primitive"
+                        },
+                        "logit_bias": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": 1.1,
+                                  "type": "double"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
+                          "type": "map"
                         },
                         "stop": {
                           "value": [
@@ -6985,18 +7050,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
-                    "value": {
-                      "schema": {
-                        "type": "double"
-                      },
-                      "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "double"
                     },
+                    "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "generatedName": "ModelVersionExecConfigParametersLogitBias",
                   "groupName": [],
@@ -7480,18 +7539,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
-                  "value": {
-                    "schema": {
-                      "type": "double"
-                    },
-                    "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "double"
                   },
+                  "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "nullable"
+                  "type": "primitive"
                 },
                 "generatedName": "NormalizedTokenLogProbsTopLogprobs",
                 "groupName": [],
@@ -8722,18 +8775,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
-                    "value": {
-                      "schema": {
-                        "type": "double"
-                      },
-                      "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "double"
                     },
+                    "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                   "groupName": [],

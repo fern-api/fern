@@ -72,7 +72,8 @@ export interface ParseOpenAPIOptions {
      */
     groupMultiApiEnvironments: boolean;
 
-    coerceNullableToOptional: boolean;
+    wrapReferencesToNullableInOptional: boolean;
+    coerceOptionalSchemasToNullable: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -101,7 +102,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     preserveSingleSchemaOneOf: false,
     inlineAllOfSchemas: false,
     groupMultiApiEnvironments: false,
-    coerceNullableToOptional: true
+    wrapReferencesToNullableInOptional: true,
+    coerceOptionalSchemasToNullable: true
 };
 
 export function getParseOptions({
@@ -191,9 +193,13 @@ export function getParseOptions({
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments,
-        coerceNullableToOptional:
-            overrides?.coerceNullableToOptional ??
-            options?.coerceNullableToOptional ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceNullableToOptional
+        wrapReferencesToNullableInOptional:
+            overrides?.wrapReferencesToNullableInOptional ??
+            options?.wrapReferencesToNullableInOptional ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable:
+            overrides?.coerceOptionalSchemasToNullable ??
+            options?.coerceOptionalSchemasToNullable ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable
     };
 }

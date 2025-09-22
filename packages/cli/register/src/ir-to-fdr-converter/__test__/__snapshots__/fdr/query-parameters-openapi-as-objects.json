@@ -283,12 +283,9 @@
                   }
                 },
                 "valueType": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               }

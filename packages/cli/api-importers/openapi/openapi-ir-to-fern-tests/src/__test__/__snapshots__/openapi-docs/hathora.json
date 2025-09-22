@@ -3752,6 +3752,10 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
+                  },
                   "response": {
                     "body": "string",
                   },
@@ -3799,6 +3803,10 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
+                  },
                   "response": {
                     "body": "string",
                   },
@@ -3842,6 +3850,10 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -3930,6 +3942,9 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
+            local: true
           headers: {}
           response:
             body: string
@@ -3962,6 +3977,9 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
+            local: true
           headers: {}
           response:
             body: string
@@ -3991,6 +4009,9 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            local: true
+            region: Seattle
           headers: {}
           response:
             body:
@@ -4034,6 +4055,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -4109,6 +4133,9 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
+                  "query-parameters": {
+                    "roomId": "roomId",
+                  },
                   "request": {
                     "initialConfig": {
                       "key": "value",
@@ -4181,6 +4208,9 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
+                  "query-parameters": {
+                    "roomId": "roomId",
+                  },
                   "request": {
                     "initialConfig": {
                       "key": "value",
@@ -4252,6 +4282,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -4362,6 +4395,9 @@ service:
                 {
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -4526,6 +4562,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -4575,6 +4613,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -4624,6 +4664,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -4673,6 +4715,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             visibility: public
@@ -4711,6 +4755,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - state:
@@ -5022,6 +5068,11 @@ service:
                     "appId": "appId",
                     "processId": "processId",
                   },
+                  "query-parameters": {
+                    "end": 1,
+                    "start": 1,
+                    "step": 1,
+                  },
                   "response": {
                     "body": {
                       "cpu": [
@@ -5126,6 +5177,10 @@ service:
         - path-parameters:
             appId: appId
             processId: processId
+          query-parameters:
+            end: 1
+            start: 1
+            step: 1
           response:
             body:
               cpu:
@@ -5215,6 +5270,9 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
+                  "query-parameters": {
+                    "region": "Seattle",
+                  },
                   "response": {
                     "body": [
                       {
@@ -5232,6 +5290,7 @@ service:
                         "rooms": [
                           {
                             "appId": "appId",
+                            "currentAllocation": null,
                             "roomId": "roomId",
                             "status": "scheduling",
                           },
@@ -5278,6 +5337,9 @@ service:
                 {
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -5357,6 +5419,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - egressedBytes: 1.1
@@ -5379,6 +5443,7 @@ service:
                   - appId: appId
                     roomId: roomId
                     status: scheduling
+                    currentAllocation: null
                 totalRooms: 1.1
     GetStoppedProcesses:
       path: /processes/v1/{appId}/list/stopped
@@ -5401,6 +5466,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - egressedBytes: 1.1

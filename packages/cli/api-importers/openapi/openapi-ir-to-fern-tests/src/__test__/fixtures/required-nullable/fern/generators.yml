@@ -4,4 +4,5 @@ api:
     - openapi: ../openapi.json
       settings:
         respect-nullable-schemas: true
-        coerce-nullable-to-optional: false
+        wrap-references-to-nullable-in-optional: false
+        coerce-optional-schemas-to-nullable: false

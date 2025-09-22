@@ -150,6 +150,7 @@
     "preserveSingleSchemaOneOf": false,
     "inlineAllOfSchemas": false,
     "groupMultiApiEnvironments": false,
-    "coerceNullableToOptional": true
+    "wrapReferencesToNullableInOptional": true,
+    "coerceOptionalSchemasToNullable": true
   }
 }

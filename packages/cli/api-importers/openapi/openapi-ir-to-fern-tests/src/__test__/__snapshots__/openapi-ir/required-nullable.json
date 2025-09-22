@@ -28,7 +28,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -57,15 +57,20 @@
           "schema": {
             "generatedName": "GetFooRequestOptionalNullableBaz",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetFooRequestOptionalNullableBaz",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetFooRequestOptionalNullableBaz",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -129,6 +134,16 @@
               "value": {
                 "value": {
                   "value": "required_baz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "required_nullable_baz",
+              "value": {
+                "value": {
+                  "value": "required_nullable_baz",
                   "type": "string"
                 },
                 "type": "primitive"

@@ -260,6 +260,10 @@ types:
                   "path-parameters": {
                     "organizationId": "organizationId",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "pageSize": 1,
+                  },
                   "response": {
                     "body": {
                       "users": [
@@ -329,6 +333,9 @@ service:
       examples:
         - path-parameters:
             organizationId: organizationId
+          query-parameters:
+            page: 1
+            pageSize: 1
           response:
             body:
               users:
@@ -356,6 +363,10 @@ service:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "pageSize": 1,
+                  },
                   "response": {
                     "body": {
                       "users": [
@@ -418,7 +429,10 @@ service:
         type: root.UserList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            pageSize: 1
+          response:
             body:
               users:
                 - id: id

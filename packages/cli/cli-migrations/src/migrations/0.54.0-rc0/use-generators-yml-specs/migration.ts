@@ -379,7 +379,8 @@ function convertDeprecatedApiSettingsToOpenApiSettings(
         "prefer-undiscriminated-unions-with-literals": deprecatedApiSettings?.unions === "v1" ? true : undefined,
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
-        "coerce-nullable-to-optional": deprecatedApiSettings["coerce-nullable-to-optional"]
+        "wrap-references-to-nullable-in-optional": deprecatedApiSettings["wrap-references-to-nullable-in-optional"],
+        "coerce-optional-schemas-to-nullable": deprecatedApiSettings["coerce-optional-schemas-to-nullable"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {
@@ -396,7 +397,8 @@ function convertDeprecatedApiSettingsToAsyncApiSettings(
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
         "message-naming": deprecatedApiSettings["message-naming"],
-        "coerce-nullable-to-optional": deprecatedApiSettings["coerce-nullable-to-optional"]
+        "wrap-references-to-nullable-in-optional": deprecatedApiSettings["wrap-references-to-nullable-in-optional"],
+        "coerce-optional-schemas-to-nullable": deprecatedApiSettings["coerce-optional-schemas-to-nullable"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {

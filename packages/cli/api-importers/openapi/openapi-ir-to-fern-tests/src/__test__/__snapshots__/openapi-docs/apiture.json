@@ -13454,6 +13454,9 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "retryCount": 1,
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -13523,6 +13526,11 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1,
+                    "location": "internal",
+                    "start": "start",
+                  },
                   "response": {
                     "body": {
                       "count": 6,
@@ -13798,7 +13806,11 @@ service:
         - root.AccountsListAccountsRequestForbiddenError
         - root.AccountsListAccountsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            location: internal
+            start: start
+            limit: 1
+          response:
             body:
               limit: 1
               nextPage_url: >-
@@ -13946,7 +13958,9 @@ service:
         - root.AccountsListAccountBalancesRequestTooManyRequestsError
         - root.AccountsListAccountBalancesRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            retryCount: 1
+          response:
             body:
               items:
                 - id: 05d00d7d-d630
@@ -14069,6 +14083,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               ],
               "examples": [
                 {
+                  "headers": {
+                    "If-None-Match": "If-None-Match",
+                  },
                   "path-parameters": {
                     "institutionId": "TIBURON",
                   },
@@ -14154,7 +14171,9 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "query-parameters": {
                     "endsOn": "2022-07-04",
+                    "risk": "early",
                     "startsOn": "2022-07-04",
+                    "type": "internal",
                   },
                   "response": {
                     "body": {
@@ -14329,6 +14348,7 @@ This information provides hints to clients, allowing bank customers to select tr
                     "institutionId": "TIBURON",
                   },
                   "query-parameters": {
+                    "count": 1,
                     "direction": "debit",
                     "endsOn": "2022-07-04",
                     "frequency": "once",
@@ -14443,6 +14463,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 {
                   "query-parameters": {
                     "countryCode": "US",
+                    "includeIntermediaryInstitutions": true,
                     "locator": "locator",
                     "locatorType": "abaRoutingNumber",
                   },
@@ -14600,6 +14621,7 @@ service:
             locator: locator
             locatorType: abaRoutingNumber
             countryCode: US
+            includeIntermediaryInstitutions: true
           response:
             body:
               found: true
@@ -14695,6 +14717,7 @@ service:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
             direction: debit
+            count: 1
             frequency: once
           response:
             body:
@@ -14771,6 +14794,8 @@ service:
             institutionId: TIBURON
           query-parameters:
             timeZoneId: America/New_York
+          headers:
+            If-None-Match: If-None-Match
           response:
             body:
               timeZoneId: America/New_York
@@ -14860,6 +14885,8 @@ service:
           query-parameters:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
+            type: internal
+            risk: early
           response:
             body:
               restrictedDates:
@@ -15163,6 +15190,10 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                   "path-parameters": {
                     "accountId": "accountId",
                   },
+                  "query-parameters": {
+                    "limit": 1,
+                    "start": "start",
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -15375,6 +15406,9 @@ service:
       examples:
         - path-parameters:
             accountId: accountId
+          query-parameters:
+            start: start
+            limit: 1
           response:
             body:
               limit: 100
@@ -15504,6 +15538,9 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
               ],
               "examples": [
                 {
+                  "headers": {
+                    "If-None-Match": "If-None-Match",
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -15593,7 +15630,9 @@ service:
         - >-
           root.TransactionCategoriesListTransactionCategoriesRequestUnprocessableEntityError
       examples:
-        - response:
+        - headers:
+            If-None-Match: If-None-Match
+          response:
             body:
               items:
                 - label: Dining
@@ -15643,8 +15682,12 @@ The default response lists only recent transactions. Normally, this is transacti
                     "amount": "[1000.00,1200.00)",
                     "checkNumber": "[1000,1200)",
                     "createdOn": "2022-05-19",
+                    "limit": 1,
                     "occurredOn": "2023-05-19",
+                    "posted": true,
                     "postedOn": "2022-05-19",
+                    "retryCount": 1,
+                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -15993,11 +16036,15 @@ service:
         - path-parameters:
             accountId: accountId
           query-parameters:
+            start: start
+            limit: 1
             occurredOn: '2023-05-19'
+            posted: true
             createdOn: '2022-05-19'
             postedOn: '2022-05-19'
             amount: '[1000.00,1200.00)'
             checkNumber: '[1000,1200)'
+            retryCount: 1
           response:
             body:
               limit: 10
@@ -16074,6 +16121,9 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Challenge": "Challenge",
+                  },
                   "request": {
                     "amount": "275.00",
                     "memo": "Cover check for car repair",
@@ -16276,7 +16326,10 @@ Note: This operation requires an identity challenge if the financial institution
                   "query-parameters": {
                     "creditsOn": "2022-05-19",
                     "debitsOn": "2022-05-19",
+                    "historical": true,
+                    "limit": 1,
                     "scheduledOn": "2022-05-19",
+                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -16420,6 +16473,9 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Challenge": "Challenge",
+                  },
                   "path-parameters": {
                     "transferId": "transferId",
                   },
@@ -16611,6 +16667,9 @@ service:
             scheduledOn: '2022-05-19'
             debitsOn: '2022-05-19'
             creditsOn: '2022-05-19'
+            historical: true
+            start: start
+            limit: 1
           response:
             body:
               limit: 10
@@ -16720,7 +16779,9 @@ service:
         - root.TransfersCreateTransferRequestForbiddenError
         - root.TransfersCreateTransferRequestUnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            Challenge: Challenge
+          request:
             amount: '275.00'
             sourceAccount:
               id: bd9b7af2-6f9b
@@ -16893,6 +16954,8 @@ service:
       examples:
         - path-parameters:
             transferId: transferId
+          headers:
+            Challenge: Challenge
           request:
             amount: '275.00'
             targetAccount:

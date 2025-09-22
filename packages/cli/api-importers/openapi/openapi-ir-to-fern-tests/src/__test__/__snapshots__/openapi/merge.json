@@ -10050,7 +10050,22 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "account_type": "CHECKING",
+                    "bank_name": "bank_name",
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "expand": "employee",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "order_by": "-remote_created_at",
+                    "page_size": 1,
+                    "remote_fields": "account_type",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "account_type",
                   },
                   "response": {
                     "body": {
@@ -10184,6 +10199,12 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "employee",
+                    "include_remote_data": true,
+                    "remote_fields": "account_type",
+                    "show_enum_origins": "account_type",
                   },
                   "response": {
                     "body": {
@@ -10391,7 +10412,22 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            account_type: CHECKING
+            bank_name: bank_name
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            expand: employee
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            order_by: '-remote_created_at'
+            page_size: 1
+            remote_fields: account_type
+            remote_id: remote_id
+            show_enum_origins: account_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10453,6 +10489,11 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: employee
+            include_remote_data: true
+            remote_fields: account_type
+            show_enum_origins: account_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10499,7 +10540,17 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "expand": "employee",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -10611,6 +10662,10 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "employee",
+                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -10748,7 +10803,17 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            expand: employee
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10805,6 +10870,9 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: employee
+            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10852,7 +10920,15 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -10956,6 +11032,9 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -11079,7 +11158,15 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11130,6 +11217,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11224,7 +11313,22 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "ended_after": "2024-01-15T09:30:00Z",
+                    "ended_before": "2024-01-15T09:30:00Z",
+                    "expand": "employee",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "payroll_run_id": "payroll_run_id",
+                    "remote_id": "remote_id",
+                    "started_after": "2024-01-15T09:30:00Z",
+                    "started_before": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -11392,6 +11496,10 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "employee",
+                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -11700,7 +11808,22 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            ended_after: '2024-01-15T09:30:00Z'
+            ended_before: '2024-01-15T09:30:00Z'
+            expand: employee
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            payroll_run_id: payroll_run_id
+            remote_id: remote_id
+            started_after: '2024-01-15T09:30:00Z'
+            started_before: '2024-01-15T09:30:00Z'
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11782,6 +11905,9 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: employee
+            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11890,6 +12016,10 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "is_debug_mode": true,
+                    "run_async": true,
                   },
                   "request": {
                     "model": {},
@@ -12075,7 +12205,35 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "company_id": "company_id",
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "display_full_name": "display_full_name",
+                    "employment_status": "ACTIVE",
+                    "expand": "company",
+                    "first_name": "first_name",
+                    "groups": "groups",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "include_sensitive_fields": true,
+                    "last_name": "last_name",
+                    "manager_id": "manager_id",
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "pay_group_id": "pay_group_id",
+                    "personal_email": "personal_email",
+                    "remote_fields": "employment_status",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "employment_status",
+                    "started_after": "2024-01-15T09:30:00Z",
+                    "started_before": "2024-01-15T09:30:00Z",
+                    "team_id": "team_id",
+                    "terminated_after": "2024-01-15T09:30:00Z",
+                    "terminated_before": "2024-01-15T09:30:00Z",
+                    "work_email": "work_email",
+                    "work_location_id": "work_location_id",
                   },
                   "response": {
                     "body": {
@@ -12339,6 +12497,13 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "company",
+                    "include_remote_data": true,
+                    "include_sensitive_fields": true,
+                    "remote_fields": "employment_status",
+                    "show_enum_origins": "employment_status",
                   },
                   "response": {
                     "body": {
@@ -15980,7 +16145,35 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            company_id: company_id
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            display_full_name: display_full_name
+            employment_status: ACTIVE
+            expand: company
+            first_name: first_name
+            groups: groups
+            include_deleted_data: true
+            include_remote_data: true
+            include_sensitive_fields: true
+            last_name: last_name
+            manager_id: manager_id
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            pay_group_id: pay_group_id
+            personal_email: personal_email
+            remote_fields: employment_status
+            remote_id: remote_id
+            show_enum_origins: employment_status
+            started_after: '2024-01-15T09:30:00Z'
+            started_before: '2024-01-15T09:30:00Z'
+            team_id: team_id
+            terminated_after: '2024-01-15T09:30:00Z'
+            terminated_before: '2024-01-15T09:30:00Z'
+            work_email: work_email
+            work_location_id: work_location_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -16058,7 +16251,10 @@ service:
         type: root.EmployeeResponse
         status-code: 201
       examples:
-        - headers:
+        - query-parameters:
+            is_debug_mode: true
+            run_async: true
+          headers:
             X-Account-Token: X-Account-Token
           request:
             model: {}
@@ -16168,6 +16364,12 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: company
+            include_remote_data: true
+            include_sensitive_fields: true
+            remote_fields: employment_status
+            show_enum_origins: employment_status
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -16294,7 +16496,20 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "expand": "employee",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "order_by": "-effective_date",
+                    "page_size": 1,
+                    "remote_fields": "employment_type",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "employment_type",
                   },
                   "response": {
                     "body": {
@@ -16421,6 +16636,12 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "employee",
+                    "include_remote_data": true,
+                    "remote_fields": "employment_type",
+                    "show_enum_origins": "employment_type",
                   },
                   "response": {
                     "body": {
@@ -16991,7 +17212,20 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            expand: employee
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            order_by: '-effective_date'
+            page_size: 1
+            remote_fields: employment_type
+            remote_id: remote_id
+            show_enum_origins: employment_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17057,6 +17291,11 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: employee
+            include_remote_data: true
+            remote_fields: employment_type
+            show_enum_origins: employment_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17302,7 +17541,18 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_fields": "type",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "type",
+                    "types": "types",
                   },
                   "response": {
                     "body": {
@@ -17414,6 +17664,11 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "include_remote_data": true,
+                    "remote_fields": "type",
+                    "show_enum_origins": "type",
                   },
                   "response": {
                     "body": {
@@ -17552,7 +17807,18 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_fields: type
+            remote_id: remote_id
+            show_enum_origins: type
+            types: types
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17606,6 +17872,10 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            include_remote_data: true
+            remote_fields: type
+            show_enum_origins: type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17649,7 +17919,19 @@ service:
                     "X-Account-Token": "[object Object]",
                   },
                   "query-parameters": {
+                    "account_token": "account_token",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "end_date": "end_date",
+                    "end_user_organization_name": "end_user_organization_name",
+                    "first_incident_time_after": "2024-01-15T09:30:00Z",
+                    "first_incident_time_before": "2024-01-15T09:30:00Z",
+                    "include_muted": "include_muted",
+                    "integration_name": "integration_name",
+                    "last_incident_time_after": "2024-01-15T09:30:00Z",
+                    "last_incident_time_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "start_date": "start_date",
+                    "status": "ONGOING",
                   },
                   "response": {
                     "body": {
@@ -17880,7 +18162,19 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            account_token: account_token
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            end_date: end_date
+            end_user_organization_name: end_user_organization_name
+            first_incident_time_after: '2024-01-15T09:30:00Z'
+            first_incident_time_before: '2024-01-15T09:30:00Z'
+            include_muted: include_muted
+            integration_name: integration_name
+            last_incident_time_after: '2024-01-15T09:30:00Z'
+            last_incident_time_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            start_date: start_date
+            status: ONGOING
           headers:
             X-Account-Token: '[object Object]'
           response:
@@ -18182,7 +18476,19 @@ service:
                     "X-Account-Token": "[object Object]",
                   },
                   "query-parameters": {
+                    "category": "accounting",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "end_user_email_address": "end_user_email_address",
+                    "end_user_organization_name": "end_user_organization_name",
+                    "end_user_origin_id": "end_user_origin_id",
+                    "end_user_origin_ids": "end_user_origin_ids",
+                    "id": "id",
+                    "ids": "ids",
+                    "include_duplicates": true,
+                    "integration_name": "integration_name",
+                    "is_test_account": "is_test_account",
+                    "page_size": 1,
+                    "status": "status",
                   },
                   "response": {
                     "body": {
@@ -18447,7 +18753,19 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            category: accounting
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            end_user_email_address: end_user_email_address
+            end_user_organization_name: end_user_organization_name
+            end_user_origin_id: end_user_origin_id
+            end_user_origin_ids: end_user_origin_ids
+            id: id
+            ids: ids
+            include_duplicates: true
+            integration_name: integration_name
+            is_test_account: is_test_account
+            page_size: 1
+            status: status
           headers:
             X-Account-Token: '[object Object]'
           response:
@@ -18507,7 +18825,17 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_fields": "location_type",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "location_type",
                   },
                   "response": {
                     "body": {
@@ -18621,6 +18949,11 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "include_remote_data": true,
+                    "remote_fields": "location_type",
+                    "show_enum_origins": "location_type",
                   },
                   "response": {
                     "body": {
@@ -18760,7 +19093,17 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_fields: location_type
+            remote_id: remote_id
+            show_enum_origins: location_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -18820,6 +19163,10 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            include_remote_data: true
+            remote_fields: location_type
+            show_enum_origins: location_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19059,7 +19406,15 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -19157,6 +19512,9 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -19274,7 +19632,15 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19320,6 +19686,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19361,7 +19729,22 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "ended_after": "2024-01-15T09:30:00Z",
+                    "ended_before": "2024-01-15T09:30:00Z",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_fields": "run_state",
+                    "remote_id": "remote_id",
+                    "run_type": "CORRECTION",
+                    "show_enum_origins": "run_state",
+                    "started_after": "2024-01-15T09:30:00Z",
+                    "started_before": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -19497,6 +19880,11 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "include_remote_data": true,
+                    "remote_fields": "run_state",
+                    "show_enum_origins": "run_state",
                   },
                   "response": {
                     "body": {
@@ -19782,7 +20170,22 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            ended_after: '2024-01-15T09:30:00Z'
+            ended_before: '2024-01-15T09:30:00Z'
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_fields: run_state
+            remote_id: remote_id
+            run_type: CORRECTION
+            show_enum_origins: run_state
+            started_after: '2024-01-15T09:30:00Z'
+            started_before: '2024-01-15T09:30:00Z'
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19838,6 +20241,10 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            include_remote_data: true
+            remote_fields: run_state
+            show_enum_origins: run_state
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20090,7 +20497,9 @@ service:
                   },
                   "name": "Employees that started on or after January 1st, 2022",
                   "query-parameters": {
+                    "common_model": "common_model",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "page_size": 1,
                   },
                   "response": {
                     "body": {
@@ -20241,7 +20650,9 @@ service:
       examples:
         - name: Employees that started on or after January 1st, 2022
           query-parameters:
+            common_model: common_model
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            page_size: 1
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20284,6 +20695,7 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "page_size": 1,
                   },
                   "response": {
                     "body": {
@@ -20366,6 +20778,7 @@ service:
       examples:
         - query-parameters:
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            page_size: 1
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20403,7 +20816,17 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "expand": "parent_team",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "parent_team_id": "parent_team_id",
+                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -20510,6 +20933,10 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "parent_team",
+                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -20640,7 +21067,17 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            expand: parent_team
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            parent_team_id: parent_team_id
+            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20692,6 +21129,9 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: parent_team
+            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20732,6 +21172,10 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
+                  },
+                  "query-parameters": {
+                    "is_debug_mode": true,
+                    "run_async": true,
                   },
                   "request": {
                     "model": {},
@@ -20846,7 +21290,22 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "approver_id": "approver_id",
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "expand": "approver",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "remote_fields": "request_type",
+                    "remote_id": "remote_id",
+                    "request_type": "BEREAVEMENT",
+                    "show_enum_origins": "request_type",
+                    "status": "APPROVED",
                   },
                   "response": {
                     "body": {
@@ -21031,6 +21490,12 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "approver",
+                    "include_remote_data": true,
+                    "remote_fields": "request_type",
+                    "show_enum_origins": "request_type",
                   },
                   "response": {
                     "body": {
@@ -21481,7 +21946,22 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            approver_id: approver_id
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            expand: approver
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            remote_fields: request_type
+            remote_id: remote_id
+            request_type: BEREAVEMENT
+            show_enum_origins: request_type
+            status: APPROVED
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -21538,7 +22018,10 @@ service:
         type: root.TimeOffResponse
         status-code: 201
       examples:
-        - headers:
+        - query-parameters:
+            is_debug_mode: true
+            run_async: true
+          headers:
             X-Account-Token: X-Account-Token
           request:
             model: {}
@@ -21622,6 +22105,11 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: approver
+            include_remote_data: true
+            remote_fields: request_type
+            show_enum_origins: request_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -21696,7 +22184,20 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                    "employee_id": "employee_id",
+                    "expand": "employee",
+                    "include_deleted_data": true,
+                    "include_remote_data": true,
+                    "modified_after": "2024-01-15T09:30:00Z",
+                    "modified_before": "2024-01-15T09:30:00Z",
+                    "page_size": 1,
+                    "policy_type": "BEREAVEMENT",
+                    "remote_fields": "policy_type",
+                    "remote_id": "remote_id",
+                    "show_enum_origins": "policy_type",
                   },
                   "response": {
                     "body": {
@@ -21824,6 +22325,12 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": "employee",
+                    "include_remote_data": true,
+                    "remote_fields": "policy_type",
+                    "show_enum_origins": "policy_type",
                   },
                   "response": {
                     "body": {
@@ -22016,7 +22523,20 @@ service:
         status-code: 200
       examples:
         - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
+            employee_id: employee_id
+            expand: employee
+            include_deleted_data: true
+            include_remote_data: true
+            modified_after: '2024-01-15T09:30:00Z'
+            modified_before: '2024-01-15T09:30:00Z'
+            page_size: 1
+            policy_type: BEREAVEMENT
+            remote_fields: policy_type
+            remote_id: remote_id
+            show_enum_origins: policy_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -22076,6 +22596,11 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: employee
+            include_remote_data: true
+            remote_fields: policy_type
+            show_enum_origins: policy_type
           headers:
             X-Account-Token: X-Account-Token
           response:

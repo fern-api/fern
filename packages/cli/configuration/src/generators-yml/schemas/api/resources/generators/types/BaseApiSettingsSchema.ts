@@ -11,9 +11,16 @@ export interface BaseApiSettingsSchema {
     "coerce-enums-to-literals"?: boolean;
     "idiomatic-request-names"?: boolean;
     /**
-     * If true, the converter will convert nullable schemas to optional nullable.
-     * If false, the converter will convert nullable schemas to required nullable.
+     * If true, the converter will wrap references to nullable schemas in optional.
+     * If false, the converter will wrap references to nullable schemas in nullable.
      * Defaults to true.
      */
-    "coerce-nullable-to-optional"?: boolean;
+    "wrap-references-to-nullable-in-optional"?: boolean;
+
+    /**
+     * If true, the converter will coerce nullable schemas to optional.
+     * If false, the converter will keep nullable schemas as nullable.
+     * Defaults to true.
+     */
+    "coerce-optional-schemas-to-nullable"?: boolean;
 }

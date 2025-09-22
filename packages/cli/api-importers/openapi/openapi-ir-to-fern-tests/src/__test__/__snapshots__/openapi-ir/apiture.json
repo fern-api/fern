@@ -772,7 +772,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "location",
+              "value": {
+                "value": "internal",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2448,7 +2476,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "retryCount",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4703,7 +4742,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7732,6 +7792,16 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "includeIntermediaryInstitutions",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -8788,6 +8858,16 @@
               "value": {
                 "value": "debit",
                 "type": "enum"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
               }
             },
             {
@@ -9870,7 +9950,18 @@
               }
             }
           ],
-          "headers": [],
+          "headers": [
+            {
+              "name": "If-None-Match",
+              "value": {
+                "value": {
+                  "value": "If-None-Match",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "response": {
             "value": {
               "properties": {
@@ -10816,6 +10907,20 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "type",
+              "value": {
+                "value": "internal",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "risk",
+              "value": {
+                "value": "early",
+                "type": "enum"
               }
             }
           ],
@@ -12625,11 +12730,41 @@
           ],
           "queryParameters": [
             {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "occurredOn",
               "value": {
                 "value": {
                   "value": "2023-05-19",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "posted",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -12670,6 +12805,16 @@
                 "value": {
                   "value": "[1000,1200)",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "retryCount",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -13550,7 +13695,18 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "If-None-Match",
+              "value": {
+                "value": {
+                  "value": "If-None-Match",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "response": {
             "value": {
               "properties": {
@@ -14336,6 +14492,36 @@
                 "value": {
                   "value": "2022-05-19",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "historical",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -15320,7 +15506,18 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "Challenge",
+              "value": {
+                "value": {
+                  "value": "Challenge",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "request": {
             "properties": {
               "amount": {
@@ -17612,7 +17809,18 @@
             }
           ],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "Challenge",
+              "value": {
+                "value": {
+                  "value": "Challenge",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "request": {
             "properties": {
               "amount": {

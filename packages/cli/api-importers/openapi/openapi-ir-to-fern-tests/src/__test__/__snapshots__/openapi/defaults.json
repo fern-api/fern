@@ -14,6 +14,15 @@
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "boolParam1": true,
+                    "boolParam2": true,
+                    "boolParam3": true,
+                    "boolParam4": true,
+                    "integerParam": 1,
+                    "numberParam": 1.1,
+                    "stringParam": "stringParam",
+                  },
                   "response": {
                     "body": {
                       "boolField1": true,
@@ -158,7 +167,15 @@ service:
         type: GetTestResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            boolParam1: true
+            boolParam2: true
+            boolParam3: true
+            boolParam4: true
+            stringParam: stringParam
+            numberParam: 1.1
+            integerParam: 1
+          response:
             body:
               boolField1: true
               boolField2: true

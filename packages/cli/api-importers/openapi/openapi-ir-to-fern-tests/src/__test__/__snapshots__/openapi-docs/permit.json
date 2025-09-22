@@ -6959,6 +6959,13 @@ If the permission is already granted, it is skipped.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "permission": "permission",
+                    "resource_set": "resource_set",
+                    "user_set": "user_set",
+                  },
                   "response": {
                     "body": [
                       {
@@ -7194,6 +7201,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            user_set: user_set
+            permission: permission
+            resource_set: resource_set
+            page: 1
+            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -7763,6 +7776,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -7910,6 +7927,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -8055,6 +8076,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
+                    "type": "userset",
                   },
                   "response": {
                     "body": {
@@ -8459,6 +8487,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            type: userset
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -8947,6 +8981,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -9054,6 +9091,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -9442,6 +9482,10 @@ allowed.",
                 {
                   "path-parameters": {
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -9900,6 +9944,9 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: key
@@ -10447,6 +10494,10 @@ authenticated actor (i.e: human team member or api key).",
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -10621,7 +10672,10 @@ service:
       errors:
         - root.ListOrganizationsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            per_page: 1
+          response:
             body:
               - key: key
                 id: id
@@ -11032,6 +11086,10 @@ Every project is a separate silo, and has its own unique set of environments and
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -11218,7 +11276,10 @@ service:
       errors:
         - root.ListProjectsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            per_page: 1
+          response:
             body:
               - key: key
                 urn_namespace: urn_namespace
@@ -11673,6 +11734,10 @@ This includes any permissions granted to perform the action.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -11912,6 +11977,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: Writer
@@ -12447,6 +12515,10 @@ This includes any permissions granted to perform the action.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -12679,6 +12751,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: read
@@ -13071,6 +13146,10 @@ attribute to evaluate as `undefined`.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                 },
               ],
               "method": "DELETE",
@@ -13203,6 +13282,10 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -13415,6 +13498,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - type: bool
@@ -13602,6 +13688,9 @@ service:
             env_id: env_id
             resource_id: resource_id
             attribute_id: attribute_id
+          query-parameters:
+            page: 1
+            per_page: 1
     update_resource_attribute:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
@@ -13918,6 +14007,10 @@ and will return the existing instance object in the response body.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -14132,6 +14225,9 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: react
@@ -14896,6 +14992,10 @@ This includes any permissions granted to said role.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -15232,6 +15332,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: Maintainer
@@ -16170,6 +16273,13 @@ A resource may also contain:
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "include_built_in": true,
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -16668,6 +16778,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_built_in: true
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -17436,6 +17552,13 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "tenant": "tenant",
+                    "user": "user",
+                  },
                   "response": {
                     "body": [
                       {
@@ -17648,6 +17771,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            user: user
+            role: role
+            tenant: tenant
+            page: 1
+            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -18308,6 +18437,12 @@ This includes any permissions granted to said role.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -18666,6 +18801,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -19457,6 +19597,12 @@ and will return the existing tenant object in the response body.",
                     "proj_id": "proj_id",
                     "tenant_id": "tenant_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "search": "search",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -19576,6 +19722,12 @@ and will return the existing tenant object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -19837,6 +19989,11 @@ service:
             proj_id: proj_id
             tenant_id: tenant_id
             env_id: env_id
+          query-parameters:
+            search: search
+            role: role
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -19917,6 +20074,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -20256,6 +20418,9 @@ define a string `owner` attribute that we can now use in our policies.
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
+                  },
                   "request": {
                     "description": "whether or not the github repository is private",
                     "key": "private",
@@ -20331,6 +20496,11 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "resource_id": "resource_id",
+                  },
                 },
               ],
               "method": "DELETE",
@@ -20401,6 +20571,9 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
+                  },
                   "response": {
                     "body": {
                       "built_in": false,
@@ -20466,6 +20639,11 @@ attribute to evaluate as `undefined`.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "resource_id": "resource_id",
                   },
                   "response": {
                     "body": [
@@ -20556,6 +20734,9 @@ Fields that will be provided will be completely overwritten.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
                   },
                   "request": {
                     "description": "whether or not the github repository is private",
@@ -20677,6 +20858,10 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            resource_id: resource_id
+            page: 1
+            per_page: 1
           response:
             body:
               - type: bool
@@ -20729,6 +20914,8 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            resource_id: resource_id
           request:
             key: private
             type: bool
@@ -20790,6 +20977,8 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
           response:
             body:
               type: bool
@@ -20858,6 +21047,10 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
+            page: 1
+            per_page: 1
     update_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
       method: PATCH
@@ -20904,6 +21097,8 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
           request:
             description: whether or not the github repository is private
           response:
@@ -21272,6 +21467,12 @@ and will return the existing user object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -21714,6 +21915,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            role: role
+            page: 1
+            per_page: 1
           response:
             body:
               data:

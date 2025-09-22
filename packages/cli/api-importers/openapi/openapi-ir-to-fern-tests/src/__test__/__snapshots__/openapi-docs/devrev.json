@@ -10682,6 +10682,7 @@ enterprise connections can be created by an organization.
               "examples": [
                 {
                   "request": {
+                    "display_name": null,
                     "type": "google_apps",
                   },
                   "response": {
@@ -10924,6 +10925,7 @@ disabled.
               "examples": [
                 {
                   "request": {
+                    "display_name": null,
                     "id": "string",
                     "type": "google_apps",
                   },
@@ -11003,6 +11005,7 @@ service:
       examples:
         - request:
             type: google_apps
+            display_name: null
           response:
             body:
               auth_connection:
@@ -11172,6 +11175,7 @@ service:
       examples:
         - request:
             type: google_apps
+            display_name: null
             id: string
           response:
             body:
@@ -11445,6 +11449,11 @@ token type issued for a given subject.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "client_id": "client_id",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "subject": "subject",
+                  },
                   "response": {
                     "body": {
                       "tokens": [
@@ -11882,7 +11891,11 @@ service:
         - root.AuthTokensListRequestInternalServerError
         - root.AuthTokensListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            client_id: client_id
+            requested_token_type: urn:devrev:params:oauth:token-type:aat
+            subject: subject
+          response:
             body:
               tokens:
                 - created_by:
@@ -12035,6 +12048,11 @@ docs: Security token interactions.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "dev_users": [
@@ -12264,7 +12282,11 @@ service:
         - root.DevUsersListRequestInternalServerError
         - root.DevUsersListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               dev_users:
                 - created_by:
@@ -12378,6 +12400,7 @@ docs: Dev user interactions.
               "examples": [
                 {
                   "request": {
+                    "description": null,
                     "name": "string",
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
@@ -12625,6 +12648,11 @@ docs: Dev user interactions.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -12741,8 +12769,11 @@ used.
               "examples": [
                 {
                   "request": {
+                    "description": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "key": "value",
+                    "name": null,
+                    "owned_by": null,
                     "type": "capability",
                   },
                   "response": {
@@ -12860,6 +12891,7 @@ service:
             parent_part:
               - don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             type: capability
+            description: null
             name: string
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
@@ -13058,7 +13090,11 @@ service:
         - root.PartsListRequestInternalServerError
         - root.PartsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               parts:
@@ -13113,7 +13149,10 @@ service:
         - request:
             key: value
             type: capability
+            description: null
             id: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            name: null
+            owned_by: null
           response:
             body:
               part:
@@ -13424,6 +13463,15 @@ to access.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "created_date.after": "2024-01-15T09:30:00Z",
+                    "created_date.before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                    "modified_date.after": "2024-01-15T09:30:00Z",
+                    "modified_date.before": "2024-01-15T09:30:00Z",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -13897,7 +13945,15 @@ service:
         - root.RevOrgsListRequestInternalServerError
         - root.RevOrgsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            created_date.after: '2024-01-15T09:30:00Z'
+            created_date.before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            mode: after
+            modified_date.after: '2024-01-15T09:30:00Z'
+            modified_date.before: '2024-01-15T09:30:00Z'
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -14258,6 +14314,11 @@ permitted.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -14630,7 +14691,11 @@ service:
         - root.TagsListRequestInternalServerError
         - root.TagsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -14754,6 +14819,7 @@ docs: DevRev tag interactions.
                   "request": {
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "type": "timeline_comment",
+                    "visibility": null,
                   },
                   "response": {
                     "body": {
@@ -14920,6 +14986,9 @@ docs: DevRev tag interactions.
               "examples": [
                 {
                   "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   },
                   "response": {
@@ -15116,6 +15185,7 @@ service:
         - request:
             type: timeline_comment
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            visibility: null
           response:
             body:
               timeline_entry:
@@ -15257,6 +15327,9 @@ service:
       examples:
         - query-parameters:
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            cursor: cursor
+            limit: 1
+            mode: after
           response:
             body:
               next_cursor: next_cursor
@@ -16104,14 +16177,19 @@ docs: Webhook event APIs.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                    "artifacts": null,
+                    "body": null,
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
                     ],
+                    "reported_by": null,
+                    "stage": null,
                     "tags": [
                       {
                         "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                       },
                     ],
+                    "target_close_date": null,
                     "title": "string",
                     "type": "issue",
                   },
@@ -16272,6 +16350,9 @@ docs: Webhook event APIs.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "first": 1,
+                  },
                   "response": {
                     "body": {
                       "works": [
@@ -16529,6 +16610,11 @@ organizations.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -16689,7 +16775,15 @@ organizations.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                    "artifacts": null,
+                    "body": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                    "owned_by": null,
+                    "reported_by": null,
+                    "stage": null,
+                    "tags": null,
+                    "target_close_date": null,
+                    "title": null,
                     "type": "issue",
                   },
                   "response": {
@@ -16825,10 +16919,15 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            artifacts: null
+            body: null
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
+            reported_by: null
+            stage: null
             tags:
               - id: don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>
+            target_close_date: null
             title: string
           response:
             body:
@@ -16984,7 +17083,9 @@ service:
         - root.WorksExportRequestInternalServerError
         - root.WorksExportRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            first: 1
+          response:
             body:
               works:
                 - created_by:
@@ -17178,7 +17279,11 @@ service:
         - root.WorksListRequestInternalServerError
         - root.WorksListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -17243,7 +17348,15 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            artifacts: null
+            body: null
             id: don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>
+            owned_by: null
+            reported_by: null
+            stage: null
+            tags: null
+            target_close_date: null
+            title: null
           response:
             body:
               work:

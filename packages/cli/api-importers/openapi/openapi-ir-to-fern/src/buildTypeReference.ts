@@ -467,23 +467,18 @@ export function buildReferenceTypeReference({
         type: schemaName
     });
 
-    console.log("context.coerceNullableToOptional", context.coerceNullableToOptional);
-    const type =
-        resolvedSchema.type === "nullable"
-            ? context.coerceNullableToOptional
-                ? `optional<${typeWithPrefix}>`
-                : `nullable<${typeWithPrefix}>`
-            : typeWithPrefix;
+    let type = typeWithPrefix;
+    if (resolvedSchema.type === "nullable") {
+        type = context.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+    }
+    if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
+        type = `optional<${type}>`;
+    }
     if (schema.description == null && displayName == null) {
         return type;
     }
     return {
-        type:
-            resolvedSchema.type === "nullable"
-                ? context.coerceNullableToOptional
-                    ? `optional<${typeWithPrefix}>`
-                    : `nullable<${typeWithPrefix}>`
-                : typeWithPrefix,
+        type,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };

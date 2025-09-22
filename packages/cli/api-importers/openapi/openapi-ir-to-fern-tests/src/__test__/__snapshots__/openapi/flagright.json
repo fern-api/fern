@@ -1249,6 +1249,10 @@ Here are some of the most used payload fields explained (you can find the full p
               "examples": [
                 {
                   "name": "example-1",
+                  "query-parameters": {
+                    "validateDestinationUserId": "validateDestinationUserId",
+                    "validateOriginUserId": "validateOriginUserId",
+                  },
                   "request": {
                     "destinationAmountDetails": {
                       "country": "IN",
@@ -7561,6 +7565,9 @@ service:
         - TooManyRequestsError
       examples:
         - name: example-1
+          query-parameters:
+            validateOriginUserId: validateOriginUserId
+            validateDestinationUserId: validateDestinationUserId
           request:
             originAmountDetails:
               transactionAmount: 800

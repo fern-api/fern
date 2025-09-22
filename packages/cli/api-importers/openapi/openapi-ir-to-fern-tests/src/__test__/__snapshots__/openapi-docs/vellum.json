@@ -403,6 +403,7 @@ Generate a completion using a previously defined deployment.
                           "data": {
                             "completions": [
                               {
+                                "finish_reason": null,
                                 "id": "id",
                                 "model_version_id": "model_version_id",
                                 "text": "text",
@@ -500,6 +501,7 @@ Generate a stream of completions using a previously defined deployment.
                         "delta": {
                           "data": {
                             "completion": {
+                              "finish_reason": null,
                               "id": "id",
                               "model_version_id": "model_version_id",
                               "text": "text",
@@ -1440,7 +1442,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, optional<double>>>",
+              "logit_bias": "optional<map<string, double>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
               "stop": "optional<list<string>>",
@@ -1592,7 +1594,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "logprob": "optional<double>",
               "text_offset": "integer",
               "token": "string",
-              "top_logprobs": "optional<map<string, optional<double>>>",
+              "top_logprobs": "optional<map<string, double>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1853,7 +1855,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, optional<double>>>",
+              "logit_bias": "optional<map<string, double>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
               "stop": "optional<list<string>>",
@@ -2926,6 +2928,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     completions:
                       - id: id
                         text: text
+                        finish_reason: null
                         model_version_id: model_version_id
                   error:
                     message: message
@@ -2997,6 +3000,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     completion:
                       id: id
                       text: text
+                      finish_reason: null
                       model_version_id: model_version_id
                   error:
                     message: message
@@ -3736,7 +3740,7 @@ types:
       top_p: double
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, optional<double>>>
+      logit_bias: optional<map<string, double>>
       stop: optional<list<string>>
       top_k: optional<double>
     source:
@@ -3835,7 +3839,7 @@ types:
     properties:
       token: string
       logprob: optional<double>
-      top_logprobs: optional<map<string, optional<double>>>
+      top_logprobs: optional<map<string, double>>
       text_offset: integer
     source:
       openapi: ../openapi.yml
@@ -3997,7 +4001,7 @@ types:
       top_k: optional<double>
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, optional<double>>>
+      logit_bias: optional<map<string, double>>
     source:
       openapi: ../openapi.yml
   RegisterPromptPrompt:
@@ -5056,6 +5060,12 @@ Used to list documents. Optionally filter on supported fields.
 ",
               "examples": [
                 {
+                  "query-parameters": {
+                    "document_index_id": "document_index_id",
+                    "limit": 1,
+                    "offset": 1,
+                    "ordering": "ordering",
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -5251,7 +5261,12 @@ service:
         type: root.PaginatedSlimDocumentList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            document_index_id: document_index_id
+            limit: 1
+            offset: 1
+            ordering: ordering
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?offset=400&limit=100
@@ -5433,6 +5448,9 @@ Used to retrieve a model version given its ID.
                         ],
                         "parameters": {
                           "frequency_penalty": 1.1,
+                          "logit_bias": {
+                            "key": 1.1,
+                          },
                           "max_tokens": 1,
                           "presence_penalty": 1.1,
                           "stop": [
@@ -5541,6 +5559,8 @@ service:
                   top_p: 1.1
                   frequency_penalty: 1.1
                   presence_penalty: 1.1
+                  logit_bias:
+                    key: 1.1
                   stop:
                     - stop
                   top_k: 1.1

@@ -790,6 +790,26 @@
               "type": "null"
             }
           ]
+        },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1549,7 +1569,7 @@
             }
           ]
         },
-        "coerce-nullable-to-optional": {
+        "wrap-references-to-nullable-in-optional": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1817,7 +1837,7 @@
             }
           ]
         },
-        "coerce-nullable-to-optional": {
+        "wrap-references-to-nullable-in-optional": {
           "oneOf": [
             {
               "type": "boolean"

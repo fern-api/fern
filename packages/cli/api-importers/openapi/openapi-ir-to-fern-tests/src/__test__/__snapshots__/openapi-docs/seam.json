@@ -20967,6 +20967,7 @@ service:
                           "controlbyweb_metadata": {
                             "device_id": "device_id",
                             "device_name": "device_name",
+                            "relay_name": null,
                           },
                           "currently_triggering_noise_threshold_ids": [
                             "currently_triggering_noise_threshold_ids",
@@ -21087,6 +21088,7 @@ service:
                             "locked_state": "locked_state",
                           },
                           "schlage_metadata": {
+                            "access_code_length": null,
                             "device_id": "device_id",
                             "device_name": "device_name",
                           },
@@ -21223,6 +21225,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -22030,6 +22033,7 @@ service:
                   schlage_metadata:
                     device_id: device_id
                     device_name: device_name
+                    access_code_length: null
                   smartthings_metadata:
                     device_id: device_id
                     device_name: device_name
@@ -22092,6 +22096,7 @@ service:
                   controlbyweb_metadata:
                     device_id: device_id
                     device_name: device_name
+                    relay_name: null
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
@@ -22237,6 +22242,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -24761,6 +24767,7 @@ service:
                           "controlbyweb_metadata": {
                             "device_id": "device_id",
                             "device_name": "device_name",
+                            "relay_name": null,
                           },
                           "currently_triggering_noise_threshold_ids": [
                             "currently_triggering_noise_threshold_ids",
@@ -24881,6 +24888,7 @@ service:
                             "locked_state": "locked_state",
                           },
                           "schlage_metadata": {
+                            "access_code_length": null,
                             "device_id": "device_id",
                             "device_name": "device_name",
                           },
@@ -25014,6 +25022,7 @@ service:
                           "controlbyweb_metadata": {
                             "device_id": "device_id",
                             "device_name": "device_name",
+                            "relay_name": null,
                           },
                           "currently_triggering_noise_threshold_ids": [
                             "currently_triggering_noise_threshold_ids",
@@ -25134,6 +25143,7 @@ service:
                             "locked_state": "locked_state",
                           },
                           "schlage_metadata": {
+                            "access_code_length": null,
                             "device_id": "device_id",
                             "device_name": "device_name",
                           },
@@ -25270,6 +25280,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -25318,6 +25329,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -26027,6 +26039,7 @@ service:
                   schlage_metadata:
                     device_id: device_id
                     device_name: device_name
+                    access_code_length: null
                   smartthings_metadata:
                     device_id: device_id
                     device_name: device_name
@@ -26089,6 +26102,7 @@ service:
                   controlbyweb_metadata:
                     device_id: device_id
                     device_name: device_name
+                    relay_name: null
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
@@ -26222,6 +26236,7 @@ service:
                   schlage_metadata:
                     device_id: device_id
                     device_name: device_name
+                    access_code_length: null
                   smartthings_metadata:
                     device_id: device_id
                     device_name: device_name
@@ -26284,6 +26299,7 @@ service:
                   controlbyweb_metadata:
                     device_id: device_id
                     device_name: device_name
+                    relay_name: null
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
@@ -26429,6 +26445,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -26463,6 +26480,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -27806,6 +27824,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {},
                           "warnings": [
@@ -27971,6 +27990,7 @@ service:
                   capabilities_supported:
                     - access_code
                   properties: {}
+                  location: {}
                   workspace_id: workspace_id
                   errors:
                     - error_code: error_code
@@ -28520,6 +28540,7 @@ service:
                           "controlbyweb_metadata": {
                             "device_id": "device_id",
                             "device_name": "device_name",
+                            "relay_name": null,
                           },
                           "currently_triggering_noise_threshold_ids": [
                             "currently_triggering_noise_threshold_ids",
@@ -28640,6 +28661,7 @@ service:
                             "locked_state": "locked_state",
                           },
                           "schlage_metadata": {
+                            "access_code_length": null,
                             "device_id": "device_id",
                             "device_name": "device_name",
                           },
@@ -28920,6 +28942,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -29881,6 +29904,7 @@ service:
                   schlage_metadata:
                     device_id: device_id
                     device_name: device_name
+                    access_code_length: null
                   smartthings_metadata:
                     device_id: device_id
                     device_name: device_name
@@ -29943,6 +29967,7 @@ service:
                   controlbyweb_metadata:
                     device_id: device_id
                     device_name: device_name
+                    relay_name: null
                   ttlock_metadata:
                     lock_id: 1.1
                     lock_alias: lock_alias
@@ -30182,6 +30207,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -31599,6 +31625,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -31647,6 +31674,7 @@ service:
                             },
                           ],
                           "is_managed": true,
+                          "location": {},
                           "nickname": "nickname",
                           "properties": {
                             "appearance": {
@@ -32670,6 +32698,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:
@@ -32704,6 +32733,7 @@ service:
                     model:
                       display_name: display_name
                       manufacturer_display_name: manufacturer_display_name
+                  location: {}
                   connected_account_id: connected_account_id
                   workspace_id: workspace_id
                   errors:

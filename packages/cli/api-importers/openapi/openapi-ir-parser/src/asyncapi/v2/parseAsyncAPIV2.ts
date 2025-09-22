@@ -48,7 +48,7 @@ export function parseAsyncAPIV2({
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, context.namespace);
+        const convertedSchema = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -79,7 +79,15 @@ export function parseAsyncAPIV2({
                     parameterNameOverride: undefined,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source, context.namespace)
+                            ? convertSchema(
+                                  parameter.schema,
+                                  false,
+                                  false,
+                                  context,
+                                  breadcrumbs,
+                                  source,
+                                  context.namespace
+                              )
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -117,6 +125,7 @@ export function parseAsyncAPIV2({
                             schema: convertReferenceObject(
                                 schema,
                                 false,
+                                false,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -131,11 +140,16 @@ export function parseAsyncAPIV2({
                         });
                         continue;
                     }
+                    const isRequired = required.includes(name);
+                    const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                        ? [false, !isRequired]
+                        : [!isRequired, false];
                     headers.push({
                         name,
                         schema: convertSchema(
                             schema,
-                            !required.includes(name),
+                            isOptional,
+                            isNullable,
                             context,
                             [...breadcrumbs, name],
                             source,
@@ -160,6 +174,7 @@ export function parseAsyncAPIV2({
                             schema: convertReferenceObject(
                                 schema,
                                 false,
+                                false,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -173,11 +188,16 @@ export function parseAsyncAPIV2({
                         });
                         continue;
                     }
+                    const isRequired = required.includes(name);
+                    const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                        ? [false, !isRequired]
+                        : [!isRequired, false];
                     queryParameters.push({
                         name,
                         schema: convertSchema(
                             schema,
-                            !required.includes(name),
+                            isOptional,
+                            isNullable,
                             context,
                             [...breadcrumbs, name],
                             source,
@@ -399,6 +419,7 @@ function convertOneOfToSchema({
             generatedName,
             title: event.message.title,
             groupName: undefined,
+            wrapAsOptional: false,
             wrapAsNullable: false,
             breadcrumbs,
             context,
@@ -429,7 +450,7 @@ function convertMessageToSchema({
         if (isReferenceObject(message.payload)) {
             resolvedSchema = context.resolveSchemaReference(message.payload);
         }
-        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
+        return convertSchema(resolvedSchema, false, false, context, [channelPath, action], source, context.namespace);
     }
     return undefined;
 }

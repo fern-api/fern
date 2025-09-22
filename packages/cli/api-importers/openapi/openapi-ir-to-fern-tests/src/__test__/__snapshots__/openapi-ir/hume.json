@@ -214,7 +214,49 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "when",
+              "value": {
+                "value": "created_before",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "timestamp_ms",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "sort_by",
+              "value": {
+                "value": "created",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -6226,17 +6268,11 @@
                   },
                   "value": {
                     "generatedName": "SessionSettingsVariablesValue",
-                    "value": {
-                      "generatedName": "SessionSettingsVariablesValue",
-                      "schema": {
-                        "type": "string"
-                      },
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "groupName": [],
                   "type": "map"

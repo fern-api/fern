@@ -14,11 +14,23 @@
               "docs": undefined,
               "examples": [
                 {
+                  "headers": {
+                    "X-Active-Header": "X-Active-Header",
+                    "X-Deprecated-Header": "X-Deprecated-Header",
+                    "X-Deprecated-Ref-Header": "X-Deprecated-Ref-Header",
+                    "x-fern-availability_header": "x-fern-availability_header",
+                  },
                   "path-parameters": {
                     "active_id": "active_id",
                     "deprecated_ref_id": "deprecated_ref_id",
                     "id": "id",
                     "x-fern-availability_path_param": "x-fern-availability_path_param",
+                  },
+                  "query-parameters": {
+                    "active_lang": "active_lang",
+                    "deprecated_lang": "deprecated_lang",
+                    "deprecated_ref_lang": "deprecated_ref_lang",
+                    "x-fern-availability_query_param": "x-fern-availability_query_param",
                   },
                   "response": {
                     "body": {
@@ -355,6 +367,16 @@
             active_id: active_id
             deprecated_ref_id: deprecated_ref_id
             x-fern-availability_path_param: x-fern-availability_path_param
+          query-parameters:
+            deprecated_lang: deprecated_lang
+            active_lang: active_lang
+            deprecated_ref_lang: deprecated_ref_lang
+            x-fern-availability_query_param: x-fern-availability_query_param
+          headers:
+            X-Deprecated-Header: X-Deprecated-Header
+            X-Active-Header: X-Active-Header
+            X-Deprecated-Ref-Header: X-Deprecated-Ref-Header
+            x-fern-availability_header: x-fern-availability_header
           response:
             body:
               fine_setting: true

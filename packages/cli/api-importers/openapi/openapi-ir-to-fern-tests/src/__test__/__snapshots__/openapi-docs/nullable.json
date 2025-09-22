@@ -73,6 +73,7 @@
                   },
                   "query-parameters": {
                     "activated": "activated",
+                    "email": "email",
                   },
                   "response": {
                     "body": {
@@ -324,6 +325,7 @@
             userId: userId
           query-parameters:
             activated: activated
+            email: email
           response:
             body:
               id: id

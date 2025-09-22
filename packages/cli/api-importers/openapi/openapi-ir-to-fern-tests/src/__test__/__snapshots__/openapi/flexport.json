@@ -8331,11 +8331,26 @@ errors:
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
+                    "f.cargo_ready_date": "f.cargo_ready_date",
+                    "f.cargo_ready_date.gt": "f.cargo_ready_date.gt",
+                    "f.cargo_ready_date.gte": "f.cargo_ready_date.gte",
+                    "f.cargo_ready_date.lt": "f.cargo_ready_date.lt",
+                    "f.cargo_ready_date.lte": "f.cargo_ready_date.lte",
                     "f.consignee_entity_ref": "amazon-us",
+                    "f.created_at": "f.created_at",
+                    "f.created_at.gt": "f.created_at.gt",
+                    "f.created_at.gte": "f.created_at.gte",
+                    "f.created_at.lt": "f.created_at.lt",
+                    "f.created_at.lte": "f.created_at.lte",
+                    "f.metadata.YOUR_METADATA_KEY": "f.metadata.YOUR_METADATA_KEY",
+                    "f.name": "f.name",
                     "f.shipment.id": 123456,
                     "f.shipper_entity_ref": "amazon-us",
+                    "f.status": "booked",
                     "page": 1,
                     "per": 20,
+                    "sort": "cargo_ready_date",
                   },
                   "response": {
                     "body": {
@@ -9674,9 +9689,24 @@ service:
           query-parameters:
             page: 1
             per: 20
+            sort: cargo_ready_date
+            direction: asc
+            f.status: booked
             f.shipment.id: 123456
             f.consignee_entity_ref: amazon-us
             f.shipper_entity_ref: amazon-us
+            f.name: f.name
+            f.cargo_ready_date: f.cargo_ready_date
+            f.cargo_ready_date.gt: f.cargo_ready_date.gt
+            f.cargo_ready_date.gte: f.cargo_ready_date.gte
+            f.cargo_ready_date.lt: f.cargo_ready_date.lt
+            f.cargo_ready_date.lte: f.cargo_ready_date.lte
+            f.created_at: f.created_at
+            f.created_at.gt: f.created_at.gt
+            f.created_at.gte: f.created_at.gte
+            f.created_at.lt: f.created_at.lt
+            f.created_at.lte: f.created_at.lte
+            f.metadata.YOUR_METADATA_KEY: f.metadata.YOUR_METADATA_KEY
           response:
             body:
               _object: /api/response
@@ -11117,6 +11147,7 @@ docs: >-
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
                     "f.booking.id": 54321,
                     "f.purchase_order.id": 123,
                     "f.purchase_order_line_item.id": 54321,
@@ -11440,6 +11471,7 @@ service:
           query-parameters:
             page: 1
             per: 20
+            direction: asc
             f.purchase_order.id: 123
             f.booking.id: 54321
             f.purchase_order_line_item.id: 54321
@@ -12180,6 +12212,10 @@ docs: Endpoints relating to Carbon Calculations
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.invoice_number": "f.invoice_number",
+                    "f.involved_party_seller_id": "f.involved_party_seller_id",
+                    "f.involved_party_seller_ref": "f.involved_party_seller_ref",
+                    "f.shipment.id": "f.shipment.id",
                     "page": 1,
                     "per": 20,
                   },
@@ -12843,6 +12879,10 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.shipment.id: f.shipment.id
+            f.invoice_number: f.invoice_number
+            f.involved_party_seller_id: f.involved_party_seller_id
+            f.involved_party_seller_ref: f.involved_party_seller_ref
           response:
             body:
               _object: /api/response
@@ -13468,6 +13508,8 @@ docs: Endpoints relating to Commercial Invoice objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.metadata.YOUR_METADATA_KEY": "f.metadata.YOUR_METADATA_KEY",
+                    "f.ref": "f.ref",
                     "page": 1,
                     "per": 20,
                   },
@@ -14058,6 +14100,8 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.ref: f.ref
+            f.metadata.YOUR_METADATA_KEY: f.metadata.YOUR_METADATA_KEY
           response:
             body:
               _object: /api/response
@@ -14411,6 +14455,9 @@ docs: Endpoints relating to Company objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.company_id": "f.company_id",
+                    "f.company_ref": "f.company_ref",
+                    "f.ref": "f.ref",
                     "page": 1,
                     "per": 20,
                   },
@@ -14931,6 +14978,9 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.ref: f.ref
+            f.company_id: f.company_id
+            f.company_ref: f.company_ref
           response:
             body:
               _object: /api/response
@@ -15262,6 +15312,9 @@ docs: Endpoints relating to CompanyEntity objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.company.id": "f.company.id",
+                    "f.company_ref": "f.company_ref",
+                    "f.location.id": "f.location.id",
                     "page": 1,
                     "per": 20,
                   },
@@ -15661,6 +15714,9 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.company_ref: f.company_ref
+            f.company.id: f.company.id
+            f.location.id: f.location.id
           response:
             body:
               _object: /api/response
@@ -15876,6 +15932,9 @@ docs: Endpoints relating to Contact objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.container_number": "f.container_number",
+                    "f.metadata.YOUR_METADATA_KEY": "f.metadata.YOUR_METADATA_KEY",
+                    "f.shipment.id": 1,
                     "page": 1,
                     "per": 20,
                   },
@@ -16249,6 +16308,9 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.shipment.id: 1
+            f.container_number: f.container_number
+            f.metadata.YOUR_METADATA_KEY: f.metadata.YOUR_METADATA_KEY
           response:
             body:
               _object: /api/response
@@ -16423,6 +16485,9 @@ docs: Endpoints relating to Container objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.leg.id": 1,
+                    "f.shipment_container.container_number": "f.shipment_container.container_number",
+                    "f.shipment_container.id": 1,
                     "page": 1,
                     "per": 20,
                   },
@@ -16705,6 +16770,9 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.leg.id: 1
+            f.shipment_container.id: 1
+            f.shipment_container.container_number: f.shipment_container.container_number
           response:
             body:
               _object: /api/response
@@ -16797,6 +16865,7 @@ docs: Endpoints relating to ContainerLeg objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.shipment.id": "f.shipment.id",
                     "page": 1,
                     "per": 20,
                   },
@@ -17045,6 +17114,7 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.shipment.id: f.shipment.id
           response:
             body:
               _object: /api/response
@@ -17207,6 +17277,13 @@ docs: Endpoints relating to Customs Entry objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.archived_at.exists": "f.archived_at.exists",
+                    "f.document_type": "f.document_type",
+                    "f.shipment.id": "f.shipment.id",
+                    "f.uploaded_at.gt": "f.uploaded_at.gt",
+                    "f.uploaded_at.gte": "f.uploaded_at.gte",
+                    "f.uploaded_at.lt": "f.uploaded_at.lt",
+                    "f.uploaded_at.lte": "f.uploaded_at.lte",
                     "page": 1,
                     "per": 20,
                   },
@@ -17539,6 +17616,13 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.shipment.id: f.shipment.id
+            f.document_type: f.document_type
+            f.archived_at.exists: f.archived_at.exists
+            f.uploaded_at.gt: f.uploaded_at.gt
+            f.uploaded_at.lt: f.uploaded_at.lt
+            f.uploaded_at.gte: f.uploaded_at.gte
+            f.uploaded_at.lte: f.uploaded_at.lte
           response:
             body:
               _object: /api/response
@@ -17691,6 +17775,8 @@ docs: Endpoints relating to Document objects
               "examples": [
                 {
                   "query-parameters": {
+                    "f.data.resource._object": "/document",
+                    "f.data.shipment.id": 1,
                     "f.occurred_at.gte": "2020-01-10T20:00:00.000Z",
                     "f.occurred_at.lte": "2020-01-10T20:00:00.000Z",
                     "f.type": "/shipment_leg#departed",
@@ -18049,6 +18135,8 @@ service:
             f.type: /shipment_leg#departed
             f.occurred_at.gte: '2020-01-10T20:00:00.000Z'
             f.occurred_at.lte: '2020-01-10T20:00:00.000Z'
+            f.data.shipment.id: 1
+            f.data.resource._object: /document
           response:
             body:
               _object: /api/response
@@ -18187,6 +18275,8 @@ docs: Endpoints relating to Event objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
+                    "f.billed_directly_to_client": true,
                     "f.client_id": 54321,
                     "f.entity.id": 12345,
                     "f.entity.ref": "my-entity-ref",
@@ -18197,8 +18287,10 @@ docs: Endpoints relating to Event objects
                     "f.name": "FLEX-123456-1",
                     "f.shipment.id": 12345,
                     "f.shipment_id": 12345,
+                    "f.status": "outstanding",
                     "page": 1,
                     "per": 20,
+                    "sort": "due_date",
                   },
                   "response": {
                     "body": {
@@ -19019,7 +19111,11 @@ service:
           query-parameters:
             page: 1
             per: 20
+            sort: due_date
+            direction: asc
+            f.status: outstanding
             f.shipment.id: 12345
+            f.billed_directly_to_client: true
             f.entity.id: 12345
             f.entity.ref: my-entity-ref
             f.name: FLEX-123456-1
@@ -19442,6 +19538,11 @@ docs: Endpoints relating to Invoice objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.company.id": "f.company.id",
+                    "f.company_ref": "f.company_ref",
+                    "f.contact.id": "f.contact.id",
+                    "f.metadata.YOUR_METADATA_KEY": "f.metadata.YOUR_METADATA_KEY",
+                    "f.ref": "f.ref",
                     "page": 1,
                     "per": 20,
                   },
@@ -20016,6 +20117,11 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.ref: f.ref
+            f.company_ref: f.company_ref
+            f.company.id: f.company.id
+            f.contact.id: f.contact.id
+            f.metadata.YOUR_METADATA_KEY: f.metadata.YOUR_METADATA_KEY
           response:
             body:
               _object: /api/response
@@ -20298,6 +20404,7 @@ docs: Endpoints relating to Location objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.port_type": "airport",
                     "f.unlocode": "CATOR",
                     "page": 1,
                     "per": 20,
@@ -20550,6 +20657,7 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.port_type: airport
             f.unlocode: CATOR
           response:
             body:
@@ -20743,6 +20851,11 @@ docs: Endpoints relating to Ports objects
               "examples": [
                 {
                   "name": "Success",
+                  "query-parameters": {
+                    "f.archived_at.exists": true,
+                    "f.product_properties.TYPE": "f.product_properties.TYPE",
+                    "f.sku": "f.sku",
+                  },
                   "response": {
                     "body": {
                       "_object": "/api/response",
@@ -21152,6 +21265,10 @@ service:
         - root.BadRequestError
       examples:
         - name: Success
+          query-parameters:
+            f.sku: f.sku
+            f.archived_at.exists: true
+            f.product_properties.TYPE: f.product_properties.TYPE
           response:
             body:
               _object: /api/response
@@ -21712,16 +21829,20 @@ docs: Endpoints relating to Product objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
+                    "f.archived_at.exists": true,
                     "f.buyer_entity_ref": "id-54321",
                     "f.buyer_ref": "amazon-us",
                     "f.name": "PO-123456",
                     "f.seller_entity_ref": "id-12345",
                     "f.seller_ref": "amazon-us",
                     "f.shipment.id": 123456,
+                    "f.status": "open",
                     "f.updated_at.gt": "2022-01-01 18:26:37 PST",
                     "f.updated_at.lt": "2022-01-01 18:26:37 PST",
                     "page": 1,
                     "per": 20,
+                    "sort": "id",
                   },
                   "response": {
                     "body": {
@@ -22040,6 +22161,9 @@ docs: Endpoints relating to Product objects
                   "name": "Success",
                   "path-parameters": {
                     "id": 1,
+                  },
+                  "query-parameters": {
+                    "f.purchase_order_version.id": 1,
                   },
                   "response": {
                     "body": {
@@ -22647,6 +22771,10 @@ service:
           query-parameters:
             page: 1
             per: 20
+            sort: id
+            direction: asc
+            f.archived_at.exists: true
+            f.status: open
             f.buyer_ref: amazon-us
             f.seller_ref: amazon-us
             f.seller_entity_ref: id-12345
@@ -23054,6 +23182,8 @@ service:
         - name: Success
           path-parameters:
             id: 1
+          query-parameters:
+            f.purchase_order_version.id: 1
           response:
             body:
               _object: /purchase_order
@@ -23351,8 +23481,11 @@ docs: >-
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
                     "f.item_key": "item1",
+                    "f.line_item_number": "f.line_item_number",
                     "f.purchase_order.id": 123,
+                    "f.purchase_order_version.id": 1,
                     "page": 1,
                     "per": 20,
                   },
@@ -23827,8 +23960,11 @@ service:
           query-parameters:
             page: 1
             per: 20
+            direction: asc
             f.purchase_order.id: 123
+            f.line_item_number: f.line_item_number
             f.item_key: item1
+            f.purchase_order_version.id: 1
           response:
             body:
               _object: /api/response
@@ -24056,11 +24192,37 @@ docs: >-
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "direction": "asc",
+                    "f.archived_at.gt": "f.archived_at.gt",
+                    "f.archived_at.lt": "f.archived_at.lt",
+                    "f.belongs_to_a_buyers_consol": true,
+                    "f.consignee_external_ref": "f.consignee_external_ref",
                     "f.container_number": "BWSE3982156",
+                    "f.destination_address_ref": "f.destination_address_ref",
+                    "f.house_bill_number": "f.house_bill_number",
+                    "f.master_bill_number": "f.master_bill_number",
+                    "f.metadata.YOUR_METADATA_KEY": "f.metadata.YOUR_METADATA_KEY",
+                    "f.origin_address_ref": "f.origin_address_ref",
                     "f.purchase_order": "PO002811",
                     "f.sku": "ASA121",
+                    "f.status": "seller_location",
+                    "f.statuses.any": "seller_location",
+                    "f.transportation_mode": "ocean",
+                    "f.updated_at.gt": "f.updated_at.gt",
+                    "f.updated_at.lt": "f.updated_at.lt",
+                    "f.visibility_only": true,
+                    "f.wants_commercial_invoice_transcription": true,
+                    "f.wants_delivery_service": true,
+                    "f.wants_export_customs_service": true,
+                    "f.wants_flexport_freight": true,
+                    "f.wants_flexport_insurance": true,
+                    "f.wants_freight_management_bco": true,
+                    "f.wants_import_customs_service": true,
+                    "f.wants_pickup_service": true,
+                    "f.wants_trade_declaration_service": true,
                     "page": 1,
                     "per": 20,
+                    "sort": "id",
                   },
                   "response": {
                     "body": {
@@ -25579,9 +25741,35 @@ service:
           query-parameters:
             page: 1
             per: 20
+            sort: id
+            direction: asc
+            f.transportation_mode: ocean
+            f.status: seller_location
+            f.statuses.any: seller_location
             f.container_number: BWSE3982156
             f.purchase_order: PO002811
             f.sku: ASA121
+            f.updated_at.gt: f.updated_at.gt
+            f.updated_at.lt: f.updated_at.lt
+            f.archived_at.gt: f.archived_at.gt
+            f.archived_at.lt: f.archived_at.lt
+            f.master_bill_number: f.master_bill_number
+            f.house_bill_number: f.house_bill_number
+            f.consignee_external_ref: f.consignee_external_ref
+            f.origin_address_ref: f.origin_address_ref
+            f.destination_address_ref: f.destination_address_ref
+            f.metadata.YOUR_METADATA_KEY: f.metadata.YOUR_METADATA_KEY
+            f.wants_freight_management_bco: true
+            f.wants_flexport_freight: true
+            f.wants_import_customs_service: true
+            f.wants_export_customs_service: true
+            f.wants_commercial_invoice_transcription: true
+            f.wants_flexport_insurance: true
+            f.wants_pickup_service: true
+            f.wants_trade_declaration_service: true
+            f.visibility_only: true
+            f.wants_delivery_service: true
+            f.belongs_to_a_buyers_consol: true
           response:
             body:
               _object: /api/response
@@ -26382,6 +26570,9 @@ docs: Endpoints relating to Shipment objects
                 {
                   "name": "Success",
                   "query-parameters": {
+                    "f.include_deleted": true,
+                    "f.shipment.id": 1,
+                    "f.transportation_mode": 1,
                     "page": 1,
                     "per": 20,
                   },
@@ -26593,6 +26784,9 @@ docs: Endpoints relating to Shipment objects
                   "name": "Success",
                   "path-parameters": {
                     "id": 1,
+                  },
+                  "query-parameters": {
+                    "f.include_deleted": true,
                   },
                   "response": {
                     "body": {
@@ -26887,6 +27081,9 @@ service:
           query-parameters:
             page: 1
             per: 20
+            f.shipment.id: 1
+            f.transportation_mode: 1
+            f.include_deleted: true
           response:
             body:
               _object: /api/response
@@ -27026,6 +27223,8 @@ service:
         - name: Success
           path-parameters:
             id: 1
+          query-parameters:
+            f.include_deleted: true
           response:
             body:
               _object: /api/response

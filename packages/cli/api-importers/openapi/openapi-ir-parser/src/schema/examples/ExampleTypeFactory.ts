@@ -94,9 +94,9 @@ export class ExampleTypeFactory {
                 if (
                     example == null &&
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
-                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                    this.exceedsMaxDepth(depth, options)
                 ) {
-                    return undefined;
+                    return FullExample.null({});
                 }
                 const result = this.buildExampleHelper({
                     schema: schema.value,
@@ -107,14 +107,8 @@ export class ExampleTypeFactory {
                     options,
                     skipReadonly
                 });
-                if (result != null && result.type === "array" && result.value.length === 0) {
-                    return undefined;
-                }
-                if (result != null && result.type === "map" && result.value.length === 0) {
-                    return undefined;
-                }
-                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
-                    return undefined;
+                if (result == null) {
+                    return FullExample.null({});
                 }
                 return result;
             }
@@ -571,6 +565,7 @@ export class ExampleTypeFactory {
             },
             primitive: noop,
             unknown: noop,
+            null: noop,
             _other: noop
         });
     }

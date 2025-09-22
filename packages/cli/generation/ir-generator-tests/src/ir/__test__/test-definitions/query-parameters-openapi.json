@@ -1095,19 +1095,13 @@
                                                 }
                                             },
                                             "valueType": {
-                                                "_type": "container",
-                                                "container": {
-                                                    "_type": "optional",
-                                                    "optional": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
                                                     }
                                                 }
                                             }
@@ -3242,11 +3236,8 @@
                                         "value": "STRING"
                                     },
                                     "value": {
-                                        "type": "optional",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 }
                             },

@@ -15,6 +15,10 @@
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1,
+                    "pageNumber": 1,
+                  },
                   "response": {
                     "body": {
                       "meta": {
@@ -123,7 +127,10 @@
         type: UsersResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            pageNumber: 1
+            limit: 1
+          response:
             body:
               meta:
                 hasMore: true

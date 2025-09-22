@@ -258,13 +258,8 @@ function getQueryParameterTypeReference({
         }
     }
 
-    console.log("context.coerceNullableToOptional", context.coerceNullableToOptional);
     if (schema.type === "optional" || schema.type === "nullable") {
-        const optOrNullableSchema = context.coerceNullableToOptional
-            ? Schema.optional
-            : schema.type === "optional"
-              ? Schema.optional
-              : Schema.nullable;
+        const optOrNullableSchema = schema.type === "optional" ? Schema.optional : Schema.nullable;
         if (schema.value.type === "reference") {
             const resolvedSchema = context.getSchema(schema.value.schema, namespace);
             if (resolvedSchema == null) {

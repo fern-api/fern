@@ -93,7 +93,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

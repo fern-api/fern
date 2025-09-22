@@ -794,7 +794,58 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "account_holder_id",
+              "value": {
+                "value": {
+                  "value": "account_holder_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2197,7 +2248,55 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "processing",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -3271,7 +3370,55 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "queued",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4816,7 +4963,48 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7135,7 +7323,55 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "status",
+              "value": {
+                "value": "open",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -8741,7 +8977,38 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "name",
+              "value": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "website",
+              "value": {
+                "value": {
+                  "value": "website",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "location",
+              "value": {
+                "value": {
+                  "value": "location",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

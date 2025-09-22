@@ -58,7 +58,14 @@ export interface ConvertOpenAPIOptions {
      * If false, the converter will convert nullable schemas to required nullable.
      * Defaults to true.
      */
-    coerceNullableToOptional: boolean;
+    wrapReferencesToNullableInOptional: boolean;
+
+    /**
+     * If true, the converter will coerce nullable schemas to optional.
+     * If false, the converter will keep nullable schemas as nullable.
+     * Defaults to true.
+     */
+    coerceOptionalSchemasToNullable: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -71,7 +78,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     inlinePathParameters: false,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
-    coerceNullableToOptional: true
+    wrapReferencesToNullableInOptional: true,
+    coerceOptionalSchemasToNullable: true
 };
 
 export function getConvertOptions({
@@ -118,9 +126,13 @@ export function getConvertOptions({
             overrides?.respectForwardCompatibleEnums ??
             options?.respectForwardCompatibleEnums ??
             DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums,
-        coerceNullableToOptional:
-            overrides?.coerceNullableToOptional ??
-            options?.coerceNullableToOptional ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceNullableToOptional
+        wrapReferencesToNullableInOptional:
+            overrides?.wrapReferencesToNullableInOptional ??
+            options?.wrapReferencesToNullableInOptional ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable:
+            overrides?.coerceOptionalSchemasToNullable ??
+            options?.coerceOptionalSchemasToNullable ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable
     };
 }

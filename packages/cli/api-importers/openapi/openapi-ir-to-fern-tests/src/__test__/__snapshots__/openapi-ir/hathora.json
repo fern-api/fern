@@ -3673,7 +3673,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -3965,7 +3983,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -4181,7 +4217,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -4604,7 +4658,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5052,7 +5117,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5500,7 +5576,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5979,7 +6066,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -6219,7 +6317,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7511,7 +7617,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "end",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "step",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7745,7 +7882,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7882,6 +8027,9 @@
                             "status": {
                               "value": "scheduling",
                               "type": "enum"
+                            },
+                            "currentAllocation": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -8032,7 +8180,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

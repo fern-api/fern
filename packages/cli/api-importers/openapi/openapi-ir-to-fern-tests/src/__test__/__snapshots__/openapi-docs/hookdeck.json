@@ -4557,7 +4557,7 @@
               },
               "env": {
                 "docs": "A key-value object of environment variables to encrypt and expose to your transformation code",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "name": {
                 "docs": "The unique name of the transformation",
@@ -4613,7 +4613,7 @@
               "encrypted_env": "optional<string>",
               "env": {
                 "docs": "Key-value environment variables to be passed to the transformation",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "id": {
                 "docs": "ID of the transformation",
@@ -7719,7 +7719,7 @@ types:
         type: string
         docs: A string representation of your JavaScript (ES6) code to run
       env:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >-
           A key-value object of environment variables to encrypt and expose to
           your transformation code
@@ -7896,7 +7896,7 @@ types:
       encrypted_env: optional<string>
       iv: optional<string>
       env:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: Key-value environment variables to be passed to the transformation
       updated_at:
         type: datetime
@@ -8105,6 +8105,14 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "dir": "asc",
+                    "event_id": "event_id",
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -8272,7 +8280,14 @@ service:
         - root.GetAttemptsRequestBadRequestError
         - root.GetAttemptsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            event_id: event_id
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -8556,6 +8571,19 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "dir": "asc",
+                    "event_data_id": "event_data_id",
+                    "id": "id",
+                    "label": "label",
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "webhook_id": "webhook_id",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -8980,7 +9008,19 @@ service:
         - root.GetBookmarksRequestBadRequestError
         - root.GetBookmarksRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            webhook_id: webhook_id
+            event_data_id: event_data_id
+            label: label
+            last_used_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -9417,6 +9457,19 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "id": "id",
+                    "in_progress": true,
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "query_partial_match": true,
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -10607,7 +10660,19 @@ service:
         - root.GetEventBulkRetriesRequestBadRequestError
         - root.GetEventBulkRetriesRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            cancelled_at: '2024-01-15T09:30:00Z'
+            completed_at: '2024-01-15T09:30:00Z'
+            created_at: '2024-01-15T09:30:00Z'
+            id: id
+            query_partial_match: true
+            in_progress: true
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -10943,6 +11008,19 @@ docs: ''
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "id": "id",
+                    "in_progress": true,
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "query_partial_match": true,
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -11277,7 +11355,19 @@ service:
         - root.GetIgnoredEventBulkRetriesRequestBadRequestError
         - root.GetIgnoredEventBulkRetriesRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            cancelled_at: '2024-01-15T09:30:00Z'
+            completed_at: '2024-01-15T09:30:00Z'
+            created_at: '2024-01-15T09:30:00Z'
+            id: id
+            query_partial_match: true
+            in_progress: true
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -11611,6 +11701,19 @@ docs: ''
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
+                    "completed_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "id": "id",
+                    "in_progress": true,
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "query_partial_match": true,
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -12525,7 +12628,19 @@ service:
         - root.GetRequestBulkRetriesRequestBadRequestError
         - root.GetRequestBulkRetriesRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            cancelled_at: '2024-01-15T09:30:00Z'
+            completed_at: '2024-01-15T09:30:00Z'
+            created_at: '2024-01-15T09:30:00Z'
+            id: id
+            in_progress: true
+            query_partial_match: true
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -13090,6 +13205,21 @@ docs: ''
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "archived": true,
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "destination_id": "destination_id",
+                    "dir": "asc",
+                    "full_name": "full_name",
+                    "id": "id",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "paused_at": "2024-01-15T09:30:00Z",
+                    "prev": "prev",
+                    "source_id": "source_id",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -14312,7 +14442,21 @@ service:
         - root.GetConnectionsRequestBadRequestError
         - root.GetConnectionsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            destination_id: destination_id
+            source_id: source_id
+            archived: true
+            archived_at: '2024-01-15T09:30:00Z'
+            full_name: full_name
+            paused_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -15269,6 +15413,19 @@ docs: >-
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "archived": true,
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "cli_path": "cli_path",
+                    "dir": "asc",
+                    "id": "id",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "url": "url",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -15743,7 +15900,19 @@ service:
         - root.GetDestinationsRequestBadRequestError
         - root.GetDestinationsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            archived: true
+            archived_at: '2024-01-15T09:30:00Z'
+            url: url
+            cli_path: cli_path
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -16120,6 +16289,34 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "attempts": 1,
+                    "body": "body",
+                    "bulk_retry_id": "bulk_retry_id",
+                    "cli_id": "cli_id",
+                    "cli_user_id": "cli_user_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination_id": "destination_id",
+                    "dir": "asc",
+                    "error_code": "error_code",
+                    "event_data_id": "event_data_id",
+                    "headers": "headers",
+                    "id": "id",
+                    "include": "data",
+                    "issue_id": "issue_id",
+                    "last_attempt_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "last_attempt_at",
+                    "parsed_query": "parsed_query",
+                    "path": "path",
+                    "prev": "prev",
+                    "response_status": 1,
+                    "source_id": "source_id",
+                    "status": "SCHEDULED",
+                    "successful_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -16629,7 +16826,34 @@ service:
         - root.GetEventsRequestBadRequestError
         - root.GetEventsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            status: SCHEDULED
+            issue_id: issue_id
+            webhook_id: webhook_id
+            destination_id: destination_id
+            source_id: source_id
+            attempts: 1
+            response_status: 1
+            successful_at: '2024-01-15T09:30:00Z'
+            created_at: '2024-01-15T09:30:00Z'
+            error_code: error_code
+            cli_id: cli_id
+            cli_user_id: cli_user_id
+            last_attempt_at: '2024-01-15T09:30:00Z'
+            event_data_id: event_data_id
+            headers: headers
+            body: body
+            parsed_query: parsed_query
+            bulk_retry_id: bulk_retry_id
+            path: path
+            include: data
+            order_by: last_attempt_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -17109,6 +17333,10 @@ docs: An event is any request that Hookdeck receives from a source.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "label": "label",
+                    "provider": "twitter",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -17309,7 +17537,10 @@ service:
         - root.GetIntegrationsRequestBadRequestError
         - root.GetIntegrationsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            label: label
+            provider: twitter
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -17875,6 +18106,16 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "dir": "asc",
+                    "disabled_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "type": "delivery",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -18268,7 +18509,16 @@ service:
         - root.GetIssueTriggersRequestBadRequestError
         - root.GetIssueTriggersRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            name: name
+            type: delivery
+            disabled_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -18768,9 +19018,20 @@ docs: >-
               "examples": [
                 {
                   "query-parameters": {
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "dismissed_at": "2024-01-15T09:30:00Z",
+                    "first_seen_at": "2024-01-15T09:30:00Z",
                     "id": "iss_YXKv5OdJXCiVwkPhGy",
                     "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                    "last_seen_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
                     "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "status": "OPENED",
+                    "type": "delivery",
                   },
                   "response": {
                     "body": {
@@ -18867,9 +19128,20 @@ docs: >-
               "examples": [
                 {
                   "query-parameters": {
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "dismissed_at": "2024-01-15T09:30:00Z",
+                    "first_seen_at": "2024-01-15T09:30:00Z",
                     "id": "iss_YXKv5OdJXCiVwkPhGy",
                     "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                    "last_seen_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
                     "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "status": "OPENED",
+                    "type": "delivery",
                   },
                   "response": {
                     "body": {
@@ -19272,7 +19544,18 @@ service:
         - query-parameters:
             id: iss_YXKv5OdJXCiVwkPhGy
             issue_trigger_id: it_BXKv5OdJXCiVwkPhGy
+            type: delivery
+            status: OPENED
             merged_with: iss_AXKv3OdJXCiKlkPhDz
+            created_at: '2024-01-15T09:30:00Z'
+            first_seen_at: '2024-01-15T09:30:00Z'
+            last_seen_at: '2024-01-15T09:30:00Z'
+            dismissed_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
           response:
             body:
               pagination:
@@ -19361,7 +19644,18 @@ service:
         - query-parameters:
             id: iss_YXKv5OdJXCiVwkPhGy
             issue_trigger_id: it_BXKv5OdJXCiVwkPhGy
+            type: delivery
+            status: OPENED
             merged_with: iss_AXKv3OdJXCiKlkPhDz
+            created_at: '2024-01-15T09:30:00Z'
+            first_seen_at: '2024-01-15T09:30:00Z'
+            last_seen_at: '2024-01-15T09:30:00Z'
+            dismissed_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
           response:
             body:
               count: 5
@@ -19759,6 +20053,34 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "attempts": 1,
+                    "body": "body",
+                    "bulk_retry_id": "bulk_retry_id",
+                    "cli_id": "cli_id",
+                    "cli_user_id": "cli_user_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "destination_id": "destination_id",
+                    "dir": "asc",
+                    "error_code": "error_code",
+                    "event_data_id": "event_data_id",
+                    "headers": "headers",
+                    "id": "id",
+                    "include": "data",
+                    "issue_id": "issue_id",
+                    "last_attempt_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "last_attempt_at",
+                    "parsed_query": "parsed_query",
+                    "path": "path",
+                    "prev": "prev",
+                    "response_status": 1,
+                    "source_id": "source_id",
+                    "status": "SCHEDULED",
+                    "successful_at": "2024-01-15T09:30:00Z",
+                    "webhook_id": "webhook_id",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -19976,6 +20298,14 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "dir": "asc",
+                    "id": "id",
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -20106,6 +20436,28 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "body": "body",
+                    "bulk_retry_id": "bulk_retry_id",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "events_count": 1,
+                    "headers": "headers",
+                    "id": "id",
+                    "ignored_count": 1,
+                    "include": "data",
+                    "ingested_at": "2024-01-15T09:30:00Z",
+                    "limit": 1,
+                    "next": "next",
+                    "order_by": "ingested_at",
+                    "parsed_query": "parsed_query",
+                    "path": "path",
+                    "prev": "prev",
+                    "rejection_cause": "SOURCE_ARCHIVED",
+                    "source_id": "source_id",
+                    "status": "accepted",
+                    "verified": true,
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -20514,7 +20866,28 @@ service:
         - root.GetRequestsRequestBadRequestError
         - root.GetRequestsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            status: accepted
+            rejection_cause: SOURCE_ARCHIVED
+            ignored_count: 1
+            events_count: 1
+            source_id: source_id
+            verified: true
+            headers: headers
+            body: body
+            parsed_query: parsed_query
+            path: path
+            created_at: '2024-01-15T09:30:00Z'
+            ingested_at: '2024-01-15T09:30:00Z'
+            bulk_retry_id: bulk_retry_id
+            include: data
+            order_by: ingested_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -20790,6 +21163,33 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            id: id
+            status: SCHEDULED
+            issue_id: issue_id
+            webhook_id: webhook_id
+            destination_id: destination_id
+            source_id: source_id
+            attempts: 1
+            response_status: 1
+            successful_at: '2024-01-15T09:30:00Z'
+            created_at: '2024-01-15T09:30:00Z'
+            error_code: error_code
+            cli_id: cli_id
+            cli_user_id: cli_user_id
+            last_attempt_at: '2024-01-15T09:30:00Z'
+            event_data_id: event_data_id
+            headers: headers
+            body: body
+            parsed_query: parsed_query
+            bulk_retry_id: bulk_retry_id
+            path: path
+            include: data
+            order_by: last_attempt_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
           response:
             body:
               pagination:
@@ -20864,6 +21264,13 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            id: id
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
           response:
             body:
               pagination:
@@ -21078,6 +21485,17 @@ docs: A request represent a webhook received by Hookdeck.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "archived": true,
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "id": "id",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -21457,7 +21875,17 @@ service:
         - root.GetRulesetsRequestBadRequestError
         - root.GetRulesetsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            archived: true
+            archived_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -21918,6 +22346,18 @@ docs: A ruleset defines a group of rules that can be used across many connection
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "archived": true,
+                    "archived_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "id": "id",
+                    "integration_id": "integration_id",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -22295,7 +22735,18 @@ service:
         - root.GetSourcesRequestBadRequestError
         - root.GetSourcesRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            archived: true
+            archived_at: '2024-01-15T09:30:00Z'
+            integration_id: integration_id
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -22780,6 +23231,17 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "dir": "asc",
+                    "issue_id": "issue_id",
+                    "limit": 1,
+                    "log_level": "debug",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                    "webhook_id": "webhook_id",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -22902,6 +23364,15 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "dir": "asc",
+                    "id": "id",
+                    "limit": 1,
+                    "name": "name",
+                    "next": "next",
+                    "order_by": "created_at",
+                    "prev": "prev",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -22910,6 +23381,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                           "code": "code",
                           "created_at": "2024-01-15T09:30:00Z",
                           "encrypted_env": "encrypted_env",
+                          "env": {
+                            "key": "value",
+                          },
                           "id": "id",
                           "iv": "iv",
                           "name": "name",
@@ -23506,7 +23980,15 @@ service:
         - root.GetTransformationsRequestBadRequestError
         - root.GetTransformationsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            id: id
+            name: name
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
+          response:
             body:
               pagination:
                 order_by: order_by
@@ -23522,6 +24004,8 @@ service:
                   code: code
                   encrypted_env: encrypted_env
                   iv: iv
+                  env:
+                    key: value
                   updated_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
     createTransformation:
@@ -23812,6 +24296,16 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            log_level: debug
+            webhook_id: webhook_id
+            issue_id: issue_id
+            created_at: '2024-01-15T09:30:00Z'
+            order_by: created_at
+            dir: asc
+            limit: 1
+            next: next
+            prev: prev
           response:
             body:
               pagination:

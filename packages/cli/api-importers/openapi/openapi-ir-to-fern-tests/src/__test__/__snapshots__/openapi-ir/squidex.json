@@ -162,7 +162,38 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "skip",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "take",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2168,7 +2199,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7145,7 +7187,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7489,6 +7542,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -7509,6 +7571,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -7894,6 +7962,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -7914,6 +7991,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -7999,6 +8082,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -8019,6 +8111,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -8349,6 +8447,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -8369,6 +8476,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -8754,6 +8867,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -8774,6 +8896,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -8859,6 +8987,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -8879,6 +9016,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -9504,6 +9647,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -9524,6 +9676,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -9609,6 +9767,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -9629,6 +9796,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -10267,6 +10440,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -10287,6 +10469,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -10372,6 +10560,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -10392,6 +10589,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -11056,6 +11259,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -11076,6 +11288,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -11161,6 +11379,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -11181,6 +11408,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -11464,6 +11697,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -11484,6 +11726,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -11869,6 +12117,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -11889,6 +12146,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -11974,6 +12237,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -11994,6 +12266,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -12622,6 +12900,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -12642,6 +12929,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -12727,6 +13020,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -12747,6 +13049,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -13056,6 +13364,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -13076,6 +13393,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -13461,6 +13784,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -13481,6 +13813,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -13566,6 +13904,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -13586,6 +13933,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -14240,6 +14593,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -14260,6 +14622,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -14345,6 +14713,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -14365,6 +14742,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -14994,6 +15377,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -15014,6 +15406,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -15099,6 +15497,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -15119,6 +15526,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -15774,6 +16187,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -15794,6 +16216,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -15879,6 +16307,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -15899,6 +16336,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -16528,6 +16971,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -16548,6 +17000,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -16633,6 +17091,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -16653,6 +17120,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -17308,6 +17781,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -17328,6 +17810,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -17413,6 +17901,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -17433,6 +17930,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -18062,6 +18565,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18082,6 +18594,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18167,6 +18685,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18187,6 +18714,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -18842,6 +19375,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18862,6 +19404,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18947,6 +19495,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18967,6 +19524,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -19596,6 +20159,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -19616,6 +20188,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -19701,6 +20279,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -19721,6 +20308,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -20376,6 +20969,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -20396,6 +20998,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -20481,6 +21089,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -20501,6 +21118,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -21130,6 +21753,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -21150,6 +21782,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -21235,6 +21873,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -21255,6 +21902,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -21910,6 +22563,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -21930,6 +22592,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -22015,6 +22683,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -22035,6 +22712,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -22508,6 +23191,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -22528,6 +23220,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -23181,6 +23879,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -23201,6 +23908,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -23286,6 +23999,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23306,6 +24028,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -23868,6 +24596,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -23888,6 +24625,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -23973,6 +24716,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23993,6 +24745,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -24626,6 +25384,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -24646,6 +25413,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -24731,6 +25504,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -24751,6 +25533,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -25582,6 +26370,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -25602,6 +26399,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -25687,6 +26490,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -25707,6 +26519,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -26332,6 +27150,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -26352,6 +27179,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -26437,6 +27270,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -26457,6 +27299,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -27096,6 +27944,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -27116,6 +27973,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -27201,6 +28064,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -27221,6 +28093,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -27846,6 +28724,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -27866,6 +28753,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -27951,6 +28844,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -27971,6 +28873,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -28596,6 +29504,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -28616,6 +29533,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -28701,6 +29624,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -28721,6 +29653,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -29323,6 +30261,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -29343,6 +30290,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -29428,6 +30381,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -29448,6 +30410,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -30050,6 +31018,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -30070,6 +31047,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -30155,6 +31138,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -30175,6 +31167,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -33127,7 +34125,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "fromSnapshots",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -34229,7 +35238,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "ruleId",
+              "value": {
+                "value": {
+                  "value": "ruleId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "skip",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "take",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36590,7 +37630,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36929,7 +37980,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "channel",
+              "value": {
+                "value": {
+                  "value": "channel",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -37147,7 +38209,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "channel",
+              "value": {
+                "value": {
+                  "value": "channel",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -38655,7 +39728,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "ids",
+              "value": {
+                "value": {
+                  "value": "ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -39005,6 +40099,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -39025,6 +40128,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -39371,7 +40480,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "publish",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "value": [
@@ -39753,6 +40893,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -39773,6 +40922,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -40409,6 +41564,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -40429,6 +41593,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -40701,7 +41871,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -41010,6 +42191,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -41030,6 +42220,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -41115,6 +42311,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -41135,6 +42340,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -41483,7 +42694,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "patch",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "publish",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "value": [
@@ -41865,6 +43107,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -41885,6 +43136,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42575,6 +43832,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -42595,6 +43861,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42908,7 +44180,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "checkReferrers",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "permanent",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -43539,6 +44832,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -43559,6 +44861,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -44041,7 +45349,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -44391,6 +45710,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -44411,6 +45739,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -44682,7 +46016,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -45032,6 +46377,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -45052,6 +46406,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -46551,6 +47911,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -46571,6 +47940,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -47210,6 +48585,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -47230,6 +48614,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -47869,6 +49259,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -47889,6 +49288,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -48528,6 +49933,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -48548,6 +49962,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -48767,6 +50187,16 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "resource",
+              "value": {
+                "value": {
+                  "value": "resource",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "queryParameters": [],
@@ -48971,7 +50401,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -49964,7 +51405,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -52455,7 +53907,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "scope",
+              "value": {
+                "value": "PathAndItems",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -54438,7 +55908,78 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ids",
+              "value": {
+                "value": {
+                  "value": "ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$top",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$skip",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$orderby",
+              "value": {
+                "value": {
+                  "value": "$orderby",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$filter",
+              "value": {
+                "value": {
+                  "value": "$filter",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -55005,7 +56546,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "duplicate",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {},
@@ -56385,7 +57957,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "duplicate",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {},
@@ -57282,7 +58875,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "checkReferrers",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "permanent",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -77554,18 +79168,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "UpsertSchemaDtoPreviewUrlsValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "UpsertSchemaDtoPreviewUrlsValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "UpsertSchemaDtoPreviewUrlsValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "generatedName": "UpsertSchemaDtoPreviewUrls",
                   "groupName": [],

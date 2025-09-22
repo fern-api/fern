@@ -5075,6 +5075,12 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5258,7 +5264,12 @@ service:
         - >-
           root.GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+          response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -5696,6 +5707,13 @@ for bs in sdk.bank_statements.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "status": "queued",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5894,7 +5912,13 @@ service:
         - >-
           root.GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            status: queued
+          response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -6372,6 +6396,13 @@ for batch in sdk.batches.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "status": "processing",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -6664,7 +6695,13 @@ service:
       errors:
         - root.GetBatchesV3BatchesGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            status: processing
+          response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -7588,6 +7625,11 @@ sdk.entities.lookup(name="Starbucks") ",
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "location": "location",
+                    "name": "name",
+                    "website": "website",
+                  },
                   "response": {
                     "body": {
                       "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
@@ -7675,7 +7717,11 @@ service:
         - root.SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError
         - root.SearchEntityV3EntitiesLookupGetRequestLockedError
       examples:
-        - response:
+        - query-parameters:
+            name: name
+            website: website
+            location: location
+          response:
             body:
               id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
               name: Starbucks
@@ -8720,6 +8766,13 @@ reports = sdk.reports.list()
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "status": "open",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -8942,7 +8995,13 @@ service:
       errors:
         - root.GetReportsV3ReportsGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            status: open
+          response:
             body:
               next_cursor: next_cursor
               data:
@@ -9327,6 +9386,13 @@ for tx in sdk.transactions.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
+                  "query-parameters": {
+                    "account_holder_id": "account_holder_id",
+                    "created_after": "2024-01-15T09:30:00Z",
+                    "created_before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -9907,7 +9973,13 @@ service:
       errors:
         - root.ListTransactionsV3TransactionsGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            created_after: '2024-01-15T09:30:00Z'
+            created_before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            account_holder_id: account_holder_id
+          response:
             body:
               next_cursor: XjdHaksD
               data:
