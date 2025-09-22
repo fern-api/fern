@@ -55,22 +55,99 @@ jobs:
             echo "create-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
-    if: github.repository == 'fern-api/fern'
+    # if: github.repository == 'fern-api/fern'
+    # CHRISM test
+    if: false
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        include:
+          - files: |
+              .github/actions/cached-seed/action.yaml
+              .github/actions/check-for-changed-files/action.yaml
+              .github/actions/install/action.yaml
+              .github/workflows/seed.yml
+              packages/seed/
+              packages/ir-sdk/fern/apis/
+              packages/cli/generation/ir-generator/
+              test-definitions/
+              test-definitions-openapi/
+            generator-name: seed
+          - files: |
+              generators/ruby/
+              seed/ruby-sdk/
+              seed/ruby-model/
+            generator-name: ruby
+          - files: |
+              generators/ruby-v2/
+              seed/ruby-sdk-v2/
+            generator-name: ruby-v2
+          - files: |
+              generators/openapi/
+              seed/openapi/
+            generator-name: openapi
+          - files: |
+              generators/python/
+              seed/pydantic/
+              seed/pydantic-v2/
+              seed/python-sdk/
+              seed/fastapi/
+            generator-name: python
+          - files: |
+              generators/postman/
+              seed/postman/
+            generator-name: postman
+          - files: |
+              generators/java/
+              seed/java-sdk/
+              seed/java-model/
+              seed/java-spring/
+            generator-name: java
+          - files: |
+              generators/typescript/
+              seed/ts-sdk/
+              seed/ts-express/
+            generator-name: typescript
+          - files: |
+              generators/go/
+              seed/go-sdk/
+              seed/go-model/
+              seed/go-fiber/
+            generator-name: go
+          - files: |
+              generators/csharp/
+              seed/csharp-sdk/
+              seed/csharp-model/
+            generator-name: csharp
+          - files: |
+              generators/php/
+              seed/php-sdk/
+              seed/php-model/
+            generator-name: php
+          - files: |
+              generators/swift/
+              seed/swift-sdk/
+            generator-name: swift
+          - files: |
+              generators/rust/
+              seed/rust-model/
+              seed/rust-sdk/
+            generator-name: rust
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed }}
-      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
-      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
-      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
-      python: ${{ steps.get-generator-changes.outputs.python }}
-      postman: ${{ steps.get-generator-changes.outputs.postman }}
-      java: ${{ steps.get-generator-changes.outputs.java }}
-      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
-      go: ${{ steps.get-generator-changes.outputs.go }}
-      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
-      php: ${{ steps.get-generator-changes.outputs.php }}
-      swift: ${{ steps.get-generator-changes.outputs.swift }}
-      rust: ${{ steps.get-generator-changes.outputs.rust }}
+      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.set-output.outputs.seed-changes }}
+      ruby: ${{ steps.set-output.outputs.ruby-changes }}
+      ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
+      openapi: ${{ steps.set-output.outputs.openapi-changes }}
+      python: ${{ steps.set-output.outputs.python-changes }}
+      postman: ${{ steps.set-output.outputs.postman-changes }}
+      java: ${{ steps.set-output.outputs.java-changes }}
+      typescript: ${{ steps.set-output.outputs.typescript-changes }}
+      go: ${{ steps.set-output.outputs.go-changes }}
+      csharp: ${{ steps.set-output.outputs.csharp-changes }}
+      php: ${{ steps.set-output.outputs.php-changes }}
+      swift: ${{ steps.set-output.outputs.swift-changes }}
+      rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
       - if: github.event_name != 'workflow_dispatch'
@@ -79,10 +156,125 @@ jobs:
         with:
           # Get sufficient history to check for changes
           fetch-depth: 200
-      - if: github.event_name != 'workflow_dispatch'
-        name: Get generator changes
+          sparse-checkout: |
+            ${{ matrix.files }}
+            .github/
+
+      - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
-        uses: ./.github/actions/get-generator-changes
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: ${{ matrix.files }}
+
+      - name: Set output
+        id: set-output
+        run: |
+          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+
+  build-matrices:
+    runs-on: ubuntu-latest
+    outputs:
+      built-matrix: ${{ steps.combine-matrices.outputs.built-matrix }}
+    steps:
+      - name: Build ruby-model matrix
+        id: build-ruby-model-matrix
+        shell: bash
+        run: |
+          SDK_NAME="ruby-model"
+          GEN_PATH="generators/ruby"
+          LANG_NAME="ruby"
+          ALLOW_FAIL="true"
+          BASH_VAR="{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", \"language-name\": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}"
+          echo "ruby_model_matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+      - name: Build python-sdk matrix
+        id: build-python-sdk-matrix
+        shell: bash
+        run: |
+          SDK_NAME="python-sdk"
+          GEN_PATH="generators/python"
+          LANG_NAME="python"
+          ALLOW_FAIL="true"
+          BASH_VAR="{\"${SDK_NAME}\": {\"generator-path\": \"${GEN_PATH}\", \"language-name\": \"${LANG_NAME}\", \"allow-failures\": \"$ALLOW_FAIL\"}}"
+          echo "python_sdk_matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+
+          # debug
+          echo "${BASH_VAR}" | jq .
+
+      - name: Combine matrices
+        id: combine-matrices
+        shell: bash
+        run: |
+          # Combine all built matrices into a single JSON object. Wrap in array for GitHub matrix
+          # strategy format.
+          ruby_matrix='${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}}'
+          python_matrix='${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}'
+
+          combined=$(jq -n --argjson ruby "$ruby_matrix" \
+          --argjson python "$python_matrix" \
+          '$ruby + $python')
+          echo "${combined}" | jq . 
+
+          # matrix=$(echo "${combined}" | jq '[.]' -c)
+          # echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+
+          # Transform from object to array format
+          matrix=$(echo "${combined}" | jq -c 'to_entries | map(.value + {"name": .key})')
+          echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+
+          # Output for debug
+          echo "${matrix}" | jq .
+
+  matrix-example:
+    needs: [setup, build-matrices] # CHRISM - add back changes
+    # if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    # force for now
+    if: true
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJson(needs.build-matrices.outputs.built-matrix) }}
+        # packages: ${{ fromJSON(needs.build-matrices.outputs.built-matrix) }}
+    steps:
+      - name: Echo name
+        shell: bash
+        run: echo '${{ matrix.name }}'
+
+      - name: Echo package
+        shell: bash
+        run: |
+          echo 'Generator path: '  
+          echo '${{ matrix.generator-path }}' | jq .
+
+          echo 'Language name: '  
+          echo '${{ matrix.language-name }}' | jq .
+
+          echo 'Allow fail: '  
+          echo '${{ matrix.allow-failures }}' | jq .
+
+      # - name: Get data for key
+      #   run: |
+      #     echo "${generator_path}"
+      #     echo "${other_value}"
+
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # - name: Update seed
+      #   uses: ./.github/actions/auto-update-seed
+      #   with:
+      #     generator-name: ${{ matrix.sdk-name}} ruby-model
+      #     generator-path: ${{ matrix.generator-path }} generators/ruby
+      #     language-name: ${{ matrix.language-name }} ruby
+      #     allow-unexpected-failures: ${{ matrix.allow-failures }}
+      #     skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+      #     create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+      #     create-pr: ${{ needs.setup.outputs.create-pr }}
+      #     secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+      #     secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-model-seed-update:
     needs: [changes, setup]
@@ -618,11 +810,13 @@ jobs:
   commit-seed-changes:
     outputs:
       has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
+    # if: >-
+    #   ${{
+    #     always() && needs.setup.outputs.create-artifacts == 'true' &&
+    #     !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+    #   }}
+    # CHRISM test
+    if: false
     needs:
       [
         changes,

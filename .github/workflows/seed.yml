@@ -123,6 +123,9 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    
+    # CHRISM test
+    if: false
     strategy:
       matrix:
         generator-name:
