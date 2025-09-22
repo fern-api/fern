@@ -8,6 +8,7 @@ import {
     FernFilepath,
     HttpEndpoint,
     IntermediateRepresentation,
+    TypeReference,
     Name,
     TypeDeclaration,
     TypeId
@@ -42,6 +43,35 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
+        // Handle pagination endpoints specially
+        if (httpEndpoint.pagination != null) {
+            // For paginated endpoints, the return type is SyncPagingIterable<ItemType>
+            // The item type is extracted from the pagination configuration
+            let itemType: java.Type | undefined;
+
+            if (httpEndpoint.pagination.type === "cursor") {
+                const resultsProperty = httpEndpoint.pagination.results;
+                if (resultsProperty?.property?.valueType) {
+                    itemType = this.extractPaginationItemType(resultsProperty.property.valueType);
+                }
+            } else if (httpEndpoint.pagination.type === "offset") {
+                const resultsProperty = httpEndpoint.pagination.results;
+                if (resultsProperty?.property?.valueType) {
+                    itemType = this.extractPaginationItemType(resultsProperty.property.valueType);
+                }
+            }
+
+            if (itemType) {
+                return java.Type.generic(
+                    java.classReference({
+                        name: this.getPaginationClassName(),
+                        packageName: this.getPaginationPackageName()
+                    }),
+                    [itemType]
+                );
+            }
+        }
+
         const responseBody = httpEndpoint.response?.body;
 
         if (responseBody == null) {
@@ -70,7 +100,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                     default:
                         assertNever(responseBody.value);
                 }
-                break;
             }
             case "fileDownload":
                 return java.Type.inputStream();
@@ -271,5 +300,36 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             throw new Error(`No example found for endpoint ${endpoint.id}`);
         }
         return exampleEndpointCall;
+    }
+
+    private extractPaginationItemType(valueType: TypeReference): java.Type | undefined {
+        if (!valueType) {
+            return undefined;
+        }
+
+        // If it's a list container, extract the item type
+        if (valueType.type === "container" && valueType.container) {
+            if (valueType.container.type === "list" && valueType.container.list) {
+                const innerType = valueType.container.list;
+                return this.javaTypeMapper.convert({ reference: innerType });
+            } else if (valueType.container.type === "optional" && valueType.container.optional) {
+                return this.extractPaginationItemType(valueType.container.optional);
+            }
+        }
+
+        if (valueType.type === "named" && valueType.typeId) {
+            const typeDecl = this.ir.types[valueType.typeId];
+            if (typeDecl?.shape.type === "object") {
+                // Look for the first list property in the object
+                for (const prop of typeDecl.shape.properties) {
+                    const itemType = this.extractPaginationItemType(prop.valueType);
+                    if (itemType) {
+                        return itemType;
+                    }
+                }
+            }
+        }
+
+        return undefined;
     }
 }
