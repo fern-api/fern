@@ -1,6 +1,6 @@
 import { java } from "@fern-api/java-ast";
 import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint, TypeReference, ResponseProperty } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, ResponseProperty, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { SnippetExtractor } from "../extractors/SnippetExtractor";
 import { WireTestExample } from "../extractors/TestDataExtractor";
@@ -148,25 +148,18 @@ export class TestMethodBuilder {
         });
     }
 
-    /**
-     * Gets the return type for an endpoint.
-     */
     private getEndpointReturnType(endpoint: HttpEndpoint): string {
         try {
-            // Check if endpoint has pagination - if so, return SyncPagingIterable<T>
             if (endpoint.pagination != null) {
                 const itemType = this.extractPaginationItemType(endpoint);
                 if (itemType) {
-                    // Use a temporary writer to get the item type name
                     const tempWriter = new java.Writer({
                         packageName: this.context.getCorePackageName(),
                         customConfig: this.context.customConfig
                     });
 
-                    // Write the item type to get its string representation
                     itemType.write(tempWriter);
 
-                    // Get the type name without package prefix
                     const itemTypeName = tempWriter.buffer.trim();
 
                     return `SyncPagingIterable<${itemTypeName}>`;
@@ -195,9 +188,6 @@ export class TestMethodBuilder {
         }
     }
 
-    /**
-     * Extracts the item type from a paginated endpoint and returns the java.Type.
-     */
     private extractPaginationItemType(endpoint: HttpEndpoint): java.Type | undefined {
         if (!endpoint.pagination) {
             return undefined;
@@ -214,43 +204,31 @@ export class TestMethodBuilder {
             return undefined;
         }
 
-        // Handle nested property paths (e.g., data.users)
-        // The propertyPath tells us if we need to navigate through nested objects
-        // but the actual list type is in the property itself
         const valueType = resultsProperty.property.valueType;
         if (!valueType) {
             return undefined;
         }
 
-        // Extract the item type from the list/container type
         return this.extractItemTypeFromValueType(valueType);
     }
 
-    /**
-     * Recursively extracts the item type from a value type.
-     */
     private extractItemTypeFromValueType(valueType: TypeReference): java.Type | undefined {
         if (!valueType) {
             return undefined;
         }
 
-        // Handle container types
         if (valueType.type === "container" && valueType.container) {
             if (valueType.container.type === "list" && valueType.container.list) {
-                // For list types, get the inner type
                 const innerType = valueType.container.list;
                 return this.context.javaTypeMapper.convert({ reference: innerType });
             } else if (valueType.container.type === "optional" && valueType.container.optional) {
-                // Handle optional - recursively check the inner type
                 return this.extractItemTypeFromValueType(valueType.container.optional);
             }
         }
 
-        // If it's a named type, try to resolve it and look for list properties
         if (valueType.type === "named" && valueType.typeId) {
             const typeDecl = this.context.ir.types[valueType.typeId];
             if (typeDecl?.shape.type === "object") {
-                // Look for properties that are lists
                 for (const prop of typeDecl.shape.properties) {
                     const itemType = this.extractItemTypeFromValueType(prop.valueType);
                     if (itemType) {
@@ -260,13 +238,9 @@ export class TestMethodBuilder {
             }
         }
 
-        // Can't extract a list item type
         return undefined;
     }
 
-    /**
-     * Converts a TypeReference to a Java type string.
-     */
     private convertTypeReferenceToJavaType(typeRef: TypeReference): string {
         if (!typeRef) {
             return "Object";
@@ -281,7 +255,6 @@ export class TestMethodBuilder {
             javaType.write(simpleWriter);
             return simpleWriter.buffer.trim();
         } catch (error) {
-            // Fallback to simple type extraction
             if (typeRef.type === "primitive") {
                 switch (typeRef.primitive.v1) {
                     case "STRING":
@@ -302,7 +275,6 @@ export class TestMethodBuilder {
                         return "Object";
                 }
             } else if (typeRef.type === "named" && typeRef.typeId) {
-                // Try to get the type name from the typeId
                 const typeDecl = this.context.ir.types[typeRef.typeId];
                 if (typeDecl) {
                     return typeDecl.name.name.pascalCase.unsafeName;
@@ -320,28 +292,22 @@ export class TestMethodBuilder {
         try {
             const imports = new Set<string>();
 
-            // Check if endpoint has pagination - if so, return SyncPagingIterable<T>
             if (endpoint.pagination != null) {
                 const itemType = this.extractPaginationItemType(endpoint);
                 if (itemType) {
-                    // Add import for SyncPagingIterable
                     const paginationPackage = this.context.getCorePackageName() + ".pagination";
                     imports.add(`${paginationPackage}.SyncPagingIterable`);
 
-                    // Use a temporary writer to get the item type name and its imports
                     const tempWriter = new java.Writer({
                         packageName: this.context.getCorePackageName(),
                         customConfig: this.context.customConfig
                     });
 
-                    // Write the item type to collect its imports
                     itemType.write(tempWriter);
 
-                    // Get the type name without package prefix
                     const itemTypeName = tempWriter.buffer.trim();
 
-                    // Collect imports that were added when writing the type
-                    tempWriter.getImports().forEach(imp => imports.add(imp));
+                    tempWriter.getImports().forEach((imp) => imports.add(imp));
 
                     return { typeName: `SyncPagingIterable<${itemTypeName}>`, imports };
                 }
@@ -358,7 +324,7 @@ export class TestMethodBuilder {
 
             const typeName = simpleWriter.buffer.trim();
             const writerImports = simpleWriter.getImports();
-            writerImports.forEach(imp => imports.add(imp));
+            writerImports.forEach((imp) => imports.add(imp));
 
             if (typeName === "Void") {
                 return { typeName: "void", imports };
@@ -370,5 +336,4 @@ export class TestMethodBuilder {
             return { typeName: "Object", imports: new Set<string>() };
         }
     }
-
 }

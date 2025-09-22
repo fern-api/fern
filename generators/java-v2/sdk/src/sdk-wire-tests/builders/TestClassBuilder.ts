@@ -172,8 +172,6 @@ export class TestClassBuilder {
             case "basic":
                 return '.credentials("testuser", "testpass")';
             case "header": {
-                // For header auth, the method name is derived from the scheme name
-                // If the scheme has a name, use it in camelCase, otherwise default to apiKey
                 if (scheme.name?.name?.camelCase?.unsafeName) {
                     const methodName = scheme.name.name.camelCase.unsafeName;
                     return `.${methodName}("test-api-key")`;
