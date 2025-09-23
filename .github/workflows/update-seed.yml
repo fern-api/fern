@@ -276,7 +276,7 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.ruby-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -306,7 +306,7 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.ruby-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -330,16 +330,6 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -347,7 +337,7 @@ jobs:
           generator-path: generators/ruby-v2
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -377,7 +367,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.pydantic.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -407,7 +397,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.python-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -437,7 +427,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.fastapi.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -467,7 +457,7 @@ jobs:
           generator-path: generators/openapi
           language-name: openapi
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.openapi.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -497,7 +487,7 @@ jobs:
           generator-path: generators/postman
           language-name: postman
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.postman.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -527,7 +517,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.java-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -557,7 +547,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.java-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -587,7 +577,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.java-spring.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -617,7 +607,7 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.ts-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -647,7 +637,7 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.ts-express.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -677,7 +667,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.go-fiber.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -707,7 +697,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.go-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -737,7 +727,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.go-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -767,7 +757,7 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.csharp-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -797,7 +787,7 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.csharp-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -827,7 +817,7 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.php-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -857,7 +847,7 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.php-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -887,7 +877,7 @@ jobs:
           generator-path: generators/swift
           language-name: swift
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.swift-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -917,7 +907,7 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.rust-model.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -947,7 +937,7 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ needs.get-all-test-matrices.outputs.rust-sdk.fixtures }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
