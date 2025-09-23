@@ -641,11 +641,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-<<<<<<< HEAD
                                 "id": "8a8806b8",
-=======
-                                "id": "d789ff35",
->>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
                                 "name": null,
                                 "url": "/postWithNullableNamedRequestBodyType/id",
                                 "rootPathParameters": [],
@@ -694,26 +690,90 @@
                                         "type": "container",
                                         "container": {
                                             "type": "optional",
-<<<<<<< HEAD
                                             "optional": {
                                                 "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
-                                                        "typeId": "type_:NullableObject",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "nullable",
+                                                        "nullable": {
+                                                            "shape": {
+                                                                "type": "named",
+                                                                "typeName": {
+                                                                    "typeId": "type_:NullableObject",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "name": {
+                                                                        "originalName": "NullableObject",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "nullableObject",
+                                                                            "safeName": "nullableObject"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "nullable_object",
+                                                                            "safeName": "nullable_object"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "NULLABLE_OBJECT",
+                                                                            "safeName": "NULLABLE_OBJECT"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "NullableObject",
+                                                                            "safeName": "NullableObject"
+                                                                        }
+                                                                    },
+                                                                    "displayName": null
+                                                                },
+                                                                "shape": {
+                                                                    "type": "object",
+                                                                    "properties": []
+                                                                }
+                                                            },
+                                                            "jsonExample": {}
                                                         },
-=======
-                                            "optional": null,
+                                                        "valueType": {
+                                                            "_type": "named",
+                                                            "name": {
+                                                                "originalName": "NullableObject",
+                                                                "camelCase": {
+                                                                    "unsafeName": "nullableObject",
+                                                                    "safeName": "nullableObject"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "nullable_object",
+                                                                    "safeName": "nullable_object"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "NULLABLE_OBJECT",
+                                                                    "safeName": "NULLABLE_OBJECT"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "NullableObject",
+                                                                    "safeName": "NullableObject"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:NullableObject",
+                                                            "default": null,
+                                                            "inline": null
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": {}
+                                            },
                                             "valueType": {
                                                 "_type": "container",
                                                 "container": {
                                                     "_type": "nullable",
                                                     "nullable": {
                                                         "_type": "named",
->>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
                                                         "name": {
                                                             "originalName": "NullableObject",
                                                             "camelCase": {
@@ -733,51 +793,6 @@
                                                                 "safeName": "NullableObject"
                                                             }
                                                         },
-<<<<<<< HEAD
-                                                        "displayName": null
-                                                    },
-                                                    "shape": {
-                                                        "type": "object",
-                                                        "properties": []
-                                                    }
-                                                },
-                                                "jsonExample": {}
-                                            },
-                                            "valueType": {
-                                                "_type": "named",
-                                                "name": {
-                                                    "originalName": "NullableObject",
-                                                    "camelCase": {
-                                                        "unsafeName": "nullableObject",
-                                                        "safeName": "nullableObject"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "nullable_object",
-                                                        "safeName": "nullable_object"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NULLABLE_OBJECT",
-                                                        "safeName": "NULLABLE_OBJECT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "NullableObject",
-                                                        "safeName": "NullableObject"
-                                                    }
-                                                },
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:NullableObject",
-                                                "default": null,
-                                                "inline": null
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": {}
-=======
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -791,8 +806,8 @@
                                                 }
                                             }
                                         }
-                                    }
->>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
+                                    },
+                                    "jsonExample": {}
                                 },
                                 "response": {
                                     "type": "ok",
