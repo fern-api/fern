@@ -66,6 +66,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
                 },
                 "prefix": "ApiKey",
                 "headerEnvVar": null,
+                "key": "ApiKey",
                 "docs": null
             }
         ],
@@ -209,6 +210,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -1831,6 +1833,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -9102,6 +9105,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": "ServerA",
                     "v2BaseUrls": null,
@@ -9185,6 +9189,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": "ServerB",
                     "v2BaseUrls": null,
@@ -9333,6 +9338,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": "ServerA",
                     "v2BaseUrls": null,
@@ -10471,6 +10477,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 },
                 "passwordEnvVar": null,
+                "key": "MyBasicAuth",
                 "docs": null
             }
         ],
@@ -11052,6 +11059,11 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "MyBasicAuth": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -13635,6 +13647,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -15314,6 +15327,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -16099,6 +16113,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -17995,6 +18010,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -20591,6 +20607,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -31033,6 +31050,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -31952,6 +31970,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -34249,6 +34268,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     },
                     "displayName": "Get Movie by Id",
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -37039,6 +37059,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -40692,6 +40713,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -40807,6 +40829,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -41729,6 +41752,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,

@@ -35,6 +35,7 @@
       "servers": [],
       "description": "Root endpoint that returns a \"Hello World\" message.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ping",
       "examples": [
@@ -280,6 +281,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the organization.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view",
+            "organization:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/iam/members",
       "examples": [
@@ -577,6 +589,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the organization.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view",
+            "organization:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/iam/members/{member}",
       "examples": [
@@ -999,6 +1022,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the organization.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/iam/members/{member}",
       "examples": [
@@ -1386,6 +1419,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the organization.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/iam/test",
       "examples": [
@@ -1574,6 +1617,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org",
       "examples": [
@@ -1689,6 +1737,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org",
       "examples": [
@@ -1928,6 +1981,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}",
       "examples": [
@@ -2178,6 +2241,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}",
       "examples": [
@@ -2412,6 +2485,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:join"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/join",
       "examples": [
@@ -2720,6 +2803,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/invite",
       "examples": [
@@ -3082,6 +3175,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:add_member"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/invite",
       "examples": [
@@ -3321,6 +3424,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:remove_member"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/invite/{org_invite_id}",
       "examples": [
@@ -3525,6 +3638,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:edit"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/domains",
       "examples": [
@@ -3800,6 +3923,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/domains",
       "examples": [
@@ -4048,6 +4181,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:edit"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/domains/{domain_id}",
       "examples": [
@@ -4298,6 +4441,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/avatar",
       "examples": [
@@ -4425,6 +4578,11 @@
       "servers": [],
       "description": "Retrieve the profile of the current user.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/user",
       "examples": [
@@ -4563,6 +4721,11 @@
       "servers": [],
       "description": "Update the profile of the current user.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/user",
       "examples": [
@@ -4704,6 +4867,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/user/avatar",
       "examples": [
@@ -4979,6 +5147,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project",
       "examples": [
@@ -5272,6 +5450,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "organization:create_project"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project",
       "examples": [
@@ -5539,6 +5727,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}",
       "examples": [
@@ -5922,6 +6120,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}",
       "examples": [
@@ -6100,6 +6308,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/config",
       "examples": [
@@ -6422,6 +6631,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/config",
       "examples": [
@@ -6748,6 +6967,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/avatar",
       "examples": [
@@ -7056,6 +7285,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the project.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view",
+            "project:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/iam/members",
       "examples": [
@@ -7379,6 +7619,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the project.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view",
+            "project:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/iam/members/{member}",
       "examples": [
@@ -7827,6 +8078,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the project.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/iam/members/{member}",
       "examples": [
@@ -8240,6 +8501,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the project.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/iam/test",
       "examples": [
@@ -8566,6 +8837,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection",
       "examples": [
@@ -8923,6 +9204,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_collection",
+            "document_embedding_instance:query"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection",
       "examples": [
@@ -9275,6 +9567,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}",
       "examples": [
@@ -9645,6 +9947,17 @@
       "servers": [],
       "description": "Edit collection details",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:edit",
+            "document_embedding_instance:query"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}",
       "examples": [
@@ -10005,6 +10318,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/stats",
       "examples": [
@@ -10355,6 +10678,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:list_chats"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/chat",
       "examples": [
@@ -10724,6 +11057,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:query"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/query",
       "examples": [
@@ -11006,6 +11349,16 @@
       "servers": [],
       "description": "Generate and update the summary for a collection",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/update_summary",
       "examples": [
@@ -11301,6 +11654,17 @@
       "servers": [],
       "description": "Add an embedding instance to the collection",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:edit",
+            "document_embedding_instance:query"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/add",
       "examples": [
@@ -11689,6 +12053,16 @@
       "servers": [],
       "description": "Remove an embedding instance from the collection",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/remove",
       "examples": [
@@ -12095,6 +12469,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the collection.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view",
+            "collection:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members",
       "examples": [
@@ -12444,6 +12829,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the collection.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view",
+            "collection:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}",
       "examples": [
@@ -12918,6 +13314,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the collection.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}",
       "examples": [
@@ -13357,6 +13763,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the collection.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/test",
       "examples": [
@@ -13825,6 +14241,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:list_documents"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document",
       "examples": [
@@ -14238,6 +14664,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_document"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document",
       "examples": [
@@ -14577,6 +15013,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_document"
+          ]
+        }
+      ],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document/upload",
@@ -14951,6 +15397,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_document"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/create/status/{group_id}",
       "examples": [
@@ -15286,6 +15742,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:query"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/query",
       "examples": [
@@ -15578,6 +16044,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
       "examples": [
@@ -15985,6 +16461,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
       "examples": [
@@ -16380,6 +16866,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:edit"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
       "examples": [
@@ -16692,6 +17188,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/embeddings",
       "examples": [
@@ -16924,6 +17430,7 @@
       "servers": [],
       "description": "Fetch an individual embedding record by its ID. Useful for examining the source submitted to an LLM",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/embedding/{embedding_id}",
       "examples": [
@@ -17243,6 +17750,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the document.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view",
+            "document:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members",
       "examples": [
@@ -17592,6 +18110,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the document.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view",
+            "document:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}",
       "examples": [
@@ -18066,6 +18595,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the document.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}",
       "examples": [
@@ -18505,6 +19044,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the document.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "document:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/test",
       "examples": [
@@ -18680,6 +19229,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/chat/recent",
       "examples": [
@@ -18940,6 +19494,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/chat/{chat_id}",
       "examples": [
@@ -19225,6 +19789,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/chat/{chat_id}",
       "examples": [
@@ -19503,6 +20077,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/chat/{chat_id}/config",
       "examples": [
@@ -19798,6 +20382,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/chat/{chat_id}/config",
       "examples": [
@@ -20079,6 +20673,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "collection:create_chat"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/chat",
       "examples": [
@@ -20370,6 +20974,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:query"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/chat/{chat_id}/query",
       "examples": [
@@ -20650,6 +21264,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the chat.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view",
+            "chat:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/chat/{chat_id}/iam/members",
       "examples": [
@@ -20947,6 +21572,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the chat.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view",
+            "chat:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/chat/{chat_id}/iam/members/{member}",
       "examples": [
@@ -21369,6 +22005,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the chat.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/chat/{chat_id}/iam/members/{member}",
       "examples": [
@@ -21756,6 +22402,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the chat.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "chat:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/chat/{chat_id}/iam/test",
       "examples": [
@@ -21959,6 +22615,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/list-files",
       "examples": [
@@ -22211,6 +22872,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch",
       "examples": [
@@ -22612,6 +23278,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/authorize",
       "examples": [
@@ -22857,6 +23533,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize",
       "examples": [
@@ -23091,6 +23777,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}",
       "examples": [
@@ -23405,6 +24101,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/runs",
       "examples": [
@@ -23779,6 +24485,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run",
       "examples": [
@@ -24167,6 +24883,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
       "examples": [
@@ -24458,6 +25184,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
       "examples": [
@@ -24640,6 +25376,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/box/callback",
       "examples": [
@@ -24812,6 +25553,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/list-files",
       "examples": [
@@ -25064,6 +25810,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch",
       "examples": [
@@ -25465,6 +26216,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/authorize",
       "examples": [
@@ -25710,6 +26471,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize",
       "examples": [
@@ -25944,6 +26715,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}",
       "examples": [
@@ -26258,6 +27039,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/runs",
       "examples": [
@@ -26632,6 +27423,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run",
       "examples": [
@@ -27020,6 +27821,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
       "examples": [
@@ -27311,6 +28122,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
       "examples": [
@@ -27493,6 +28314,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/confluence/callback",
       "examples": [
@@ -27665,6 +28491,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/list-files",
       "examples": [
@@ -27917,6 +28748,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch",
       "examples": [
@@ -28318,6 +29154,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/authorize",
       "examples": [
@@ -28563,6 +29409,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize",
       "examples": [
@@ -28797,6 +29653,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}",
       "examples": [
@@ -29111,6 +29977,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/runs",
       "examples": [
@@ -29485,6 +30361,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run",
       "examples": [
@@ -29873,6 +30759,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
       "examples": [
@@ -30164,6 +31060,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
       "examples": [
@@ -30346,6 +31252,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/dropbox/callback",
       "examples": [
@@ -30518,6 +31429,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/list-files",
       "examples": [
@@ -30770,6 +31686,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch",
       "examples": [
@@ -31171,6 +32092,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/authorize",
       "examples": [
@@ -31416,6 +32347,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize",
       "examples": [
@@ -31650,6 +32591,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}",
       "examples": [
@@ -31964,6 +32915,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/runs",
       "examples": [
@@ -32338,6 +33299,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run",
       "examples": [
@@ -32726,6 +33697,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
       "examples": [
@@ -33017,6 +33998,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
       "examples": [
@@ -33199,6 +34190,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/gdrive/callback",
       "examples": [
@@ -33371,6 +34367,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/list-files",
       "examples": [
@@ -33623,6 +34624,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch",
       "examples": [
@@ -34024,6 +35030,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/authorize",
       "examples": [
@@ -34269,6 +35285,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize",
       "examples": [
@@ -34503,6 +35529,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}",
       "examples": [
@@ -34817,6 +35853,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/runs",
       "examples": [
@@ -35191,6 +36237,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run",
       "examples": [
@@ -35579,6 +36635,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
       "examples": [
@@ -35870,6 +36936,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
       "examples": [
@@ -36052,6 +37128,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/notion/callback",
       "examples": [
@@ -36224,6 +37305,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/list-files",
       "examples": [
@@ -36476,6 +37562,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch",
       "examples": [
@@ -36877,6 +37968,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/authorize",
       "examples": [
@@ -37122,6 +38223,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize",
       "examples": [
@@ -37356,6 +38467,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}",
       "examples": [
@@ -37670,6 +38791,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/runs",
       "examples": [
@@ -38044,6 +39175,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run",
       "examples": [
@@ -38432,6 +39573,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
       "examples": [
@@ -38723,6 +39874,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
       "examples": [
@@ -38905,6 +40066,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/onedrive/callback",
       "examples": [
@@ -39077,6 +40243,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/list-files",
       "examples": [
@@ -39329,6 +40500,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch",
       "examples": [
@@ -39730,6 +40906,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/authorize",
       "examples": [
@@ -39975,6 +41161,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize",
       "examples": [
@@ -40209,6 +41405,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}",
       "examples": [
@@ -40523,6 +41729,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/runs",
       "examples": [
@@ -40897,6 +42113,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run",
       "examples": [
@@ -41285,6 +42511,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
       "examples": [
@@ -41576,6 +42812,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_datasource_connection"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
       "examples": [
@@ -41758,6 +43004,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/datasource/sharepoint/callback",
       "examples": [
@@ -41868,6 +43119,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/internal/webhook/hydra/token_hook",
       "examples": [
@@ -42135,6 +43387,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:edit"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/internal/project/{project_id}/register_oauth_client",
       "examples": [
@@ -42292,6 +43554,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/internal/webhook/kratos/signup_check",
       "examples": [
@@ -42472,6 +43735,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/internal/webhook/kratos/signup_commit",
       "examples": [
@@ -42662,6 +43926,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/scrape",
       "examples": [
@@ -42832,6 +44101,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/scrape/start",
       "examples": [
@@ -43123,6 +44397,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}",
       "examples": [
@@ -43436,6 +44711,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/scrape/runs",
       "examples": [
@@ -43779,6 +45059,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_compose"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose",
       "examples": [
@@ -44046,6 +45336,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_compose"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/generate",
       "examples": [
@@ -44347,6 +45647,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_compose"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/update_section",
       "examples": [
@@ -44662,6 +45972,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_compose"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/section_talking_points",
       "examples": [
@@ -44958,6 +46278,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_compose"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/compose/topic",
       "examples": [
@@ -45292,6 +46622,19 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task",
@@ -45744,6 +47087,19 @@
       "servers": [],
       "description": "Tasks are the core of the platform and define the prompts and models used to generate responses.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task",
@@ -46295,6 +47651,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:view"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}",
@@ -46773,6 +48139,19 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:edit"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}",
@@ -47308,6 +48687,19 @@
       "servers": [],
       "description": "Individual Task Runs provide an audit trail for all Task executions.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:edit"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run",
@@ -47823,6 +49215,16 @@
       "servers": [],
       "description": "Run a specified Task against provided text and/or image input. The response is controlled by the `output_format` of the Task. Note that a Task must be `enabled` to be run.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:run_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run",
@@ -48110,6 +49512,17 @@
       "servers": [],
       "description": "Lists all members that have been granted direct access to the task.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:view",
+            "task:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members",
       "examples": [
@@ -48459,6 +49872,17 @@
       "servers": [],
       "description": "Retrieve a specific member that has been granted direct access to the task.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:view",
+            "task:view_members"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}",
       "examples": [
@@ -48933,6 +50357,16 @@
       "servers": [],
       "description": "Update the roles that a member holds on the task.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}",
       "examples": [
@@ -49372,6 +50806,16 @@
       "servers": [],
       "description": "Test the permissions that the caller (or another subject) holds on the task.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:view"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/test",
       "examples": [
@@ -49702,6 +51146,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task_forwarder",
@@ -50064,6 +51518,19 @@
       "servers": [],
       "description": "A Task Forwarder will receive the output of a Task and forward it to the specified destination. This can be used to send data to external systems, or to trigger other actions based on the output of a Task.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task_forwarder",
@@ -50433,6 +51900,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}",
@@ -50788,6 +52265,19 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:create_task"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "POST",
       "path": "/org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}",
@@ -51149,6 +52639,19 @@
       "servers": [],
       "description": "Fetch an individual Task Run.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "task:edit"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run/{task_run_id}",
@@ -51578,6 +53081,16 @@
       "servers": [],
       "description": "All supported LLM providers and models. Not all models have the same functionality.",
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        },
+        {
+          "HTTPBearer": [
+            "project:view"
+          ]
+        }
+      ],
       "availability": "GenerallyAvailable",
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/model",
@@ -51776,6 +53289,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/org/{org_id}/project/{project_id}/guardrail",
       "examples": [
@@ -51900,6 +53414,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "HTTPBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/whoami",
       "examples": [

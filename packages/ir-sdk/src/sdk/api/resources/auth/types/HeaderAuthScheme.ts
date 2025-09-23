@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface HeaderAuthScheme extends FernIr.WithDocs {
+export interface HeaderAuthScheme extends FernIr.BaseAuthScheme {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     prefix: string | undefined;

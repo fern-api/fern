@@ -464,7 +464,11 @@ types:
           "base-path": "",
           "endpoints": {
             "createAgent": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Create Agent",
               "docs": "Create a new agent",
               "errors": [
@@ -528,7 +532,11 @@ types:
               },
             },
             "deleteAgent": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Delete Agent",
               "docs": "Delete a specific agent",
               "errors": [
@@ -565,7 +573,11 @@ types:
               },
             },
             "getAgent": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Get Agent",
               "docs": "Get a specific agent",
               "errors": [
@@ -602,7 +614,11 @@ types:
               },
             },
             "listAllAgents": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List All Agents",
               "docs": "List all agents",
               "examples": [
@@ -630,7 +646,11 @@ types:
               },
             },
             "patchAgent": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Patch Agent",
               "docs": "Patch a specific agent",
               "errors": [
@@ -676,7 +696,11 @@ types:
               },
             },
             "promptAgent": {
-              "auth": true,
+              "auth": [
+                {
+                  "APIKeyHeader": [],
+                },
+              ],
               "display-name": "Prompt Agent",
               "docs": "Invoke a specific agent",
               "errors": [
@@ -748,7 +772,8 @@ types:
     listAllAgents:
       path: /api/v1/agents
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all agents
       source:
         openapi: ../openapi.yml
@@ -766,7 +791,8 @@ types:
     createAgent:
       path: /api/v1/agents
       method: POST
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Create a new agent
       source:
         openapi: ../openapi.yml
@@ -807,7 +833,8 @@ types:
     getAgent:
       path: /api/v1/agents/{agentId}
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Get a specific agent
       source:
         openapi: ../openapi.yml
@@ -831,7 +858,8 @@ types:
     deleteAgent:
       path: /api/v1/agents/{agentId}
       method: DELETE
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Delete a specific agent
       source:
         openapi: ../openapi.yml
@@ -856,7 +884,8 @@ types:
     patchAgent:
       path: /api/v1/agents/{agentId}
       method: PATCH
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Patch a specific agent
       source:
         openapi: ../openapi.yml
@@ -886,7 +915,8 @@ types:
     promptAgent:
       path: /api/v1/agents/{agentId}/predict
       method: POST
-      auth: true
+      auth:
+        - APIKeyHeader: []
       docs: Invoke a specific agent
       source:
         openapi: ../openapi.yml
@@ -938,7 +968,11 @@ imports:
           "base-path": "",
           "endpoints": {
             "createApiToken": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Create Api Token",
               "docs": "Create a new API token",
               "errors": [
@@ -984,7 +1018,11 @@ imports:
               },
             },
             "deleteApiToken": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Delete Api Token",
               "docs": "Delete a specific API token",
               "errors": [
@@ -1021,7 +1059,11 @@ imports:
               },
             },
             "getApiToken": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Get Api Token",
               "docs": "Get a specific API token",
               "errors": [
@@ -1058,7 +1100,11 @@ imports:
               },
             },
             "listApiTokens": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List Api Tokens",
               "docs": "List all API tokens",
               "examples": [
@@ -1098,7 +1144,8 @@ imports:
     listApiTokens:
       path: /api/v1/api-tokens
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all API tokens
       source:
         openapi: ../openapi.yml
@@ -1116,7 +1163,8 @@ imports:
     createApiToken:
       path: /api/v1/api-tokens
       method: POST
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Create a new API token
       source:
         openapi: ../openapi.yml
@@ -1144,7 +1192,8 @@ imports:
     getApiToken:
       path: /api/v1/api-tokens/{tokenId}
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Get a specific API token
       source:
         openapi: ../openapi.yml
@@ -1169,7 +1218,8 @@ imports:
     deleteApiToken:
       path: /api/v1/api-tokens/{tokenId}
       method: DELETE
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Delete a specific API token
       source:
         openapi: ../openapi.yml
@@ -1208,7 +1258,7 @@ imports:
           "base-path": "",
           "endpoints": {
             "signIn": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Sign In",
               "docs": undefined,
               "errors": [
@@ -1256,7 +1306,7 @@ imports:
               },
             },
             "signUp": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Sign Up",
               "docs": undefined,
               "errors": [
@@ -1324,7 +1374,6 @@ service:
     signIn:
       path: /api/v1/auth/sign-in
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Sign In
@@ -1353,7 +1402,6 @@ service:
     signUp:
       path: /api/v1/auth/sign-up
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Sign Up
@@ -1398,7 +1446,11 @@ service:
           "base-path": "",
           "endpoints": {
             "createDocument": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Create Document",
               "docs": "Create a new document",
               "errors": [
@@ -1463,7 +1515,11 @@ service:
               },
             },
             "deleteDocument": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Delete Document",
               "docs": "Delete a specific document",
               "errors": [
@@ -1500,7 +1556,11 @@ service:
               },
             },
             "getDocument": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Get Document",
               "docs": "Get a specific document",
               "errors": [
@@ -1537,7 +1597,11 @@ service:
               },
             },
             "listDocuments": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List Documents",
               "docs": "List all documents",
               "examples": [
@@ -1577,7 +1641,8 @@ service:
     listDocuments:
       path: /api/v1/documents
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all documents
       source:
         openapi: ../openapi.yml
@@ -1595,7 +1660,8 @@ service:
     createDocument:
       path: /api/v1/documents
       method: POST
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Create a new document
       source:
         openapi: ../openapi.yml
@@ -1637,7 +1703,8 @@ service:
     getDocument:
       path: /api/v1/documents/{documentId}
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Get a specific document
       source:
         openapi: ../openapi.yml
@@ -1662,7 +1729,8 @@ service:
     deleteDocument:
       path: /api/v1/documents/{documentId}
       method: DELETE
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Delete a specific document
       source:
         openapi: ../openapi.yml
@@ -1701,7 +1769,11 @@ imports:
           "base-path": "",
           "endpoints": {
             "createAPrompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Create A Prompt",
               "docs": "Create a new prompt",
               "errors": [
@@ -1753,7 +1825,11 @@ imports:
               },
             },
             "deletePrompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Delete Prompt",
               "docs": "Delete a specific prompt",
               "errors": [
@@ -1790,7 +1866,11 @@ imports:
               },
             },
             "getPrompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Get Prompt",
               "docs": "Get a specific prompt",
               "errors": [
@@ -1827,7 +1907,11 @@ imports:
               },
             },
             "listPrompts": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List Prompts",
               "docs": "List all prompts",
               "examples": [
@@ -1855,7 +1939,11 @@ imports:
               },
             },
             "patchPrompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Patch Prompt",
               "docs": "Patch a specific prompt",
               "errors": [
@@ -1913,7 +2001,8 @@ imports:
     listPrompts:
       path: /api/v1/prompts
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all prompts
       source:
         openapi: ../openapi.yml
@@ -1931,7 +2020,8 @@ imports:
     createAPrompt:
       path: /api/v1/prompts
       method: POST
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Create a new prompt
       source:
         openapi: ../openapi.yml
@@ -1964,7 +2054,8 @@ imports:
     getPrompt:
       path: /api/v1/prompts/{promptId}
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Get a specific prompt
       source:
         openapi: ../openapi.yml
@@ -1988,7 +2079,8 @@ imports:
     deletePrompt:
       path: /api/v1/prompts/{promptId}
       method: DELETE
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Delete a specific prompt
       source:
         openapi: ../openapi.yml
@@ -2013,7 +2105,8 @@ imports:
     patchPrompt:
       path: /api/v1/prompts/{promptId}
       method: PATCH
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Patch a specific prompt
       source:
         openapi: ../openapi.yml
@@ -2058,7 +2151,11 @@ imports:
           "base-path": "",
           "endpoints": {
             "createATool": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Create A Tool",
               "docs": "Create a new tool",
               "errors": [
@@ -2109,7 +2206,11 @@ imports:
               },
             },
             "deleteTool": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Delete Tool",
               "docs": "Delete a specific tool",
               "errors": [
@@ -2146,7 +2247,11 @@ imports:
               },
             },
             "getTool": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Get Tool",
               "docs": "Get a specific tool",
               "errors": [
@@ -2183,7 +2288,11 @@ imports:
               },
             },
             "listTools": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List Tools",
               "docs": "List all tools",
               "examples": [
@@ -2223,7 +2332,8 @@ imports:
     listTools:
       path: /api/v1/tools
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all tools
       source:
         openapi: ../openapi.yml
@@ -2241,7 +2351,8 @@ imports:
     createATool:
       path: /api/v1/tools
       method: POST
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Create a new tool
       source:
         openapi: ../openapi.yml
@@ -2273,7 +2384,8 @@ imports:
     getTool:
       path: /api/v1/tools/{toolId}
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Get a specific tool
       source:
         openapi: ../openapi.yml
@@ -2297,7 +2409,8 @@ imports:
     deleteTool:
       path: /api/v1/tools/{toolId}
       method: DELETE
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: Delete a specific tool
       source:
         openapi: ../openapi.yml
@@ -2332,7 +2445,11 @@ imports:
           "base-path": "",
           "endpoints": {
             "listAgentTraces": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "List Agent Traces",
               "docs": "List all agent traces",
               "examples": [
@@ -2372,7 +2489,8 @@ imports:
     listAgentTraces:
       path: /api/v1/traces
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       docs: List all agent traces
       source:
         openapi: ../openapi.yml
@@ -2402,7 +2520,7 @@ imports:
           "base-path": "",
           "endpoints": {
             "readUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Read User",
               "docs": undefined,
               "errors": [
@@ -2439,7 +2557,11 @@ imports:
               },
             },
             "readUserMe": {
-              "auth": true,
+              "auth": [
+                {
+                  "JWTBearer": [],
+                },
+              ],
               "display-name": "Read User Me",
               "docs": undefined,
               "examples": [
@@ -2479,7 +2601,8 @@ imports:
     readUserMe:
       path: /api/v1/users/me
       method: GET
-      auth: true
+      auth:
+        - JWTBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Read User Me
@@ -2496,7 +2619,6 @@ imports:
     readUser:
       path: /api/v1/users/{userId}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:

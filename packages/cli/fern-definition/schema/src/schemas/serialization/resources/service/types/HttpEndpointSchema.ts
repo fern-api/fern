@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { HttpMethodSchema } from "./HttpMethodSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
+import { HttpEndpointAuth } from "./HttpEndpointAuth";
 import { HttpRequest } from "./HttpRequest";
 import { HttpResponseSchema } from "./HttpResponseSchema";
 import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
@@ -30,7 +31,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         path: core.serialization.string(),
         url: core.serialization.string().optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        auth: core.serialization.boolean().optional(),
+        auth: HttpEndpointAuth.optional(),
         idempotent: core.serialization.boolean().optional(),
         "stream-condition": core.serialization.string().optional(),
         request: HttpRequest.optional(),
@@ -53,7 +54,7 @@ export declare namespace HttpEndpointSchema {
         path: string;
         url?: string | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        auth?: boolean | null;
+        auth?: HttpEndpointAuth.Raw | null;
         idempotent?: boolean | null;
         "stream-condition"?: string | null;
         request?: HttpRequest.Raw | null;

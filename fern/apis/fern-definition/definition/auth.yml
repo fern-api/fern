@@ -2,10 +2,13 @@ imports:
   commons: commons.yml
 
 types:
+  AuthSchemeKey: string
+  AuthScope: string
+
   WithAuthSchema:
     properties:
       auth: optional<ApiAuthSchema>
-      auth-schemes: optional<map<string, AuthSchemeDeclarationSchema>>
+      auth-schemes: optional<map<AuthSchemeKey, AuthSchemeDeclarationSchema>>
 
   ApiAuthSchema:
     discriminated: false
@@ -128,7 +131,7 @@ types:
     properties:
       scheme: literal<"oauth">
       type: literal<"client-credentials">
-      scopes: optional<list<string>>
+      scopes: optional<list<AuthScope>>
       client-id-env: optional<string>
       client-secret-env: optional<string>
       token-prefix:
