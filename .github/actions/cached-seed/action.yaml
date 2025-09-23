@@ -109,7 +109,7 @@ runs:
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${{ steps.format-fixtures.outputs.formatted-fixtures }} \
+          --fixture ${FORMATTED_FIXTURES} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
