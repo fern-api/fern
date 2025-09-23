@@ -78,22 +78,22 @@ runs:
       shell: bash
       run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-    - name: Format Fixtures
-      shell: bash
-      id: format-fixtures
-      run: |
-        json_data='${{toJson(inputs.fixtures-to-run)}}'
-        # Convert JSON array to space-separated string
-        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-        echo "Generated string: '$string_result'"
+    # - name: Format Fixtures
+    #   shell: bash
+    #   id: format-fixtures
+    #   run: |
+    #     json_data='${{toJson(inputs.fixtures-to-run)}}'
+    #     # Convert JSON array to space-separated string
+    #     string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+    #     echo "Generated string: '$string_result'"
 
-        # Leave as default if set to special keyword "all"
-        FORMATTED_FIXTURES=""
-        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
-          FORMATTED_FIXTURES="${{ inputs.fixtures-to-run }}"
-        fi
+    #     # Leave as default if set to special keyword "all"
+    #     FORMATTED_FIXTURES=""
+    #     if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
+    #       FORMATTED_FIXTURES="${{ inputs.fixtures-to-run }}"
+    #     fi
 
-        echo "formatted-fixtures=$FORMATTED_FIXTURES" >> $GITHUB_OUTPUT
+    #     echo "formatted-fixtures=$FORMATTED_FIXTURES" >> $GITHUB_OUTPUT
 
     - name: Seed Test
       if: steps.cache.outputs.cache-hit != 'true' || inputs.cache-disabled == 'true'
@@ -101,6 +101,11 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
+        FORMATTED_FIXTURES=""
+        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
+          FORMATTED_FIXTURES="${{ inputs.fixtures-to-run }}"
+        fi
+
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \

@@ -304,11 +304,15 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Test debug
-        shell: bash
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
         run: |
-          echo "Test debug 1: "
-          echo '${{ toJson(matrix.fixtures) }}' | jq .
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -341,11 +345,15 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Test debug
-        shell: bash
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
         run: |
-          echo "Test debug 1: "
-          echo '${{ toJson(matrix.fixtures) }}' | jq .
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
