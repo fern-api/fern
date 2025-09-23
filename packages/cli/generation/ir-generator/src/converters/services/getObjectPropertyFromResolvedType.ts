@@ -6,6 +6,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export function getObjectPropertyFromResolvedType({
     typeResolver,
@@ -89,7 +90,7 @@ function getAllPropertiesForRawObjectSchema(
 
     const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
-        properties[objectProperty.name.name.originalName] = objectProperty;
+        properties[getOriginalName(objectProperty.name.name)] = objectProperty;
     });
 
     return properties;

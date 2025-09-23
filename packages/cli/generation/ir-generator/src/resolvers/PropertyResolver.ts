@@ -17,6 +17,7 @@ import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "./EndpointResolver";
 import { ResolvedType } from "./ResolvedType";
 import { TypeResolver } from "./TypeResolver";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export interface PropertyResolver {
     resolveRequestProperty: (args: {
@@ -563,7 +564,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name.originalName;
+            return getOriginalName(resolvedType.name.name);
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":

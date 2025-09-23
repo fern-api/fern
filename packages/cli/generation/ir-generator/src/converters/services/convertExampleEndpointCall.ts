@@ -18,7 +18,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
-import { hashJSON } from "@fern-api/ir-utils";
+import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";
@@ -602,7 +602,7 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

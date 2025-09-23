@@ -23,7 +23,7 @@ import {
     VariableStatementStructure,
     WriterFunction
 } from "ts-morph";
-import { FernIr } from "../../../../../packages/ir-sdk/src";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 

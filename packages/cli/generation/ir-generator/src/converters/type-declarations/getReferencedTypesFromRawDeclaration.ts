@@ -11,6 +11,7 @@ import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
@@ -169,7 +170,7 @@ class SeenTypeNamesImpl implements SeenTypeNames {
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
         return (
-            typeName.fernFilepath.allParts.map((part) => part.originalName).join("/") + ":" + typeName.name.originalName
+            typeName.fernFilepath.allParts.map((part) => getOriginalName(part)).join("/") + ":" + getOriginalName(typeName.name)
         );
     }
 }
