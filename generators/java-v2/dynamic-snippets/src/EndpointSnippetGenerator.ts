@@ -710,9 +710,46 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
+            const paramValue = parameter.value;
+            let typeLiteral: java.TypeLiteral;
+
+            if (paramValue != null && typeof paramValue === "string") {
+                let variableName = String(paramValue)
+                    .replace(/[-_]+([a-z0-9])/gi, (_, char) => char.toUpperCase())
+                    .replace(/^([A-Z])/, (_, char) => char.toLowerCase())
+                    .replace(/[^a-zA-Z0-9]/g, "");
+
+                const JAVA_KEYWORDS = new Set([
+                    "class",
+                    "interface",
+                    "enum",
+                    "extends",
+                    "implements",
+                    "public",
+                    "private",
+                    "protected",
+                    "static",
+                    "final",
+                    "abstract",
+                    "synchronized"
+                ]);
+
+                if (
+                    JAVA_KEYWORDS.has(variableName) ||
+                    !/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(variableName) ||
+                    variableName.length === 0
+                ) {
+                    typeLiteral = this.context.dynamicTypeLiteralMapper.convert(parameter);
+                } else {
+                    typeLiteral = java.TypeLiteral.raw(java.codeblock(variableName));
+                }
+            } else {
+                typeLiteral = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            }
+
             args.push({
                 name: this.context.getMethodName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: typeLiteral
             });
         }
         return args;

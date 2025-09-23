@@ -1,3 +1,11 @@
+- version: 3.5.9
+  changelogEntry:
+    - summary: |
+        Display path parameters as variables instead of string literals in README snippets for better usage illustration
+      type: fix
+  createdAt: "2025-09-23"
+  irVersion: 59
+
 - version: 3.5.8
   changelogEntry:
     - summary: |

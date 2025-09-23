@@ -51,7 +51,7 @@ public class Example {
             .build();
 
         client.user().createUser(
-            "tenant_id",
+            tenantId,
             User
                 .builder()
                 .name("name")

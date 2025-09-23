@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.organizations().getOrganization("tenant_id", "organization_id");
+client.organizations().getOrganization(tenantId, organizationId);
 ```
 </dd>
 </dl>
@@ -62,8 +62,8 @@ client.organizations().getOrganization("tenant_id", "organization_id");
 
 ```java
 client.organizations().getOrganizationUser(
-    "organization_id",
-    "user_id",
+    organizationId,
+    userId,
     GetOrganizationUserRequest
         .builder()
         .build()
@@ -124,7 +124,7 @@ client.organizations().getOrganizationUser(
 
 ```java
 client.organizations().searchOrganizations(
-    "organization_id",
+    organizationId,
     SearchOrganizationsRequest
         .builder()
         .limit(1)
@@ -187,7 +187,7 @@ client.organizations().searchOrganizations(
 
 ```java
 client.user().getUser(
-    "user_id",
+    userId,
     GetUsersRequest
         .builder()
         .build()
@@ -240,7 +240,7 @@ client.user().getUser(
 
 ```java
 client.user().createUser(
-    "tenant_id",
+    tenantId,
     User
         .builder()
         .name("name")
@@ -297,7 +297,7 @@ client.user().createUser(
 
 ```java
 client.user().updateUser(
-    "user_id",
+    userId,
     UpdateUserRequest
         .builder()
         .body(
@@ -367,7 +367,7 @@ client.user().updateUser(
 
 ```java
 client.user().searchUsers(
-    "user_id",
+    userId,
     SearchUsersRequest
         .builder()
         .limit(1)
