@@ -757,7 +757,7 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ matrix }}
+          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
