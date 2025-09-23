@@ -109,11 +109,18 @@ export class SubClientGenerator {
     private generateImports(): UseStatement[] {
         const hasTypes = this.hasTypes(this.context);
         const hasHashMapInQueryParams = this.hasHashMapInQueryParams();
+        const hasQueryParams = this.hasQueryParameters();
+
+        // Build base crate imports conditionally
+        const crateItems = ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"];
+        if (hasQueryParams) {
+            crateItems.push("QueryBuilder");
+        }
 
         const imports = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ApiError", "HttpClient", "QueryBuilder", "RequestOptions"]
+                items: crateItems
             }),
             new UseStatement({
                 path: "reqwest",
@@ -242,6 +249,11 @@ export class SubClientGenerator {
     private hasPaginatedEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.pagination != null);
+    }
+
+    private hasQueryParameters(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
     }
 
     private hasHashMapInQueryParams(): boolean {
@@ -856,7 +868,7 @@ export class SubClientGenerator {
         const requestBody = this.getRequestBody(endpoint, params);
 
         // Always use generic serde_json::Value for maximum compatibility
-        const itemType = rust.Type.reference(rust.reference({ name: "serde_json::Value" }));
+        const itemType = rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
 
         // Return AsyncPaginator<ItemType> with proper typing
         const returnType = rust.Type.result(

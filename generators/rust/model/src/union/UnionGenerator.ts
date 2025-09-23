@@ -6,7 +6,9 @@ import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTy
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     isCollectionType,
+    isDateTimeOnlyType,
     isDateTimeType,
+    isDateType,
     isOptionalType,
     isUnknownType,
     isUuidType,
@@ -58,8 +60,18 @@ export class UnionGenerator {
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
-        // Add chrono if we have datetime fields
-        if (this.hasDateTimeFields()) {
+        // Add chrono imports based on specific types needed
+        const hasDateOnly = this.hasDateFields();
+        const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+
+        if (hasDateOnly && hasDateTimeOnly) {
+            // Both date and datetime types present
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else if (hasDateOnly) {
+            // Only date type present, import NaiveDate only
+            writer.writeLine("use chrono::NaiveDate;");
+        } else if (hasDateTimeOnly) {
+            // Only datetime type present, import DateTime and Utc only
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
@@ -68,14 +80,14 @@ export class UnionGenerator {
             writer.writeLine("use std::collections::HashMap;");
         }
 
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
+
         // Add uuid if we have UUID fields
         if (this.hasUuidFields()) {
             writer.writeLine("use uuid::Uuid;");
-        }
-
-        // Add serde_json if we have unknown/Value fields
-        if (this.hasJsonValueFields()) {
-            writer.writeLine("use serde_json::Value;");
         }
 
         // Add serde imports LAST
@@ -271,6 +283,14 @@ export class UnionGenerator {
     // Helper methods to detect field types for imports
     private hasDateTimeFields(): boolean {
         return this.hasFieldsOfType(isDateTimeType);
+    }
+
+    private hasDateFields(): boolean {
+        return this.hasFieldsOfType(isDateType);
+    }
+
+    private hasDateTimeOnlyFields(): boolean {
+        return this.hasFieldsOfType(isDateTimeOnlyType);
     }
 
     private hasUuidFields(): boolean {

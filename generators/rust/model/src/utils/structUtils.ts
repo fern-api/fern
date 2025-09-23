@@ -6,7 +6,9 @@ import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
     isCollectionType,
+    isDateTimeOnlyType,
     isDateTimeType,
+    isDateType,
     isFloatingPointType,
     isOptionalType,
     isUnknownType,
@@ -22,6 +24,20 @@ export function hasDateTimeFields(properties: (ObjectProperty | InlinedRequestBo
     return properties.some((prop) => {
         const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
         return isDateTimeType(typeRef);
+    });
+}
+
+export function hasDateFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
+    return properties.some((prop) => {
+        const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+        return isDateType(typeRef);
+    });
+}
+
+export function hasDateTimeOnlyFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
+    return properties.some((prop) => {
+        const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+        return isDateTimeOnlyType(typeRef);
     });
 }
 
@@ -142,9 +158,19 @@ export function writeStructUseStatements(
         writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
     });
 
-    // Add chrono if we have datetime fields
-    if (hasDateTimeFields(properties)) {
+    // Add chrono imports based on specific types needed
+    const hasDateOnly = hasDateFields(properties);
+    const hasDateTimeOnly = hasDateTimeOnlyFields(properties);
+
+    if (hasDateOnly && hasDateTimeOnly) {
+        // Both date and datetime types present
         writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+    } else if (hasDateOnly) {
+        // Only date type present, import NaiveDate only
+        writer.writeLine("use chrono::NaiveDate;");
+    } else if (hasDateTimeOnly) {
+        // Only datetime type present, import DateTime and Utc only
+        writer.writeLine("use chrono::{DateTime, Utc};");
     }
 
     // Add std::collections if we have maps or sets
@@ -162,10 +188,10 @@ export function writeStructUseStatements(
         writer.writeLine("use uuid::Uuid;");
     }
 
-    // Add serde_json if we have unknown/Value fields
-    if (hasJsonValueFields(properties)) {
-        writer.writeLine("use serde_json::Value;");
-    }
+    // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+    // if (hasJsonValueFields(properties)) {
+    //     writer.writeLine("use serde_json::Value;");
+    // }
 
     // Add serde imports LAST
     writer.writeLine("use serde::{Deserialize, Serialize};");

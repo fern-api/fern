@@ -145,6 +145,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
+        const clientName = context.getClientName();
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -155,7 +156,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "resources", items: [clientName], isPublic: true }));
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }

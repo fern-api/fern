@@ -13,9 +13,9 @@ import {
     generateFieldType,
     getCustomTypesUsedInFields,
     hasCollectionFields,
-    hasDateTimeFields,
+    hasDateFields,
+    hasDateTimeOnlyFields,
     hasFloatingPointSets,
-    hasJsonValueFields,
     hasUuidFields
 } from "../utils/structUtils";
 
@@ -87,9 +87,19 @@ export class StructGenerator {
             });
         }
 
-        // Add chrono if we have datetime fields
-        if (hasDateTimeFields(this.objectTypeDeclaration.properties)) {
+        // Add chrono imports based on specific types needed
+        const hasDateOnly = hasDateFields(this.objectTypeDeclaration.properties);
+        const hasDateTimeOnly = hasDateTimeOnlyFields(this.objectTypeDeclaration.properties);
+
+        if (hasDateOnly && hasDateTimeOnly) {
+            // Both date and datetime types present
             writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else if (hasDateOnly) {
+            // Only date type present, import NaiveDate only
+            writer.writeLine("use chrono::NaiveDate;");
+        } else if (hasDateTimeOnly) {
+            // Only datetime type present, import DateTime and Utc only
+            writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
         // Add std::collections if we have maps or sets
@@ -107,10 +117,10 @@ export class StructGenerator {
             writer.writeLine("use uuid::Uuid;");
         }
 
-        // Add serde_json if we have unknown/Value fields
-        if (hasJsonValueFields(this.objectTypeDeclaration.properties)) {
-            writer.writeLine("use serde_json::Value;");
-        }
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
 
         // Add serde imports LAST
         writer.writeLine("use serde::{Deserialize, Serialize};");
