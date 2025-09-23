@@ -213,8 +213,11 @@ jobs:
           ruby_matrix='${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}}'
           python_matrix='${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}'
 
-          combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
-          echo "${combined}" | jq . 
+          echo "${ruby_matrix}" | jq .
+          echo "${python_matrix}" | jq .
+
+          # combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
+          # echo "${combined}" | jq . 
           # matrix=$(echo '$combined' | jq '[.]')
           # echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
           
