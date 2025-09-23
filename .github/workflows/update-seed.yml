@@ -203,8 +203,8 @@ jobs:
         shell: bash
         run: |
           # debug
-          echo '${{toJson(fromJson(steps.build-ruby-model-matrix.outputs.ruby_model_matrix)) }}' | jq .
-          echo '${{toJson(fromJson(steps.build-python-sdk-matrix.outputs.python_sdk_matrix))}}' | jq .
+          echo '${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix }}' | jq .
+          echo '${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}' | jq .
 
 
     
