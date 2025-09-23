@@ -11,6 +11,7 @@ import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export async function registerApi({
     organization,
@@ -50,7 +51,7 @@ export async function registerApi({
     const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
-        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
+        apiId: FdrCjsSdk.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition
     });
 

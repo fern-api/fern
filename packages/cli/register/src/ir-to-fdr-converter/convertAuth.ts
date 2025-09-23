@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
@@ -25,28 +26,28 @@ export function convertAuth({
             case "basic":
                 return {
                     type: "basicAuth",
-                    passwordName: scheme.password.originalName,
-                    usernameName: scheme.username.originalName,
+                    passwordName: getOriginalName(scheme.password),
+                    usernameName: getOriginalName(scheme.username),
                     description: auth.docs
                 };
             case "bearer":
                 return {
                     type: "bearerAuth",
-                    tokenName: scheme.token.originalName,
+                    tokenName: getOriginalName(scheme.token),
                     description: auth.docs
                 };
             case "header":
                 return {
                     type: "header",
                     headerWireValue: scheme.name.wireValue,
-                    nameOverride: scheme.name.name.originalName,
+                    nameOverride: getOriginalName(scheme.name.name),
                     prefix: scheme.prefix,
                     description: auth.docs
                 };
             case "oauth": {
                 const tokenPath =
                     scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
-                        ?.map((p) => p.name.originalName)
+                        ?.map((p) => getOriginalName(p.name))
                         .join(".") || "$.body.access_token";
 
                 return playgroundConfig?.oauth

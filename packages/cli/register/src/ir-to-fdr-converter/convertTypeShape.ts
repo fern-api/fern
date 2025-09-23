@@ -3,6 +3,7 @@ import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { convertIrAvailability } from "./convertPackage";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
     return irType._visit<FdrCjsSdk.api.v1.register.TypeShape>({
@@ -110,7 +111,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                 type: "undiscriminatedUnion",
                 variants: union.members.map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
-                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
+                        typeName: variant.type.type === "named" ? getOriginalName(variant.type.name) : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                         availability: undefined,

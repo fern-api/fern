@@ -1,4 +1,5 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { convertAuth, PlaygroundConfig } from "./convertAuth";
@@ -36,7 +37,7 @@ export function convertIrToFdrApi({
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
             description: type.docs ?? undefined,
-            name: type.name.name.originalName,
+            name: getOriginalName(type.name.name),
             shape: convertTypeShape(type.shape),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
@@ -48,7 +49,7 @@ export function convertIrToFdrApi({
         fdrApi.subpackages[FdrCjsSdk.api.v1.SubpackageId(subpackageId)] = {
             subpackageId: FdrCjsSdk.api.v1.SubpackageId(subpackageId),
             displayName: service?.displayName ?? subpackage.displayName,
-            name: subpackage.name.originalName,
+            name: getOriginalName(subpackage.name),
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)
         };
