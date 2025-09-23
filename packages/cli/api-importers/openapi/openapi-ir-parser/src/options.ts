@@ -85,7 +85,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,
     preserveSchemaIds: false,
-    objectQueryParameters: false,
+    objectQueryParameters: true,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     shouldUseIdiomaticRequestNames: true,
     filter: undefined,

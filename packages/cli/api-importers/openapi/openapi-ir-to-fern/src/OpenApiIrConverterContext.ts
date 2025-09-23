@@ -83,7 +83,7 @@ export class OpenApiIrConverterContext {
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
         this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
-        this.objectQueryParameters = options?.objectQueryParameters ?? false;
+        this.objectQueryParameters = options?.objectQueryParameters ?? true;
         this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
         this.respectNullableSchemas = options?.respectNullableSchemas ?? true;
         this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;

@@ -5,6 +5,7 @@ api:
       settings:
         title-as-schema-name: true
         type-dates-as-strings: true
+        object-query-parameters: false
         respect-nullable-schemas: false
         idiomatic-request-names: false
         inline-path-parameters: false
@@ -14,6 +15,7 @@ api:
       settings:
         title-as-schema-name: false
         type-dates-as-strings: true
+        object-query-parameters: false
         respect-nullable-schemas: false
         idiomatic-request-names: false
         inline-path-parameters: false

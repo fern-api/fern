@@ -243,6 +243,7 @@ const NEW_DEPRECATED_SETTINGS_DEFAULTS: NewSettingsDefaults = {
 const NEW_OPENAPI_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
     "title-as-schema-name": [true, false],
     "type-dates-as-strings": [true, false],
+    "object-query-parameters": [false, true],
     ...COMMON_SETTINGS_DEFAULTS,
     ...OPENAPI_SETTINGS_DEFAULTS
 };

@@ -57,7 +57,7 @@ export interface ConvertOpenAPIOptions {
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     enableUniqueErrorsPerEndpoint: false,
     detectGlobalHeaders: true,
-    objectQueryParameters: false,
+    objectQueryParameters: true,
     respectReadonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,

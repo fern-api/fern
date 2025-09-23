@@ -97,7 +97,7 @@ function parseOpenApiDefinitionSettingsSchema(
         ...parseBaseApiDefinitionSettingsSchema(settings),
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.["prefer-undiscriminated-unions-with-literals"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-        objectQueryParameters: settings?.["object-query-parameters"],
+        objectQueryParameters: settings?.["object-query-parameters"] ?? true,
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
         filter: settings?.filter,
