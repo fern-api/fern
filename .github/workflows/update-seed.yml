@@ -173,36 +173,31 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # sdk-name:
-        #   [
-        #     ruby-model,
-        #     ruby-sdk,
-        #     ruby-sdk-v2,
-        #     pydantic,
-        #     python-sdk,
-        #     fastapi,
-        #     openapi,
-        #     postman,
-        #     java-sdk,
-        #     java-model,
-        #     java-spring,
-        #     ts-sdk,
-        #     ts-express,
-        #     go-fiber,
-        #     go-model,
-        #     go-sdk,
-        #     csharp-model,
-        #     csharp-sdk,
-        #     php-model,
-        #     php-sdk,
-        #     swift-sdk,
-        #     rust-model,
-        #     rust-sdk
-        #   ]
         sdk-name:
           [
+            ruby-model,
             ruby-sdk,
-            ruby-sdk-v2
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
           ]
     outputs:
       ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
@@ -274,6 +269,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -281,7 +286,7 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -385,6 +390,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -392,7 +407,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -415,6 +430,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -422,7 +447,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -445,6 +470,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -452,7 +487,7 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -475,6 +510,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -482,7 +527,7 @@ jobs:
           generator-path: generators/openapi
           language-name: openapi
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -505,6 +550,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -512,7 +567,7 @@ jobs:
           generator-path: generators/postman
           language-name: postman
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -535,6 +590,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -542,7 +607,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -565,6 +630,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -572,7 +647,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -595,6 +670,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -602,7 +687,7 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -625,6 +710,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -632,7 +727,7 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -655,6 +750,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -662,7 +767,7 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -685,6 +790,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -692,7 +807,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -715,6 +830,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -722,7 +847,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -745,6 +870,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -752,7 +887,7 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -775,6 +910,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -782,7 +927,7 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -805,6 +950,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -812,7 +967,7 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -835,6 +990,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -842,7 +1007,7 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -865,6 +1030,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -872,7 +1047,7 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -895,6 +1070,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -902,7 +1087,7 @@ jobs:
           generator-path: generators/swift
           language-name: swift
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -925,6 +1110,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -932,7 +1127,7 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -955,6 +1150,16 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -962,7 +1167,7 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
