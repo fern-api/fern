@@ -54,6 +54,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
         return {
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
+            mode: this.publishConfig.mode,
             token: this.publishConfig.token
         };
     }
