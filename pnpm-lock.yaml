@@ -6663,6 +6663,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../commons/ir-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context

@@ -3,6 +3,7 @@ import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from 
 
 import { getParameterExamples } from "./getParameterExamples";
 import { getFirstExamples, getV2Examples } from "./getV2Examples";
+import { getOriginalName } from "../../utils/nameUtils";
 
 export function getRequestBodyExamples({
     endpoint,
@@ -109,11 +110,11 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
         const value = userExample ?? autoExample;
         let stringValue: string;
         if (value == null) {
-            stringValue = pathParameter.name.originalName;
+            stringValue = getOriginalName(pathParameter.name);
         } else {
             stringValue = typeof value === "string" ? value : JSON.stringify(value);
         }
-        pathParameters[pathParameter.name.originalName] = stringValue;
+        pathParameters[getOriginalName(pathParameter.name)] = stringValue;
     });
     const url =
         endpoint.fullPath.head +

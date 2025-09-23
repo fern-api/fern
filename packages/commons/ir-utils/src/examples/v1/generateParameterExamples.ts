@@ -13,6 +13,7 @@ import {
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { getOriginalName } from "../../utils/nameUtils";
 
 export interface GenerateParamsOptions {
     typeDeclarations: Record<TypeId, TypeDeclaration>;
@@ -31,7 +32,7 @@ export function generatePathParameterExamples(
 
     for (const p of pathParameters) {
         const generatedExample = generateTypeReferenceExample({
-            fieldName: p.name.originalName,
+            fieldName: getOriginalName(p.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
@@ -73,7 +74,7 @@ export function generateHeaderExamples(
         }
 
         const generatedExample = generateTypeReferenceExample({
-            fieldName: h.name.name.originalName,
+                fieldName: getOriginalName(h.name.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
@@ -114,7 +115,7 @@ export function generateQueryParameterExamples(
         }
 
         const generatedExample = generateTypeReferenceExample({
-            fieldName: q.name.name.originalName,
+            fieldName: getOriginalName(q.name.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 10,
             typeDeclarations: options.typeDeclarations,

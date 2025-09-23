@@ -2,6 +2,7 @@ import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2Va
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { getFirstExamples } from "./getV2Examples";
+import { getOriginalName } from "../../utils/nameUtils";
 
 export function getParameterExamples({
     ir,
@@ -31,9 +32,9 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = userExample;
+            result.pathParameters[getOriginalName(parameter.name)] = userExample;
         } else if (autoExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = autoExample;
+            result.pathParameters[getOriginalName(parameter.name)] = autoExample;
         }
     }
 
@@ -41,7 +42,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.queryParameters[parameter.name.name.originalName] = userExample;
+            result.queryParameters[getOriginalName(parameter.name.name)] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -50,7 +51,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.queryParameters[parameter.name.name.originalName] = autoExample;
+            result.queryParameters[getOriginalName(parameter.name.name)] = autoExample;
         }
     }
 

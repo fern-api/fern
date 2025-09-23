@@ -15,6 +15,7 @@ import {
     generateQueryParameterExamples
 } from "./generateParameterExamples";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { getOriginalName } from "../../utils/nameUtils";
 
 export declare namespace generateWebSocketExample {
     interface Args {
@@ -163,7 +164,7 @@ function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSoc
     [...example.pathParameters].forEach((examplePathParameter) => {
         const value = examplePathParameter.value.jsonExample;
         const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-        pathParameters[examplePathParameter.name.originalName] = stringValue;
+        pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
     });
     const url =
         channel.path.head +

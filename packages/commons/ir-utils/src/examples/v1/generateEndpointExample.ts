@@ -27,6 +27,7 @@ import {
 } from "./generateParameterExamples";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { getOriginalName } from "../../utils/nameUtils";
 
 export declare namespace generateEndpointExample {
     interface Args {
@@ -413,7 +414,7 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
         (examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
             const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
+            pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
         }
     );
     const url =
