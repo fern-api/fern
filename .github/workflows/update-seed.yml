@@ -66,11 +66,11 @@ jobs:
               .github/actions/check-for-changed-files/action.yaml
               .github/actions/install/action.yaml
               .github/workflows/seed.yml
-              packages/seed/**
-              packages/ir-sdk/fern/apis/**
-              packages/cli/generation/ir-generator/**
-              test-definitions/**
-              test-definitions-openapi/**
+              packages/seed/
+              packages/ir-sdk/fern/apis/
+              packages/cli/generation/ir-generator/
+              test-definitions/
+              test-definitions-openapi/
             generator-name: seed
           - files: |
               generators/ruby/
@@ -206,8 +206,14 @@ jobs:
           echo '${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix }}' | jq .
           echo '${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}' | jq .
 
-
-    
+          # Combine all built matrices into a single JSON object. Wrap in array for GitHub matrix
+          # strategy format.
+          combined=$(echo '${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}} ${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}' | jq -s -c 'add')
+          matrix=$(echo '$combined' | jq '[.]')
+          echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+          
+          # Output for debug
+          echo "${matrix}" | jq .
 
 # bash-3.2$ GEN_PATH="folder/file"
 # bash-3.2$ ruby_test="{\"ruby-model\": {\"generator-path\": \"${GEN_PATH}\", \"other\": 2}}"
