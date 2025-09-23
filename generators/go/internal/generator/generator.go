@@ -14,7 +14,6 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
-	gov2 "github.com/fern-api/fern-go/internal/generator/v2"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
 
@@ -740,18 +739,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
-	if mode == ModeClient {
-		// Finally, run the go-v2 SDK generator.
-		g.coordinator.Log(
-			generatorexec.LogLevelDebug,
-			"Constructing go-v2 SDK generator...",
-		)
-
-		v2 := gov2.New(g.coordinator)
-		if v2Err := v2.Run(); v2Err != nil {
-			return nil, v2Err
-		}
-	}
 
 	return files, nil
 }
